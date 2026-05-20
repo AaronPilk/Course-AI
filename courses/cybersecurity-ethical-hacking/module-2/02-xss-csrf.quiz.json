@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: XSS & CSRF",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why store auth tokens in HttpOnly cookies instead of localStorage?",
+      "choices": [
+        { "id": "a", "text": "localStorage is slow." },
+        { "id": "b", "text": "localStorage is readable from JavaScript — any XSS vulnerability anywhere in your site can read tokens and exfiltrate them. HttpOnly cookies are explicitly hidden from JavaScript (`document.cookie` returns nothing for HttpOnly cookies); only the browser includes them in outgoing requests automatically. So if XSS happens, with HttpOnly: attacker can make requests AS the user from within the current page but can't steal the token for use elsewhere; with localStorage: attacker grabs the token, exfiltrates it, uses it from any device until expiry. Trade-off: HttpOnly cookies require CSRF defense (SameSite=Lax/Strict + CSRF tokens for state-changing requests). The net is much better than localStorage tokens. XSS happens; design assuming it does." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "localStorage is full." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HttpOnly hides cookies from JS. XSS can't exfiltrate them. localStorage tokens get stolen on any XSS.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your bank app lets users transfer money via POST /transfer with cookie auth. Defenses needed against CSRF?",
+      "choices": [
+        { "id": "a", "text": "Just HTTPS." },
+        { "id": "b", "text": "Layered defense: (1) Set the session cookie with `SameSite=Lax` (default in modern browsers) or `SameSite=Strict` — prevents the browser from sending the cookie on cross-origin POSTs from attacker.com, defeating most CSRF, (2) Add CSRF tokens — random per-session value the form must include; attacker doesn't know it (it's not sent on cross-origin requests), so forged requests miss it; most frameworks (Django, Rails) generate this automatically, (3) Re-authentication for sensitive actions like money transfer — require entering password even within authenticated session, so even a successful CSRF can't transfer without the password, (4) Audit logging — every transfer logged with IP / device / user-agent so anomalies are visible. SameSite alone catches most modern CSRF; tokens + reauth are belt-and-suspenders. The combination is what banks actually run." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to GET." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SameSite cookies + CSRF tokens + reauth for sensitive actions + audit logging. Layered defense.",
+      "points": 1
+    }
+  ]
+}

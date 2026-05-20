@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Threat models & attacker thinking",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the four questions of a threat model (Shostack)?",
+      "choices": [
+        { "id": "a", "text": "Encrypt everything." },
+        { "id": "b", "text": "(1) What are we building? — system architecture, data, users; (2) What can go wrong? — concrete threats often generated via STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, DOS, Elevation of privilege); (3) What are we doing about it? — specific mitigations per threat; (4) Did we do a good job? — review residual risk and known gaps. The structure forces specificity: 'we use bcrypt because we identified credential theft as a top threat' beats generic 'security best practices.' Without threat modeling, security decisions are guesses; with it, every control traces to a threat. Even an informal one-hour whiteboard session beats no threat model at all." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "ABCD." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Build/Threats/Mitigations/Review. Structured paranoia; the foundation of every security decision.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your org's threat model focused on technical exploits. The team got phished and lost an admin account. Where did the model fail?",
+      "choices": [
+        { "id": "a", "text": "Software bug." },
+        { "id": "b", "text": "The model didn't think like an attacker. Real attackers don't 'break' authentication; they find paths around it — phishing, social engineering, credential stuffing with leaked passwords, supply chain. A threat model focused on 'can someone bypass our login?' misses 'can someone get a real password by deception?' Phishing is the #1 vector in serious breaches; checklists rarely catch it. Fix: walk the threat model from an attacker's perspective end-to-end — 'how would I get into the admin panel with no special access?' Answer: phish > credential stuff > insider > supply chain. Mitigations: MFA (defeats credential theft), hardware tokens for high-privilege accounts, phishing-resistant authentication (FIDO2/WebAuthn), security awareness training. Threat models without the human element miss the dominant attack class." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bad luck." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Model missed the human element. Phishing >> brute force. MFA + WebAuthn + awareness training.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Which CIA pillar do most ransomware attacks target?",
+      "choices": [
+        { "id": "a", "text": "Confidentiality only." },
+        { "id": "b", "text": "Primarily Availability (data encrypted, unusable) and Integrity (data tampered with — can't trust original state). Modern 'double extortion' ransomware also exfiltrates data first, adding Confidentiality violation: pay or we publish. A single ransomware event can hit all three pillars at once. Defenses must address each: offline / immutable backups (Availability), integrity-verified backups (Integrity — make sure attackers didn't tamper with backups before encrypting), encryption at rest + data classification (Confidentiality so exfil is harder to monetize). 'We have backups' is necessary but insufficient — verify the backups themselves; address the data-disclosure vector separately. Ransomware tested every weakness most orgs had on availability and integrity simultaneously; it's why the threat reshaped enterprise security around 2018-2022." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Integrity only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Availability + Integrity (+ Confidentiality in double-extortion). All three pillars at once.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You find an API key in a public GitHub repo, committed 8 months ago and revoked 2 weeks later. Risk?",
+      "choices": [
+        { "id": "a", "text": "Zero." },
+        { "id": "b", "text": "Non-zero. Bots scrape new commits within MINUTES of being pushed — the key was almost certainly harvested and used in those 2 weeks before revocation; check provider audit logs for any unauthorized access in that window. The key also remains in git history forever — anyone cloning the repo sees it; revocation doesn't remove it. Some 'revoked' tokens leave behind downstream cached access (other services with the token still trusted), and the very fact of the leak signals 'this org has secret-leakage problems' to attackers. Lessons: enable GitHub secret scanning (auto-revokes for many providers in seconds, much faster than humans noticing), set up pre-commit secret scanning (gitleaks), use a secret manager (Vault, AWS Secrets Manager, Doppler) so secrets never touch code, rotate everything periodically. The hours after a leak are critical; 8 months is plenty of time for exploitation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Clean." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bots scrape within minutes. Check audit logs. Enable secret scanning + pre-commit hooks; use secret manager.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "You accidentally discover an exposed S3 bucket with customer data. Right action?",
+      "choices": [
+        { "id": "a", "text": "Download to verify it's real." },
+        { "id": "b", "text": "Document what you saw (URL, structure screenshot, NOT contents), find the company's security contact (security@ email, security.txt file, HackerOne page), report responsibly with details, wait for them to fix it before public disclosure (~90 days standard), never extort or hint at it. The line between 'security researcher who got a bug bounty' and 'criminal' is whether you went past observation into download/copy. The CFAA treats exfiltration as a separate, much worse offense than discovery. Hero ending: company fixes the leak, possibly pays bounty, 500K customers protected. Criminal ending: you downloaded data to 'verify it's real,' now facing federal charges. Stay on the observe side. Modern bug bounty programs explicitly include safe harbor for in-scope reports — leverage that infrastructure when available." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Document → report via security contact → wait for fix. Never download data. Never extort.",
+      "points": 1
+    }
+  ]
+}

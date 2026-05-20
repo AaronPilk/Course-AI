@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OSI & TCP/IP",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between an L4 and L7 load balancer?",
+      "choices": [
+        { "id": "a", "text": "Just speed." },
+        { "id": "b", "text": "L4 (Layer 4 / Transport) load balancers route based on TCP/UDP info — IP addresses and ports. They don't understand HTTP; just forward connections to backends round-robin or by hash. Fast (per-connection decision is cheap), works for any TCP protocol (databases, mail, custom), can handle huge throughput. L7 (Layer 7 / Application) load balancers understand HTTP — they can route by URL path, header, hostname, cookie. Slower per request (parse HTTP), HTTP-only, but enables sophisticated routing (canary releases, A/B tests, path-based microservice routing). Common stack: cloud L4 (AWS NLB, GCP TCP LB) for raw bandwidth + L7 (AWS ALB, GCP HTTPS LB, nginx, Envoy) for HTTP-aware routing. Choose based on what you need: opaque TCP/long-lived connections → L4; HTTP-aware behavior → L7." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "L4 = TCP/IP-only routing (any protocol, fast). L7 = HTTP-aware (path/header routing, slower).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app can't reach the database. How does the OSI model help you debug?",
+      "choices": [
+        { "id": "a", "text": "It doesn't." },
+        { "id": "b", "text": "Narrows the cause by working through layers: (L7/App) Are credentials right? Is the connection string correct? (L4/Transport) Can you `nc -zv db-host 5432` from the app server? If port refused → DB not listening; if timeout → firewall. (L3/Network) Does `dig +short db-host` resolve? If not, DNS issue. Can you `ping db-host`? If not, routing issue. (L2/Link) Are interfaces up? `ip link show`. (L1/Physical) Cables plugged in? (Rare in cloud but matters on-prem). Each layer has tools: dig (DNS), ping (L3 reachability), traceroute (routing path), nc (L4 port check), tcpdump (everything). Without the model, you guess randomly; with it, you narrow systematically. 'My DB is down' → 'DNS resolves, port refused → DB process is down (not network).' Same diagnostic structure works for any network issue." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reinstall everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Narrows cause by layer: DNS → ping → port → service → auth. Each has tools; systematic beats guessing.",
+      "points": 1
+    }
+  ]
+}

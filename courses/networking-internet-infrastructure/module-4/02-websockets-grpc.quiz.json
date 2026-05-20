@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: WebSockets & gRPC",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When pick SSE over WebSockets?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "When server → client one-way updates suffice (no need for client to push messages back beyond the initial subscription). SSE is HTTP-based (single GET that streams `text/event-stream`), works through more proxies and corporate firewalls than WebSockets, has built-in auto-reconnect with last-event-id resumption, simpler client code (`new EventSource(url)`). Good fits: live news feeds, server-pushed notifications, status pages, log tailing UIs. When you need true bidirectional or client-pushes-frequently, switch to WebSockets — pickier about proxies and need custom reconnect logic but full-duplex. The simpler tool is often the right call: don't pull in WebSocket complexity for what SSE does fine. Trade-off summary: SSE = simple, one-way, HTTP-friendly. WebSocket = complex, two-way, lower overhead per message after setup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSE for one-way server→client. Simpler, HTTP-based, works through more proxies. WebSocket for bidirectional.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a chat app for 1M concurrent users. Architecture?",
+      "choices": [
+        { "id": "a", "text": "One big WebSocket server." },
+        { "id": "b", "text": "Distributed: (1) WebSocket connection brokers — fleet of servers handling long-lived connections (different scaling profile than stateless HTTP — connections persist; capacity is connection count, not RPS), (2) Pub/sub backbone — Redis Pub/Sub, NATS, or Kafka decouples 'incoming message' from 'deliver to subscribers'; when User A sends message to Room X, publisher writes once and all brokers with Room X subscribers receive it for fan-out, (3) Persistence — PostgreSQL or Cassandra for message history (cold storage), (4) Presence service — separate component tracking who's online (Redis with TTLs typically), (5) Load balancer with sticky sessions or consistent hashing — clients reconnect to the same broker for cache locality. Tools that bundle: Pusher, Ably, PubNub (managed), Centrifugo, Soketi (self-hosted). Pattern: scale horizontally on brokers; centralize pub/sub for fan-out; persist separately. Single-server hits ~10-100K connections; needs distributed architecture past that." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Polling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "WebSocket brokers + pub/sub backbone (Redis/NATS/Kafka) + persistence + presence + sticky LB.",
+      "points": 1
+    }
+  ]
+}

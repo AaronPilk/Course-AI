@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Error responses",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why include a stable `code` field in error responses?",
+      "choices": [
+        { "id": "a", "text": "Backup data." },
+        { "id": "b", "text": "Machine-readable identifier consumers use to handle errors programmatically: `if (err.code === 'rate_limited') retry_with_backoff(); else if (err.code === 'validation_failed') show_form_errors();`. Without a stable code, clients fall back to grepping error MESSAGES — brittle (messages get tweaked, translated, capitalized) and incorrect (one English phrase might map to multiple error types). Stable codes are: snake_case strings ('validation_failed', 'auth.expired_token'), never changed once shipped, documented in API reference, separate from human-readable messages. Hierarchical codes (`auth.invalid_token`, `auth.expired_token`, `auth.no_token`) help consumers handle categories. The principle: API responses serve two audiences — humans reading errors and code branching on them. Codes serve code; messages serve humans. Both need to be stable in their respective dimensions; mixing them (using messages for branching) breaks consumer integrations on tiny copy edits." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compression." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stable codes let clients branch programmatically. Messages are for humans and may change.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Customer support gets a complaint: 'I got error 500 yesterday.' How to investigate?",
+      "choices": [
+        { "id": "a", "text": "Search the logs by time." },
+        { "id": "b", "text": "Ask for the request_id from the error response. Every API error response should include `X-Request-Id` header and/or `request_id` field in body — a unique identifier generated at the gateway/LB and propagated through every internal log. Customer pastes the request_id; you grep logs across all services; you see the entire trace of that specific request in seconds (timestamp, user, endpoint, downstream calls, exception message, stack trace). Without request IDs: 'an error happened yesterday' is unsearchable across millions of requests; support guesses; bugs go undiagnosed. Implementation: generate UUID at API gateway; include as header on all internal requests; every log line includes it; centralized logging (Splunk, Datadog, ELK) makes correlation trivial. One of the highest-leverage observability practices; takes a day to set up; pays back forever. Pair with structured logging (each line is JSON with request_id field) and you can answer customer questions in minutes instead of hours." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apologize." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Request IDs in error responses + logs. Customer reports the ID; you grep; trace is instant.",
+      "points": 1
+    }
+  ]
+}

@@ -342,9 +342,11 @@
     },
     {
       "slug": "cybersecurity-ethical-hacking",
-      "title": "Cybersecurity & Ethical Hacking Basics",
+      "title": "Cybersecurity & Ethical Hacking Foundations",
       "category": "Security",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://owasp.org",
         "https://www.kali.org/docs/"
@@ -354,21 +356,27 @@
       "slug": "networking-internet-infrastructure",
       "title": "Networking & Internet Infrastructure",
       "category": "Systems",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://www.netacad.com"]
     },
     {
       "slug": "api-rest-engineering",
       "title": "API Engineering & REST Systems",
       "category": "Backend",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://learning.postman.com"]
     },
     {
       "slug": "saas-product-architecture",
       "title": "SaaS Product Architecture",
       "category": "Architecture",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://learn.microsoft.com/en-us/azure/architecture/"]
     },
     {

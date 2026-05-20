@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: DNS",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why pre-stage low TTL before planned DNS changes?",
+      "choices": [
+        { "id": "a", "text": "Compliance." },
+        { "id": "b", "text": "Resolvers cache responses for the TTL duration. If TTL is 86400 (1 day), changing the A record means up to 24 hours of resolvers returning the old IP — users land on the old endpoint (which may be down post-cutover). Pre-staging: 24-48 hours BEFORE the planned change, lower TTL to 60-300 seconds. Resolvers re-query frequently during that window. Make the actual change — propagation completes in minutes since TTL is short. Once stable, raise TTL back to 3600+ to reduce query load. The pattern works because DNS caches respect TTLs strictly; you just need a window where the TTL is small enough that the post-change propagation is fast. Standard for any production DNS change. Skip it and you get partial traffic on the old endpoint for hours or days — known pitfall, easily avoidable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Resolvers cache for TTL duration; pre-staging low TTL 24-48h before makes post-change propagation minutes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "App can't reach api.example.com. `dig` resolves the IP correctly. Cause?",
+      "choices": [
+        { "id": "a", "text": "DNS." },
+        { "id": "b", "text": "Not DNS — it resolved. Look elsewhere: (1) `nc -zv api.example.com 443` to check L4 port reachability — timeouts indicate firewall, refused means service down, (2) `curl -v https://api.example.com` to see HTTP response — surfaces TLS errors, 403s, 5xxs, (3) check security groups / network ACLs — maybe only some hosts can reach the API, (4) check app config — wrong hostname, wrong port, missing auth. 'DNS issue' is the most-blamed and least-actually-the-cause network problem. If `dig` returns the right IP, DNS is fine; the bug is at L4 (firewall/connectivity) or L7 (HTTP/TLS/auth) or app-level. Diagnose systematically: DNS → L3 (ping) → L4 (nc) → L7 (curl) → app — narrow the layer where it actually breaks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "DNS cache." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DNS works (dig returns IP). Check L4 connectivity, firewall, TLS, app config — don't reflexively blame DNS.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why no CNAME at the apex (example.com)?",
+      "choices": [
+        { "id": "a", "text": "Spec quirk." },
+        { "id": "b", "text": "DNS standard prohibits CNAME from coexisting with other record types at the same name. The apex of a zone (example.com without subdomain) needs SOA, NS, and often MX records — so it can't be a CNAME. Subdomains (www.example.com) can CNAME freely because they have no such requirements. Workaround for apex → CDN: cloud DNS providers offer ALIAS / ANAME records (Route 53 ALIAS, Cloudflare ANAME) — look like CNAMEs but resolve server-side and return the target's A/AAAA records, sidestepping the spec restriction. Modern apex-to-CDN setups use ALIAS. Alternative: use the CDN's anycast IPs directly as A records at the apex. The 'apex CNAME problem' was a real friction point for years; ALIAS records made it disappear in practice. Today, just pick a DNS provider that supports ALIAS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "RFC bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DNS spec: CNAME can't coexist with other records. Apex needs SOA/NS. Use ALIAS/ANAME records as workaround.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your domain's outbound email goes to spam. DNS fixes?",
+      "choices": [
+        { "id": "a", "text": "Buy domain reputation." },
+        { "id": "b", "text": "Set up SPF + DKIM + DMARC — the email authentication trio. SPF (TXT): lists authorized mail servers (`v=spf1 include:_spf.google.com ~all`); receivers reject mail from elsewhere claiming your domain. DKIM (TXT under selector._domainkey): public key for signing outgoing mail; receivers verify with this key. DMARC (TXT at _dmarc.yourdomain.com): policy tying SPF+DKIM together (`v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com`); instructs receivers what to do with failures and where to report. Combined, receivers trust your mail. Major providers (Gmail, Outlook) increasingly REQUIRE all three for bulk delivery (Google's 2024 sender requirements). Without them, you're flagged as 'might be spoofed' → spam folder. Standard hardening; one of the highest-leverage DNS configurations for any domain that sends mail. Free, takes 30 minutes to set up correctly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Send less." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SPF + DKIM + DMARC — required by Gmail/Outlook for delivery; without them, you're spam-flagged.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "DNSSEC vs DoH — purpose?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Different problems. DNSSEC = cryptographic signatures on DNS records so resolvers can verify answers are AUTHENTIC (defeats forging / spoofing / cache poisoning). Doesn't encrypt — eavesdroppers still see queries. DoH (DNS over HTTPS) = encrypts the QUERY CHANNEL between client and resolver (defeats eavesdropping / on-path tampering). Doesn't verify end-to-end authenticity — you trust your DoH resolver. Modern best practice combines both: DNSSEC on the authoritative side (your domains), DoH on the client side (Firefox, Chrome, OS-level resolver settings). Each addresses one property; combined gives authenticated + confidential DNS. Single biggest win for most users: enable DoH in browser (Firefox makes it default in some regions). For domain owners: enable DNSSEC if your provider makes it easy, otherwise good ops > broken DNSSEC." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two protocols, one purpose." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DNSSEC = authenticity of answers (signed records). DoH = confidentiality of queries (encrypted channel). Complementary.",
+      "points": 1
+    }
+  ]
+}

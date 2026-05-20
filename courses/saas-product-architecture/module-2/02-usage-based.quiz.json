@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Usage-based billing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why include a unique `event_id` on each billable event?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Idempotency / deduplication. Distributed systems retry on network glitches, queue replays, restart scenarios — the same event may arrive multiple times in the metering pipeline. Without dedup, retries cause double-counting → customer billed twice for one API call → disputes, refunds, credibility damage. With event_id (UUID per event), aggregator checks 'have I processed this ID before?' and drops duplicates. Replaying a day's events after a bug fix is safe — duplicates de-dupe. Reliability of metering is a customer-trust issue; errors are remembered. Idempotency keys make billing pipelines tolerant of the chaos that distributed systems inevitably produce. Same pattern as API idempotency keys — different layer, same principle: assume retries WILL happen; design to be safe under them. Critical for any usage-based pricing where customers will scrutinize bills." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compression." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotency — retries / replays don't double-count. Critical for billing accuracy and customer trust.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Customer says they didn't use that much. Investigation tool?",
+      "choices": [
+        { "id": "a", "text": "Trust them." },
+        { "id": "b", "text": "Audit raw event logs for the billing period. Pull events for the tenant in the disputed window; break down by day, by endpoint, by feature; compare to aggregates; ideally compare to customer's own logs if they track. The audit either confirms your bill is correct (provide the breakdown to customer — usually resolves disputes) or finds a metering bug (fix + credit + apologize). For this to work, maintain raw event log (not just aggregates) for at least 90 days — provides forensic capability. Store cheaply (cold storage, columnar formats, ClickHouse/BigQuery work). Beyond 90 days, sampled events or aggregates suffice. Customers often discover their own bugs through this process ('oh, we had a script in a loop'). Transparency wins long-term: customers who see detailed usage breakdowns trust the billing system more than those given opaque totals. Pair with customer-visible usage dashboards — many disputes self-resolve when customers can see usage in real time." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apologize and refund." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Audit raw event logs (kept 90+ days). Provide breakdown to customer; find bugs or confirm correct.",
+      "points": 1
+    }
+  ]
+}

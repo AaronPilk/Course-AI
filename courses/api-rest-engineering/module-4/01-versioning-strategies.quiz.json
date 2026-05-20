@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Versioning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you bump the major version of your API?",
+      "choices": [
+        { "id": "a", "text": "Every release." },
+        { "id": "b", "text": "Only for BREAKING changes: removing a field consumers might use, changing a field's type/meaning, adding required fields, renaming endpoints, changing default behaviors, changing auth requirements. Don't bump for: adding optional fields, adding new endpoints, internal performance work, adding new optional headers — these are additive and don't break existing consumers. Major version bumps are expensive for everyone — consumers must update integration code, you must maintain multiple versions in parallel for years (typical lifecycle: 1-5 years between majors with 6-12 month deprecation windows). Most 'should we bump?' decisions resolve to 'no — make the change additive.' Keep majors rare; ship many minor changes additively in between. The good ratio: years between major bumps, monthly additive improvements. APIs that bump majors frequently (every quarter, etc.) signal poor compatibility discipline and lose consumer trust." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Every quarter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Only for breaking changes. Most evolution is additive (new fields, new endpoints) and doesn't require a bump.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You decide to deprecate `/v1/orders`. What headers help consumers prepare?",
+      "choices": [
+        { "id": "a", "text": "None — just shut it off." },
+        { "id": "b", "text": "Use `Deprecation` and `Sunset` headers (RFC 8594 + IETF draft). `Deprecation: Wed, 01 Jun 2026 00:00:00 GMT` signals 'as of this date, consider this endpoint deprecated.' `Sunset: Wed, 01 Dec 2026 00:00:00 GMT` signals 'on this date, it will be removed.' Combined with `Link: <https://docs.example.com/migrate-to-v2>; rel=\"deprecation\"` pointing to migration docs. Consumers monitoring response headers (or proactive ones inspecting their integrations) see warnings months in advance; can migrate before breakage. Beyond headers: email customers using v1, post in changelog, write migration guides, sometimes proactively reach out for high-value customers. Don't shut things off without warning — even after months of headers, some consumers won't have migrated; staged shutdowns (5% traffic returning 410 Gone first, escalating) catch laggards before total cutoff. Stripe, Twilio, GitHub all manage deprecations like this; consumer trust builds when you handle the lifecycle well." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "X-Old-API." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`Deprecation` + `Sunset` headers (RFC 8594) signal upcoming removal. Email + docs + staged shutdown for laggards.",
+      "points": 1
+    }
+  ]
+}

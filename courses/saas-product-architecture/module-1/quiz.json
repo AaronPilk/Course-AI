@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Multi-tenancy",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does most SaaS start with pooled (shared-DB) multi-tenancy?",
+      "choices": [
+        { "id": "a", "text": "Sounds modern." },
+        { "id": "b", "text": "Cheapest cost per tenant + fastest onboarding + simplest operations. One DB to back up, monitor, patch, scale; new customer = one row insert (milliseconds); tenants share infrastructure cost efficiently. Silo (DB-per-tenant) provisions a database on every signup — orders of magnitude slower and more expensive at SMB price points. Trade-off: pooled requires careful query discipline (every query must filter by tenant_id, or RLS enforces at DB level); silo is foolproof but operationally heavy. Most successful SaaS (Notion, Linear, Slack) start pooled and only add silo for enterprise tier. Migration of large enterprise customers from pooled → silo is a documented practice when revenue justifies the operational cost. PostgreSQL Row-Level Security makes pooled safe and is the modern default for new SaaS architecture. Right answer: pooled with RLS; add silo for enterprise tier when revenue per customer justifies it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cheapest + fastest onboarding + simplest ops. Add silo for enterprise tier later.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Enterprise prospect requires dedicated database. Your SaaS is pooled. Path?",
+      "choices": [
+        { "id": "a", "text": "Decline." },
+        { "id": "b", "text": "Offer dedicated infrastructure as an enterprise tier — common pattern. Architecture: pooled for SMB/mid-market (efficient, cheap); dedicated/silo for enterprise willing to pay the premium covering operational cost. Implementation: same codebase routes connections based on customer tier — pooled customers hit shared DB; dedicated customers hit their own (provisioned via Terraform on signup). Charge accordingly: $X/month for shared tier, $XX,000+/month for dedicated. Common pattern across mature SaaS: Snowflake, Datadog, Linear, MongoDB Atlas all offer this. The 'decline' answer loses the enterprise deal; building a separate codebase for enterprise is unnecessary; architecture can support both modes via a connection-routing abstraction. Plan for it from day one even if you don't ship dedicated initially — the abstraction (tenant → connection string) prepares you to add silo without rewrite when the first big customer asks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rewrite as silo." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hybrid: pooled for SMB, silo for enterprise. Charge accordingly. Plan abstraction from day one.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why index on `(tenant_id, ...)` rather than just on `(other_column)` in pooled SaaS?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Every query in a pooled-tenancy app starts with `WHERE tenant_id = $1`. A composite index leading with tenant_id lets Postgres use the index for the tenant filter AND the additional filter (`WHERE tenant_id = $1 AND user_id = $2`). Single-column index on user_id alone doesn't help — user_id is unique only within a tenant; the DB still has to scan all matching rows across tenants to find the right one. Composite index `(tenant_id, user_id)` + tenant-scoped query = fast index lookup; missing the composite = full scan filtered by tenant_id (slow at scale). Add to every tenant-scoped table; usually 2-5 composite indexes per table covering common query patterns. Cost: indexes take storage + slow writes slightly; benefit: queries are O(log n) instead of O(n). Standard pattern; one of the cheapest performance wins in pooled SaaS. Without composite indexes, performance degrades unpredictably as tenants grow." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "PG mandates it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Composite indexes lead with tenant_id — every query filters by it. Single-column indexes don't help.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "After enabling RLS, queries return zero rows from your app. Why?",
+      "choices": [
+        { "id": "a", "text": "Bug." },
+        { "id": "b", "text": "App isn't setting the session variable the RLS policy references. RLS policy says `tenant_id = current_setting('app.tenant_id')`; if app forgets `SET LOCAL app.tenant_id = '...'` at the start of each request, the setting is empty and the policy matches NO rows → empty result. This is the SAFE failure mode (vs forgetting tenant_id filter in app-level scoping = catastrophic leak — would return ALL rows). Fix: middleware that runs `SET LOCAL app.tenant_id = $tenant_id` as the first query of every transaction; verify execution before actual app queries. For connection pooling: use `SET LOCAL` (scoped to transaction; cleans up automatically) NOT `SET` (scoped to connection; leaks across requests using the same pooled connection). Alternative: use Postgres roles per tenant if your connection pool can map appropriately. 'Zero rows after enabling RLS' is the canonical first-deploy gotcha; fix is one middleware function." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Permission denied." }
+      ],
+      "correct_answer": "b",
+      "explanation": "App not setting `app.tenant_id`. Add middleware: `SET LOCAL app.tenant_id = ...` per transaction. Safe failure mode.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why is RLS safer than app-level tenant filtering?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "Database enforces, not the app. App-level: developer must remember `WHERE tenant_id = $X` everywhere; one missed query in millions of lines = cross-tenant data leak. Risk surface = every query in the app. With RLS: policy on the table specifies 'rows visible only when tenant_id matches session variable'; app sets the session variable per request; every subsequent query — raw SQL, ORM, console, buggy code — respects the policy automatically. Forgetting the SET = queries return ZERO rows (safe failure); the opposite of forgetting a WHERE filter (catastrophic). Risk surface drops to 'is the session variable set correctly' — a single middleware audit. Performance overhead typically <5%. Modern Postgres SaaS uses RLS as default; Supabase is built around it. Defense-in-depth: app-level filtering as primary + RLS as backstop catches the inevitable bug. The shift from 'trust the app to filter' to 'database guarantees isolation' eliminates a whole category of expensive bugs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DB enforces; safe failure mode (zero rows vs catastrophic leak). Single audit point vs every query.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Billing & subscriptions",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why offer 10-20% discount on annual vs monthly billing?",
+      "choices": [
+        { "id": "a", "text": "Customer service." },
+        { "id": "b", "text": "Cash flow + reduced churn + faster runway. Annual prepaid = cash in hand today vs monthly drips over the year — massive boost to operating capital. Reduced churn: annual customers commit for 12 months; typical SaaS sees 50-80% lower churn on annual vs monthly. Higher-intent customers self-select for annual; they invest more in adoption. The discount is more than recouped by these effects. Most SaaS show monthly as default with 'save 20%' callout for annual to nudge. Net: monthly = customer optionality, terrible cash flow for you; annual = better cash flow + lower churn + higher commitment. Universal pattern; one of the highest-leverage pricing choices for any SaaS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduces support." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cash upfront + 50-80% lower churn + higher-intent customers. Discount more than pays back.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Customers complain about paying for dormant per-seat users. Fix?",
+      "choices": [
+        { "id": "a", "text": "Discount." },
+        { "id": "b", "text": "Bill only for ACTIVE users — define active as logged in within N days (typically 30-90). Implement: nightly job flags users active in the period; billing pulls active count; dashboard shows 'active users (billed)' clearly. Dormant users remain in the workspace (can log back in) but don't count until reactivated. Slack pioneered this 'fair billing' pattern; now widespread. Trade-off: slight revenue dip per customer; offset by easier adoption (customers invite everyone), reduced churn (no resentment about wasted seats), and growth as activations rise. Some tools also free view-only roles + paid edit roles — captures value where consumed. Standard fair-billing pattern; addresses the #1 per-seat complaint." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Flat pricing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bill only active users (logged in within N days). Slack-style fair billing; addresses dormant-user complaint.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why include `event_id` on each billable usage event?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Idempotency / deduplication. Distributed systems retry on network glitches, queue replays, restart scenarios — the same event may arrive multiple times in the metering pipeline. Without dedup, retries cause double-counting → customer billed twice for one API call → disputes, refunds, credibility damage. With event_id (UUID per event), aggregator checks 'have I processed this ID?' and drops duplicates. Replaying events after a bug fix is safe — duplicates de-dupe. Reliability of metering is a customer-trust issue; errors are remembered. Idempotency keys make billing pipelines tolerant of the chaos distributed systems inevitably produce. Same pattern as API idempotency keys — different layer, same principle: assume retries will happen; design safe under them. Critical for any usage-based pricing where customers scrutinize bills." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compression." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotency for retries/replays. Without it, double-counting; with it, safe replays.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Card declines: 5-15% on first attempt. Without action, what happens?",
+      "choices": [
+        { "id": "a", "text": "Stripe retries forever." },
+        { "id": "b", "text": "Customers silently churn. Their service stops; they're confused; they don't know they need to update their card; you lose revenue you would have retained. With proper dunning (structured retry sequence over 2-4 weeks + escalating email + customer-portal link to update card), you recover 50-70% of failed payments. Massive impact: at $50K MRR with 10% failure rate, dunning is worth $25-35K/year in retained revenue. Stripe Smart Retries, Recurly, Chargebee automate this with intelligence (retry on payday, retry after typical resolution windows). Stripe's account-updater also auto-fetches new card numbers from Visa/Mastercard before the customer notices expiry. Combined: involuntary churn drops dramatically. Without dunning: customers churn that you would have kept. ROI on dunning setup is excellent; one of the highest-leverage billing infrastructure investments." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Auto-cancel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Silent churn — customers lose service; you lose revenue. Dunning recovers 50-70%. Use Stripe Smart Retries.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why verify Stripe webhook signatures?",
+      "choices": [
+        { "id": "a", "text": "Required by AWS." },
+        { "id": "b", "text": "Anyone knowing your webhook URL can POST fake events without verification — fake cancellations for competitors' customers, fake paid invoices for free service, fake state changes affecting your billing. Stripe signs webhook payloads with HMAC using your webhook secret; verification (`stripe.Webhook.construct_event(payload, sig, secret)`) confirms the request actually came from Stripe. Without verification, your endpoint trusts attacker-controlled input as gospel. Always verify; reject on mismatch with 400. Webhook secret is environment-scoped (test vs live); load from environment variable; never commit. Some teams add additional defense: IP allowlist for Stripe's published IP range as a layer (signature is primary). The 'forgot to verify' bug is a classic supply-chain-like vulnerability where your app accepts attacker-controlled input. Stripe's SDK makes verification one line; no excuse to skip. Same pattern for any webhook — verify the signature is the cheap defense against fake events." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves bandwidth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Attackers can fake events without verification. construct_event() with secret verifies HMAC; reject mismatches.",
+      "points": 1
+    }
+  ]
+}

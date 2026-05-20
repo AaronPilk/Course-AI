@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Anycast & peering",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the physical floor on round-trip latency between NYC and London?",
+      "choices": [
+        { "id": "a", "text": "Almost zero." },
+        { "id": "b", "text": "About 55ms theoretical (speed of light in fiber over ~5,500 km each way). Real-world: 70-90ms because of routing detours, queue delays, and processing at each hop. You cannot beat this without changing physics — light travels at ~200,000 km/s in fiber (slower than in vacuum due to refractive index). Implications: any cross-continental real-time application has fundamental latency limits; users in different regions need local replicas to feel snappy. Same logic for US↔Asia (~100-200ms), US↔Australia (~150-200ms). This is why CDNs (Cloudflare, Akamai, Fastly) exist — they put servers near users so most requests don't cross oceans. Edge compute (Cloudflare Workers, Lambda@Edge) takes this further by running code close to users. The 'global app feels fast' pattern is: cache aggressively at the edge, replicate data regionally, accept that writes still travel to a primary region. Latency budgeting in distributed systems starts with these physical limits." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bandwidth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "~55ms theoretical (speed of light in fiber); 70-90ms real. Physics cap; CDNs / edge bring data closer.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to serve users globally with sub-100ms latency. Architecture?",
+      "choices": [
+        { "id": "a", "text": "One big server." },
+        { "id": "b", "text": "Layered global architecture: (1) CDN at the edge — Cloudflare / Fastly / CloudFront serve static content from POPs near users (10-50ms typical), (2) DNS-based routing or anycast IPs — point clients to the nearest application region (latency-based DNS, AWS Global Accelerator, Cloudflare Argo, etc.), (3) Multi-region application deployments — at minimum 3-4 regions (US East, US West, EU, APAC) handling reads locally, (4) Database replication — read replicas per region (Aurora Global, Cloud Spanner, CockroachDB) for fast local reads; writes go to primary, (5) Edge compute for dynamic logic — Workers / Lambda@Edge for things that should run close to user (auth, routing, personalization). Trade-offs: write latency to non-primary regions is still cross-region; eventual consistency for cross-region replicas. The cost is significant; the payoff is global users feel like they're using a local app. For most apps starting: single region + CDN gets you 80% there for 20% of the cost." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CDN + multi-region app + replicated DBs + edge compute. Cap latency by bringing data + compute close to users.",
+      "points": 1
+    }
+  ]
+}

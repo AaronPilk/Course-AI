@@ -1,0 +1,89 @@
+{
+  "slug": "api-rest-engineering",
+  "title": "API Engineering & REST Systems",
+  "subtitle": "Design APIs that age well — versioning, auth, errors, performance",
+  "description": "A practical course on designing and operating HTTP APIs that survive contact with real consumers. Covers REST principles, resource modeling, versioning, authentication, error semantics, pagination, rate limiting, caching, observability, and the trade-offs vs gRPC and GraphQL. Optimized for engineers building APIs that other people will depend on.",
+  "category": "Backend",
+  "difficulty": "intermediate",
+  "audience": "Backend engineers, full-stack devs, integration engineers. Comfortable with HTTP basics; have built at least one API endpoint before.",
+  "tags": ["api", "rest", "http", "authentication", "versioning", "openapi"],
+  "estimated_minutes": 285,
+  "brand": {
+    "name": "API",
+    "logo": "/brands/api-rest-engineering.svg",
+    "gradient": ["#8B5CF6", "#6D28D9"],
+    "tint": "#10081C"
+  },
+  "prerequisites": [
+    "Understand HTTP basics (methods, status codes, headers)",
+    "Built at least one API endpoint",
+    "Comfortable with JSON"
+  ],
+  "outcomes": [
+    "Design clean REST resources that match consumer needs",
+    "Choose HTTP methods and status codes correctly",
+    "Authenticate with API keys, OAuth, JWTs at the right time",
+    "Version APIs without breaking consumers",
+    "Design error responses that are debuggable",
+    "Paginate, filter, and sort consistently",
+    "Document with OpenAPI; generate clients automatically",
+    "Operate APIs: rate limits, observability, deprecation"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Design fundamentals",
+      "objective": "Get the shape right before the code.",
+      "lessons": [
+        { "position": 1, "title": "REST principles — what they really mean" },
+        { "position": 2, "title": "Resource modeling: nouns, not verbs" },
+        { "position": 3, "title": "HTTP methods and what they mean" },
+        { "position": 4, "title": "Status codes: the conversation with the client" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Authentication and authorization",
+      "objective": "Lock things down without making consumers cry.",
+      "lessons": [
+        { "position": 1, "title": "API keys, basic auth, bearer tokens" },
+        { "position": 2, "title": "OAuth 2.1 and the authorization code flow" },
+        { "position": 3, "title": "JWTs: when they help, when they hurt" },
+        { "position": 4, "title": "Per-endpoint authorization and scopes" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Working with collections",
+      "objective": "Pagination, filtering, sorting, errors that scale.",
+      "lessons": [
+        { "position": 1, "title": "Pagination patterns: offset vs cursor" },
+        { "position": 2, "title": "Filtering and sorting" },
+        { "position": 3, "title": "Error responses worth debugging" },
+        { "position": 4, "title": "Idempotency and retries" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Evolution and versioning",
+      "objective": "Ship changes without breaking consumers.",
+      "lessons": [
+        { "position": 1, "title": "Versioning strategies — URL, header, none" },
+        { "position": 2, "title": "Backward-compatible change patterns" },
+        { "position": 3, "title": "Deprecation: announcing the future" },
+        { "position": 4, "title": "OpenAPI and contract-first design" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Operating real APIs",
+      "objective": "Make APIs that don't fall over.",
+      "lessons": [
+        { "position": 1, "title": "Rate limiting and quotas" },
+        { "position": 2, "title": "Caching and conditional requests" },
+        { "position": 3, "title": "Observability: logs, traces, SLOs" },
+        { "position": 4, "title": "REST vs gRPC vs GraphQL — picking right" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Deploy strategies",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why combine feature flags with canary deploys?",
+      "choices": [
+        { "id": "a", "text": "Marketing." },
+        { "id": "b", "text": "Separates 'code is in production' from 'feature is active' — two different risks, two different mitigations. Canary: tests whether the new code works (no crashes, latency OK, errors in line). If canary passes, code is healthy. Feature flags: tests whether the new feature is good for users (UX, conversion, behavior). Both can fail independently: code may work fine but the feature confuses users; OR feature is great in design but the implementation has bugs. Combined deploy pattern: (1) ship code with new feature flagged off, (2) canary verifies code stability, (3) once 100% on new code, flip flag for 1% of customers, (4) watch metrics, expand gradually. Allows hotfixes to ship without enabling half-finished features; allows enabling features without redeploying (instant if needed); allows kill-switching a misbehaving feature without rollback. Standard pattern in mature SaaS. Without the separation, every feature change requires deploy coordination; with it, deploys are routine + feature enablement is independent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Canary tests code; flags test feature. Two different risks; independent rollback levers.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to rename `user_name` column to `username` with zero downtime. Plan?",
+      "choices": [
+        { "id": "a", "text": "ALTER TABLE rename." },
+        { "id": "b", "text": "Expand-and-contract pattern, takes multiple deploys: (1) Deploy code that READS both `user_name` and `username` (preferring username if both present); WRITES to both columns. (2) Run migration that adds `username` column, backfills from `user_name` for existing rows. (3) Deploy is now reading correctly from either; writes go to both. (4) Verify all reads work; let backfill complete and new writes maintain both. (5) Deploy code that READS only `username`; still writes to both for safety. (6) After confidence period, deploy code that reads/writes only `username`. (7) Drop old `user_name` column. Each step is safe: rollback to previous deploy works because the schema supports both forms during transition. Direct ALTER TABLE rename + deploy = downtime: between migration and deploy, code references old column that no longer exists. The 'parallel change' pattern is standard for zero-downtime DB refactoring; takes weeks of patient deploys but no downtime. Tools like ghost / pt-online-schema-change automate parts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Maintenance window." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Expand-and-contract: deploy compat code, run migration, deploy new-only code, drop old. Zero-downtime; takes weeks.",
+      "points": 1
+    }
+  ]
+}

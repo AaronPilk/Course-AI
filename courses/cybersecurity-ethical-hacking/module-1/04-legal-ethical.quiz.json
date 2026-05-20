@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Legal & ethical",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "A friend says 'feel free to test my site for vulnerabilities.' Are you authorized?",
+      "choices": [
+        { "id": "a", "text": "Yes, verbal is fine." },
+        { "id": "b", "text": "Not safely — for legal protection you need written authorization specifying scope (which systems / domains / IPs), time window, allowed methods (web testing yes; DOS no; social engineering yes/no), emergency contacts, and a confidentiality / disclosure agreement. Verbal permission is hard to prove if your friend changes their mind later or if a third party (their hosting provider, payment processor) reports the activity. The US Computer Fraud and Abuse Act is broad enough that 'authorized access' has been litigated extensively; courts have ruled in both directions depending on documentation. Get it in writing — even a simple email reply 'Yes, I authorize you to test https://example.com between [dates] using [methods]' is dramatically better than verbal. For commercial work, a signed Rules of Engagement document is standard. The legal risk is real and not worth saving the paperwork." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always illegal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Get written authorization with scope, time, methods, contacts. Verbal isn't legally robust.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You accidentally find an S3 bucket exposing 500K customer records of CompanyX. What's the right move?",
+      "choices": [
+        { "id": "a", "text": "Download to verify." },
+        { "id": "b", "text": "STOP — don't download data; that converts 'accidental discovery' into 'unauthorized exfiltration,' which is the felony line. Document what you saw (URL, listing screenshot showing the structure, NOT the contents), find CompanyX's security contact (security@ email, security.txt file at /.well-known/security.txt, or HackerOne page), report responsibly with the vulnerability details and your finding-it method. Don't tell others; don't post on Twitter; don't 'verify the data is real' by downloading. Give them ~90 days to fix before considering public disclosure. Never threaten or hint at extortion ('I have access to your data; what's the reward?'). The good ending: they fix it, may pay a bug bounty if eligible, you've helped 500K people without breaking laws. The bad ending: you downloaded a sample to verify, now you're charged with unauthorized access and exfiltration. The line between hero and criminal is whether you went past 'observe' into 'take.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell on dark web." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Don't download. Document → report via security contact → wait for fix. Don't extort; don't share.",
+      "points": 1
+    }
+  ]
+}

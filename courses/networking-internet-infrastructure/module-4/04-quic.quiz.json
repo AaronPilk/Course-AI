@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: QUIC",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does QUIC use UDP rather than building over TCP?",
+      "choices": [
+        { "id": "a", "text": "Hipster choice." },
+        { "id": "b", "text": "TCP has fundamental design limits QUIC needs to solve: TCP head-of-line blocking (one lost packet stalls everything on the connection), slow handshakes (3-way TCP + TLS = 2-3 RTTs before data), connection identification by IP+port (so changing networks drops connection), and difficulty evolving (TCP is in OS kernels; updates take years to roll out and middleboxes break new TCP options). UDP is a thin layer over IP — basically 'send this packet to that port' — leaving QUIC free to implement reliability, encryption, multiplexing in user space exactly the way it wants. User-space implementation also means QUIC can evolve via library updates (months) rather than waiting for OS-level deployment (years). Trade-off: networks that block UDP can't run QUIC; fallback to TCP+HTTP/2. Result: QUIC gets to be everything TCP can't easily become — faster handshakes, no HOL blocking, connection migration, rapid iteration. It's not 'UDP is better' — it's 'UDP gets out of the way so we can build the right transport above it.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "UDP gets out of the way; QUIC builds reliability/encryption/multiplexing fresh in user space, free from TCP's design constraints.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mobile users complain your app feels slow on cellular. Quick infra win?",
+      "choices": [
+        { "id": "a", "text": "More servers." },
+        { "id": "b", "text": "Enable HTTP/3 at your CDN / edge — the biggest user-visible improvement for users on lossy or roaming networks. HTTP/3 (over QUIC) gets faster handshakes (saves 200-400ms on first request) and avoids TCP head-of-line blocking, which is exactly the pathology mobile users hit (cellular networks lose packets more than wired, and TCP's HOL blocking amplifies the impact). Most major CDNs (Cloudflare, Fastly, CloudFront, Akamai) support HTTP/3 with a toggle in the dashboard — no app code changes required. Browsers negotiate HTTP/3 automatically when the server advertises it via `alt-svc` header. Combined with smart caching headers and compression, this is the highest-ROI infra change for mobile UX. Trade-off: networks that block UDP (some corporate networks) fall back to HTTP/2 automatically; no downside other than slightly more complex debugging if you need it. Measure with WebPageTest or RUM (Real User Monitoring) before/after to quantify the gain." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger pipes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable HTTP/3 at CDN — biggest user-visible win for mobile/lossy networks; no app code change needed.",
+      "points": 1
+    }
+  ]
+}

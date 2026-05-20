@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Idempotency",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does an Idempotency-Key header prevent duplicate charges on retry?",
+      "choices": [
+        { "id": "a", "text": "Encrypts data." },
+        { "id": "b", "text": "Server caches the result of the original request keyed by the Idempotency-Key. Client generates a UUID per logical operation; sends it in the `Idempotency-Key` header. First request: server checks cache (miss), executes the operation, stores response keyed by Idempotency-Key, returns response. Retry: same key, server finds the cached result, returns it WITHOUT re-executing. Only one charge happens regardless of how many retries; client gets the same response each time. Cache TTL typically 24 hours (long enough for reasonable retries). Stripe pioneered this for public APIs; widely copied (GitHub, AWS, others). Client responsibility: generate the key BEFORE submit; reuse the SAME key on retries of the same logical operation; new operation = new key. Without idempotency keys, retries of POST create duplicates (`POST /charges` retried 3 times = 3 charges). With them: retries are safe. Critical for any operation with side effects (charges, emails, inventory deductions)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Locks the database." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server caches result by Idempotency-Key. Retry with same key returns cached result; no re-execution.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your client retries failed requests immediately, hammering your API. Right approach?",
+      "choices": [
+        { "id": "a", "text": "More retries faster." },
+        { "id": "b", "text": "Exponential backoff with jitter: wait `base * 2^attempt + random` between retries (1s, 2s, 4s, 8s, ... with random 0-1s added each time). Cap maximum delay (60-120s) and total attempts (3-5). Don't retry 4xx errors (the request is wrong; retrying doesn't help). On 429: honor the `Retry-After` header. The 'retry immediately' pattern causes cascading failures — a brief blip becomes a thundering herd of retries that prevents recovery; the service stays down longer because it can't catch up. With exponential backoff, retries space out exponentially, giving the service room to recover; jitter prevents all clients retrying in lockstep. Standard pattern in every reliable HTTP client library (axios-retry, urllib3 with Retry, AWS SDK retries). For production: use a library that implements this correctly rather than rolling your own; subtle bugs (no jitter, wrong base, no max delay) recreate the thundering-herd problem." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch endpoints." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exponential backoff + jitter; cap attempts and delays; honor Retry-After; don't retry 4xx. Use library.",
+      "points": 1
+    }
+  ]
+}

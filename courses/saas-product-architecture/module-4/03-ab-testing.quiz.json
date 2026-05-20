@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: A/B testing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is 'peeking' at A/B test results dangerous?",
+      "choices": [
+        { "id": "a", "text": "Performance hit." },
+        { "id": "b", "text": "Inflates false positives. Statistical significance tests assume a fixed sample size — they tell you 'at this sample size, the observed difference is unlikely under the null hypothesis.' If you peek repeatedly and stop the moment results are 'significant,' you're effectively running many tests; some will show false positives by chance. You'll declare winners that aren't actually winners. Result: you ship changes that don't help (or hurt); your team loses trust in experimentation. Fix: pre-declare the sample size using power calculations; let the test run to that size regardless of intermediate results; only then evaluate. Some methods (sequential testing, Bayesian) explicitly support 'safe peeking' with adjusted statistics — use them if you want to monitor in flight. Tools like Statsig, GrowthBook, Optimizely handle this; raw Z-test math doesn't. The temptation to peek is enormous; discipline matters. A/A tests as a regular check catch infrastructure bugs that cause false significance even without peeking." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Customer privacy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Peeking + stop-on-significant inflates false positives. Pre-declare sample size; or use sequential/Bayesian methods.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your B2B SaaS A/B-tests UI by user — Aaron sees variant A; teammate Linus sees B. Issue?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Confused collaboration UX. Aaron and Linus are on the same team in the same tenant; they screen-share, write docs about workflows, point each other to features — but their UI looks different. 'Click the green button' / 'I don't see a green button.' 'Use the new dashboard' / 'I'm not seeing it.' Especially bad for screenshots, video tutorials, support tickets, customer success calls. Fix: bucket by TENANT, not user. `experiment.get_variant(flag, tenant_id)` — every member of a tenant sees the same variant; team UX is consistent; collaboration works. Trade-off: smaller sample size (each tenant is one data point, not N users). For B2B with team workflows, this is the right call; for B2C where users don't collaborate, per-user is fine. Some SaaS use hybrid: tenant-bucket for UI features; user-bucket for personalization. Match bucketing key to the actual unit of decision making." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower sample size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "B2B users collaborate; per-user bucketing breaks team UX. Bucket by tenant_id instead.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Security mindset",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best way to build practical security skills?",
+      "choices": [
+        { "id": "a", "text": "Memorize CVE list." },
+        { "id": "b", "text": "Hands-on practice on intentionally vulnerable systems — PortSwigger Web Security Academy (free, excellent for web), HackTheBox or TryHackMe (broader range), OverTheWire (Linux + binary exploitation), CryptoPals (cryptography depth), CTF competitions (DEF CON, picoCTF). Reading about vulnerabilities builds awareness; trying to exploit them builds intuition. Reading then doing then writing it up publicly compounds: you internalize the technique, build a portfolio that signals skill, and others learn from your work. Spend 1-2 hours weekly on one platform; over years this compounds into deep practical skill. Combined with building real systems (which teaches what attackers will target) and breaking things you've built (which builds attacker intuition), the build-break-build loop produces the strongest security engineers. Certifications signal but don't substitute for demonstrated hands-on work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Watch videos." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hands-on practice on intentional vulnerable systems. PortSwigger Academy, HackTheBox, etc. Build-break-build loop.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Engineering team says 'It's behind the firewall; doesn't need auth.' Response?",
+      "choices": [
+        { "id": "a", "text": "Agree." },
+        { "id": "b", "text": "Push back: defense in depth requires authentication even for 'internal' services. The firewall WILL be bypassed at some point — VPN compromise, lateral movement from another internal service, insider threat, supply-chain attack injecting code that runs inside the perimeter. When that happens, an unauthenticated internal service is wide open. Auth is cheap (Open Policy Agent / JWT validation / mTLS adds minimal complexity); the cost of skipping it is one compromised perimeter from full data access. The 'flat internal network' model died with zero-trust architectures around 2015-2020. Modern best practice: every service authenticates every caller, regardless of network position; service mesh (Istio, Linkerd) makes this automatic with mTLS. The 'firewall is enough' argument is the security equivalent of skipping unit tests because integration tests exist — it works until it doesn't, and when it doesn't, it costs more than doing it right from the start." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove firewall." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Defense in depth. Firewalls get bypassed; internal services need auth too. Zero-trust + mTLS is modern default.",
+      "points": 1
+    }
+  ]
+}

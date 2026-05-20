@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Injection",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are parameterized queries safer than escaping user input?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "Parameterized queries separate the query *structure* from the *data* at the protocol level — the database driver sends the SQL template and the values separately, and the database knows the values are LITERALS, not SQL. No amount of injection in the input can change the query's structure because the input never gets parsed as SQL. Escaping, by contrast, tries to neutralize dangerous characters in code — fragile, database-specific, easy to get wrong, and bypassable via charset tricks or stacked-query edge cases. Parameterized queries solve injection categorically; escaping introduces ongoing maintenance risk. Every modern database driver supports parameterized queries; use them universally (`cursor.execute(query, params)` style, or ORM methods). Manual SQL string concatenation is the original sin." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Less typing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Parameterization separates query structure from data — input can't change structure. Escaping is fragile.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Code does `os.system(f'tar -czf backup.tgz /data/{user_input}')`. User enters `'; rm -rf / #'. What happens?",
+      "choices": [
+        { "id": "a", "text": "Tar errors out." },
+        { "id": "b", "text": "The shell interprets the semicolon as a command separator and runs BOTH commands: tar (likely failing with the weird filename) AND `rm -rf /`. Command injection — same pattern as SQL injection, different target. Fix: never use `os.system` or `shell=True` with user input. Use `subprocess.run(['tar', '-czf', 'backup.tgz', f'/data/{user_input}'])` — passing args as a list bypasses shell interpretation, so semicolons become literal characters in the filename. Even better: validate user_input against an allowlist (e.g., `re.match(r'^[a-zA-Z0-9_-]+$', user_input)`) to reject anything weird upfront. Defense in depth: argument-list calls + input validation + least-privilege user running the script. Shell injection is responsible for some of the most catastrophic remote-code-execution vulnerabilities in history; the fix is well-known and free to apply." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Nothing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Command injection. Use `subprocess.run([list])` not `os.system(string)`. Add input allowlist.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Crypto pitfalls",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `hmac.compare_digest()` instead of `==` for comparing secrets?",
+      "choices": [
+        { "id": "a", "text": "Compatibility." },
+        { "id": "b", "text": "`==` is a non-constant-time comparison — it short-circuits at the first byte that differs. Attackers measure how long the comparison takes: longer = more bytes matched. Over many requests, they recover the secret byte by byte. Demonstrated against real systems (the original Keyczar HMAC bug, password checks, API key comparisons). `hmac.compare_digest()` (and `crypto.timingSafeEqual` in Node, `subtle.ConstantTimeCompare` in Go) compares all bytes regardless of mismatch, taking constant time. The cost is microseconds; the benefit is closing a real side-channel attack. Apply to: password hashes (well, the hash output), API key validation, JWT signature verification (libraries usually handle this), session token comparison. Anywhere you compare a secret to a candidate: never `==`; always constant-time compare. Modern frameworks usually use the right primitive internally; awareness helps when writing custom auth code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`==` short-circuits; attackers measure timing to recover secrets byte-by-byte. Use constant-time compare.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "JWT validation accepts `alg: none` from the token. Risk?",
+      "choices": [
+        { "id": "a", "text": "Slow validation." },
+        { "id": "b", "text": "Anyone can forge a token without a signature. JWTs include an algorithm in the header (`alg: HS256`, `alg: RS256`, etc.); buggy libraries have accepted `alg: none` as valid, meaning 'no signature, just trust the claims.' Attacker takes a real token, changes the header to `alg: none`, removes the signature, modifies the payload (changes user_id, adds is_admin: true), submits — server accepts because alg says no signature needed. Also: algorithm-confusion attacks where `alg: HS256` is accepted but the verification key is the RSA public key — server uses public key as HMAC secret, attacker forges tokens. Modern libraries fix this but the bug class persists. Defense: hardcode the expected algorithm in your verification code; reject anything else regardless of token header. `jwt.verify(token, key, { algorithms: ['RS256'] })` — list the allowed algorithms explicitly. Same principle: never trust user-supplied data to dictate security decisions, including JWT algorithm choice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brief outage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anyone can forge tokens. Hardcode expected algorithm in verification; never trust header's alg.",
+      "points": 1
+    }
+  ]
+}

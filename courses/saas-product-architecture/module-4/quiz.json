@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Feature flags & rollouts",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use deterministic hash-bucketing for percentage rollouts?",
+      "choices": [
+        { "id": "a", "text": "Random is fine." },
+        { "id": "b", "text": "Stability — same user always lands in the same bucket for a given flag, ensuring consistent behavior across sessions/page loads. Random per-request would mean a user in the 10% rollout sees the new feature on one request and the old on the next — flickering UX, broken state, terrible. With `hash(user_id + flag_name) % 100 < rollout_percent`: bucket is deterministic; once in the 10% bucket for flag X, always in it. Adding flag_name to the hash means same user is in different buckets for different flags (10% for flag A, 60% for flag B) — good distribution. Stable across devices and logins. Standard pattern in all major flag services (LaunchDarkly, Statsig, GrowthBook). Without it, gradual rollouts feel broken to users; testing is unreliable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stable bucketing — same user always in same bucket per flag. No flickering UX during rollouts.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Pro customer downgrades to Free; has 10 collaborators (Free allows 5). Right handling?",
+      "choices": [
+        { "id": "a", "text": "Auto-delete 5." },
+        { "id": "b", "text": "Soft enforcement — grandfathered overage; show 'you're over limit; reduce to 5 collaborators or upgrade back to Pro.' Don't auto-remove team members (catastrophic UX). Don't hard-block all features (work continues; remove blockers). Pattern: existing entities (10 collaborators) keep working; new additions are blocked ('can't add 11th'); persistent UI nudges them to reduce team or upgrade. Soft enforcement for existing-state-over-limit + hard enforcement for new-additions is the kind pattern. Slack, Notion, Linear all handle downgrades this way. Aggressively deleting things at downgrade loses customers immediately — they'd rather not downgrade than have data destruction. Respect the customer; enforce gradually." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hard block." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Soft enforcement for existing overage + hard block on new additions. Don't auto-delete; respect customer.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is 'peeking' at A/B test results dangerous?",
+      "choices": [
+        { "id": "a", "text": "Slow." },
+        { "id": "b", "text": "Inflates false positives. Statistical significance tests assume fixed sample size — 'at this size, the observed difference is unlikely under null hypothesis.' Peeking repeatedly and stopping when 'significant' = running many tests; some show false positives by chance. You declare winners that aren't winners; ship changes that don't help or actively hurt; team loses trust in experimentation. Fix: pre-declare sample size using power calculations; let the test run to that size regardless of intermediate results; only then evaluate. Sequential testing and Bayesian methods explicitly support safe peeking with adjusted statistics; raw Z-test math doesn't. Tools (Statsig, GrowthBook, Optimizely) handle this. Discipline matters — temptation to peek is enormous. A/A tests as regular checks catch infra bugs that cause false significance even without peeking." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Customer trust." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Peeking + stop-on-significant inflates false positives. Pre-declare size; or use sequential/Bayesian methods.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Renaming `user_name` to `username` in a live SaaS. Zero-downtime?",
+      "choices": [
+        { "id": "a", "text": "ALTER and deploy." },
+        { "id": "b", "text": "Expand-and-contract pattern (multiple deploys): (1) Deploy code that READS both `user_name` and `username` (preferring username); WRITES to both. (2) Run migration adding `username` column + backfill from `user_name`. (3) Reads work from either; writes go to both. (4) Verify; let backfill complete; new writes maintain both. (5) Deploy code that READS only `username`; still writes to both for safety. (6) After confidence period, deploy code that reads/writes only `username`. (7) Drop old `user_name`. Each step safely rollback-able because schema supports both forms during transition. Direct ALTER TABLE rename + deploy = downtime: between migration and deploy, code references old column that no longer exists. The 'parallel change' pattern is standard for zero-downtime DB refactoring; takes weeks of patient deploys but no downtime. Standard SRE / DBRE knowledge; pt-online-schema-change automates some parts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Maintenance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Expand-and-contract: compat code → migration → new-only code → drop old. Zero-downtime over weeks.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why combine feature flags with canary deploys?",
+      "choices": [
+        { "id": "a", "text": "Trendy." },
+        { "id": "b", "text": "Separates 'code is in production' from 'feature is active' — two different risks. Canary: tests code stability (no crashes, latency OK). Feature flags: tests feature usefulness (UX, conversion). Both can fail independently. Pattern: (1) ship code with feature flagged off, (2) canary verifies code stability, (3) once 100% on new code, flip flag for 1% of customers, (4) watch metrics, expand gradually. Allows hotfixes without enabling unfinished features; allows enabling features without redeploying; allows kill-switching misbehaving features without rollback. Standard pattern in mature SaaS. Without separation, every feature change requires deploy coordination; with it, deploys are routine and feature enablement is independent. Compounds: smaller, more frequent deploys + instant feature toggling = fast iteration with low risk." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Canary tests code; flags test feature. Two risks; independent rollback levers; smaller-deploy iteration.",
+      "points": 1
+    }
+  ]
+}

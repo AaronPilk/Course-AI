@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Authorization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is 'default deny' the safer authorization stance?",
+      "choices": [
+        { "id": "a", "text": "Easier code." },
+        { "id": "b", "text": "Failure modes are asymmetric. Default-deny: bugs in your authorization logic cause requests to be REJECTED — user complaints surface immediately, you fix the bug, no security incident. Default-allow: bugs cause requests to be ACCEPTED that shouldn't be — security incident, possibly silent, possibly catastrophic. Forgotten endpoint → default-deny rejects (annoying but safe); default-allow exposes it to anyone. The asymmetric cost (annoyed user vs data breach) means default-deny is the right safety stance. Implementation: authorization policy returns false unless explicitly returning true for known-allowed cases; the 'final return false' line at the end of every policy function is intentional and important. Routes you forgot to handle = blocked. New code is blocked until policy is updated. The friction is the feature — it forces every endpoint to be considered. Standard pattern across mature security architectures (OPA policies, Kubernetes RBAC, Cerbos, IAM). The cost of false negatives in security is always lower than false positives." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Asymmetric failure modes — default-deny bugs annoy users; default-allow bugs cause breaches. Always deny by default.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Audit finds your `GET /api/orders/:id` returns any order if you're authenticated. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add MFA." },
+        { "id": "b", "text": "IDOR (Insecure Direct Object Reference) — endpoint checks authentication but not authorization. Fix: per-query scoping by owner. Change `SELECT * FROM orders WHERE id = $1` to `SELECT * FROM orders WHERE id = $1 AND user_id = $2` with the authenticated user's ID. For multi-tenant: enforce at the database via Row-Level Security (RLS) in Postgres / Supabase so even buggy app code can't leak across tenants. Test every authenticated endpoint: as User A, can I access User B's resource by changing the ID? If yes — IDOR. This is OWASP Top 10 #1 (Broken Access Control) in 2021 because it's pervasive and damaging. Authentication just checks 'are you logged in'; authorization checks 'are you allowed to access THIS specific resource'. The fix isn't more auth layers (MFA, OAuth scopes) — it's per-query scoping. Automated tests with multiple users hitting each endpoint catch IDOR before deploys; many companies maintain a per-endpoint authorization test suite as a hardening practice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable that endpoint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IDOR. Scope query by owner: `... AND user_id = $authenticated_user_id`. RLS at DB level. Test per-endpoint.",
+      "points": 1
+    }
+  ]
+}

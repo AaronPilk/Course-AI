@@ -1,0 +1,8 @@
+{
+  "sources": [
+    { "url": "https://developer.apple.com/design/human-interface-guidelines/", "title": "Apple Human Interface Guidelines", "publisher": "Apple" },
+    { "url": "https://developer.apple.com/fonts/", "title": "Apple Fonts (SF Pro, SF Mono, NY)", "publisher": "Apple" },
+    { "url": "https://developer.apple.com/accessibility/", "title": "Apple Accessibility", "publisher": "Apple" },
+    { "url": "https://developer.apple.com/sf-symbols/", "title": "SF Symbols", "publisher": "Apple" }
+  ]
+}

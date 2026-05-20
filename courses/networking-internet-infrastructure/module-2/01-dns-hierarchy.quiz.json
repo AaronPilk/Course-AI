@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: DNS hierarchy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why shorten TTL before planned DNS changes?",
+      "choices": [
+        { "id": "a", "text": "Looks neat." },
+        { "id": "b", "text": "TTL controls how long recursive resolvers cache the answer. If TTL is 86400 (1 day) and you change the A record, resolvers will keep returning the old IP for up to 24 hours. Users land on the old server (which might be down post-cutover). Pattern: 24-48 hours BEFORE the planned change, lower TTL to 60-300 seconds. After the TTL window, resolvers re-query frequently. Make the actual DNS change — propagation completes within minutes since TTL is short. Once stable, raise TTL back to normal (3600+) to reduce DNS query load. The pattern is sometimes called 'pre-staging the TTL' and is standard for any production DNS change. Skipping it means hours or days of partial traffic on the old endpoint." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pre-stage TTL low (24-48h before change) so post-change propagation is minutes, not days.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "App can't reach api.example.com but `dig api.example.com` returns the right IP. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "DNS bug." },
+        { "id": "b", "text": "DNS is working — the IP resolves. Issue is at a layer above DNS. Diagnose: (1) `ping <ip>` or `nc -zv api.example.com 443` to check L3/L4 reachability, (2) `curl -v https://api.example.com` to see what HTTP returns (TLS errors, 403, 5xx), (3) check the app's network policies / security groups — sometimes only certain hosts can reach the API, (4) check the app config — maybe it's using a different hostname or port than expected. The mistake to avoid: 'DNS issue' is the most-blamed and least-actually-the-cause network problem. If `dig` resolves, DNS isn't the problem; look elsewhere (L4 connectivity, firewall, app config, TLS, auth)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "DNS cache poisoning." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DNS is fine (dig returns IP). Look at L4 connectivity, firewall, TLS, app config. Don't blame DNS reflexively.",
+      "points": 1
+    }
+  ]
+}

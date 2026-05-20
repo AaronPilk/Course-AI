@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Support & CS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why invest in docs / KB early in a SaaS lifecycle?",
+      "choices": [
+        { "id": "a", "text": "SEO." },
+        { "id": "b", "text": "Docs deflect support volume — customers Google their question, find an article, get unblocked without writing a ticket. Reduces support staffing needs as you scale; same content helps everyone. Investment in docs has compounding return: write once, deflects forever. At scale, a good KB can deflect 30-50% of potential tickets, dramatically reducing per-customer support cost. Beyond cost: faster customer resolution (seconds via search vs hours waiting for support reply); higher self-serve activation (users discover features in docs); easier onboarding for new hires (read the docs your customers read). Tools (Mintlify, ReadMe, Intercom Articles, custom Next.js docs) make this manageable. Pair with in-app help (tooltips, search widget from app), and you've moved a lot of support friction to deflection. Counterintuitive ROI: docs feel like 'work for later' but pay back continuously as customer count grows. Start docs early; iterate as you learn what customers actually ask." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Marketing leverage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Docs deflect 30-50% of support tickets; pay back continuously. Faster customer resolution; lower support cost.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Customer success wants to know which accounts are at-risk. How?",
+      "choices": [
+        { "id": "a", "text": "Wait for cancellation." },
+        { "id": "b", "text": "Build a health score combining: engagement (DAU/MAU trend — falling = bad), feature adoption (% of features used, especially key ones), commercial signals (renewal date approaching, payment failures, plan downgrades), support sentiment (CSAT, ticket volume — high volume = pain), executive sponsor signals (champion left? main user gone?). Weight each; score 0-100; red/yellow/green buckets nightly. CS team works from a 'red accounts dashboard' — proactive outreach to investigate, offer help, identify and address root causes BEFORE the customer churns. Tools (Gainsight, Vitally, ChurnZero, Catalyst) are CS-specific platforms for this. Without health scoring, CS works reactively (only on accounts who complain); proactive intervention catches accounts that drift silently. Industry benchmark: proactive CS reduces churn 10-30% on accounts they touch. Standard practice for any SaaS with revenue per customer high enough to justify human CS attention (typically $5K+ ACV)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Survey them weekly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Health score (engagement + adoption + commercial + sentiment). Tools: Gainsight, Vitally, ChurnZero.",
+      "points": 1
+    }
+  ]
+}

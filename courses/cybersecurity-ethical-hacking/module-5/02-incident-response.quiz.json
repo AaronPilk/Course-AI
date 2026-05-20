@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Incident response",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why have an incident commander separate from investigators?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Coordination during incidents is a full-time job: who's investigating what; who's communicating with leadership; who's drafting customer messaging; who's on the phone with legal / regulators / forensic firm. If the same person investigates AND coordinates, they get pulled in every direction and neither happens well. The incident commander (IC) holds the big picture, makes scope decisions, allocates responders, manages communications. Investigators report findings to the IC, who decides next steps. Pattern borrowed from emergency response (incident command system, used in firefighting). Even small teams benefit — designate one person as IC even if they also have an investigation role, but their IC duties take priority. Without clear IC: decisions get made by whoever's loudest, contradictory actions taken, communications get fumbled. With IC: organized response that scales as the incident grows." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduces costs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Coordination is a full-time role during incidents. IC holds big picture; investigators do the work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Ransomware encrypts your file servers. First response within minutes?",
+      "choices": [
+        { "id": "a", "text": "Pay ransom." },
+        { "id": "b", "text": "Aggressive containment: disconnect affected systems from the network IMMEDIATELY to stop the encryption from spreading to more hosts (ransomware typically propagates laterally). Don't shut down — power-off destroys evidence in memory; pull network cables / isolate VLAN / disable network interfaces. Once contained, the IR playbook kicks in: notify the IC, engage forensics (snapshot memory, image disks), identify the entry point, assess scope (which systems, which data exfiltrated before encryption — modern ransomware does both), restore from CLEAN backups (verified pre-incident; not the encrypted ones), rebuild affected hosts from scratch, rotate credentials, root-cause the entry. Don't pay — funds the attackers, doesn't guarantee key works, and many jurisdictions now criminalize the payment. Notify regulators if required (GDPR: 72 hours). Bring in a specialized firm (Mandiant, CrowdStrike) for a serious incident; their first-day response often saves weeks of fumbling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Power off every machine." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Aggressive containment — disconnect network on affected systems immediately. Preserve evidence; restore clean.",
+      "points": 1
+    }
+  ]
+}

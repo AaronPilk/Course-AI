@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CIA triad",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which CIA pillar does ransomware most directly violate?",
+      "choices": [
+        { "id": "a", "text": "Confidentiality only." },
+        { "id": "b", "text": "Primarily Availability (data is encrypted and unusable) and Integrity (the data has been modified by the attacker, you can't trust it remains in its original state). In modern ransomware, attackers often also exfiltrate data first, adding a Confidentiality violation — 'pay or we publish.' So a single ransomware event can hit all three pillars. Defenses must address each: offline backups (Availability), integrity checksums on backups (Integrity — make sure attackers didn't tamper with backups first), encryption at rest + data classification (Confidentiality so the exfil isn't useful). 'We have backups' is necessary but not sufficient; verify the backups themselves aren't compromised, and address the data-disclosure threat separately." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Integrity only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Availability + Integrity, often Confidentiality too (double-extortion). Defenses must address all three.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A hospital records system goes down at 2 AM. Patient care needs records immediately. How does CIA inform the response?",
+      "choices": [
+        { "id": "a", "text": "Wait until morning." },
+        { "id": "b", "text": "Availability becomes the dominant pillar in this context — patient lives depend on immediate access. The system should support break-glass access: emergency override that grants access with reduced auth (still authenticated, but skip non-critical checks), full audit logging of every override, follow-up review of each break-glass event the next business day. This trades some confidentiality (broader access in the moment) for availability (clinicians can act). The architecture decision was made in advance: hospitals know this trade-off, designed for it, document it, monitor the use. Without break-glass, perfect confidentiality kills patients. Without audit, break-glass becomes the new default and confidentiality dies. CIA priorities aren't universal; they depend on context, and good systems encode the context-specific weights." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable auth permanently." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Availability dominates in emergencies. Break-glass: emergency access + full audit + next-day review.",
+      "points": 1
+    }
+  ]
+}

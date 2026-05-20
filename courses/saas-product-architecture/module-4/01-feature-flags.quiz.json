@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Feature flags",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use deterministic hash-bucketing for percentage rollouts?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Stability — same user always lands in the same bucket for a given flag, so they see consistent behavior across sessions and page loads. If you used random selection per-request, a user in the 10% rollout might see the new feature on one request and the old feature on the next — flickering UX, broken state, terrible. With `hash(user_id + flag_name) % 100 < rollout_percent`: the user's bucket is deterministic; once they're in the 10% bucket for flag X, they're always in it (until the rollout expands and includes more users). Adding flag_name to the hash means same user is in different buckets for different flags (10% for flag A, 60% for flag B) — good distribution across experiments. Different from session-only stickiness: stable across devices and logins. Standard pattern across all major flag services. Without it, gradual rollouts feel broken to users." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required syntax." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stable bucketing — same user always in same bucket per flag. No flickering UX during rollouts.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Codebase has 300+ flags; many are 100% rolled out for months. Problem?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Tech debt — each flag is a conditional in code, doubling the test matrix and complicating reasoning about behavior. With 300+ stale flags: code paths are tangled (`if A then if B then if C ...`); QA can't realistically test all combinations; new developers can't tell which branches are alive; refactors break 'dead' code that's actually live somewhere. Forced solution: quarterly flag audits. Any flag at 100% for >90 days = scheduled for removal; assign owner; delete the dead branch; merge. Some teams put expiry dates on flags when created; CI alerts when expired flags remain. The 'we'll remove it later' promise breaks because removing flags has zero feature-velocity reward — it must be scheduled and enforced. Mature engineering orgs have explicit flag-cleanup sprints. The cost of keeping a stale flag compounds linearly with adjacent code changes; cleanup pays back in code clarity and lower bug rates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire more devs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stale flags = code complexity tech debt. Quarterly audit; delete >90-day 100% flags. Schedule cleanup sprints.",
+      "points": 1
+    }
+  ]
+}

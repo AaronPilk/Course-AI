@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: NAT",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does VoIP/WebRTC need STUN/TURN servers?",
+      "choices": [
+        { "id": "a", "text": "Encryption." },
+        { "id": "b", "text": "Peer-to-peer media doesn't work behind NAT without help — neither peer can directly reach the other's private IP. STUN servers let each peer discover their PUBLIC IP+port as seen from outside, which they then exchange via signaling. Often that's enough; if both sides have full-cone or restricted-cone NAT, they can punch holes by sending packets out (creating NAT mappings) before receiving from each other. When NAT is symmetric on both ends, even STUN can't help — every destination gets a different mapping — and you fall back to TURN: both peers connect to a relay in the public internet, which forwards between them (more expensive, higher latency, but always works). ICE (Interactive Connectivity Establishment) coordinates STUN + TURN + direct attempts to find the best path. WebRTC implements all this under the hood; you provide STUN/TURN URLs in the configuration. Google, Twilio, Cloudflare run public STUN/TURN. The whole NAT-traversal stack exists because IPv4 + NAT + P2P is fundamentally awkward; IPv6 mostly avoids it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost savings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "P2P through NAT requires public-address discovery (STUN) and relay fallback (TURN) when direct fails.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're hosting a service from your home, but your ISP put you behind CGNAT — port forwarding doesn't work. Solution?",
+      "choices": [
+        { "id": "a", "text": "Buy a domain." },
+        { "id": "b", "text": "Use a tunneling service that establishes an OUTBOUND connection from your home to a public endpoint, then routes inbound traffic through the tunnel. Options: Cloudflare Tunnel (free, integrates with Cloudflare's edge), ngrok (popular for dev, paid for stable URLs), Tailscale Funnel (Tailscale's public-exposure feature), or self-hosted via FRP / rathole / Cloudflare argo tunnels. The pattern: your server connects out to the service; service exposes a public URL; traffic to the URL traverses the tunnel to your home server. CGNAT doesn't matter because you're not accepting inbound to your IP — you're sending outbound (which always works through NAT). Same trick handles home users with dynamic IPs, restrictive firewalls, ISPs that block hosting. Trade-off: dependency on the tunnel provider; small latency overhead. For most home-hosting scenarios in 2026 (CGNAT increasingly common), tunnels are the practical answer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch ISP." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tunneling services (Cloudflare Tunnel, ngrok, Tailscale Funnel) — outbound connection from home; inbound via the tunnel.",
+      "points": 1
+    }
+  ]
+}

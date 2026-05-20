@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://learning.postman.com", "title": "Postman Learning Center", "publisher": "Postman" },
+    { "url": "https://datatracker.ietf.org/doc/html/rfc7231", "title": "RFC 7231 — HTTP/1.1 Semantics", "publisher": "IETF" },
+    { "url": "https://spec.openapis.org", "title": "OpenAPI Specification", "publisher": "OpenAPI Initiative" },
+    { "url": "https://oauth.net", "title": "OAuth 2.0 / 2.1", "publisher": "OAuth Working Group" },
+    { "url": "https://docs.stripe.com/api", "title": "Stripe API Reference (as exemplar)", "publisher": "Stripe" }
+  ]
+}

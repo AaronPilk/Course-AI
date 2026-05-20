@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Rate limiting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is the token bucket algorithm the standard for API rate limiting?",
+      "choices": [
+        { "id": "a", "text": "Smallest memory." },
+        { "id": "b", "text": "Balances burst tolerance with sustained-rate enforcement. Bucket holds N tokens; each request consumes one; tokens refill at rate R per second. Allows clients to burst up to N requests instantly (good UX for batched workloads, page loads with many parallel requests), then enforces sustained rate R after the bucket empties. Compared to: fixed window (resets at clock boundaries — burst bug at boundary); leaky bucket (smooths bursts entirely — bad UX for legitimate bursts); naive counters (no concept of bursting). Token bucket parameters tune the trade-off: small bucket + high refill = smooth steady rate; large bucket + low refill = bursty but capped. Most API gateways (AWS API Gateway, Cloudflare, Kong, Envoy) implement token bucket as primary algorithm. Combined with per-consumer state in Redis, scales to millions of distinct consumers. Industry standard for production rate limiting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Easiest to code." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Allows bursts up to bucket size, enforces sustained rate via refill. Best balance for real-world API usage.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your API returns 429 but no headers indicating when to retry. Why is that a problem?",
+      "choices": [
+        { "id": "a", "text": "No problem." },
+        { "id": "b", "text": "Clients have no way to know when retrying is OK. Without `Retry-After`, they guess — often retrying immediately (worst case) or with their own (probably wrong) backoff. Immediate retry hammers your service harder when it's already saying 'slow down'; clients in a tight retry loop can prevent recovery. Standard pattern: 429 + `Retry-After: <seconds>` (or HTTP date) + `X-RateLimit-Limit`/`X-RateLimit-Remaining`/`X-RateLimit-Reset` for budget visibility (RFC 9213 has standardized newer names too). Clients see the full picture: limit, current usage, when to retry, when window resets. Well-behaved clients honor `Retry-After`; libraries like axios-retry / urllib3 / requests-toolbelt handle it automatically. Without these headers, retry behavior is unpredictable and tends toward harmful patterns. Headers are free; helping consumers be well-behaved benefits everyone." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves bandwidth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Clients can't plan without Retry-After + RateLimit headers. Hammered retries prevent recovery.",
+      "points": 1
+    }
+  ]
+}

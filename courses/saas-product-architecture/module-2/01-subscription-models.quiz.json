@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Subscription models",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why offer an annual discount (10-20%) vs only monthly?",
+      "choices": [
+        { "id": "a", "text": "Customer satisfaction." },
+        { "id": "b", "text": "Cash flow + reduced churn + faster runway. Annual prepaid means cash in hand today vs monthly drips over the year — massive boost to operating capital and runway for a growing SaaS. Reduced churn: annual customers commit for 12 months; can't churn mid-year (well, they can but already paid); typical SaaS sees 50-80% lower churn rate on annual vs monthly plans. The 10-20% discount is more than recouped by these effects. Also: customers who commit annually are higher-intent (more likely to invest in adoption, less likely to leave); they self-select for fit. Annual prepaid with extra discount (15-25%) doubles down. Most SaaS show monthly as default on pricing page with 'save N%' callout for annual to nudge toward annual. Net: monthly = optionality for customer, terrible cash flow for you; annual = better cash flow, lower churn, slight discount. Universal pattern in modern SaaS for these reasons." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduces support." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cash upfront + lower churn (committed) + higher-intent customers. Discount more than pays back.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Per-seat pricing for a B2B tool — customers complain about paying for dormant users. Fix?",
+      "choices": [
+        { "id": "a", "text": "Discount per seat." },
+        { "id": "b", "text": "Bill only for ACTIVE users — define 'active' as logged in within the last N days (typically 30 or 90 depending on tool usage patterns). Implement: nightly job that flags users active in the period; billing pulls active count, not seat count; customer dashboard shows 'active users (billed)' clearly. Dormant users remain in the workspace (can still log back in) but don't count toward the bill until they re-activate. This addresses the most common per-seat complaint: 'we have 50 employees but only 20 actually use it; we're paying for 50.' Slack pioneered this pattern (their fair-billing policy refunds for inactive users); now widespread. Trade-off: revenue dips per customer slightly; offsets via easier adoption (customers more willing to invite everyone), reduced churn (no resentment about wasted seats), and growth as activations rise. Some tools also offer 'view-only' roles free (read-only users) with paid roles for editors/admins — captures value where it's actually consumed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Move to flat price." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bill only for active users (logged in within N days). Slack-style fair billing; addresses the dormant-user complaint.",
+      "points": 1
+    }
+  ]
+}

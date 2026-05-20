@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: User vs org models",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why design SaaS to support a user belonging to multiple organizations?",
+      "choices": [
+        { "id": "a", "text": "Code reuse." },
+        { "id": "b", "text": "Real-world use cases demand it. Examples: consultants serve multiple clients (each client = separate tenant); employees who move companies want to keep account + history; people use the tool at work AND for personal projects; agencies manage client accounts. Without multi-tenant support per user: people create multiple email accounts to work around it (painful), or they leave for tools that support it. Slack pioneered multi-workspace per account; now industry standard for B2B SaaS (Linear, Notion, GitHub all support). Data model: many-to-many membership table linking users ↔ tenants with per-tenant role. Auth flow: user signs in with one identity; sees list of their tenants; picks active one; session has tenant_id alongside user_id. Retrofitting multi-tenant onto a single-tenant-per-user model is painful migration; do it from day one. The 'one user, one tenant' simplification scales for B2C but breaks for any B2B serving people with multiple work contexts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Better SEO." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real users need multi-tenant: consultants, ex-employees, agencies. Slack/Linear/GitHub all support. Hard to retrofit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Tenant admin enters email of a new team member. What's the typical invite flow?",
+      "choices": [
+        { "id": "a", "text": "Auto-create user, send password." },
+        { "id": "b", "text": "Token-based email invitation: (1) store invitation row with random token + tenant_id + role + expires_at, (2) email the invitee a link like `https://app.example.com/invite/<token>`, (3) invitee clicks; lands on accept-invitation page; if they have an account they sign in (now joined to tenant via membership), if not they sign up (account creation + auto-join), (4) on accept, create membership row + mark invitation accepted. Token is unguessable, single-use, expires after N days. Never send credentials in plaintext email; never auto-create accounts with random passwords. The signed-token pattern works because possession of the token proves access to the invited email — adequate proof of identity for joining. Combine with: limit invite token validity (7-30 days typical), allow re-sending if expired, audit log who invited whom. Standard B2B SaaS pattern; Slack/Linear/Notion all work this way." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just add to tenant." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Signed-token email link; invitee clicks; signs up or signs in + joins. Standard B2B pattern.",
+      "points": 1
+    }
+  ]
+}

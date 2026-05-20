@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: TCP & UDP",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does DNS use UDP by default?",
+      "choices": [
+        { "id": "a", "text": "DNS is special." },
+        { "id": "b", "text": "DNS queries are typically small (a name and a few flags) and need to be FAST. TCP would require: SYN + SYN-ACK + ACK (1.5 RTT) before the first byte of query, then the query, then the response, then a FIN/ACK to close — minimum 3 RTTs for a single lookup. UDP just sends the query in one packet; response comes back in one packet — 1 RTT total. For DNS resolution which happens before any other network operation can proceed, this latency matters enormously. Trade-off: UDP is unreliable, so DNS implementations retry on timeout. For responses too large for one UDP packet (DNSSEC signatures, very long records), DNS falls back to TCP. Modern variants (DoH, DoT) use HTTPS/TLS over TCP for privacy at the cost of more RTTs. The 'why UDP' answer is: speed matters more than perfect reliability for a simple stateless query." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "DNS is older." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Speed — UDP DNS is 1 RTT; TCP would be 3+. Retry on timeout handles loss.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Web server has thousands of connections in TIME_WAIT and starts rejecting new connections. Cause?",
+      "choices": [
+        { "id": "a", "text": "OOM." },
+        { "id": "b", "text": "Port exhaustion from TIME_WAIT — TCP requires a closed connection to linger in TIME_WAIT state (typically 60-240 seconds) to handle late-arriving packets and prevent connection re-use ambiguity. On a high-throughput server with many short connections, accumulated TIME_WAIT entries consume ephemeral ports (default range ~28K usable). Once exhausted, new outbound connections fail. Fixes: (1) enable `net.ipv4.tcp_tw_reuse=1` to safely reuse TIME_WAIT sockets, (2) tune `net.ipv4.ip_local_port_range` to widen ephemeral pool, (3) use HTTP keep-alive so fewer connections are needed, (4) for outbound, pool connections at the app level (HTTP keep-alive, connection pools). TIME_WAIT exhaustion is a classic 'works fine, then suddenly doesn't at scale' issue; the fixes are well-known but require understanding the underlying state machine. CLOSE_WAIT accumulation (different state) is usually app bugs not calling close()." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disk full." }
+      ],
+      "correct_answer": "b",
+      "explanation": "TIME_WAIT exhausts ephemeral ports. Tune tcp_tw_reuse, port range; use keep-alive + connection pooling.",
+      "points": 1
+    }
+  ]
+}

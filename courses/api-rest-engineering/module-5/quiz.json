@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operating real APIs",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is token bucket the standard rate-limit algorithm?",
+      "choices": [
+        { "id": "a", "text": "Memory savings." },
+        { "id": "b", "text": "Balances burst tolerance with sustained-rate enforcement. Bucket of N tokens; each request consumes one; tokens refill at rate R/second. Allows clients to burst up to N requests instantly (legitimate need for batched workloads, page loads with parallel requests), then enforces sustained rate R after bucket empties. Compared to alternatives: fixed window (resets at clock boundaries; double-burst bug at boundary), leaky bucket (smooths bursts entirely; bad UX for legitimate bursts), naive counters (no burst concept). Parameters tune the trade-off: small bucket + high refill = smooth steady rate; large bucket + low refill = bursty but capped. Most production API gateways (AWS API Gateway, Cloudflare, Kong, Envoy) implement token bucket. Combined with per-consumer state in Redis, scales to millions of distinct consumers. Industry standard for production rate limiting; the right default unless you have specific reasons otherwise." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Allows bursts up to bucket size, enforces sustained rate via refill. Best balance for real-world usage.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cacheable response varies per user. How to safely cache?",
+      "choices": [
+        { "id": "a", "text": "Don't cache." },
+        { "id": "b", "text": "`Cache-Control: private, max-age=N` + `Vary: Authorization`. The private directive tells shared caches (CDNs) NOT to cache; only the browser caches per-user. Vary tells any cache that does cache (including the browser) that responses differ based on Authorization, preventing one user's response being served to another via cache key collision. Alternative for public caches: use a CDN with per-user cache keys (e.g., Cloudflare Workers + KV with user-scoped keys), and `Cache-Control: public, max-age=N, Vary: Authorization`. Pure private + Vary is safest default for user-specific data. Without these directives: CDN might cache user A's response and serve it to user B — catastrophic data leak. Cache poisoning attacks (Web Cache Deception) exploit exactly this. Audit your cache headers on any auth-aware endpoint. Defensive default: use `private` unless you've explicitly verified the response is public. For truly public data (anon endpoints), `public, max-age=N` without auth-related Vary is fine and the CDN happily caches widely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cache aggressively." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache-Control: private + Vary: Authorization. Browser caches per-user; CDN doesn't cache; no cross-user leaks.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why are SLOs more actionable than 'things should be fast'?",
+      "choices": [
+        { "id": "a", "text": "Bureaucracy." },
+        { "id": "b", "text": "Quantified + measurable. SLO: '99.9% of requests complete in <500ms over 30 days' built from SLIs (% requests under 500ms) and assigns an error budget (0.1% × 30 days ≈ 43 minutes of breach allowed). When the error budget is exhausted, the team STOPS launching features and focuses on reliability — self-regulating mechanism balancing velocity vs reliability. 'Things should be fast' has no clear trigger; arguments are vibes-based. With SLOs, the data decides: budget exhausted → freeze features; budget healthy → ship aggressively. The act of defining the SLO surfaces disagreements ('what does the user actually need?') that vague goals hide. Google's SRE book is the canonical source. Standard practice in mature engineering orgs; emerging in smaller teams. Pair with proper alerting: alert when error budget burns faster than expected (the budget will be exhausted before window closes), not just when individual requests fail." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by ISO." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quantified + measurable + error budget regulates feature pace. Self-regulating reliability vs velocity trade-off.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Latency spike on an endpoint. Logs + metrics show p99 doubled but don't say where time goes. Diagnostic?",
+      "choices": [
+        { "id": "a", "text": "Restart." },
+        { "id": "b", "text": "Distributed tracing. Latency metrics tell you a request is slow but not WHY; logs tell you what happened in isolated events. Traces show the request's full path through services: which DB queries, which external API calls, where the milliseconds went. Open a sample slow request's trace — see 'auth: 5ms, DB query: 230ms, response: 15ms' — the DB query is the culprit. Click into the DB span — see the exact query, parameters, how many rows scanned. The fix becomes obvious: missing index, N+1 query, expensive operation. OpenTelemetry (OTEL) is the modern standard; instrumented apps emit spans to backends (Jaeger, Tempo, Honeycomb, Datadog). Trace IDs propagate via `traceparent` header, connecting spans across services. Pair with log correlation (same request_id) — pivot between logs/metrics/traces during investigation. Without traces, you guess where time is spent — slow and unreliable. With traces, you see. Essential for any non-trivial distributed system." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy bigger servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Distributed tracing (OpenTelemetry) shows time per span end-to-end; latency culprit becomes obvious.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Picking between REST, gRPC, GraphQL — what matters most?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "The consumer. REST: universal, conventional, defaults. Most cases — public APIs, browser-first apps, ecosystems where many clients consume. gRPC: fast service-to-service, binary, strong types. Internal microservices, high throughput. GraphQL: client-driven shape; varied UIs (mobile + web + admin), BFF pattern. Each has different strengths; the choice depends on who consumes and what they need, not on developer preference or trend. Public API with broad ecosystem? REST. High-throughput internal microservices? gRPC. Many varied frontends with different data needs? GraphQL. Hybrid is normal in production: REST externally + gRPC internally; or REST with GraphQL BFF for frontend. Avoid: gRPC for browser apps (limited support), GraphQL because trendy, REST when gRPC's 10x throughput matters internally. The right tool depends on consumer; consumer determines tool more than developer preference. Premature complexity is the most common mistake — REST works for nearly everything when you start; add complexity only when consumer needs justify it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hipness." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The consumer. REST for public/universal; gRPC for service-to-service performance; GraphQL for varied UIs. Match tool to consumer.",
+      "points": 1
+    }
+  ]
+}

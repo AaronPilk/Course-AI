@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: HTTP evolution",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does HTTP/3 solve that HTTP/2 didn't?",
+      "choices": [
+        { "id": "a", "text": "Encryption." },
+        { "id": "b", "text": "TCP head-of-line blocking — HTTP/2 multiplexes streams at the HTTP layer but they all share one TCP connection; if any packet is lost, TCP holds back the entire stream until retransmission completes, blocking ALL multiplexed HTTP streams on that connection. HTTP/3 runs over QUIC (UDP-based), which has independent stream-level reliability — packet loss in stream A doesn't block stream B. Other HTTP/3 wins: faster handshake (TLS 1.3 integrated, 1-RTT typical, 0-RTT for resumption), connection migration (switching Wi-Fi to cellular doesn't drop because QUIC connections use an ID, not IP+port). For users on mobile networks or with intermittent connectivity, HTTP/3 measurably improves perceived performance. Adoption is broad in 2025-2026: Cloudflare, Google, Meta, Akamai, Fastly all support; major browsers default to HTTP/3 when available. Most pages should be on HTTP/3 via your CDN by now." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HTTP/3 over QUIC eliminates TCP head-of-line blocking + faster handshake + connection migration.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your API returns 1MB of JSON for typical responses; clients on slow networks struggle. Easy fix?",
+      "choices": [
+        { "id": "a", "text": "Buy faster servers." },
+        { "id": "b", "text": "Enable response compression. Add `Content-Encoding: gzip` (or `br` for Brotli, modern and slightly better) to JSON responses. JSON typically compresses to ~10-20% of original size — that 1MB becomes 100-200KB, dramatically reducing transfer time on slow networks. Most HTTP servers and frameworks support compression with a single config flag (nginx `gzip on;`, Express `compression()` middleware, etc.). Clients send `Accept-Encoding: gzip, br` in requests; servers respond with compressed body. CDNs typically also compress at the edge automatically. Cost: tiny CPU overhead to compress/decompress; benefit: 5-10x throughput on slow connections + lower data costs for mobile users. One of the highest-ROI optimizations in web infrastructure. Combine with proper Cache-Control headers (so clients don't re-fetch unchanged data) and ETags (for conditional requests) — together these reduce most API bandwidth dramatically with minimal code change." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller responses." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable gzip / brotli compression. JSON typically compresses to 10-20% of original; trivial to add.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: SCIM",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is SCIM essential alongside SSO for enterprise?",
+      "choices": [
+        { "id": "a", "text": "Same protocol." },
+        { "id": "b", "text": "SSO and SCIM solve different problems. SSO = authentication: when a user already exists in your system, they log in via the customer's IdP (so they don't manage another password). SCIM = provisioning: creating/updating/deleting user accounts automatically. Without SCIM but with SSO, tenant admins still manually invite each new employee + remember to remove them when they leave; at 10K+ employees, this is impossible — admins forget; ex-employees retain access; security audit failures. With SCIM, the IdP pushes events to your SaaS: new hire → account auto-created + membership added; employee leaves → account auto-deactivated. The customer's HR system → IdP → your SaaS pipeline becomes the source of truth for user lifecycle. Both protocols together = full enterprise automation. Half-automation (SSO only) is worse than fully manual in some ways because it lulls people into thinking provisioning is solved. Roll out together; enterprise customers expect both." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost savings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSO = login; SCIM = lifecycle (create/update/delete). Together = full automation; alone = manual gaps.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "SCIM sends `DELETE /scim/v2/Users/abc123`. Hard-delete from your DB?",
+      "choices": [
+        { "id": "a", "text": "Yes — DELETE means delete." },
+        { "id": "b", "text": "Soft-delete (mark inactive, keep data) is usually safer. Reasons: (1) Audit logs reference user IDs — if Aaron created 1000 records and you hard-delete, those records lose authorship attribution, (2) Mistakes happen — wrong user offboarded; soft delete is recoverable, (3) Compliance — some regulations require retaining user data for years even after offboarding (financial records, regulated industries), (4) Reactivation is common — rehires, returns from leave, mistaken removal, (5) Billing reconciliation — sometimes need historical access to verify charges. Soft-delete pattern: set `deleted_at = now()`, `active = false`; queries filter `WHERE deleted_at IS NULL`; data still in DB for forensics. Schedule hard-delete after retention period (90 days, 1 year, or per legal requirement) via background job. Provide explicit 'permanent delete' option for GDPR right-to-be-forgotten requests separately. SCIM's DELETE is typically interpreted as 'no longer needs access' rather than 'erase all evidence' — soft delete matches the actual operational intent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hard delete is faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Soft-delete preserves audit trail + allows recovery + handles compliance. Hard-delete after retention period.",
+      "points": 1
+    }
+  ]
+}

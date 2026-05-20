@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Network design",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Hosting service from home behind CGNAT — solution?",
+      "choices": [
+        { "id": "a", "text": "Buy a static IP." },
+        { "id": "b", "text": "Use a tunneling service: Cloudflare Tunnel (free), ngrok (popular for dev), Tailscale Funnel, or self-hosted (FRP, rathole). Pattern: your server establishes an OUTBOUND connection to the tunnel service's public endpoint; service exposes a public URL; traffic to that URL traverses the tunnel back to your home server. CGNAT doesn't matter because you're not accepting inbound to your IP — outbound always works through NAT. Same trick handles dynamic IPs, restrictive firewalls, ISPs that block hosting on residential connections. Trade-offs: dependency on the tunnel provider; small latency overhead. For most home-hosting in 2026 (CGNAT increasingly common as IPv4 runs out), tunnels are the practical answer. 'Get a static IP from ISP' often isn't an option for residential customers; tunnels are." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to mobile." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tunneling service (Cloudflare Tunnel, ngrok, Tailscale Funnel) — outbound from home; inbound via the tunnel.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "LB does TCP-only health checks; backends serve 500s for hours. Fix?",
+      "choices": [
+        { "id": "a", "text": "More backends." },
+        { "id": "b", "text": "Switch to HTTP health checks that exercise the app. `GET /health` returning 200 only when the app's dependencies (DB, cache, downstream services) are reachable and core paths work. TCP checks only confirm 'process is listening on the port' — not 'app actually works.' Common scenario: process up, can't reach database, returns 500s, passes TCP. Good /health endpoints check: DB connectivity, critical cache, downstream services with timeouts; return 200 only if all healthy, 503 otherwise. Some teams split into /livez (process alive — for restart decisions) and /readyz (ready for traffic — for LB routing); Kubernetes uses this distinction natively. Tune intervals (5-10s) and failure thresholds (2-3) to balance fast detection vs flap immunity. Without proper health checks, an LB happily routes traffic to broken backends — and the LB itself becomes complicit in serving errors." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable health checks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HTTP health check validating app + deps. Separate /livez (restart) vs /readyz (routing) like Kubernetes.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why version your static asset URLs (e.g., /main-abc123.js)?",
+      "choices": [
+        { "id": "a", "text": "Looks pro." },
+        { "id": "b", "text": "Enables aggressive caching with `Cache-Control: immutable, max-age=31536000` (1 year). Because the URL contains a content hash, content can never change at that URL — only new versions appear at new URLs. Browsers / CDNs cache forever; when you deploy, your HTML references the new hashed filename, browsers fetch the new one, old caches gracefully expire. Without hashing: short TTLs + cache invalidation on every deploy, both worse. Universal in modern build tooling (Webpack, Vite, Rollup, esbuild auto-hash filenames). HTML itself gets short TTLs (60-300s, changes frequently); hashed assets get year-long TTLs. Combined: fastest possible repeat visits + freshness when needed. Standard performance pattern; one of the highest-leverage decisions in web delivery and an immediate Lighthouse score boost on any site without it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "SEO." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Versioned URLs allow `immutable, max-age=31536000`. Deploy = new URL = fresh fetch; assets cached forever.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Sydney users complain your app is slow; US/EU users fine. Cause + fix?",
+      "choices": [
+        { "id": "a", "text": "Sydney bug." },
+        { "id": "b", "text": "Physics — your servers likely in US/EU; Sydney users pay 150-200ms RTT for every packet. Each request adds that round trip; static assets load slow; API calls feel laggy. Fixes layered: (1) CDN with Sydney POP (Cloudflare, Fastly, CloudFront all have Sydney) — caches static at ~10ms RTT for Sydney users, biggest single win, (2) Edge compute (Workers, Lambda@Edge) handles dynamic at the edge so most requests don't traverse oceans, (3) Multi-region app — full stack in Sydney or Singapore for true local serving, (4) Replicated DB (Aurora Global, Spanner, CockroachDB) for fast local reads. Trade-offs: cost scales with regions; multi-master writes have consistency challenges. Most apps: CDN first (80% of the win for 20% of cost); add multi-region only when CDN alone isn't enough. Latency physics doesn't care how fast your servers are — only proximity helps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Physical distance = 150-200ms RTT. CDN with Sydney POP first; add edge compute + multi-region as needed.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why monitor p99 rather than just p50?",
+      "choices": [
+        { "id": "a", "text": "More numbers." },
+        { "id": "b", "text": "Tail latency dominates user perception. A site with p50 50ms but p99 5s feels broken regularly — 1 in 100 requests is slow; a user clicking 10 things has a 10% chance of hitting one. Averages and p50 hide this: if 99% of requests are 50ms and 1% are 5s, the mean is 50.5ms (looks fast on dashboards, feels slow in real use). Causes of bad tails: GC pauses, slow DB queries, network glitches, downstream saturation, failover delays. SRE practice: track p50/p95/p99/p99.9 separately; optimize the high percentiles, not the average. Tail-latency reduction is often higher-leverage than mean-latency improvement — your average user already has a good experience; the tail-affected requests cause the complaints and churn. Modern observability (Prometheus, Datadog, Honeycomb) makes histograms visible; latency percentile dashboards should be standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SLA." }
+      ],
+      "correct_answer": "b",
+      "explanation": "p99 = what users actually feel. p50 50ms / p99 5s ruins UX. Optimize percentiles, not just averages.",
+      "points": 1
+    }
+  ]
+}

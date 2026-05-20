@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: REST principles",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does idempotency matter for HTTP methods?",
+      "choices": [
+        { "id": "a", "text": "Reduces bandwidth." },
+        { "id": "b", "text": "It determines whether retries are safe. Network glitches happen constantly; clients retry failed requests. If the operation is idempotent (GET, PUT, DELETE), repeating it has the same effect as doing it once — safe to retry blindly. If it's NOT idempotent (POST defaults), each retry creates duplicates: 3 retries of `POST /orders` after a flaky network = 3 orders, 3 charges. Real-world impact: charging customers twice, sending duplicate emails, double-deducting inventory. Solution for non-idempotent operations: idempotency keys — client generates a unique key per logical operation; server stores it; subsequent retries with the same key return the original result instead of re-executing. Stripe, AWS, GitHub all use this pattern. Knowing which methods are idempotent (and designing around the ones that aren't) is fundamental to operating reliable APIs at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotent = safe to retry. Non-idempotent retries cause duplicates (double charges, etc.). Use idempotency keys for POST.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need an endpoint to 'cancel an order' — REST design?",
+      "choices": [
+        { "id": "a", "text": "POST /cancelOrder?id=123." },
+        { "id": "b", "text": "Two REST-idiomatic options: (1) Treat cancellation as a state change on the order — `PATCH /orders/123` with `{\"status\": \"cancelled\"}`. Works if cancellation is just a state change. (2) Treat cancellation as a sub-resource — `POST /orders/123/cancellations`. Better if cancelling involves side effects (refunds, notifications) that have their own state. Both are conventional REST; pick based on semantics. The verb-in-URL form (`POST /cancelOrder`) is RPC-style — works but breaks the predictability that REST conventions provide. For complex actions, the sub-resource pattern lets you GET history of cancellations, track them with their own IDs, etc. Google's API style uses `:cancel` action suffix (`POST /orders/123:cancel`) as a middle ground — pragmatic for non-CRUD actions while keeping the resource hierarchy intact. Pick a style; stick with it; document it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "DELETE /orders/123." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PATCH state to cancelled OR POST to /orders/123/cancellations sub-resource. Avoid verb-in-URL.",
+      "points": 1
+    }
+  ]
+}

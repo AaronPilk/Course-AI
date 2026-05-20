@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: SSO",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do most early-stage SaaS use WorkOS / Auth0 for SSO rather than build it?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "SAML and OIDC implementation is complex, easy to get subtly wrong (XML signature wrapping attacks, OIDC validation pitfalls, IdP edge cases), and requires ongoing maintenance as IdPs evolve. Building from scratch: weeks of engineering for initial support; ongoing burden as Okta / Azure AD / Google add features; per-customer onboarding friction (you become the IdP support team). Specialized providers (WorkOS, Auth0, Clerk, Stytch) abstract this: their SDK handles SAML/OIDC; you get one auth flow that works across hundreds of IdPs; they handle per-customer setup. WorkOS specifically positions as 'add SSO in an afternoon, including SAML' — drop-in API; supports admin portal where customers configure their IdP. Costs: $X00-X000/mo at modest scale; less than engineering DIY. Build vs buy math is overwhelming for SSO; even enterprise companies with security teams often use WorkOS internally. The 'just use a library' option (passport-saml, etc.) handles protocol but not per-customer onboarding ops; specialized SaaS handles both. Skip-the-pain answer for fast-moving teams." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SAML/OIDC complexity + ongoing per-customer ops. WorkOS / Auth0 / Clerk drop-in API for far less than DIY.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Enterprise customer enables SSO. What's a critical safeguard before flipping the switch?",
+      "choices": [
+        { "id": "a", "text": "Test with one user." },
+        { "id": "b", "text": "Maintain a break-glass admin account (super-admin with password, exempt from SSO requirement). SSO can break in many ways: IdP misconfiguration, certificate expiry, customer's Okta outage, your SSO integration bug. If SSO is mandatory for the customer and SSO breaks, ALL their users are locked out — including admins who would fix it. The customer is now stuck calling support; you're scrambling. Break-glass admin: one or two accounts (CEO, security lead) that always have password login regardless of SSO requirement; documented in customer's runbook; reset procedure clear. Pair with: 'SSO required' setting that can be toggled by these break-glass admins; certificate-expiry monitoring with alerts before expiry; clear recovery docs sent to customer at SSO setup. This single safeguard prevents the worst SSO failure mode (full lockout). Standard enterprise pattern; required by mature security teams; cheap to implement. Without it, your first SSO outage becomes 'we can't access our own SaaS' panic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable SSO." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Break-glass admin (password-login bypass SSO requirement). SSO can break; admins need to recover.",
+      "points": 1
+    }
+  ]
+}

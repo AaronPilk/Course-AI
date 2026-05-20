@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Postgres RLS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Postgres RLS safer than app-level tenant filtering?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "The database enforces, not the app. App-level: developer must remember to add `WHERE tenant_id = $X` everywhere; one missed query in millions of lines = cross-tenant data leak (catastrophic in B2B). Risk surface = every query in the app. With RLS: policy on the table specifies 'rows visible only when tenant_id matches session variable.' App sets the session variable per request (`SET LOCAL app.tenant_id = '...'`); every subsequent query — raw SQL, ORM, console, even buggy code — respects the policy automatically. Forgetting the SET = queries return ZERO rows (safe failure mode); the opposite of forgetting a WHERE filter (catastrophic). Risk surface drops to 'is the session variable set correctly per request' — a single place, easily audited. Performance overhead is typically <5%. Modern Postgres SaaS uses RLS as the default; Supabase is built around it. The 'defense in depth' principle applied to data isolation: app-level filtering as primary + RLS as backstop catches the inevitable bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DB enforces; one place to audit. App-level requires every query to remember; one miss = leak.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "RLS enabled on `orders`; queries from your app now return zero rows. Cause?",
+      "choices": [
+        { "id": "a", "text": "Bug in Postgres." },
+        { "id": "b", "text": "App likely isn't setting the session variable that the RLS policy references. RLS policy says 'tenant_id = current_setting('app.tenant_id')'; if the app forgets `SET LOCAL app.tenant_id = '...'` at the start of each request, the setting is empty and the policy matches no rows → empty result. This is the SAFE failure mode (vs forgetting tenant_id filter in app-level scoping = catastrophic leak). Fix: middleware that runs `SET LOCAL app.tenant_id = $tenant_id` as the first query of every transaction; verify it ran before the actual app queries. For connection pooling: ensure `SET LOCAL` (scoped to transaction) not `SET` (scoped to connection, leaks to next user of pool). Alternative: use `current_user` and Postgres roles per tenant if your connection pool can map. The 'zero rows after enabling RLS' moment is the canonical first-deploy gotcha; the fix is one middleware function." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Permission denied." }
+      ],
+      "correct_answer": "b",
+      "explanation": "App not setting `app.tenant_id` session variable. Add middleware: `SET LOCAL app.tenant_id = ...` per transaction.",
+      "points": 1
+    }
+  ]
+}

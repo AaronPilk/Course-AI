@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Authentication & authorization",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why send API keys in `Authorization: Bearer` rather than `?api_key=` URL param?",
+      "choices": [
+        { "id": "a", "text": "Bandwidth." },
+        { "id": "b", "text": "Query parameters leak in many places: server access logs (full URLs logged by default), browser history, HTTP `Referer` header to other sites, third-party analytics/CDN logs, error tracker URL captures. Anyone with read access to logs eventually has the keys; rotating becomes a routine hygiene task. Headers don't leak there — `Authorization` is treated as sensitive across the stack (logging tools redact it by default, browser tools mask it). Standard schemes (`Bearer`, `Basic`) plug into middleware and tooling automatically; custom `X-API-Key` works but breaks some clients/tools. Rule: credentials in headers (or POST body for tokens during auth), never in URLs. The query-param pattern persists in legacy / quick-and-dirty APIs but is universally a hardening target." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Shorter URL." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Query params leak in logs, history, referer. Headers don't. `Authorization: Bearer` is the standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your SPA stores access tokens in localStorage. Concern?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Any XSS vulnerability anywhere in your site lets attackers read localStorage and exfiltrate the token. Even one third-party script (analytics, ads, A/B test, vendor library) with an XSS bug is enough. Modern best practice: don't store tokens in JS-accessible storage. Two patterns: (1) Backend-for-Frontend (BFF) — SPA talks to your backend, backend holds tokens server-side and proxies API calls; token never reaches browser, (2) HttpOnly cookies — backend sets the token as cookie inaccessible to JS; XSS can't read it (still need CSRF protection with SameSite + tokens). Both still leave XSS able to make requests AS the user via the active session, but the token itself isn't exfiltrated for off-device use. localStorage tokens are the bad pattern; backend proxy or HttpOnly cookies are the modern alternatives. Design assumes XSS will happen sometime; minimize blast radius." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "XSS reads localStorage. Use backend proxy or HttpOnly cookies. JS-accessible token = exfiltration risk.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why hardcode the algorithm in JWT verification?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Algorithm-confusion attacks. JWT headers include an `alg` field declaring the signature algorithm. Buggy libraries trust this — call `jwt.verify(token, key)` without restricting the algorithm and attackers can: switch alg to `none` and remove signature entirely (library accepts unsigned), or switch from `RS256` (asymmetric) to `HS256` (symmetric) so the library uses the public key as an HMAC secret (attacker creates HMACs with the public key and they verify). Real CVEs in major libraries (jsonwebtoken, python-jose) for both. Fix: `jwt.verify(token, key, { algorithms: ['RS256'] })` — token's `alg` header is informational; library uses your declared allowlist. Never trust user-supplied data to dictate security decisions; algorithm choice in token headers is user-supplied. Textbook 'don't trust the input that defines security' pattern; closes a whole class of vulnerabilities for free." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Memory savings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Algorithm-confusion attacks. Hardcode expected algorithms; never trust token header's `alg` field.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your `GET /api/invoices/:id` returns any invoice if you're authenticated. Bug?",
+      "choices": [
+        { "id": "a", "text": "Caching." },
+        { "id": "b", "text": "IDOR — endpoint checks authentication ('are you logged in?') but not authorization ('does this invoice belong to you?'). Fix: per-query scoping. `SELECT * FROM invoices WHERE id = $1 AND user_id = $authenticated_user_id`. For multi-tenant: enforce at the database via Row-Level Security (RLS) in Postgres / Supabase so even buggy app code can't leak across tenants. Test every authenticated endpoint manually: as User A, try to access User B's resource by changing the ID; if it works, IDOR confirmed. OWASP Top 10 #1 (Broken Access Control). The fix isn't more authentication layers — MFA / OAuth scopes / etc don't fix IDOR; only per-query scoping does. Automated tests covering 'different users hit each endpoint' catch IDOR before deploys; mature companies maintain a per-endpoint authorization test suite as standard practice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Missing rate limit." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IDOR. Scope query by owner; RLS at DB level. The #1 OWASP Top 10. Test per-endpoint with different users.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Default deny vs default allow in authorization — which is safer?",
+      "choices": [
+        { "id": "a", "text": "Equivalent." },
+        { "id": "b", "text": "Default deny — asymmetric failure modes. Default-deny bugs cause valid requests to be REJECTED — users complain, you find the bug, you fix it, no security incident. Default-allow bugs cause invalid requests to be ACCEPTED — silent security incident, possibly catastrophic. Forgotten endpoint with default-deny = rejected (annoying but safe); with default-allow = exposed to anyone. The asymmetric cost (annoyed user vs data breach) makes default-deny the obvious choice. Implementation: authorization policy returns false unless explicitly returning true for known-allowed cases; new code is denied until policy is updated. Friction is the feature — forces every endpoint to be considered. Standard pattern across mature security architectures (OPA, Kubernetes RBAC, Cerbos, IAM). False negatives (deny something that should be allowed) cost much less than false positives (allow something that shouldn't be) in security." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Default allow is faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default deny — bugs cause rejected requests (annoying) not security incidents. Asymmetric failure cost.",
+      "points": 1
+    }
+  ]
+}

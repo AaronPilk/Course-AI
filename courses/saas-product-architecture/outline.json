@@ -1,0 +1,87 @@
+{
+  "slug": "saas-product-architecture",
+  "title": "SaaS Product Architecture",
+  "subtitle": "Multi-tenancy, billing, growth — the architecture decisions that define a SaaS",
+  "description": "A practical course on architecting SaaS products that scale, bill correctly, and don't leak between customers. Covers multi-tenancy models, billing (subscriptions, usage, invoicing), authentication & SSO, feature flags, deployment patterns, and the operational practices that let a small team support thousands of customers. For engineers who'll build or operate a SaaS.",
+  "category": "Architecture",
+  "difficulty": "intermediate",
+  "audience": "Backend engineers, tech leads, founders building B2B / B2C SaaS. Comfortable with web apps and basic AWS / cloud concepts.",
+  "tags": ["saas", "multi-tenancy", "billing", "sso", "feature-flags", "architecture"],
+  "estimated_minutes": 285,
+  "brand": {
+    "name": "SaaS",
+    "logo": "/brands/saas-product-architecture.svg",
+    "gradient": ["#06B6D4", "#0891B2"],
+    "tint": "#03161B"
+  },
+  "prerequisites": [
+    "Built or used a web app",
+    "Understand databases and APIs",
+    "Comfortable with cloud / deployment concepts"
+  ],
+  "outcomes": [
+    "Choose the right multi-tenancy model for your stage",
+    "Design billing that scales — subscriptions, usage, invoicing",
+    "Implement SSO and enterprise auth without rebuilding everything",
+    "Use feature flags for safe rollouts and per-tenant customization",
+    "Build deployment pipelines for SaaS",
+    "Operate at scale with onboarding, support, and metrics"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Multi-tenancy models",
+      "objective": "How to isolate tenants — economically and safely.",
+      "lessons": [
+        { "position": 1, "title": "What multi-tenancy means" },
+        { "position": 2, "title": "Single DB, shared schema — the default" },
+        { "position": 3, "title": "Schema-per-tenant and DB-per-tenant" },
+        { "position": 4, "title": "Row-level security in Postgres" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Billing and subscriptions",
+      "objective": "Recurring revenue, but correctly.",
+      "lessons": [
+        { "position": 1, "title": "Subscription models: per-seat, per-feature, freemium" },
+        { "position": 2, "title": "Usage-based billing — metering and aggregation" },
+        { "position": 3, "title": "Invoicing, dunning, and revenue ops" },
+        { "position": 4, "title": "Integrating Stripe Billing (or alternatives)" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Authentication for SaaS",
+      "objective": "From email/password to SSO without rewriting.",
+      "lessons": [
+        { "position": 1, "title": "User vs organization models" },
+        { "position": 2, "title": "SSO, SAML, OIDC — enterprise readiness" },
+        { "position": 3, "title": "SCIM and user provisioning" },
+        { "position": 4, "title": "Auth services (Auth0, Clerk, WorkOS, Supabase Auth)" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Feature flags and rollouts",
+      "objective": "Ship safely; experiment continuously.",
+      "lessons": [
+        { "position": 1, "title": "Feature flags fundamentals" },
+        { "position": 2, "title": "Per-tenant entitlements and gating" },
+        { "position": 3, "title": "Experimentation and A/B testing" },
+        { "position": 4, "title": "Deploy strategies: canary, blue/green, dark launches" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Scaling and operations",
+      "objective": "Run SaaS without burning out.",
+      "lessons": [
+        { "position": 1, "title": "Self-serve onboarding flows" },
+        { "position": 2, "title": "Support and customer success at scale" },
+        { "position": 3, "title": "SaaS metrics: MRR, churn, NRR, CAC" },
+        { "position": 4, "title": "When to add SOC 2, ISO, GDPR readiness" }
+      ]
+    }
+  ]
+}

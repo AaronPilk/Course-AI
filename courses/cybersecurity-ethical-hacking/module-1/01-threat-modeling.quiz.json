@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Threat modeling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the four questions of a threat model?",
+      "choices": [
+        { "id": "a", "text": "Encrypt everything." },
+        { "id": "b", "text": "(1) What are we building? — system architecture, data, users. (2) What can go wrong? — concrete threats, often generated via STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege). (3) What are we doing about it? — specific mitigations for each threat. (4) Did we do a good job? — review residual risk, document known gaps. The structure forces specificity: 'security' becomes 'we use bcrypt because we identified credential theft as a top threat,' not generic best-practice cargo-culting. Threat modeling is the foundation; without it, security decisions are guesses. With it, every control traces back to a threat it mitigates. Do this even informally — a one-hour whiteboard session beats no threat model." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encrypt nothing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Build/Threats/Mitigations/Review — Shostack's four questions. Foundation of every security decision.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You hardened your login against brute force but the team got phished and lost an admin account. Where did the threat model fail?",
+      "choices": [
+        { "id": "a", "text": "Nowhere." },
+        { "id": "b", "text": "It didn't think like an attacker. Attackers don't 'break' authentication; they find paths around it — credential stuffing, phishing, supply chain attacks, social engineering. A threat model that only considered 'attacker tries random passwords' missed 'attacker tricks an admin into entering credentials on a fake site.' Phishing is the #1 vector for serious breaches and doesn't show up in 'login security' checklists. The fix: walk through the system from an attacker's perspective — how would I, with no special access, get an admin's credentials? Answer: phishing > credential stuffing > shoulder surf > insider. Mitigations: MFA (defeats stolen passwords), security awareness training, hardware tokens for high-privilege accounts. Threat models that miss the human element miss the dominant attack class." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stronger passwords." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Threat model missed the human element. Phishing > brute force as attack vector. MFA + awareness fixes it.",
+      "points": 1
+    }
+  ]
+}

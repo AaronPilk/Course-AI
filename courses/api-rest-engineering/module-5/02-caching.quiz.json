@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Caching",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why include `Vary: Authorization` on cacheable auth-aware responses?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Tells caches to store separate response per unique Authorization value. Without it: cache stores ONE response per URL; first user's auth-bound response cached; subsequent requests from ANY user get that first response — catastrophic data leak. With `Vary: Authorization`: cache key includes the Authorization header value; user A's response stored under A's token; user B's request hits cache miss; B gets their own response. Same logic applies for `Vary: Accept-Language` (language-specific responses), `Vary: Cookie` (session-specific). The Vary header is the cache key extension — it tells the cache 'responses differ based on these headers; key accordingly.' Forgetting Vary on auth-aware content is a common cache poisoning / data-leak vulnerability. Defensive default: if response varies on any request header, declare it via Vary. CDNs like Cloudflare respect Vary; misconfigured ones might not — test cache behavior with different auth values to confirm separation works. Standard hardening for any cacheable per-user response." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "SEO." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vary tells caches to store separate response per Authorization value. Prevents cross-user data leaks via cache.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Static asset gets long-TTL caching but a new deploy ships an updated version. How are users seeing the new version quickly?",
+      "choices": [
+        { "id": "a", "text": "Wait for TTL." },
+        { "id": "b", "text": "Version the URL with a content hash — `main-abc123.js` instead of `main.js`. The hash changes when content changes; new deploy generates `main-xyz789.js`; HTML references the new URL; browsers/CDNs fetch the new file (cache miss for the new URL); old file's cache continues serving until natural expiry (then garbage collected). Combine with `Cache-Control: immutable, max-age=31536000` — files at versioned URLs literally cannot change, so cache them forever. HTML itself gets short TTL (60-300s) because it references the changing version. This pattern is universal in modern build tooling (Webpack, Vite, Rollup, esbuild all auto-hash filenames). Result: fastest possible repeat visits (assets cached forever) + freshness on deploy (HTML expires, references new versions). The hash-based versioning eliminates the 'wait for TTL' problem entirely. Standard performance pattern; immediate Lighthouse boost." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable caching." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hash-versioned URLs (main-abc123.js) + `immutable` Cache-Control. New deploy = new URL = fresh fetch. Cache forever otherwise.",
+      "points": 1
+    }
+  ]
+}

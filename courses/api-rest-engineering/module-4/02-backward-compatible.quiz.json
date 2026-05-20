@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Backward compatibility",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Adding a new optional field to a response — backward compatible?",
+      "choices": [
+        { "id": "a", "text": "Breaking." },
+        { "id": "b", "text": "Backward compatible. Most JSON parsers ignore unknown fields by default; consumers that don't expect the new field simply don't read it. Their code continues to work. Exception: strictly-validated parsers (some statically-typed languages with explicit schema validation set to 'fail on extra fields') might error — these are rare in practice and a sign of bad client design. Adding fields is the safest API evolution path: ship new functionality additively without major version bumps. Removing fields, renaming, changing types — all breaking. Tightening validation — breaking (rejects previously-valid requests). Adding required request fields — breaking (old clients without them now fail). The rule: additive changes are safe; subtractive or restrictive changes are breaking. Most API evolution can be expressed additively if you plan ahead; major version bumps should be rare." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Depends." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Backward compatible — consumers ignore unknown fields. Additive changes are safe; subtractive/restrictive are breaking.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to rename `user_name` → `username` in responses. How without breaking consumers?",
+      "choices": [
+        { "id": "a", "text": "Just rename it." },
+        { "id": "b", "text": "Ship BOTH for a deprecation period: `{\"user_name\": \"Aaron\", \"username\": \"Aaron\"}`. New clients use `username`; old clients still see `user_name`. Mark `user_name` as deprecated in docs + add a `Deprecation` response header noting the future removal date. After the deprecation window (months to years depending on your customer base), include only `username` in the next major version bump. Same pattern for renaming endpoints (old endpoint redirects to new for a while, then 410 Gone), changing parameter names (accept both, prefer new). Direct rename breaks anyone reading the old name; the dual-field period gives consumers time to migrate without coordination. Stripe-style date versioning solves this differently: old account versions keep the old name; new account versions get the new name; the server maintains the mapping. Either pattern requires deliberate maintenance of multiple shapes; the cost is real but predictable. Without it, consumer integrations break overnight." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bump major immediately." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ship both fields for a deprecation period; warn via headers + docs; remove in next major.",
+      "points": 1
+    }
+  ]
+}

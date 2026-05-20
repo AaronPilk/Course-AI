@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Entitlements",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Customer downgrades Pro → Free; they had 10 collaborators (Free allows 5). Handle how?",
+      "choices": [
+        { "id": "a", "text": "Auto-remove extras." },
+        { "id": "b", "text": "Soft enforcement — grandfathered overage; show 'you're over limit; reduce to 5 collaborators or upgrade back to Pro.' Don't auto-remove team members (catastrophic UX — would they really lose 5 random colleagues from their workspace?). Don't hard-block all features (work continues; remove blockers). Pattern: existing entities (the 10 collaborators) keep working; new additions are blocked ('can't add an 11th'); persistent UI nudges them to either downgrade their team or upgrade their plan. Soft enforcement for existing-state-over-limit + hard enforcement for new-additions is the kind pattern. Most SaaS handles downgrades this way (Slack, Notion, Linear all do). The 'aggressively delete things at downgrade' approach loses customers immediately — they'd rather not downgrade at all than have data destruction. Charge them the prior tier prorated if your accounting needs the consistency; some companies offer 30-day overage grace then enforce. Net: respect the customer; enforce gradually." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block all login." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Soft enforcement for existing overage + hard block for new additions. Don't auto-delete; respect the customer.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Entitlement check is the slowest part of every request. Optimization?",
+      "choices": [
+        { "id": "a", "text": "Skip the check." },
+        { "id": "b", "text": "Cache tenant entitlements in memory / Redis with a short TTL (1-5 minutes); invalidate on plan-change events. Pattern: first request for a tenant loads entitlements from DB; cache by tenant_id; subsequent requests within TTL hit cache (sub-ms). When Stripe webhook fires for plan change, publish a Redis pub/sub message; all app servers receive; flush their cache entry for that tenant. Combined: most requests serve from cache (fast); cache stays mostly-fresh; plan changes propagate within seconds. Without caching, every request does a DB query for entitlements — adds 5-50ms; doesn't scale. With caching: <1ms typical. Trade-off: brief staleness window (up to TTL) for non-webhook updates; usually acceptable. For ultra-fresh requirements: load on first request + invalidate aggressively + accept higher cache-miss rate. Standard pattern: cache + event-driven invalidation. Tools like LaunchDarkly bake this in (their SDK caches in-memory; updates pushed via WebSocket)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy bigger servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache tenant entitlements (1-5 min TTL); invalidate on plan-change webhook via pub/sub. Sub-ms checks.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operations & response",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why ship logs to a separate system in real-time, not just store locally?",
+      "choices": [
+        { "id": "a", "text": "Capacity." },
+        { "id": "b", "text": "An attacker who compromises a host can clean its local logs — modify timestamps, delete entries, wipe the log directory. Shipped-elsewhere logs are out of their reach. Pattern: log locally + ship in real-time to a separate trust domain (different account, different infrastructure). Even an attacker with root on the host can't unsay what was shipped before they got in. For high-stakes logs: write-once / append-only storage (S3 with object-lock, immutable buckets) prevents tampering even by your own admins. During incident response, these logs are how you reconstruct what happened, when, by whom — without them, investigation is guesswork. Standard pattern across every serious security program. Costs are minimal (most cloud logging services are cheap); the value during the incident you'll eventually have is enormous." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Attacker can clean local logs. Real-time ship to separate trust domain preserves evidence.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Ransomware hits your file servers. First action within minutes?",
+      "choices": [
+        { "id": "a", "text": "Pay ransom." },
+        { "id": "b", "text": "Aggressive containment: disconnect affected systems from the network IMMEDIATELY to stop encryption from spreading laterally (modern ransomware actively propagates to additional hosts). Don't power off — that destroys memory evidence. Pull network cables, isolate VLANs, disable network interfaces. Once contained: alert the incident commander, engage forensics (snapshot memory, image disks for analysis), assess scope (which systems affected, what data exfiltrated before encryption — modern 'double extortion' ransomware steals data first), restore from CLEAN backups (verified pre-incident; not the encrypted ones), rebuild affected hosts from scratch (don't trust 'cleaned' machines), rotate ALL credentials potentially exposed, identify the entry point and patch. Don't pay — funds attackers, doesn't guarantee key works, criminalized in some jurisdictions. Notify regulators (GDPR 72-hour window). Bring in a specialized IR firm; their day-one response often saves weeks of fumbling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Power off everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Disconnect affected systems immediately. Don't power off (destroys evidence). Restore clean; rotate credentials.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What is 'safe harbor' in a bug bounty program?",
+      "choices": [
+        { "id": "a", "text": "Cloud feature." },
+        { "id": "b", "text": "Legal authorization clause in the program policy — researchers testing in scope per the rules are protected from civil/criminal action by the company. Without safe harbor, finding a vulnerability technically constitutes unauthorized access under laws like the CFAA. With it, the company has pre-authorized testing within explicit scope and rules. Always read the safe harbor BEFORE testing: out-of-scope testing falls outside the protection. Combined with HackerOne / Bugcrowd / Disclose.io initiatives, this has dramatically reduced legal risk for ethical researchers since the mid-2010s — turned what was once gray-area territory into a real industry with clear rules. Some companies offer safe harbor even without paying bounties (Vulnerability Disclosure Programs); those still build skill and reputation without monetary reward but with legal protection." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encrypted email." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Legal authorization to test in-scope assets; protects researchers from CFAA-style charges within program rules.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You found a vuln but the company has no bug bounty. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Public disclosure." },
+        { "id": "b", "text": "Responsible disclosure: find their security contact (security@ email; /.well-known/security.txt on their site; vulnerability disclosure page if any), report privately with reproduction steps and impact assessment, give them industry-standard 90 days to fix (popularized by Google Project Zero), then coordinate disclosure when fixed — ideally a joint announcement. Don't disclose publicly before fix (harms users who could be exploited in the window). Don't demand payment to stay quiet (extortion; criminal in most jurisdictions; tarnishes career permanently). If the company ignores or threatens legal action: escalate to a national CERT (US-CERT, ENISA) or to security journalists who handle disclosure ethically (Krebs, etc.). The reputation built by responsible disclosure compounds over years; the reputation from premature disclosure or extortion follows negatively for the same period. Choose long-term over short-term." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell on dark web." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Find security contact, report privately, 90 days to fix, coordinated disclosure. Never extort or publicly disclose early.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "How do you build strong security skills?",
+      "choices": [
+        { "id": "a", "text": "Read books." },
+        { "id": "b", "text": "Hands-on practice on intentionally vulnerable systems — PortSwigger Web Security Academy (free, excellent), HackTheBox / TryHackMe (broader), OverTheWire (Linux + binary), CryptoPals (cryptography), CTF competitions (DEF CON, picoCTF). Reading builds awareness; trying to exploit builds intuition. Combine with: building real systems (teaches what attackers will target), breaking your own systems (builds attacker intuition), writing up findings publicly (builds portfolio + community). Build-break-build-write loop. 1-2 hours weekly compounds dramatically over years. Specialize in 1-2 domains (web app, infra, crypto, etc.) while staying broadly aware. Certifications (OSCP, CISSP, cloud security) signal but don't substitute for demonstrated work. The field is meritocratic: bounty disclosures, CTF results, open-source contributions, and blog posts speak louder than credentials. Showing up consistently for years beats short bursts of intensity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Watch videos only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hands-on practice (PortSwigger, HackTheBox) + build/break/write loop + 1-2 hours weekly over years.",
+      "points": 1
+    }
+  ]
+}

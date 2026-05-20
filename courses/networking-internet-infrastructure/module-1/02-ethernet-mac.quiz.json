@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Ethernet & MAC",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why don't MAC addresses route across the internet?",
+      "choices": [
+        { "id": "a", "text": "Too long." },
+        { "id": "b", "text": "MAC addresses are local-network identifiers — they only have meaning on a single L2 segment (your home LAN, an office switch, a data center rack switch). Routers between networks operate at L3 (IP); they discard the L2 frame's MAC info and create a new frame with the next-hop's MAC as they forward the packet. So a packet from your laptop to a server in another country has the laptop's MAC removed at the first router and a new MAC inserted at each hop. The packet's IP address stays consistent end-to-end; the MAC changes per hop. This is why ARP only works within a single L2 segment — for anywhere else, you send to your gateway's MAC and let IP routing handle the rest. The L2/L3 separation lets MACs be 'flat' (any vendor's MAC can be anywhere) while IP routing is hierarchical and scales globally." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encryption." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MAC is L2 (local segment only); IP is L3 (routed). Routers strip and rewrite L2 frames at each hop.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your office network has 100 Mbps when configured for 1 Gbps. Random intermittent drops. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Cable too long." },
+        { "id": "b", "text": "Duplex mismatch — common cause of 'slow + intermittent' symptoms. Two devices auto-negotiate speed and duplex (full = simultaneous send/receive; half = turn-taking). If negotiation fails (legacy gear, manual setting on one side), one device runs full-duplex while the other runs half — collisions, retransmits, terrible performance that LOOKS like working but isn't. Diagnose with `ethtool eth0` (Linux) or check switch port stats; the give-away is collision counts or duplex showing differently on each end. Fix: ensure both ends auto-negotiate, or pin both to the same speed/duplex explicitly. Cable too long (>100m for Cat 5e/6) would more typically prevent link entirely or show as total failure, not 'works but slow.' Bad cable causes link drops but usually link doesn't come up at all rather than negotiating wrong speed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wi-Fi interference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Duplex mismatch — auto-negotiation failed; one side full, one half = collisions + retransmits.",
+      "points": 1
+    }
+  ]
+}

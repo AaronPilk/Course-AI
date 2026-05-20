@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OpenAPI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the biggest payoff of maintaining an OpenAPI spec?",
+      "choices": [
+        { "id": "a", "text": "Documentation only." },
+        { "id": "b", "text": "Generated client SDKs in many languages. Run `openapi-generator generate -i openapi.yaml -g typescript-axios -o ./sdk` (and similar for Python, Go, Java, Rust, etc.) and get typed, polished clients for free. Consumers `npm install your-sdk`; get autocomplete, type safety, request/response handling, proper error types — all without writing fetch() calls by hand. Stripe, Twilio, GitHub etc. publish multi-language SDKs largely generated from their specs. Other benefits stack: interactive docs (Swagger UI, Redoc), mock servers for frontend-without-backend dev (Prism), API testing tools (Postman imports specs), validation against the spec in CI (Spectral). One file → an entire ecosystem of tooling. The cost of maintaining the spec is small (auto-generated from code in many frameworks like FastAPI); the value compounds across every consumer integration over the API's lifetime. The 'docs as a side effect' framing undersells it — the spec IS the product surface area." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generated typed SDKs in many languages. Consumers get autocomplete + types for free; you maintain one spec.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Frontend team is blocked on backend not being ready. Your backend has an OpenAPI spec. Help them?",
+      "choices": [
+        { "id": "a", "text": "Wait." },
+        { "id": "b", "text": "Run a mock server from the OpenAPI spec — Prism, mockoon, or other mock-from-OpenAPI tools serve fake responses matching the schema. `prism mock openapi.yaml` and the frontend gets a working API at `http://localhost:4010` that returns shape-correct (random) data for every endpoint. Frontend can build the UI, write integration tests, develop their feature; backend can build the real implementation in parallel. When real backend is ready, frontend points at it; minimal switch. Mock servers also enable demo environments, sales prototypes, and client SDK testing without spinning up the real backend. One of the highest-value uses of OpenAPI specs: parallel development. Combined with TypeScript types generated from the same spec, frontend can write code that's correctly-typed against the eventual real API before the backend has any code. This is the contract-first dev flow that the OpenAPI ecosystem enables." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire more devs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mock server from the spec (Prism etc.). Frontend builds against shape-correct mock; switches to real backend when ready.",
+      "points": 1
+    }
+  ]
+}

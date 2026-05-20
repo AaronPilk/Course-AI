@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Application layer",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does HTTP/3 solve that HTTP/2 didn't?",
+      "choices": [
+        { "id": "a", "text": "TLS." },
+        { "id": "b", "text": "TCP head-of-line blocking — HTTP/2 multiplexes streams at the HTTP layer but they all ride one TCP connection; one lost packet stalls ALL multiplexed streams until TCP retransmits. HTTP/3 over QUIC has independent stream-level reliability — loss in stream A doesn't block stream B. Other HTTP/3 wins: faster handshake (TLS 1.3 integrated in QUIC, 1-RTT typical, 0-RTT for known servers), connection migration (Wi-Fi → cellular switch doesn't drop because QUIC connections use an ID not IP+port). Adoption in 2025-2026 is broad — major CDNs and browsers support; roughly half of HTTPS traffic on the public internet is HTTP/3 by 2026. Biggest user-visible wins are on lossy/mobile networks where TCP HOL blocking and slow handshakes hurt most. For most teams: enable HTTP/3 at your CDN/edge; no app code changes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "TCP head-of-line blocking. HTTP/3 over QUIC fixes it + faster handshake + connection migration.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Live dashboard pushes updates server → browser. SSE or WebSockets?",
+      "choices": [
+        { "id": "a", "text": "WebSockets always." },
+        { "id": "b", "text": "SSE (Server-Sent Events) — simpler and sufficient when the data flow is one-way (server → browser). SSE is HTTP-based, works through more proxies and firewalls than WebSockets, auto-reconnects with `Last-Event-ID` resumption, simple client code (`new EventSource(url)`). For a dashboard pushing live metrics, SSE is the right shape. WebSockets are correct when you need bidirectional traffic (browser also pushing messages back beyond initial subscription) — chat, collaborative editing, multiplayer games. Don't reach for WebSocket complexity when SSE does the job. Trade-off summary: SSE = simple, one-way, HTTP-native. WebSocket = complex, full-duplex, lower overhead per message after handshake. Picking the simpler tool when it fits is one of those signals of a developer who understands the problem rather than reaching for the buzzword." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Polling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSE for one-way server→client. Simpler, HTTP-friendly, auto-reconnect. WebSocket for bidirectional.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use a dedicated email service vs self-hosted SMTP?",
+      "choices": [
+        { "id": "a", "text": "Easier API." },
+        { "id": "b", "text": "Deliverability is a reputation game. Self-hosted SMTP from a fresh cloud IP starts with bad reputation (cloud IPs frequently blocklisted; fresh IPs have no history); Gmail/Outlook spam-folder or reject the mail. Sending services (SendGrid, Mailgun, Postmark, Amazon SES, Resend) own large pools of pre-warmed IPs with established reputation; they manage DKIM/SPF/DMARC alignment, bounce processing, complaint feedback loops, blocklist monitoring, and IP rotation. You get an API key and good delivery; they do the operational work professionally. Pricing is cents per thousand for most apps. Self-hosting makes sense only at very high volume (millions/day where dedicated infra is cheaper) or for compliance requiring data sovereignty. Build-vs-buy math is overwhelmingly 'buy' for email; this is one of the few areas where rolling your own creates immediate pain (delivery starts failing day one) rather than slow regret." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SEC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deliverability requires established IP reputation + reputable sending practices. Services do this professionally.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Production API returns 1MB JSON; mobile users on 3G hate it. Cheapest fix?",
+      "choices": [
+        { "id": "a", "text": "Buy 5G." },
+        { "id": "b", "text": "Enable response compression — `Content-Encoding: gzip` (or `br` for Brotli, modern and ~20% better compression). JSON typically compresses to 10-20% of original size; 1MB becomes 100-200KB, dramatically reducing transfer time on slow networks. Most HTTP servers and frameworks support compression with a single config flag: nginx `gzip on;`, Express `compression()` middleware, Spring Boot `server.compression.enabled=true`. Clients send `Accept-Encoding: gzip, br` automatically; servers respond compressed. CDNs typically compress at the edge too. Combine with proper Cache-Control headers (clients don't refetch) and ETags (conditional requests get 304 Not Modified). Together these are the highest-ROI mobile-API optimizations: tiny CPU cost, 5-10× throughput improvement on slow connections. Most app teams find this easier and cheaper than 'optimize the response shape' or 'paginate everything' which require code changes and API design work. Compression first; pagination second." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller phones." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable gzip/brotli compression. JSON to 10-20% of original size; one config flag, huge mobile wins.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "QUIC vs TCP — why does QUIC run on UDP?",
+      "choices": [
+        { "id": "a", "text": "UDP is faster." },
+        { "id": "b", "text": "TCP has design constraints QUIC needs to escape: TCP head-of-line blocking (one lost packet stalls all multiplexed streams), slow multi-RTT handshakes (TCP + TLS = 2-3 RTTs before data), connection identification by IP+port (network change = dropped connection), and difficulty evolving (TCP is in OS kernels; updates take years; middleboxes break new TCP options). UDP is a minimal layer over IP — basically 'send this packet to that port' — which lets QUIC implement reliability, encryption, multiplexing in user space exactly the way modern needs require. User-space implementation also means QUIC iterates via library updates (months) rather than OS-level deployment (years). Networks that block UDP can't run QUIC; fallback to TCP+HTTP/2 happens automatically. So 'why UDP' isn't 'UDP is better' — it's 'UDP gets out of the way so QUIC can be designed without TCP's legacy constraints.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "UDP gets out of the way; QUIC builds the right transport in user space without TCP's legacy constraints.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Evolution & versioning",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you bump the major version of your API?",
+      "choices": [
+        { "id": "a", "text": "Every quarter." },
+        { "id": "b", "text": "Only for BREAKING changes: removing a field consumers might use, changing a field's type/meaning, adding required fields, renaming endpoints, changing default behaviors, changing auth requirements. Don't bump for additive changes: new optional fields, new endpoints, internal performance work, new optional headers. Major version bumps are expensive for everyone — consumers must update integration code; you must maintain multiple versions in parallel for years (typical lifecycle: 1-5 years between majors with 6-12 month deprecation windows). Most 'should we bump?' decisions resolve to 'no — make the change additive.' Keep majors rare; ship many minor changes additively in between. The good ratio: years between major bumps, monthly additive improvements. APIs that bump majors frequently (every quarter) signal poor compatibility discipline and lose consumer trust." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Every release." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Only for breaking changes. Most evolution is additive (new fields, endpoints) and doesn't need a bump.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Renaming `user_name` to `username` in responses. Approach?",
+      "choices": [
+        { "id": "a", "text": "Direct rename." },
+        { "id": "b", "text": "Ship BOTH for a deprecation period: `{\"user_name\": \"Aaron\", \"username\": \"Aaron\"}`. New clients use `username`; old clients still see `user_name`. Mark `user_name` deprecated in docs + add `Deprecation` response header noting the future removal date. After the deprecation window (months to years), drop `user_name` in the next major version bump. Same pattern for renaming endpoints (old endpoint redirects to new for a while, then 410 Gone), changing parameter names. Direct rename breaks anyone reading the old name; dual-field period gives consumers time to migrate without coordination. Stripe-style date versioning solves this differently per-account; either pattern requires deliberate maintenance of multiple shapes — the cost is real but predictable. Without it, consumer integrations break overnight, which is the most expensive outcome." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bump major immediately." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ship both for deprecation period; warn via headers + docs; remove in next major.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why return 410 Gone (not 404) for sunsetted endpoints?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Semantics matter for communicating intent. 404 means 'not found — maybe a typo, maybe never existed'; consumers waste time debugging ('is my URL wrong?'). 410 Gone means 'this resource USED to exist, intentionally removed' — different signal. Combined with structured error body pointing to migration docs (`{\"code\": \"endpoint_removed\", \"doc_url\": \"...\"}`), the consumer knows immediately: 'oh, sunsetted; need to update.' Saves their debugging time; reduces your support tickets. HTTP semantics carry meaning beyond pass/fail; using the right status code is part of the API contract. Mature APIs use the full deprecation lifecycle: `Deprecation` + `Sunset` headers during warning period; 410 Gone with migration docs after sunset. Free signal; meaningfully helpful." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster response." }
+      ],
+      "correct_answer": "b",
+      "explanation": "410 = 'used to exist, intentionally removed.' 404 looks like a typo; 410 communicates planned removal.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Sunset deadline approaching; many customers haven't migrated. Action?",
+      "choices": [
+        { "id": "a", "text": "Stick to plan." },
+        { "id": "b", "text": "Extend the deprecation period. Sunsetting a heavily-used endpoint causes broad consumer breakage — angry customers, support flood, churn, possible enterprise contract issues. Better: postpone the sunset date, identify top users still on deprecated endpoint, reach out personally with migration help, add aggressive in-product warnings (dashboard banners, email reminders), maybe offer migration support hours. Once usage drops to near-zero among customers who care, sunset safely. For very large APIs (Stripe, GitHub, AWS), deprecation periods stretch to multiple years for exactly this reason. The 'we announced; you didn't move; tough' stance burns goodwill catastrophically and rarely achieves the supposed goal (engineering cost of maintaining old endpoint is usually small compared to customer-relationship cost of breaking them). Compromise option: phase out by traffic — return 410 for some percent of requests escalating monthly; gives last-chance warnings; catches consumers who ignored notifications. Hard cutoffs with broad-usage endpoints are mostly career-limiting moves." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete immediately." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Extend deprecation; reach out to top users; phase out by traffic; sunset when usage is near zero.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Biggest payoff of an OpenAPI spec?",
+      "choices": [
+        { "id": "a", "text": "Bigger files." },
+        { "id": "b", "text": "Generated multi-language client SDKs. `openapi-generator generate -i openapi.yaml -g typescript-axios -o ./sdk` and similar for Python, Go, Java, Rust gives typed, polished SDKs for free. Consumers `npm install your-sdk`; get autocomplete, type safety, request/response handling, proper error types — without hand-writing fetch() calls. Stripe, Twilio, GitHub publish multi-language SDKs largely generated from specs. Other benefits stack: interactive docs (Swagger UI, Redoc), mock servers (Prism) for frontend-without-backend dev, API testing tools (Postman imports specs), CI validation (Spectral). One spec file → an entire ecosystem of tooling. Cost of maintaining is small (auto-generated from code in FastAPI etc.); value compounds across every consumer integration over the API's lifetime. The 'docs as a side effect' framing massively undersells it — the spec IS the product surface area for any consumer-facing API." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Documentation only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generated typed SDKs in many languages + mock servers + docs + CI validation. Whole ecosystem from one spec.",
+      "points": 1
+    }
+  ]
+}

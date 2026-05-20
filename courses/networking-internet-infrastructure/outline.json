@@ -1,0 +1,88 @@
+{
+  "slug": "networking-internet-infrastructure",
+  "title": "Networking & Internet Infrastructure",
+  "subtitle": "From cables to BGP — how the internet actually works",
+  "description": "A practical networking course for engineers: OSI layers, TCP/IP, DNS, routing (BGP, OSPF), HTTP/2 and HTTP/3, NAT and CDNs, and the physical layer underneath. Optimized for understanding what happens when you type a URL — and how to debug when it doesn't.",
+  "category": "Systems",
+  "difficulty": "intermediate",
+  "audience": "Engineers who want to understand the network beneath their apps. Not a CCNA cram course; designed to build mental models you'll use for years.",
+  "tags": ["networking", "tcp-ip", "dns", "bgp", "http", "cdn", "internet"],
+  "estimated_minutes": 285,
+  "brand": {
+    "name": "Net",
+    "logo": "/brands/networking-internet-infrastructure.svg",
+    "gradient": ["#0EA5E9", "#0369A1"],
+    "tint": "#04111C"
+  },
+  "prerequisites": [
+    "Comfortable on the command line",
+    "Have used HTTP / curl before",
+    "Understand basic computing concepts"
+  ],
+  "outcomes": [
+    "Read the OSI / TCP/IP stack from physical layer up",
+    "Understand DNS resolution end-to-end",
+    "Know how routing works (BGP, OSPF) at a working level",
+    "Diagnose network issues with tcpdump, dig, traceroute",
+    "Understand HTTP/2, HTTP/3 (QUIC), and why they exist",
+    "Design with CDNs, NAT, and load balancers",
+    "Reason about latency and bandwidth trade-offs"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "The stack: from cables to packets",
+      "objective": "How bits become messages.",
+      "lessons": [
+        { "position": 1, "title": "OSI and TCP/IP — two models, one network" },
+        { "position": 2, "title": "Ethernet, MAC, and the physical layer" },
+        { "position": 3, "title": "IP addressing: IPv4, IPv6, subnets" },
+        { "position": 4, "title": "TCP vs UDP: connection-oriented and not" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "DNS and the address book of the internet",
+      "objective": "How names become IPs.",
+      "lessons": [
+        { "position": 1, "title": "DNS hierarchy and recursive resolution" },
+        { "position": 2, "title": "Record types: A, AAAA, MX, CNAME, TXT" },
+        { "position": 3, "title": "DNS performance: caching and TTL" },
+        { "position": 4, "title": "DNSSEC and DNS over HTTPS" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Routing and the global network",
+      "objective": "How packets find their destination.",
+      "lessons": [
+        { "position": 1, "title": "Routing tables and gateways" },
+        { "position": 2, "title": "BGP: the protocol that runs the internet" },
+        { "position": 3, "title": "OSPF and interior routing" },
+        { "position": 4, "title": "Anycast, IXPs, and peering" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Application layer protocols",
+      "objective": "What runs on top.",
+      "lessons": [
+        { "position": 1, "title": "HTTP/1.1 to HTTP/2 to HTTP/3" },
+        { "position": 2, "title": "WebSockets, gRPC, and real-time" },
+        { "position": 3, "title": "Email: SMTP, IMAP, deliverability" },
+        { "position": 4, "title": "QUIC and the future of transport" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Network design and operations",
+      "objective": "Putting it together at scale.",
+      "lessons": [
+        { "position": 1, "title": "NAT, port forwarding, and CGNAT" },
+        { "position": 2, "title": "Load balancers: L4 vs L7" },
+        { "position": 3, "title": "CDNs and the edge" },
+        { "position": 4, "title": "Latency, bandwidth, and physical limits" }
+      ]
+    }
+  ]
+}

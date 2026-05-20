@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Network & system security",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "nmap reveals exposed Redis (6379) without auth on a public server. Response?",
+      "choices": [
+        { "id": "a", "text": "Note in backlog." },
+        { "id": "b", "text": "Critical / immediate — Redis without auth on a public IP is actively exploited by automated scripts within hours (often minutes). Known techniques: SET dir + CONFIG SET dbfilename to write to /root/.ssh/authorized_keys; CONFIG GET to dump credentials in memory; MODULE LOAD to execute code. Dozens of major breaches trace to exactly this pattern. Immediate actions: (1) close port 6379 at firewall / security group right now, (2) assume the host may already be compromised — check authorized_keys, cron, processes, recent network connections, (3) review Redis logs / RDB for exploit-like commands, (4) once safe: enable AUTH, bind to internal IPs only (`bind 127.0.0.1`), use private subnets, never expose Redis publicly. Don't wait for a sprint; treat as 'breach until proven otherwise.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Schedule next sprint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Critical — public Redis no-auth is actively exploited. Close port; check for compromise; treat as breach.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Replacing traditional VPN with Cloudflare Access / Tailscale. Main security benefit?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "Zero-trust per-app auth instead of network-wide access. Traditional VPN: authenticated user reaches entire subnet → can probe everything inside → one compromised credential = lateral movement across the network. Zero-trust proxy: every request to every internal service is re-authenticated against identity + device posture + policy. Compromised credential reaches only the specific apps that user was authorized for. Per-app logging surfaces anomalies (`why is Aaron's account querying the admin API at 3 AM?`). Easier to revoke (per-app), works from any device location, no client VPN config to manage. Modern best practice: replace 'VPN to office' with zero-trust proxies for internal apps; reduce blast radius dramatically. The cost is migration; the benefit is real defense-in-depth instead of perimeter security alone." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Per-app auth, not network-wide. Compromise reaches one app, not the whole internal network.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why disable password-based SSH and require keys?",
+      "choices": [
+        { "id": "a", "text": "Faster login." },
+        { "id": "b", "text": "Internet-facing SSH on port 22 receives constant automated brute-force attempts — scripts trying millions of common credential combinations against every responsive host. With password auth enabled, weak passwords eventually crack. With keys-only (`PasswordAuthentication no` in sshd_config), the same attempts hit no possible match — server doesn't accept passwords at all; attacks become noise instead of risk. Compound with `PermitRootLogin no` (compromised non-root account can't directly take over) and `AllowUsers` (explicit allowlist of who can SSH at all). This combination defeats the dominant SSH attack class. SSH keys with passphrases stored in agent (ssh-agent + macOS Keychain or equivalent) protect against both online attacks and offline if the key file is stolen. Baseline practice for every Linux server in 2026." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Passwords are illegal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Defeats brute force — attacks assume password auth. Keys-only renders the attack class harmless.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Dockerized app runs as root, all capabilities, read-write filesystem. Risks?",
+      "choices": [
+        { "id": "a", "text": "Standard practice." },
+        { "id": "b", "text": "Single failure away from host compromise. A container running as root with all capabilities is one exploited vulnerability from breaking out to the host — kernel exploits or capability-abuse let it escalate to host root, then pivot to other containers / the cluster. Defense-in-depth: (1) USER directive in Dockerfile to run as non-root user (often UID 1000+), (2) `--read-only` root filesystem so exploits can't persist, (3) `--cap-drop=ALL` then explicitly add only needed caps (most apps need none), (4) seccomp profiles to block dangerous syscalls (Docker default is reasonable), (5) NEVER mount `/var/run/docker.sock` into the container — that grants full Docker control to anyone in the container, instant host compromise, (6) keep host kernel patched (container isolation has had escape CVEs), (7) scan images with Trivy/Snyk. Layers compound: if one fails, others limit damage. Default-permissive Docker is what attackers want." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Maximum speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "One exploit from host compromise. Non-root + read-only + drop caps + seccomp + never mount docker.sock.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Pin GitHub Actions by SHA, not tag — why?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Tags are mutable; maintainers can move `@v4` to point at any commit. A compromised maintainer (or attacker who got their credentials) can move the tag to malicious code; your next CI run executes attacker code with access to repo + secrets. SHA pinning is immutable — `@b4ffde65...` always references the exact code you reviewed; even compromised maintainer can't change what your workflow runs. Tradeoff: harder to upgrade. Tools like Dependabot solve this — it watches actions for new versions and proposes SHA-pinned PRs for review. Standard hardened-CI practice in 2026: pin every third-party action by SHA, let Dependabot manage updates. The xz-utils incident reminded everyone that supply chain attacks via long-trusted maintainers are real; SHA pinning is the technical defense." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tags don't work." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tags are mutable; SHA is immutable. Compromised maintainer can't change what your CI runs.",
+      "points": 1
+    }
+  ]
+}

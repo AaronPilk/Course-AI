@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Load balancers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why avoid sticky sessions when possible?",
+      "choices": [
+        { "id": "a", "text": "Slower." },
+        { "id": "b", "text": "Sticky sessions tie a client to a specific backend, so if that backend fails (or you redeploy), the client's session is lost — bad user experience and a fragility risk. They also unbalance load: heavy users 'stick' to one backend and over-load it while others sit idle, defeating the point of having a load balancer. Modern preference: stateless backends + shared session storage (Redis, memcached, JWT). Any backend can serve any request because session state lives outside the backend, in a fast shared store. Lose a backend; clients just hit another; session continues seamlessly. Use sticky ONLY when absolutely required — typically legacy apps with in-memory state that can't be moved (then fix the app over time) or specific cases like long-lived WebSocket connections where mid-stream re-routing is impossible (use consistent hashing rather than sticky if possible). Statelessness scales; statefulness eventually breaks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sticky = fragile (backend dies = session lost) + unbalanced load. Prefer stateless backends + shared store.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your LB health check passes TCP but backends serve 500 errors. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add more backends." },
+        { "id": "b", "text": "Switch to an HTTP health check that exercises the actual app — `GET /health` returning 200 only when the app's dependencies (DB, cache, downstream services) are reachable and core paths work. TCP checks only confirm 'the process is listening on the port,' not 'the app actually works' — common to have a running process that can't talk to its database, returns 500s, but passes TCP checks. Good `/health` endpoints check: DB connectivity, critical cache reachability, downstream service availability (with timeouts), and return 200 only if all are healthy; otherwise 503. Some teams split into `/livez` (process is alive — for restart decisions) and `/readyz` (ready for traffic — for LB routing). Kubernetes uses this distinction natively (liveness vs readiness probes). Tune check interval and failure thresholds to balance fast detection vs flap immunity (typical: 5-10s interval, 2-3 failures to mark unhealthy). Without proper health checks, an LB happily routes traffic to broken backends." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart LB." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HTTP health check that validates app + dependencies. Separate /livez vs /readyz for restart vs routing decisions.",
+      "points": 1
+    }
+  ]
+}

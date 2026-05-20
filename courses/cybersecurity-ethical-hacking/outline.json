@@ -1,0 +1,87 @@
+{
+  "slug": "cybersecurity-ethical-hacking",
+  "title": "Cybersecurity & Ethical Hacking Foundations",
+  "subtitle": "Threats, defenses, and the offensive thinking that makes both sides better",
+  "description": "A foundations course in modern cybersecurity for engineers and curious learners. Covers attacker thinking, the OWASP Top 10, network security, authentication, cryptography basics, and the legal and ethical framework for security work. Practical patterns, real-world incidents, and the threat model every engineer should carry around.",
+  "category": "Security",
+  "difficulty": "intermediate",
+  "audience": "Engineers, IT pros, and curious learners. Comfortable with the command line; understands HTTP basics; wants to build security intuition rather than memorize tool flags.",
+  "tags": ["security", "owasp", "pentesting", "auth", "cryptography", "incident-response"],
+  "estimated_minutes": 290,
+  "brand": {
+    "name": "Sec",
+    "logo": "/brands/cybersecurity-ethical-hacking.svg",
+    "gradient": ["#DC2626", "#991B1B"],
+    "tint": "#1A0808"
+  },
+  "prerequisites": [
+    "Comfortable with command line",
+    "Understand HTTP and basic networking",
+    "Have a willingness to be patient with how much there is to learn"
+  ],
+  "outcomes": [
+    "Think like an attacker — and defend accordingly",
+    "Recognize and prevent OWASP Top 10 vulnerabilities",
+    "Understand authentication, sessions, and what breaks them",
+    "Apply cryptography correctly (and avoid mis-using it)",
+    "Know the basics of incident response",
+    "Operate inside the legal and ethical bounds of security work"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Threat models and attacker thinking",
+      "objective": "How to think like an attacker before you defend.",
+      "lessons": [
+        { "position": 1, "title": "What is a threat model?" },
+        { "position": 2, "title": "Reconnaissance: what the internet already knows" },
+        { "position": 3, "title": "The CIA triad: confidentiality, integrity, availability" },
+        { "position": 4, "title": "Legal and ethical lines you cannot cross" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Web application security",
+      "objective": "The vulnerabilities that take down most apps.",
+      "lessons": [
+        { "position": 1, "title": "Injection: SQL, command, template" },
+        { "position": 2, "title": "XSS, CSRF, and the browser security model" },
+        { "position": 3, "title": "Auth & sessions: how they break" },
+        { "position": 4, "title": "OWASP Top 10 — what to memorize and what to look up" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Network and system security",
+      "objective": "Securing the layers below the app.",
+      "lessons": [
+        { "position": 1, "title": "Network reconnaissance: nmap, netcat, basics" },
+        { "position": 2, "title": "Firewalls, VPNs, and segmentation" },
+        { "position": 3, "title": "OS hardening: users, services, attack surface" },
+        { "position": 4, "title": "Supply chain risks: dependencies and CI/CD" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Cryptography in practice",
+      "objective": "Use crypto correctly without becoming a cryptographer.",
+      "lessons": [
+        { "position": 1, "title": "Symmetric vs asymmetric and when to use which" },
+        { "position": 2, "title": "Hashing, salts, and password storage" },
+        { "position": 3, "title": "TLS: how HTTPS actually works" },
+        { "position": 4, "title": "Pitfalls: never roll your own crypto" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Operations: detection and response",
+      "objective": "Knowing when you've been hit and what to do.",
+      "lessons": [
+        { "position": 1, "title": "Logging and detection: what to capture" },
+        { "position": 2, "title": "Incident response: the SANS phases" },
+        { "position": 3, "title": "Bug bounty and responsible disclosure" },
+        { "position": 4, "title": "Building a security mindset that lasts" }
+      ]
+    }
+  ]
+}

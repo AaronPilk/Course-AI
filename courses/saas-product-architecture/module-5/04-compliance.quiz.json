@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Compliance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should an early-stage SaaS pursue SOC 2 Type II?",
+      "choices": [
+        { "id": "a", "text": "Day one." },
+        { "id": "b", "text": "When enterprise customers ask, typically around $1-5M ARR. SOC 2 is expensive ($20-100K first audit + $20-50K/year reaudit + Vanta/Drata at $10-30K/year + engineering time implementing controls + ongoing maintenance) and serves a specific purpose: enabling enterprise sales. SMB customers don't care; SOC 2 doesn't make the product better, it makes the sales process possible with enterprise. Pursuing too early wastes resources that could go to product / GTM; pursuing too late blocks enterprise deals you could close. The right trigger: first enterprise prospect asks 'do you have SOC 2?' Start the process (Vanta etc.); 3-6 months to Type II; tell that prospect 'in progress; we'll have Type II in Q3.' For deals before audit completes, share a 'SOC 2 in progress' letter from auditor and your control evidence; some customers accept. Common sequencing: 12-18mo runway $$ → build product → first enterprise deal asks → SOC 2 → next deals close faster → SOC 2 becomes table stakes for entire enterprise GTM. Don't gold-plate before customers care; don't delay once they ask." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "When enterprise customers ask, typically $1-5M ARR. SOC 2 enables enterprise sales; not a product improvement.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have EU customers but no GDPR program. Risk?",
+      "choices": [
+        { "id": "a", "text": "Low; we're small." },
+        { "id": "b", "text": "Material legal risk + customer-trust risk. GDPR penalties: up to 4% of global revenue OR €20M (whichever higher) — existential for any SaaS. Doesn't matter that you're small; EU regulators have fined small companies. Plus: customer trust — sophisticated B2B buyers in EU ask for your GDPR program before signing; without one, lost deals. Required elements: (1) Privacy policy describing what data, why, how long, who it's shared with, (2) Cookie consent + ability to opt out of non-essential, (3) Data Processing Agreement (DPA) ready for B2B customers (standard template; legal review), (4) User self-serve export + deletion (right to access + erasure), (5) Sub-processors page listing all vendors that touch data, (6) Breach notification process (72h to authorities), (7) DPO (Data Protection Officer) — required if processing large volumes or special categories. Many tools (Termly, Iubenda) generate compliant policies; templates available. Initial setup: a few weeks + ongoing operational discipline. Cheaper than the fine; far cheaper than losing enterprise EU customers. Start now even if you're 'small'; growing into compliance is much harder than starting compliant." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block EU users." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Up to 4% of revenue / €20M penalties + lost EU enterprise deals. Set up privacy policy + DPA + user rights early.",
+      "points": 1
+    }
+  ]
+}

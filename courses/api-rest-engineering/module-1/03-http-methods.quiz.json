@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: HTTP methods",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is GET for state-changing operations a serious bug?",
+      "choices": [
+        { "id": "a", "text": "Slow." },
+        { "id": "b", "text": "GET is defined as 'safe' — meaning it shouldn't modify state. Lots of infrastructure assumes this: browsers prefetch GET links on hover (visit the URL → trigger the action you didn't intend); search engine crawlers fetch every GET URL they find (Googlebot accidentally deletes things); proxies and CDNs cache GET responses; antivirus and anti-phishing services GET URLs to check them; link previews on Slack / Twitter fetch the URL. A real-world horror story: a wiki used `GET /pages/{id}/delete` for delete actions; Googlebot crawled the site; logged-in admin had a cookie that didn't expire; Googlebot's crawler hit the delete URLs while authenticated → mass deletion of pages. The fix: any state-changing operation must be POST / PATCH / PUT / DELETE. The 'safe / unsafe' distinction in HTTP exists precisely because the whole web assumes it; violating it leads to mass-action incidents you can't easily reproduce. If a search engine crawling your URL would be bad — it's not a GET." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Browser support." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GET is 'safe' — assumed not to modify state. Crawlers, prefetch, caches assume this. Violations = mass-action incidents.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Client wants to update a user's email but keep other fields. PUT or PATCH?",
+      "choices": [
+        { "id": "a", "text": "PUT — same thing." },
+        { "id": "b", "text": "PATCH — partial update. PUT semantics are 'replace the entire resource'; if the client sends `PUT /users/123 {\"email\": \"new@example.com\"}`, the server should set everything else to defaults / null (the resource was just replaced with this object). PATCH semantics are 'update these specific fields, leave others alone' — exactly what you want here: `PATCH /users/123 {\"email\": \"new@example.com\"}` only changes email. Two body formats for PATCH: Merge Patch (RFC 7396 — send fields you want to change, send null to delete a field; simple, most common) and JSON Patch (RFC 6902 — explicit operations as an array; more expressive, more verbose). Most APIs use Merge Patch by default. Reserve PUT for when the client genuinely has the complete desired state (rare in CRUD UIs; common in declarative systems like Kubernetes manifests). The choice signals intent: 'I want a full replacement' vs 'I want to tweak.' Most CRUD is the latter; PATCH is the right call." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "POST." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PATCH for partial update. PUT replaces entirely; PATCH tweaks specific fields. Merge Patch (RFC 7396) is the common form.",
+      "points": 1
+    }
+  ]
+}

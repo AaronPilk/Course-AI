@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Bug bounty",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's 'safe harbor' in a bug bounty program?",
+      "choices": [
+        { "id": "a", "text": "Cloud storage." },
+        { "id": "b", "text": "A legal authorization clause in the program's policy that grants researchers permission to test the listed assets without civil or criminal liability — provided they stay within the defined scope and rules. Without safe harbor, finding a vulnerability technically constitutes unauthorized access under laws like the CFAA, regardless of intent. With safe harbor, the company has pre-authorized testing in writing — your activity is legally permitted. Read every program's safe harbor before testing: scope is critical (testing out-of-scope assets falls outside the protection), as are rules (no DoS, no testing payment flows with real money, no social engineering unless explicitly allowed). Some companies have safe-harbor policies even without paying bounties — they want responsible reports but don't have a paid program. Combined with HackerOne / Bugcrowd safe-harbor templates (Disclose.io initiative), this has dramatically reduced legal risk for researchers since the mid-2010s." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "VPN service." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Legal authorization to test in-scope assets; protects researchers from CFAA-style charges within program rules.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You find a vulnerability. The company has no bug bounty. What's the right approach?",
+      "choices": [
+        { "id": "a", "text": "Disclose publicly immediately." },
+        { "id": "b", "text": "Responsible disclosure: find their security contact (security@ email, /.well-known/security.txt file on their site, or any vulnerability disclosure page on their site), report privately with full reproduction steps and impact assessment, give them time to fix (industry standard: 90 days from initial report — popularized by Google Project Zero). Coordinate disclosure: ideally a joint announcement after the fix; otherwise unilateral disclosure after 90 days. Never demand payment to stay quiet (extortion, criminal in most jurisdictions). Never publicly disclose before they've had reasonable time to fix — harms users who could be exploited in the window. If they ignore you or threaten legal action: escalate to a national CERT (US-CERT, ENISA), or to security journalists who handle disclosure ethically (Krebs, etc.). The reputation you build by responsible disclosure compounds over years; the reputation from extortion or premature disclosure follows you negatively for the same period." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell to broker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Find security contact, report privately, give 90 days to fix, coordinate disclosure. Never extort.",
+      "points": 1
+    }
+  ]
+}

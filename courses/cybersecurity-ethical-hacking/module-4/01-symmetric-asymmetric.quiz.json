@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Symmetric & asymmetric",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do TLS, SSH, and PGP all use hybrid encryption (asymmetric + symmetric)?",
+      "choices": [
+        { "id": "a", "text": "Backwards compat." },
+        { "id": "b", "text": "Asymmetric crypto is slow (RSA / EC operations take milliseconds per op); symmetric crypto is fast (AES does GB/sec on commodity hardware). For bulk data — file transfers, web traffic, messaging — symmetric is the only practical choice. But symmetric requires both parties to share a secret key, which is the hard problem. Solution: use asymmetric (slow but doesn't need pre-shared secret) to securely exchange a random symmetric key (small payload, fast even with slow crypto), then use symmetric to encrypt the bulk data. TLS: ECDH key exchange derives shared symmetric key; session uses AES-GCM. SSH: same pattern. PGP: encrypts a random session key with recipient's RSA/ECC public key; encrypts the message with that session key. Hybrid combines the strengths: asymmetric's no-pre-shared-secret property + symmetric's speed. Almost every real-world encryption protocol does this." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "FIPS requirement." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Asymmetric for key exchange (no pre-shared secret), symmetric for fast bulk data. Best of both.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your dev uses AES-GCM but reuses the same nonce across messages with the same key. Consequence?",
+      "choices": [
+        { "id": "a", "text": "Slower." },
+        { "id": "b", "text": "Catastrophic — nonce reuse with GCM breaks both confidentiality AND authentication. Attacker can XOR two ciphertexts encrypted with the same key+nonce to learn the XOR of their plaintexts, sometimes recovering both. Worse, AES-GCM's authentication uses the nonce; reusing it lets an attacker forge messages by recovering the authentication key. There are public CVEs and academic papers on real-world systems compromised by GCM nonce reuse. Fixes: generate a fresh random 96-bit nonce per encryption (`os.urandom(12)`), or use a counter that's never reset for a given key. The nonce can be sent in plaintext alongside the ciphertext (secrecy isn't the property; uniqueness is). Some libraries make this safer with random-nonce defaults; some let you reuse and shoot yourself. Lesson: never reuse nonces. Use libraries that make it hard to misuse (e.g., libsodium's APIs)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Memory bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Catastrophic — breaks both encryption and authentication. Always use fresh random nonce per encryption.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "slug": "apple-hig-design",
+  "title": "Apple Human Interface Design Systems",
+  "subtitle": "The principles behind iOS, macOS, and visionOS that have shaped a generation of design",
+  "description": "A practical course on Apple's Human Interface Guidelines — how the world's most-imitated design language works in principle and execution. Covers Apple's design ethos, platform conventions across iOS / macOS / iPadOS / visionOS, typography (SF + Dynamic Type), color and dark mode, layout and the grid, controls and gestures, motion, accessibility, and how to apply HIG principles whether you're building Apple-platform apps or any product that aspires to feel native and intentional.",
+  "category": "Design",
+  "difficulty": "intermediate",
+  "audience": "Product designers, UI / UX engineers, indie developers shipping Apple-platform apps, anyone studying how Apple makes its design decisions.",
+  "tags": ["apple", "hig", "ios", "macos", "ui-design", "design-systems"],
+  "estimated_minutes": 280,
+  "brand": {
+    "name": "HIG",
+    "logo": "/brands/apple-hig-design.svg",
+    "gradient": ["#A1A1AA", "#52525B"],
+    "tint": "#0A0A0A"
+  },
+  "prerequisites": [
+    "Comfortable with UI/UX terminology",
+    "Familiar with Apple ecosystem as a user",
+    "Have shipped or want to ship a designed interface"
+  ],
+  "outcomes": [
+    "Internalize Apple's design philosophy",
+    "Choose the right platform conventions for iOS, iPadOS, macOS, visionOS",
+    "Set typography and Dynamic Type correctly",
+    "Use color and dark mode the Apple way",
+    "Design layout, controls, and gestures that feel native",
+    "Apply motion with intention",
+    "Make products accessible by default"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "The Apple design ethos",
+      "objective": "What Apple values and how it shows up.",
+      "lessons": [
+        { "position": 1, "title": "Clarity, deference, depth — the three principles" },
+        { "position": 2, "title": "Designing for humans, not for designers" },
+        { "position": 3, "title": "Platform conventions vs brand expression" },
+        { "position": 4, "title": "Reading the HIG: how Apple writes its own rules" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Typography and layout",
+      "objective": "SF, Dynamic Type, and the grid.",
+      "lessons": [
+        { "position": 1, "title": "SF Pro and the system fonts" },
+        { "position": 2, "title": "Dynamic Type and accessibility scales" },
+        { "position": 3, "title": "Spacing, alignment, and the 8pt grid" },
+        { "position": 4, "title": "Safe areas, layout margins, and adaptive layouts" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Color, materials, and dark mode",
+      "objective": "How Apple uses color systemically.",
+      "lessons": [
+        { "position": 1, "title": "The system color palette" },
+        { "position": 2, "title": "Semantic colors and dark mode" },
+        { "position": 3, "title": "Materials, blur, and translucency" },
+        { "position": 4, "title": "Accessibility: contrast and color-blindness" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Controls, gestures, and motion",
+      "objective": "Apple's interaction language.",
+      "lessons": [
+        { "position": 1, "title": "Standard controls and when to use each" },
+        { "position": 2, "title": "Gestures: tap, swipe, drag, long-press, force" },
+        { "position": 3, "title": "Motion: easing, duration, and intent" },
+        { "position": 4, "title": "Haptics and audio as design materials" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Across platforms and accessibility",
+      "objective": "Adapt thoughtfully; include everyone.",
+      "lessons": [
+        { "position": 1, "title": "iOS vs iPadOS vs macOS vs visionOS conventions" },
+        { "position": 2, "title": "Adaptive design across device classes" },
+        { "position": 3, "title": "VoiceOver, Switch Control, Voice Control" },
+        { "position": 4, "title": "The accessibility audit Apple expects" }
+      ]
+    }
+  ]
+}

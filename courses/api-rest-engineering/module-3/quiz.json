@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Collections & errors",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does offset pagination fail at scale?",
+      "choices": [
+        { "id": "a", "text": "Network." },
+        { "id": "b", "text": "OFFSET makes the DB scan and discard N rows before returning the next page. Cost is O(offset), not O(1) — performance degrades linearly with depth. On 100M-row tables, page 5000 is unusably slow even with proper indexes. Cursor pagination fixes this: cursor encodes the indexed position of the last row returned; next query is `WHERE id > $cursor LIMIT 20` — index lookup, constant time regardless of depth. Stripe, GitHub, Twitter all use cursor pagination for this reason. Trade-off: lose 'jump to page N' UX (fine for feeds and infinite scroll, less great for admin tables expecting page numbers). For large datasets and sequential consumers: cursors. For small/admin: offset is fine. Knowing the trade-off lets you pick consciously rather than defaulting to offset everywhere and hitting performance walls at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encoding overhead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OFFSET scans + discards N rows; linear with depth. Cursors are O(1) index lookup.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Adding `?filter=<any_field>` would let any column be queried. Why bad?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Three problems if you allow arbitrary fields: (1) Performance — filtering on unindexed columns causes full table scans; one consumer querying `?filter=description=foo` on a 10M-row table can take down the database, (2) Security — clients can filter on internal fields you didn't mean to expose (`internal_score`, `admin_notes`); enumeration via filter values leaks info, (3) Predictability — supported queries should be documented and stable; arbitrary combos are an unbounded surface area. Allowlist pattern: define `ALLOWED_FILTERS = {'status', 'team', 'created_at'}` per endpoint; reject anything else with 400. When you add a new filter, add it intentionally + add the matching index. Same applies to sort fields, includes, and any user-controlled query shape. Allowlists turn 'oh no the API now does anything' into 'API does exactly these documented things' — performance bounded, security bounded, contract clear." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Aesthetic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Performance (only indexed columns), security (no internal field exposure), predictability (documented surface).",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is a stable `code` field essential in error responses?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Lets clients handle errors programmatically: `if (err.code === 'rate_limited') retry_with_backoff(); else if (err.code === 'validation_failed') show_form_errors();`. Without it, clients grep error MESSAGES — brittle (messages get tweaked, translated, capitalized) and ambiguous (one English phrase might map to several error types). Stable codes are: snake_case strings (`validation_failed`, `auth.expired_token`), never changed once shipped, documented in API reference, separate from human-readable messages. Hierarchical (`auth.invalid_token`, `auth.expired_token`, `auth.no_token`) helps consumers handle categories. The principle: API responses serve two audiences — humans reading and code branching. Codes serve code; messages serve humans. Both need to be stable in their respective dimensions; mixing them (branching on messages) breaks consumer integrations on tiny copy edits. Don't use enums (numeric); strings are more debuggable and reorder-safe." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compression." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stable codes let clients branch programmatically. Messages are for humans; may change.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Customer says 'I got a 500 error yesterday.' How to debug?",
+      "choices": [
+        { "id": "a", "text": "Search by user ID." },
+        { "id": "b", "text": "Ask for the request_id from the error response. Every API error response should include `X-Request-Id` header and/or `request_id` field — a unique identifier generated at the API gateway and propagated through every internal log. Customer pastes it; you grep logs; the entire trace of that specific request surfaces in seconds (timestamp, user, endpoint, downstream calls, exception, stack trace). Without request IDs, 'an error happened yesterday' is unsearchable across millions of requests; support guesses; bugs go undiagnosed. Implementation: generate UUID at gateway; include as header on internal requests; every log line includes it; centralized logging (Splunk, Datadog, ELK) makes correlation trivial. One of the highest-leverage observability practices; takes a day to set up; pays back forever. Pair with structured JSON logging and you can answer customer questions in minutes vs hours." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apologize." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Request IDs in error responses + logs. Customer reports the ID; you grep; trace is instant.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the role of `Idempotency-Key` on POST endpoints?",
+      "choices": [
+        { "id": "a", "text": "Authentication." },
+        { "id": "b", "text": "Makes retries safe for non-idempotent operations. Client generates a UUID per logical operation; sends in `Idempotency-Key` header. Server caches the response keyed by the value: first request executes and caches; retries return the cached response WITHOUT re-executing. Result: charge happens exactly once regardless of how many times the client retries. Stripe pioneered this for public APIs; widely adopted (GitHub, AWS, etc.). Cache TTL typically 24 hours (long enough for reasonable retries). Client responsibility: generate the key BEFORE submit; reuse the SAME key across retries of the same logical operation; new operation = new key. Without idempotency keys, network glitches that cause client retries also cause duplicate side effects (double charges, double emails). Critical for any operation with side effects. The pattern composes with exponential backoff retries: client retries safely; server deduplicates safely; correctness preserved through any number of transient failures." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encryption." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server caches response by key; retries with same key return cached result without re-executing. Safe retries.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Auth services",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use a hosted auth service rather than build auth in-house?",
+      "choices": [
+        { "id": "a", "text": "Trendy." },
+        { "id": "b", "text": "Auth has enormous surface area — password handling (proper bcrypt/argon2), email verification, password reset (secure single-use tokens), MFA (TOTP, WebAuthn, SMS), social login (Google/GitHub/Apple OAuth), SSO (SAML + OIDC), SCIM provisioning, sessions/JWT, audit logs, multi-tenant orgs, abuse prevention (rate limits, CAPTCHA), compliance (SOC 2, GDPR). Building all of this: months of engineering; maintaining: continuous as attack vectors evolve, new IdPs ship, libraries update. Hosted services (Clerk, Auth0, WorkOS, Supabase Auth) deliver the whole package as a managed product; you integrate; they handle security/compliance/updates. Cost is real ($X00-X000/mo at modest scale) but less than engineering hours + ongoing maintenance + the bugs you'd introduce. Most modern SaaS uses a service; build only with strong reason (strict regulatory env, very specific custom flows, or extreme scale where service costs exceed in-house). The 'just use a service' default is correct for early-to-mid stage; defer the build decision until you have evidence you need it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SOC 2." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auth surface area is huge; hosted services do it all + compliance; build is months of work plus ongoing maintenance.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Migrating from custom auth to Clerk/Auth0. Best user experience?",
+      "choices": [
+        { "id": "a", "text": "Force password reset for everyone." },
+        { "id": "b", "text": "Bulk import existing hashed passwords (bcrypt) into the new service so users continue using their existing passwords without disruption. Auth0, Clerk, Supabase Auth all support bcrypt import via APIs or CSV upload — you provide the hash + user metadata; the service stores; users log in normally with their old passwords. No password reset emails; no user disruption; migration is invisible to end users. Alternative 'force password reset' approach: every user gets a reset email; many ignore it; some accounts go dormant; conversion / engagement dips. The lazy migration pattern (route new users to new auth; on next login for existing users, migrate them) is OK but creates a long transition period with two auth systems in parallel. Bulk import with bcrypt is the cleanest: pick a quiet weekend; export hashes from old system; import to new; switch app to use new auth; users see no change. Plan + test extensively in staging — getting password import wrong locks everyone out. Standard pattern for any auth migration of a non-trivial user base." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Keep both systems forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bulk import bcrypt hashes (Auth0/Clerk/Supabase support). Users keep existing passwords; migration invisible.",
+      "points": 1
+    }
+  ]
+}

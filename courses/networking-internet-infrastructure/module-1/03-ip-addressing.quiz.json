@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: IP addressing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `192.168.1.0/24` mean in CIDR?",
+      "choices": [
+        { "id": "a", "text": "Just an example IP." },
+        { "id": "b", "text": "A subnet — `/24` means the first 24 bits identify the network and the remaining 8 bits identify hosts within it. So 192.168.1.0/24 spans 192.168.1.0 to 192.168.1.255 (256 addresses); 254 are usable for hosts (.0 is the network address, .255 is broadcast). Equivalent old netmask notation: 255.255.255.0. CIDR (Classless Inter-Domain Replacement) replaced the older A/B/C class system in 1993; modern networking is entirely CIDR-based. Common sizes: /24 (254 hosts, typical office), /16 (65K hosts, larger network or VPC), /30 (2 hosts, point-to-point router links). VPCs in AWS / GCP / Azure typically use /16 as the overall VPC range, sliced into /20 or /24 subnets per availability zone. Tool: `ipcalc 192.168.1.0/24` calculates the network, broadcast, host range, and netmask." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "24 hosts." }
+      ],
+      "correct_answer": "b",
+      "explanation": "/24 = 24 network bits + 8 host bits = 256 addresses (254 usable). 192.168.1.0 through 192.168.1.255.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designing an AWS VPC. Need 4 subnets for 4 availability zones, each with ~4000 hosts. What CIDRs?",
+      "choices": [
+        { "id": "a", "text": "/8 each." },
+        { "id": "b", "text": "Use a /16 VPC (65K addresses) and four /20 subnets (4096 each). Example: VPC = 10.0.0.0/16; Subnet 1 = 10.0.0.0/20 (10.0.0.0 - 10.0.15.255, 4094 usable); Subnet 2 = 10.0.16.0/20; Subnet 3 = 10.0.32.0/20; Subnet 4 = 10.0.48.0/20. Each /20 = 2^12 = 4096 addresses, 4094 usable (one network, one broadcast). Leaves room in the VPC for growth — additional subnets, private/public splits per AZ, etc. AWS reserves a few IPs per subnet (network, broadcast, .1 for VPC router, .2 for DNS, .3 reserved) so usable is slightly less than 4094, but planning for 4000 hosts in a /20 is correct. Standard pattern: /16 VPC, /20 or /24 subnets, separate subnets per AZ for high availability + private/public split per AZ for security. Plan the address space carefully on day one; renumbering later is painful." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "/30 each." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VPC /16, four /20 subnets (4096 each). Standard AWS pattern; leaves room for growth.",
+      "points": 1
+    }
+  ]
+}

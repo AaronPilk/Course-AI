@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: SaaS metrics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is NRR (Net Revenue Retention) often the most important SaaS metric?",
+      "choices": [
+        { "id": "a", "text": "Easier to compute." },
+        { "id": "b", "text": "Measures whether revenue from EXISTING customers compounds. NRR > 100% means: same cohort of customers grows revenue YoY through expansion (upgrades, more seats, usage growth) net of churn and downgrades. With NRR > 120%, you grow revenue meaningfully even with ZERO new customer acquisition — compounding flywheel. Top public SaaS (Snowflake, Datadog) regularly report 130-150% NRR; that's a massive competitive moat. With NRR < 100%, every year you must replace churned/contracted revenue plus add new — running on a treadmill that's harder to scale. Investors weight NRR heavily because it predicts long-term capital efficiency. A SaaS at $10M ARR with 130% NRR and 60% growth attracts dramatically higher valuation than one at $10M with 95% NRR and 60% growth — the first compounds, the second hand-fights for every dollar. Improving NRR usually requires: usage-based pricing components (revenue grows with success), good expansion paths (clear upgrade triggers), low churn (great product + onboarding + support), proactive CS. The 'pursue NRR > 100%' framing reshapes product + pricing + CS decisions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SEC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "NRR > 100% means revenue compounds from existing customers. Compounding moat; investors weight heavily.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "CAC = $5,000; average customer pays $200/month. CAC payback?",
+      "choices": [
+        { "id": "a", "text": "5 months." },
+        { "id": "b", "text": "25 months. CAC payback = CAC / Monthly ARPU = $5,000 / $200 = 25 months. That's far above the 'great' threshold (<12 months) — capital-intensive growth that requires a lot of runway before each customer pays back acquisition cost. To shorten: (1) lower CAC (better targeting, better self-serve conversion, less paid acquisition), (2) raise ARPU (better expansion to higher tiers, upsell, usage growth), (3) improve retention so longer LTV justifies the high CAC. At $5K CAC + $200/mo ARPU, you need customers to stay 25+ months JUST to break even on acquisition; gross margin time after that for profit. Investors look at <12 months CAC payback as healthy; 12-24 as marginal; > 24 raises questions about whether the business can scale capital-efficiently. Pair with LTV:CAC: $200/mo × 5-year lifetime (60 months) = $12,000 LTV; ratio = 2.4× — marginal but workable if churn is low and retention is strong. Numbers depend tightly on churn." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cannot determine." }
+      ],
+      "correct_answer": "b",
+      "explanation": "$5,000 / $200/mo = 25 months. Above the <12-month healthy threshold; would need lower CAC or higher ARPU.",
+      "points": 1
+    }
+  ]
+}

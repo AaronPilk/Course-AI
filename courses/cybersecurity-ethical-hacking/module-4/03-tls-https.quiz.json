@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: TLS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is HSTS essential even for HTTPS-only sites?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Without HSTS, the FIRST visit to your site can still be intercepted at HTTP. User types 'example.com' (no protocol) → browser tries HTTP first → attacker on coffee-shop WiFi MITMs the response, serves a fake HTTP page that looks legit but exfiltrates everything. The user never sees the real HTTPS page. HSTS (`Strict-Transport-Security` header) tells the browser 'always use HTTPS for this domain for the next N seconds' — after one valid HTTPS visit, the browser refuses to use HTTP for that domain. Add `preload` and submit to the browser preload list, and even FIRST visits are HTTPS-only because the browser ships with that knowledge. Standard config: `max-age=31536000; includeSubDomains; preload`. Free and essential; especially important for anything users authenticate to. Browser warnings on plain HTTP are not enough; HSTS is the real defense." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SSL." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without HSTS, first-visit MITM at HTTP is possible. HSTS forces HTTPS; preload covers first-visit too.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Code does `requests.get(url, verify=False)`. Why is this dangerous?",
+      "choices": [
+        { "id": "a", "text": "Slow." },
+        { "id": "b", "text": "Disables TLS certificate verification — the client accepts ANY certificate, including ones from MITM attackers. Effectively reduces HTTPS to plain HTTP for that request. Common cause: developer hit a 'cert verification failed' error in dev and added `verify=False` to make it work, then it stayed in production. Now an attacker on the network path (cafe WiFi, ISP, compromised router) can present any cert and the client connects happily, decrypting and re-encrypting traffic. Fixes: (1) for production, ensure proper certs are configured — Let's Encrypt is free, (2) for dev / self-signed in testing, install the dev CA in the system trust store, (3) for specific known endpoints with self-signed certs (vendor APIs etc.), pin to the expected cert hash rather than disabling verification entirely. Never `verify=False` in production; it nullifies HTTPS. Same warning for `rejectUnauthorized: false` in Node, `Insecure` in curl, etc." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Memory leak." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Disables cert verification — any MITM cert is accepted. Effectively plain HTTP. Never in production.",
+      "points": 1
+    }
+  ]
+}

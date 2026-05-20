@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OAuth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the role of PKCE in OAuth 2.1?",
+      "choices": [
+        { "id": "a", "text": "Faster login." },
+        { "id": "b", "text": "Protects against authorization-code interception attacks. The classic OAuth dance has the auth server redirect the user back to the client with a `code=` parameter; that redirect URL can be intercepted on the device (e.g., another malicious app registered for the same custom URL scheme on mobile, or a malicious browser extension). If an attacker captures the code, they can exchange it for tokens — game over. PKCE adds: client generates a random `code_verifier` and sends only `code_challenge = SHA256(code_verifier)` in the initial /authorize call. The /token exchange requires the original `code_verifier`; an attacker who intercepted only the code can't complete the exchange without the verifier (which only the legitimate client has). Mandatory for public clients (SPAs, mobile) in OAuth 2.1 and strongly recommended for all clients. Modern OAuth libraries do it automatically; you opt in by passing the right options. The protection is universal and free; no reason not to use it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encryption." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Protects against auth-code interception. Client proves it initiated the flow via the code_verifier. Mandatory for public clients.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your SPA stores OAuth access tokens in localStorage. Risk?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Any XSS vulnerability anywhere in your site lets attackers read localStorage and exfiltrate the token. Even one third-party script (analytics, ads, A/B test, vendor library) with an XSS bug is enough. Modern best practice: don't store tokens in JS-accessible storage. Patterns: (1) Backend-for-Frontend (BFF) — SPA talks to your backend, which holds tokens server-side and proxies API calls (token never reaches the browser), (2) HttpOnly cookies — backend sets the token in a cookie inaccessible to JS; XSS can't read it (but still need CSRF protection with SameSite + tokens). Both approaches mean an XSS in your SPA can still cause damage (attacker can make requests AS the user via the active session) but can't steal the token for use elsewhere/later. localStorage tokens are the bad pattern; backend proxy or HttpOnly cookies are the modern alternatives. Assume XSS will happen sometime; design accordingly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "XSS reads localStorage. Use backend proxy or HttpOnly cookies. Token in JS-accessible storage = exfiltration risk.",
+      "points": 1
+    }
+  ]
+}

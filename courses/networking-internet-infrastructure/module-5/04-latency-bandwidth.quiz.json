@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Latency & bandwidth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why measure p99 latency, not just p50 / average?",
+      "choices": [
+        { "id": "a", "text": "Bragging rights." },
+        { "id": "b", "text": "Tail latency dominates user perception. A site with p50 of 50ms but p99 of 5 seconds feels broken regularly — 1 in 100 requests takes 5 seconds, so a user clicking 10 things has a 10% chance of hitting one. Average and p50 hide this: if 99% of requests are 50ms and 1% are 5000ms, the average is 50.5ms — looks fast on paper, feels terrible in practice. Causes of bad tails: GC pauses, slow database queries occasionally, network glitches, downstream service saturation, failover delays. SRE practice: track p50, p95, p99, p99.9 separately; optimize the high percentiles, not just averages. Tail-latency reduction is often higher-leverage than mean-latency improvement — the average user already has a good experience; the tail-affected requests are the ones causing complaints and churn. Histograms in observability tools (Prometheus, Datadog) make this visible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Aesthetic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tail latency = what users actually feel. p99 5s ruins UX even if median is fast. Optimize the percentiles.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Users in Sydney complain your site is slow; users elsewhere find it fast. Likely cause + fix?",
+      "choices": [
+        { "id": "a", "text": "Bug in Sydney's ISP." },
+        { "id": "b", "text": "Physical distance — your servers are likely in US/Europe; Sydney users pay 150-200ms RTT just for one packet to reach the origin. Every request adds that round trip; static assets load slowly; API calls feel laggy. Fixes: (1) CDN with POP in Sydney (Cloudflare, Fastly, AWS CloudFront all have Sydney POPs) — caches static assets at ~10ms RTT for Sydney users; (2) Edge compute (Workers, Lambda@Edge) handles dynamic logic at the edge so most requests don't traverse oceans; (3) Multi-region application deployments with a region in Sydney or Singapore — full stack closer to users; (4) Replicated databases (Aurora Global, CockroachDB, Spanner) for fast local reads. Trade-offs: cost scales with regions; consistency is harder with multi-master writes. For most apps: start with CDN — 80% of the win for 20% of the cost. Multi-region full-stack deployment only when CDN alone isn't enough. Latency physics doesn't care about how fast your servers are; only proximity helps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sydney servers are slow." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Physical distance = 150-200ms RTT. Fix: CDN with Sydney POP + edge compute + maybe multi-region.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Invoicing & dunning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is dunning (failed-payment retry sequence) essential?",
+      "choices": [
+        { "id": "a", "text": "Bureaucracy." },
+        { "id": "b", "text": "5-15% of card charges fail on first attempt — expired cards, insufficient funds, fraud-detection blocks, processor issues. Without dunning, those customers silently churn: service stops, they're confused, they don't know they need to update their card, you lose revenue you would have kept. With dunning (structured retry over 2-4 weeks + escalating email communication + customer-portal links to update card), you recover 50-70% of failed payments. That's massive — at a $50K MRR SaaS with 10% failure rate, dunning recovery is worth $25-35K/year in retained revenue. Stripe Smart Retries, Recurly, Chargebee all automate this with intelligence (retry on payday, retry after typical resolution windows). Plus: Stripe's account-updater service auto-fetches new card numbers from Visa/Mastercard programs before the customer even knows their card expired. Combined, involuntary churn (failed payments) drops dramatically. The cost of building dunning is small (or zero if you use a tool); the revenue recovery is significant; ROI is excellent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "5-15% of charges fail first attempt; dunning recovers 50-70%. Without it, silent churn. Use Stripe Smart Retries.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're selling SaaS to EU customers from a US company. Tax handling?",
+      "choices": [
+        { "id": "a", "text": "Ignore." },
+        { "id": "b", "text": "Use Stripe Tax (or Avalara, TaxJar) to handle VAT compliance automatically. EU VAT rules require registering in customer countries above thresholds (€10K-100K depending on country), charging the customer's local VAT rate (17-27% varies), and remitting to each country's tax authority. Manual compliance: weeks of legal research, multiple registrations, monthly VAT returns per country — operationally crushing for small SaaS. Stripe Tax automates: detects customer location, applies correct rate, generates compliant invoices, files returns through partner network. Cost is small (a fraction of revenue); save vs DIY is enormous. Enable on day one — easier than reverse-engineering later. Similar tools cover US state sales tax (multi-state nexus is a nightmare otherwise), Canadian GST, Australian GST, etc. Don't be the company that gets caught by surprise audits with years of uncollected VAT to back-pay; the cost compounds and can be company-ending for small SaaS. The 'ignore until it's a problem' answer is increasingly career-limiting as tax authorities get better at finding remote sellers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block EU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe Tax (or Avalara) automates VAT. Manual compliance is crushing; enable from day one.",
+      "points": 1
+    }
+  ]
+}

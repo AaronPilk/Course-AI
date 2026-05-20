@@ -1,0 +1,8 @@
+{
+  "sources": [
+    { "url": "https://www.netacad.com", "title": "Cisco Networking Academy", "publisher": "Cisco" },
+    { "url": "https://datatracker.ietf.org", "title": "IETF Datatracker (RFCs)", "publisher": "IETF" },
+    { "url": "https://www.cloudflare.com/learning/", "title": "Cloudflare Learning Center", "publisher": "Cloudflare" },
+    { "url": "https://www.iana.org", "title": "IANA — Internet Assigned Numbers Authority", "publisher": "IANA" }
+  ]
+}

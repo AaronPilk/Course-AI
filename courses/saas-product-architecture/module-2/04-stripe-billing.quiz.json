@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Stripe Billing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why update subscription state from webhooks instead of polling Stripe?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "Webhooks push events as they happen — your app learns immediately when a subscription changes; UI shows accurate state; downstream actions (provisioning, deprovisioning) trigger correctly. Polling is the opposite: you ask 'has anything changed?' every N minutes; you're always behind by up to N minutes; you waste API calls (Stripe rate-limits + charges some accounts for excessive); and race conditions multiply (poll says subscribed, user cancels just after, your app still thinks subscribed). Webhooks: configure endpoint URL in Stripe Dashboard; Stripe POSTs JSON for every event; you verify signature (`stripe.Webhook.construct_event(payload, sig, secret)`); handle events; respond 200. Key events to handle: subscription.created/updated/deleted, invoice.paid, invoice.payment_failed, customer.updated. Mirror Stripe state into your own DB on receipt — app reads your DB for fast access; Stripe is the source of truth but your DB is the working copy. Industry standard pattern; polling is the anti-pattern for any non-trivial billing integration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster API calls." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhooks push events in real-time; polling is laggy + wastes API calls + race-conditions. Mirror state to your DB.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app receives a Stripe webhook for a subscription cancellation. Signature isn't verified. Risk?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Anyone who knows your webhook URL can POST fake events — fake a cancellation for a competitor's customer, fake a paid invoice for free service, fake any state change to your app. Webhook signature verification (`stripe.Webhook.construct_event(payload, sig, secret)`) confirms the request came from Stripe by validating an HMAC signature against your webhook secret. Without verification, your endpoint trusts the payload literally; attackers can manipulate your billing state. Always verify; reject on mismatch with 400. The webhook secret is environment-scoped (test vs live); load from environment variable; never commit. Some teams add additional defense: IP allowlist for Stripe's published IP range (extra layer; signature is the primary defense). The 'forgot to verify' bug is a classic supply-chain-like vulnerability — your app accepts attacker-controlled input as gospel. Stripe's SDK makes verification one line; no excuse to skip." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bandwidth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Attackers can fake webhook events. Verify signature with construct_event() and webhook secret; reject mismatches.",
+      "points": 1
+    }
+  ]
+}

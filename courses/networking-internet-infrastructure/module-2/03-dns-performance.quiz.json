@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: DNS performance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `<link rel=\"preconnect\">` over `<link rel=\"dns-prefetch\">`?",
+      "choices": [
+        { "id": "a", "text": "Shorter syntax." },
+        { "id": "b", "text": "Preconnect goes further than DNS prefetch — it performs DNS resolution AND establishes the TCP connection AND completes the TLS handshake, all proactively. When the actual request fires, the connection is already warm; HTTP request body sends immediately, saving 200-500ms of latency on cellular / international connections. `dns-prefetch` only resolves the name (saving ~50ms). Use preconnect for the 3-5 most-critical cross-origin endpoints your page uses (fonts CDN, API origin, image CDN); use dns-prefetch for less-critical ones (analytics, ads). Don't preconnect everything — each preconnect costs a connection slot. The combination dramatically reduces perceived latency on slow networks where the handshake-stack dominates page load time. Standard performance optimization for modern web apps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Backwards compat." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Preconnect does DNS + TCP + TLS proactively; prefetch only DNS. Bigger latency savings.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You change A record at 9 AM. TTL is 86400. Users still hit old IP at 5 PM. Why?",
+      "choices": [
+        { "id": "a", "text": "Bug." },
+        { "id": "b", "text": "TTL is 1 day; resolvers cached the old answer when they last queried. Until that cache expires, they keep returning the old IP regardless of what authoritative servers now say. Different resolvers cached at different times — some will refresh sooner, some later, over the full 24 hours. To avoid this in future: pre-stage TTL to 60-300s at least 24-48 hours BEFORE planned changes. Resolvers re-query frequently during the pre-stage window; when you make the actual change, propagation completes within minutes. Then raise TTL back to normal (3600+) afterward to reduce DNS query load. Pattern is called 'TTL pre-staging' or 'flushing the cache before the change.' Skipping it means partial traffic on the old endpoint for hours or days — known pitfall, totally avoidable with planning." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Resolver bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Long TTL = resolvers cached old answer. Pre-stage low TTL 24-48h before changes; revert after.",
+      "points": 1
+    }
+  ]
+}

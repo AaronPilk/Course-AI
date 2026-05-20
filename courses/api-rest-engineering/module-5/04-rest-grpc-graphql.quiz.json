@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: REST vs gRPC vs GraphQL",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does gRPC win over REST?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "Service-to-service internal communication where performance + strong typing matter. gRPC wins on: binary Protobuf (much smaller payloads than JSON), HTTP/2 multiplexing + streaming (bidirectional possible), strongly-typed contracts from .proto files (clients generated automatically in many languages), built-in deadlines / retries / cancellation. Cost: limited browser support (gRPC-Web bridges but awkward), harder to debug (binary, no curl-friendly), less universal tooling than REST, some proxies / observability layers don't understand gRPC natively. Use cases where gRPC wins decisively: high-throughput microservices in your data center (10-100x throughput vs JSON), strongly-typed contracts between teams, streaming RPCs (bidirectional). Common pattern: gRPC internally, REST gateway externally — Google, AWS, many large companies. Public APIs almost always stay REST because consumer reach matters more than internal performance. The right answer is rarely 'gRPC everywhere' — it's 'gRPC where you control both sides and performance justifies the tooling complexity.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Browser apps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Service-to-service internal where performance + strong typing matter. Stays internal; REST gateway for external.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mobile + web frontends fetch user data with different fields each. REST endpoint returns the union (over-fetching for both). Alternative?",
+      "choices": [
+        { "id": "a", "text": "Two REST endpoints." },
+        { "id": "b", "text": "GraphQL — client specifies exactly the fields it needs; server returns just that. `query { user(id: 123) { name } }` for one client; `query { user(id: 123) { name, email, orders { total } } }` for another. Single endpoint; different shapes per consumer; no over-fetching. Alternatively: REST with sparse fieldsets (`?fields=name`) — same idea, simpler infra, less expressive than GraphQL. Or REST with multiple endpoints tailored to specific consumers (`/users/mobile/:id`, `/users/web/:id`) — works but doesn't scale to many consumers. GraphQL really shines when you have many varied consumers (mobile + web + admin + third-party); the schema becomes the contract and each client crafts its own queries. Trade-offs: more server complexity (resolvers + DataLoader for N+1), harder HTTP caching (single endpoint + POST body), more tooling. For 2-3 consumers with similar needs: REST + sparse fieldsets is enough. For 5+ consumers with varied needs: GraphQL pays off. Pick by actual consumer diversity, not theoretical." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger endpoint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GraphQL for client-driven shapes (or REST sparse fieldsets for simpler cases). Match tool to consumer diversity.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Status codes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `200 OK` with `{\"status\": \"error\"}` body a bad pattern?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Breaks HTTP semantics that infrastructure depends on. 200 means success; the entire stack — clients, proxies, CDNs, error trackers, monitoring tools, retry libraries — assumes 200 = success. With 200-but-error, every client needs custom unwrapping (`if (response.status === 200 && body.status === 'error')`); monitoring shows 100% success rate when actually 30% of requests fail; retry libraries don't retry failed requests; Sentry / DataDog don't alert on errors. Real status codes (4xx for client errors, 5xx for server errors) plug into all of this for free: monitoring auto-tracks error rates, retries happen automatically for 5xx, clients can use standard error handling. The 'easier client code' justification for 200-with-error backfires every time. Use 422 for validation errors, 404 for missing resources, 409 for conflicts, 401/403 for auth, 500/503 for server issues. The HTTP semantic system was designed for this; using it gives you observability and correct retry behavior automatically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller body." }
+      ],
+      "correct_answer": "b",
+      "explanation": "200 = success per HTTP. Infra (monitoring, retries, error trackers) all assume it. Use real codes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "User submits a form with an invalid email. What status code?",
+      "choices": [
+        { "id": "a", "text": "400." },
+        { "id": "b", "text": "422 Unprocessable Entity. The distinction: 400 = malformed request (couldn't even parse the JSON, missing required header, wrong Content-Type); 422 = request is well-formed and parseable but semantically invalid (email format wrong, age below minimum, required field absent). 422 is more specific and lets clients distinguish 'I sent garbage' (400 — usually a code bug) from 'I sent a valid request that failed validation' (422 — show the user a friendly form error). Pair with a structured body listing the failing fields: `{\"error\": \"validation_failed\", \"fields\": {\"email\": \"must be valid email\"}}`. Many APIs use 400 for validation errors out of habit; 422 is more precise and supports better client UX. Some teams use 400 for both because '422 feels obscure'; either works if consistent, but 422 is the spec-aligned choice for validation failures." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "500." }
+      ],
+      "correct_answer": "b",
+      "explanation": "422 — well-formed request, validation failed. 400 is for unparseable/malformed; 422 is for validation.",
+      "points": 1
+    }
+  ]
+}

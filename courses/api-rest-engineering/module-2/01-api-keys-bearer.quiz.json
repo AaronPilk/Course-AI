@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: API keys & bearer",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why send API keys in `Authorization: Bearer <token>` rather than `?api_key=` query param?",
+      "choices": [
+        { "id": "a", "text": "Bandwidth." },
+        { "id": "b", "text": "Query parameters leak in multiple places: server access logs (`GET /api/users?api_key=sk_live_abc...`), browser history, HTTP `Referer` header sent to other sites, third-party analytics/CDN logs, error tracker URL captures. Anyone with access to logs eventually has access to keys; rotating becomes mandatory just for log hygiene. Headers don't go to those places — they're scoped to the request itself, and `Authorization` is universally treated as sensitive (logging tools redact it by default). Bearer tokens in the standard Authorization header are also recognized by tools (curl, Postman, OpenAPI clients) and middleware (auth libraries). Custom headers like `X-API-Key` work too but break some tooling. Rule: never put credentials in URLs. Headers or POST body. The query-param pattern persists in legacy APIs but is universally a hardening target." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "URL length." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Query params leak in logs, history, referer, analytics. Headers don't. Authorization is the standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your service uses one API key shared across all environments. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Fine if rotated." },
+        { "id": "b", "text": "No — environment-separated keys are essential. Standard pattern: `sk_test_*` for development/staging, `sk_live_*` for production, with the prefix making it visible in code reviews and logs. A test key accidentally used in production hits sandbox endpoints (no real charges); a live key in test code charges real customers (real money lost). The prefix-based separation is the cheapest possible safeguard against mistakes. Cross-environment mixups account for many real-world incidents — engineers copy-pasting between staging and prod, CI systems pulling the wrong key, dev databases with prod credentials. Stripe's `sk_test_*` / `sk_live_*` convention is widely copied for exactly this reason. Additional hardening: limit prod key access to a small set of engineers, audit access logs, set up alerts on production-key usage from non-production IPs. Free, prevents real disasters." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Environment-separated keys (sk_test_* vs sk_live_*) prevent cross-environment mixups. Cheapest possible safeguard.",
+      "points": 1
+    }
+  ]
+}

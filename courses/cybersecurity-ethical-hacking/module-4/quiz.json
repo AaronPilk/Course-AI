@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Cryptography",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use hybrid encryption (asymmetric + symmetric) instead of just one?",
+      "choices": [
+        { "id": "a", "text": "FIPS rule." },
+        { "id": "b", "text": "Asymmetric crypto (RSA, Ed25519) doesn't require a pre-shared secret — useful for parties that have never communicated — but is slow (milliseconds per operation). Symmetric crypto (AES) is fast (GB/sec) but both sides need to share the same key. Hybrid combines the strengths: use asymmetric to securely exchange a random symmetric key (small payload, slow crypto on small data is fine), then use symmetric to encrypt the actual data (fast bulk encryption). TLS, SSH, PGP, and Signal all use this pattern. The asymmetric handshake handles the 'no pre-shared secret' problem; the symmetric session handles the 'transfer GBs efficiently' problem. Neither alone is practical for typical workloads; hybrid is what every real-world encryption protocol does." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stronger keys." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Asymmetric for key exchange (no pre-shared secret), symmetric for fast bulk data. Strengths of both.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bcrypt login takes 5ms with cost=4. Calibrate?",
+      "choices": [
+        { "id": "a", "text": "Keep." },
+        { "id": "b", "text": "Increase cost — 5ms is too fast for 2026 hardware. At cost=4, an attacker with modern GPUs cracks the average database of password hashes in hours. Target 100-500ms per hash on your hardware; cost=12-14 is typical in 2026. The user impact is negligible (login is rare); the attacker cost multiplies by orders of magnitude. Each +1 in bcrypt cost roughly doubles the time, so going from cost=4 to cost=12 is ~256× more work per attempted crack. Re-calibrate every 1-2 years as hardware improves. On each successful login, you can re-hash with the current cost factor and update the stored hash transparently — making this an evolving defense. Alternatively switch to argon2 with `memory_cost` for GPU/ASIC resistance, the modern best practice for new systems." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Decrease." }
+      ],
+      "correct_answer": "b",
+      "explanation": "5ms is too fast. Target 100-500ms; cost=12-14 in 2026. Re-calibrate periodically.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is HSTS essential alongside HTTPS-only?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Without HSTS, FIRST visit to your domain can still be intercepted on HTTP. User types 'example.com' (no protocol) → browser tries HTTP first → attacker on cafe WiFi MITMs the response, serves a fake HTTP page that looks legit. The user never reaches real HTTPS. HSTS (`Strict-Transport-Security` header) tells the browser 'always use HTTPS for this domain for the next N seconds' — after one valid HTTPS visit, plain HTTP is refused. With `preload` and submission to the browser preload list (hstspreload.org), even FIRST visits are HTTPS-only because the browser ships with that knowledge baked in. Recommended setup: `max-age=31536000; includeSubDomains; preload`. Free, essential, especially for anything users authenticate to. Browser address-bar HTTPS indicators are warning labels, not defense; HSTS is defense." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by CA." }
+      ],
+      "correct_answer": "b",
+      "explanation": "First visit can be HTTP-MITM'd without HSTS. HSTS forces HTTPS; preload covers first visit too.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Code: `if api_key == stored_key:`. Why dangerous?",
+      "choices": [
+        { "id": "a", "text": "Slow." },
+        { "id": "b", "text": "Timing attack vulnerability — `==` short-circuits at the first byte mismatch. An attacker measures how long the comparison takes across many requests: a correct prefix runs longer than an incorrect one. Over thousands of attempts, the attacker recovers the secret byte-by-byte. Demonstrated against real systems (early Keyczar HMAC bug, several auth libraries, even some bitcoin wallets). Fix: use a constant-time comparison — `hmac.compare_digest(api_key, stored_key)` in Python, `crypto.timingSafeEqual()` in Node, `subtle.ConstantTimeCompare()` in Go. Compares all bytes regardless of where mismatch occurs; constant time prevents the side-channel leak. Apply to: API key comparison, JWT signature verification (libraries usually handle this), password hash comparison, session token equality. Anywhere you compare a secret to user input: never `==`, always constant-time. Microseconds of cost; closes a real attack." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encoding bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Timing attack. `==` leaks via short-circuit. Use compare_digest / timingSafeEqual for constant-time.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When should you write your own crypto code?",
+      "choices": [
+        { "id": "a", "text": "Whenever needed." },
+        { "id": "b", "text": "Essentially never. The history of cryptography is littered with brilliant people implementing schemes that were broken in subtle ways no one caught for years — timing leaks, side channels, edge cases in padding, nonce-reuse bugs, key-derivation mistakes. Even high-end implementations from major companies have had catastrophic CVEs. Use battle-tested libraries: `cryptography` in Python, `libsodium` everywhere, built-in `crypto` in Node, stdlib `crypto/*` in Go. They wrap the right primitives with sane defaults: AES-GCM for encryption, Ed25519 for signatures, argon2 for password hashing, HKDF for key derivation. If your project needs something exotic (zero-knowledge proofs, custom protocols, multi-party computation), hire a cryptographer — they cost money, but the alternative costs more (Equifax-scale breaches). Custom crypto without expertise is the single most expensive form of self-inflicted harm in software. The rule is firm: never roll your own." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Essentially never. Use battle-tested libraries; hire a cryptographer for exotic needs. Custom crypto is high-risk.",
+      "points": 1
+    }
+  ]
+}

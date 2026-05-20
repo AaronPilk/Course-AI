@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Record types",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why can't you have a CNAME at the apex (e.g., example.com)?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "DNS standard says a CNAME can't coexist with other record types at the same name. The apex of a zone (`example.com` without a subdomain) needs SOA, NS, and usually MX records — so it can't be a CNAME. Subdomains (`www.example.com`) have no such requirement and can CNAME freely. Workarounds for apex pointing to a CNAME-style target (like a CDN): cloud DNS providers offer ALIAS/ANAME records (Route 53 ALIAS, Cloudflare ANAME, NS1 ALIAS) — they look like CNAMEs but actually resolve server-side and return the target's A/AAAA records, dodging the spec restriction. Modern apex-to-CDN setups use ALIAS for this. The alternative is using a flat IP (anycast) and pointing the apex A record there directly. The 'apex CNAME problem' was a real friction point for years; ALIAS records made it disappear in practice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Standards bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DNS spec: CNAME can't coexist with other records. Apex needs SOA/NS, so can't CNAME. Use ALIAS/ANAME workaround.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your emails go to spam constantly. DNS-side fixes?",
+      "choices": [
+        { "id": "a", "text": "Buy a new domain." },
+        { "id": "b", "text": "Set up SPF + DKIM + DMARC — the email authentication trio. SPF (TXT record) lists which mail servers are authorized to send for your domain: `v=spf1 include:_spf.google.com ~all`. Receivers reject mail from elsewhere claiming to be you. DKIM signs outgoing mail with a private key; receivers verify with the public key published as a TXT record at `selector._domainkey.yourdomain.com`. Receivers reject mail with broken/missing DKIM. DMARC (TXT at `_dmarc.yourdomain.com`) ties them together: `v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com` instructs receivers to quarantine mail failing SPF/DKIM and report failures to your dmarc@ address. Combined: receivers trust your mail more. Major providers (Gmail, Outlook) increasingly REQUIRE all three for delivery, particularly for bulk senders. Without them, you're flagged as 'might be spoofed,' and your real mail lands in spam. Standard hardening; one of the highest-leverage DNS configurations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Send less mail." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Set up SPF + DKIM + DMARC. Tells receivers your mail is authentic; required by Gmail/Outlook for delivery.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Routing",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Longest prefix match — what's the principle?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "A more-specific prefix encodes more knowledge about the destination, so it wins over less-specific. If your routing table has `0.0.0.0/0 via R1` (default) and `10.0.0.0/8 via R2`, packets to 10.5.6.7 match BOTH — but /8 is more specific than /0, so use R2. This lets general defaults coexist cleanly with specific overrides. Universal rule across IPv4/IPv6/cloud networking: most-specific wins, ties broken by metric. Common cases: VPN routes (10.0.0.0/8 via tunnel) override default route (internet); branch office has specific routes to HQ subnets but default to local internet. Understanding longest prefix match explains a lot of 'why is my traffic going here?' questions in any routing table. In BGP it's combined with path-length, local-pref, MED, communities for the full decision algorithm — but at its core, prefix specificity dominates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "More specific = more knowledge about destination. Universal across IP routing.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Intermittent loss on internet path. Best tool?",
+      "choices": [
+        { "id": "a", "text": "ping." },
+        { "id": "b", "text": "`mtr` (combines traceroute path discovery with continuous ping per hop). A single mtr session shows exactly where in the path loss is occurring: 'hop 6 has 15% loss; hops 7+ clean' pinpoints the degraded link. Plain traceroute gives one snapshot; ping gives end-to-end but not the hop. mtr aggregates hundreds of probes per hop and updates live, surfacing intermittent issues. Caveats: routers often rate-limit ICMP replies, so loss at intermediate hops can look worse than reality unless it propagates to all later hops too — only loss that continues through subsequent hops is genuinely affecting transit. Standard tool for any 'why is connection X slow / dropping?' investigation. Pair with traceroute for path mapping when you want a quick snapshot; mtr for sustained analysis." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "tcpdump." }
+      ],
+      "correct_answer": "b",
+      "explanation": "mtr — traceroute + continuous ping per hop. Pinpoints which router/link is dropping.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "How does anycast deliver low latency globally?",
+      "choices": [
+        { "id": "a", "text": "Magic." },
+        { "id": "b", "text": "Multiple servers worldwide announce the SAME IP prefix via BGP from different locations. Internet routing — based on BGP topology — sends each client to the nearest announcing server (shortest AS-path, which usually correlates with geographic proximity). So 1.1.1.1 from Tokyo lands at Cloudflare's Tokyo POP, from London at their London POP, from New York at their NYC POP. Same IP, different physical servers, low latency everywhere. Used by: DNS root servers (13 logical, hundreds of physical via anycast), CDNs (same IPs from hundreds of POPs), DDoS scrubbing (attack spread across many points). For deployment: own a routable prefix + AS number + announce from multiple locations — or use a provider (Cloudflare, Fastly) that does it for you. Foundation of modern low-latency global services. The key insight: BGP routing makes the 'closest' choice for free, automatically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Static routing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Same IP announced from many locations via BGP; routing picks nearest POP per client automatically.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Major service down even though servers are healthy. BGP-related cause?",
+      "choices": [
+        { "id": "a", "text": "DNS." },
+        { "id": "b", "text": "BGP outage — the company's announcements got withdrawn from the global routing table. Servers run, but the internet's routing has no path to their network. Famous: Facebook's October 2021 outage (~6 hours) — BGP misconfiguration pulled their prefixes off the internet; servers up but unreachable; even employees' internal tools were affected since everything routed through the same backbone. Rogers Canada July 2022 had a similar pattern affecting an entire country's customer base. These outages show how much modern services depend on BGP correctness — a config mistake or upstream issue takes down services that look healthy by every other metric. Defenses: BGP monitoring (alerts on announcement / withdrawal of your prefixes via tools like BGPmon, Cloudflare Radar), multiple upstreams (path diversity), tested change procedures for BGP config, RPKI for additional protection. The 'all our servers are up so we're fine' assumption ignores how thoroughly modern internet infrastructure depends on BGP." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Power outage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "BGP outage — announcements withdrawn from global table. Servers up; routes gone. Facebook 2021, Rogers 2022.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Physical floor on NYC-London round-trip?",
+      "choices": [
+        { "id": "a", "text": "Zero with 5G." },
+        { "id": "b", "text": "~55ms theoretical based on speed of light in fiber over ~5,500 km each way. Real-world: 70-90ms once you add routing detours, queue delays, processing at each hop. You cannot beat this without changing physics — light in fiber travels at ~200,000 km/s (about 2/3 of vacuum speed due to refractive index). Implications: cross-continental real-time apps have fundamental latency limits; users in distant regions need local replicas to feel snappy. Similar physics for US↔Asia (~100-200ms), US↔South America (~100-150ms). This is why CDNs exist — put servers near users so most requests don't cross oceans. Edge compute (Cloudflare Workers, Lambda@Edge) extends this for dynamic logic. Latency budgeting in distributed systems starts with these physical limits; everything else (DB queries, app logic, payload size) compounds on top. 'Why is my app slow for users in Sydney?' often answers itself once you compute the great-circle distance." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "5ms with 5G." }
+      ],
+      "correct_answer": "b",
+      "explanation": "~55ms (speed of light in fiber); 70-90ms real. Physics cap; CDNs + edge bring data closer to circumvent.",
+      "points": 1
+    }
+  ]
+}

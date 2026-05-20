@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: JWTs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why ALWAYS specify the algorithm in JWT verification?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Algorithm-confusion attacks. JWT headers include an `alg` field declaring the signature algorithm. Buggy libraries trust this field — if you pass `jwt.verify(token, key)` without restricting the algorithm, attackers can: (1) switch alg to `none` and remove the signature entirely — library accepts the unsigned token, (2) switch alg from `RS256` (asymmetric) to `HS256` (symmetric) — now the library uses your public key (which is, well, public) as the HMAC secret; attacker creates HMACs with the public key and they verify. Real CVEs in major libraries (jsonwebtoken, python-jose) for both issues. Fix: hardcode expected algorithms — `jwt.verify(token, key, { algorithms: ['RS256'] })`. Token header's `alg` becomes informational only; library uses your declared list. Never trust user-supplied data to dictate security decisions, including the algorithm choice. This is a textbook example of 'don't trust the input that defines security.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Algorithm-confusion attacks. Header's `alg` field is attacker-controlled. Hardcode expected algorithms in verification.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "User reports their account was hacked, asks you to log them out everywhere. Your auth uses JWT only, 24-hour expiry. Action?",
+      "choices": [
+        { "id": "a", "text": "Tell them to wait." },
+        { "id": "b", "text": "Can't truly revoke without state — stateless JWT design means tokens are valid until they expire; nothing checks 'is this token still allowed?' on each request. Options: (1) add a Redis denylist that the verifier checks (defeats statelessness but instant), (2) rotate the signing key — invalidates ALL tokens (heavy-handed; everyone re-logs in), (3) add a 'session version' claim — bump the user's version in DB; verifier checks claim against current; mismatch = reject (effectively per-user revocation with minimal state). For future: switch to short access tokens (5-15 min) + refresh tokens; revocation = refuse refresh = compromise window bounded to access-token lifetime; or use traditional server-side sessions (delete session row = instant logout). JWT-only auth WITHOUT a revocation strategy is a known weakness; real systems either add denylist/version-claim/short-expiry, or use server sessions for revocable access." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable JWTs entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JWT-only is hard to revoke. Add denylist, rotate keys, or session-version claim. Better long-term: short tokens + refresh.",
+      "points": 1
+    }
+  ]
+}

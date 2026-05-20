@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Firewalls & VPNs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why prefer zero-trust proxies (Cloudflare Access, Tailscale) over traditional VPNs?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "Traditional VPNs grant access to entire subnets — once authenticated, the user can probe everything inside; one compromised VPN account = lateral movement across the whole internal network. Zero-trust proxies require per-app authentication: every request to every internal service is re-authenticated against identity + device posture + policy. A compromised credential reaches only the specific apps the user was authorized for; per-app logging makes anomalies visible. Plus: easier to grant/revoke (per-app, not per-network), works seamlessly from any device location, no client VPN configuration to manage. Standard modern pattern: replace 'VPN to the office' with Cloudflare Access / Tailscale / AWS SSM Session Manager / Pomerium. Reduces blast radius dramatically; an attacker getting in still can't reach much without separate auth at each app." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster connection." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Per-app auth, not network-wide. One compromised credential reaches only one app, not the whole internal network.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You add egress filtering — outbound only to s3.amazonaws.com:443 + api.stripe.com:443. App suddenly can't reach an internal logging service. Action?",
+      "choices": [
+        { "id": "a", "text": "Remove egress filter." },
+        { "id": "b", "text": "Don't remove the filter — add the missing destination explicitly. Egress filtering is doing exactly what it should: surfacing unintended/undocumented outbound traffic. The internal logging service should be added to the allowlist (if legitimate) or routed differently (via VPC peering / private endpoint rather than public egress). Resist the urge to whitelist '0.0.0.0/0' because something broke; that defeats the protection. Egress filtering is invaluable for catching data exfiltration: a compromised app trying to send data to a random IP gets blocked at the firewall, generating an alert that surfaces the breach. Add destinations one by one as legitimate needs arise; investigate any that aren't recognized. The 'temporary disable to fix later' approach almost always becomes permanent and the protection is lost." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Allow all egress." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add the missing destination explicitly. Egress filtering surfaces legitimate-but-undocumented traffic; don't disable.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Email & SMTP",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do most teams use SendGrid / Mailgun / Postmark / SES instead of self-hosting SMTP?",
+      "choices": [
+        { "id": "a", "text": "Easier API." },
+        { "id": "b", "text": "Deliverability is a reputation game. Hosting your own SMTP from a fresh cloud IP = bad reputation by default (cloud IPs are constantly blocklisted, fresh IPs have no history). Mail gets spam-foldered or rejected outright by Gmail/Outlook. Sending services own large pools of pre-warmed IPs with established reputation; they handle DKIM/SPF/DMARC alignment, bounce processing, complaint feedback loops, blocklist monitoring, IP rotation. You get an API key and good delivery — they get the operational work. Self-hosting makes sense for: very high volume where dedicated infra is cheaper than per-message billing, or for compliance reasons (data sovereignty). For most apps: SendGrid / Postmark / Resend / SES (and modern entrants like Loops, Resend) cost cents per thousand and deliver dramatically better than rolling your own. The build-vs-buy math is overwhelmingly 'buy' for email." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deliverability requires established IP reputation + DKIM/SPF/DMARC + bounce handling. Services do this professionally.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mixing transactional (receipts, password resets) and marketing (newsletters) email on one domain. Risks?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Marketing email has higher complaint rates (people mark newsletters as spam more than receipts). Mixing degrades the domain's reputation, hurting transactional delivery — password reset emails start landing in spam, which is much worse than newsletters landing there because users actively NEED transactional mail. Standard practice: separate subdomains. `notifications.example.com` or `mail.example.com` for transactional (low-complaint, high-engagement), `marketing.example.com` for newsletters/promotions (higher-complaint, expected). Each has its own SPF/DKIM/DMARC and its own reputation score. If marketing reputation tanks, transactional keeps delivering. Major services (SendGrid, Mailgun, Postmark, Resend) support multiple sending domains; you configure each independently. Standard hardening for any production app sending diverse mail types — adds 30 minutes of DNS setup; protects transactional deliverability for years." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Marketing's high complaint rate poisons transactional delivery. Separate subdomains; separate reputations.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Logging & detection",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why ship logs to a separate system in real-time?",
+      "choices": [
+        { "id": "a", "text": "Backup." },
+        { "id": "b", "text": "An attacker who compromises a host can clean its local logs to cover their tracks — modify timestamps, delete entries, or wipe the log directory entirely. Shipped-elsewhere logs are out of their reach. The pattern: log locally + ship in real-time to a separate trust domain (different account, different infra). Even an attacker with root on the host can't unsay what was already shipped before they got in. For sensitive logs: write-once / append-only storage (S3 with object-lock, immutable buckets) prevents tampering even by your own admins. The forensic value during incident response is enormous — these logs are how you reconstruct what happened, when, by whom. Without centralized logging, post-breach investigation is guesswork; with it, you have evidence. Standard pattern across all serious security programs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Attacker on host can clean local logs. Real-time ship to separate trust domain preserves evidence.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your SIEM fires 200 alerts a day; engineers ignore most. Fix?",
+      "choices": [
+        { "id": "a", "text": "More engineers." },
+        { "id": "b", "text": "Alert fatigue is destroying detection. Fix: tune aggressively for signal-over-noise. Audit each alert type: (1) what's the false positive rate? If >30%, the rule needs tightening or removal, (2) what's the action if true? If 'no action,' delete the alert — it's noise, (3) is the alert truly time-sensitive (pager-worthy) or informational (daily digest)? Most alerts should be the latter. Goal: 5-15 page-worthy alerts per day, each meaningful enough that an engineer investigates. Common tuning moves: increase thresholds (login failures from 5 to 20 before paging), add baseline context (only alert if outside business hours), correlate multiple weak signals into one strong alert. Alerts that don't get answered are training engineers to ignore alerts — eventually they miss the real one. Better to have fewer, more reliable alerts than dashboard-of-everything that no one reads." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable SIEM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alert fatigue. Tune for signal-over-noise: audit FP rate, remove no-action alerts, correlate weak signals.",
+      "points": 1
+    }
+  ]
+}

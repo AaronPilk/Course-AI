@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://owasp.org", "title": "OWASP Foundation", "publisher": "OWASP" },
+    { "url": "https://www.kali.org/docs/", "title": "Kali Linux Documentation", "publisher": "Offensive Security" },
+    { "url": "https://nvd.nist.gov", "title": "National Vulnerability Database", "publisher": "NIST" },
+    { "url": "https://attack.mitre.org", "title": "MITRE ATT&CK Framework", "publisher": "MITRE" },
+    { "url": "https://cwe.mitre.org", "title": "Common Weakness Enumeration", "publisher": "MITRE" }
+  ]
+}

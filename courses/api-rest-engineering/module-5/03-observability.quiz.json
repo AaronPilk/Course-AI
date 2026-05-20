@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Observability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are SLOs more useful than 'things should be fast' as a goal?",
+      "choices": [
+        { "id": "a", "text": "Sound official." },
+        { "id": "b", "text": "SLOs are quantified and measurable; 'fast' is subjective. SLO: '99.9% of requests complete in <500ms over 30 days.' Built from SLIs (metrics): % requests under 500ms. Error budget: 0.1% × 30 days = 43 minutes of breach allowed. When error budget is exhausted, the team stops launching features and focuses on reliability — self-regulating mechanism that balances velocity against reliability. With 'things should be fast,' there's no clear trigger for prioritizing reliability work; arguments are vibes-based. With SLOs, the data decides: budget exhausted = freeze features; budget healthy = ship aggressively. Google's SRE book is the canonical source. SLOs require thinking about what your users actually need (not 'as fast as possible' but 'fast enough for the use case') and committing to it publicly. The act of defining the SLO surfaces disagreements that 'we should be fast' hides. Standard practice in mature engineering orgs; emerging in smaller teams." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quantified + measurable + error budget regulates feature pace. 'Fast' is unactionable; SLOs are.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Latency spike on one endpoint. Logs + metrics show p99 doubled but don't say where time goes. Tool to use?",
+      "choices": [
+        { "id": "a", "text": "Restart servers." },
+        { "id": "b", "text": "Distributed tracing. Latency metrics tell you a request is slow but not WHY; logs tell you what happened in isolated events. Traces show the request's full path: which service, which DB query, which external API call, where the milliseconds went. Open a sample slow request's trace — you see 'auth: 5ms, DB query: 230ms, response: 15ms' — DB query is the culprit. Click into the DB span — see the exact query, parameters, how many rows scanned. The fix becomes obvious: missing index, N+1 query, expensive operation. OpenTelemetry (OTEL) is the modern standard; instrumented apps emit spans to backends (Jaeger, Tempo, Honeycomb, Datadog). Trace IDs propagate via headers (`traceparent`), connecting spans across services. Pair with log correlation (same request_id) and you can pivot between any of the three pillars during an investigation. Without traces, you guess at where time is spent — slow and unreliable. With traces, you see. Essential for any non-trivial distributed system." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy bigger servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Distributed tracing (OpenTelemetry). Shows time per span end-to-end; latency culprit becomes obvious.",
+      "points": 1
+    }
+  ]
+}

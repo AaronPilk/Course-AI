@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://learn.microsoft.com/en-us/azure/architecture/", "title": "Azure Architecture Center", "publisher": "Microsoft" },
+    { "url": "https://aws.amazon.com/saas/", "title": "AWS SaaS Factory", "publisher": "AWS" },
+    { "url": "https://docs.stripe.com/billing", "title": "Stripe Billing", "publisher": "Stripe" },
+    { "url": "https://workos.com/docs", "title": "WorkOS Docs", "publisher": "WorkOS" },
+    { "url": "https://www.openid.net/connect/", "title": "OpenID Connect", "publisher": "OpenID Foundation" }
+  ]
+}

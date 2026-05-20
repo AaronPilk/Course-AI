@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: API design fundamentals",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does idempotency matter in HTTP methods?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "It determines whether retries are safe. Network glitches happen constantly; clients retry failed requests. Idempotent operations (GET, PUT, DELETE) have the same effect when done N times as when done once — safe to retry blindly. Non-idempotent operations (POST default) create duplicates on retry: 3 retries of `POST /charge` after a flaky network = 3 charges. Real-world impact: double-charges, duplicate emails, double-deducted inventory. Solution for non-idempotent: idempotency keys — client generates a unique key per logical operation; server stores results keyed by it; subsequent retries with the same key return the original result instead of re-executing. Stripe, AWS, GitHub use this pattern. Knowing which methods are idempotent — and designing around the ones that aren't — is fundamental to operating reliable APIs at scale. The HTTP spec defined the property because retries are unavoidable; the API designer's job is to make retries safe." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotent = safe to retry. Non-idempotent retries cause duplicates. Use idempotency keys for POST.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Public API uses sequential integer IDs like /orders/124. Risk?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Enumeration risk + information leakage. Sequential IDs reveal volume ('only 124 orders so far'), enable trivial enumeration (try /orders/123, /orders/122 to find more), and leak business metrics to anyone with access (competitor sees order count grow). If there's any access-control bug (IDOR — common), enumeration is trivial. Solution: opaque random IDs. UUIDs (random 128-bit), Snowflake IDs (sortable but unpredictable), nanoid (short URL-safe random). Stripe-style prefixed IDs (`cus_abc123def`, `ord_xyz789`) combine debuggability with unguessability. Cost: longer URLs (mild). Benefit: no info leakage + no enumeration. Standard practice for any public-facing API in 2026; sequential integer IDs are an anti-pattern unless they're internal-only and access-controlled per-row at the database level. The migration from sequential to opaque IDs is one of the most common API hardening tasks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sequential IDs leak volume + enable enumeration. Use opaque IDs (UUIDs / Stripe-style prefixed random).",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is GET for state-changing operations dangerous?",
+      "choices": [
+        { "id": "a", "text": "Slow." },
+        { "id": "b", "text": "GET is defined as 'safe' (shouldn't modify state); the entire web infrastructure assumes this. Browsers prefetch GET links on hover; search engine crawlers fetch every GET URL they find; proxies and CDNs cache GET responses; antivirus and anti-phishing services fetch URLs to check them; link previews on Slack/Twitter GET URLs. Real-world horror: a wiki used `GET /pages/{id}/delete` for delete; Googlebot crawled the site with the admin's persistent cookie; mass deletion of pages. Fix: any state-changing operation must be POST/PATCH/PUT/DELETE. The safe/unsafe distinction in HTTP exists precisely because the entire web assumes it; violations cause mass-action incidents you can't easily reproduce. Rule of thumb: if a search engine crawling this URL would be bad, it's not a GET." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Browser support." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GET is 'safe' per HTTP spec — crawlers, prefetch, caches assume it. Violations cause mass-action incidents.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Client submits invalid form data. Right status code?",
+      "choices": [
+        { "id": "a", "text": "500." },
+        { "id": "b", "text": "422 Unprocessable Entity for validation errors. The distinction: 400 = malformed request (unparseable JSON, missing required header, wrong Content-Type — usually indicates a client code bug); 422 = request is well-formed but semantically invalid (email format wrong, age below minimum — usually indicates user input error). 422 lets the client distinguish 'I sent garbage' from 'I sent a valid request that failed validation' for different handling (silent retry vs show form error). Pair with structured body listing fields: `{\"error\": \"validation_failed\", \"fields\": {\"email\": \"must be valid email\"}}`. Some teams use 400 for both out of habit; either works if consistent, but 422 is spec-aligned and clearer. The standard pattern: 4xx for client problems, 5xx for server problems, and within 4xx, use the most specific code (404 vs 410, 401 vs 403, 400 vs 422)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "200." }
+      ],
+      "correct_answer": "b",
+      "explanation": "422 for validation failures (well-formed but semantically invalid). 400 is for unparseable/malformed.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Returning `200 OK` with `{\"status\": \"error\"}` body — why bad?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Breaks HTTP semantics everything depends on. 200 means success across the entire HTTP stack — clients, proxies, CDNs, error trackers, monitoring, retry libraries all assume 200 = OK. With 200-but-error body: every client needs custom unwrapping, monitoring shows 100% success rate when really 30% fails, retry libraries don't retry failed requests (200 isn't retryable), error trackers don't alert. Real status codes (4xx client, 5xx server) plug into all of this for free: monitoring auto-tracks error rate, automatic retries for 5xx, observability tools surface failures, Sentry / DataDog alert. The 'easier for clients' rationale for 200-with-error backfires every time — every consumer has to add custom logic to detect failure, defeating the supposed simplicity. Use real status codes; structured error body in 4xx/5xx response provides the why. HTTP semantics were designed for this; using them gives you the entire observability and reliability ecosystem for free." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller body." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Breaks HTTP semantics. Monitoring, retries, error tracking all assume 200 = success. Use real codes.",
+      "points": 1
+    }
+  ]
+}

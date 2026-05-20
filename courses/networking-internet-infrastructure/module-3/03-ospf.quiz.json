@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OSPF",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does OSPF compute shortest-cost path, not shortest-hop?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Hops don't reflect link quality. A path through 5 fast (10Gbps) links is better than 2 slow (10Mbps) links — but shortest-hop routing would pick the slow path. OSPF uses link cost (typically inversely proportional to bandwidth: 10^8 / bandwidth) so faster links have lower cost, and Dijkstra picks the route with lowest total cost. Result: traffic flows over fast paths even if they're longer in hop count. Operators can manually tune costs to engineer specific behavior — make a backup link expensive so it's only used when the primary fails, or make a WAN link expensive to keep traffic local. This bandwidth-aware routing is fundamental to modern interior routing; hop-count-only is the old RIP approach (essentially obsolete). Same logic applies in BGP route selection at the MED level for some configurations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Fewer collisions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hop count ignores link speed. Cost (inverse of bandwidth) picks fast links over many-hops-of-slow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your Kubernetes cluster's pods can't reach pods on other nodes. CNI suspected. Tool to diagnose?",
+      "choices": [
+        { "id": "a", "text": "kubectl restart." },
+        { "id": "b", "text": "Layered approach: (1) `kubectl get pods -o wide` — check pod IPs and which node each is on, (2) from a pod on node A, try to ping a pod IP on node B (use `kubectl exec`) — does L3 work? (3) `kubectl get networkpolicy` — is there a NetworkPolicy blocking the traffic? (4) check the CNI plugin's logs (Calico, Cilium, etc.) — most have pod-network-validation tools, (5) `tcpdump` on the node's host network and the pod's veth interface to see where packets disappear, (6) look at routing tables on each node — `ip route` shows the CIDRs assigned to each node and the routes between them, the CNI should populate these. Common causes: NetworkPolicy too restrictive, CNI plugin crashed, MTU mismatch (overlay headers add ~50 bytes, fragmentation drops), node-to-node routing broken (firewall on the underlying network). Systematic CNI debug; not 'restart and hope.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch CNI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pod IPs + ping + NetworkPolicy + CNI logs + tcpdump + routing tables. Systematic CNI diagnosis.",
+      "points": 1
+    }
+  ]
+}

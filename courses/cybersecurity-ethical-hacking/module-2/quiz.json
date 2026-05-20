@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Web application security",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the fundamental fix for SQL injection?",
+      "choices": [
+        { "id": "a", "text": "Escape inputs manually." },
+        { "id": "b", "text": "Parameterized queries (also called prepared statements). The query template and the values are sent to the database SEPARATELY at the protocol level — the database knows the values are literals, not SQL, so no input can change the query's structure regardless of what characters it contains. `cursor.execute('SELECT * FROM users WHERE id = %s', (user_id,))` is safe even if user_id is `'; DROP TABLE users; --` because the database treats it as a string literal. Escaping, by contrast, tries to neutralize dangerous characters in code — fragile, database-specific, easy to forget, and bypassable via charset tricks. Every modern driver supports parameterization. ORMs (SQLAlchemy, Drizzle, Prisma) use it automatically. The fix is universal and free; manual escaping is the original sin." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "WAF." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Parameterized queries — separate query structure from data at protocol level. No input can change structure.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your bank app does money transfers via POST. Browser cookies for auth. Defenses against CSRF?",
+      "choices": [
+        { "id": "a", "text": "HTTPS." },
+        { "id": "b", "text": "Layered: (1) SameSite cookies — set session cookie with SameSite=Lax (modern default) or Strict; browser refuses to send the cookie on cross-origin POSTs from attacker.com, defeating most CSRF, (2) CSRF tokens — random per-session value the form must include; not sent on cross-origin requests, so forged requests miss it; Django/Rails generate this automatically, (3) Re-authentication for sensitive actions — require password entry even within an authenticated session, so successful CSRF can't transfer money without the password, (4) Audit logging — every transfer logged with IP/device/UA so anomalies surface for review. SameSite alone catches most modern CSRF; tokens + reauth are belt-and-suspenders. This combination is what banks actually run. CSRF is OWASP-acknowledged as much-reduced in 2026 thanks to SameSite defaults, but the belt-and-suspenders approach matters for high-stakes actions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "GET only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SameSite cookies + CSRF tokens + reauth + audit logging. Defense in depth.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is bcrypt better than SHA-256 for storing passwords?",
+      "choices": [
+        { "id": "a", "text": "Stronger collision resistance." },
+        { "id": "b", "text": "SHA-256 is designed to be FAST — billions of hashes per second on commodity GPUs. Password hashing needs to be SLOW to resist brute-force attacks on leaked database dumps. bcrypt has a configurable work factor (e.g., cost=12 means ~250ms per hash), salted automatically (preventing rainbow tables), proven across two decades. argon2 and scrypt are modern alternatives — argon2 is memory-hard (resists GPU/ASIC attacks better) and won the Password Hashing Competition. Calibrate work factor so login takes 100-500ms. A leaked database of SHA-256 hashes can have most weak passwords cracked in hours; bcrypt at cost=12 makes the same crack take months or years. Never plain SHA, MD5, base64 'encoding,' or 'encrypt' the password. These have been broken for decades; using them in 2026 is malpractice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "SHA-256 is illegal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SHA-256 is fast (GPU-crackable). Passwords need slow + salted + memory-hard (bcrypt/argon2/scrypt).",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Endpoint `GET /api/invoices/:id` returns invoice for any authenticated user. Bug?",
+      "choices": [
+        { "id": "a", "text": "Caching issue." },
+        { "id": "b", "text": "IDOR (Insecure Direct Object Reference) — checks authentication but not authorization. User Aaron logs in, requests /api/invoices/12345, server returns it without verifying 12345 BELONGS to Aaron. Aaron iterates IDs, reads every customer's invoices. This is OWASP Top 10 #1 (Broken Access Control). Fix: every query scoped to the authenticated user: `SELECT * FROM invoices WHERE id = $1 AND user_id = $2`. For multi-tenant: enforce at the database via Row-Level Security (RLS) so even buggy app code can't leak across tenants — Postgres + Supabase have this built in. Test every authenticated endpoint manually: 'as user A, can I access user B's data by changing the ID?' If yes, IDOR. Automated scanners catch some; manual testing catches more. Per-endpoint authentication isn't enough — you need per-query authorization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Missing CSP." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IDOR. Per-query scoping by user_id; RLS at DB level. Test every endpoint as different users.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What is SSRF (Server-Side Request Forgery)?",
+      "choices": [
+        { "id": "a", "text": "Client requesting server." },
+        { "id": "b", "text": "An attacker tricks your server into making HTTP requests to URLs the attacker controls — typically targeting internal resources the attacker can't reach directly. Classic exploit: app has a 'fetch URL' feature; attacker passes `http://169.254.169.254/latest/meta-data/iam/security-credentials/` (AWS instance metadata); server fetches it; attacker gets the IAM credentials and pivots into the AWS account. This is exactly how Capital One was breached in 2019 (106M records). Defenses: allowlist domains the app is allowed to fetch (explicit trusted partners only); block private IP ranges (10/8, 172.16/12, 192.168/16, 169.254/16, 127/8); use IMDSv2 on AWS (token-bound, requires header); run the fetch service in an egress-restricted subnet. Any feature that fetches a URL on behalf of the user is high-risk and should be designed with paranoia from day one." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "SSL renegotiation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server fetches URLs the attacker controls — used to steal AWS IAM creds via metadata endpoint (Capital One).",
+      "points": 1
+    }
+  ]
+}

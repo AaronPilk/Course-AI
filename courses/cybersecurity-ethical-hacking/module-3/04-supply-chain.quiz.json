@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Supply chain",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why pin GitHub Actions by SHA instead of tag?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Tags are mutable — the action maintainer can move `@v4` to point at any commit at any time, including a malicious one if their account is compromised. SHAs are immutable references to specific code. With `uses: actions/checkout@v4`, you re-fetch whatever's at v4 every workflow run; if v4 gets moved (or the maintainer is compromised), your next build runs different code than yesterday's, with full repo access and possibly secrets. With `uses: actions/checkout@b4ffde65...` (SHA), you always run the exact code you reviewed; even a compromised maintainer can't change what your workflow runs. The cost: harder to upgrade (need to update the SHA + recheck). Tools like Dependabot automate this — it watches actions and proposes SHA bumps via PR, which you review. Standard hardened-CI practice in 2026; pinning by tag is the GitHub Actions equivalent of `npm install` without a lockfile." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Aesthetics." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tags are mutable; SHA pinning is immutable. Compromised maintainer can't change what your CI runs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A critical CVE drops in lodash. How fast can your team answer 'are we affected, and where?'",
+      "choices": [
+        { "id": "a", "text": "A few days." },
+        { "id": "b", "text": "Should be seconds with proper SBOM tooling. SBOM (Software Bill of Materials) is an inventory of every dependency in your build — direct and transitive — generated automatically per release. Tools: Syft, CycloneDX CLI, GitHub's dependency graph. When a CVE drops, grep the SBOM: `lodash@4.17.20` → 'yes, three services, here's the version.' Without SBOM, when Log4Shell hit, teams spent days frantically searching repos to figure out exposure — many missed transitive uses entirely. The work to set up SBOM is small (one command in your release pipeline); the payoff during the next critical CVE is massive. Combined with Dependabot/Renovate for automated patch PRs, the response is 'merge the bot's PR; deploy; done.' This is what production-grade supply-chain hygiene looks like." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire help." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Seconds with SBOM tooling (Syft, CycloneDX). Grep the bill of materials. Critical for fast CVE response.",
+      "points": 1
+    }
+  ]
+}

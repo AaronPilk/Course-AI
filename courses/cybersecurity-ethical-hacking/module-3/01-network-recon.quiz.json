@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Network recon",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why scan your own perimeter regularly?",
+      "choices": [
+        { "id": "a", "text": "Bandwidth check." },
+        { "id": "b", "text": "To find what attackers will find. Production environments drift — engineers spin up services for testing and forget them; cloud auto-deploys expose new ports; misconfigured Terraform opens 0.0.0.0/0 instead of internal-only. Without periodic scans, you don't know what's exposed; attackers will inventory it for you using tools like Shodan/Censys (which index everything internet-facing within hours of exposure). The exposure surface includes: undocumented dev/staging environments still public, default-port database/Redis/MongoDB instances that someone meant to firewall, vendor-installed admin panels, expired certs that fell back to HTTP. Monthly nmap of your public IPs + Shodan search of `org:'your-company'` reveals what's there. Findings become tickets: 'why is port 3306 open on this prod IP?' The cost is minutes; the benefit is catching exposures before they're exploited." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Find what attackers will find. Environments drift; periodic scans catch undocumented exposure.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "nmap reveals port 6379 (Redis) open on a production server with no auth. Severity?",
+      "choices": [
+        { "id": "a", "text": "Low." },
+        { "id": "b", "text": "Critical / immediate-action. Redis without auth on a public IP = full takeover within hours, possibly minutes. Attackers run constant scripts looking for exactly this: write to /root/.ssh/authorized_keys via Redis's SAVE command (a known technique), get SSH access, mine crypto / install ransomware / pivot. Historical pattern: dozens of major orgs have been compromised this way (database leaks, ransom, system takeovers). Immediate response: (1) close the port at the firewall / security group RIGHT NOW, (2) assume the box may already be compromised — check for unexpected SSH keys, cron jobs, processes, network connections, (3) review logs for any Redis commands that look exploit-like (CONFIG SET, SAVE to weird paths), (4) post-incident: enable auth, bind to internal IPs only, run Redis in a private subnet behind a VPC. This is a known-exploited misconfiguration — treat as 'breach until proven otherwise' rather than 'risk to assess.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Medium." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Critical. Public Redis no-auth = active exploit target; close port immediately; treat as possibly breached.",
+      "points": 1
+    }
+  ]
+}

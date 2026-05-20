@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: The stack",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "L4 vs L7 load balancers — key difference?",
+      "choices": [
+        { "id": "a", "text": "Brand." },
+        { "id": "b", "text": "L4 routes on TCP/IP info only (IP, port) — fast, protocol-agnostic, works for any TCP traffic (databases, mail, custom protocols). L7 understands HTTP — routes by URL path, header, hostname, cookie. Enables sophisticated patterns (canary, A/B, path-based microservice routing) at the cost of needing to parse HTTP per request. Production stacks often use both: L4 (AWS NLB, GCP TCP LB) for raw bandwidth/throughput + L7 (AWS ALB, GCP HTTPS LB, nginx, Envoy) for HTTP-aware routing layered above. Pick by need: opaque TCP/long-lived connections → L4; HTTP-aware behavior → L7. The 'OSI layer' in the name maps to what info the LB inspects to make decisions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "L7 is older." }
+      ],
+      "correct_answer": "b",
+      "explanation": "L4 = TCP/IP-only (any protocol, fast). L7 = HTTP-aware (path/header routing).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Duplex mismatch on Ethernet — symptom?",
+      "choices": [
+        { "id": "a", "text": "No connection." },
+        { "id": "b", "text": "Slow + intermittent — one device runs full-duplex (simultaneous send/receive), the other half-duplex (turn-taking). They both think the link works, but collisions happen because full-duplex device sends while half-duplex device is also sending. Each collision causes retransmits; throughput drops dramatically; small or short transfers might work fine while bulk transfers crawl. The classic 'works but slow' symptom. Diagnose via `ethtool eth0` (Linux) showing duplex; switch port stats showing collision counts and 'late collisions' (telltale of duplex mismatch). Fix: ensure both ends auto-negotiate (modern default), or pin both to the same speed/duplex explicitly. Easy to overlook because the link comes up — the failure is performance, not connectivity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Total failure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Slow + intermittent. Auto-negotiation failed; collisions cause retransmits. Diagnose via ethtool / switch stats.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "VPC CIDR design: 4 subnets × ~4K hosts each. Plan?",
+      "choices": [
+        { "id": "a", "text": "/30 each." },
+        { "id": "b", "text": "VPC = /16 (65K addresses), four /20 subnets (4096 each). 10.0.0.0/16 split into 10.0.0.0/20, 10.0.16.0/20, 10.0.32.0/20, 10.0.48.0/20 covers four AZs cleanly with room left in the VPC for additional subnets (private/public splits per AZ, future expansion). Each /20 = 2^12 = 4096 addresses, 4094 usable (one network address, one broadcast). AWS reserves additional .0 (VPC router), .2 (DNS), .3 (reserved), so usable is slightly under 4094. Standard pattern: /16 VPC, /20-/24 subnets, separated per AZ for HA + private/public split per AZ for security boundaries. Plan address space carefully on day one — renumbering production VPCs is painful." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "/8 VPC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "/16 VPC + four /20 subnets (4096 each). Standard AWS pattern with room for growth.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "High-traffic server hits TIME_WAIT exhaustion. Fixes?",
+      "choices": [
+        { "id": "a", "text": "Reboot." },
+        { "id": "b", "text": "Layered: (1) enable `net.ipv4.tcp_tw_reuse=1` — safely reuses TIME_WAIT sockets when the new connection's timestamp is higher than the previous, (2) widen `net.ipv4.ip_local_port_range` from default (~28K usable ports) to maximum (e.g., 1024-65535) — more ephemeral ports available, (3) at the app layer: HTTP keep-alive so fewer connections are needed (reuse one connection for many requests), (4) connection pooling for outbound — don't open new connection per query. TIME_WAIT exhaustion is classic 'works at low load, fails at scale.' The underlying issue: TCP needs to linger in TIME_WAIT after close to handle late packets and prevent connection ID reuse ambiguity; with many short connections, accumulated TIME_WAIT entries exhaust the ephemeral port pool. Combined fixes scale to hundreds of thousands of connections per minute." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy more RAM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "tcp_tw_reuse + widen port range + HTTP keep-alive + connection pooling. Standard fixes.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why does DNS default to UDP rather than TCP?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "Speed — DNS queries are tiny and need to complete fast (every other network operation waits on DNS first). TCP would require handshake (1.5 RTT) before the query, then the data, then connection teardown — minimum 3 RTTs for one lookup. UDP just sends the query in one packet, gets a response in one packet — 1 RTT total. For DNS, which adds latency to every connection that needs name resolution, this matters massively. Trade-off: UDP is unreliable, so DNS implementations retry on timeout. Responses too large for one UDP packet (DNSSEC, large records) fall back to TCP. Modern privacy variants (DNS-over-HTTPS, DNS-over-TLS) use HTTPS/TLS over TCP for confidentiality at the cost of more RTTs. The 'why UDP' answer is: speed matters more than reliability for simple stateless queries with cheap retry." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compatibility." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Speed — UDP DNS is 1 RTT; TCP would be 3+. Retry on timeout handles loss.",
+      "points": 1
+    }
+  ]
+}

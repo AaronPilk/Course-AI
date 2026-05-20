@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Scaling & operations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why minimize signup form fields?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Each field reduces conversion measurably (3-10% per field, common rough estimate). Users trade effort for hypothetical value; if effort is high before they've experienced any value, they bounce. Email-only signup with deferred profile completion (ask name/role/company AFTER they've experienced the product) significantly outperforms front-loaded forms. Better patterns: magic links (email only, click link to log in, no password yet), social login (Sign in with Google = one click), progressive profiling (ask 1-2 things per session as needed). Questions you SHOULD ask early are those that meaningfully personalize (role/use case if it changes UI) — at most 2-3. Friction at signup compounds because that's the moment of highest 'should I even do this' doubt; reduce it. Defer everything that isn't necessary to provide initial value." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Server load." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Each field reduces conversion 3-10%. Defer non-essential profile data until after value demonstrated.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Customer success wants to know at-risk accounts proactively. Approach?",
+      "choices": [
+        { "id": "a", "text": "Wait for complaints." },
+        { "id": "b", "text": "Build a health score combining: engagement (DAU/MAU trend — falling = bad), feature adoption (% of features used, especially key ones), commercial signals (renewal date approaching, payment failures, plan downgrades), support sentiment (CSAT, ticket volume), executive sponsor signals (champion left? main user gone?). Weight each; score 0-100; red/yellow/green buckets nightly. CS team works from 'red accounts dashboard' — proactive outreach to investigate, offer help, address root causes BEFORE customer churns. Tools (Gainsight, Vitally, ChurnZero, Catalyst) are CS-specific platforms. Without health scoring, CS works reactively (only on accounts who complain); proactive intervention catches accounts that drift silently. Industry benchmark: proactive CS reduces churn 10-30% on touched accounts. Standard practice for SaaS with revenue per customer high enough to justify human CS attention (typically $5K+ ACV)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Survey weekly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Health score from engagement + adoption + commercial + sentiment. Tools: Gainsight, Vitally, ChurnZero.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is NRR (Net Revenue Retention) the most-watched SaaS metric?",
+      "choices": [
+        { "id": "a", "text": "Sounds technical." },
+        { "id": "b", "text": "Measures whether revenue from EXISTING customers compounds. NRR > 100% means: same cohort grows revenue YoY through expansion (upgrades, seats, usage) net of churn and downgrades. With NRR > 120%, you grow revenue meaningfully with ZERO new customer acquisition — compounding flywheel. Top public SaaS (Snowflake, Datadog) report 130-150% NRR; massive competitive moat. NRR < 100% = treadmill (constantly replacing churned revenue plus adding new). Investors weight NRR heavily because it predicts long-term capital efficiency. $10M ARR with 130% NRR and 60% growth attracts much higher valuation than $10M with 95% NRR and 60% growth — first compounds, second hand-fights for every dollar. Improving NRR requires: usage-based pricing (revenue grows with success), clear expansion paths, low churn (great product + onboarding + support), proactive CS. The 'pursue NRR > 100%' framing reshapes product + pricing + CS decisions across the org." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by GAAP." }
+      ],
+      "correct_answer": "b",
+      "explanation": "NRR > 100% = revenue from existing customers compounds. Compounding moat; investors weight heavily.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "First enterprise prospect asks 'do you have SOC 2?' You don't. Right path?",
+      "choices": [
+        { "id": "a", "text": "Lie." },
+        { "id": "b", "text": "Honest + start the process immediately. Tell prospect: 'we don't have SOC 2 yet but are starting now; expected Type II in Q3.' Some enterprise customers will accept this with: signed gap letter from auditor confirming work in progress, your DPA, your existing security controls documented (encryption, access management, MFA, logging). Others require completed Type II before signing. Either way, start NOW: pick Vanta or Drata, begin evidence collection, schedule audit. 3-6 months to Type II is realistic with these tools (vs 12-18 months without). Use this prospect's interest to justify the cost ($50-100K first year all-in). Each subsequent enterprise deal closes faster because SOC 2 becomes table stakes once you have it. Lying = audit fails or customer disqualifies you on their security review; reputation damage; possible legal exposure. Honest start + visible progress beats lying every time. Bonus: SOC 2 process forces real security improvements that benefit all customers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Decline enterprise." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Be honest + start process immediately via Vanta/Drata. 3-6mo to Type II. Some enterprises accept 'in progress' with gap letter.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "GDPR risk for a SaaS with EU customers + no privacy program?",
+      "choices": [
+        { "id": "a", "text": "Minor if small." },
+        { "id": "b", "text": "Material legal + customer-trust risk. GDPR penalties: up to 4% of global revenue OR €20M (whichever higher) — existential for any SaaS. Doesn't matter that you're small; EU regulators have fined small companies. Plus: customer trust — sophisticated B2B buyers in EU ask for your GDPR program before signing; without one, lost deals. Required: privacy policy (what data, why, how long, with whom shared), cookie consent + opt-out, DPA template for B2B customers (legal review), user self-serve export + deletion (right to access + erasure), sub-processors page listing vendors that touch data, breach notification process (72h to authorities), DPO if processing large volumes or special categories. Tools (Termly, Iubenda) generate compliant policies. Initial setup: a few weeks + ongoing operational discipline. Cheaper than the fine; far cheaper than lost EU enterprise deals. Start now even if 'small'; growing into compliance is much harder than starting compliant. The 'we're small so regulators won't care' bet is one of the worst risk/reward trades in SaaS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block EU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Up to 4% revenue / €20M penalties + lost EU deals. Privacy policy + DPA + user rights are tablestakes.",
+      "points": 1
+    }
+  ]
+}

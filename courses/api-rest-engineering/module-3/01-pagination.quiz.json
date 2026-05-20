@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Pagination",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does offset pagination perform badly on deep pages?",
+      "choices": [
+        { "id": "a", "text": "Network latency." },
+        { "id": "b", "text": "`OFFSET 1000000` makes the database scan and discard 1M rows before returning the next 20. The cost is O(offset), not O(1) — performance degrades linearly with depth. On a 100M-row table, page 5000 is unusably slow even with proper indexes. Cursor pagination fixes this: the cursor is the indexed value of the last returned row; the next query is `WHERE id > $cursor LIMIT 20` — an index lookup, constant time regardless of depth. Stripe, GitHub, Twitter API all use cursor pagination for exactly this reason. Trade-off: lose 'jump to page N' UX (acceptable for feeds, infinite scroll, sequential consumers; not great for admin tables where users expect page numbers). For large datasets and any sequential-consumer API: cursors. For small datasets or admin UIs: offset is fine. Knowing the trade-off lets you pick consciously rather than defaulting to offset everywhere and hitting performance walls at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encoding overhead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OFFSET scans and discards N rows. Linear with depth. Cursors are O(1) via index lookup.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "API returns `{\"data\": [...], \"total\": 1234567}`. Pagination is slow. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Network." },
+        { "id": "b", "text": "The `COUNT(*)` to compute total is the slow part — on a million-row table, even with indexes, COUNT scans matching rows and tallies. Combined with the pagination query, every request does the expensive count. Three fixes: (1) drop the total — many modern APIs don't include it; use `has_more` boolean from 'fetched limit+1 rows, last is dropped, has_more = was there an extra'; (2) cached approximate total — Postgres `reltuples` or precomputed stats updated periodically; (3) only compute total when the client asks (`?include_total=true`) — most clients don't need it. UX implication: 'Page X of Y' becomes 'Load more.' For most APIs in 2026 this is fine; users navigate feeds and infinite-scroll, not page numbers. If exact total is genuinely needed (admin reports, billing), do it as a separate endpoint that explicitly takes the count cost. Default: omit total from list endpoints." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disk I/O." }
+      ],
+      "correct_answer": "b",
+      "explanation": "COUNT(*) is the slow part. Drop the total or compute it lazily / approximately.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Reconnaissance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use certificate transparency logs (crt.sh) to find subdomains?",
+      "choices": [
+        { "id": "a", "text": "It's fast." },
+        { "id": "b", "text": "Certificate transparency (CT) logs are public, append-only records of every TLS certificate issued by trusted CAs since ~2018. Browsers require CT logging to trust certs. Side effect: every subdomain that ever had a cert appears in CT logs, even ones the org meant to keep private. Searching crt.sh for *.example.com reveals 'admin-staging.example.com', 'backup.example.com', 'dev-internal.example.com' — often shocking the org. Attackers use this for free; defenders should too, to audit their attack surface. The lesson: obscurity isn't security in 2026 — CT makes 'private' subdomains public. Either accept the visibility and harden everything, or use private CAs / wildcard certs that don't leak subdomain names." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheap." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CT logs publicly record every cert ever issued. Reveals subdomains orgs meant to keep private.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You find an API key committed to a public GitHub repo 8 months ago. The key was revoked 2 weeks after the commit. Risk?",
+      "choices": [
+        { "id": "a", "text": "Zero." },
+        { "id": "b", "text": "Non-zero, because: (1) bots scrape new commits within minutes — the key was likely used in those 2 weeks before revocation; check provider logs for unauthorized access during that window, (2) the key remains in git history forever — anyone cloning sees it, (3) sometimes 'revoked' keys still grant partial access (cached tokens, downstream services), (4) the commit reveals patterns about how your org structures secrets — useful for future attacks. Even revoked, leaked keys are a signal: 'this org has secret-leakage problems; what else have they leaked?' Defensive lessons: enable GitHub secret scanning (auto-revokes for many providers in seconds), set up pre-commit hooks (gitleaks), audit history with truffleHog, force secrets through env vars and a secret manager — never code. The hours after a leak are critical; 8 months is plenty of time for damage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "All clear." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bots scrape within minutes. Even revoked keys reveal patterns. Enable secret scanning + pre-commit hooks.",
+      "points": 1
+    }
+  ]
+}

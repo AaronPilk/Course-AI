@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Auth & sessions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use bcrypt/argon2 instead of SHA-256 for password hashing?",
+      "choices": [
+        { "id": "a", "text": "SHA-256 is deprecated." },
+        { "id": "b", "text": "SHA-256 is designed to be FAST (billions of hashes per second on commodity GPUs); password hashes need to be SLOW to resist brute-force attacks. bcrypt, argon2, and scrypt are designed for this: configurable work factor that makes each hash take ~100-500ms, salted automatically (preventing rainbow tables), and (for argon2/scrypt) memory-hard so GPU attacks are less effective. A leaked database of SHA-256 hashes can have most passwords cracked in hours; bcrypt at cost=12 makes the same crack take years and cost more than the data is worth. Modern alternatives in order: argon2 (winner of Password Hashing Competition, modern best), bcrypt (decades-proven, sufficient for most uses), scrypt (memory-hard). Never plain SHA, MD5, base64 'encoding' — all decades-broken." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "SHA-256 is illegal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SHA-256 is fast (GPU-crackable). Password hashes need slow + salted + memory-hard (bcrypt/argon2/scrypt).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your API has `GET /api/invoices/:id` that returns the invoice for any authenticated user. What's the bug?",
+      "choices": [
+        { "id": "a", "text": "No HTTPS." },
+        { "id": "b", "text": "IDOR (Insecure Direct Object Reference) — the endpoint checks authentication ('are you logged in?') but not authorization ('does this invoice belong to you?'). User Aaron can GET /api/invoices/12345 and read Linus's invoice just by iterating IDs. Fix: every query must scope to the authenticated user. `SELECT * FROM invoices WHERE id = $1 AND user_id = $2` with the authenticated user's ID. For multi-tenant systems, enforce at the database level via Row-Level Security (RLS) so even buggy app code can't leak data across tenants. IDOR is the #1 OWASP Top 10 in 2021 (Broken Access Control); test every authenticated endpoint: 'can a different user access this and get someone else's data?' If yes, you have an IDOR. The fix is per-query authorization, not just per-endpoint authentication." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No CSRF token." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IDOR. Check authenticated user OWNS the resource, not just that they're logged in. RLS at DB level.",
+      "points": 1
+    }
+  ]
+}

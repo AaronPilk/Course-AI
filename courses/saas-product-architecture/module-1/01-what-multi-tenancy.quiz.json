@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multi-tenancy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does most SaaS start with pooled (shared-DB) multi-tenancy?",
+      "choices": [
+        { "id": "a", "text": "Marketing." },
+        { "id": "b", "text": "Cheapest cost per tenant + fastest onboarding + simplest operations. One database to back up, monitor, patch, scale; new customer signup = insert a row into the tenants table (milliseconds); tenants share the cost of the underlying infrastructure efficiently. Silo (DB-per-tenant) would mean provisioning a new database on every signup — orders of magnitude slower and more expensive at SMB price points. The trade-off: pooled requires careful query discipline (every query must filter by tenant_id, or RLS enforces it at the database level); silo is foolproof but operationally heavy. Most successful SaaS (Notion, Linear, Slack) start pooled and only add silo for enterprise customers willing to pay for it. Migration from pooled → silo for individual large customers is a documented practice. The reverse (silo → pooled) is rarely needed but harder. Right answer: start pooled with RLS; add silo as enterprise tier when revenue per customer justifies the operational cost. PostgreSQL Row-Level Security makes pooled safe and is the modern default for new SaaS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lowest cost, fastest onboarding, simplest ops. Add silo for enterprise tier later; PG RLS makes pooled safe.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An enterprise prospect demands their data be in a dedicated database. Your SaaS is pooled. Right move?",
+      "choices": [
+        { "id": "a", "text": "Decline." },
+        { "id": "b", "text": "Offer dedicated infrastructure as an enterprise tier — typical pattern. Architecture: pooled for SMB / mid-market customers (efficient, cheap); dedicated/silo for enterprise customers willing to pay the premium that covers the operational cost. Implementation: same codebase routes connections based on customer tier — pooled customers hit the shared DB, dedicated customers hit their own (provisioned via Terraform on signup). Charge accordingly: $X/month for the shared tier, $XX,000+/month for dedicated. Common pattern across mature SaaS — Snowflake, Datadog, Linear, MongoDB Atlas all offer this. The 'decline' answer loses the enterprise deal; building a separate codebase for enterprise is unnecessary; the architecture can support both modes with a connection-routing layer. Plan for it in architecture from day one even if you don't ship dedicated initially — the abstraction (tenant → connection string) prepares you to add silo without a rewrite when the first big customer asks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rewrite as silo." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hybrid: pooled for SMB, silo for enterprise. Charge accordingly. Plan the abstraction from day one.",
+      "points": 1
+    }
+  ]
+}

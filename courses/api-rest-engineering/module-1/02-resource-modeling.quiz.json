@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Resource modeling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why avoid sequential integer IDs in public API URLs?",
+      "choices": [
+        { "id": "a", "text": "Ugly." },
+        { "id": "b", "text": "Enumeration risk — sequential IDs reveal information attackers can exploit. `/orders/124` and `/orders/125` exist; trying `/orders/123` reveals there ARE only ~125 orders (volume leakage). If access control is buggy (IDOR), enumeration is trivial — iterate IDs until you find one you can read. Even with proper auth, sequential IDs reveal business metrics: 'this company processes 1000 orders/day,' a competitor's lever. Solution: UUIDs (random 128-bit), Snowflake IDs (sortable but not predictable), nanoid (short random URL-safe). Stripe uses prefixed random IDs (`cus_abc123def`, `ord_xyz789`); the prefix is debuggable, the random portion is unguessable. Cost is small (longer URLs); benefit is removed information leakage + harder enumeration. Standard practice for any public-facing API in 2026; opaque IDs are simply the default." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sequential IDs leak volume info + enable enumeration. Use UUIDs or random IDs (Stripe-style).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need `GET /users/123/orders/456/items/789/comments/12`. Reasonable?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "Too deep — 5 levels of nesting. Problems: long URLs (hard for humans to type and debug), multiple paths to same resource (`/users/123/orders/456/items/789` vs `/items/789` — which is canonical?), bracket complexity in client code, cognitive load reading the URL. Practical limit: 2-3 levels of nesting. Beyond that, flatten — comments belong to items belong to orders belong to users, but the URL doesn't need to capture all of that. Better: `/items/789/comments` if items are top-level (with `?order_id=456` filter if needed), or `/comments?item_id=789`. Resource hierarchy should mirror genuine 'always belongs to' relationships, not every dimension of identity. When you find yourself needing 4+ levels, you usually need to elevate some resources to top-level and use query params for relationships. The deep nesting smell is real; trust the discomfort and refactor." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use POST." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Too deep — 2-3 levels max. Elevate to top-level + query params for relationships at depth.",
+      "points": 1
+    }
+  ]
+}

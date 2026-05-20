@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: DNSSEC & DoH",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between DNSSEC and DoH?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Different problems, complementary solutions. DNSSEC adds cryptographic signatures to DNS records so resolvers can verify answers are authentic — defeats spoofing / cache poisoning / forged responses. But DNSSEC doesn't encrypt; an eavesdropper still sees the queries and answers in plaintext on the wire. DoH (DNS over HTTPS) encrypts the channel between client and resolver — defeats eavesdropping and on-path tampering, but doesn't verify the answer's authenticity end-to-end (you trust your DoH resolver). Together: DNSSEC verifies the answer hasn't been forged; DoH hides what you asked from passive observers. Modern best practice is to enable both: DoH on the client side (Firefox, Chrome, OS), DNSSEC on the authoritative side for your domains. Each addresses one property; combined they give you authenticated + confidential DNS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "DNSSEC is faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DNSSEC = signed records (authenticity); DoH = encrypted channel (confidentiality). Complementary.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your DNSSEC keys expire over the weekend; resolvers return SERVFAIL. Site appears down. Recovery?",
+      "choices": [
+        { "id": "a", "text": "Wait." },
+        { "id": "b", "text": "Re-sign with current keys / rotate to valid ones IMMEDIATELY — most DNS providers offer one-click re-sign. Alternative emergency: temporarily disable DNSSEC (un-sign the zone) so resolvers fall back to unsigned answers; this restores access while you fix the keys properly. Long-term: monitor key expiry and rotate well before expiration; many providers handle this automatically (Cloudflare, Route 53 with DNSSEC managed mode). DNSSEC operational discipline matters — broken signatures cause outages that look like 'site down' to validating resolvers. Set up monitoring: tools like DNSCheck or Hardenize alert on signature problems. Lesson learned: don't enable DNSSEC unless you trust your DNS provider's automation or have alerting on key health. A small percentage of resolvers strictly validate DNSSEC; that percentage is enough to ruin a Monday morning." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Change registrar." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Re-sign or temporarily disable DNSSEC. Monitor key expiry; use managed DNSSEC where possible.",
+      "points": 1
+    }
+  ]
+}

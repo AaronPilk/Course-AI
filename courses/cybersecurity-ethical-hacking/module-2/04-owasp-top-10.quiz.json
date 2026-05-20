@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OWASP Top 10",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Broken Access Control #1 on the OWASP Top 10?",
+      "choices": [
+        { "id": "a", "text": "Hardest to fix." },
+        { "id": "b", "text": "Most prevalent AND most damaging. Access-control bugs are common because every authenticated endpoint needs its own authorization check — easy to skip, hard to test exhaustively, often not visible without manual probing. They're damaging because they directly bypass the privacy model: 'logged-in user can read another user's invoices,' 'regular user reaches the admin panel,' 'IDs in URLs reveal data they shouldn't.' The damages tend to be exactly the kind that makes news: customer data leaked, accounts compromised, financial loss. Defense requires both per-endpoint checks AND per-query scoping (RLS in databases, explicit user_id filters in queries). Testing requires walking every authenticated endpoint with a different user — automated tools miss most of this. Combination of prevalence + impact + difficulty of comprehensive testing = #1." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Slow performance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Most prevalent + most damaging. Easy to miss; hard to test exhaustively; directly leaks data.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app accepts a `?url=` parameter, fetches it server-side, returns content. Risk?",
+      "choices": [
+        { "id": "a", "text": "Slow." },
+        { "id": "b", "text": "SSRF (Server-Side Request Forgery, OWASP A10). User passes `?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/` — that's AWS's instance metadata endpoint, which returns the IAM credentials for the host's role. Your app fetches it on behalf of the attacker, returns the credentials, attacker pivots into your cloud account. This is exactly how the 2019 Capital One breach happened (Paige Thompson exploited an SSRF to extract IAM credentials and exfiltrate 106M records). Defenses: allowlist domains the app is allowed to fetch (only the explicit set of trusted partners); block private IP ranges (10/8, 172.16/12, 192.168/16, 169.254/16, 127/8); use IMDSv2 on AWS (token-bound, harder to SSRF); place fetch service in egress-restricted subnet. Any 'fetch this URL for me' feature is high-risk; treat with paranoia." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Memory leak." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSRF — attacker uses your server to fetch AWS metadata + steal IAM credentials. Capital One pattern.",
+      "points": 1
+    }
+  ]
+}

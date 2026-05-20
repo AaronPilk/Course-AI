@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: BGP",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does anycast deliver low latency to global users?",
+      "choices": [
+        { "id": "a", "text": "Magic." },
+        { "id": "b", "text": "Multiple servers worldwide announce the same IP prefix via BGP from different locations. When a client tries to reach that IP, the internet's routing — based on BGP topology — sends them to the closest announcing server. 'Closest' here means BGP-shortest-path (fewest AS hops), which usually correlates with geographic proximity but not always. So 1.1.1.1 from Tokyo lands at Cloudflare's Tokyo POP; from London at their London POP. Same IP, different servers, low latency everywhere. Used by: DNS root servers (13 logical, hundreds of physical via anycast), CDNs (Cloudflare/Google/Akamai serve same IPs from hundreds of POPs), DDoS scrubbing (spreads attack across many points). Requires owning a routable prefix and announcing from multiple locations — or using a provider (Cloudflare, Fastly) that does it for you. Foundation of modern low-latency global services." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Static routing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Same IP announced from many locations via BGP. Routing sends each client to the closest POP automatically.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A major service goes down even though its servers are running fine. BGP-related cause?",
+      "choices": [
+        { "id": "a", "text": "DNS." },
+        { "id": "b", "text": "BGP outage — the company's announcements got withdrawn from the global routing table. Servers run, but no one can reach them because the routes pointing to their network disappear from neighbor ASes. Famous example: Facebook's 6-hour outage in October 2021 — a BGP misconfiguration pulled Facebook's prefixes off the internet; servers up, DNS down (because their DNS was also unreachable), employees couldn't even access internal tools because everything routed through the same backbone. Rogers Canada 2022 had a similar pattern affecting their entire customer base. These outages reveal how much modern internet services depend on BGP correctness — a configuration mistake or upstream issue takes down services that look healthy by any other metric. Defenses: BGP monitoring alerts (announcements / withdrawals from your prefixes), path diversity (multiple upstreams + RPKI), tested change procedures for BGP config changes. Tools like RIPE NCC RIS, BGPmon for monitoring." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Power outage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "BGP outage — announcements withdrawn from global table. Servers up; internet can't reach them. Facebook 2021 pattern.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Authentication for SaaS",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why support multi-org per user in B2B SaaS?",
+      "choices": [
+        { "id": "a", "text": "Trendy." },
+        { "id": "b", "text": "Real-world demand. Consultants serve multiple clients (each = separate tenant); employees who change companies want to keep their account + history; people use the tool at work AND for personal projects; agencies manage client accounts. Without multi-tenant per user: people create multiple email accounts to work around it (painful) or leave for tools that support it. Slack pioneered multi-workspace per account; now industry standard for B2B (Linear, Notion, GitHub). Data model: many-to-many membership table linking users ↔ tenants with per-tenant role. Auth flow: user signs in with one identity; sees list of tenants; picks active one; session has tenant_id + user_id. Retrofitting multi-tenant onto single-tenant-per-user is painful migration; do it from day one. The 'one user, one tenant' simplification scales for B2C but breaks for any B2B serving people with multiple work contexts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Code reuse." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real users need it: consultants, ex-employees, agencies. Slack/Linear/GitHub all support; hard to retrofit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why use hosted auth like WorkOS / Auth0 for SSO rather than build SAML yourself?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "SAML implementation is complex (XML signatures, signature-wrapping attacks, IdP-specific quirks) and OIDC has its own validation pitfalls. Building from scratch: weeks of engineering + ongoing maintenance + per-customer support burden. Specialized providers (WorkOS, Auth0, Clerk, Stytch) abstract this — their SDK handles SAML/OIDC; you get one auth flow that works across hundreds of IdPs; they handle per-customer setup via admin portal. WorkOS specifically positions as 'add SSO in an afternoon, including SAML' — drop-in API; customer admin portal for IdP config. Costs: $X00-X000/mo at modest scale; less than engineering DIY. Build-vs-buy math overwhelmingly favors buy for SSO; even mature enterprise companies often use WorkOS internally. Skip-the-pain answer for fast-moving teams. The 'just use a library' approach handles protocol but not per-customer onboarding ops; SaaS solutions handle both end-to-end." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compliance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SAML/OIDC complexity + ongoing per-customer ops. WorkOS / Auth0 drop-in for far less than DIY.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Critical safeguard when enabling mandatory SSO for an enterprise customer?",
+      "choices": [
+        { "id": "a", "text": "Strong password policy." },
+        { "id": "b", "text": "Break-glass admin account (super-admin with password, exempt from SSO requirement). SSO can break in many ways: IdP misconfiguration, certificate expiry, customer's Okta outage, your SSO integration bug. If SSO is mandatory and breaks, ALL users are locked out — including admins who would fix it. Customer stuck calling support; you're scrambling. Break-glass admin: one or two accounts (CEO, security lead) that always have password login regardless of SSO requirement; documented in customer runbook; reset procedure clear. Pair with: 'SSO required' toggle these admins can flip; certificate-expiry monitoring with alerts; clear recovery docs sent to customer at SSO setup. Single safeguard prevents the worst SSO failure mode (full lockout). Standard enterprise pattern; required by mature security teams; cheap to implement. Without it, your first SSO outage becomes 'we can't access our own SaaS' panic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Backup SSO provider." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Break-glass admin (password bypasses SSO requirement). SSO breaks happen; admins need to recover.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "SCIM `DELETE /scim/v2/Users/abc` arrives. Hard-delete from your DB?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "Soft-delete (mark inactive, retain data) is usually safer. Reasons: (1) Audit logs reference user IDs — hard-deleting orphans authorship attribution on records, (2) Mistakes happen — wrong user offboarded; recoverable via soft delete, (3) Compliance — some regulations require retention even after offboarding (financial records, regulated industries), (4) Reactivation is common (rehires, returns from leave), (5) Billing reconciliation may need historical access. Pattern: set `deleted_at = now()`, `active = false`; queries filter `WHERE deleted_at IS NULL`; data preserved for forensics. Schedule hard-delete after retention period (90 days / 1 year / per legal requirement) via background job. Provide explicit 'permanent delete' option separately for GDPR right-to-be-forgotten. SCIM's DELETE typically means 'no longer needs access' rather than 'erase all evidence' — soft delete matches operational intent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block them." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Soft-delete preserves audit trail + allows recovery + handles compliance. Hard-delete after retention period.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Choosing an auth service for a new B2B SaaS — what matters most?",
+      "choices": [
+        { "id": "a", "text": "Cheapest tier." },
+        { "id": "b", "text": "Multi-tenant org management built-in. B2B SaaS needs: workspaces / tenants / organizations as a first-class concept (not bolted on); per-tenant roles and permissions; invitation flows; SSO and SCIM per tenant for enterprise; multi-tenant analytics. Services with this built in (Clerk Organizations, WorkOS Organizations, Auth0 Organizations) save weeks of engineering vs services that only handle users (forcing you to build orgs on top). Beyond that: matters are SSO/SCIM support (for enterprise tier later), audit logs (enterprise expects), MFA options (WebAuthn matters increasingly), pricing model (per-MAU vs per-tenant — per-tenant often cleaner for SaaS economics), DX (React components vs raw APIs). For new B2B SaaS in 2026: Clerk for early-stage with great DX and orgs built in; add WorkOS for enterprise SSO. Or Auth0 for mature established stack. Whatever you pick, prioritize org-first design over user-first; B2B is fundamentally about teams, not individuals." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brand recognition." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-tenant org management built-in. Clerk, WorkOS, Auth0 all have first-class orgs. Saves weeks vs DIY.",
+      "points": 1
+    }
+  ]
+}
