@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Component testing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does React Testing Library push you toward `getByRole` instead of `getByTestId`?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "getByRole queries the DOM the way assistive tech (screen readers, keyboard navigation) does — matches actual user paths. It naturally pushes you toward accessible components: if you can't find a button by role, the button isn't accessible. data-testid is an escape hatch for cases where no semantic option works; relying on it for everything creates tests that pass while users with disabilities can't use the feature. The query priority (role → label → placeholder → text → display value → alt text → title → test ID) reflects how visible/important each path is to real users." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster lookups." }
+      ],
+      "correct_answer": "b",
+      "explanation": "getByRole matches how assistive tech navigates — pushes toward accessible components.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Component fetches data from `/api/posts`. How to test it without hitting real network?",
+      "choices": [
+        { "id": "a", "text": "Mock fetch directly." },
+        { "id": "b", "text": "Use MSW (Mock Service Worker). Define handlers like `http.get('/api/posts', () => HttpResponse.json([...]))` and start a test server in beforeAll. The component's fetch calls go out as normal — but MSW intercepts at the network layer and returns mocked responses. Cleaner than fetch-mocking because your component code stays unchanged (no test-only branches), and the mock is closer to a real API. Reset handlers between tests for isolation. Works for fetch, axios, any HTTP library. Becoming the standard pattern for testing components that talk to APIs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip the test." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MSW intercepts at network layer; component code unchanged; cleaner than fetch mocks.",
+      "points": 1
+    }
+  ]
+}

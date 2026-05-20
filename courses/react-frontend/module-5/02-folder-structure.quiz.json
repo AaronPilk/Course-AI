@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Folder structure",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does feature-first folder structure beat file-type-first at scale?",
+      "choices": [
+        { "id": "a", "text": "It compiles faster." },
+        { "id": "b", "text": "Feature-first (features/auth/, features/posts/, etc., each with components/hooks/api/types inside) keeps related code together — adding a feature is adding a folder; removing is removing a folder. File-type-first (components/, hooks/, utils/ at the root) creates flat lists of 200+ files where related code spreads across folders; finding things requires text search; refactoring a feature touches many folders. Feature-first also enables clean public API per feature (index.ts re-exports the surface; internals stay private). Works for small projects too; essential at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Same thing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Feature-first keeps related code together; public API per feature; scales to teams.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Feature A wants to import a function from Feature B. Where should it import from?",
+      "choices": [
+        { "id": "a", "text": "Direct file path: `import { fn } from '@/features/b/lib/helper'`." },
+        { "id": "b", "text": "From Feature B's public API (its index.ts): `import { fn } from '@/features/b'`. The public API is the contract — Feature A depends on what B explicitly exports. If B's internals refactor (file moves, helper splits, renames), A doesn't break because the public API stays stable. Reaching into another feature's internals (`/features/b/lib/helper`) couples consumers to internal structure; every internal refactor cascades. Enforce via ESLint (`eslint-plugin-boundaries`) for teams: imports across feature boundaries must come from the index.ts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Copy the function." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Import from the feature's public API (index.ts). Internals can refactor freely.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Render cycle",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why doesn't `state.items.push(x)` trigger a re-render?",
+      "choices": [
+        { "id": "a", "text": "React doesn't watch arrays." },
+        { "id": "b", "text": "React compares state by reference equality. Mutating the existing array (`push`, `splice`, `sort`, `state.x = 1`) modifies the object in place — same reference, so React sees nothing changed. State updates must be immutable: `setItems([...items, x])` creates a new array with a new reference; React sees it as different and re-renders. Same rule for objects: `setUser({ ...user, name: 'new' })`, not `user.name = 'new'`. This is why immutability is a hard rule in React, not a style preference." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random behavior." }
+      ],
+      "correct_answer": "b",
+      "explanation": "React compares by reference. Mutating keeps the same reference; no re-render. Use immutable updates.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Click handler calls `setCount(count + 1)` three times in a row. Count goes up by how much?",
+      "choices": [
+        { "id": "a", "text": "3." },
+        { "id": "b", "text": "1. All three setState calls reference `count` from the current render's closure — the same value. React batches them into one re-render, and the final state is `count + 1`, set three times to the same value. To increment by 3, use the updater function: `setCount(c => c + 1)` three times. The updater receives the latest queued state, so each call increments from the previous one. This is the rule for any state update that depends on the previous state." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Unpredictable." }
+      ],
+      "correct_answer": "b",
+      "explanation": "All three reference the closure's count; batched into one update. Use setCount(c => c + 1) for incremental updates.",
+      "points": 1
+    }
+  ]
+}

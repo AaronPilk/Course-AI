@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Testing and architecture",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does RTL push you toward getByRole over getByTestId?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "getByRole matches how assistive tech (screen readers, keyboard nav) finds elements — tests pass when the UI is genuinely accessible. data-testid is an escape hatch for cases where no semantic option works; relying on it lets tests pass while users with disabilities can't use the feature. The query priority (role → label → text → testid) reflects how visible each path is to real users. Tests resemble usage; usage stays accessible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster lookups." }
+      ],
+      "correct_answer": "b",
+      "explanation": "getByRole matches how assistive tech navigates — keeps tests accessible-aligned.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Codebase has 200 components in one /components folder. New engineers can't find anything. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add a README." },
+        { "id": "b", "text": "Switch to feature-first structure: features/auth/, features/posts/, features/dashboard/, each containing the components/hooks/api/types for that domain. Adding a feature = adding a folder; removing = removing a folder. Each feature exposes a public API via index.ts; other features import from there, not directly into internals. Shared UI primitives stay in components/ui/. Migrate incrementally — one feature at a time. The structural shift dramatically improves navigability and limits cross-feature coupling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sort alphabetically." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Feature-first folders + public API per feature. Migrate incrementally.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Modern React forms pattern?",
+      "choices": [
+        { "id": "a", "text": "Fully controlled with useState per field." },
+        { "id": "b", "text": "React Hook Form + Zod. RHF uses uncontrolled (ref-based) inputs — each keystroke doesn't re-render the whole form, dramatically faster for forms with 20+ fields. Zod centralizes validation in a schema; `z.infer<typeof schema>` derives the form's TypeScript types. Same schema runs server-side (Server Actions, API routes), so client and server share one validation source of truth. Less boilerplate, fewer re-renders, type safety end-to-end. The 2026 default." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Formik." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RHF + Zod: uncontrolled inputs, schema validation, shared client/server rules.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Form has 30 fields, sluggish on every keystroke. Diagnostic?",
+      "choices": [
+        { "id": "a", "text": "Reduce fields." },
+        { "id": "b", "text": "Likely fully-controlled with useState per field — each keystroke re-renders the whole form, all 30 fields go through render. Switch to React Hook Form: inputs become ref-based, only individual fields re-render, the form root only re-renders when validation state changes. Also audit `watch()` calls — every watch causes re-renders on its field changes; use only when one field genuinely gates another's render. The shift typically delivers a 5-10x perf improvement on form interactions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Debounce." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Controlled-useState forms re-render fully per keystroke. RHF's ref-based approach fixes it.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Building a custom dropdown. A11y approach?",
+      "choices": [
+        { "id": "a", "text": "Hand-roll keyboard + ARIA." },
+        { "id": "b", "text": "Use Radix UI, React Aria, or shadcn/ui's accessible dropdown primitives. Building keyboard navigation (arrow keys, Home/End, type-ahead), focus management (move into menu on open, restore on close), correct ARIA (aria-expanded, aria-controls, aria-haspopup), and screen reader announcements correctly from scratch is hard — easy to get 80% there and miss edge cases that exclude users. Libraries get this right after years of refinement; you style on top. Strongly prefer accessible primitives over hand-rolling for complex widgets like dropdowns, dialogs, comboboxes, date pickers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip a11y." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use accessible primitives (Radix, React Aria) for complex widgets. Don't hand-roll keyboard/ARIA.",
+      "points": 1
+    }
+  ]
+}

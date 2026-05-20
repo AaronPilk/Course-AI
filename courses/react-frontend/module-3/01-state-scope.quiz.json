@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: State scope",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Decision framework for where state should live?",
+      "choices": [
+        { "id": "a", "text": "All state goes in Redux." },
+        { "id": "b", "text": "Ask in order: (1) only one component cares? → local (useState). (2) Sibling components share it? → lift to nearest common parent. (3) Deep subtree needs it? → composition (pass JSX as children) or context. (4) Whole app needs it? → external store (Zustand, Redux Toolkit). (5) Should persist across refresh/share? → URL. (6) From the server? → server-state library (TanStack Query, SWR). Most state ends at steps 1-2. Steps 4-6 are smaller categories than people assume. Default to local; promote only when actual sharing is needed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always lift to App." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Local → lift → composition/context → store → URL → server library. Start small.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team is storing fetched API data (posts, users, products) in Redux. Manual loading flags, refetch logic, cache invalidation. Why this pattern struggles?",
+      "choices": [
+        { "id": "a", "text": "Redux is too slow." },
+        { "id": "b", "text": "Server state has different problems than client state: caching, deduplication, stale-while-revalidate, automatic refetching on focus, optimistic updates, request cancellation, retries. Redux (and Zustand, Jotai) are client-state tools — they store values but don't manage the data-fetching lifecycle. Teams end up reimplementing TanStack Query / SWR badly. Switch server data to a dedicated server-state library; Redux stays for genuine client state (theme, current user, app-wide settings). Clean separation: 'where does this data come from?' Server → query library. UI → client store. Reduces store size dramatically and fixes a lot of caching bugs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more reducers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server state needs server-state libraries (TanStack Query, SWR). Redux for client state only.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: How React really renders",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why doesn't `state.items.push(x)` trigger a re-render?",
+      "choices": [
+        { "id": "a", "text": "React doesn't watch arrays." },
+        { "id": "b", "text": "React compares state by reference equality. Mutating the existing array keeps the same reference — React sees nothing changed. State updates must be immutable: `setItems([...items, x])` creates a new array with a new reference; React sees it as different. Same rule for objects: `setUser({ ...user, name })`, not `user.name = ...`. Immutability is a hard rule, not style preference." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reference equality. Mutating keeps reference; React skips re-render. Use immutable updates.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Click handler calls setCount(count + 1) three times in a row. Count goes up by how much?",
+      "choices": [
+        { "id": "a", "text": "3." },
+        { "id": "b", "text": "1. All three calls reference `count` from the current closure — the same value. React batches them; final state is `count + 1` set three times to the same value. To increment by 3, use the updater: `setCount(c => c + 1)` three times. The updater receives the latest queued state, so each increments from the previous." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Unpredictable." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Batched updates with closure value. Use setCount(c => c + 1) for incremental updates.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is `key={index}` dangerous for lists with state?",
+      "choices": [
+        { "id": "a", "text": "Slower." },
+        { "id": "b", "text": "React matches list items by key to track them across renders. With index keys, inserting at the top means the DOM node at position 0 keeps user-typed text but now represents a different item — state, focus, animations attach to position instead of item. Use stable IDs (item.id) so React correctly tracks items across reorderings. Index keys are only safe for append-only stateless lists." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "React doesn't use keys." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Index keys attach state to position, not item. Use stable IDs.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "setInterval inside useEffect with empty deps. setCount(count + 1) doesn't advance past 1. Why?",
+      "choices": [
+        { "id": "a", "text": "setInterval broken." },
+        { "id": "b", "text": "Stale closure. Effect runs once on mount; interval callback captures `count` from initial render (0). Every tick: `setCount(0 + 1)` = 1; never higher. Fix with updater function: `setCount(c => c + 1)` — receives latest state regardless of when callback was created. Same trap with setTimeout, async callbacks, event handlers in mount-only effects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase deps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stale closure from empty deps. Use setCount(c => c + 1).",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why does Strict Mode double-render in dev?",
+      "choices": [
+        { "id": "a", "text": "React bug." },
+        { "id": "b", "text": "To surface concurrent-rendering bugs. Concurrent React can interrupt and re-run renders; effects can mount → cleanup → mount again. Strict Mode simulates this in dev so you catch missing cleanup, impure renders, side effects in render, and stale closures before production. Production behavior is normal. If your component breaks under Strict Mode, fix the bug — don't disable Strict Mode." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance test." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Catches concurrent-rendering bugs (impure renders, missing cleanup) in dev.",
+      "points": 1
+    }
+  ]
+}

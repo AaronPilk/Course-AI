@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Accessibility",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `<button onClick={fn}>` better than `<div onClick={fn}>` for clickable elements?",
+      "choices": [
+        { "id": "a", "text": "Smaller bundle." },
+        { "id": "b", "text": "Native `<button>` includes built-in keyboard support (Tab focus, Enter/Space activation), screen reader announcement ('button, label'), default focus ring styling, automatic role='button' for assistive tech, and form-submission behavior in `<form>`. `<div onClick>` has none of this — keyboard users and screen reader users can't activate it without additional code (tabindex, key handlers, visual focus, role='button'). Add all that and you've reimplemented `<button>` worse. The first rule of a11y: use semantic HTML. Free accessibility from defaults beats manual reconstruction of the same behavior." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buttons are styled differently." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Native button = keyboard, screen reader, focus, role, semantics — all free. Div onClick = manual reconstruction.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a custom dropdown with custom styling. Accessibility approach?",
+      "choices": [
+        { "id": "a", "text": "Add role='listbox' to a div and call it done." },
+        { "id": "b", "text": "Use Radix UI, React Aria, or shadcn/ui's accessible dropdown primitives. Building keyboard navigation (arrow keys, Home/End, type-ahead), focus management (move into menu on open, restore on close), ARIA (aria-expanded, aria-controls, aria-haspopup), and screen reader announcements correctly from scratch is genuinely hard — easy to get 80% there and miss critical edge cases that exclude users. The libraries get this right after years of refinement; you style on top. Strongly prefer using accessible primitives over hand-rolling the behavior." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip a11y, ship it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use accessible primitives (Radix, React Aria) for complex widgets. Don't hand-roll keyboard/ARIA.",
+      "points": 1
+    }
+  ]
+}

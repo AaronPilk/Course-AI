@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Custom hooks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you extract logic into a custom hook?",
+      "choices": [
+        { "id": "a", "text": "Every time you write stateful code." },
+        { "id": "b", "text": "When the same hook logic appears in 2+ components, when a component has many hooks doing one logical thing, when stateful logic is testable independently, or when naming the logic clarifies the component code. Don't extract for single-use logic with no clear reuse path (premature abstraction) or logic tightly coupled to one component's specific UI. A good custom hook handles ONE concept end-to-end with a clear name and a small return surface. Convention: name starts with `use` so ESLint's hooks plugin can enforce the rules of hooks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Extract when reused, when cohesive logic clutters a component, or when naming clarifies intent.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A 'custom hook' returns the same value every time and doesn't use any React APIs. Best treatment?",
+      "choices": [
+        { "id": "a", "text": "Keep it as a hook." },
+        { "id": "b", "text": "Rename it to a plain function (drop the `use` prefix). If it doesn't use hooks (state, effects, refs, context), it's a function, not a hook. Naming it `use...` triggers the ESLint hooks plugin into checking rules that don't apply, confuses tooling, and signals false ceremony to readers. `formatDate(date)`, `parseQuery(qs)`, `slugify(s)` are functions. `useDate()` should actually subscribe to something React-aware. The `use` prefix is reserved for functions that genuinely use hooks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add a fake useState." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pure functions stay functions. `use` prefix is for hooks that actually use React APIs.",
+      "points": 1
+    }
+  ]
+}

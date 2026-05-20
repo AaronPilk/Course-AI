@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Profiling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'Why did this render?' in React DevTools Profiler tell you?",
+      "choices": [
+        { "id": "a", "text": "If React has a bug." },
+        { "id": "b", "text": "The cause of each render: 'Props changed: [list]' (which specific props), 'Hooks changed' (a useState/useReducer in this component fired), 'Parent component rendered' (no props changed but the parent rerendered, pulling this child along), 'Context changed' (a consumed context's value updated). The killer feature for diagnosis: if 'Parent rendered' but props look identical, you have a reference identity issue (new object/function created each render). If 'Parent rendered' and the child is expensive, React.memo candidate. Identifying the cause leads directly to the right fix." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random metadata." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tells you why each render happened — props, hooks, parent, context. Diagnoses what to fix.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Page slow with 100+ visible items. Profile shows each item renders in 5ms; total render 500ms. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add React.memo to each item." },
+        { "id": "b", "text": "Virtualize the list — render only items currently visible in the viewport (typically 10-20), reuse DOM nodes as the user scrolls. Libraries: TanStack Virtual, react-window, react-virtuoso. With virtualization: only ~20 items rendered at a time instead of 100+; total render drops from 500ms to ~100ms; scroll stays at 60fps. React.memo on items helps when individual items re-render unnecessarily, but doesn't solve 'too many items rendering at once.' For long lists, virtualization is the right tool. Add memo to items once virtualized so re-renders during scroll are also cheap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduce item count manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Virtualize for long lists — render only visible items. React.memo alone doesn't fix volume.",
+      "points": 1
+    }
+  ]
+}

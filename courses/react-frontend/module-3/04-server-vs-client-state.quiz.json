@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Server vs client state",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do client-state tools (Redux, Zustand) fail at managing server data?",
+      "choices": [
+        { "id": "a", "text": "They're too slow." },
+        { "id": "b", "text": "Server state has fundamentally different problems than UI state: caching across components and remounts, deduplication (two components fetching same URL → one request), stale-while-revalidate (show cached + refetch in background), refetch on focus/reconnect, optimistic updates with rollback, automatic retries, request cancellation. Client-state tools just store values; they don't manage the data-fetching lifecycle. Teams using Redux/Zustand for server data end up reimplementing these features manually — error-prone and tedious. Use TanStack Query, SWR, or RTK Query for server data; keep client-state tools for UI state (theme, modals, form drafts)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "They are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server state needs caching, dedup, stale-while-revalidate, refetch — client-state tools just store values.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "After mutating a post via useMutation, the post list still shows old data. Fix?",
+      "choices": [
+        { "id": "a", "text": "Reload the page." },
+        { "id": "b", "text": "Invalidate the query in `onSuccess`: `onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] })`. TanStack Query marks all queries with that key as stale and refetches them — the post list automatically updates with the new data. The query key system is how the library knows what to invalidate; hierarchical keys let one invalidation refresh many related queries. For instant feedback, pair with optimistic updates via `onMutate`: update the cache before the mutation fires, rollback in `onError` if it fails. The most common server-state bug is forgetting to invalidate after mutations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual state update." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Invalidate the query key after mutation. queryClient.invalidateQueries triggers refetch.",
+      "points": 1
+    }
+  ]
+}

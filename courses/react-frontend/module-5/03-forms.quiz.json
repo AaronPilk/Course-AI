@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Forms and validation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is React Hook Form + Zod the modern pattern over raw controlled inputs with useState?",
+      "choices": [
+        { "id": "a", "text": "Smaller bundle." },
+        { "id": "b", "text": "RHF uses uncontrolled inputs (refs-based) so each keystroke doesn't re-render the entire form — for forms with 20+ fields, this is dramatically faster. Zod centralizes validation in one schema; `z.infer<typeof schema>` derives the form's TypeScript types so they stay in sync automatically. Same schema can run server-side (Server Actions, API routes), so client and server use one source of truth for validation. Less boilerplate than manual onChange/value plumbing, fewer re-renders, type safety end-to-end. The 2026 default for React forms." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Looks cleaner." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fewer re-renders + schema-derived types + shared client/server validation.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Form has 30 fields. Performance feels sluggish on each keystroke. Diagnostic and fix?",
+      "choices": [
+        { "id": "a", "text": "Reduce fields." },
+        { "id": "b", "text": "Likely fully-controlled with useState — each keystroke triggers a full form re-render, all 30 fields go through render. Switch to React Hook Form: inputs become uncontrolled (ref-based), only individual fields re-render on change, the form root only re-renders when needed. Also check for unnecessary `watch()` calls — every watch triggers re-renders on its field changes; use sparingly (only when one field's value gates another's display). For most cases the move from controlled-useState to RHF is a 5-10x perf improvement on form interactions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Debounce inputs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Controlled state per field re-renders the whole form per keystroke. RHF's ref-based approach fixes it.",
+      "points": 1
+    }
+  ]
+}

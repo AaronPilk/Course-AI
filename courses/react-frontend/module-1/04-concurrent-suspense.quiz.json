@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Concurrent rendering",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Strict Mode double-render components and double-fire effects in dev?",
+      "choices": [
+        { "id": "a", "text": "React bug." },
+        { "id": "b", "text": "To surface bugs that would matter under concurrent rendering. Concurrent React can interrupt and re-run renders; effects can mount → cleanup → mount again on the same render cycle. Strict Mode simulates this in dev so you catch missing cleanup, impure renders, side effects in render, and stale closures before they cause hard-to-debug production issues. Production behavior is normal (single render, single mount). If your component breaks under Strict Mode, it has a real bug — fix the bug instead of disabling Strict Mode." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance testing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Strict Mode catches concurrent-rendering bugs (impure renders, missing cleanup) in dev.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Search bar feels laggy — typing stutters while expensive results list re-renders. Fix?",
+      "choices": [
+        { "id": "a", "text": "Debounce manually." },
+        { "id": "b", "text": "Wrap the expensive update in `startTransition`: `setQuery(query)` runs at high priority (input updates immediately, keystroke feels instant); `startTransition(() => setResults(filter(items, query)))` runs at low priority (React can interrupt if the user types again). The input stays responsive while the heavy list render happens as a background transition. Alternative: useDeferredValue on the query to get a 'lagging' value that drives the expensive component. Both let high-priority updates (typing) preempt low-priority updates (filtering). Manual debouncing also works but the concurrent-rendering primitives are cleaner and adapt automatically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Class Components." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wrap expensive update in startTransition (or useDeferredValue). Lets high-priority typing preempt the heavy list render.",
+      "points": 1
+    }
+  ]
+}

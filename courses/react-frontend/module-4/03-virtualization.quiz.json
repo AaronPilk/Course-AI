@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Virtualization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does list virtualization work?",
+      "choices": [
+        { "id": "a", "text": "Items are compressed into smaller DOM nodes." },
+        { "id": "b", "text": "Render only the items currently visible in the viewport (typically 10-20) plus a small overscan above/below for scroll smoothness. The scrollable container reports a height matching all items (so the scrollbar represents 100k items), but only the visible window is in the DOM. As the user scrolls, the library recalculates which items are visible, swaps DOM nodes in/out, and positions them absolutely. Memory and CPU stay flat regardless of list length. 100,000 items can scroll as smoothly as 20. Libraries: TanStack Virtual, react-window, react-virtuoso." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Show first 10 only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Render visible window + overscan; scrollbar shows full size; DOM stays small.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "List of 30 items rendering slowly. Should you virtualize?",
+      "choices": [
+        { "id": "a", "text": "Yes, always virtualize." },
+        { "id": "b", "text": "Probably not — for ~30 items, virtualization's complexity (absolute positioning, height measurement, overscan, library dep) usually exceeds its benefit. First diagnose: profile what's actually slow. Often the issue is heavy per-item rendering (React.memo helps), unstable callbacks causing re-renders (useCallback at parent), or context value re-renders (split context). Virtualization shines at 100+ items; under 50 it's overkill. If profiling confirms the volume is the bottleneck (each item is genuinely expensive AND there are many), then virtualize. Otherwise fix the per-item cost first." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Show fewer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Virtualize for 100+ items. For ~30, fix per-item cost first (memo, stable refs, profile).",
+      "points": 1
+    }
+  ]
+}

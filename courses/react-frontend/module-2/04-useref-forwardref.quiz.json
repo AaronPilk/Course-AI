@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Refs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When to use useRef vs useState?",
+      "choices": [
+        { "id": "a", "text": "useRef is always faster, use it." },
+        { "id": "b", "text": "Use state for anything that affects rendering (input values shown in UI, modal open status, list items). Use refs for things that should survive renders but don't trigger them: DOM access (focus, measurement, scroll), mutable values not displayed (debounce timer IDs, third-party SDK instances, render counters, last-known value for comparison). The rule: 'if changing it should re-render the UI, use state; otherwise use ref.' Refs and state aren't substitutes — they solve different problems. Mistake: using a ref where state belongs makes the UI stale because writing to ref doesn't trigger render." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always useState." }
+      ],
+      "correct_answer": "b",
+      "explanation": "State = things that affect rendering. Ref = things that survive renders without triggering them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You built a reusable `<FancyInput>` component. Parent wants to call `.focus()` on it. How?",
+      "choices": [
+        { "id": "a", "text": "Pass a callback prop." },
+        { "id": "b", "text": "Use `React.forwardRef` so the ref the parent passes lands on the inner `<input>`. `const FancyInput = React.forwardRef<HTMLInputElement, Props>(function FancyInput(props, ref) { return <input ref={ref} ...props /> })`. Parent then `const inputRef = useRef(); <FancyInput ref={inputRef} />` and calls `inputRef.current?.focus()` directly. Without forwardRef, `ref` on a function component is ignored. For more controlled exposure (custom API beyond the raw DOM), use `useImperativeHandle` — but usually exposing the DOM ref is fine and less coupling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Can't be done." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wrap in React.forwardRef so the parent's ref attaches to the inner DOM element.",
+      "points": 1
+    }
+  ]
+}

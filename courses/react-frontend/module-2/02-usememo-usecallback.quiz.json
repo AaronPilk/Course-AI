@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: useMemo and useCallback",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `useMemo(() => items.filter(i => i.active), [items])` on a 10-item list usually pointless?",
+      "choices": [
+        { "id": "a", "text": "filter is broken." },
+        { "id": "b", "text": "The 'computation' is cheap — filtering 10 items takes microseconds. useMemo itself has overhead (storing the value, comparing deps on every render). The overhead exceeds the savings; net negative on performance. useMemo helps when: the computation is genuinely expensive (sorting 10k items, complex math, parsing), or the result must be referentially stable as a dep for another effect/memo. For trivial computations, drop the useMemo — code is simpler and faster. React Compiler in React 19 makes this even more true; manual memoization becomes mostly unnecessary." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Filter results don't memoize." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useMemo overhead > cheap computation cost. Only memoize genuinely expensive work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Parent passes `config = { theme }` (inline) to a `React.memo`'d child. Child re-renders every parent render despite memo. Cause?",
+      "choices": [
+        { "id": "a", "text": "React.memo doesn't work." },
+        { "id": "b", "text": "`config` is a new object reference every parent render. React.memo does shallow equality on props; new reference means 'different,' so the child re-renders despite memo. Fix: wrap the config in useMemo at the parent — `const config = useMemo(() => ({ theme }), [theme])`. Now config is stable when theme is stable; the child's memo actually skips re-renders. Same trap with inline function props (`onClick={() => ...}`) — wrap in useCallback if the child is memoized. The lesson: memoizing the child without stabilizing its props is wasted." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Child has a bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Inline objects are new refs every render. Wrap in useMemo at the parent to stabilize.",
+      "points": 1
+    }
+  ]
+}

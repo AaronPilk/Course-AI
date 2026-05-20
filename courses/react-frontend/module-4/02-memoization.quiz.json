@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Memoization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does React.memo actually save renders?",
+      "choices": [
+        { "id": "a", "text": "Always — just wrap everything." },
+        { "id": "b", "text": "When (1) the parent re-renders frequently, (2) the child is genuinely expensive, AND (3) the child's props are STABLE references across parent renders. Without stable refs, React.memo's shallow equality check always fails — new object/function literal each render means new reference, props look 'different,' child re-renders anyway. Pair React.memo with useMemo / useCallback at the parent to stabilize object and function props. If any of the three conditions don't hold, memo adds overhead without benefit. Profile to verify." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "When children are simple." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Frequent parent re-renders + expensive child + stable props. Otherwise memo is overhead.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Component has 10+ useMemo / useCallback calls 'for safety.' Should they stay?",
+      "choices": [
+        { "id": "a", "text": "Yes, more is better." },
+        { "id": "b", "text": "Probably not. Each useMemo/useCallback has overhead: React stores the value, compares the deps array on every render, allocates memory for the cache. For cheap computations or callbacks not passed to memoized children, this overhead exceeds any savings — net negative on performance. Profile to see which actually save measurable time; remove the rest. React 19's React Compiler auto-memoizes correctly and makes manual memoization mostly unnecessary. For React 18 and earlier: memoize when profiling shows a real bottleneck, not preemptively." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Each adds overhead; many are pure cost. Profile and keep only the ones that save measurable time.",
+      "points": 1
+    }
+  ]
+}

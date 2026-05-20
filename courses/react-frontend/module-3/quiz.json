@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: State management at scale",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Decision framework for where state should live?",
+      "choices": [
+        { "id": "a", "text": "Everything in Redux." },
+        { "id": "b", "text": "(1) Only one component cares → local useState. (2) Siblings share → lift to nearest common parent. (3) Deep subtree needs → composition or context. (4) Whole app → external store (Zustand, Redux Toolkit). (5) Persist across refresh/share → URL. (6) From the server → server-state library (TanStack Query). Most state ends at steps 1-2; steps 4-6 are smaller categories than people assume. Default local; promote only when actual sharing is needed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always lift to App." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Local → lift → composition/context → store → URL → server library. Start small.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Big AppContext with user + theme + notifications. Every consumer re-renders when notifications update. Fix?",
+      "choices": [
+        { "id": "a", "text": "Use class components." },
+        { "id": "b", "text": "Split into separate contexts (UserContext, ThemeContext, NotificationsContext); each has its own update cadence. Memoize each provider's value object via useMemo so the reference is stable when fields haven't changed. For more granular control, separate read and write contexts so components that only set don't re-render on reads. If optimization gymnastics start to dominate the code, switch to an external store (Zustand/Jotai) with selector-level subscriptions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable context." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Split contexts, memoize values, or switch to a store with selectors.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Safe default state library for a new app in 2026?",
+      "choices": [
+        { "id": "a", "text": "MobX." },
+        { "id": "b", "text": "Zustand. ~1KB, hooks-first (no Provider), selectors give component-level subscription, TypeScript-friendly, minimal boilerplate, accessible outside React. Produces simpler code than Redux Toolkit for small-to-medium apps with most of the benefits. Reach for Jotai when you want atomic granular subscriptions; for RTK when large team needs strict patterns, best devtools, or migrating from legacy Redux." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Recoil." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Zustand: minimal, selectors solve context re-render, safe default for most new apps.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Team stores fetched API data in Redux with manual loading flags and refetch logic. Why does this pattern struggle?",
+      "choices": [
+        { "id": "a", "text": "Redux is too slow." },
+        { "id": "b", "text": "Server state has fundamentally different problems than UI state: caching across components/remounts, deduplication, stale-while-revalidate, refetch on focus/reconnect, optimistic updates with rollback, automatic retries, cancellation. Client-state tools (Redux, Zustand, Jotai) just store values; they don't manage data-fetching lifecycle. Teams reimplement TanStack Query / SWR / RTK Query badly. Switch server data to a dedicated server-state library; keep client-state tools for genuine UI state. Clean separation reduces store size and fixes most caching bugs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more middleware." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server state needs server-state libraries. Client-state tools just store values.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "After mutation via useMutation, list still shows old data. Fix?",
+      "choices": [
+        { "id": "a", "text": "Reload the page." },
+        { "id": "b", "text": "Call `queryClient.invalidateQueries({ queryKey: ['list'] })` in `onSuccess` — marks the query stale and refetches. Hierarchical query keys let one invalidation refresh many related queries. For instant feedback, pair with optimistic updates via `onMutate` to update cache before mutation fires, with `onError` rollback. Forgetting invalidation after mutations is the most common server-state bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual state update." }
+      ],
+      "correct_answer": "b",
+      "explanation": "invalidateQueries with the right key after mutation triggers automatic refetch.",
+      "points": 1
+    }
+  ]
+}

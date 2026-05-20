@@ -1,0 +1,74 @@
+{
+  "slug": "tailwind-css-production",
+  "title": "Tailwind CSS in Production",
+  "subtitle": "Utility-first CSS that scales — design tokens, components, and the patterns that hold up.",
+  "category": "Web",
+  "level": "Intermediate",
+  "estimatedHours": 5,
+  "brand": {
+    "primary": "#38BDF8",
+    "accent": "#0EA5E9",
+    "secondary": "#0F172A",
+    "tertiary": "#FFFFFF",
+    "logo": "/brands/tailwind-css-production.svg",
+    "gradient": "linear-gradient(135deg, #0F172A 0%, #0369A1 50%, #38BDF8 100%)"
+  },
+  "summary": "Tailwind CSS won the styling debate by being utility-first, themeable, and ship-friendly. But scaling it past a single component takes discipline — design tokens, component patterns, dark mode, responsive design, and a configuration that doesn't fight you. This course covers Tailwind in real production: from CSS variables and themes to component libraries, animation, and performance.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "Utility-first thinking",
+      "objective": "Why this approach beats the alternatives.",
+      "lessons": [
+        { "position": 1, "title": "What utility-first solves", "objective": "Why classnames win at scale." },
+        { "position": 2, "title": "Reading and writing Tailwind", "objective": "Class ordering, modifiers, the layer model." },
+        { "position": 3, "title": "When to extract components", "objective": "Avoiding the @apply trap." },
+        { "position": 4, "title": "Tailwind vs CSS-in-JS vs CSS Modules", "objective": "The 2026 landscape." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Theming and design tokens",
+      "objective": "Make your design system the source of truth.",
+      "lessons": [
+        { "position": 1, "title": "tailwind.config and the design system", "objective": "Tokens for color, spacing, type." },
+        { "position": 2, "title": "CSS variables for runtime theming", "objective": "Dark mode and brand themes." },
+        { "position": 3, "title": "Typography and the prose plugin", "objective": "Rich text without fighting Tailwind." },
+        { "position": 4, "title": "Custom plugins and extensions", "objective": "When the defaults don't fit." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Responsive and adaptive design",
+      "objective": "Build for every screen.",
+      "lessons": [
+        { "position": 1, "title": "Mobile-first breakpoints", "objective": "The right way to use sm: md: lg:." },
+        { "position": 2, "title": "Container queries", "objective": "Component-aware responsiveness." },
+        { "position": 3, "title": "Fluid type and spacing", "objective": "clamp() and the Tailwind way." },
+        { "position": 4, "title": "Dark mode patterns", "objective": "class vs media, theming choices." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Component patterns",
+      "objective": "Scale beyond one file.",
+      "lessons": [
+        { "position": 1, "title": "The component as the abstraction unit", "objective": "Tailwind classes inside React components." },
+        { "position": 2, "title": "Variant patterns with class-variance-authority", "objective": "Type-safe component variants." },
+        { "position": 3, "title": "tailwind-merge and conditional classes", "objective": "Avoid duplicate / conflicting utilities." },
+        { "position": 4, "title": "shadcn/ui and the copy-paste pattern", "objective": "Owning your components." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Performance and production",
+      "objective": "Ship Tailwind without surprises.",
+      "lessons": [
+        { "position": 1, "title": "How Tailwind generates CSS", "objective": "JIT, purging, the output size question." },
+        { "position": 2, "title": "Animation and transitions", "objective": "From hover effects to Framer Motion." },
+        { "position": 3, "title": "Common pitfalls and how to avoid them", "objective": "Dynamic class names, ordering, specificity." },
+        { "position": 4, "title": "Migrating to Tailwind from legacy CSS", "objective": "Incremental adoption that works." }
+      ]
+    }
+  ]
+}

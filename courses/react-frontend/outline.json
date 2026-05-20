@@ -1,0 +1,74 @@
+{
+  "slug": "react-frontend",
+  "title": "React Frontend Engineering",
+  "subtitle": "Modern React: hooks, state, performance, and the patterns that scale.",
+  "category": "Web",
+  "level": "Intermediate",
+  "estimatedHours": 6,
+  "brand": {
+    "primary": "#61DAFB",
+    "accent": "#282C34",
+    "secondary": "#149ECA",
+    "tertiary": "#FFFFFF",
+    "logo": "/brands/react-frontend.svg",
+    "gradient": "linear-gradient(135deg, #20232A 0%, #282C34 50%, #149ECA 100%)"
+  },
+  "summary": "React in 2026 looks very different from the class-component era. Hooks, concurrent rendering, server components, and a mature ecosystem of state management changed how serious frontend gets built. This course covers modern React fundamentals: how rendering really works, hooks done right, state management patterns, performance optimization, and the testing and architecture practices that keep large React apps maintainable.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "How React really renders",
+      "objective": "The mental model that fixes most bugs.",
+      "lessons": [
+        { "position": 1, "title": "Components, elements, and the render cycle", "objective": "What actually happens when state changes." },
+        { "position": 2, "title": "Reconciliation and keys", "objective": "Why your list re-renders the wrong way." },
+        { "position": 3, "title": "Effects and the dependency array", "objective": "useEffect done right (and when not to)." },
+        { "position": 4, "title": "Concurrent rendering and Suspense", "objective": "How React 18+ schedules work." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Hooks done right",
+      "objective": "The patterns that actually work.",
+      "lessons": [
+        { "position": 1, "title": "useState and useReducer", "objective": "Picking the right state primitive." },
+        { "position": 2, "title": "useMemo and useCallback", "objective": "When optimization is real and when it's noise." },
+        { "position": 3, "title": "Custom hooks", "objective": "Extracting logic without coupling." },
+        { "position": 4, "title": "useRef, forwardRef, and imperatives", "objective": "When to escape declarative rendering." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "State management at scale",
+      "objective": "Beyond useState.",
+      "lessons": [
+        { "position": 1, "title": "Local vs lifted vs global state", "objective": "Picking the right scope." },
+        { "position": 2, "title": "Context: when it helps, when it hurts", "objective": "The re-render problem." },
+        { "position": 3, "title": "Zustand, Jotai, Redux Toolkit", "objective": "Modern state libraries compared." },
+        { "position": 4, "title": "Server state vs client state", "objective": "Why TanStack Query / SWR matter." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Performance",
+      "objective": "Make it fast and keep it fast.",
+      "lessons": [
+        { "position": 1, "title": "Profiling and finding bottlenecks", "objective": "React DevTools Profiler in practice." },
+        { "position": 2, "title": "Memoization done right", "objective": "React.memo, useMemo, useCallback rules." },
+        { "position": 3, "title": "Virtualization for long lists", "objective": "Render only what's visible." },
+        { "position": 4, "title": "Code splitting and lazy loading", "objective": "Smaller bundles, faster pages." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Testing and architecture",
+      "objective": "Ship React apps that don't decay.",
+      "lessons": [
+        { "position": 1, "title": "Component testing with React Testing Library", "objective": "Test behavior, not implementation." },
+        { "position": 2, "title": "Folder structure and component organization", "objective": "Patterns that scale to teams." },
+        { "position": 3, "title": "Forms and validation", "objective": "React Hook Form + Zod in practice." },
+        { "position": 4, "title": "Accessibility fundamentals", "objective": "Build for everyone." }
+      ]
+    }
+  ]
+}

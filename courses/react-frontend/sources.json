@@ -1,0 +1,10 @@
+{
+  "slug": "react-frontend",
+  "sources": [
+    { "type": "docs", "url": "https://react.dev", "label": "React documentation" },
+    { "type": "docs", "url": "https://react.dev/reference/react", "label": "React API reference" },
+    { "type": "docs", "url": "https://tanstack.com/query/latest", "label": "TanStack Query" },
+    { "type": "docs", "url": "https://testing-library.com/docs/react-testing-library/intro/", "label": "React Testing Library" },
+    { "type": "docs", "url": "https://www.w3.org/WAI/standards-guidelines/wcag/", "label": "WCAG accessibility" }
+  ]
+}

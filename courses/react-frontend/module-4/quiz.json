@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Performance",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'Why did this render?' in React DevTools tell you?",
+      "choices": [
+        { "id": "a", "text": "If React has a bug." },
+        { "id": "b", "text": "The cause of each render: which props changed, whether hooks fired, whether the parent re-rendered (no prop change), or context updated. The killer feature for performance diagnosis — points you at the right fix. 'Parent rendered' with stable-looking props means a reference-identity issue (new object every render). 'Hooks changed' means a state/reducer update. Identifying the cause leads directly to the right intervention." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tells you the cause of each render — props, hooks, parent, context.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Page slow with 1,000 visible items. Best fix?",
+      "choices": [
+        { "id": "a", "text": "React.memo on each." },
+        { "id": "b", "text": "Virtualize the list — render only ~20 items currently visible (plus a small overscan), reuse DOM as the user scrolls. Libraries: TanStack Virtual, react-window, react-virtuoso. Memory and CPU stay flat regardless of list length. React.memo alone doesn't solve the 'too many items rendering' problem; pair memo with virtualization once items render only when visible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduce count manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Virtualization for long lists. React.memo alone doesn't address volume.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When does React.memo actually save renders?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "When the parent re-renders frequently, the child is genuinely expensive, AND the child's props are STABLE references across parent renders. Without stable refs, React.memo's shallow equality fails (new object/function each render), child re-renders despite memo. Pair memo with useMemo / useCallback at the parent to stabilize props. If any of the three conditions don't hold, memo adds overhead without benefit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Simple children." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Frequent parent + expensive child + stable props. Otherwise pure overhead.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Component has 10+ useMemo/useCallback 'for safety.' Keep them?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "Probably not. Each has overhead: storing values, comparing deps every render, memory for the cache. For cheap computations or callbacks not passed to memoized children, overhead exceeds savings — net negative. Profile to see which actually save measurable time; remove the rest. React 19's React Compiler auto-memoizes correctly. For 18-: memoize when profiling shows a real bottleneck, not preemptively." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Many memos add cost without saving. Profile and keep only the ones that pay off.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Initial bundle 800KB; 300KB is charting library used only on /dashboard. Fix?",
+      "choices": [
+        { "id": "a", "text": "Compress more." },
+        { "id": "b", "text": "Lazy-load components that use the chart library: `const Chart = lazy(() => import('./Chart'))` with Suspense fallback. The library ships in the lazy chunk, loaded when /dashboard renders. Other routes drop 300KB from initial bundle. Combined with route-level splitting (automatic in Next.js App Router; manual via React Router lazy), the bundle savings compound. Re-run bundle analyzer to verify." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove chart." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lazy-load components that use heavy libraries; the library ships in the lazy chunk.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: State libraries",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Safe default state library for a new app in 2026?",
+      "choices": [
+        { "id": "a", "text": "MobX." },
+        { "id": "b", "text": "Zustand. ~1KB, hooks-first (no Provider), selectors give component-level subscription (avoiding context's all-consumers-re-render trap), TypeScript-friendly, minimal boilerplate, accessible outside React via `getState()`, middleware support (persistence, devtools, immer). For small-to-medium apps, Zustand produces simpler code than Redux Toolkit with most of the benefits. Reach for Jotai when you want atomic granular subscriptions and lots of derived state; for RTK when you're on a large team needing strict patterns, the best devtools, or migrating from legacy Redux." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Recoil." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Zustand: minimal, selectors solve context re-render problem, safe default for most new apps.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team picks Redux Toolkit. Best practice for server data (posts, users, products)?",
+      "choices": [
+        { "id": "a", "text": "Plain Redux slices with manual loading flags." },
+        { "id": "b", "text": "Use RTK Query — Redux Toolkit's built-in server-state library. createApi defines endpoints with `query` and `mutation` builders; auto-generated hooks (`useGetPostsQuery`, `useAddPostMutation`) handle caching, deduplication, automatic refetching, optimistic updates, and cache tag invalidation. Same primitives as TanStack Query but integrated with Redux devtools. Don't write manual loading/error/data reducers — that's the pre-2020 pattern that taught everyone server state needs its own tool. Keep regular Redux slices for genuine client state (theme, current user, UI flags); RTK Query owns server data." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Store all data manually in slices." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RTK Query for server data; regular slices for client state. Don't reimplement caching manually.",
+      "points": 1
+    }
+  ]
+}

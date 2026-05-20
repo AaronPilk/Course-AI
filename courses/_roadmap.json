@@ -261,7 +261,9 @@
       "slug": "react-frontend",
       "title": "React Frontend Engineering",
       "category": "Web",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://react.dev"]
     },
     {

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Reconciliation and keys",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `key={index}` dangerous for lists with state?",
+      "choices": [
+        { "id": "a", "text": "It's slower." },
+        { "id": "b", "text": "React matches list items to previous renders by key. With index keys, inserting/removing/reordering items causes React to keep the DOM node at position N but treat it as a different item — state, focus, animations stay attached to the position instead of following the item. Insert at the top: every item below shifts; with index keys, the input at position 0 keeps user-typed text but now represents a different item. Use stable IDs (item.id) so React can correctly track items across reorderings. Index keys are only safe when the list is append-only with stateless items." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "React doesn't use keys." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Index keys attach state to position, not item. Inserts/reorders glue state to the wrong row.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Form component shouldn't preserve state when switching between editing different users. How?",
+      "choices": [
+        { "id": "a", "text": "Manual useEffect reset for every field." },
+        { "id": "b", "text": "Add `key={user.id}` to the form component. When user.id changes, React sees a different key, unmounts the old form, and mounts a fresh one — all internal state resets automatically. Clean alternative to writing manual reset logic in useEffect for every field. Also re-runs mount effects. The key-as-reset pattern is the standard way to force a component to behave as if it's a different instance when external context changes (different user, different document, different conversation, etc.)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrap in React.memo." }
+      ],
+      "correct_answer": "b",
+      "explanation": "key={user.id} forces remount when user changes — state resets automatically.",
+      "points": 1
+    }
+  ]
+}

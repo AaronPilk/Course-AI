@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Context",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Main gotcha when using React Context?",
+      "choices": [
+        { "id": "a", "text": "It's slow." },
+        { "id": "b", "text": "Every component that consumes a context re-renders when the provider's value changes, regardless of which specific field they care about. A single big AppContext with user + theme + notifications causes every consumer (including ones that only care about theme) to re-render when notifications update. Fixes: (1) Split into multiple smaller contexts so each has its own update cadence. (2) Memoize the value object with useMemo so the reference is stable when fields haven't changed. (3) Separate read and write contexts (UserValueContext + UserSetterContext) so components that only set don't re-render on reads. For complex needs, switch to Zustand/Jotai with selector-level subscriptions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Context doesn't work in 2026." }
+      ],
+      "correct_answer": "b",
+      "explanation": "All consumers re-render on value change — no field-level subscription. Split contexts; memoize value.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "When does an external store (Zustand/Jotai/Redux Toolkit) beat context?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When many components subscribe to state with different slices needed (selector-level subscription avoids the all-consumers-re-render trap), when you want middleware (logging, persistence, devtools), when state needs to be accessed outside React components (services, utility functions), or when complex transitions / state machines benefit from a dedicated tool. Modern external stores are lightweight (Zustand ~1KB) and often produce simpler code than context with multiple splits, useMemo wrappers, and read/write separation. Default to context for slowly-changing subtree values; reach for an external store when context's optimization gymnastics start to dominate the code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only at enterprise scale." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Selector-level subscription + middleware + non-React access — when context optimization tricks dominate, switch to a store.",
+      "points": 1
+    }
+  ]
+}

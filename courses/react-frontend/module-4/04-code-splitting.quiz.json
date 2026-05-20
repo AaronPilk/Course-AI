@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Code splitting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you reach for React.lazy / next/dynamic?",
+      "choices": [
+        { "id": "a", "text": "Every component." },
+        { "id": "b", "text": "When a component is heavy (rich text editor, video player, complex chart, PDF viewer), rarely used (admin tools, settings modal), below the fold (not visible on first paint), or route-specific (one route only). Lazy-loading splits the component into a separate JS chunk loaded on demand — initial bundle stays small, non-critical code arrives when the user actually needs it. Don't lazy-load tiny components or above-the-fold content; the network overhead exceeds savings or hurts LCP. In Next.js App Router, each page is automatically a separate chunk." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Heavy, rare, below-fold, or route-specific components. Not for tiny or critical-path components.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Initial bundle is 800KB; bundle analyzer shows 300KB of that is a charting library used only on /dashboard. Fix?",
+      "choices": [
+        { "id": "a", "text": "Increase compression." },
+        { "id": "b", "text": "Lazy-load the charting library at the boundary where it's used. Move chart-using components behind `lazy(() => import('./Chart'))` (which internally imports the chart library); wrap in Suspense. The chart library now ships as a separate chunk loaded when /dashboard renders — homepage and other routes drop 300KB from their initial bundle. Combined with route-level splitting (Next.js does this automatically, or React Router with lazy routes), the bundle savings compound. Verify by re-running the bundle analyzer after the change." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove the chart." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lazy-load components that use heavy libraries; library ships in the lazy chunk, not initial bundle.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Hooks done right",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When to migrate from useState to useReducer?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When state updates become tangled: 5+ useState calls with interdependencies, state fields that always update together (loading + data + error), complex transitions, many possible actions on the same state. useReducer consolidates transitions in one pure function — easier to reason about, easier to test, stable dispatch reference. Start with useState; migrate when complexity warrants. State machines via discriminated unions in the reducer prevent impossible states (e.g., 'loading' with 'error' set)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useReducer when state transitions are coordinated, complex, or many.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Form initialized from `initialValue` prop. Prop changes but form keeps old value. Cause?",
+      "choices": [
+        { "id": "a", "text": "Bug." },
+        { "id": "b", "text": "`useState(initialValue)` only uses the argument on first render — initial state, not a subscription. Subsequent prop changes don't update state. Fix: `key={someStableId}` on the form forces remount with new initial when key changes; cleanly resets all internal state. Alternative: make form fully controlled — value derives from props, parent owns state. Pick based on ownership: form-owned (key reset) or parent-owned (controlled)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "useEffect to sync." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useState(initial) only on first render. Use key remount or fully-controlled.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is useMemo on a 10-item filter usually pointless?",
+      "choices": [
+        { "id": "a", "text": "filter is broken." },
+        { "id": "b", "text": "The computation is cheap; useMemo's own overhead (storing value, comparing deps on every render) exceeds the savings — net negative. Memoize only when the computation is genuinely expensive (sorting thousands, complex math, parsing) or when the result must be referentially stable as a dep for another effect/memo. React Compiler in React 19 makes this even more true — manual memoization becomes mostly unnecessary." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always memoize." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memoize only expensive work or when downstream needs referential stability.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Pure helper function that doesn't use any React APIs is named `useFormatDate`. Right treatment?",
+      "choices": [
+        { "id": "a", "text": "Keep the name." },
+        { "id": "b", "text": "Rename to `formatDate` (drop the `use` prefix). The `use` prefix is reserved for actual hooks — functions that use state, effects, refs, or context. ESLint's hooks plugin enforces rules of hooks on any `use*` function; applying those rules to a pure function adds false ceremony and confuses tooling. Pure functions stay functions. Same with helpers that just compute values: `slugify`, `parseQuery`, `formatCurrency` — all functions, no `use`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add fake useState." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pure functions stay functions. `use` prefix is for hooks using React APIs.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Rule for state vs ref?",
+      "choices": [
+        { "id": "a", "text": "Refs are always faster." },
+        { "id": "b", "text": "State for anything that affects rendering (input values shown in UI, open/closed status, list items). Refs for things that should survive renders but don't trigger them: DOM access (focus, measure, scroll), mutable values not displayed (debounce timer IDs, third-party SDK instances, render counters, comparison values). Writing to a ref doesn't re-render — using a ref where state belongs makes the UI stale. State and refs solve different problems; they're not substitutes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use whichever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "State for UI-affecting values. Refs for values that survive renders without triggering them.",
+      "points": 1
+    }
+  ]
+}

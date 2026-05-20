@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Effects",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you reach for useEffect?",
+      "choices": [
+        { "id": "a", "text": "Whenever state changes." },
+        { "id": "b", "text": "When you need to synchronize the component with something OUTSIDE React: the DOM, network requests, subscriptions, timers, analytics. NOT for transforming data from props/state (derive inline or use useMemo), reacting to events (use handlers), initializing state (useState with a function), or sending events to parents (call the handler in your own event handler). Most useEffect bugs come from using it for things it's not for. If you're reaching for useEffect, first ask: does this synchronize with something outside React? If no, you probably don't need it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "For every render side effect." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useEffect = sync with external systems. Not for derived state or event reactions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "setInterval inside useEffect with empty deps. setCount(count + 1) doesn't advance past 1. Why?",
+      "choices": [
+        { "id": "a", "text": "setInterval is broken." },
+        { "id": "b", "text": "Stale closure. The effect runs once on mount with empty deps; the interval callback captures `count` from the initial render (0). Every tick: `setCount(0 + 1)` = 1; never higher. Fix with the updater function: `setCount(c => c + 1)` — receives the latest state regardless of when the callback was created. Alternative: list `count` as a dependency, but then the interval restarts on every count change. Updater pattern is the cleaner fix. Same trap with setTimeout, async callbacks, event handlers attached in mount-only effects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase deps array size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stale closure from empty deps. Use setCount(c => c + 1) updater pattern.",
+      "points": 1
+    }
+  ]
+}

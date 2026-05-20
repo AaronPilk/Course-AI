@@ -1,0 +1,9 @@
+{
+  "slug": "tailwind-css-production",
+  "sources": [
+    { "type": "docs", "url": "https://tailwindcss.com/docs", "label": "Tailwind CSS documentation" },
+    { "type": "docs", "url": "https://ui.shadcn.com", "label": "shadcn/ui" },
+    { "type": "docs", "url": "https://cva.style/docs", "label": "class-variance-authority" },
+    { "type": "docs", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_container_queries", "label": "CSS container queries" }
+  ]
+}

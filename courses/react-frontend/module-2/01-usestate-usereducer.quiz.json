@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: useState vs useReducer",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you migrate from useState to useReducer?",
+      "choices": [
+        { "id": "a", "text": "Never — useState is always fine." },
+        { "id": "b", "text": "When state updates become tangled: 5+ useState calls with interdependencies; state fields that always update together (loading + data + error); complex transitions (form steps, wizard flows); state that depends on previous state in complex ways; need to test transitions separately. useReducer consolidates transitions in one pure function — easier to reason about, easier to test, and dispatch has a stable reference (doesn't trigger child re-renders the way new callbacks do). Start with useState; migrate when complexity warrants." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always start with useReducer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useReducer when state transitions are coordinated, complex, or many — consolidates logic.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Form initialized from prop `initialValue`. Prop changes later but the form still shows the original value. Why?",
+      "choices": [
+        { "id": "a", "text": "React bug." },
+        { "id": "b", "text": "`useState(initialValue)` only uses the argument on the first render — it's the initial state, not a subscription. Subsequent prop changes don't update state because state is local now. Two fixes: (1) Use `key={someStableId}` on the form component — changing the key remounts the form with the new initial value, cleanly resetting all internal state. (2) Treat the form as controlled — derive value from props directly, fire onChange to parent. Pick based on whether you want the form to own the state (key reset) or the parent (controlled)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add useEffect to sync." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useState(initial) only fires on first render. Use key={id} to remount, or make the form controlled.",
+      "points": 1
+    }
+  ]
+}
