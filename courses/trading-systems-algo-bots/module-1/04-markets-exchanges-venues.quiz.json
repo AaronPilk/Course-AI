@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Markets & venues",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is payment for order flow (PFOF)?",
+      "choices": [
+        { "id": "a", "text": "Broker commissions." },
+        { "id": "b", "text": "A revenue model where retail brokers (Robinhood, parts of TD, Webull) sell their customer orders to wholesalers like Citadel Securities or Virtu in exchange for rebates. The wholesaler internalizes the trade — fills at the National Best Bid/Offer (NBBO) or slightly better — and profits from the spread. This subsidizes the broker's $0 commissions. Trade-off: fills are usually at NBBO, fine for casual trading, but pro algos may get marginally worse execution than direct exchange routing. Interactive Brokers Pro is the main no-PFOF alternative; you pay commissions but get direct routing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Exchange fee." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brokers sell order flow to wholesalers; subsidizes $0 commissions; minor exec quality trade-off.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bot strategy holds positions for 100ms. Running it on home Wi-Fi. Why is this doomed?",
+      "choices": [
+        { "id": "a", "text": "Home is fine." },
+        { "id": "b", "text": "Network latency from home broadband to exchange is 100-500ms — longer than the entire intended holding period. The bot's signal is stale before its order even arrives at the venue; by the time it tries to exit, the trade is in a completely different market state. Sub-second strategies require co-location or same-city cloud (e.g., AWS us-east-1 for NYSE) with sub-20ms latency to be competitive. Match the strategy holding period to your latency capability: home broadband is fine for minutes-to-days hold strategies; sub-second strategies need real infrastructure. Choosing the right time scale is upstream of every other decision." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need bigger screen." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Home latency (100-500ms) exceeds the strategy's hold period. Match latency to strategy timescale.",
+      "points": 1
+    }
+  ]
+}

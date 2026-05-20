@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Mechanical vs discretionary",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does discretionary override of a tested mechanical strategy usually destroy alpha?",
+      "choices": [
+        { "id": "a", "text": "Bots are smarter." },
+        { "id": "b", "text": "Human overrides systematically follow predictable biases — loss aversion (wait one more day on losers), recency bias (cancel signals after a losing streak), confirmation (skip trades against current views), greed (hold winners past exits). The strategy was tested with mechanical rules; every override is a deviation from those rules and typically picks the moments where the rules would have been right. Long-run studies of override patterns show this: traders interfere most exactly when the bot was about to recover, and they hold winners past the algorithmically-correct exit. The bot doesn't have these biases; that's a feature. Override only for clear errors (data glitch, regulatory event), never out of fear or hope." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Overrides break the code." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Human biases (loss aversion, recency, etc.) systematically interfere. Bot is immune; that's the point.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You find yourself manually skipping every earnings-week signal because they 'feel risky.' Fix?",
+      "choices": [
+        { "id": "a", "text": "Keep skipping." },
+        { "id": "b", "text": "Codify the rule into the bot. If you're consistently overriding for the same reason, that's a signal the rule belongs in the strategy itself. Add an earnings-calendar filter that automatically suspends signals for symbols within N days of earnings. Benefits: (1) the rule is now testable — backtest with and without the filter, see if the skipping actually helps, (2) execution is consistent — no missed-by-human edge cases, (3) the override log goes silent, freeing you to spot truly anomalous situations. The job of discretionary feedback is to improve the bot, not to perpetually compete with it. Treat every recurring override as a candidate rule." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Quit trading." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Codify recurring overrides into the bot as rules. Override = signal that a rule belongs in code.",
+      "points": 1
+    }
+  ]
+}

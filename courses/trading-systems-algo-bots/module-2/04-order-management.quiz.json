@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Order management",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why must order/fill event handlers be idempotent?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Brokers occasionally deliver the same event twice — websocket reconnects, retries, network blips. If a fill event for 100 shares processes twice without idempotency, your bot books 200 shares of position and 2× the realized PnL. Your view diverges from broker reality. Fix: dedupe by event ID — every fill has a unique `execId` (IBKR) or trade-update ID (Alpaca); on receipt, check if you've already processed it; if yes, drop. With idempotency, duplicates are safe; without it, they silently corrupt your books. Required pattern for any production bot." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Logging." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brokers re-deliver events. Without dedup by event ID, duplicates double-count fills.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "On bot startup, broker shows AAPL position of 50 shares; your DB shows 100. Auto-fix?",
+      "choices": [
+        { "id": "a", "text": "Update DB to match broker." },
+        { "id": "b", "text": "No — alert loudly and pause trading until investigated. The mismatch could mean: (1) a fill event was missed (your DB is stale), (2) a duplicate event was processed (your DB over-counted), (3) someone hand-traded in the broker UI, (4) a bug just executed half the position somewhere. Auto-syncing to broker hides the underlying issue and prevents diagnosis. The correct flow is to halt trading, alert the operator, manually inspect order history and event logs, find the root cause, then resolve. Auto-correction prevents you from catching the bug that caused the drift in the first place. Trading bots should be conservative when their state and reality diverge — pause, don't paper over." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell all." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alert and pause — don't auto-fix. The mismatch indicates a bug; auto-syncing hides it.",
+      "points": 1
+    }
+  ]
+}

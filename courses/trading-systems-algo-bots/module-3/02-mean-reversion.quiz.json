@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Mean reversion",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do mean reversion strategies often blow up despite high win rates?",
+      "choices": [
+        { "id": "a", "text": "Bad luck." },
+        { "id": "b", "text": "Mean reversion's PnL distribution is asymmetric: many small wins (price reverts as expected), rare large losses (price keeps moving against you, often during regime shifts or news events). A 70% win rate looks great until one 5× loss erases 5+ small wins. The strategy is designed for ranging markets; in trending or crisis regimes it gets steamrolled. Defenses: small position sizes (the tail loss caps risk), hard stops (cap each loss), time stops (exit positions that don't revert quickly — they often turn into runaway losers), and regime filters that pause the strategy when trend strength rises. Without these guards, the strategy wins for months and then loses a year of profit in one event." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Win rate is wrong." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Asymmetric: lots of small wins, rare huge losses. Stops + small size + time exits are mandatory.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mean reversion strategy hits a 4-week drawdown 1.5× its backtest max. What now?",
+      "choices": [
+        { "id": "a", "text": "Increase size." },
+        { "id": "b", "text": "Pause or reduce size — the regime has likely shifted. Mean reversion lives in ranging markets and dies in trends. A drawdown beyond backtest max suggests the underlying market structure has changed: increased directional persistence, regime breakdown, or correlation regime (e.g., crisis-mode everything-correlated). The mature response is to reduce position size (e.g., to 25-50% of normal), continue paper-tracking the strategy, and re-enter full size only when behavior normalizes. Don't double down trying to 'win back' losses — that's how 30% drawdowns become 60%. Drawdown 1.5× backtest is your designed-for threshold; treat it as a stop sign, not a buying opportunity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to options." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pause/reduce size. Drawdown beyond backtest max = regime shift; don't double down.",
+      "points": 1
+    }
+  ]
+}

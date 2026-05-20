@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Script basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `[[ ]]` preferred over `[ ]` in modern bash?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "`[[ ]]` is a bash builtin with sane parsing — no need to quote variables to avoid word splitting, supports regex matching with `=~`, supports logical && and || INSIDE the test (no need for nested [ ]), and `==` works alongside `=`. `[ ]` is an alias for the `test` command from POSIX — more portable but has nasty gotchas: unquoted empty variables cause syntax errors, no regex, must use `-a`/`-o` for AND/OR. For bash-specific scripts (which is most scripts in practice), use `[[ ]]`. For sh-portable scripts (init systems, alpine images), stick to `[ ]` with strict quoting. The difference is shell capability, not preference — once you use bash features anyway, the gain in safety with [[ ]] is free." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster execution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "[[ ]] is safer: no word splitting, regex support, &&/|| inside, == works. POSIX scripts still use [ ].",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your script's first line is missing `set -euo pipefail`. What can go wrong?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Everything. Without `set -e`, a failing command (e.g., `cd /nonexistent`) doesn't stop the script — subsequent commands run anyway, potentially in the wrong directory. Without `set -u`, typos in variable names silently expand to empty strings: `rm -rf $TEMPDIR/old` becomes `rm -rf /old` if TEMPDIR is misspelled or unset. Without `set -o pipefail`, `false | true` succeeds (only the last command's exit code is checked), so failures in the middle of a pipeline are silently swallowed. Adding these four characters (and the `-uo`) at the top of every script catches dozens of subtle bugs. Standard hardening prelude: `#!/usr/bin/env bash` + `set -euo pipefail` + `IFS=$'\\n\\t'`. The 'bash strict mode'; treat it as table stakes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Scripts run slower." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without it: errors silently continue, unset vars become empty (bad with rm -rf), pipeline failures swallowed.",
+      "points": 1
+    }
+  ]
+}

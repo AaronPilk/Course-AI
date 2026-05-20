@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Observability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use structured JSON logging over plain console.log strings?",
+      "choices": [
+        { "id": "a", "text": "Smaller logs." },
+        { "id": "b", "text": "JSON logs are queryable — external sinks (Logflare, Axiom, Datadog) parse fields like level, userId, traceId, duration as columns you can filter and aggregate on. Plain strings force regex parsing or full-text search, both lossy and slow. With JSON, `wrangler tail --search '\"level\":\"error\"'` works trivially, and dashboards can chart p95 latency per route. The cost is one wrapper function; the payoff is logs you can actually answer questions with at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster CPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JSON logs become queryable fields in external sinks; plain strings are unstructured and lossy.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Multi-service Worker request fails intermittently. Logs exist at each layer but you can't tell which logs belong to the failing request. Fix?",
+      "choices": [
+        { "id": "a", "text": "Log more verbosely." },
+        { "id": "b", "text": "Propagate a request ID (traceId) across service boundaries. Generate it at the edge entrypoint (`crypto.randomUUID()` or use an incoming X-Trace-Id header), pass it through Service Binding fetches via headers, log it as a field at every layer. Now `traceId:abc123` in your log sink shows the full path of one request across all Workers. Without correlation IDs, multi-service debugging is guess-and-check; with them, you follow the exact request through the system. Required pattern past a single Worker." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add timestamps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Propagate a request ID via headers; log it at each layer to correlate logs across services.",
+      "points": 1
+    }
+  ]
+}

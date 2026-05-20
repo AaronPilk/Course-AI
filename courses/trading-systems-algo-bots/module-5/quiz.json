@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Going live and staying alive",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the standard retail risk-per-trade range?",
+      "choices": [
+        { "id": "a", "text": "10-20%." },
+        { "id": "b", "text": "0.5% to 2% of equity per trade. Math: at 1% risk, surviving a 10-loss streak costs ~10% drawdown — uncomfortable but recoverable. At 5% risk, the same streak is 50% drawdown — strategy-ending. At 10% risk, ~65% drawdown — usually unrecoverable. Even +EV strategies hit unlikely streaks (e.g., 60%-win-rate strategy hits 10 losses in a row roughly once per 10,000 trades — once in a typical bot's lifetime). Sizing must let you survive the streak with capital intact. 1-2% is the sweet spot: aggressive enough to compound meaningfully, conservative enough to survive variance. Above 5% is gambling regardless of strategy quality. Kelly criterion gives theoretical optima but assumes perfect knowledge of edge — fractional Kelly (1/4) usually lands close to 1-2% anyway." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "50%." }
+      ],
+      "correct_answer": "b",
+      "explanation": "0.5%-2% per trade. Survives variance; conservative compounds best long-term.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bot starts submitting orders in a tight loop due to a code bug — 100/second. What stops it?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "An order-rate-limit circuit breaker — table stakes for any production bot. Implementation: track timestamps of orders submitted in the last 60 seconds; if count exceeds the strategy's expected max (e.g., 20 for daily-bar strategy, 200 for tick), fire the kill switch immediately. Without this guard, a loop bug can submit thousands of orders in seconds — daily-loss limits and human response are too slow. The order-rate guard is the difference between a 'bad bug' and an 'account-blowing catastrophe.' Layer it with: daily-loss limit, per-position size cap, heartbeat watchdog, EOD reconciliation. Each catches different failure classes; together they bound damage from any single mode going wrong." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Broker limits." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Order-rate circuit breaker catches runaway loops. Layer with daily loss, size caps, heartbeats, EOD.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why are heartbeat / watchdog processes mandatory for live bots?",
+      "choices": [
+        { "id": "a", "text": "Vanity metric." },
+        { "id": "b", "text": "Catches silent failures — bot processes that crashed, hung, or stopped without writing an error message. A bot that's silent during market hours is a bot that's failing; without a heartbeat watchdog, you may not notice until your daily report (or never). Setup: bot writes a timestamp to a shared store (Redis, file, DB) every minute; a separate watchdog process (cron, systemd timer, monitoring service) checks the timestamp every minute and alerts if it's stale. The watchdog runs in a separate process for resilience — if the bot's own crash logging fails, the watchdog still sees the silence. Pair with kill switches and metrics for full coverage. The watchdog is the cheapest insurance you can build; the cost is trivial, the catch rate is high." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SEC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Catches silent failures — crashed/hung bots that don't log their own death.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You're in month 4 of live trading. Strategy is in 12% drawdown. Tempted to quit. Right move?",
+      "choices": [
+        { "id": "a", "text": "Quit, cut losses." },
+        { "id": "b", "text": "Probably not. 4 months is too short to know whether your strategy works or doesn't; you need a multi-year horizon. 12% drawdown is within expected variance for many algo strategies (especially trend); panic-quitting at this point gives up exactly when statistical mean-reversion to expected returns is mostly likely. The right framework: did the drawdown cross your pre-decided thresholds (e.g., 20% = halt)? If no, continue. Did the strategy's behavior change vs paper / backtest? If no, the variance is doing what variance does. Did anything technical break? If no, the bot is working as designed; the painful part is psychological. Quit only if (1) genuine strategy decay (live PnL persistently divergent from backtest), or (2) you can't follow your own rules. Quitting from emotional discomfort is exactly the mistake the course warns about." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add leverage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "4 months is too short. Quit only on strategy decay or rule-breaking, not emotional discomfort.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the single most important habit for long-term algo trading success?",
+      "choices": [
+        { "id": "a", "text": "Beating the market." },
+        { "id": "b", "text": "Not overriding the bot during drawdowns. Algo trading is technically harder than discretionary in theory but psychologically harder in practice — the constant temptation to interfere when the bot loses money you wouldn't have personally lost destroys validated edges. Pre-decided rules, sizing that bounds drawdowns to tolerable levels, multi-year time horizons, capital you can afford to drawdown, separation of bot capital from emotional capital — these are the operating disciplines that distinguish traders who compound over years from traders who blow up in months. The technical side gets you the edge; the discipline side keeps the edge. Both are required; most retail traders are weakest on the discipline side and quit before the math has time to work. Keep a journal of overrides; review monthly; trust the math; let the bot run." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Daily trading." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Don't override during drawdowns. Discipline beats raw edge for long-term compounding.",
+      "points": 1
+    }
+  ]
+}

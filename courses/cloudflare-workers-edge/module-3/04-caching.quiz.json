@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Caching",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between Workers Cache API and KV for caching?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Cache API is per-edge-location (cache populated in Tokyo doesn't help San Francisco; each data center maintains its own); instant in same region; great for HTTP-style URL-based caching. KV is globally replicated (writes propagate to all edges within ~60s; reads serve from nearest cache after first hit anywhere); eventually consistent. Pick Cache API for traditional HTTP caching tied to URLs/Request objects. Pick KV for globally-cached values (feature flags, computed results) where you want all edges to benefit from one cache write. Often used together: Cache API in front of R2 for static assets; KV for app-level cached values." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cache API is faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache API: per-edge, URL-based. KV: globally replicated, key-value. Different problems.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cached value should refresh in background but user always gets immediate response. Pattern?",
+      "choices": [
+        { "id": "a", "text": "Block on refresh." },
+        { "id": "b", "text": "Stale-while-revalidate. Check cache; if hit, serve immediately AND fire `ctx.waitUntil(refreshCache(...))` to refresh in background; if miss, compute synchronously and store. User always sees fast cached response; the next user gets refreshed data. Trades a bit of staleness for snappy UX. Pattern: `const cached = await env.CACHE.get(key); if (cached) { ctx.waitUntil(refresh(key)); return Response.json(cached); } else { /* compute + cache + return */ }`. The waitUntil ensures the isolate stays alive to complete the background refresh after the response is sent. Standard pattern for any 'data should be fresh-ish but response must be fast' case." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip caching." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stale-while-revalidate via cached value + ctx.waitUntil(refresh). Fast response; fresh-ish data.",
+      "points": 1
+    }
+  ]
+}

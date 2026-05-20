@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Shell scripting",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `set -euo pipefail` do?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Bash strict mode — four safety flags that catch common bugs. `-e` exits the script immediately on any non-zero exit code; `-u` errors on unset variables (catches typos and prevents `rm -rf $TYPO/`); `-o pipefail` makes pipelines fail if any stage fails (default ignores all but the last); the `-e -u -o pipefail` form combines them. Without these, bash silently barrels through errors and treats unset variables as empty strings — sources of catastrophic bugs. Standard hardening prelude: `#!/usr/bin/env bash` + `set -euo pipefail` + `IFS=$'\\n\\t'` (safer field splitting). Habit makes them automatic; once you've been burned by a missing `set -e`, you'll never skip them." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speeds execution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exit on errors (-e), error on unset vars (-u), fail pipelines on any stage (-o pipefail).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your script creates /tmp/work_dir. Script gets Ctrl-C'd mid-run. Directory left behind. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add cleanup at end." },
+        { "id": "b", "text": "Add `trap 'rm -rf \"$TMP\"' EXIT` near the top, immediately after `TMP=$(mktemp -d)`. trap registers a handler for the EXIT pseudo-signal that fires on ANY exit path — normal completion, set -e error, Ctrl-C (SIGINT), SIGTERM. Trailing cleanup at the end only runs on normal flow; set -e or signals skip it entirely. Standard pattern: create resource → register cleanup trap immediately → use resource → trap fires on exit. Combine with explicit SIGINT/SIGTERM handlers if you want graceful shutdown messages. Same principle as RAII or defer in other languages, but explicit in bash. Without trap, every script that creates state outside its own variables eventually leaves debris." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Python." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`trap 'rm -rf $TMP' EXIT` runs on ANY exit. Trailing cleanup skipped on errors/signals.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use `local` inside bash functions?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Without `local`, variables defined inside a function are GLOBAL by default — they persist after the function returns and silently clobber caller variables with the same name. Classic bug: function uses `i` as a loop counter; caller had its own `i`; calling the function corrupts the caller's `i`, leading to mysterious failures later. With `local i=0`, the function's `i` is scoped to that function only. Standard hygiene: `local` EVERY variable inside a function unless you specifically want it to leak (rare). Same rule for function arguments captured by name: `local name=\"$1\"`. Bash globals-by-default is one of the biggest footguns in shell scripting; `local` is the antidote." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without local, function vars leak globally and clobber caller's state.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Script outputs both log progress and data to stdout. Caller pipes it to another tool. What breaks?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "The downstream tool gets log lines interleaved with data, can't tell them apart, and behaves wrong (possibly silently producing wrong output, possibly crashing). Convention: stdout = data the program is producing, stderr = diagnostics about how it's producing it. Send logs to stderr (`echo \"progress\" >&2` or `log() { echo \"$@\" >&2; }`); keep stdout for the actual output the script generates. Now `myscript.sh | downstream` works correctly — data flows clean to downstream, logs still visible on the user's terminal (because stderr isn't piped by default). Honoring this convention makes your scripts compose with every other Unix tool; violating it silently breaks pipelines." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pipes are slow." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mixing logs with data on stdout corrupts pipelines. Logs to stderr; data to stdout.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When should you reach for Python instead of bash?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "When the script grows past ~200 lines, needs real data structures (dicts, classes, complex parsing), needs cross-platform behavior beyond GNU coreutils, calls multiple APIs, or has logic complex enough that bash starts feeling fragile. Bash excels at 'glue between Unix commands and config files'; for richer logic, Python is far clearer and more maintainable. Tell-tale signs you've outgrown bash: heavy use of `awk`/`sed` for things that would be one Python line, JSON manipulation beyond simple jq, multi-step computations with intermediate state, error-handling logic that takes more lines than the actual work. Don't be religious about it — write bash when bash is the right shape, Python when the problem outgrows the shell. The cost of switching too late (debugging a 500-line bash script) is much higher than too early." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "When > 200 lines, needs data structures, complex logic, APIs, or cross-platform. Bash is glue; Python is logic.",
+      "points": 1
+    }
+  ]
+}

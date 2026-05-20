@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: sed",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does `sed 's/foo/bar/' file.txt` only replace the first foo per line?",
+      "choices": [
+        { "id": "a", "text": "Bug." },
+        { "id": "b", "text": "That's sed's default behavior — `s/pattern/replacement/` replaces the first match on each line; the `g` (global) flag enables all matches per line. Use `s/foo/bar/g` for what most newcomers expect: replace every occurrence on every line. Other flags worth knowing: `i` for case-insensitive (GNU sed only), `2` to replace only the second occurrence on each line, `N` to replace only the Nth. The default-first behavior is occasionally useful — say you want only the first occurrence — but most real uses want /g. After this trips you up once, it's wired in forever. Test substitutions without `-i` first to verify the result before writing back to disk." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Needs -E flag." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default replaces only first per line. Add `/g` flag for global replacement.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "On macOS, `sed -i 's/foo/bar/' file.txt` errors with 'extra characters at end of i command'. Fix?",
+      "choices": [
+        { "id": "a", "text": "Install GNU sed." },
+        { "id": "b", "text": "macOS uses BSD sed, which requires a backup-extension argument with `-i`. Two fixes: `sed -i '' 's/foo/bar/' file.txt` (empty string = no backup), or `sed -i.bak 's/foo/bar/' file.txt` (creates file.txt.bak). Linux GNU sed accepts `-i` alone — hence the confusion when scripts move between platforms. For cross-platform portability, always provide an extension (use `.bak` and delete the backup afterward if needed), or `gsed` on macOS (install via brew install gnu-sed) which behaves like Linux. Many CI/scripts in the wild fail on macOS for exactly this reason; making your sed commands portable is a small price for not debugging it later." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use awk." }
+      ],
+      "correct_answer": "b",
+      "explanation": "BSD sed requires backup arg with -i. Use `sed -i '' ...` or `sed -i.bak ...`.",
+      "points": 1
+    }
+  ]
+}

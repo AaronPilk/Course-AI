@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Functions & arrays",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `local` for variables inside bash functions?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Without `local`, variables defined inside a function are global by default — they persist after the function returns and can clobber caller variables with the same name. Example: function uses `i=0` as a loop counter; caller had its own `i` for something else; calling the function corrupts the caller's `i`. With `local i=0`, the function's `i` is scoped to that function only. Standard hygiene: `local` every variable you declare inside a function unless you specifically want it to leak. The same rule applies to function arguments stored in named variables: `local name=\"$1\"`. Bash globals are a footgun the way globals were before any modern language; `local` is the antidote. Discipline here prevents the worst class of script bugs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required syntax." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without local, function vars leak globally and can clobber caller's state. Always use local.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to read each line of a file into an array. Best way?",
+      "choices": [
+        { "id": "a", "text": "cat file | while read." },
+        { "id": "b", "text": "`mapfile -t lines < file` (also called `readarray`). Reads each line into the array `lines`; `-t` strips the trailing newline from each element. Now you can iterate `for line in \"${lines[@]}\"; do ... done` cleanly. Alternative `cat file | while read line; do ... done` has two problems: (1) it spawns a subshell for the while loop, so variables set inside don't persist to the outer script — a frequent footgun, (2) it processes line-by-line without storing them, so you can't iterate twice. `mapfile` is the modern idiomatic approach, available since bash 4. For very large files where you don't want everything in memory, the `while read` pattern (with proper `< file` redirection, NOT `cat | while`) is fine: `while IFS= read -r line; do ...; done < file`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Loop wc." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`mapfile -t lines < file` reads into array cleanly. Avoids subshell trap of `cat | while`.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Order types",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does a stop-limit order fail to protect you?",
+      "choices": [
+        { "id": "a", "text": "It never fails." },
+        { "id": "b", "text": "When price moves through your limit too fast and doesn't come back. Stop-limit triggers a limit order at your specified limit price; if the market is gapping or in free-fall, your limit may be below the new market, and the order never fills. You then sit through the rest of the drop. Stop-market in the same scenario fills at whatever's available — worse-than-trigger price, but at least you're out. Trade-off: stop-limit caps slippage at the cost of execution certainty; stop-market guarantees execution but can fill far from the stop. Liquid instruments → stop-limit usually fine. Fast-moving / news-driven names → consider stop-market." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "On weekends." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fast moves can blow through the limit and never come back — order doesn't execute.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bot sends a market order to buy 5,000 shares of a stock that trades 50,000/day, average spread $0.10. Expected outcome?",
+      "choices": [
+        { "id": "a", "text": "Fills at last trade." },
+        { "id": "b", "text": "Heavy slippage — the bot walks up the book. 5,000 shares is 10% of daily volume; the visible depth at the inside ask is likely a few hundred shares max. The order eats through level after level, filling progressively higher, possibly $0.30-1.00 above the displayed ask. Better approaches: (1) break into smaller chunks (TWAP/VWAP over the day) so each piece is within local liquidity, (2) use a limit at the inside ask and let it patiently fill, (3) trade a more liquid instrument. Market orders on thin stocks are how strategies die — the slippage cost dwarfs any signal-based edge." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancelled by broker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Walks up the book — massive slippage on thin instruments. Chunk it or use limits.",
+      "points": 1
+    }
+  ]
+}

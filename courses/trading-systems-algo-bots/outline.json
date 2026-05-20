@@ -1,0 +1,88 @@
+{
+  "slug": "trading-systems-algo-bots",
+  "title": "Trading Systems & Algorithmic Bots",
+  "subtitle": "From order book to live PnL — design, code, and operate trading bots that survive contact with the market",
+  "description": "A rigorous, engineer-led course on building algorithmic trading systems: market microstructure, order types and execution, broker APIs (Alpaca, Interactive Brokers), strategy design, backtesting honestly, risk management, and going live without blowing up. Focus on what actually matters for retail-to-prosumer algorithmic trading in 2026.",
+  "category": "Trading",
+  "difficulty": "intermediate",
+  "audience": "Developers and quantitative-minded traders who want to ship working trading bots. Comfortable with Python or TypeScript; understands basic finance concepts. Not a get-rich-quick course — this is engineering and risk management for trading systems.",
+  "tags": ["trading", "algorithmic", "python", "alpaca", "ibkr", "backtesting", "risk-management"],
+  "estimated_minutes": 290,
+  "brand": {
+    "name": "Algo",
+    "logo": "/brands/trading-systems-algo-bots.svg",
+    "gradient": ["#10B981", "#059669"],
+    "tint": "#04140C"
+  },
+  "prerequisites": [
+    "Code in Python or TypeScript",
+    "Understand the basics of stocks/markets (price, volume, bid/ask)",
+    "Have or willing to open a paper-trading account (Alpaca free)"
+  ],
+  "outcomes": [
+    "Read a market microstructure with eyes that see the order book",
+    "Choose the right order type for the situation",
+    "Connect to Alpaca and Interactive Brokers APIs from code",
+    "Design strategies that have a real edge (not overfit)",
+    "Backtest honestly with realistic costs and slippage",
+    "Size positions and manage risk so bad trades don't kill the account",
+    "Operate a live bot — monitoring, kill switches, postmortems"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Markets and microstructure",
+      "objective": "How markets actually work at the level a bot must care about.",
+      "lessons": [
+        { "position": 1, "title": "Order books and how prices form" },
+        { "position": 2, "title": "Order types: market, limit, stop, IOC" },
+        { "position": 3, "title": "Liquidity, slippage, and spreads" },
+        { "position": 4, "title": "Markets, exchanges, and venues" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Connecting to brokers",
+      "objective": "Get a bot talking to a real (or paper) brokerage.",
+      "lessons": [
+        { "position": 1, "title": "Alpaca: the easy start" },
+        { "position": 2, "title": "Interactive Brokers: the pro option" },
+        { "position": 3, "title": "Market data: bars, ticks, and streams" },
+        { "position": 4, "title": "Order management essentials" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Strategy design",
+      "objective": "How to find and refine trading edges.",
+      "lessons": [
+        { "position": 1, "title": "What an 'edge' really is" },
+        { "position": 2, "title": "Mean reversion patterns" },
+        { "position": 3, "title": "Momentum and trend following" },
+        { "position": 4, "title": "Mechanical vs discretionary blending" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Backtesting honestly",
+      "objective": "Get real signal from historical data without lying to yourself.",
+      "lessons": [
+        { "position": 1, "title": "Backtest mechanics: vectorbt and beyond" },
+        { "position": 2, "title": "Survivorship, look-ahead, and lookback bias" },
+        { "position": 3, "title": "Modeling costs, slippage, and capacity" },
+        { "position": 4, "title": "From backtest to walk-forward to paper" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Going live and staying alive",
+      "objective": "Operate a real trading bot without disaster.",
+      "lessons": [
+        { "position": 1, "title": "Position sizing and risk management" },
+        { "position": 2, "title": "Kill switches and circuit breakers" },
+        { "position": 3, "title": "Monitoring, alerts, and ops" },
+        { "position": 4, "title": "The trader's mindset: surviving losing streaks" }
+      ]
+    }
+  ]
+}

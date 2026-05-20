@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Backtesting honestly",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the single most common bias in retail backtests?",
+      "choices": [
+        { "id": "a", "text": "Time bias." },
+        { "id": "b", "text": "Survivorship bias — testing on today's index members (e.g., today's S&P 500) excludes all companies that failed, were delisted, or merged out of existence. A long-only strategy backtested on today's S&P from 2000-2023 sees Apple, Amazon, and Nvidia performing brilliantly — but never sees Enron, Lehman, WorldCom, Eastman Kodak, or the hundreds of other names that didn't survive. The strategy looks great because it implicitly cherry-picked the eventual winners; in real-time you'd have held the failures too. Fix: use point-in-time index constituents from paid data providers (Norgate, Sharadar). Free data (Yahoo, default APIs) introduces survivorship by default. Discount any free-data backtest accordingly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Currency bias." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Survivorship — today's index excludes failures. Use point-in-time data for honest backtests.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Backtest fills at the historical close, no costs included. Strategy shows 25% CAGR. Skeptical?",
+      "choices": [
+        { "id": "a", "text": "Numbers don't lie." },
+        { "id": "b", "text": "Very skeptical — this is a textbook 'too good to be true' result. Filling at the historical close assumes you could trade at mid-prices instantly with no spread, no slippage, no commission, no impact. Real-world fills happen at bid (when selling) or ask (when buying), with slippage that scales with size, plus commissions and regulatory fees. Adding realistic costs (half-spread + size-dependent slippage + 5 bps cushion) typically cuts a 25% CAGR strategy to 5-10% — or to negative. Before believing any backtest result, model fills against bid/ask with realistic friction. Strategies that survive cost modeling are the only ones worth testing further; the rest are statistical artifacts of frictionless simulation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Look fine." }
+      ],
+      "correct_answer": "b",
+      "explanation": "No-cost backtests at close prices over-promise massively. Add realistic friction before believing.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use walk-forward analysis instead of a single in-sample / out-of-sample split?",
+      "choices": [
+        { "id": "a", "text": "It's faster." },
+        { "id": "b", "text": "Walk-forward repeats the train/test cycle across the time series: train on years 1-3, test on year 4; then train on years 2-4, test on year 5; and so on. Each test window is genuinely OOS, so you get many independent OOS results to aggregate. A single IS/OOS split has one OOS data point — that may be lucky or unlucky. Walk-forward averages across many, giving a more stable estimate of true edge. Bonus: it tests robustness to regime changes — does the strategy work in year 4 trained on 1-3? In year 8 trained on 5-7? If performance is consistent across rolling windows, the edge is regime-robust. If it works only in one window, the edge is regime-specific." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper data." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multiple rolling OOS tests — more honest aggregate estimate; reveals regime-robustness.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You have a strategy backtested at $10K capital with Sharpe 1.4. Scaling to $1M, Sharpe is still 1.4. Concern?",
+      "choices": [
+        { "id": "a", "text": "Excellent." },
+        { "id": "b", "text": "Yes — real strategies degrade as capital grows because larger size causes more slippage (walks the order book deeper, takes more time to fill, leaks information). Identical Sharpe at 100× capital almost certainly means your slippage model is fixed-bps rather than size-dependent — both scales experience the same artificial friction, which isn't physical. Fix: use a size-dependent slippage model (e.g., half-spread + 1bp per 1% of daily volume). Re-run; Sharpe should drop at $1M while staying similar at $10K. Without capacity testing, strategies that work at hobby scale fail at production scale — and you only discover it after committing real capital. Capacity is part of strategy validation, not an afterthought." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need bigger account." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Identical Sharpe at 100× capital signals missing size-dependent slippage. Re-test with capacity in mind.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When should you go from paper trading to live trading?",
+      "choices": [
+        { "id": "a", "text": "After 1 week." },
+        { "id": "b", "text": "After 1-3 months of paper trading where live results track backtest within reasonable tolerance, all error paths have been exercised, the kill switch is wired and tested, alerts and monitoring are running, and you've identified zero unresolved anomalies. Even then, start live at 25% of intended size — bound the cost of any unknown failure mode. Increase size to 50%, 75%, 100% in 4-week increments as confidence builds. Skipping any of these because 'it's working' is how retail traders lose money to bugs that paper trading would have caught. The bar for 'go live' should be much higher than 'backtest shows green' or 'paper looks good for a week.' Patience is the cheapest edge in algo trading." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "When excited." }
+      ],
+      "correct_answer": "b",
+      "explanation": "1-3 months of paper matching backtest + all checks pass + kill switch wired + start at 25% size.",
+      "points": 1
+    }
+  ]
+}

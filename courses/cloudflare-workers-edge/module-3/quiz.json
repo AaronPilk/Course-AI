@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Building real Workers",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "`wrangler dev` vs `wrangler dev --remote`?",
+      "choices": [
+        { "id": "a", "text": "Same." },
+        { "id": "b", "text": "Local mode mocks bindings (KV in-memory, R2 local disk, D1 local SQLite, secrets from .dev.vars). Fast iteration. --remote uses actual Cloudflare bindings (real KV/R2/D1) — slower but real data. Use local for most dev; --remote when you need to test against production data or verify integration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different ports." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Local mocks bindings; --remote uses real Cloudflare bindings.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker has 15 routes plus middleware. Raw fetch or Hono?",
+      "choices": [
+        { "id": "a", "text": "Raw fetch — simpler." },
+        { "id": "b", "text": "Hono. Raw fetch handler with 15 routes becomes a long if/else chain with manual JSON parsing, repeated error handling, ad-hoc middleware. Hono (~10KB) gives Express-like routing, built-in middleware (CORS, auth, logger, security, cache, compression), context helpers, type-safe bindings via `<{ Bindings: Env }>` generic, and Zod-based validation via @hono/zod-validator. Bundle and runtime overhead minimal; DX win large. Standard 2026 choice for Workers APIs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Build framework yourself." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hono for any multi-route Worker. ~10KB; huge DX win.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why verify JWTs locally instead of via external API per request?",
+      "choices": [
+        { "id": "a", "text": "Same speed." },
+        { "id": "b", "text": "Local verification is microseconds via Web Crypto; external API call is 50-200ms per request plus cost/rate limits. JWTs are self-validating — signature proves the issuer; payload claims are trustworthy if signature is valid. For HMAC use the shared secret; for RSA/ECDSA fetch JWKS once and cache. Hono's jwt middleware handles both. Reserve external API calls for cases needing real-time info beyond JWT claims." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "External is safer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Local crypto is microseconds vs 50-200ms external. JWTs designed for self-validation.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "User profile cached for fast reads. Should refresh in background. Pattern?",
+      "choices": [
+        { "id": "a", "text": "Block on refresh." },
+        { "id": "b", "text": "Stale-while-revalidate: check cache; if hit, serve immediately AND fire `ctx.waitUntil(refresh(...))` to update cache in background; if miss, compute synchronously, store, return. User always sees fast cached response; next request gets fresh data. waitUntil keeps isolate alive after response sent. Standard pattern for 'data should be fresh-ish but response must be fast.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip caching." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cached value + ctx.waitUntil(refresh) for stale-while-revalidate.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Essential session cookie attributes?",
+      "choices": [
+        { "id": "a", "text": "Any string." },
+        { "id": "b", "text": "`httpOnly: true` (prevents JS access; XSS protection), `secure: true` (HTTPS only), `sameSite: 'Lax'` (CSRF protection), `path: '/'`, reasonable maxAge. For cross-origin: sameSite='None' + secure=true. Pair with CSRF middleware (hono/csrf) for cookie-based forms. Skipping any of these creates real vulnerabilities — non-httpOnly is the most common 'stolen session' attack vector." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Secure only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "httpOnly + secure + sameSite='Lax'. Each blocks specific attack categories.",
+      "points": 1
+    }
+  ]
+}

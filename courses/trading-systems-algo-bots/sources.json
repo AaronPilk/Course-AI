@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "url": "https://docs.alpaca.markets",
+      "title": "Alpaca Markets API Docs",
+      "publisher": "Alpaca",
+      "rationale": "Primary broker API for retail algo trading; the easiest commercial bot stack."
+    },
+    {
+      "url": "https://interactivebrokers.github.io",
+      "title": "Interactive Brokers API Reference",
+      "publisher": "IBKR",
+      "rationale": "The professional bridge — TWS API, IB Gateway, and the protocols pros use."
+    },
+    {
+      "url": "https://vectorbt.dev",
+      "title": "vectorbt Documentation",
+      "publisher": "vectorbt",
+      "rationale": "Fast, modern backtesting library in Python; reference for honest backtests."
+    },
+    {
+      "url": "https://www.sec.gov/investor",
+      "title": "SEC Investor Information",
+      "publisher": "U.S. Securities and Exchange Commission",
+      "rationale": "Authoritative on rules, order types, and what regulated trading looks like."
+    },
+    {
+      "url": "https://www.investopedia.com",
+      "title": "Investopedia",
+      "publisher": "Investopedia",
+      "rationale": "Reference for definitions and mechanics: order types, microstructure terms, risk concepts."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Filesystem & core commands",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the `~` character mean in a shell path?",
+      "choices": [
+        { "id": "a", "text": "Root of filesystem." },
+        { "id": "b", "text": "Your home directory — `/home/yourname` on Linux, `/Users/yourname` on macOS. Used as a shortcut anywhere a path is expected: `cd ~`, `ls ~/Documents`, `cp file.txt ~/backup/`. The shell expands `~` to the full home path before passing to the command. `~user` (with another username) expands to that user's home. Different from `/` (filesystem root), `.` (current directory), `..` (parent directory). Knowing the four path shortcuts — `~`, `/`, `.`, `..` — eliminates most absolute-path typing for daily commands. Combined with tab completion and `cd -` (return to previous), you can navigate efficiently without typing long paths." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Current directory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Home directory (/home/yourname). Shell expands ~ before running the command.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You typed `rm -rf $DIR/important_files` and got 'cannot remove /important_files'. What happened?",
+      "choices": [
+        { "id": "a", "text": "Permission denied." },
+        { "id": "b", "text": "$DIR was unset or empty, so the command became `rm -rf /important_files` — rm tried to delete a top-level filesystem path, which (mercifully) didn't exist. The closer-to-disaster version: if you'd been root and the path existed, you'd have deleted real system files. This single bug pattern has caused famous outages. Defenses: (1) `set -u` in scripts (treat unset variables as errors), (2) explicit guards: `[ -n \"$DIR\" ] || exit 1`, (3) `: ${DIR:?DIR must be set}` for required variables, (4) quote variables: `\"$DIR\"` prevents word-splitting. Treat any rm -rf using variables as a potential disaster site; require multiple confirmations before pulling the trigger." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "rm is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "$DIR was empty, command became `rm -rf /important_files`. Use `set -u` and guards.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What permission mode should SSH private keys have?",
+      "choices": [
+        { "id": "a", "text": "644." },
+        { "id": "b", "text": "600 — readable and writable only by the owner; nobody else has access. SSH explicitly refuses to use a private key with looser permissions (you'll get 'Permissions 0644 for id_rsa are too open' or similar), as a safety check against keys being accidentally readable by other users on shared systems. The full SSH directory setup: chmod 700 ~/.ssh (only you can enter), chmod 600 ~/.ssh/id_rsa (private key), chmod 644 ~/.ssh/id_rsa.pub (public key — meant to be shared), chmod 600 ~/.ssh/config and ~/.ssh/known_hosts. Same logic applies to other secrets: API tokens, GPG keys, .netrc files. The rule: secrets are 600 with a 700 parent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "777." }
+      ],
+      "correct_answer": "b",
+      "explanation": "600 — owner read/write only. SSH refuses keys with looser permissions for security.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You want a 'current' symlink pointing to /opt/app-v3 that you can later flip to /opt/app-v4 atomically. Best approach?",
+      "choices": [
+        { "id": "a", "text": "cp -r each version." },
+        { "id": "b", "text": "Symlink it: `ln -s /opt/app-v3 /opt/app/current`. Consumers reference /opt/app/current; deploys atomically flip the symlink with `ln -snf /opt/app-v4 /opt/app/current` (the `-snf` flags: -s symbolic, -n don't follow into existing symlink, -f force overwrite). Process: deploy v4 alongside v3, run database migrations if needed, flip the symlink, restart services. Rollback: flip back to v3 — instant, no copy. This is the standard deploy pattern (Capistrano, Spinnaker, etc.). The atomicity matters: file readers either see the old or the new, never a half-applied state, which is what plain cp + mv would risk." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardlink." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ln -s for symlink; flip with `ln -snf new current` atomically. Standard deploy pattern.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between `find` and `locate`?",
+      "choices": [
+        { "id": "a", "text": "Synonyms." },
+        { "id": "b", "text": "`find` walks the filesystem in real-time — slow but always current; supports rich filters (name, size, time, type, permissions, and exec). `locate` queries a pre-built database (typically updated nightly by cron via `updatedb`) — microseconds to query but possibly stale; just searches paths, no filters. Choose based on: need real-time / fresh data → find; need a fast 'where is this file' lookup of well-established files → locate. Modern alternative: `fd` is a fast find with friendly syntax and .gitignore support. For content search inside files (not just filenames), use `grep -r` or `rg` (ripgrep). The four tools cover the search space: `find`/`fd` for filenames live, `locate` for filenames cached, `grep`/`rg` for content." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "find = live filesystem walk with filters; locate = fast indexed lookup, possibly stale.",
+      "points": 1
+    }
+  ]
+}

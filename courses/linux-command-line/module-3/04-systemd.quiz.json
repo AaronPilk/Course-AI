@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: systemd",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `Restart=on-failure` in a systemd service file?",
+      "choices": [
+        { "id": "a", "text": "Required syntax." },
+        { "id": "b", "text": "Tells systemd to automatically restart the service if it exits with a non-zero status (crash, unhandled exception, OOM) — but NOT if it exits cleanly with 0 (e.g., a planned stop). Combined with `RestartSec=5` (wait 5 seconds before restart), this gives services automatic crash recovery without the restart loop you'd get with `Restart=always`. Production-grade pattern: the service crashes → systemd waits → restarts → resumes work; you wake up to a still-running system rather than a dead one. Without this, every crash requires manual intervention. The combination of `Restart=on-failure`, `RestartSec`, and a properly handled SIGTERM gives production reliability for free. Compared to `nohup + cron-restart` hacks, systemd is dramatically better." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves boot time." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-restart on crashes but not on clean exits. Production reliability built in.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You changed `/etc/systemd/system/myapp.service` but `systemctl restart myapp` uses old config. Why?",
+      "choices": [
+        { "id": "a", "text": "systemd is broken." },
+        { "id": "b", "text": "systemd caches unit definitions in memory; editing the file on disk doesn't update the cache. Fix: `sudo systemctl daemon-reload` to re-read all unit files, then `sudo systemctl restart myapp` to apply. This is the #1 systemd footgun for newcomers — edits work but don't take effect until reload. The pattern for any unit file change: edit → `daemon-reload` → `restart`. For changing the file's start command itself (ExecStart), the daemon-reload is mandatory; for just config files the service reads (separate from the unit definition), only the service restart is needed. systemd will warn you in some cases ('unit changed on disk') but doesn't auto-reload — by design." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reboot needed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "systemd caches unit files; need `daemon-reload` after editing to pick up changes.",
+      "points": 1
+    }
+  ]
+}

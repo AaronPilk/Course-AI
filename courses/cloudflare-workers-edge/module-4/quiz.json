@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Beyond HTTP",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why make scheduled (cron) Workers idempotent?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Cloudflare may retry scheduled handlers under failure conditions; rare double-runs happen. Idempotent jobs handle double-runs safely (deleting where condition met, upserts, check-before-action). Non-idempotent jobs (counters, emails, record creation) cause duplicate damage on retry. Standard pattern: check a 'done' flag at job start; skip if already ran today. Same principle as Lambda or any at-least-once delivery system." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cron always runs once." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cron may retry; double-runs possible. Idempotent jobs handle this safely.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to send 100k personalized emails daily. One cron Worker hits CPU limit. Fix?",
+      "choices": [
+        { "id": "a", "text": "Pay for longer CPU." },
+        { "id": "b", "text": "Cron + Queues. Daily cron enqueues 100k jobs to a Queue (one per user). A queue consumer Worker processes in batches; Cloudflare auto-scales consumers. Each job is small, well within CPU limits; if any fails, the queue retries that individual job. Cron orchestrates; queue handles throughput. Standard for 'do something for many entities on a schedule' at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip cron." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cron enqueues jobs; queue consumer processes in batches with auto-scaling.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Stripe webhook handler. Why enqueue instead of process inline?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Stripe requires fast 200 response (~10s window); processing inline (DB updates, notifications, CRM sync) can exceed it, causing Stripe to retry the webhook → duplicate processing. Right pattern: verify signature synchronously (must happen before ack), enqueue the work, ACK to Stripe immediately. Consumer processes asynchronously without affecting webhook delivery." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves CPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhook providers require fast 200; enqueue for async processing.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Real-time chat room. Why route to a Durable Object instead of plain Workers?",
+      "choices": [
+        { "id": "a", "text": "Convenience." },
+        { "id": "b", "text": "Workers are stateless — different requests may land in different isolates; no shared memory; isolates can be torn down. WebSockets require persistent per-connection state (active session, room membership, message buffer) plus coordination between connections (broadcast to all). Durable Objects provide both: single-leader instance per room (all connections route to the same DO); persistent storage for connection state; coordination across connections. Worker upgrades the request and forwards to DO; DO accepts the WebSocket and handles its lifecycle. Use `acceptWebSocket` for hibernation cost savings on idle periods." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just policy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers are stateless; WebSockets need persistent coordination. DOs provide single-leader stateful instances.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Building RAG over 100k documents from Workers. Stack?",
+      "choices": [
+        { "id": "a", "text": "OpenAI + Pinecone." },
+        { "id": "b", "text": "Cloudflare-native: Workers AI for embeddings (`@cf/baai/bge-base-en-v1.5`); Vectorize for vector storage and similarity search (binding); R2 for source documents; D1 for metadata. Query flow: embed user query via Workers AI → query Vectorize for top-K → fetch full docs from R2/D1 → optionally feed to LLM via Workers AI for synthesis. All in one infrastructure; bindings throughout; sub-second end-to-end; significantly cheaper than OpenAI+Pinecone+GPT equivalent. Integrated stack is one of Cloudflare's strongest RAG stories." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardcoded responses." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers AI embeddings + Vectorize + R2/D1. Cheaper and faster than external equivalents.",
+      "points": 1
+    }
+  ]
+}

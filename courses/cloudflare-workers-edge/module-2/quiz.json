@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Storage primitives",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'eventually consistent' mean for KV?",
+      "choices": [
+        { "id": "a", "text": "Data is never lost." },
+        { "id": "b", "text": "Writes propagate to all 300+ edges within ~60s; reads serve from nearest cache (may be stale). Sub-ms reads from edge after first hit. Right for sessions, flags, configs, caches (where eventual consistency is fine). Wrong for transactional data or strict rate limits — use Durable Objects/D1 for those." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Writes happen eventually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Writes propagate within ~60s; reads serve from cache (may be stale).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Defining cost advantage of R2 over S3?",
+      "choices": [
+        { "id": "a", "text": "Lower storage." },
+        { "id": "b", "text": "Zero egress fees. S3 charges $0.05-0.09/GB for data leaving AWS; at any scale this dominates costs. R2 charges $0 for egress. For external-serving workloads (images, downloads, media), the savings are massive. R2 also has slightly cheaper storage per GB. Pair with Workers Cache API for edge caching." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Zero egress fees. Dominates economics for serving workloads.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What is D1?",
+      "choices": [
+        { "id": "a", "text": "Key-value store." },
+        { "id": "b", "text": "Managed SQLite database with global read replicas. Full SQL (joins, indexes, transactions, window functions). Reads serve from regional replicas (sub-ms at edge); writes go to primary region. Up to ~10GB per database; fits typical OLTP workloads. Drizzle ORM for type-safe schema/queries. For larger or PostgreSQL features, use Hyperdrive + external Postgres." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "An ORM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Managed SQLite with global read replicas. Up to 10GB; OLTP shape.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "User uploads (avatars, docs) on a Workers app. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Everything in D1 as BLOBs." },
+        { "id": "b", "text": "Split: D1 for metadata (user records, file metadata rows with id/owner_id/filename/mime_type/r2_key/size/uploaded_at), R2 for file contents at the r2_key path. Relational queries via D1; file retrieval from R2 (cheap egress). Avoids huge BLOBs in D1; gives queryable metadata R2 alone can't. Add Cache API in front of R2 for hot files. Standard architecture for any Workers app with user uploads." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Both in KV." }
+      ],
+      "correct_answer": "b",
+      "explanation": "D1 for metadata (relational); R2 for files. Standard upload pattern.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What do Durable Objects uniquely provide?",
+      "choices": [
+        { "id": "a", "text": "Faster reads." },
+        { "id": "b", "text": "Strong consistency via single-leader, single-threaded coordination. One DO per entity (per user, per room, per match) — each lives in one location, serializes its requests, provides linearizable operations on its state. Solves what KV/D1 can't: 'exactly one source of truth for this entity, operations must be ordered.' Use cases: exact rate limiting, chat rooms, game state, shopping carts, distributed locks. Many DOs run independently; single-threaded design caps per-DO throughput but provides guarantees nothing else does." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger storage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Strong consistency via single-leader coordination. One source of truth per entity.",
+      "points": 1
+    }
+  ]
+}

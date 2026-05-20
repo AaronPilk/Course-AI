@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Alpaca",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How should a bot detect order fills on Alpaca?",
+      "choices": [
+        { "id": "a", "text": "Poll get_order in a loop." },
+        { "id": "b", "text": "Subscribe to the Trading WebSocket (`TradingStream.subscribe_trade_updates`) and receive events in real-time when orders transition through states (new, partial_fill, fill, canceled, rejected). Polling get_order in a loop is wasteful (eats your 200 req/min rate limit), laggy (events lag by your poll interval), and doesn't scale (each open order needs its own poll). WebSocket pushes are real-time, scale to many open orders for free, and put fill data right where you'd react to it. Required pattern for any bot beyond hello-world." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Check email." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Subscribe to trade updates via WebSocket — real-time fill events, no polling.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your bot has run on paper for 3 days. PnL looks great. Switch to live?",
+      "choices": [
+        { "id": "a", "text": "Yes, go live." },
+        { "id": "b", "text": "No — paper-trade at least 30 days with no manual intervention before going live. Three days isn't enough to surface: rare error paths, weekend behavior, after-hours edge cases, broker outages, market regime shifts. Also verify live execution by funding a tiny live account and running with very small size for another period — paper-fills don't always match live-fills perfectly (no real queue position, simulated price improvement). Required pre-live checklist: 30+ days paper, error paths all handled, kill switch wired and tested, alerts on stop-trading / big-loss conditions, conservative position sizing. Three days of paper is hello-world, not production." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wait a year." }
+      ],
+      "correct_answer": "b",
+      "explanation": "30+ days of paper, full error handling, kill switch, alerts, conservative sizing before going live.",
+      "points": 1
+    }
+  ]
+}

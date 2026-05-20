@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Shell basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `cd -` do?",
+      "choices": [
+        { "id": "a", "text": "Go up one." },
+        { "id": "b", "text": "Returns to the previous working directory you were in — useful when bouncing between two directories. The shell remembers your prior `cd` location in `$OLDPWD`; `cd -` swaps the current and previous. So if you cd from /home/aaron to /var/log, then `cd -` returns to /home/aaron; another `cd -` goes back to /var/log. Combined with tab completion and history (Ctrl-R), this eliminates repeated typing of long paths. The other shortcuts to remember: `cd` with no argument goes to home (~); `cd ~` does the same; `cd ..` goes up; `cd ../..` goes up two. The `-` argument is the dark-horse shortcut most beginners miss." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Refresh shell." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Returns to previous directory. Swaps PWD and OLDPWD; great for bouncing between two paths.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're in /home/aaron/projects/big-app and need to look at /var/log/syslog. Fastest move?",
+      "choices": [
+        { "id": "a", "text": "cd to it." },
+        { "id": "b", "text": "Don't cd — use absolute path directly: `less /var/log/syslog` reads the file without changing directories. cd-then-cmd is two steps when one will do; you're also stuck in /var/log when done. For one-off file access, prefer absolute paths in the command argument; cd only when you'll be doing multiple operations in the new directory. For repeated jumps: `pushd /var/log` and `popd` use a directory stack you can return from. For frequent destinations, set aliases or use `cd -` to bounce. Habits of fluent shell use: minimize directory changes; let commands accept full paths." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Open another terminal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use absolute path directly (less /var/log/syslog). cd only when you'll do multiple operations there.",
+      "points": 1
+    }
+  ]
+}

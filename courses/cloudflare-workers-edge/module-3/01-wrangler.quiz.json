@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Wrangler",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between `wrangler dev` and `wrangler dev --remote`?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "`wrangler dev` (default) runs in local mode — same V8 isolate runtime as production but with MOCKED bindings: KV is in-memory, R2 is local disk, D1 is local SQLite, secrets come from .dev.vars. Fast iteration; storage doesn't persist between local restarts. `wrangler dev --remote` runs against actual production bindings — real KV namespace, real R2 bucket, real D1 in Cloudflare. Useful when you need real data (e.g., production-shaped DB to test queries) or to verify integration with Cloudflare services. Slower (calls go to Cloudflare); affects real data. Use local for most dev; --remote when you need realism." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different ports." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Local mocks bindings; --remote uses real Cloudflare bindings (real data).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker live but errors are intermittent. How to investigate?",
+      "choices": [
+        { "id": "a", "text": "Wait for users to complain." },
+        { "id": "b", "text": "`wrangler tail` streams live logs from the deployed Worker — see console.log, console.error, request metadata in real-time. Filter with `--status error` to only show failed requests, or `--search 'auth'` to find lines matching specific text. Combined with structured logging in your Worker (`console.error(JSON.stringify({ event: 'auth_failed', userId, error }))`), you can trace specific issues quickly. For longer retention, ship logs to Logflare, Axiom, or Datadog via Cloudflare's Logpush feature. wrangler tail is the first stop for any production Workers debugging." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Roll back." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`wrangler tail` streams live logs from production. First stop for any Workers debugging.",
+      "points": 1
+    }
+  ]
+}

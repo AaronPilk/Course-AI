@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Kill switches",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is an order-rate-limit circuit breaker mandatory?",
+      "choices": [
+        { "id": "a", "text": "API rate limits." },
+        { "id": "b", "text": "Detects run-away loops — bugs where the bot submits orders in a tight loop (e.g., signal logic with no de-bounce, broker returning unexpected state causing retry loop). Without a rate cap, the bot can submit thousands of orders in seconds before any human or daily-loss limit kicks in. The damage scales with the loop speed: position-flipping bugs at 100 orders/second drain accounts in minutes. An order-rate cap (e.g., max 20 orders/minute for a swing strategy) detects the anomaly and triggers the kill switch before the loop does damage. Treat this as table stakes for any production bot; the cost is one counter and a panic call, the benefit is preventing the most common catastrophic failure mode." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves money." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Catches run-away loops before they blow up the account — common catastrophic failure mode.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Kill switch fires at 2:30 PM after a bug in your new code. Live in 90 minutes for close? Restart immediately?",
+      "choices": [
+        { "id": "a", "text": "Yes, restart fast." },
+        { "id": "b", "text": "No — investigate first, document, fix, test, then resume cautiously. The kill switch fired for a reason; the bug is still there. Restarting hot puts you back where you started, with less time to react if it loops again. Correct flow: (1) confirm flatten succeeded — positions actually closed, (2) reconcile DB state against broker, (3) examine logs to identify the trigger, (4) root-cause: was it data, code, or external? (5) write a regression test that fails without the fix, (6) fix and verify the test passes, (7) deploy to paper first, (8) resume live tomorrow with reduced size. Friction prevents repeating the same blowup. Bots that don't blow up just once tend to blow up several times in quick succession after sloppy restarts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch brokers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Investigate → fix → regression test → paper → live with smaller size. Don't restart hot.",
+      "points": 1
+    }
+  ]
+}

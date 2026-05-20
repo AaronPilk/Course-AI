@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Practical scripts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `cat file | while read line; do …; done` worse than `while read line; do …; done < file`?",
+      "choices": [
+        { "id": "a", "text": "Slower." },
+        { "id": "b", "text": "The cat pipe spawns a subshell for the while loop. Variables you set or modify inside the loop don't persist back to the script — when the subshell ends, any state vanishes. Classic bug: `count=0; cat file | while read line; do count=$((count+1)); done; echo $count` prints 0, because the count++ happened in the subshell. Redirecting from file directly (`done < file`) runs the loop in the parent shell where variable assignments persist correctly. Counts, accumulators, found-flags all work as expected. Once trapped by this, you'll never write `cat | while` again. The same issue applies to `command | while`, `find | while`, etc. — any pipe into while creates the subshell trap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pipe creates subshell; loop-set variables don't persist. `< file` runs in current shell, variables persist.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your install script does `mkdir /opt/myapp` and fails on the second run because the directory exists. Fix?",
+      "choices": [
+        { "id": "a", "text": "Delete first." },
+        { "id": "b", "text": "Use `mkdir -p /opt/myapp` — the `-p` flag means 'don't error if it already exists, and create parents as needed.' This makes the script idempotent: running it twice produces the same end state as running it once. The same principle applies broadly: `useradd` fails if user exists → guard with `id user &>/dev/null || useradd user`; `ln -s` fails if link exists → use `ln -sf` to force; appending to a file might duplicate lines → check before appending. Idempotent scripts can be safely re-run during retries, in CI, after partial failures, and as part of configuration management. Designing for idempotency means each step asks 'is the desired state already there?' and only acts if not." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to Python." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`mkdir -p` doesn't error if dir exists. Make every step idempotent.",
+      "points": 1
+    }
+  ]
+}

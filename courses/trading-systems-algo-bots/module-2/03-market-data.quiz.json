@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Market data",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use adjusted prices for backtests with multi-year lookback?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Splits and dividends create discontinuities in raw price series. A 2-for-1 split halves the printed price overnight — un-adjusted data shows AAPL going from $200 to $100, which looks like a catastrophic crash. Strategies that react to 'big moves' fire false signals; momentum, breakout, mean-reversion all degrade. Adjusted prices back-propagate splits so historical levels are comparable to today (the pre-split $200 becomes $100 retroactively). Adjusted-for-dividends prices reflect total return, which matters for long-hold backtests. Default to adjusted (yfinance: `auto_adjust=True`; Alpaca returns adjusted). Always confirm the data provider's adjustment policy before backtesting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "API requires it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Un-adjusted prices show false crashes at splits. Adjusted prices preserve continuity.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bot strategy holds positions for 2-3 days based on daily bars. What data should it pay for?",
+      "choices": [
+        { "id": "a", "text": "Full tick data." },
+        { "id": "b", "text": "Daily bars are sufficient — likely free via Alpaca, Yahoo, or IEX Cloud. Tick data is overkill for a swing strategy: holding period is days, decisions are on daily-close signals, paying for tick storage and bandwidth gives zero alpha while costing $99+/month. Match data granularity to the strategy's actual time horizon. Microstructure-sensitive strategies need ticks; daily/swing strategies need bars; multi-year quant research needs adjusted historical bars + occasional intraday for entry/exit timing. Pay only for what your strategy reads. Tick data is the most-expensive, most-overprescribed data tier in retail algo trading." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Premium options data." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Daily bars match the strategy timescale. Tick data is overkill and expensive for swing strategies.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Bindings",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the benefit of bindings vs traditional SDK + credentials pattern?",
+      "choices": [
+        { "id": "a", "text": "Just syntactic sugar." },
+        { "id": "b", "text": "No credentials in code (or anywhere — Cloudflare grants the Worker access; no IAM roles or API tokens to manage within your CF account), no region selection (bindings work from any edge location), type safety (TypeScript types flow from wrangler.toml to your code), low latency (binding communication is sub-millisecond over Cloudflare's internal network), no cold-start dependencies. Compared to AWS Lambda: less config, less code, less surface area for credential leaks. The unified binding pattern works for KV, R2, D1, Durable Objects, Queues, AI, service-to-service calls — one mental model across all services." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster API calls." }
+      ],
+      "correct_answer": "b",
+      "explanation": "No credentials, no region, type-safe, low-latency, unified pattern. Less code; less risk.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have multiple Workers (auth, api, billing) that need to call each other. How?",
+      "choices": [
+        { "id": "a", "text": "Each Worker exposes public HTTP endpoints; call them via fetch with URLs." },
+        { "id": "b", "text": "Service bindings. In API Worker's wrangler.toml: `[[services]] binding = 'AUTH'; service = 'auth-worker'`. In code: `await env.AUTH.fetch(...)` — call goes directly between Workers via Cloudflare's internal network. No DNS, no TLS, no public hop; sub-millisecond. For newer RPC pattern: expose methods on a WorkerEntrypoint class; call them type-safe from other Workers (`await env.AUTH.verifyToken(token)`). Compose your app from focused Workers connected via service bindings — much cleaner than exposing each Worker publicly and hitting them over HTTP." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Combine into one Worker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Service bindings or RPC bindings — Workers call each other directly via Cloudflare internal network.",
+      "points": 1
+    }
+  ]
+}

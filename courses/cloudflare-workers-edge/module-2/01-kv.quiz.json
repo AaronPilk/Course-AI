@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: KV",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'eventually consistent' mean for KV?",
+      "choices": [
+        { "id": "a", "text": "Data is never lost." },
+        { "id": "b", "text": "Writes propagate to all 300+ edge locations within ~60 seconds; reads return whatever's in the nearest edge cache (which may be stale during propagation). 'Just wrote, can I read it back?' works after a few seconds but not instantly. Optimized for reads — sub-millisecond from edge cache after first hit. Trade-off: scale and global distribution vs strong consistency. Right fit: sessions, feature flags, configuration, computed caches (where eventual consistency is fine). Wrong fit: transactional data, strict rate limits, anything requiring read-after-write guarantees. For strong consistency, use Durable Objects or D1 instead." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Writes happen eventually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Writes propagate within ~60s; reads serve from nearest cache (may be stale). Sub-ms reads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need strict rate limiting (exactly 100 requests/min per user). KV or Durable Objects?",
+      "choices": [
+        { "id": "a", "text": "KV — fast and global." },
+        { "id": "b", "text": "Durable Objects. KV's eventual consistency means rate-limit counters can be undercounted (parallel requests in different edges see stale counts, race past the limit). For strict limits, use a Durable Object per user — it's a single coordinated instance globally, providing strong consistency. Each request increments the counter atomically; over-limit requests get rejected reliably. KV-based rate limiting works only for APPROXIMATE limits where some leakage is acceptable. For payment fraud prevention, abuse blocking, or any case where 'exactly 100' matters, Durable Objects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Neither." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Durable Objects for strict consistency. KV is fine for approximate; not for exact-count limits.",
+      "points": 1
+    }
+  ]
+}

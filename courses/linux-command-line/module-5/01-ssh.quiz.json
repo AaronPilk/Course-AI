@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: SSH",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `ProxyJump bastion` in ~/.ssh/config do?",
+      "choices": [
+        { "id": "a", "text": "Sets a backup host." },
+        { "id": "b", "text": "Routes SSH connections through `bastion` to reach the target host. Common pattern: a bastion server is the only public-facing host; internal services are accessible only from the bastion's network. Without ProxyJump, you'd manually `ssh bastion`, then from inside `ssh internal-host` — two-step, no native tooling support (scp, rsync, IDEs all break). With `ProxyJump bastion` in the host's config block, a single `ssh internal-host` does the hop transparently; scp/rsync also work seamlessly. Important: ProxyJump uses end-to-end encryption — the bastion routes packets but doesn't decrypt them or see your private key. Each hop authenticates independently. Standard pattern for any non-trivial production environment with a bastion." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sets a proxy server." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Routes SSH through a bastion to reach internal hosts; transparent for scp/rsync; end-to-end encrypted.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need to copy a 50GB directory between two servers — and it might disconnect mid-transfer. Tool?",
+      "choices": [
+        { "id": "a", "text": "scp -r" },
+        { "id": "b", "text": "`rsync -avzP source/ user@target:/dest/` — rsync is resumable (re-running picks up where it left off; -P keeps partials), only transfers changed files on subsequent runs (cheap re-syncs), preserves permissions/timestamps/symlinks (-a), compresses in transit (-z), and shows progress (-P). scp on a 50GB transfer that fails halfway = start over from scratch. rsync also handles edge cases scp doesn't: symlinks, hard links, large numbers of small files, excluding patterns. Standard combo: `rsync -avzP --delete` for true mirror semantics (deletes files on dest that aren't on source). For one-off small transfers scp is fine; for anything substantial or sync-style workflows, rsync wins decisively." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "tar | nc" }
+      ],
+      "correct_answer": "b",
+      "explanation": "rsync -avzP — resumable, only-changed-files, progress, compression. scp can't resume after disconnect.",
+      "points": 1
+    }
+  ]
+}

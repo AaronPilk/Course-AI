@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Hono",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use Hono over raw `fetch` handlers for a multi-route Worker?",
+      "choices": [
+        { "id": "a", "text": "Hono is faster." },
+        { "id": "b", "text": "Cleaner routing, built-in middleware, context helpers, type-safe bindings, and validation integration — without losing the V8 isolate performance. Raw `fetch` handlers become messy with 5+ routes (long if/else chains, manual JSON parsing, repeated error handling). Hono is ~10KB, Express-like, with middleware for CORS, auth, logging, security headers, compression; Zod-based validation via `@hono/zod-validator`; type-safe RPC client (`hc`) for frontend integration. The bundle and runtime overhead is minimal; the DX win is large. For 1-2 route Workers, raw `fetch` is fine. For real APIs, Hono is the default in 2026." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Workers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cleaner routing + middleware + validation + RPC client. ~10KB overhead for major DX win.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "API needs type-safe input validation on POST endpoints. Approach with Hono?",
+      "choices": [
+        { "id": "a", "text": "Manual checks in each handler." },
+        { "id": "b", "text": "Use `@hono/zod-validator` with Zod schemas. Define schema (`z.object({ title: z.string().min(1), body: z.string() })`); attach as middleware (`zValidator('json', schema)`); inside the handler, `c.req.valid('json')` returns the typed, validated data. Invalid inputs auto-reject with 400 before the handler runs. Schema doubles as documentation and TypeScript types. Same schema can validate on the client (form), in the Worker, and even in the database layer via Drizzle — one source of truth for the data shape. Standard pattern; eliminates a class of input-validation bugs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No validation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "@hono/zod-validator + Zod schema. Auto-reject invalid; typed `c.req.valid()` inside handler.",
+      "points": 1
+    }
+  ]
+}

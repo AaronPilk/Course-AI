@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Order books",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is the spread in a stock's order book?",
+      "choices": [
+        { "id": "a", "text": "Average price." },
+        { "id": "b", "text": "The gap between the lowest ask (cheapest sell order) and the highest bid (most aggressive buy order). It's the implicit cost of an instant round-trip: buying at the ask, then immediately selling at the bid, you lose the spread. Liquid names like AAPL trade at a $0.01 spread; thin small-caps may trade at $0.10+; an illiquid crypto pair might show 1%+. Spread is the first cost any backtest must include — strategies that ignore it perform much better on paper than in reality, especially on small-size or low-liquidity instruments." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Daily range." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Spread = best ask − best bid. It's the implicit per-round-trip cost; thin names have wide spreads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your backtest looks profitable using last-trade prices. Live trading loses money. Why?",
+      "choices": [
+        { "id": "a", "text": "Bad luck." },
+        { "id": "b", "text": "Last-trade prices aren't tradeable. To buy now you must lift the ask; to sell now you hit the bid — each round-trip costs the spread plus slippage as size moves the book. A backtest using mid-prices or last-trade massively overstates returns: a strategy that 'made $0.05 per trade' against last-trade may actually pay $0.02 spread + $0.01 slippage = $0.03 round-trip cost, leaving $0.02 — but the backtest didn't subtract any of that. Always model bid/ask fills (or last + spread + slippage) before believing the equity curve. This is the #1 cause of strategies that 'work' on paper and bleed live." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Market shifted." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Last-trade prices aren't tradeable. Model bid/ask fills and slippage or backtests overstate.",
+      "points": 1
+    }
+  ]
+}

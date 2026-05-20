@@ -1,0 +1,87 @@
+{
+  "slug": "linux-command-line",
+  "title": "Linux Command Line Mastery",
+  "subtitle": "From first cd to scripting servers — the shell skills every engineer eventually needs",
+  "description": "A practical course on the Linux command line as it's used in 2026. Covers the filesystem, processes, text manipulation, shell scripting, package management, networking, and the production patterns developers actually use day-to-day. Optimized for engineers who write code but want fluency in the terminal that runs their systems.",
+  "category": "Infrastructure",
+  "difficulty": "beginner",
+  "audience": "Developers, data scientists, sysadmins who want to work confidently on Linux systems. Some prior exposure to a terminal helps; not required.",
+  "tags": ["linux", "bash", "shell", "command-line", "sysadmin"],
+  "estimated_minutes": 280,
+  "brand": {
+    "name": "CLI",
+    "logo": "/brands/linux-command-line.svg",
+    "gradient": ["#F59E0B", "#D97706"],
+    "tint": "#1A1308"
+  },
+  "prerequisites": [
+    "Comfortable using a computer",
+    "Have access to a Linux machine, WSL, or Mac terminal"
+  ],
+  "outcomes": [
+    "Navigate the filesystem fluently — files, directories, permissions",
+    "Manipulate text with grep, sed, awk, jq",
+    "Run, monitor, and manage processes",
+    "Write reliable shell scripts that handle errors",
+    "Use SSH for remote work and key management",
+    "Understand package management across distros",
+    "Compose Unix tools with pipes for real workflows"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Filesystem and core commands",
+      "objective": "Move around, find things, manage files confidently.",
+      "lessons": [
+        { "position": 1, "title": "The shell, your home, and ls/cd/pwd" },
+        { "position": 2, "title": "Files: cp, mv, rm, ln, touch" },
+        { "position": 3, "title": "Permissions: chmod, chown, the octal model" },
+        { "position": 4, "title": "Finding things: find, locate, which" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Text manipulation",
+      "objective": "The Unix tools that turn lines into answers.",
+      "lessons": [
+        { "position": 1, "title": "grep: search through text" },
+        { "position": 2, "title": "sed: stream-edit lines" },
+        { "position": 3, "title": "awk: structured text processing" },
+        { "position": 4, "title": "jq: JSON in the shell" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Processes, jobs, and system view",
+      "objective": "See what's running and control it.",
+      "lessons": [
+        { "position": 1, "title": "ps, top, htop — knowing your processes" },
+        { "position": 2, "title": "Jobs, background, nohup, &" },
+        { "position": 3, "title": "Signals: kill, trap, the lifecycle" },
+        { "position": 4, "title": "systemd basics — services that survive reboot" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Shell scripting",
+      "objective": "Automate workflows with reliable bash.",
+      "lessons": [
+        { "position": 1, "title": "Variables, conditionals, loops" },
+        { "position": 2, "title": "Functions, arrays, command substitution" },
+        { "position": 3, "title": "Error handling: set -euo pipefail and traps" },
+        { "position": 4, "title": "Practical scripts: parse args, read files, exit codes" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Networking, SSH, and packages",
+      "objective": "Remote work and package management.",
+      "lessons": [
+        { "position": 1, "title": "SSH: keys, config, jumping" },
+        { "position": 2, "title": "curl, wget, and HTTP in the shell" },
+        { "position": 3, "title": "Package managers: apt, dnf, brew, pacman" },
+        { "position": 4, "title": "Network diagnostics: ss, dig, traceroute" }
+      ]
+    }
+  ]
+}

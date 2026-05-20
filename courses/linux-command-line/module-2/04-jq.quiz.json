@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: jq",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `jq -r` (raw output) usually what you want?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "Without `-r`, jq emits JSON-quoted strings (e.g., `\"Linus\"`), which breaks downstream tools expecting plain text. With `-r`, strings are unquoted (e.g., `Linus`) — usable directly in shell pipelines, variable assignment (`name=$(jq -r .name)`), or `xargs`. Example: `jq .id` returns `\"abc123\"`; `jq -r .id` returns `abc123`. The first form passes literal quote characters to whatever's downstream, which often fails silently or produces weird results. Use raw output anytime the value will be consumed as plain text by shell or other tools. Keep default (JSON-quoted) when you're piping back into more jq or want valid JSON output." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduces memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Raw output strips JSON quoting — usable in shell pipelines and variables.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "API returns `[{name: 'A', tags: ['x','y']}, ...]`. You want only items with 'urgent' in tags. Command?",
+      "choices": [
+        { "id": "a", "text": "grep urgent" },
+        { "id": "b", "text": "`jq '.[] | select(.tags | contains([\"urgent\"]))'` — iterates each array element, selects those whose tags array contains 'urgent.' grep would match the literal string 'urgent' anywhere in the line including inside other fields (e.g., a name containing 'urgentcare') and would break on whitespace variations / multiline JSON. jq parses the structure correctly: `.[]` iterates, `select(...)` filters, `.tags | contains([\"urgent\"])` is the membership test. Standard pattern for filtering structured data: select on a predicate against parsed fields, never grep on raw JSON. Add `-r` and downstream transformations to extract just the names: `jq -r '.[] | select(.tags | contains([\"urgent\"])) | .name'`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Convert to CSV first." }
+      ],
+      "correct_answer": "b",
+      "explanation": "jq '.[] | select(.tags | contains([\"urgent\"]))' — proper structured filtering, not text matching.",
+      "points": 1
+    }
+  ]
+}

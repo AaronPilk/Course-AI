@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Networking, SSH, packages",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does ProxyJump do in ~/.ssh/config?",
+      "choices": [
+        { "id": "a", "text": "Sets backup server." },
+        { "id": "b", "text": "Routes SSH connections to the target host through a bastion server in one transparent hop — no manual two-step. Common pattern: bastion is the only publicly-exposed SSH host; internal services are reachable only from inside. With `ProxyJump bastion` in the target's config block, a single `ssh internal-host` works; scp / rsync / IDEs / port forwarding all work transparently because they're all just running over ssh. Critically: end-to-end encrypted. Each hop authenticates independently with its own credentials; the bastion routes packets but never sees decrypted data or your private keys. Standard production pattern for any environment with a bastion. Old syntax used `ProxyCommand`; modern is `ProxyJump` (or `-J`). Saves manual `ssh bastion → ssh internal` workflow." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skips DNS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Routes SSH transparently through a bastion. End-to-end encrypted; scp/rsync work seamlessly.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your script does `curl https://api.example.com` and gets back HTML of a redirect page. Why?",
+      "choices": [
+        { "id": "a", "text": "API broken." },
+        { "id": "b", "text": "Missing `-L` flag. The API returned a 301/302 redirect (likely HTTP→HTTPS or path renamed); without `-L`, curl prints the redirect response (which often includes an HTML body explaining the move) and stops. Fix: `curl -L https://api.example.com`. Many APIs and CDNs use redirects routinely; production scripts should default to following them. The diagnostic move: add `-v` to see exactly what's happening: `curl -v` shows the response status (301 Moved Permanently) and the Location header pointing to the real URL. Combined: `curl -sL` for clean output following redirects. Memorize the trio: `-s` (silent), `-L` (follow), `-i` or `-v` (inspect headers when debugging). Solves 90% of 'curl is doing something weird' issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "DNS bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Missing -L. The API redirected; without -L, curl stops at the 301. Use `curl -sL`.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why avoid `sudo pip install` system-wide?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Pollutes the system Python that the OS uses for its own tools. Many Linux distros depend on Python: apt (parts of it), dnf, networkd-related tooling, cloud-init. Upgrading or installing packages via sudo pip can break system tools when versions conflict with what the distro's package manager installed. The system package manager also installs Python packages (apt install python3-pandas); sudo pip installing pandas on top creates two versions of the same library — unpredictable behavior. Standard 2026 practice: pipx for command-line Python tools (each in its own venv), virtual environments (python -m venv .venv) for project deps, `--user` flag (pip install --user) for personal scripts not requiring root, or `uv` for a modern fast project manager. Never sudo pip — system Python stays system-managed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Slower." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Breaks system Python which OS tools depend on. Use pipx / venv / --user / uv instead.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your app at api.internal can't connect to db.internal. First diagnostic step?",
+      "choices": [
+        { "id": "a", "text": "Reinstall the app." },
+        { "id": "b", "text": "Layered diagnosis starting at DNS: (1) `dig +short db.internal` — does the hostname resolve to an IP? If not, DNS is the problem; check /etc/resolv.conf and /etc/hosts. (2) `nc -zv db.internal 5432` — is the database port reachable? Timeouts indicate firewall / network ACL blocking; connection-refused means the DB isn't listening on that port. (3) On the DB host: `ss -tlnp | grep 5432` shows if/what is bound. (4) Auth: try connecting with the actual credentials. Each layer narrows the cause: DNS → network → port → service → credentials. Without progressive narrowing, you waste time guessing at the wrong level. The 'reinstall' impulse comes from frustration; the diagnostic flow takes 2 minutes and points to the real problem." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart computer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layered: dig (DNS) → nc (port) → ss (listening) → auth. Narrows the cause progressively.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does `ss -tlnp` show?",
+      "choices": [
+        { "id": "a", "text": "Network speed." },
+        { "id": "b", "text": "All TCP (-t) listening (-l) sockets with numeric ports (-n) and the process (-p) using each. The most common 'what's listening on this server?' command. Output shows port, PID, and command for each listener — letting you immediately answer 'what's using port 8080?' or 'is nginx really running?' Modern replacement for `netstat -tlnp`; faster and uses the kernel's netlink interface. Variants: `ss -tunlp` adds UDP; `ss -t state established` shows active TCP connections; `ss -s` gives summary stats. Pair with `lsof -i :PORT` when you need file-descriptor-level detail. Together, ss and lsof answer almost any 'what's on the network from this server?' question in seconds." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "TLS handshakes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ss -tlnp: TCP listening sockets with numeric ports + process info. The 'what's listening?' command.",
+      "points": 1
+    }
+  ]
+}

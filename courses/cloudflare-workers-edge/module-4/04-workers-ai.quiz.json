@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Workers AI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does Workers AI fit better than calling OpenAI/Anthropic from a Worker?",
+      "choices": [
+        { "id": "a", "text": "Always — it's always better." },
+        { "id": "b", "text": "When an open-weight model (Llama, Mistral, Qwen) suffices for the task and cost matters. Workers AI runs models on Cloudflare's GPU network via bindings — no API keys, no separate provider account, often 2-10x cheaper than OpenAI/Anthropic for equivalent capability tier, edge-runtime latency. Fits: chat with mid-tier models, classification, embeddings (BGE), simple generation, moderation, transcription (Whisper). Doesn't fit: hardest reasoning tasks that need GPT-5/Claude Opus-level capability; very specialized closed-model features. Many apps mix: Workers AI for the bulk (cheap, fast); OpenAI/Anthropic for the hard 10% via Wrangler secrets. Pair with AI Gateway for unified observability across providers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "When open-weight models suffice. Cheaper, no key management, edge latency. Mix with closed providers for hardest tasks.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building semantic search over 100k documents from a Workers app. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Call OpenAI from the Worker, store results in D1." },
+        { "id": "b", "text": "Cloudflare-native RAG stack. Generate embeddings via Workers AI (`@cf/baai/bge-base-en-v1.5`); store in Vectorize (Cloudflare's vector DB, accessed via binding); store source documents in R2 + metadata in D1. Query flow: Worker receives query → embed via Workers AI → query Vectorize for top-K matches → fetch full docs from R2/D1 → optionally feed to LLM via Workers AI for synthesis. All in one infrastructure; no external API keys; bindings throughout; sub-second end-to-end. Cheaper and faster than equivalent OpenAI embeddings + Pinecone + GPT setup. The integrated stack is one of Cloudflare's strongest stories for RAG apps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Pinecone." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare-native: Workers AI embeddings + Vectorize + R2/D1. Bindings throughout; cheap and fast.",
+      "points": 1
+    }
+  ]
+}

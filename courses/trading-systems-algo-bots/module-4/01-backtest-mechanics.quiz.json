@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Backtest mechanics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does a Sharpe ratio above 3 typically indicate?",
+      "choices": [
+        { "id": "a", "text": "Excellent strategy." },
+        { "id": "b", "text": "Likely overfit. Real-world strategies almost never sustain Sharpe > 3 — even Renaissance's Medallion fund averages ~2 net of fees. When a retail backtest shows Sharpe > 3, the usual cause is overfitting: too many parameters tuned to historical data, lookahead bias hiding in the signal, survivorship bias in the universe, or unrealistic execution assumptions (filled at the inside, zero slippage). Sharpe 1-2 is the realistic range for genuine retail edges. Sharpe > 3 should trigger forensic review — find the bug before celebrating. If after rigorous checks it really is that high, deploy with small size and watch it deflate live (or persist, confirming you found something rare)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need more leverage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sharpe > 3 almost always means overfit, lookahead bias, or unrealistic execution. Be suspicious.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Backtest summary: 18% CAGR, 1.2 Sharpe, 22% max DD. Equity curve shows all gains in 2020-2021. Verdict?",
+      "choices": [
+        { "id": "a", "text": "Strong strategy." },
+        { "id": "b", "text": "Suspicious — the strategy 'worked' during an unusual market regime (COVID-driven momentum and stimulus-fueled trend) but did nothing in normal regimes. Summary stats hide this; the equity curve reveals it. The strategy may have an edge specific to high-volatility / strong-trending environments; it almost certainly doesn't have a generalizable edge across regimes. Diagnostic moves: compute year-by-year returns (need them across regimes, not concentrated), check rolling Sharpe (does it stay positive over time?), test on a different time window (does it work in 2010-2015?). One-window strategies that lit up during a specific regime aren't strategies — they're survivorship. Skip or rebuild with regime-robust testing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase capital." }
+      ],
+      "correct_answer": "b",
+      "explanation": "All gains in one window = regime-specific, not a real edge. Test across diverse periods.",
+      "points": 1
+    }
+  ]
+}

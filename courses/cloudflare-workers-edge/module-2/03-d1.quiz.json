@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: D1",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is D1?",
+      "choices": [
+        { "id": "a", "text": "A key-value store." },
+        { "id": "b", "text": "Managed SQLite database from Cloudflare with global read replicas. Full SQL: joins, indexes, transactions, window functions — everything SQLite supports. Accessed from Workers via type-safe bindings. Reads serve from regional replicas (sub-ms at edge after warm-up); writes go to a primary region. Up to ~10GB per database (growing); fits typical OLTP workloads (operational data, user accounts, posts, comments). For larger data or PostgreSQL-specific features (PostGIS, JSONB queries, etc.), use Hyperdrive + external Postgres. Drizzle ORM is the popular type-safe schema/query layer for D1." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "An ORM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Managed SQLite with global read replicas. Full SQL; typed bindings; up to 10GB.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker stores user data + uploaded files (avatars, documents). Architecture?",
+      "choices": [
+        { "id": "a", "text": "Everything in D1 as BLOBs." },
+        { "id": "b", "text": "Split: D1 for metadata + R2 for file contents. D1 stores user records, file metadata rows (id, owner_id, filename, mime_type, r2_key, size, uploaded_at). R2 stores the actual file bytes at the r2_key path. Queries join users to their files via D1 (relational); file retrieval pulls from R2 (cheap; no egress). Avoids storing huge BLOBs in D1 (size limits, slow queries) and gives you queryable metadata that R2 alone can't provide. Standard architecture for any Workers app with user uploads. Pair with Cache API in front of R2 for hot files." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Both in KV." }
+      ],
+      "correct_answer": "b",
+      "explanation": "D1 for metadata (relational, queryable); R2 for file contents. Standard pattern.",
+      "points": 1
+    }
+  ]
+}

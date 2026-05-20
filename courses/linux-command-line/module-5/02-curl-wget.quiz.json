@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: curl & wget",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `curl -L` do?",
+      "choices": [
+        { "id": "a", "text": "Logs requests." },
+        { "id": "b", "text": "Follow redirects — without -L, curl prints the 301/302 response and stops; with -L, it follows the Location header to the final URL. Many APIs and websites use redirects: HTTP→HTTPS, www→bare, /old-path→/new-path, ad-tracking shorteners, and cloud storage signed URLs. Without -L you see the redirect HTML and assume the request failed; with -L you actually get to the destination. Standard pattern: `curl -sL URL | jq .` for clean output from any API endpoint regardless of redirects. The -L is so commonly needed that some people alias `curl` to `curl -L`. Pair with `-s` (silent) for clean scripted use and `--max-time` to bound runaway redirects (curl limits to 50 by default to prevent loops, but for production scripts, set a smaller cap)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use HTTPS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Follows redirects. Without -L you see 301/302 instead of the destination content.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your script POSTs JSON to an API and gets back 400. How do you debug?",
+      "choices": [
+        { "id": "a", "text": "Read docs." },
+        { "id": "b", "text": "Add `-v` to see the full request and response: `curl -v -X POST -H 'Content-Type: application/json' -d '...' URL`. The verbose output shows exactly what curl sent (headers, body) and what the server returned (status, headers, error body). Common 400 causes surface immediately: wrong Content-Type (missing or 'application/x-www-form-urlencoded' when the API expects JSON), malformed JSON (trailing comma, unquoted key, escaped wrong), missing required field, wrong field name. Without -v you guess from the 400; with -v you see the issue in seconds. Also pipe the response body through jq to catch error details: `... 2>&1 | grep -A 20 '< HTTP'` or save the body and inspect. Verbose-first is the right debug instinct for any HTTP API issue." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Try GET instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`curl -v` shows full request + response. Wrong Content-Type and malformed JSON jump out immediately.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Limits",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between wall time and CPU time in Workers?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Wall time is total request duration including time waiting on subrequests (fetches to APIs, databases, R2). CPU time is only time the JS engine actively spent computing — parsing, looping, crypto. The Workers CPU limit (10ms free, 30s paid) caps CPU time, not wall time, so a Worker can spend several seconds awaiting a slow upstream and stay well under the budget. The thing that blows the limit is local computation: tight loops, large JSON parsing, synchronous crypto. Understanding the distinction tells you whether 'my Worker is slow' is a CPU problem (refactor or offload to Queues) or a wall-time problem (fix the upstream)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wall time counts faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wall time includes I/O waits; CPU time is only active computation. The limit caps CPU, not wall time.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker that loops over 500 items, fetching detail from an API for each one. Started failing with 'Too many subrequests' under load. Fix?",
+      "choices": [
+        { "id": "a", "text": "Upgrade plan." },
+        { "id": "b", "text": "Subrequest limit is 1000 on paid (50 on free) — 500 individual fetches is too brittle. Options: (1) use the API's bulk endpoint if it exists — one fetch for all items, (2) move the work to a Queue handler that processes batches of 10-50 per invocation, each handler stays within budget, (3) cache aggressively so most items hit cache instead of the API. Loops of N fetches are an anti-pattern in Workers — they create coupling between traffic volume and per-request fan-out. Batching is the structural fix; raising the plan only delays the failure." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add retries." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Switch to bulk endpoints, queue the work, or cache aggressively. N-fetches-per-request is structurally broken.",
+      "points": 1
+    }
+  ]
+}

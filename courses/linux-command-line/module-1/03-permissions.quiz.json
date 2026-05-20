@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Permissions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `chmod 777` almost always wrong?",
+      "choices": [
+        { "id": "a", "text": "It's slow." },
+        { "id": "b", "text": "Makes the file/directory readable, writable, AND executable by everyone — owner, group, and any user on the system. This is a textbook security mistake: any compromised account, web service, or malicious script can modify the file (including scripts, configs, or web-served content). For directories, 777 means anyone can delete or replace contents. The typical reason 777 gets applied is 'I had a permission error and this made it go away' — but the real fix is identifying who should access (specific user/group) and setting that minimum. 755 for executables and directories, 644 for files, 600 for secrets, 700 for private dirs covers nearly all legitimate cases. Web hosting exploits routinely depend on someone having chmodded 777 to fix a problem." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "World-writable = security hole. Real fix is minimum permissions, not 777.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "SSH says 'Permissions 0644 for id_rsa are too open.' Fix?",
+      "choices": [
+        { "id": "a", "text": "Reinstall SSH." },
+        { "id": "b", "text": "`chmod 600 ~/.ssh/id_rsa` — SSH refuses to use private keys readable by anyone other than the owner, as a safety check against accidental key leakage. Standard SSH directory permissions: `chmod 700 ~/.ssh` (only you can enter), `chmod 600 ~/.ssh/id_rsa` (private key, only you can read), `chmod 644 ~/.ssh/id_rsa.pub` (public key, anyone can read — that's the point), `chmod 600 ~/.ssh/config` (your SSH client config, only you). The 'permissions too open' error is one of the first SSH troubles new Linux users hit; the fix is always tighter permissions, never looser. The same logic applies to GPG keys, API token files, .netrc — secrets should be 600 with a 700 parent directory." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use a password instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "chmod 600 ~/.ssh/id_rsa. SSH requires private keys to be readable only by owner.",
+      "points": 1
+    }
+  ]
+}

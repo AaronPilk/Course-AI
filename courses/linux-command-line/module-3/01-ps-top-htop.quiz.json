@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: ps, top, htop",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "In `free -h`, why look at 'available' instead of 'free'?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Linux uses spare RAM aggressively for disk cache (buff/cache column). 'Free' is RAM not used for anything at all — typically a small number on a healthy system, because the kernel grabs unused memory for cache to speed up file I/O. That cache is reclaimable when processes need RAM. 'Available' = free + reclaimable cache = the actual amount your next process can allocate without swapping. New Linux users panic seeing 'free' near zero on a 16GB machine; 'available' would correctly show 7-8GB. The kernel docs explicitly warn against the 'free is what matters' misconception. Always read available." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "free shows swap." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Linux uses spare RAM for disk cache. 'Available' = real memory available; 'free' is misleading.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You start your dev server but `lsof -i :3000` shows another process already on port 3000. What to do?",
+      "choices": [
+        { "id": "a", "text": "Restart computer." },
+        { "id": "b", "text": "Use `lsof -i :3000` to find the PID, identify whether it's a stale process from a previous session or something else you care about (e.g., another project's dev server), then either reclaim the port: `kill <PID>` (graceful SIGTERM) or `kill -9 <PID>` (force) if it doesn't respond. For a more permanent fix in a startup script, add port-check logic: `lsof -i :3000 -t | xargs -r kill -TERM`. The diagnostic flow: `lsof -i :PORT` tells you what's there; `ps -p <PID>` confirms it's not something you need; `kill` reclaims the port. Restarting the computer works but is a hammer — knowing what's actually holding the port helps prevent the next collision." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use a different port forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "lsof -i :3000 to find PID, ps to verify, kill to reclaim. Restart-the-machine is overkill.",
+      "points": 1
+    }
+  ]
+}

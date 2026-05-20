@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Processes & system",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "On a 4-core server with load average 8.0, what's happening?",
+      "choices": [
+        { "id": "a", "text": "Working perfectly." },
+        { "id": "b", "text": "Severely overloaded — load average represents 'tasks waiting to run.' On a 4-core machine, load 4.0 is the saturation point (4 cores each running one task); load 8.0 means double the runnable tasks vs cores, so half are waiting in queue. Latency spikes, request times balloon, eventually requests time out. Quick triage: `htop` to see what's hot, identify the runaway process (often a forked-bomb, infinite loop, or stuck I/O), kill it (`kill PID` then `-9` if stuck), and check whether it'll come back (systemd restart loop, crashed cron job, etc.). For sustained high load, scale up (more cores), scale out (more machines), or optimize the heavy workload. Load is the first diagnostic in any 'why is this server slow' investigation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Idle." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Load 8 on 4 cores = 2× saturation; half of tasks waiting. Severely overloaded.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "`free -h` shows 'free' = 200MB on a 16GB server. Should you panic?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — look at the 'available' column instead. Linux aggressively uses spare RAM for disk cache (buff/cache); 'free' being low just means the kernel is using memory efficiently. 'available' = free + reclaimable cache = real memory available for new allocations. On a healthy 16GB server with active workloads, 'free' is often <500MB while 'available' shows 8-12GB. Newcomers often panic at low 'free' values and try to clear caches (`echo 3 > /proc/sys/vm/drop_caches`) — which actually hurts performance because the cache rebuilds immediately. Trust 'available'; ignore 'free' unless you're also seeing swap usage, OOM kills, or app errors. The kernel docs explicitly call out this misconception." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reboot." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Linux uses spare RAM for disk cache. 'Available' is the real number; 'free' is misleading.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does `kill -9 PID` do that `kill PID` doesn't?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "Sends SIGKILL (signal 9), which can't be caught or ignored — the kernel terminates the process immediately with no opportunity to clean up. Default `kill` sends SIGTERM (signal 15), which the process can catch via a signal handler and use to: close file descriptors, finish in-flight work, release database locks, save state, exit cleanly. The right escalation: `kill PID` first, wait 5-10 seconds, then `kill -9 PID` only if it's still alive. SIGKILL leaves orphaned lock files, half-written data, corrupted databases, dependent services hanging — the cleanup cost can be hours. Reserve SIGKILL for genuinely stuck processes that don't respond to SIGTERM. The 'kill -9 everything' instinct is the same anti-pattern as `chmod 777`: it works but leaves a mess." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sends to root." }
+      ],
+      "correct_answer": "b",
+      "explanation": "kill -9 = SIGKILL, can't be caught. No cleanup. Last resort, not default.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Production app crashes once a week. Manual restart annoying. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Cron a check script." },
+        { "id": "b", "text": "Run as a systemd service with `Restart=on-failure` and `RestartSec=5`. systemd watches the process; on a non-zero exit, waits 5 seconds, restarts. The app comes back automatically while you're asleep, and journalctl captures both crash logs and restart events for diagnosis. Far better than a cron-driven check script (which has gaps between checks and is itself a thing to maintain). For the underlying bug, also: identify the crash via `journalctl -u app -p err`, fix the root cause, deploy. But the safety net of auto-restart should always be in place regardless — production services should self-heal. Add `RestartPreventExitStatus=` if some exit codes should NOT trigger restart (e.g., 'config error' codes you don't want to retry blindly)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch language." }
+      ],
+      "correct_answer": "b",
+      "explanation": "systemd service with Restart=on-failure auto-restarts on crash. Safety net first, root cause second.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Where do logs from a systemd service live?",
+      "choices": [
+        { "id": "a", "text": "/var/log/syslog." },
+        { "id": "b", "text": "In journald, accessed via `journalctl -u <service>`. Modern distros (Debian, Ubuntu since ~16.04, Fedora, RHEL 8+) capture service stdout/stderr in journald — a structured binary log store rather than the old plain text /var/log/ files. Query patterns: `journalctl -u myapp` (all logs), `-f` (follow), `--since '1 hour ago'` (time-bounded), `-p err` (error priority), `-n 100` (last 100 lines). journalctl outputs can be piped to less, grep, jq (with --output=json). For services not under systemd, /var/log/ may still apply. Some apps log to their own files in /var/log/ regardless of systemd; check the unit file's StandardOutput= and StandardError= settings. Bottom line: try journalctl first for any modern Linux service investigation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "/etc/log." }
+      ],
+      "correct_answer": "b",
+      "explanation": "journald, accessed via `journalctl -u service`. Modern Linux default; replaces /var/log/ usage.",
+      "points": 1
+    }
+  ]
+}

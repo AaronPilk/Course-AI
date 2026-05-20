@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: R2",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Defining cost advantage of R2 over AWS S3?",
+      "choices": [
+        { "id": "a", "text": "Lower per-GB storage." },
+        { "id": "b", "text": "Zero egress fees. AWS S3 charges $0.05-0.09 per GB egress (data leaving AWS to users or other clouds); at any scale this dominates costs. A site serving 10TB of images/month pays AWS $500-900 in egress alone. R2 charges $0 for egress — only pay for storage ($0.015/GB) and operations. The cost difference for media-heavy or download-heavy workloads is dramatic. R2 also has slightly cheaper storage per GB. The egress story is what makes R2 a viable replacement for S3 in most consumer-facing use cases; for pure internal storage with no external reads, S3's ecosystem might still win, but external-serving workloads benefit enormously from R2." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster reads." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Zero egress fees. AWS charges $0.05-0.09/GB out; R2 is $0. Dominates economics for serving workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker serves user-uploaded images. How to make them fast at edge?",
+      "choices": [
+        { "id": "a", "text": "Each request fetches from R2." },
+        { "id": "b", "text": "Combine R2 + Cache API. Worker checks `caches.default` first; on miss, fetches from R2 and stores in cache with appropriate Cache-Control headers (`public, max-age=86400`); subsequent requests hit edge cache (microseconds) instead of R2 storage. Use `ctx.waitUntil(cache.put(...))` so the cache write doesn't block the response. For dynamic images, layer Cloudflare Image Resizing on top — URL-based transforms (resize, format conversion) with edge caching. R2 alone is fast but adds storage-tier latency; Cache API in front turns repeated reads into edge-cached responses. Standard pattern for any media-heavy Workers app." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use KV instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "R2 + Cache API: first request fetches + caches; subsequent serves from edge in microseconds.",
+      "points": 1
+    }
+  ]
+}

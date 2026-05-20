@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cron",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Cron job runs daily cleanup. Why make it idempotent?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Cloudflare may retry scheduled handlers under certain failure conditions; rare double-runs can happen. If the job is idempotent (deleting where condition met, upserting, checking a 'done' flag), running twice is harmless. If not idempotent (incrementing counters, sending emails, creating records), double-runs cause real damage — duplicate notifications sent to users, double-billed customers, doubled metrics. Pattern: write a flag at job completion (`cleanup:2026-05-20: 'done'`); check the flag at start; skip if already ran today. Or structure operations to be naturally idempotent. Same principle as Lambda invocation idempotency — at-least-once delivery semantics require the consumer to handle duplicates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cron always runs exactly once." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cron may retry under failures; double-runs are possible. Idempotent jobs handle this safely.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to send 100k personalized emails daily. One cron Worker iterating all users hits CPU limit. Approach?",
+      "choices": [
+        { "id": "a", "text": "Pay for longer CPU." },
+        { "id": "b", "text": "Cron + Queues split. The daily cron fires; enqueues 100k jobs to a Cloudflare Queue (one job per user). A queue consumer Worker processes jobs in batches — Cloudflare automatically scales consumers and bounds concurrency. Each job is small (one email send), well within CPU limits; if any fails, the queue retries that individual job. Cleaner than fitting 100k operations into one cron run. Pattern: cron is the orchestrator (decides what work needs doing); queue is the throughput layer (processes the work). Standard architecture for any 'do something for many entities on a schedule' pattern at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip cron entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cron enqueues jobs to a Queue; queue consumer processes in batches with auto-scaling.",
+      "points": 1
+    }
+  ]
+}

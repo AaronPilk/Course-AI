@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Markets & microstructure",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between top of book and Level 2 data?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Top of book shows only the best bid and best ask plus last trade — enough for most retail strategies. Level 2 (L2) shows multiple price levels deep on each side — useful for spotting order book imbalance ('bid stack is 5× the ask stack → upward pressure'), gauging real depth before sizing into a trade, and detecting hidden liquidity withdrawal. Most retail APIs include top of book free; L2 is paid on many platforms. For minute-to-day strategies, top of book is plenty. For execution-sensitive or microstructure-based strategies, L2 starts to matter." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Top of book = best bid/ask + last. L2 shows depth at multiple levels.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have $0.05/share edge on a strategy. Your modeled cost is $0.03/share spread+slippage. Bot says 'go live.' What's missing?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "The margin is thin (60% of edge eaten by modeled cost) AND live conditions are consistently worse than backtest: rejected fills, latency between signal and order, queue position behind faster traders, regime changes that quietly shift behavior. With $0.05 gross and $0.03 modeled, a 1.5× cost shock (very common live) takes net to $0.005 — essentially zero. Live execution should be paper-traded for at least 1 month to measure actual fills vs assumed; only deploy real capital if live fills track close to backtest AND the edge is much larger than worst-case cost. The bar for 'go live' is significantly higher than 'backtest shows green'." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Edge/cost margin too thin; live execution always worse than backtest. Paper-trade first.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When does a stop-market order fail you?",
+      "choices": [
+        { "id": "a", "text": "Always works." },
+        { "id": "b", "text": "In a fast gap — the trigger fires but the market is already much further than your stop price by the time the market order matches. You exit, but far from where you intended. Example: stop at $100, overnight gap opens stock at $85, your stop-market fills at $84.95. The price was $100 on the chart but the next tradeable price was $85. Stop-market guarantees you exit; it does NOT guarantee the price. For names with overnight gap risk (small-caps, earnings, biotech), consider sized positions only, options for tail-protection, or never holding overnight at all — no order type protects against a gap below your stop." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bad weather." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stop-market triggers but fills at whatever's available — a gap can mean exit far below stop.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Bot is scanning 8,000 US stocks for signals. Should it trade every match?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — filter by liquidity upstream of signal generation. Rule of thumb: only trade names with average daily volume > 1M shares (so your size is comfortably <1% of ADV), tight spreads (<0.05% of price for short-hold strategies), and major-exchange listing (NYSE/Nasdaq, not OTC). Around 1,000-2,000 US stocks pass these filters. Trading thin names with even a real signal still loses to slippage and unavailable depth. The liquidity universe is upstream of strategy decisions — get this right first and your strategies have a chance; get it wrong and no amount of model improvement helps. Filter aggressively." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random sample." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Filter by ADV, spread, and exchange first. Trading thin names destroys edges regardless of signal quality.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why are extended-hours sessions risky for bots?",
+      "choices": [
+        { "id": "a", "text": "Never risky." },
+        { "id": "b", "text": "Volume is a small fraction of regular hours; spreads widen dramatically; depth is shallow. A name that trades 50M shares regular hours might trade 200K pre-market, with spreads 5-10× wider. Order types behave differently (some venues halt; some brokers only accept limit). News-driven gaps move prices in ways regular-hours-fitted strategies aren't prepared for. Most bots restrict to regular hours (9:30 AM - 4:00 PM ET) for predictable behavior. News-driven strategies that deliberately trade extended hours need different sizing (smaller), different order types (limit only), and risk awareness that fills can be far from expectation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hackers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Thin volume, wide spreads, shallow depth, gap risk — most bots restrict to regular hours.",
+      "points": 1
+    }
+  ]
+}

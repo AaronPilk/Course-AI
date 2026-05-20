@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Package managers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why avoid `sudo pip install` for Python packages?",
+      "choices": [
+        { "id": "a", "text": "It's slower." },
+        { "id": "b", "text": "Pollutes the system Python that the OS itself relies on. Many Linux tools are written in Python (apt has Python parts on Ubuntu, dnf is Python-based, networkd-related tooling, etc.); upgrading a system package via sudo pip can break them. The system package manager (apt/dnf) also installs Python packages that integrate with the system — `sudo pip install pandas` conflicts with `apt install python3-pandas`. Standard practice in 2026: use `pipx install` for command-line tools (gives each tool its own venv), virtual environments (`python -m venv .venv`) for project deps, `uv` for modern fast Python project management, or `--user` flag (`pip install --user`) for personal scripts. Never `sudo pip` — system Python should stay system-managed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "pip is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pollutes system Python (breaks apt/dnf tools). Use pipx, venv, --user, or uv instead.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're on a new Ubuntu server. `apt install nginx` returns 'unable to locate package nginx'. Why?",
+      "choices": [
+        { "id": "a", "text": "Wrong distro." },
+        { "id": "b", "text": "Package lists are stale or absent — fresh installs and just-booted images often have empty/old package caches. Fix: `sudo apt update` first to refresh the lists, then `sudo apt install nginx`. The combined idiom: `sudo apt update && sudo apt install nginx`. apt doesn't auto-refresh; it trusts your local cache until you tell it to update. Same on dnf (less common because dnf often auto-refreshes), pacman (`pacman -Sy` syncs first; `pacman -Syu` is the canonical update flow). The 'package not found' error often means 'apt's local list of packages is older than the package you need' — refresh and retry." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reboot." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stale package list. `sudo apt update` first, then `sudo apt install`.",
+      "points": 1
+    }
+  ]
+}

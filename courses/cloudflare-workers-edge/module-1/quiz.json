@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: The edge runtime model",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why don't Workers have cold starts?",
+      "choices": [
+        { "id": "a", "text": "They're always running." },
+        { "id": "b", "text": "V8 isolates instead of containers. V8 isolates (same tech browsers use to isolate tabs) start in <5ms; containers/microVMs take 100ms-1s. Multiple Workers share a process; each runs in its own isolate. A Worker that hasn't run in days fires instantly. The trade-off: V8 isolates are constrained (no filesystem, no native modules, 128MB memory, time limits) but the architecture enables sub-millisecond startup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pre-warmed always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "V8 isolates start in <5ms vs containers' 100ms-1s. No cold starts.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker needs OpenAI API key. Where to store?",
+      "choices": [
+        { "id": "a", "text": "wrangler.toml vars." },
+        { "id": "b", "text": "Use `wrangler secret put OPENAI_API_KEY` — encrypted; bound at runtime as `env.OPENAI_API_KEY`. `[vars]` in wrangler.toml is for non-sensitive config (it's committed and visible in dashboard). Secrets are excluded from wrangler.toml; managed separately. Treat secrets the same way as any production environment — never commit, never log, never expose in client code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Query parameter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`wrangler secret put` for encrypted secrets. Never `[vars]` in committed config.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What do bindings give you over traditional SDK + credentials?",
+      "choices": [
+        { "id": "a", "text": "Just syntactic sugar." },
+        { "id": "b", "text": "No credentials in code (Cloudflare grants access; no IAM/tokens to manage), no region selection, type safety (TS types flow from wrangler.toml), low latency (sub-millisecond internal communication), unified pattern across KV/R2/D1/DO/Queues/AI. Less config, less surface for credential leaks, simpler architecture." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster APIs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "No creds, no region, type-safe, low-latency, unified pattern.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Multiple Workers (auth, api, billing) need to call each other. Pattern?",
+      "choices": [
+        { "id": "a", "text": "Expose public HTTP; call via URLs." },
+        { "id": "b", "text": "Service bindings: `[[services]] binding = 'AUTH'; service = 'auth-worker'` in wrangler.toml. Call via `env.AUTH.fetch(...)` — goes directly between Workers via Cloudflare internal network, sub-millisecond, no DNS/TLS/public hop. Or newer RPC bindings expose typed methods (`await env.AUTH.verifyToken(token)`). Compose your app from focused Workers connected via service bindings — cleaner than each Worker exposing public endpoints." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Combine into one." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Service bindings or RPC bindings for direct Worker-to-Worker calls via Cloudflare internal network.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Global API serving 100M light requests/month. Cost-optimized platform?",
+      "choices": [
+        { "id": "a", "text": "Lambda." },
+        { "id": "b", "text": "Workers. 100M light requests fit Workers' sweet spot: ~$32/month total (vs Lambda + API Gateway ~$50-150+, plus regional latency). Workers serve from 300+ edge locations with sub-50ms global latency and no cold starts. For high-traffic light-compute global APIs, Workers are dramatically cheaper AND faster than Lambda. Pick Lambda only when you need heavy compute, full Node, longer runtime, or deep AWS integration — not for typical edge APIs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always Lambda." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers for high-traffic light-compute global APIs. Cheaper AND faster than Lambda for this profile.",
+      "points": 1
+    }
+  ]
+}

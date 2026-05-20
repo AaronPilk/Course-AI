@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: What Workers are",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do Workers have no cold starts while Lambda does?",
+      "choices": [
+        { "id": "a", "text": "Workers are pre-warmed." },
+        { "id": "b", "text": "Different isolation model. Lambda spins up containers/microVMs per function — 100ms-1s startup. Workers use V8 isolates (same tech V8 uses to isolate browser tabs) — <5ms startup. Multiple Workers share a process; each runs in its own isolate protected by V8's boundary. A Worker that hasn't run in days fires instantly when a request arrives. Trade-off: V8 isolates are more constrained (no filesystem, no native modules, smaller memory, time limits) but the architecture enables sub-millisecond startup and dramatically lower cost-per-request than container-based serverless." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster network." }
+      ],
+      "correct_answer": "b",
+      "explanation": "V8 isolates start in <5ms vs containers' 100ms-1s. No cold starts; constrained runtime is the trade-off.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team needs image transcoding (resize, format convert) at scale. Workers or Lambda?",
+      "choices": [
+        { "id": "a", "text": "Workers — they're cheaper." },
+        { "id": "b", "text": "Depends on intensity. Light resizing of small images via WASM libraries (Photon, Squoosh) works on Workers and is dramatically cheaper at scale. Heavy transcoding of large images, batch processing many at once, or operations needing native libraries (Sharp, ImageMagick native) need more CPU/memory than Workers offer — use Lambda or dedicated infra. Cloudflare also has Image Resizing service for common transforms without writing a Worker. Decision factors: per-request CPU time, memory needs, library compatibility. For most thumbnail-sized resizes: Workers + WASM. For Photoshop-scale work: Lambda or container service." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always Lambda." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Light image work fits Workers (WASM-based). Heavy transcoding needs Lambda/dedicated infra.",
+      "points": 1
+    }
+  ]
+}

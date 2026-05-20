@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Modeling costs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why model slippage as size-dependent rather than a fixed bps amount?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Slippage scales with size relative to typical liquidity. Trading 100 shares of AAPL is essentially free (well within inside depth); trading 100,000 shares walks the book and costs significantly more per share. A fixed-bps model assumes the same friction regardless of size, hiding the most important fact: small sizes are cheap, large sizes are expensive. Real model: half-spread (constant) + size-dependent term (e.g., 1bp per 1% of daily volume) + cushion (5-10 bps for safety). Now backtests at $10K vs $1M produce different (and accurate) PnL — capacity becomes visible. Without this, you ship a strategy that worked at hobby scale and discover liquidity issues only when you scale up." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves API costs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Slippage scales with size — fixed bps misses capacity issues. Use half-spread + size-dependent term.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Strategy backtests with Sharpe 1.5 at $10K capital; same Sharpe at $1M. Suspicious?",
+      "choices": [
+        { "id": "a", "text": "Great consistency." },
+        { "id": "b", "text": "Yes — real strategies degrade as capital grows because size affects slippage. If $1M trades the same names as $10K, the larger size eats more liquidity per trade and Sharpe should drop noticeably. Identical performance at 100× capital almost certainly means the cost model doesn't include size-dependent slippage — it's slipping by the same fixed bps at both scales, which is unphysical. Diagnose: switch to a size-dependent slippage model, re-run; Sharpe should fall at $1M and stay similar at $10K. If a strategy's real capacity is $100K and you ran it at $10M, live PnL will be far worse than backtest. Capacity testing should be part of every strategy validation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need more capital." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Identical Sharpe at 100× capital = cost model missing size-dependent slippage. Suspicious.",
+      "points": 1
+    }
+  ]
+}

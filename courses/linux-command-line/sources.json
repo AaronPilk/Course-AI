@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://www.gnu.org/software/bash/manual/bash.html", "title": "GNU Bash Reference Manual", "publisher": "GNU" },
+    { "url": "https://man7.org/linux/man-pages/", "title": "Linux man-pages project", "publisher": "man7.org" },
+    { "url": "https://wiki.archlinux.org", "title": "ArchWiki", "publisher": "Arch Linux" },
+    { "url": "https://tldp.org", "title": "The Linux Documentation Project", "publisher": "TLDP" },
+    { "url": "https://www.kernel.org/doc/html/latest/", "title": "Linux Kernel Documentation", "publisher": "kernel.org" }
+  ]
+}

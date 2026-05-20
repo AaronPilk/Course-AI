@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Auth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why verify JWTs locally instead of calling an external auth API per request?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Local verification is fast (microseconds via Web Crypto) and free; external API calls add 50-200ms latency per request and cost money / rate limits. JWTs are designed to be self-validating — the signature proves the token came from the issuer; the payload contains claims (user ID, expiration, etc.) you can trust if signature is valid. For HMAC (HS256), you have a shared secret. For RSA/ECDSA (RS256), fetch JWKS once and cache (refresh hourly or longer). Hono's jwt middleware handles both patterns. Reserve external API calls for cases where you need real-time info beyond the JWT (current permissions, account status) — and even then, cache aggressively." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "External is safer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Local crypto verification is microseconds vs 50-200ms external API. JWTs designed for this.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "App uses session cookies. What cookie attributes are essential for security?",
+      "choices": [
+        { "id": "a", "text": "Just any string works." },
+        { "id": "b", "text": "Set: `httpOnly: true` (prevents JS access; XSS protection — even if attacker injects script, can't steal session cookie), `secure: true` (HTTPS-only; prevents man-in-the-middle on insecure networks), `sameSite: 'Lax'` (blocks most CSRF — cookie sent on top-level navigations but not on cross-site subresource requests), `path: '/'` (cookie applies to all routes), reasonable `maxAge`. For cross-origin auth: `sameSite: 'None'` + `secure: true` (None requires secure). Pair with CSRF middleware (hono/csrf) if cookie-based and serving forms. Skipping any of these creates real vulnerabilities — a non-httpOnly cookie is the most common 'stolen session' attack vector." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just secure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "httpOnly + secure + sameSite='Lax'. Each blocks specific attack categories.",
+      "points": 1
+    }
+  ]
+}

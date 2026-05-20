@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Network diagnostics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use mtr over traceroute for network diagnosis?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "mtr combines traceroute (path discovery) with continuous ping (loss/latency per hop) and updates live. A single mtr session shows: 'hop 4 has 10% packet loss; hop 5 onward is clean' — pinpointing exactly which link is degraded. traceroute gives you path once; you can't tell whether a slow hop is consistently slow or just one bad measurement. mtr's continuous probing aggregates statistics across hundreds of packets, revealing intermittent issues that traceroute misses. Standard tool for any 'why is connection to X slow / dropping?' investigation. Caveat for both: loss at intermediate hops often reflects routers rate-limiting ICMP replies, not actual packet loss for normal traffic — only consistent loss propagating through subsequent hops is real." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "mtr is faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "mtr = traceroute + ping continuously, with per-hop loss/latency stats. Better diagnostic.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app can't reach the database at db.internal. Steps to diagnose?",
+      "choices": [
+        { "id": "a", "text": "Reinstall everything." },
+        { "id": "b", "text": "Layered diagnosis: (1) `dig +short db.internal` — does DNS resolve? If not, fix DNS; (2) `ping -c 3 <resolved-ip>` — is the host reachable? (caveat: ICMP may be blocked, so don't trust 'no response' as down); (3) `nc -zv db.internal 5432` — is the database port open from your network? If timeouts, firewall or network ACL; if connection-refused, the DB isn't listening on that port or interface; (4) check the DB process: `ss -tlnp | grep 5432` on the DB host to see what's listening; (5) auth/credentials: try `psql -h db.internal -U user` and read the error. Each layer narrows the cause: DNS → network → port → service → credentials. Without this progression, you guess at the wrong level and waste time." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reboot servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layered: dig DNS → ping host → nc port → ss listening → psql credentials. Narrows the cause progressively.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Error handling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `trap cleanup EXIT` rather than calling cleanup at the end of the script?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "`trap cleanup EXIT` runs the cleanup function on ANY exit path — normal completion, error exit triggered by `set -e`, Ctrl-C (SIGINT), SIGTERM, unhandled exception. Cleanup at the end only runs on normal flow; the moment `set -e` aborts the script mid-function, the trailing cleanup is skipped, leaving temp files / lock files / partial state behind. Pattern: register trap immediately after creating the resource that needs cleanup. `TMP=$(mktemp -d); trap 'rm -rf \"$TMP\"' EXIT` guarantees the tempdir is removed regardless of what happens next. Combine with SIGINT/SIGTERM traps if you want graceful shutdown messages. Same principle as RAII / defer in other languages — but explicit in bash." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by set -e." }
+      ],
+      "correct_answer": "b",
+      "explanation": "trap runs cleanup on ANY exit path (error, signal, normal). Trailing cleanup is skipped on errors.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your script logs progress to stdout, then prints data to stdout at the end. Caller pipes script to another tool. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Mixed log + data on stdout corrupts the pipeline — the downstream tool receives log lines interleaved with actual data, can't distinguish them, and likely breaks. Fix: send all log/progress messages to stderr (`echo \"progress\" >&2`), keep stdout pure for data. Now `script.sh | downstream` works correctly: data flows clean, logs still visible on the user's terminal (because stderr isn't piped by default). Convention across Unix tools: stdout = data the program is producing, stderr = diagnostics about how it's producing it. Honor this and your scripts compose cleanly with everything else. Violate it and pipelines silently corrupt." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use 2>&1." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Logs to stderr (>&2); data to stdout. Mixing them corrupts pipelines.",
+      "points": 1
+    }
+  ]
+}

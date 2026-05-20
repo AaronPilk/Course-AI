@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Validation pipeline",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the value of paper trading after a successful backtest?",
+      "choices": [
+        { "id": "a", "text": "Confidence boost." },
+        { "id": "b", "text": "Catches problems that backtests can't: API quirks (rate limits, rejection paths, order type interactions), execution bugs (order-management errors, timezone bugs), real-fill behavior vs modeled fills (paper-trade fills happen against live order books — your fills lag, sometimes miss entirely), operational issues (bot crashes overnight, holiday handling, weekend behavior). Backtest is in the strategy's controlled environment; paper is the strategy's broker-and-network environment. Many strategies that backtest beautifully fail paper for boring reasons — and those bugs would be much more expensive to discover live. Run paper for 1-3 months before risking real capital. Don't skip the stage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SEC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Catches execution bugs, API quirks, real-fill behavior, operational issues backtest can't see.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Strategy's OOS Sharpe is 0.4 vs IS Sharpe 1.5. You tweak and re-run OOS — Sharpe is now 1.2. Deploy?",
+      "choices": [
+        { "id": "a", "text": "Yes, fixed it." },
+        { "id": "b", "text": "No — the OOS data is contaminated. By looking at it and tweaking, you've effectively turned 'out of sample' into 'extended in sample.' The new 1.2 Sharpe is no longer an honest out-of-sample test; it's tuned to fit that data too. To get a real OOS check now, you'd need a fresh untouched holdout (e.g., a different year, a different asset class) — and you only get to use that one once before contaminating it too. Strict discipline: research on IS only, run OOS ONCE, accept the result. If it fails OOS, the strategy needs more research, not OOS tuning. The temptation to 'fix' OOS performance after seeing it is universal — and ruins the validation completely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more data." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Contamination — looking at OOS and tweaking destroys its validity. Need a fresh holdout.",
+      "points": 1
+    }
+  ]
+}

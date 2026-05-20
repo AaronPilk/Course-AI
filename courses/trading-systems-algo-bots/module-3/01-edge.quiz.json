@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Edges",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why isn't 'RSI under 30' an edge?",
+      "choices": [
+        { "id": "a", "text": "Math is wrong." },
+        { "id": "b", "text": "RSI < 30 is a measurement of recent price weakness, not a tradeable signal with positive expected value. Backtested mechanically over a long period and a diverse universe, 'buy when RSI < 30, sell when RSI > 70' is typically break-even or slightly negative after costs — sometimes the dip continues, sometimes the rebound is too small to overcome spread + slippage. Indicators like RSI, MACD, Bollinger bands are tools for filtering or contextualizing trades, not standalone edges. Real edges come from combining tools with context (regime, volatility, liquidity), discipline (sizing, exits), and structural reasons why the signal should persist. 'Indicator X is bullish' is a starting hypothesis, not a strategy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "RSI is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RSI is a measurement, not an edge. Mechanical RSI strategies typically break even after costs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Strategy backtests show 60% win rate over 20 trades. Time to deploy?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — 20 trades is far too small a sample to know if you have an edge or got lucky. Statistical significance at 50% null requires ~100+ trades for marginal-edge strategies and 1000+ for confidence. With 20 trades at 60% win rate, the p-value vs random is ~0.13 — well above any reasonable significance threshold. The next 20 trades could easily be 35% wins (still consistent with random). Run the backtest across 5+ years on a diverse universe to generate at least 100-200 trades; ideally more. Few-trade backtests are seductive — they show high win rates because variance hasn't averaged out — but they're indistinguishable from noise. Wait for a real sample." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need 5 trades more." }
+      ],
+      "correct_answer": "b",
+      "explanation": "20 trades is too few — could easily be luck. Need 100+ trades for statistical confidence.",
+      "points": 1
+    }
+  ]
+}

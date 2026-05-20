@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Strategy design",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is the actual definition of an edge in trading?",
+      "choices": [
+        { "id": "a", "text": "Indicator setup." },
+        { "id": "b", "text": "Statistically significant tendency for a setup to deliver positive expected value after all costs (spread, slippage, commissions, fees, borrow/funding). Three parts matter: (1) statistically significant — requires hundreds to thousands of trades, not 20, (2) positive EV — P(win)×avg_win minus P(loss)×avg_loss must clear costs, (3) post-cost — pre-cost edges don't pay rent. Tools like RSI, MACD, moving averages are measurements, not edges. Real edges come from information, speed, modeling, discipline, or structural inefficiencies. Retail traders mostly compete on discipline and structure. The work of an algo trader is rigorously testing whether a candidate edge survives the full validation pipeline (backtest, cost stress, walk-forward, paper)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Win rate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Edge = statistically significant +EV after all costs. Three parts; all must hold.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Trend strategy: 35% win rate, average win $400, average loss $80. Profitable?",
+      "choices": [
+        { "id": "a", "text": "Win rate too low." },
+        { "id": "b", "text": "Strongly profitable in expected value: EV per trade = (0.35 × 400) − (0.65 × 80) = 140 − 52 = $88. The 35% win rate looks ugly but the 5:1 win/loss ratio more than compensates. This is the trend-following profile: many small losses (whipsaws), rare big winners (caught a real trend). Discretionary traders psychologically can't survive — feels like losing constantly — but mechanically the math is excellent. Judge such strategies by EV-per-trade, not win rate. Asymmetric +EV strategies are some of the best edges in markets; the psychological barrier is part of why they persist." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need 60% wins." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EV = $88/trade. Win/loss ratio (5:1) more than compensates 35% win rate.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is volatility-adjusted sizing standard for trend strategies?",
+      "choices": [
+        { "id": "a", "text": "It saves money." },
+        { "id": "b", "text": "Equalizes dollar risk across diverse instruments. A 2% move in TLT (treasuries) is huge; a 2% move in TSLA is routine. Fixed-share or fixed-dollar sizing concentrates risk in volatile names — a portfolio of '100 shares each of TLT/TSLA/AAPL/NVDA' is really a TSLA + NVDA portfolio. Volatility-targeted sizing uses ATR or rolling stdev to compute how many shares of each yield the same dollar volatility, e.g., '$200 of daily expected move per position.' Volatile names get fewer shares; calm names get more. The result is real diversification: any individual position's contribution to PnL is bounded. Standard since the Turtle Traders codified it in the 1980s." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speeds backtests." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Equalize dollar risk across instruments; otherwise volatile names dominate the portfolio.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Mean reversion strategy hits 1.5× backtest max drawdown. Action?",
+      "choices": [
+        { "id": "a", "text": "Buy more." },
+        { "id": "b", "text": "Pause or reduce size — the regime has likely shifted. Mean reversion lives in ranging markets; trends and crisis regimes break it. Drawdown 1.5× backtest = beyond what the strategy was designed for; this isn't variance, it's signal that conditions have changed. Mature response: cut size to 25-50% of normal (some live observation, reduced risk), continue tracking on paper, re-enter full size only when behavior normalizes for 2-4 weeks. Doubling down is how 30% drawdowns become 60%. Many traders ruin themselves trying to 'win back' losses; the math just doesn't work — a 50% drawdown requires 100% gain to recover. Defense wins championships." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch broker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pause/cut size. Drawdown 1.5× backtest = regime shift; recover before scaling back.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When should you override your mechanical bot?",
+      "choices": [
+        { "id": "a", "text": "Whenever uncomfortable." },
+        { "id": "b", "text": "Only for clear, identifiable failures: data glitches (signal computed from a bad bar), regulatory events (exchange halt, force-close requirement), counterparty risk (broker solvency concerns), genuinely new conditions the code wasn't designed for. NOT for fear ('feels risky'), recency bias ('just had three losses'), greed ('it'll bounce back'), or loss aversion ('one more day'). If you're overriding daily or weekly, you don't have a discretionary advantage — you have an interference problem destroying the edge you tested for. Log every override with reason; review monthly; codify recurring patterns into bot rules instead of perpetuating manual interference. Override should be a rare safety mechanism, not a regular activity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Every Monday." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Only for clear failures (data, regulatory, counterparty). Not for emotional reasons. Log and codify.",
+      "points": 1
+    }
+  ]
+}

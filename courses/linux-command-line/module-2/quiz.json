@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Text manipulation",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `grep -C 3 'error' log.txt` show?",
+      "choices": [
+        { "id": "a", "text": "Three errors." },
+        { "id": "b", "text": "Lines matching 'error' plus 3 lines of context BEFORE AND AFTER each match — for interpreting matches with surrounding lines. Variants: -A 3 (after only), -B 3 (before only), -C 3 (context = both). Essential for log diagnostics where the error line says 'connection refused' but the prior 3 lines tell you which connection and why. Without context, grep results are correct but uninterpretable; with -C they become diagnostic. Combined with -n (line numbers) and -i (case insensitive), this is the daily-driver grep invocation for incident response. Memorize `-Cni` or alias it: this combination answers most 'why is the log showing this error?' questions in seconds." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Color output." }
+      ],
+      "correct_answer": "b",
+      "explanation": "3 lines of context before AND after each match. Use -A/-B for one direction; -C for both.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "macOS: `sed -i 's/foo/bar/' file.txt` errors. Fix?",
+      "choices": [
+        { "id": "a", "text": "Use different file." },
+        { "id": "b", "text": "BSD sed (macOS) requires a backup-extension argument with `-i`. Fix options: `sed -i '' 's/foo/bar/' file.txt` (empty string = no backup), or `sed -i.bak 's/foo/bar/' file.txt` (creates file.txt.bak). Linux GNU sed accepts `-i` alone — hence cross-platform scripts often fail on macOS. For portability across both, always provide an extension (even empty for the BSD form), or install gnu-sed on Mac (`brew install gnu-sed`; use as `gsed`). Many open-source install scripts hit exactly this issue; awareness saves debugging time." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to awk." }
+      ],
+      "correct_answer": "b",
+      "explanation": "BSD sed needs backup arg with -i. Use `sed -i ''` or `sed -i.bak`.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Best tool for 'sum column 3 where column 1 = US' on a 10M-row CSV?",
+      "choices": [
+        { "id": "a", "text": "Excel." },
+        { "id": "b", "text": "awk: `awk -F',' '$1 == \"US\" {sum += $3} END {print sum}' file.csv` — streams through the file once, no memory blow-up. Excel and pandas-without-streaming would crash or take minutes; awk handles 10M rows in seconds because it processes one line at a time, doesn't load the whole file. Caveat: assumes the CSV doesn't have embedded commas inside quoted fields (real-world CSVs sometimes do; for those, Python's csv module or csvkit's csvgrep handle quoting correctly). For clean comma-separated data without embedded commas, awk is the perfect tool. Pattern generalizes: any 'filter rows by some column condition, aggregate another column' is awk's sweet spot." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Write Java." }
+      ],
+      "correct_answer": "b",
+      "explanation": "awk streams through 10M rows fast: `awk -F, '$1==\"US\" {sum+=$3} END{print sum}'`.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "API returns JSON array. You want the IDs of items with status='active'. Best tool?",
+      "choices": [
+        { "id": "a", "text": "grep status active." },
+        { "id": "b", "text": "jq: `jq -r '.[] | select(.status == \"active\") | .id'` — parses the JSON structure correctly, filters by the status field, extracts the id, outputs as raw lines (no JSON quoting). grep on JSON breaks on whitespace formatting, escaped quotes, multiline objects — it works until it doesn't. jq is the standard JSON-aware tool: install via `apt install jq` or `brew install jq`. The pattern `jq '.[] | select(...) | .field'` is the JSON equivalent of SQL 'SELECT field WHERE condition' — once internalized, you'll use it daily for kubectl, AWS CLI, GitHub API, Docker inspect outputs. Add `-r` for raw output that's usable in downstream pipes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Write Python." }
+      ],
+      "correct_answer": "b",
+      "explanation": "jq with select: `jq -r '.[] | select(.status==\"active\") | .id'`. Proper JSON parsing.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the relationship between sed and awk?",
+      "choices": [
+        { "id": "a", "text": "Same tool." },
+        { "id": "b", "text": "Different specialties that compose well. sed is for substitution and line-level transformations (replace 'foo' with 'bar', delete lines matching a pattern). awk is for field/column-level processing (sum column 3, print last field, group by category, filter rows by condition). They share Unix-pipeline DNA but solve different problems. Common pipeline pattern: `cat log.txt | awk '{print $4}' | sed 's/[0-9]*$//' | sort | uniq -c` — awk extracts column, sed cleans it, sort+uniq aggregate. For JSON, neither works; use jq. For complex multi-line state machines, switch to Python. The full toolkit is grep (search) + sed (substitute) + awk (columns) + jq (JSON) + Python (everything else). Knowing when to reach for which is the actual skill." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "awk is newer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "sed = substitution/line-level. awk = field/column processing. Compose them in pipelines.",
+      "points": 1
+    }
+  ]
+}

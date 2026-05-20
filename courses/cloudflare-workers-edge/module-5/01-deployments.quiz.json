@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Deployments",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Cloudflare Versions enable?",
+      "choices": [
+        { "id": "a", "text": "Backup of code." },
+        { "id": "b", "text": "Gradual rollout of new deployments — `wrangler versions upload` uploads a new version without making it active; `wrangler versions deploy` shifts traffic interactively (1%, 5%, 25%, 50%, 100%). Monitor metrics at each step; rollback by shifting traffic back. Catches breaking changes before they hit all users. For risky deploys (refactors, new dependencies, big logic changes), gradual rollout is dramatically safer than the default 'switch 100% of traffic in 30 seconds.' Standard pattern for any production Worker; cheap insurance against deploy-time bugs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Code formatting." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradual rollout — shift traffic to new version in steps; rollback by shifting back. Cheap insurance for risky deploys.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Auto-deploy staging on main pushes; production needs human approval. How?",
+      "choices": [
+        { "id": "a", "text": "Manual deploys only." },
+        { "id": "b", "text": "Two CI jobs in the same workflow. `deploy-staging` runs on every main push: tests + `wrangler deploy --env staging`. `deploy-production` needs `deploy-staging` (uses `needs: deploy-staging`) and gates on GitHub's `environment: production` — in repo Settings → Environments, configure 'production' with required reviewers. Workflow pauses at the production job; reviewer gets notified; click 'Approve' to proceed. Combine with version pinning (use specific git tags for prod) and observability so reviewers can verify staging's healthy before approving prod. Standard pattern for any team wanting CI speed for staging plus human-in-loop for production." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "One workflow." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Separate CI jobs; production gated by GitHub environment with required reviewers.",
+      "points": 1
+    }
+  ]
+}

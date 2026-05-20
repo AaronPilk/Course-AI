@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Liquidity & slippage",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why model slippage aggressively in backtests rather than realistically?",
+      "choices": [
+        { "id": "a", "text": "Save data." },
+        { "id": "b", "text": "Backtests can't know the real fill — your order would have affected the book, but you only have historical observed prices. Realistic models still over-fit to favorable conditions; aggressive (conservative) models add a margin of safety so only strategies with substantial edge survive on paper. If a strategy still makes money assuming you paid 2× the typical slippage, it likely has a real edge. If it only works under optimistic assumptions, live trading will reveal worse fills than backtest, and the strategy will bleed. The asymmetry favors conservatism: you don't get to refund a live loss because slippage was worse than expected." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Aggressive slippage gives a safety margin — only real edges survive; live always exposes worse fills.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Strategy backtests at 0.05% net edge per trade on AAPL. Per-round-trip costs are ~0.013%. Worth deploying live?",
+      "choices": [
+        { "id": "a", "text": "Yes, immediately." },
+        { "id": "b", "text": "Marginal — costs eat 26% of gross edge, and live conditions will be worse than backtest in subtle ways (rejected fills, latency, queue position, regime changes). At 0.05% edge with 0.013% modeled cost, the net is 0.037% per trade; a 2× cost shock takes it to 0.024%; a 3× shock to 0.011%; a 4× shock to negative. Strategies need substantial margin over costs to survive live trading. Default approach: paper-trade for a month with live fills before risking real capital, and consider that this 'edge' may simply not be real if the backtest assumed optimistic fills. The bar for deploying live should be much higher than for green numbers in a notebook." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Quit trading." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Edge/cost ratio is too thin. Paper-trade first; require substantial buffer over modeled costs.",
+      "points": 1
+    }
+  ]
+}

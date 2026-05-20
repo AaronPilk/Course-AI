@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Momentum & trend",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do trend-following strategies need volatility-adjusted position sizing?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Different instruments have different normal ranges of motion — a 2% move in TLT (treasuries) is huge; a 2% move in TSLA is routine. Fixed-dollar sizing concentrates risk in volatile names: 100 shares of TLT and 100 shares of TSLA have wildly different dollar volatilities. Volatility-targeted sizing (using ATR or rolling stdev) calibrates so each position risks the same dollar amount — fewer shares of TSLA, more of TLT. This is the Turtle Traders' contribution; it equalizes the contribution of each position to portfolio risk and lets you diversify across instruments without one volatile name dominating PnL. Standard in modern trend strategies." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Saves capital." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Equalize dollar risk across positions by sizing inversely to volatility (ATR-based).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Trend strategy backtests at 38% win rate. Worth pursuing?",
+      "choices": [
+        { "id": "a", "text": "No, win rate too low." },
+        { "id": "b", "text": "Yes — trend following is asymmetric: low win rate, but the wins are huge multiples of the losses. A profile of 38% wins averaging $300, 62% losses averaging $80 has EV per trade of (0.38 × 300) − (0.62 × 80) = $64.40 — strongly positive. The psychological challenge is real (most trades are small losers), but the math works. The wrong frame is judging trend strategies on win rate; the right frame is EV-per-trade and the win/loss ratio. Discretionary traders who require 'mostly winning' can't run trend; that's part of why the edge persists. Algos are immune to the psychology, so trend is one of the most algorithmically-friendly strategy families." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need 50%+ wins." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trend is asymmetric — low win rate, big wins. Judge by EV-per-trade, not win rate.",
+      "points": 1
+    }
+  ]
+}

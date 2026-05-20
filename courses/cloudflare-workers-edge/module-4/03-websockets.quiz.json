@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: WebSockets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do WebSockets in Workers require Durable Objects?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare policy." },
+        { "id": "b", "text": "Workers are stateless — different requests may land in different isolates at different edges; no shared memory; isolates can be torn down between requests. WebSockets require persistent state per connection (active session, message buffer, room membership) plus coordination between connections (broadcast to all connected clients). Durable Objects provide both: a single-leader instance per entity (per room, per session) that connections route to; persistent storage for connection state; coordination across all connections in that instance. The Worker upgrades the request and forwards to the DO; the DO accepts the WebSocket and handles its lifecycle. This is exactly the kind of stateful coordination DOs were designed for." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just convention." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers are stateless; WebSockets need persistent coordination. DOs provide single-leader stateful instances.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Chat room with periodic activity (5 messages/hour during day, idle overnight). Cost-optimal pattern?",
+      "choices": [
+        { "id": "a", "text": "Standard WebSocket handling, DO always active." },
+        { "id": "b", "text": "Use `acceptWebSocket` (hibernation-enabled accept) instead of older `accept`. DO can sleep when idle while WebSocket connections stay open from the client's perspective. Cloudflare wakes the DO when a message arrives via `webSocketMessage` callback or other events. Cost drops dramatically because billing is based on active duration, and most chat rooms are idle most of the time. For a chat room with 5 messages/hour active during business hours, hibernation cuts costs by ~95% vs always-active. Hibernation is essentially free state preservation; combined with persistent DO storage, the DO's full state (room history, member list) survives sleep cycles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disconnect users." }
+      ],
+      "correct_answer": "b",
+      "explanation": "acceptWebSocket enables hibernation — DO sleeps while connections stay open. Massive cost savings for bursty traffic.",
+      "points": 1
+    }
+  ]
+}

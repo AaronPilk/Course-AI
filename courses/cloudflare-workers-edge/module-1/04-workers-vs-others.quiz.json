@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Workers vs alternatives",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does Lambda still beat Workers?",
+      "choices": [
+        { "id": "a", "text": "Never; Workers always win." },
+        { "id": "b", "text": "When you need heavy compute (long CPU per request, batch jobs, ML inference needing > 128MB), full Node.js (native modules like Sharp, packages assuming filesystem access), runtimes other than JS (Python, Go, Java), longer execution time (Lambda 15min vs Workers' 30s CPU), deep AWS integration (existing RDS/S3/ecosystem), or VPC connectivity. Workers' constraints (no FS, 128MB, time limits) are also its strengths for high-traffic light-compute, but they're real limitations for compute-heavy workloads. Many real apps use both: Workers at the edge for auth/cache/routing; Lambda or origin for heavy compute. Pick by workload shape, not based on which is 'better.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only on AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Heavy compute, full Node, longer runtime, deep AWS integration. Workers' constraints are real limits for those.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a global API serving 100M requests/month, mostly light work (auth check, fetch from cache, return JSON). Cost-optimized choice?",
+      "choices": [
+        { "id": "a", "text": "Lambda — biggest ecosystem." },
+        { "id": "b", "text": "Workers. 100M light requests fit Workers' sweet spot. Pricing: $5/month base + $0.30 per million over the included 10M = roughly $32/month plus light CPU charges. Lambda equivalent: $0.20 per million + per-ms compute = ~$20-50 just for requests, plus you need API Gateway ($1+ per million) for HTTP routing, plus regional latency hits global users. Workers serve from 300+ edge locations with sub-50ms latency anywhere; no cold starts. For high-traffic light-compute global APIs, Workers are dramatically cheaper AND faster. The sweet spot they were designed for. Pick Lambda only if you have a compelling reason — heavy compute, AWS-deep ecosystem, specific runtime needs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Vercel only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers for high-traffic light-compute global APIs. Cheaper AND faster than Lambda for this profile.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Durable Objects",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What problem do Durable Objects solve that Workers + KV + D1 can't?",
+      "choices": [
+        { "id": "a", "text": "Faster storage." },
+        { "id": "b", "text": "Strong consistency through single-leader, single-threaded coordination. Workers run in many edges globally; KV is eventually consistent; D1 reads are from replicas. For 'I need exactly one source of truth for this specific entity, and operations on it must be linearizable,' DOs are the answer. Each DO instance lives in exactly one location at a time; requests serialize through it; no race conditions on state. Use cases: exact rate limiting, chat room state, game sessions, shopping carts, distributed locks. One DO per entity (per user, per room, per session) — many entities means many DOs running independently. Single-threaded design caps throughput per DO but provides guarantees nothing else does." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper storage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Strong consistency via single-leader coordination. The 'exactly one source of truth per entity' primitive.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a multiplayer game with 4 players per match. State (positions, scores) shared in real-time. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Each player polls KV." },
+        { "id": "b", "text": "One Durable Object per match (keyed by match ID). All 4 players' WebSocket connections route to the same DO; player actions hit the DO; DO updates state and broadcasts to all connected sockets. Strong consistency (no two players' actions can race on the state); persistence (game state survives restarts); coordination (the DO is the single source of truth for this match). With 1000 concurrent matches, you have 1000 DOs running independently, each handling its 4 players. KV-based polling would have latency, inconsistency, and miss real-time updates; D1 lacks the WebSocket connection management. DOs are exactly the right primitive for this multiplayer-state-coordination pattern." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use D1." }
+      ],
+      "correct_answer": "b",
+      "explanation": "One DO per match. WebSocket connections route to the same DO; DO coordinates state and broadcasts.",
+      "points": 1
+    }
+  ]
+}

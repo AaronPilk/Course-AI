@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cost optimization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is module-scope caching effective in Workers?",
+      "choices": [
+        { "id": "a", "text": "It's free." },
+        { "id": "b", "text": "Workers run inside isolates that handle many requests over their lifetime. Variables defined at module scope (outside the fetch handler) persist across all requests served by that isolate — so expensive one-time work (parsing a large config blob, compiling a regex, building a lookup table) runs once and the result is reused for free on subsequent requests. The catch: you have many isolates globally, so each region's first request pays the cost, and isolates can be evicted. Best for immutable or rarely-changing data; not a substitute for shared state (use KV / DO for that). Practical impact on CPU billing is substantial." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Module-scope vars persist across requests in the same isolate — expensive init runs once, reused free.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker costs $50/month for compute; upstream API calls cost $4000/month. Optimization priority?",
+      "choices": [
+        { "id": "a", "text": "Optimize Worker CPU." },
+        { "id": "b", "text": "Cache the upstream — the Worker is essentially free; the API costs 80× more. Use the Cache API (or KV with TTL) to serve repeat requests from the edge without hitting the upstream. Even a 50% cache hit rate halves the $4000 bill to $2000 — Worker compute savings can never approach that. The general rule: optimize the most expensive line item, not the most visible one. Edge caching is exactly what Workers is best at; this is a textbook case for it. Worker CPU optimization is worth doing later, after the upstream is contained." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel both." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache the expensive upstream. Worker compute is small change; the API bill is the leak.",
+      "points": 1
+    }
+  ]
+}

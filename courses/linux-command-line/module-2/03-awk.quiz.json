@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: awk",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `awk '{print $NF}'` do?",
+      "choices": [
+        { "id": "a", "text": "Print all fields." },
+        { "id": "b", "text": "Prints the LAST field of each line, where NF is awk's built-in 'number of fields' variable — and `$NF` is 'the value of the field numbered NF' (i.e., the last one). Equivalent to 'print the column whose index = total columns.' Useful when the relevant data is at the end of variable-width lines (file paths, exit codes, the last item in space-separated output). Compare: `$1` is first, `$2` is second, `$NF` is last, `$(NF-1)` is second-to-last. The pattern generalizes: NR is line number, length(\\$0) is line length, both available everywhere in awk programs. Knowing the built-in vars unlocks most of awk's everyday utility." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Print line numbers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "$NF = the last field. NF is field count; $NF dereferences to that column's value.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have a CSV with millions of rows. Need to sum column 3 of rows where column 1 = 'US'. Tool?",
+      "choices": [
+        { "id": "a", "text": "Open in Excel." },
+        { "id": "b", "text": "awk: `awk -F',' '$1 == \"US\" {sum += $3} END {print sum}' file.csv` — streams through the file in one pass, no memory blow-up regardless of size. CSV with millions of rows would crash or thrash Excel; awk handles it in seconds because it processes one line at a time without loading the whole file. Caveats: this assumes the CSV doesn't have embedded commas inside quoted fields (real-world CSV often does; for that, Python's csv module or csvkit's csvgrep are safer). For clean, simple CSV (no embedded commas in fields), awk is the workhorse. Pattern generalizes: any 'filter rows by column, aggregate another column' is awk's sweet spot." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Write Python." }
+      ],
+      "correct_answer": "b",
+      "explanation": "awk handles millions of rows in one pass: `awk -F, '$1==\"US\" {sum+=$3} END{print sum}'`.",
+      "points": 1
+    }
+  ]
+}

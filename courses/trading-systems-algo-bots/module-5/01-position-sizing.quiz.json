@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Position sizing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is 1-2% risk per trade the standard for fixed-fractional sizing?",
+      "choices": [
+        { "id": "a", "text": "It's tradition." },
+        { "id": "b", "text": "Math: at 1% risk per trade, surviving a 10-loss streak is a 10% drawdown — uncomfortable but recoverable. At 5% risk, 10 losses = 50% drawdown, requiring a 100% gain to break even (likely strategy-ending). At 10% risk, 10 losses = ~65% drawdown, often unrecoverable. Even +EV strategies hit unlikely streaks (a 60%-win-rate strategy hits 10 losses in a row roughly once per 10,000 trades — once in a typical algo's life). Sizing must let you survive the streak with capital intact. 1-2% is the sweet spot: aggressive enough to compound meaningfully, conservative enough to survive the tail. Beyond 5% is gambling regardless of how good the strategy looks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tax-optimal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "1-2% lets you survive 10-loss streaks intact. 5%+ risks strategy-ending drawdowns.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You hit a 15% drawdown. In-the-moment instinct?",
+      "choices": [
+        { "id": "a", "text": "Increase size to recover." },
+        { "id": "b", "text": "Reduce size or pause — and decide this rule BEFORE the drawdown happens, not during. At 15% drawdown your judgment is biased: fear says cut everything (often the worst time, just before reversion); ego says double down to 'win it back' (catastrophic if drawdown deepens). Pre-decided rules remove the in-the-moment bias. Typical scale: 5% DD = audit for bugs; 10% DD = cut size to 50%; 15% DD = pause new entries, let existing positions decay; 20% DD = flatten and halt. Math: doubling size during drawdown means you take losses at the wrong size if the drawdown deepens, while a +EV strategy will recover at normal size when it inevitably mean-reverts. Defense always; never bet to recover." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch strategies." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pre-decide drawdown response. Cut size or pause; never double down to 'win back'.",
+      "points": 1
+    }
+  ]
+}

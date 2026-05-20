@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Signals",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why try `kill PID` before `kill -9 PID`?",
+      "choices": [
+        { "id": "a", "text": "Habit." },
+        { "id": "b", "text": "Default `kill PID` sends SIGTERM — a polite request that the process can catch and respond to by saving state, closing files, releasing locks, finishing in-flight work, and exiting cleanly. Most well-written processes do exactly this. `kill -9` sends SIGKILL, which can't be caught — the kernel terminates the process immediately, no cleanup. The cost: orphaned lock files, half-written data, corrupt databases, dependent processes left hanging. Escalation rule: SIGTERM → wait 5-10 seconds → if still running, SIGKILL. Production services routinely handle SIGTERM gracefully; SIGKILL is the firefighter's axe, useful but destructive. Reserve it for genuinely stuck processes that ignore SIGTERM." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SIGTERM is catchable — allows cleanup. SIGKILL is uncatchable and leaves messes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your shell script creates a temp file in /tmp/work and gets Ctrl-C'd mid-run. File is left behind. Fix?",
+      "choices": [
+        { "id": "a", "text": "Ignore it." },
+        { "id": "b", "text": "Add a `trap` that cleans up on signal: `trap 'rm -f /tmp/work; exit 1' SIGINT SIGTERM EXIT`. Bash's trap registers a handler for signals; placed near the top of the script, it ensures cleanup runs regardless of how the script ends — normal exit, Ctrl-C interrupt, SIGTERM from killing, or even an unhandled error. The `EXIT` pseudo-signal fires for ANY exit path; combining it with SIGINT/SIGTERM covers both 'crashed/killed' and 'finished normally.' Cleanup actions go in the trap; the script's main body focuses on logic. Standard pattern for any script that creates state outside its own variables: lock files, temp dirs, downloaded artifacts, half-built outputs. Without trap, debris accumulates over time and eventually breaks something." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Python." }
+      ],
+      "correct_answer": "b",
+      "explanation": "trap cleanup_cmd SIGINT SIGTERM EXIT — runs cleanup regardless of how script exits.",
+      "points": 1
+    }
+  ]
+}

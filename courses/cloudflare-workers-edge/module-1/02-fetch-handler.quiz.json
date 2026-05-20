@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Fetch handler",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the role of `ctx.waitUntil()` in a Worker?",
+      "choices": [
+        { "id": "a", "text": "Delay the response." },
+        { "id": "b", "text": "Lets you do work AFTER returning the Response to the user — the runtime keeps the isolate alive until the promise passed to waitUntil resolves. Use for logging, analytics, cache updates, anything that shouldn't block the response. Pattern: handle the user's request, return Response, fire `ctx.waitUntil(logEvent(request))` for async telemetry. User gets a fast response; the logging happens in parallel. Without waitUntil, async work after returning Response would get canceled when the isolate is torn down." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel the request." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Background work that continues after Response is sent. Logging, analytics, cache updates.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your Worker needs to call OpenAI with a secret API key. How to make the key available?",
+      "choices": [
+        { "id": "a", "text": "Hardcode in wrangler.toml vars." },
+        { "id": "b", "text": "Use `wrangler secret put OPENAI_API_KEY` — uploads the secret to Cloudflare; encrypted; bound to the Worker as `env.OPENAI_API_KEY` at runtime. Don't use `[vars]` in wrangler.toml for secrets — that file is committed and the values are visible. Secrets are excluded from wrangler.toml; managed separately via CLI or dashboard. Access in code via `env.OPENAI_API_KEY`. Same pattern for database URLs, JWT signing keys, third-party API tokens — anything that must not leak. Treat secrets the same way you'd treat them in any production environment." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pass as URL query param." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`wrangler secret put` for encrypted secrets bound at runtime. Never hardcode in committed config.",
+      "points": 1
+    }
+  ]
+}

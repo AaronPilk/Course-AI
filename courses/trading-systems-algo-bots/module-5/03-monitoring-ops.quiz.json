@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Monitoring & ops",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is a daily summary email more valuable than real-time monitoring for most retail bots?",
+      "choices": [
+        { "id": "a", "text": "Email is free." },
+        { "id": "b", "text": "Daily summaries surface slow drift that real-time charts miss — gradual slippage degradation, week-over-week PnL trends, anomalies in trade distribution, sector concentration creeping above limits. Real-time monitoring is good for crisis response (kill switch alerts, broker outages) but bad for catching slow problems where you'd habituate to changes. Reading a daily one-pager for 30 seconds catches issues that compound: 'fill latency creeping from 80ms to 200ms' — invisible day-to-day, obvious in 5 daily summaries. Layer both: real-time for crisis (page-worthy alerts only), daily digest for drift (sit-and-read), monthly review for strategic calibration. The 30 seconds/day cost is the cheapest insurance against unnoticed slow failures." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Less compute." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Daily summaries catch slow drift (slippage creep, trend changes) that real-time dashboards miss.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Solo trader's alert system goes off at 2 AM with a critical alert. They ignore it and check at 9 AM. Is this OK?",
+      "choices": [
+        { "id": "a", "text": "Yes, market is closed." },
+        { "id": "b", "text": "Depends — if the alert was a false positive (crypto bot detecting a non-event), it's fine but the alert should be tuned. If it was real (broker outage warning, account anomaly, position move overnight), 7 hours of unanswered alert means whatever was breaking continued to break. Two design responses: (1) tier alerts — page-worthy only for things truly requiring immediate response (kill switch, account compromise), push-only for warnings that can wait until morning, (2) constrain alert hours — if you trade only US regular hours, suppress non-critical alerts outside market hours. The wrong answer is 'alerts I don't answer' — they're noise that masks real signals. Either tune them or commit to answering them." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to email." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tier alerts by severity and tune hours. Unanswered alerts are noise; tune or commit to respond.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Jobs & background",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is tmux mandatory for long-running SSH work?",
+      "choices": [
+        { "id": "a", "text": "Looks cooler." },
+        { "id": "b", "text": "SSH sessions die when the network drops, the laptop sleeps, the VPN reconnects, or you close the terminal. Without a multiplexer, anything you were running dies with the session — long compiles, training jobs, file transfers, package upgrades. tmux (or screen) creates a persistent session on the remote server that survives the SSH connection ending; reconnect via `tmux attach` and find your work exactly where you left it. Standard SSH workflow: ssh in → `tmux` (or `tmux attach` if resuming) → do work → Ctrl-b d to detach → close laptop → reconnect tomorrow → `tmux attach` → resume. Without this, multi-hour jobs become Russian roulette with network glitches. nohup + & also works for fire-and-forget commands, but tmux preserves the interactive session including your editor state, command history, etc." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster terminal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSH sessions die on disconnect; tmux sessions survive. Re-attach to resume work intact.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You started `./train.py &` from your local terminal, then your laptop went to sleep. Process status?",
+      "choices": [
+        { "id": "a", "text": "Still running." },
+        { "id": "b", "text": "Depends — if it's on a remote server via SSH, the SSH session died with the network drop and the process likely died too (SIGHUP). If on your local machine, sleep doesn't usually kill processes but it does pause them. The robust pattern is to combine `nohup` and `&` plus output redirection: `nohup ./train.py > train.log 2>&1 &` — nohup makes it ignore the HUP signal sent when the parent shell exits. Or even better: run inside `tmux` so the session itself persists. For laptops that sleep: run training jobs on a server you ssh into, attach via tmux, and let the laptop be just a viewer. The pattern 'run heavy jobs on a stable machine' is more reliable than 'try to keep my laptop awake.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Definitely dead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Likely dead — & alone doesn't survive SIGHUP from SSH drop. Use nohup + & or tmux.",
+      "points": 1
+    }
+  ]
+}

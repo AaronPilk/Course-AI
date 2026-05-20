@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Bias traps",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is backtesting on the current S&P 500 misleading?",
+      "choices": [
+        { "id": "a", "text": "Too few names." },
+        { "id": "b", "text": "Survivorship bias — today's S&P 500 only contains companies that survived bankruptcy, delisting, and merger to today. Names like Enron, Lehman, WorldCom, GE (kicked out, returned), Kodak — gone or shrunken — aren't in your universe even though they'd have been part of a 2000-2010 backtest. Your strategy sees only the eventual winners and looks great; in real-time you'd have held the failures alongside the winners. Fix: use point-in-time index constituents (Norgate Data, Sharadar, paid vendors) that include delisted names with proper history. Free data (Yahoo, default APIs) almost universally introduces survivorship. Discount any free-data backtest accordingly — your real-life experience will be measurably worse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Too many tech names." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Survivorship — today's index excludes companies that failed. Point-in-time data fixes it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your strategy backtests beautifully at parameters (RSI window=23, threshold=2.7, ATR=14, hold=8). Tested neighboring values: window=22 or 24 collapse. Verdict?",
+      "choices": [
+        { "id": "a", "text": "Deploy with these exact params." },
+        { "id": "b", "text": "Curve-fit — robust strategies have wide parameter plateaus, not knife-edges. The fact that performance collapses with a 1-unit parameter change means you've found a regression-to-the-mean fluke in the historical data, not a stable edge. Live trading will hit conditions different from the precise historical sample your params overfit; the strategy will fail immediately. Fix: re-test with broader parameter sweeps, look for plateaus where multiple nearby values perform well; if no plateau exists, the strategy doesn't have a real edge — only an overfit fit. Round numbers (20, 25, 3) that work across a range are more believable than oddly specific values (23, 2.7) that only work at one spot." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more params." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Curve-fit. Knife-edge param sensitivity = overfitting. Robust strategies have parameter plateaus.",
+      "points": 1
+    }
+  ]
+}

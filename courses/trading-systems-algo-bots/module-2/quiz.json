@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Connecting to brokers",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Alpaca the typical first broker for algorithmic trading?",
+      "choices": [
+        { "id": "a", "text": "Largest universe." },
+        { "id": "b", "text": "Purpose-built for algo traders: free paper trading with full API access (no application — sign up and code), $0 commissions on US equities and crypto, clean modern REST + WebSocket API, official SDKs in major languages. Onboarding is minutes, not hours. Trade-offs: smaller universe (US equities + crypto; no futures, options, FX, or international), retail-grade execution rather than pro-tier, occasional API outages. For learning algorithmic trading and most retail-scale strategies, Alpaca is the right choice. Graduate to IBKR when you outgrow the scope: need futures/options, larger size, or sophisticated order types." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's the only one." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Free paper, $0 commissions, clean API — the easiest start. Switch to IBKR when you outgrow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bot reconnects to broker after a network blip. The 50-share order it sent before the disconnect — should it resubmit?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — the order may already be live at the broker; resubmitting duplicates it (100 shares instead of 50). Correct flow on reconnect: (1) fetch broker's open-orders list, (2) check for an order matching your client_order_id, (3) if present, reattach and resume tracking; if absent, the broker never received it — safe to submit. Never assume your last-known state survived a network event. Use client_order_id as a stable handle you control (some brokers let you pass it in submission) so identification across reconnects is reliable. Same logic applies to fill events: dedupe on broker event IDs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fetch broker's open orders, check by client_order_id, reattach if present. Never blindly resubmit.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use WebSocket streaming over REST polling for live bots?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "WebSocket pushes events as they happen — bar closes, order fills, quote updates arrive in real-time with no polling delay. REST polling has three problems: it lags (delay = poll interval), it eats your rate limit (200 req/min on Alpaca free), and it doesn't scale (each open order or watched symbol needs its own request). WebSocket subscriptions: one connection handles many symbols and order updates; cost stays flat as you add subscriptions. For any live trading bot beyond hello-world, streaming is required. REST stays useful for one-off queries (historical data, account state at startup) but the live decision loop runs on streams." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "WebSocket is cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Streaming: real-time, scales flat, doesn't eat rate limits. REST polling = lag + waste.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Bot uses 1-min bars to make decisions on a 3-day swing strategy. Need to pay for tick data?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — 1-min bars are far more granular than the strategy's actual time horizon (3-day swing). Tick data is overkill: gigabytes per day of data the strategy never reads, $99-200/month subscription cost, storage and processing infrastructure to handle the volume, all for zero alpha. Match data granularity to strategy: daily bars for monthly position holds, 5-min or hourly for intraday swing, 1-min for short scalps, ticks only for microstructure-sensitive strategies (sub-second). Paying for the wrong tier is the most common over-engineering mistake in retail algo trading. Start simple, upgrade only when the strategy demonstrably needs finer data." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tick data is free." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Match data granularity to strategy timescale. Tick data is overkill for swing strategies.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What is the role of reconciliation in an OMS?",
+      "choices": [
+        { "id": "a", "text": "Performance tuning." },
+        { "id": "b", "text": "Periodic check that the bot's local view of orders and positions matches the broker's view. Drift happens constantly — missed events on disconnects, duplicate processing, manual intervention in broker UI, race conditions. Reconciliation fetches broker state (open orders, positions) and compares against the local DB; mismatches trigger alerts. Crucially: don't auto-fix mismatches — alert and pause for human inspection. The mismatch is a symptom of a bug; auto-syncing hides it. Reconcile at startup, periodically during the day, and at EOD. With reliable reconciliation, bots can recover gracefully from disconnects; without it, they slowly drift away from reality." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speeds up trading." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Periodic check that local state matches broker state. Alert on mismatch; don't auto-fix.",
+      "points": 1
+    }
+  ]
+}

@@ -288,14 +288,19 @@
       "slug": "cloudflare-workers-edge",
       "title": "Cloudflare Workers & Edge Computing",
       "category": "Infrastructure",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://developers.cloudflare.com/workers/"]
     },
     {
       "slug": "ai-agent-engineering",
       "title": "AI Agent Engineering Systems",
       "category": "AI Engineering",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "duplicate_of_earlier_entry": true,
       "sources": [
         "https://python.langchain.com/docs/introduction/",
         "https://platform.openai.com/docs"
@@ -305,7 +310,10 @@
       "slug": "autonomous-ai-assistants",
       "title": "Building Autonomous AI Assistants",
       "category": "AI Engineering",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "duplicate_of_earlier_entry": true,
       "sources": [
         "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
         "https://cookbook.openai.com"
@@ -315,7 +323,9 @@
       "slug": "trading-systems-algo-bots",
       "title": "Trading Systems & Algorithmic Bots",
       "category": "Trading",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://interactivebrokers.github.io",
         "https://docs.alpaca.markets"
@@ -325,7 +335,9 @@
       "slug": "linux-command-line",
       "title": "Linux Command Line & Server Infrastructure",
       "category": "Systems",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://ubuntu.com/server/docs"]
     },
     {

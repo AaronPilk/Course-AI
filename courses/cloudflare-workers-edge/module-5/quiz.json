@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Production operations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How should you do a controlled rollout of a risky Worker change?",
+      "choices": [
+        { "id": "a", "text": "Deploy to 100% directly." },
+        { "id": "b", "text": "Use Gradual Deployments — deploy the new version, then route a small percentage of traffic to it (5-10%), watch metrics and errors for the canary fraction, increase progressively if healthy (25%, 50%, 100%). If error rate or latency spikes, instantly roll back by setting the percentage to 0. The control loop is faster and cheaper than full rollback after a bad deploy; the cost is one extra step per release. Standard pattern for any production-facing Worker, especially when changes touch caching, auth, or upstream integrations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Deploy in dev only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradual Deployments: canary traffic, watch metrics, ramp up. Roll back instantly if bad.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Worker errors are happening but you don't know which logs belong to which failing request. Fix?",
+      "choices": [
+        { "id": "a", "text": "More logs." },
+        { "id": "b", "text": "Propagate a request ID across service boundaries. Generate `crypto.randomUUID()` at the edge entrypoint (or take an incoming X-Trace-Id header), pass it via headers to every downstream service binding fetch, log it as a `traceId` field in every structured log line. Now searching `traceId:abc123` in Logflare/Axiom shows the full path of that one request across all Workers — the failing request's complete trace surfaces immediately. Without correlation IDs, multi-service debugging is guesswork. Required pattern for any system with more than one Worker." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Timestamps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Propagate a request ID through headers; log it everywhere; search by it to correlate.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Workers CPU time limit refers to what?",
+      "choices": [
+        { "id": "a", "text": "Total request duration." },
+        { "id": "b", "text": "Time the JS engine actively spent computing — NOT time spent waiting on subrequests. A Worker can `await fetch()` for several seconds against a slow upstream and burn essentially no CPU; that wall time isn't capped. CPU time IS capped — 10ms on free, 30s on paid plans. Things that consume CPU: tight loops, large JSON parsing, synchronous crypto, building large strings. The distinction matters because 'my Worker is slow' may be a CPU problem (refactor or offload to Queues) or a wall-time / upstream problem (fix the upstream, the Worker is fine). Read CPU time in Analytics to know which." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bytes processed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CPU time = active JS computation, not wall time. Awaiting upstreams doesn't count.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Worker doing 10M req/month at $3 in compute, but $4000/month in upstream API costs. What to optimize first?",
+      "choices": [
+        { "id": "a", "text": "Worker CPU." },
+        { "id": "b", "text": "Cache the upstream — Worker compute is essentially free; the API costs 1000× more. Use the Cache API or KV with TTL to serve repeat requests from the edge without re-hitting the upstream. Even a 50% cache hit rate halves the $4000 bill to $2000 — no amount of Worker CPU optimization could approach that. General rule: optimize the most expensive line item, not the most visible one. Edge caching is what Workers does best; this is a textbook fit. Worker CPU optimization is worth doing after the upstream is contained." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache the upstream. Worker compute is small; the API is the leak. Optimize biggest line item.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Production observability stack for a Worker — what's the standard pattern in 2026?",
+      "choices": [
+        { "id": "a", "text": "Just console.log." },
+        { "id": "b", "text": "(1) Structured JSON logging with level, traceId, fields — not plain strings; queryable in any external sink. (2) `wrangler tail` for live debugging during incidents. (3) Logpush to Logflare, Axiom, or Datadog for retention and ad-hoc queries — Workers don't store logs natively. (4) Sentry (via Toucan-js) for unhandled errors with stack traces and breadcrumbs. (5) Workers Analytics Engine for app-specific custom metrics. (6) Synthetic monitoring (UptimeRobot/BetterUptime) hitting /health. (7) Alerts on error rate / latency thresholds. Hit these seven and most production issues become diagnosable in minutes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Dashboard only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured logs + Logpush retention + Sentry errors + Analytics Engine + synthetic checks + alerts.",
+      "points": 1
+    }
+  ]
+}

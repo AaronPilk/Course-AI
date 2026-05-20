@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Finding things",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `type` instead of `which` to check what a command does?",
+      "choices": [
+        { "id": "a", "text": "type is faster." },
+        { "id": "b", "text": "`which` only checks the PATH for executables — it misses shell built-ins (cd, type), aliases, and functions. `type` reports all of these. Concrete example: `which cd` returns nothing or an obscure binary; `type cd` says 'cd is a shell builtin' — which explains why cd behaves differently than file commands. Aliases are particularly easy to miss: `which ls` might show /bin/ls, but if you've aliased ls to 'ls --color=auto -F', that's what actually runs. `type ls` shows the alias. When debugging 'why is this command doing something weird,' `type` is the first move; it tells you whether you're hitting a binary, builtin, alias, or function, each of which has different override mechanics." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "which is deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`type` reports built-ins, aliases, and functions too — `which` only finds PATH executables.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need to delete all .pyc files under your project. Fast and safe command?",
+      "choices": [
+        { "id": "a", "text": "rm *.pyc" },
+        { "id": "b", "text": "`find . -name '*.pyc' -delete` — finds all .pyc files recursively from the current directory and deletes them in one pass. `rm *.pyc` only matches the current directory (no recursion); rm with shell globbing also won't recurse without globstar enabled. Find's `-delete` is efficient (no exec subshell per file) and safe (only deletes regular files matching the pattern). For sanity, run `find . -name '*.pyc'` first WITHOUT the delete to preview what would be deleted. Same pattern works for any clean-up: tempfiles, old logs, node_modules debris. The `find ... -delete` idiom is your daily cleanup tool." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "rm -r ." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`find . -name '*.pyc' -delete` — recursive, efficient, preview-able by removing -delete.",
+      "points": 1
+    }
+  ]
+}
