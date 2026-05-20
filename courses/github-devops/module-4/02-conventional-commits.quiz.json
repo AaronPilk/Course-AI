@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Conventional commits",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `feat(auth)!: rename getUserProfile to getProfile` signal?",
+      "choices": [
+        { "id": "a", "text": "Just a feature." },
+        { "id": "b", "text": "Breaking change. The `!` after the scope marks it as backward-incompatible (in Conventional Commits format). Auto-versioning tools see this and trigger a MAJOR version bump (e.g., 2.5.3 → 3.0.0). Pair with a `BREAKING CHANGE:` footer in the body explaining what callers need to update. Consumers reading the changelog know to read carefully before upgrading. The combination of structured types (feat/fix/etc.) + breaking-change indicator means humans don't have to manually pick the next semver; tools compute it from commit history. Hugely reduces the 'we forgot to bump major' bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Documentation change." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`!` marks breaking change → triggers major version bump in auto-versioning tools.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team uses squash-and-merge. How to keep Conventional Commits format in main history?",
+      "choices": [
+        { "id": "a", "text": "Trust developers to format commits inside PRs." },
+        { "id": "b", "text": "Use PR TITLES as Conventional Commits (since the squash-merge defaults to using the PR title as the squash commit message). Add `amannn/action-semantic-pull-request` as a CI check to validate PR titles follow the format — PRs with non-conforming titles fail CI and can't merge. Document the format in PR template. Individual commits inside PRs can be messy (WIP, fixup, etc.); they get collapsed away. Main's history ends up clean and Conventional Commits-conformant despite messy intra-PR commits. Pair with branch protection requiring the title check; release-please can then auto-generate changelogs from the squashed history." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rebase manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use PR titles + CI check that validates title format. Squash-merge uses title as commit message.",
+      "points": 1
+    }
+  ]
+}

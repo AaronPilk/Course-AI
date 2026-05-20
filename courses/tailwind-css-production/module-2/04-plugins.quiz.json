@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Plugins",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `@tailwindcss/forms` plugin do?",
+      "choices": [
+        { "id": "a", "text": "Adds form validation." },
+        { "id": "b", "text": "Resets browser default styles for form elements (inputs, selects, checkboxes, radios, etc.) so Tailwind utilities work consistently across browsers. Without this plugin, browser defaults override your utility styling unpredictably — Chrome shows different focus rings than Firefox shows different selects vs Safari. The plugin gives you a clean canvas to style with utilities like `rounded-md border-gray-300 focus:border-brand-500 focus:ring focus:ring-brand-500/20`. Essential for any app with forms. The plugin itself doesn't add validation logic — that's a separate concern (React Hook Form + Zod, covered in the React course)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Generates forms automatically." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Resets browser form defaults so Tailwind utilities can style consistently. Essential for any forms.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want a `text-shadow-md` utility that doesn't exist in Tailwind. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Inline style={{ textShadow: ... }} everywhere." },
+        { "id": "b", "text": "Write a tiny custom plugin: `plugin(function({ addUtilities }) { addUtilities({ '.text-shadow-md': { textShadow: '0 2px 4px rgba(0,0,0,0.15)' }, ... }) })` in tailwind.config. Now `text-shadow-md` works as a utility with all Tailwind modifiers (`hover:text-shadow-lg`, `dark:text-shadow-none`). For values that should track your theme, use `theme()` inside the plugin to reference design tokens. Custom plugins are the right tool when you need a utility pattern across many components; inline styles lose composition with modifiers, and CSS classes lose tree-shaking and modifier support." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip the feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Write a custom plugin with addUtilities. Gets full Tailwind composition (modifiers, tree-shaking).",
+      "points": 1
+    }
+  ]
+}

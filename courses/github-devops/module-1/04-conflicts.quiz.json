@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Conflicts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "package-lock.json shows a merge conflict. How to resolve?",
+      "choices": [
+        { "id": "a", "text": "Manually merge by hand." },
+        { "id": "b", "text": "Delete the conflicted lockfile and regenerate it: `rm package-lock.json && npm install`, then `git add package-lock.json && git commit` (or `git rebase --continue`). Lockfiles are auto-generated artifacts encoding precise dependency versions; hand-merging conflict markers produces broken JSON or inconsistent dep resolution that fails at runtime. Same for yarn.lock, pnpm-lock.yaml, Cargo.lock, Gemfile.lock — regenerate them, don't merge. Source-control them so deploys are reproducible, but resolve conflicts by regeneration. This is the standard pattern across ecosystems." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Keep both versions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Delete and regenerate lockfiles. Don't hand-merge them; the result is usually broken.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mid-rebase, you've resolved 3 conflicts and 5 more are coming. The conflicts are confusing. What to do?",
+      "choices": [
+        { "id": "a", "text": "Push through all 8." },
+        { "id": "b", "text": "Consider aborting. `git rebase --abort` returns you to the pre-rebase state — your branch is unchanged, all your commits intact. Then reconsider the approach: maybe a `git merge` produces a single big conflict resolution that's easier to think through than 8 sequential ones. Maybe the branches diverged too much; you need to refactor on main first, then rebase the feature. Maybe pair with the original author of the conflicting changes to resolve together. Slogging through dozens of confusing conflicts mid-rebase often produces subtle bugs. Aborting and restructuring is sometimes the right call." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use --force." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`git rebase --abort` is safe. Reconsider approach: merge instead, refactor main first, or pair up.",
+      "points": 1
+    }
+  ]
+}

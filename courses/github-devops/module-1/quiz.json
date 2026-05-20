@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Git fundamentals",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does a Git commit contain?",
+      "choices": [
+        { "id": "a", "text": "Deltas since last commit." },
+        { "id": "b", "text": "A complete SNAPSHOT of every file (as a tree), pointers to parent commit(s), and metadata (author, timestamp, message). Snapshots, not deltas — same content is deduplicated via content addressing (identical files = same blob hash). The commit's SHA-1 hash IS its ID, computed from content; commits are immutable. Amending creates a new commit with a new hash." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Snapshot + parent pointers + metadata. Content-addressed; immutable.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You realize you've been making commits in detached HEAD state. How to save them?",
+      "choices": [
+        { "id": "a", "text": "Commits are lost." },
+        { "id": "b", "text": "Create a branch BEFORE switching away: `git switch -c new-branch-name`. The branch is created at the current commit; your detached-HEAD work is now on a named branch, safe to push. If you've already switched away without saving, the reflog has them: `git reflog` shows HEAD movements; `git checkout HEAD@{N}` returns to the desired point; then create the branch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "git reset --hard." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Create a branch with `git switch -c name`. Or recover via reflog if already switched.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Golden rule of rebase?",
+      "choices": [
+        { "id": "a", "text": "Always rebase." },
+        { "id": "b", "text": "Never rebase commits pushed to a SHARED branch. Rebase replaces commits with new hashes; teammates who pulled the originals will have divergent history, force-push creates conflicts and confusion. Safe to rebase: your local feature branch (not yet pushed) or pushed only to your own fork. Unsafe: shared main/develop or any branch teammates have pulled. Rewrite only history you own." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always squash." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Never rebase shared commits. Rewriting commits others have pulled creates pain.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Lockfile (package-lock.json) shows merge conflict. Resolution?",
+      "choices": [
+        { "id": "a", "text": "Hand-merge the conflict markers." },
+        { "id": "b", "text": "Delete and regenerate: `rm package-lock.json && npm install`, then `git add && git commit` (or rebase --continue). Lockfiles are auto-generated artifacts encoding precise dep resolution; hand-merging usually produces broken JSON or inconsistent versions. Same pattern for yarn.lock, pnpm-lock.yaml, Cargo.lock, Gemfile.lock — regenerate, don't merge. Standard across ecosystems." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete and never recommit." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Delete and regenerate lockfiles. Hand-merging breaks them.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Way to clean up a PR with 12 messy commits before merging?",
+      "choices": [
+        { "id": "a", "text": "Merge all 12." },
+        { "id": "b", "text": "Use 'Squash and merge' on GitHub — combines all 12 PR commits into one clean commit on main with a meaningful message. Feature branch retains the original commits (deletable post-merge); main gets one tidy commit per feature. Alternative: interactive rebase locally (`git rebase -i HEAD~12`) to reorder/squash/reword commits into 1-3 meaningful ones, then regular merge. Squash-and-merge is the dominant 2026 pattern for teams valuing clean main history; pair with Conventional Commits format for changelog generation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Force-push." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Squash and merge (GitHub) or interactive rebase to clean up before merging.",
+      "points": 1
+    }
+  ]
+}

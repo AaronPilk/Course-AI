@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Typography",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use the `prose` class?",
+      "choices": [
+        { "id": "a", "text": "Every paragraph in the app." },
+        { "id": "b", "text": "Rich-text content where you don't control the HTML — Markdown rendered to HTML, CMS-authored content, blog posts, documentation, terms of service. `prose` automatically styles nested `<p>`, headings, lists, code blocks, blockquotes, links with consistent typography, spacing, and line heights. Don't use for UI text (buttons, form labels, navigation) — those should use Tailwind's font utilities directly (`text-lg font-semibold` etc.). Pair `prose` with `dark:prose-invert` for dark mode and customize per-element with `prose-headings:font-display prose-a:text-blue-600` modifiers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "prose for rich-text where you don't control the HTML (Markdown, CMS). Not for UI text.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Large hero heading looks loose and awkward at 6xl size. Common fix?",
+      "choices": [
+        { "id": "a", "text": "Make it smaller." },
+        { "id": "b", "text": "Add `tracking-tight` (negative letter-spacing) and `leading-tight` or `leading-none` (reduced line-height). Default line-heights are tuned for body text; at display sizes (4xl+), they read as too loose. Combination: `text-6xl font-bold tracking-tight leading-tight`. For hero text where you want cinematic visual rhythm, `leading-none` plus generous tracking adjustment. Small adjustments to tracking and leading make a disproportionate visual difference at large sizes; same headline with default vs tuned typography reads as amateur vs professional." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Change font family." }
+      ],
+      "correct_answer": "b",
+      "explanation": "tracking-tight + leading-tight (or leading-none) for display sizes. Disproportionate visual impact.",
+      "points": 1
+    }
+  ]
+}

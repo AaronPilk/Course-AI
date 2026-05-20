@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: GitHub Actions and CI/CD",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why pin action versions vs `@main`?",
+      "choices": [
+        { "id": "a", "text": "Convention." },
+        { "id": "b", "text": "`@main` pulls the action's latest commit — breaking changes can land anytime and silently break workflows. Pinned versions (`@v4`, `@v4.1.2`, or commit SHA) give reproducibility. Use major version tags (`@v4`) for most cases — get patch/security updates automatically while staying in a stable API. Pin to SHA for high-security workflows. Dependabot can keep pinned versions up to date." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "@main can break anytime. Pin to major version (or SHA) for reproducibility.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "CI takes 4 minutes; most of it is reinstalling deps. Fix?",
+      "choices": [
+        { "id": "a", "text": "Bigger runners." },
+        { "id": "b", "text": "Cache deps via `actions/setup-node@v4` with `cache: 'npm'` — caches the npm cache directory keyed by package-lock.json hash. First build normal; subsequent builds restore the cache and skip downloading unchanged deps. Typical: 4min → 30sec. Same pattern for pip, yarn, pnpm, Go modules. For more control, use `actions/cache@v4` directly. Builds fast; team friction drops; CI minute costs drop." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip install." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use setup-node's built-in cache. 4min → 30sec is typical.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why OIDC over long-lived AWS keys for deploys?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "OIDC gives workflows short-lived tokens scoped to specific cloud roles. No long-lived credentials in GitHub Secrets. If GitHub is compromised, attackers can't grab a permanent key. If permissions change, update the IAM role (not rotate keys everywhere). Standard 2026 pattern across AWS, GCP, Azure. Hugely improved security posture." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Short-lived OIDC tokens; no long-lived creds in GitHub. Standard 2026 pattern.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Auto-deploy main to staging but require human approval for production. Setup?",
+      "choices": [
+        { "id": "a", "text": "Manual deploys only." },
+        { "id": "b", "text": "Two workflows. Staging triggers on push to main, deploys via `staging` environment automatically. Production triggers on tag push or workflow_dispatch (manual), deploys via `production` environment which has 'Required reviewers' configured in repo Settings → Environments. Workflow pauses at production environment gate; reviewer gets notified; approve to proceed. Human in the loop for prod without slowing down staging iteration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "One workflow." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Separate workflows; production environment has required reviewers gating the deploy.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Matrix build of 9 combos (3 OS × 3 Node) at 5min each. Wall time?",
+      "choices": [
+        { "id": "a", "text": "45 minutes." },
+        { "id": "b", "text": "About 5 minutes — matrix builds run in PARALLEL by default. All 9 combos start simultaneously on 9 runners; total wall time is max(any combo) ≈ 5 minutes. Add caching to drop per-combo time further (~2 minutes with cached deps). For library testing where you want all failures visible: `fail-fast: false`. For app CI where any failure blocks: default `fail-fast: true` saves CI minutes by canceling remaining combos on first failure." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sequential 45min." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Matrix runs in parallel. Wall time = max(combo), not sum. ~5 min total.",
+      "points": 1
+    }
+  ]
+}

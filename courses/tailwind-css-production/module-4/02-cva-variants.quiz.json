@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: cva variants",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does class-variance-authority (cva) pay off vs inline conditional classes?",
+      "choices": [
+        { "id": "a", "text": "Always — use cva for everything." },
+        { "id": "b", "text": "cva shines at 3+ variant axes (e.g., variant + size + color + state) or for components used across many places where centralized variant definitions matter. For 1-2 conditional variants (`variant === 'primary' && '...'`), inline `cn()` is cleaner and lighter. cva benefits: variants in one config, TypeScript types flow automatically (`VariantProps<typeof cvaConfig>`), defaultVariants set sensible defaults, compound variants for special combinations, boolean variants for flag props. shadcn/ui uses cva universally — pick it up to match the dominant 2026 component pattern." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only for buttons." }
+      ],
+      "correct_answer": "b",
+      "explanation": "cva for 3+ variant axes or shared component libraries. Inline cn() for simple 1-2 variants.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want the Button's primary-color look on a Link as well. Approach without duplication?",
+      "choices": [
+        { "id": "a", "text": "Copy the class string." },
+        { "id": "b", "text": "Export `buttonVariants` from your Button component file (the cva function itself, not just the component). Then `<Link href='/' className={buttonVariants({ variant: 'primary' })}>` applies button styles to the Link. Even better, use Radix `<Slot>` (asChild pattern) inside Button so `<Button asChild><Link href='/'>Home</Link></Button>` renders an actual <a> with all button styling and behavior. shadcn/ui exports buttonVariants alongside Button for exactly this case. Pattern: components export the variant function; consumers can apply the look without rendering the component." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Make a separate LinkButton." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Export buttonVariants for class reuse; or use Radix Slot with asChild for proper composition.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Pitfalls",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "`<div className='bg-blue-500 hover:bg-blue-700'>` doesn't change on hover. Why might that be?",
+      "choices": [
+        { "id": "a", "text": "Tailwind broken." },
+        { "id": "b", "text": "Several possibilities. (1) The class isn't actually in the DOM — verify via Inspect Element. (2) `darkMode: 'class'` is set but `.dark` class is on a parent and overriding hover (unlikely but check). (3) The element has `pointer-events: none` somewhere disabling hover. (4) A child is intercepting the hover event (mouse over child = no hover on this div). (5) The class spelling is wrong (`hover:bg-blue700` missing dash). (6) Touch device with no hover capability. Diagnostic order: check DOM → check DevTools Computed tab for which rule applies → check pointer-events. 90% of Tailwind 'not applying' bugs are visible in DevTools." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Browser bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Check DOM, Computed styles, pointer-events, child interception. 90% visible in DevTools.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "CSS bundle is 250KB, audit shows hundreds of `p-[13px]`, `bg-[#FF5733]`, `text-[#2A2A2A]` arbitrary values. Diagnosis?",
+      "choices": [
+        { "id": "a", "text": "Tailwind is broken." },
+        { "id": "b", "text": "Design system drift — your scale and palette don't cover what designs need, so devs escape to arbitrary values everywhere. Each unique arbitrary value generates a class, ballooning the CSS output. Two-fold fix: (1) ADD the recurring arbitrary values to your tailwind.config (`13` in spacing if it keeps appearing; `'wine': '#FF5733'` in colors). The classes consolidate and the size drops as scale steps replace one-offs. (2) Audit underlying design decisions — are these arbitrary values intentional brand requirements or accumulated drift? Conversation with designers often reveals the drift; consolidating values strengthens the system. Bundle size shrinks naturally as devs reuse the scale instead of inventing values." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Tailwind." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lots of arbitrary values = design system gap. Add to config; audit the drift; consolidate.",
+      "points": 1
+    }
+  ]
+}

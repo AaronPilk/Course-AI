@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Hotfixes and rollbacks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Production is broken. Recent deploy caused it. Default response?",
+      "choices": [
+        { "id": "a", "text": "Debug then fix forward." },
+        { "id": "b", "text": "Rollback first, fix later. Restore service to working state immediately — the previous deploy is already built and known-good; promoting it back (Vercel: one-click; tag-based: trigger rollback workflow with prior version) takes seconds and returns users to a working app. Then diagnose calmly without time pressure. Trying to debug and forward-fix a live incident under stress produces hasty patches and second-incidents. Rollback is faster AND safer for the vast majority of incidents. Practice the rollback workflow monthly so the 3 AM execution is muscle memory, not first-time use." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Email the team." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rollback first restores service immediately. Diagnose calmly afterward.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bad deploy included a schema migration that dropped a column. Code rollback?",
+      "choices": [
+        { "id": "a", "text": "Roll back immediately." },
+        { "id": "b", "text": "Code rollback alone won't work — old code expects the dropped column to exist, will fail on queries referencing it. Either: (1) hotfix forward to address the actual bug (fast, but the schema is now changed); (2) re-add the column via migration (might lose data), then roll back code. The deeper lesson: migrations should be BACKWARD-COMPATIBLE to enable rollback. Split breaking schema changes: Deploy 1 adds new column (old code still works); Deploy 2 uses new column (old code stops working); Deploy 3 drops old column. Between deploys, both code versions work — rollback within any window is safe. Migrations that drop or rename in a single deploy create a rollback trap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just don't roll back." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Code rollback breaks on missing column. Either hotfix forward or re-add column first. Lesson: backward-compatible migrations.",
+      "points": 1
+    }
+  ]
+}

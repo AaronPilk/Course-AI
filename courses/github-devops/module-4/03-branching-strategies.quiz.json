@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Branching strategies",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why has trunk-based development (GitHub Flow) replaced git-flow for most teams?",
+      "choices": [
+        { "id": "a", "text": "Trunk-based has more features." },
+        { "id": "b", "text": "Less merge pain (short branches diverge less from main), faster feedback (integration happens daily), simpler mental model (one branch to deploy from), better fit for CI/CD and continuous deployment, simpler for monorepos. Git-flow's multiple long-lived branches (main, develop, release/*, hotfix/*) accumulate divergence and ceremony — every merge step is a decision point, and the coordination overhead becomes disproportionate for teams shipping rapidly. Vincent Driessen (git-flow's creator) himself wrote in 2020 that git-flow doesn't fit modern continuous-delivery teams. Git-flow still fits versioned products, regulated environments, or coordinated quarterly releases — but those are minority cases now." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "GitHub forced the change." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Less merge pain, faster feedback, simpler model, better CI/CD fit. Git-flow is too much ceremony for most.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team wants to ship incomplete features without long-running branches. Pattern?",
+      "choices": [
+        { "id": "a", "text": "Long-running feature branches." },
+        { "id": "b", "text": "Feature flags. Merge incomplete code to main behind a flag: `if (featureFlag('new-checkout'))`. The code ships; the flag determines who sees it. Roll out gradually (0% → 5% → 25% → 100%); flip off if broken; A/B test variants. Decouples DEPLOY (code goes to production) from RELEASE (users see it). With feature flags, long-lived feature branches become unnecessary — you merge daily, behind a flag, activate when ready. Tools: LaunchDarkly, GrowthBook, Statsig, or simple custom flag systems. Foundation for trunk-based at scale; lets you keep main always-deployable while features develop in code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stop shipping." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Feature flags decouple deploy from release. Merge incomplete features behind flags; activate later.",
+      "points": 1
+    }
+  ]
+}

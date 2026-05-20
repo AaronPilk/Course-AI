@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Animation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why animate `transform` + `opacity` over `width`/`height`/`top`/`left`?",
+      "choices": [
+        { "id": "a", "text": "Less code." },
+        { "id": "b", "text": "Transform and opacity are GPU-accelerated by the browser — they don't trigger layout or paint, so animations stay smooth at 60fps. Width, height, top, left changes trigger layout recalculation on every frame, which is slow and janky for complex pages. For hover effects, prefer `hover:translate-y-1 hover:scale-105` (transforms) over `hover:py-4` (changes padding, triggers layout). Same goes for entrance animations: animate translateY into place instead of growing height. Lighthouse and DevTools Performance tab flag layout-triggering animations as 'force layout' or 'paint' issues. Plus respect `prefers-reduced-motion` — some users have vestibular disorders triggered by motion." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster code." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Transform + opacity = GPU-accelerated, no layout/paint. Width/height/position = layout thrash.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need a modal with exit animation (fades out when dismissed). Tailwind transitions or Framer Motion?",
+      "choices": [
+        { "id": "a", "text": "Tailwind transition-opacity." },
+        { "id": "b", "text": "Framer Motion (motion.dev). Tailwind transitions only handle IN smoothly — when an element is removed from the DOM (modal closes), there's no element left to transition out of; it just disappears. Framer Motion's `AnimatePresence` solves this by keeping the element mounted until its exit animation completes, then removing. Pattern: `<AnimatePresence>{show && <motion.div initial={...} animate={...} exit={...}>` — the exit prop fires when `show` becomes false. Combine with Tailwind for static styling (`className='bg-white p-6 rounded-lg'`) plus motion for dynamic motion. shadcn/ui's Dialog uses Radix + tailwindcss-animate for some exit animations too — viable alternative for simpler cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "CSS animation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Framer Motion's AnimatePresence for exit animations (Tailwind transitions only handle IN).",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Monorepos",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use Turborepo (or Nx) with a monorepo?",
+      "choices": [
+        { "id": "a", "text": "It's required." },
+        { "id": "b", "text": "Task orchestration with caching and affected-by-changes detection. Without it: every PR runs every test/lint/build for every package — slow and wasteful. With Turborepo: tasks run in dependency order; outputs cache; unchanged packages skip rebuild. `turbo run test --filter=...[main]` runs only packages affected by changes since main. CI scales with what changed, not with repo size. Remote caching shares builds across team and CI — local dev uses CI's cache instead of rebuilding. As the monorepo grows past ~5 packages, Turborepo/Nx becomes essential; otherwise CI becomes painful." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pretty UI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Task orchestration + caching + affected detection. CI scales with changes, not repo size.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Monorepo has 12 packages but each push runs all tests for all packages — 20 minutes CI. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add more runners." },
+        { "id": "b", "text": "Use affected-by-changes detection via Turborepo's `--filter=...[main]` (or Nx's `nx affected`). The tool examines the dependency graph and determines which packages depend (directly or transitively) on changed files; runs tests only for affected packages. A change to a leaf package may affect 1-2 things; a change to a deeply-shared utility may affect 10. Either way, you only test what's affected. Combine with task caching so even affected packages skip work if their inputs haven't changed. 20-minute CI typically drops to 2-5 minutes for typical PRs. Standard pattern for any non-trivial monorepo." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip tests." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use Turborepo --filter=...[main] or Nx affected. Test only packages affected by changes.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Extracting components",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `@apply` to create `.btn-primary` discouraged for app UI?",
+      "choices": [
+        { "id": "a", "text": "It's slow." },
+        { "id": "b", "text": "Loses the utility-first benefits: you're back to CSS naming, separate files, and specificity issues. Variants explode into combinatorial classes (.btn-primary, .btn-secondary, .btn-large, .btn-disabled, .btn-large-primary...). Refactoring scatters across CSS files. Tailwind's own docs explicitly recommend components over @apply for application UI. Component extraction (`<Button variant=...>`) keeps classes co-located, gives you type-safe variants via props or class-variance-authority, and refactors in one file. @apply has narrow legitimate uses (base layer typography, integrating with third-party CSS) but isn't the right tool for component reuse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tailwind doesn't support it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Loses utility-first benefits, variant explosion, scattered refactoring. Components fix all of this.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Component accepts a `className` prop and merges it with internal classes. User passes `className='px-8'` but internal `px-4` wins. Why and fix?",
+      "choices": [
+        { "id": "a", "text": "React bug." },
+        { "id": "b", "text": "Both `px-4` and `px-8` ship in the final CSS at equal specificity; source order in the generated CSS decides which wins, not the order in the className string. Fix: use `tailwind-merge` (typically wrapped as `cn = (...args) => twMerge(clsx(args))`). twMerge knows Tailwind's utility groups and resolves conflicts — when two `px-*` classes appear, the LAST one in the className string wins predictably. Standard pattern from shadcn/ui: every component that accepts className uses `cn()` to merge with its internal classes. Without twMerge, className-prop overrides are unreliable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use !important." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use tailwind-merge (cn helper). Resolves utility conflicts so the last-listed class wins predictably.",
+      "points": 1
+    }
+  ]
+}

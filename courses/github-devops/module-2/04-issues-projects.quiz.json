@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Issues and Projects",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best way to auto-close an issue when its PR merges?",
+      "choices": [
+        { "id": "a", "text": "Manually close after merge." },
+        { "id": "b", "text": "Use GitHub keywords in the PR description: `Closes #1234`, `Fixes #5678`, `Resolves #9012`. When the PR merges to the default branch, GitHub auto-closes the linked issues. Multiple per PR; one issue per line; recognized verbs are close/fix/resolve in any tense. Standard convention; saves the manual close step and keeps issue tracker in sync with code state. Bonus: links appear in both the PR and the issue, providing full audit trail of which code changes closed which issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Email the team." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use `Closes #1234` in PR description. Auto-closes on merge.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Issue queue has hundreds of open issues, half from 2+ years ago. Triage strategy?",
+      "choices": [
+        { "id": "a", "text": "Close all of them." },
+        { "id": "b", "text": "Automate stale handling via the actions/stale action: configure to mark issues stale after N days of inactivity (e.g., 60), then auto-close after another N days (e.g., 7) unless someone comments. The action posts a 'this is stale' comment giving people a chance to re-engage; truly abandoned issues close automatically. Combine with a weekly human triage pass for newly-stale items where you have actual signal on importance. Reduces backlog to actionable work; keeps active issues visible. Standard pattern for open-source maintainers; equally useful for company repos with accumulated cruft." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Leave them open forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "actions/stale to auto-mark and auto-close inactive issues + weekly human triage.",
+      "points": 1
+    }
+  ]
+}

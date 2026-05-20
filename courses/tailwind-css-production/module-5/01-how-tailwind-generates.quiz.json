@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tailwind generation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does Tailwind decide which utilities to include in the final CSS?",
+      "choices": [
+        { "id": "a", "text": "Ships everything; browser ignores unused." },
+        { "id": "b", "text": "JIT (just-in-time) compiler scans the files configured in `content` for class string literals, then generates CSS only for classes it found. No 'purge' step — utilities you never write never exist. Scan uses regex on source files; doesn't evaluate JavaScript, doesn't parse comments. Implication: dynamic class names (`bg-${color}-500`) aren't visible to the scanner — won't generate. Use full class strings in source code, or add to `safelist` in config for unavoidable dynamic cases. Final CSS is typically 10-100KB for even large apps because only used utilities ship." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "AI decides." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JIT scans for class strings, generates only what it found. Dynamic strings don't generate.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "CSS bundle is 200KB and growing. Audit shows hundreds of arbitrary values like `p-[13px]`, `bg-[#FF5733]`. Implication?",
+      "choices": [
+        { "id": "a", "text": "Tailwind is broken." },
+        { "id": "b", "text": "Design system smell — your scale doesn't have what designs need, so the team escapes to arbitrary values everywhere. Each unique arbitrary value generates its own class, bloating output. Two fixes: (1) ADD the values to tailwind.config so the scale covers actual needs (e.g., add `13` and `15` to spacing if those keep appearing), and (2) audit the underlying design decisions — are these arbitrary values intentional or drift from the system? Often it's drift; conversation with design fixes the root cause. Bundle size shrinks naturally as you replace arbitrary values with scale steps that reuse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Tailwind." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lots of arbitrary values = design system gap. Add to config; question the underlying drift.",
+      "points": 1
+    }
+  ]
+}

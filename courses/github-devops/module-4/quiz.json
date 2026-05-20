@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Release management",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Removing a public API function — semver bump?",
+      "choices": [
+        { "id": "a", "text": "Patch." },
+        { "id": "b", "text": "Major. Removing public API breaks consumers; the whole point of semver is communicating compatibility intent. Skipping major for 'just removing one thing' breaks consumers silently. When in doubt, bump major — overcautious annoys but protects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Minor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Removing public API = breaking change = major bump.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Squash-and-merge team wants Conventional Commits in main history. How?",
+      "choices": [
+        { "id": "a", "text": "Hope developers format right." },
+        { "id": "b", "text": "Use PR titles as Conventional Commits. Squash-merge uses the PR title as the squash commit message. Add `amannn/action-semantic-pull-request` as a CI check that validates PR title format — PRs with non-conforming titles fail and can't merge. Main's history ends up clean and Conventional Commits-conformant. release-please can auto-generate changelogs from the squashed history. Document the format in PR template." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual rebase." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PR titles + CI check validating title format. Squash uses title as commit message.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why has trunk-based replaced git-flow for most teams?",
+      "choices": [
+        { "id": "a", "text": "More features." },
+        { "id": "b", "text": "Less merge pain (short branches diverge less), faster feedback (daily integration), simpler mental model (one branch to deploy), better fit for CI/CD. Git-flow's multiple long-lived branches accumulate divergence and ceremony. Vincent Driessen (git-flow's creator) himself wrote in 2020 that git-flow doesn't fit modern continuous-delivery teams. Git-flow still fits versioned products, regulated environments, or coordinated releases — minority cases now." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "GitHub mandate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Simpler model + faster feedback + better CI/CD fit. Trunk-based wins for most.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Production broken from recent deploy. Default response?",
+      "choices": [
+        { "id": "a", "text": "Debug and fix forward." },
+        { "id": "b", "text": "Rollback first, fix later. The previous deploy is built and known-good; promoting it (Vercel: one-click; tag-based: trigger rollback workflow) takes seconds and restores users to working state. Then diagnose calmly. Trying to debug under live-incident pressure produces hasty patches and second-incidents. Rollback is usually faster AND safer for the vast majority of incidents. Practice the rollback workflow monthly so the 3 AM use is muscle memory." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Notify users." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rollback first restores service immediately; diagnose calmly afterward.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why should DB migrations be backward-compatible?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "To enable code rollback without schema rollback. Code rollback is easy (move pointer to previous version); schema rollback is hard (might lose data; complex). If a migration adds a nullable column, old code still works after rollback (new column unused). If a migration drops a column, code rollback breaks because old code expects that column. Split breaking schema changes: Deploy 1 adds new column → Deploy 2 uses it → Deploy 3 drops old column. Between deploys, both code versions work; rollback within any window is safe. This pattern makes incident response dramatically simpler — rollback is always an option." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Postgres." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Code rollback only works if schema doesn't drop/rename behind old code. Split breaking changes across deploys.",
+      "points": 1
+    }
+  ]
+}

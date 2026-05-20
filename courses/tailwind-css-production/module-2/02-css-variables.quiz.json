@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CSS variables",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use the RGB space-separated format for CSS variables (e.g., `--primary: 59 130 246`)?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Lets you use Tailwind's alpha modifier syntax. Define the variable as space-separated channels (`--primary: 59 130 246`), reference it in tailwind.config as `'rgb(var(--primary) / <alpha-value>)'`. Now `bg-primary/50` works (50% opacity), `bg-primary/10` works (subtle background tints), etc. Without this format, alpha modifiers fail because Tailwind can't inject the alpha value into a pre-formatted rgb() string. HSL space-separated (`217 91% 60%`) works the same way. The single-color-with-alpha pattern is essential for theme-aware tints (overlays, hover backgrounds, focus rings)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller file size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RGB space-separated enables Tailwind's `/alpha` modifier syntax. Otherwise no opacity tints.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Light theme briefly flashes before dark theme on page load. Fix?",
+      "choices": [
+        { "id": "a", "text": "Live with it." },
+        { "id": "b", "text": "Use `next-themes` (for Next.js) which handles SSR-safe theme detection — reads the stored preference or OS setting server-side and applies the class to <html> before React hydrates. No flash. For custom solutions: add an inline script in <head> that reads localStorage and the `prefers-color-scheme` media query and sets the `.dark` class on documentElement BEFORE the rest of the page loads. The script runs synchronously (blocking; tiny cost) so the class is on the element before any CSS evaluates — page renders directly in the correct theme. `suppressHydrationWarning` on <html> needed to prevent React's hydration warning about the class mismatch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable dark mode." }
+      ],
+      "correct_answer": "b",
+      "explanation": "next-themes or an inline script that sets the class before React loads. Eliminates FOUC.",
+      "points": 1
+    }
+  ]
+}

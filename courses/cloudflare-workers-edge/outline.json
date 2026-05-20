@@ -1,0 +1,74 @@
+{
+  "slug": "cloudflare-workers-edge",
+  "title": "Cloudflare Workers & Edge Computing",
+  "subtitle": "Serverless at the edge — Workers, KV, R2, D1, Durable Objects, and the new shape of infrastructure.",
+  "category": "Infrastructure",
+  "level": "Intermediate",
+  "estimatedHours": 5,
+  "brand": {
+    "primary": "#F38020",
+    "accent": "#FAAD3F",
+    "secondary": "#003682",
+    "tertiary": "#FFFFFF",
+    "logo": "/brands/cloudflare-workers-edge.svg",
+    "gradient": "linear-gradient(135deg, #003682 0%, #F38020 60%, #FAAD3F 100%)"
+  },
+  "summary": "Cloudflare Workers run JavaScript at 300+ edge locations globally — milliseconds from any user. Combined with Cloudflare's storage primitives (KV, R2, D1, Durable Objects), they enable a new architecture: serverless apps with no cold starts, global state, and a programming model that fits modern teams. This course covers building, deploying, and operating Workers in production.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "The edge runtime model",
+      "objective": "How Workers run and why it matters.",
+      "lessons": [
+        { "position": 1, "title": "What Workers are (and aren't)", "objective": "V8 isolates, not containers." },
+        { "position": 2, "title": "The Fetch handler", "objective": "Request in, Response out — that's the API." },
+        { "position": 3, "title": "Bindings: how Workers access services", "objective": "Type-safe access to storage, queues, and more." },
+        { "position": 4, "title": "Workers vs Lambda vs Vercel Functions", "objective": "Picking the right serverless model." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Storage primitives",
+      "objective": "State at the edge.",
+      "lessons": [
+        { "position": 1, "title": "KV — fast eventually-consistent key-value", "objective": "When KV fits and when it doesn't." },
+        { "position": 2, "title": "R2 — S3-compatible object storage", "objective": "Files at edge speed, zero egress." },
+        { "position": 3, "title": "D1 — SQLite at the edge", "objective": "Relational data globally." },
+        { "position": 4, "title": "Durable Objects — coordination primitive", "objective": "Strong consistency where you need it." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Building real Workers",
+      "objective": "From hello world to production.",
+      "lessons": [
+        { "position": 1, "title": "Wrangler and the dev loop", "objective": "Local development that mirrors production." },
+        { "position": 2, "title": "Routing and the Hono framework", "objective": "Building APIs cleanly." },
+        { "position": 3, "title": "Authentication patterns", "objective": "JWT, sessions, OAuth at the edge." },
+        { "position": 4, "title": "Caching strategies", "objective": "Cache API, CDN, and KV." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Beyond HTTP",
+      "objective": "Other Workers patterns.",
+      "lessons": [
+        { "position": 1, "title": "Cron triggers and scheduled work", "objective": "Scheduled tasks at edge cost." },
+        { "position": 2, "title": "Queues for async processing", "objective": "Decouple work from request flow." },
+        { "position": 3, "title": "WebSockets and real-time", "objective": "Persistent connections via Durable Objects." },
+        { "position": 4, "title": "Workers AI", "objective": "Run models at the edge." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Production operations",
+      "objective": "Deploy, monitor, and scale.",
+      "lessons": [
+        { "position": 1, "title": "Deployments and environments", "objective": "Staging, production, gradual rollouts." },
+        { "position": 2, "title": "Observability: logs, metrics, tracing", "objective": "Workers Analytics Engine and beyond." },
+        { "position": 3, "title": "Limits and how to live within them", "objective": "CPU time, request size, subrequests." },
+        { "position": 4, "title": "Cost optimization", "objective": "Pricing model and where money leaks." }
+      ]
+    }
+  ]
+}

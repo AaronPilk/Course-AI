@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Git object model",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does a Git commit actually contain?",
+      "choices": [
+        { "id": "a", "text": "The deltas (changes) since the previous commit." },
+        { "id": "b", "text": "A complete SNAPSHOT of every file at that point in time (as a tree), pointers to its parent commit(s), and metadata (author, timestamp, message). Git stores snapshots, not deltas — same content shares storage via content addressing (identical files = same blob hash). The commit's SHA-1 hash IS its ID, computed from content; change anything and the hash changes, meaning commits are immutable. You can't edit a commit; amending creates a new commit with a new hash. This determinism is what makes the DAG (directed acyclic graph) consistent and Git operations safe." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Snapshot + parent pointers + metadata. Content-addressed; immutable. Storage is deduplicated.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You pushed a commit to a shared `main` branch, then realized it had a bad message. You amended locally and tried to push again. What's the right approach?",
+      "choices": [
+        { "id": "a", "text": "Force-push the amended commit." },
+        { "id": "b", "text": "Don't rewrite shared history. Amending creates a NEW commit with a different hash; the original commit you pushed is still in everyone else's local repos. Force-pushing replaces remote history but creates conflicts for everyone else when they pull. Right approach: leave the commit as-is and live with the message, OR add a follow-up commit that explains/corrects (e.g., 'Note: previous commit message should have said X'). Force-pushing is only safe on branches you're sure no one else has pulled — typically your own feature branches before merging. The rule: rewrite history only on commits that exist only in your local branch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete and recreate the repo." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Never rewrite shared history. Force-push only on your own unshared branches.",
+      "points": 1
+    }
+  ]
+}

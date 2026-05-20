@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: PR workflow",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are smaller PRs better than massive ones?",
+      "choices": [
+        { "id": "a", "text": "GitHub limits PR size." },
+        { "id": "b", "text": "Massive PRs (1000+ lines) get skimmed instead of read carefully; reviewers can't hold all context. Bugs slip through. Smaller PRs (under ~400 lines) get thorough review, faster turnaround, fewer conflicts with main, easier rollback if something's wrong. The discipline of breaking changes apart pays back continuously: separate refactor PRs from feature PRs; separate tests from logic; ship behind feature flags and activate later. PR size is a leading indicator of code review quality and team velocity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Big PRs get skimmed; small PRs get reviewed. Bugs slip through skimmed reviews.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team has no PR template; PRs have varying quality of context. What to add?",
+      "choices": [
+        { "id": "a", "text": "Nothing required." },
+        { "id": "b", "text": "Add `.github/PULL_REQUEST_TEMPLATE.md` with sections like: Summary (one sentence), Why (link to ticket/design doc), What changed (bullet list), Testing (how you verified), Risks (what could break). Every new PR auto-populates this template; authors fill in; reviewers know exactly what to expect. Eliminates 'what's this PR even about' confusion that wastes review time. Combine with branch protection requiring linked issues and CI passing — turns implicit norms into platform-enforced process. Standard part of mature GitHub repos." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manually remind people." }
+      ],
+      "correct_answer": "b",
+      "explanation": ".github/PULL_REQUEST_TEMPLATE.md auto-populates every PR with the right sections.",
+      "points": 1
+    }
+  ]
+}

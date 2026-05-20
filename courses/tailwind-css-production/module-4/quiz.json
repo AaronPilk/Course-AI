@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Component patterns",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Standard pattern for a styled React + Tailwind component that accepts a className prop?",
+      "choices": [
+        { "id": "a", "text": "String concatenate manually." },
+        { "id": "b", "text": "Use `cn = (...args) => twMerge(clsx(args))` helper. Component composes internal classes with consumer's className: `cn('px-4 py-2 bg-blue-600', className)`. clsx handles conditionals; twMerge resolves conflicts so consumer's className overrides predictably. Extend native HTML props (`React.ButtonHTMLAttributes<HTMLButtonElement>`) and spread `...props` for full attribute pass-through. Every shadcn/ui component follows this; it's the 2026 standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No className prop." }
+      ],
+      "correct_answer": "b",
+      "explanation": "cn() helper + spread native props. Standard 2026 pattern.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Button needs 4 variants × 3 sizes × 2 states. Approach?",
+      "choices": [
+        { "id": "a", "text": "Many conditional ternaries." },
+        { "id": "b", "text": "class-variance-authority (cva). Defines all variant axes in one config: `cva('base classes', { variants: { variant: {...}, size: {...}, state: {...} }, defaultVariants: {...}, compoundVariants: [...] })`. TypeScript types flow via `VariantProps<typeof variants>` — `<Button variant='banana'>` is a compile error. compoundVariants for special combinations (variant=destructive + size=lg needs extra shadow). Used universally by shadcn/ui. For 1-2 variants, inline `cn()` is fine; cva pays off at 3+ axes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Avoid variants." }
+      ],
+      "correct_answer": "b",
+      "explanation": "cva for multi-axis variants. Centralized, type-safe, compound combinations.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "`className='px-4 px-8'` — which wins?",
+      "choices": [
+        { "id": "a", "text": "px-4 always." },
+        { "id": "b", "text": "Without tailwind-merge: unpredictable — both ship in CSS at same specificity; CSS source order decides. With tailwind-merge via cn(): `px-8` wins (last in string). twMerge knows Tailwind's utility groups and resolves conflicts so later-listed always wins. This makes consumer className overrides reliable. Standard composition: `cn('base classes', conditionals, className)` — order matters; className LAST so it wins." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Browsers vary." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without twMerge: unpredictable. With cn() + twMerge: last in string wins.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You want a `<Link>` styled exactly like the Button's primary variant. Approach?",
+      "choices": [
+        { "id": "a", "text": "Copy the class string." },
+        { "id": "b", "text": "Export `buttonVariants` from the Button component file (the cva function itself). Then `<Link href='/' className={buttonVariants({ variant: 'primary' })}>` applies button styles. Or use the asChild + Radix Slot pattern (`<Button asChild><Link href='/'>...</Link></Button>`) to render the actual <a> element with Button styling and behavior. shadcn/ui Button exports buttonVariants alongside the component for exactly this case. Lets links, headings, divs adopt the button look without duplicating the class string." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Build a separate component." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Export buttonVariants; or use Radix Slot asChild pattern. Reuse class composition without copying.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the shadcn/ui copy-paste pattern?",
+      "choices": [
+        { "id": "a", "text": "It's a CSS framework." },
+        { "id": "b", "text": "Components are copied as source code into YOUR repo (`components/ui/button.tsx`), not installed as a dependency. You own each file; edit freely; no version lock; no library updates that break your code. `npx shadcn-ui add button` copies the file. Built on Radix primitives for accessibility, styled with Tailwind, themed via CSS variables. Updates are optional and on your schedule — diff manually, re-run add with --overwrite, or stay frozen. The dominant pattern for React + Tailwind in 2026 because the trade-off (more files in repo, manual updates) is overwhelmingly favored by teams wanting customization control." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Install from npm." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Source code copied to your repo (not installed). Own, customize freely, no version lock.",
+      "points": 1
+    }
+  ]
+}

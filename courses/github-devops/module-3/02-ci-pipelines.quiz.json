@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CI pipelines",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Minimum viable CI for a typical web app PR?",
+      "choices": [
+        { "id": "a", "text": "Just run tests." },
+        { "id": "b", "text": "Test + lint + type-check + build, in parallel jobs. Each catches different bug categories: tests catch behavior regressions, lint catches style and common pitfalls, type-check catches type errors that runtime tests might miss, build catches integration/dependency issues that show up only in production. Running in parallel keeps total wall time low. Pair with branch protection requiring all four to pass before merge — broken code can't ship. Add caching via setup-node's `cache: 'npm'` to keep builds fast." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just lint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Test + lint + type-check + build in parallel. Catches different bug categories.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Concurrent pushes to a PR trigger multiple CI runs; only the latest matters. How to stop wasted runs?",
+      "choices": [
+        { "id": "a", "text": "Manually cancel old runs." },
+        { "id": "b", "text": "Add concurrency control to the workflow: `concurrency: { group: 'ci-${{ github.ref }}', cancel-in-progress: true }`. New runs in the same group (same PR) cancel previous in-progress runs automatically. Saves CI minutes and reflects current state (you don't care about results from outdated commits). For main pushes, usually disable cancellation — each commit's CI should complete for audit trail. Concurrency control is one of the highest-ROI CI tunings; standard pattern for active PR-heavy teams." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't push fast." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Concurrency control with cancel-in-progress. Standard for active teams.",
+      "points": 1
+    }
+  ]
+}

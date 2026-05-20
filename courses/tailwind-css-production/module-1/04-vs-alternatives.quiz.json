@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Styling landscape",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why has CSS-in-JS (styled-components, Emotion) declined in popularity?",
+      "choices": [
+        { "id": "a", "text": "Performance is the same as everything else." },
+        { "id": "b", "text": "Multiple reasons compounded. Runtime cost — most CSS-in-JS libraries inject styles at render, creating measurable performance overhead at scale. SSR complications — generating styles server-side adds setup. Critically, React Server Components don't work well with most CSS-in-JS libraries (they require runtime that doesn't fit RSC's serialization model). As Next.js App Router with RSC became dominant, CSS-in-JS lost ground rapidly. Bundle size also adds 10-15KB. Tailwind generates static CSS (zero runtime), works perfectly with RSC, has no bundle overhead beyond the utility CSS itself." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It became free." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Runtime cost, SSR complications, doesn't fit React Server Components. Tailwind sidesteps all three.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Existing CSS Modules codebase, team is productive. Migrate to Tailwind?",
+      "choices": [
+        { "id": "a", "text": "Yes, immediately." },
+        { "id": "b", "text": "Not unless you have a real pain point. A working CSS Modules codebase is better than a half-migrated one with two systems fighting. Migrate when there's actual friction (design inconsistency creeping in, slow style iteration, team frustration with naming/refactoring) — solve THAT problem. If the team is productive and the existing CSS works, switching for fashion is net-negative: months of migration cost, team disruption, no real win. For new projects: Tailwind. For working CSS Modules projects: only migrate when the pain justifies the work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rewrite everything in one weekend." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Working code is better than half-migrated code. Switch when there's a real pain point, not for fashion.",
+      "points": 1
+    }
+  ]
+}

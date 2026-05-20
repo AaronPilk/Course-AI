@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dark mode",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "`darkMode: 'class'` vs `darkMode: 'media'` — which and why?",
+      "choices": [
+        { "id": "a", "text": "Always 'media' — simpler." },
+        { "id": "b", "text": "`darkMode: 'class'` is the modern default. Dark mode activates when `.dark` is on a parent element (typically <html>) — your app controls when it applies. Users can toggle independent of OS preference. Pair with next-themes (Next.js) to read OS preference as default, let user override, persist choice in localStorage, handle SSR safely. `media` is the simpler legacy option — uses prefers-color-scheme directly with no user toggle. For real apps, users expect a manual toggle (sometimes OS dark is on but they want light for this app, or vice versa). class-based gives that control." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "'class' for user-controllable dark mode (modern default). 'media' for follows-OS-only.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer specifies pure black (#000) as dark mode background. Why push back?",
+      "choices": [
+        { "id": "a", "text": "It's fine." },
+        { "id": "b", "text": "Pure black has uncomfortably high contrast on most displays — text appears to vibrate, OLED bleed is visible at edges, eye strain increases on long sessions. Good dark mode uses very dark grays (#0F172A, #1E293B). Same applies to pure white text on dark — use off-white (#F8FAFC) to reduce glare. Other dark-mode design rules: reduce shadows (they look weird on dark backgrounds; replace with subtle borders), desaturate bright colors (red #FF0000 becomes harsh; use slightly muted #EF4444-ish), and re-verify WCAG contrast in dark mode (4.5:1 still applies). Dark mode isn't 'invert colors' — it's a deliberate design pass." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pure black is recommended by WCAG." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pure black causes eye strain and OLED issues. Use very dark grays. Dark mode is its own design pass.",
+      "points": 1
+    }
+  ]
+}

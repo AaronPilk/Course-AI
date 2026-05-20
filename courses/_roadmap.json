@@ -268,16 +268,20 @@
     },
     {
       "slug": "tailwind-css-production",
-      "title": "Tailwind CSS Production UI Design",
+      "title": "Tailwind CSS in Production",
       "category": "Web",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://tailwindcss.com/docs"]
     },
     {
       "slug": "github-devops",
       "title": "GitHub DevOps & Version Control",
       "category": "DevOps",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://docs.github.com"]
     },
     {

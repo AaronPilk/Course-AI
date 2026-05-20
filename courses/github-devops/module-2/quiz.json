@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Working with GitHub",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are smaller PRs better than massive ones?",
+      "choices": [
+        { "id": "a", "text": "GitHub limits PR size." },
+        { "id": "b", "text": "Massive PRs (1000+ lines) get skimmed, not read carefully — bugs slip through. Small PRs (under ~400 lines) get thorough review, faster turnaround, fewer conflicts with main, easier rollback. Discipline of splitting changes pays back continuously: separate refactor from feature, tests from logic, ship behind flags." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Big PRs get skimmed; small PRs get reviewed. Bugs slip through skimmed reviews.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Reviewer has 5 minor style preferences. Block the PR with 'Request changes'?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — leave nit-prefixed comments and Approve. 'Request changes' blocks merge; reserve for substantive concerns. For style, use nit: prefix and trust the author to address. Better: automate formatting (Prettier) and linting (ESLint) via pre-commit hooks so humans don't review style at all. Frees code review for logic, design, tests, edge cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't review." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Don't block on style nits. Automate style; reserve 'Request changes' for substantive issues.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why include administrators in branch protection?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Without it, admins bypass every rule — the rules apply to everyone except those most likely to make 'just this once' exceptions. Whoever bypasses sets the actual norm. Including admins means the rules are real even for emergencies. Combined with minimal bypass lists (only documented automation accounts), the team gets real safety that doesn't erode." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by GitHub." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without admin inclusion, admins become the carve-out and rules don't really exist.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "CI job renamed from 'test' to 'tests'. Required status checks no longer enforce. Cause?",
+      "choices": [
+        { "id": "a", "text": "GitHub bug." },
+        { "id": "b", "text": "Required check names must match CI job names exactly. Renaming broke the match — old rule looks for 'test' which doesn't exist now; new 'tests' check runs but isn't required. PRs merge without CI. Fix: edit the branch protection rule to require 'tests' instead. Audit required checks every time CI jobs rename — rename rules are not auto-updated." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reset settings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Required check names must match CI job names. Renaming jobs breaks protection silently.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best way to auto-close an issue when its PR merges?",
+      "choices": [
+        { "id": "a", "text": "Manual close." },
+        { "id": "b", "text": "Add `Closes #1234` (or Fixes / Resolves) to the PR description. When the PR merges to the default branch, GitHub auto-closes the linked issues. Multiple keywords per PR; recognized verbs are close/fix/resolve in any tense. Standard convention; saves the manual close step and provides audit trail linking code changes to closed issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Email the team." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use `Closes #1234` in PR description. Auto-closes on merge.",
+      "points": 1
+    }
+  ]
+}

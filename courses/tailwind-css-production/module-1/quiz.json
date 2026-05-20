@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Utility-first thinking",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Key difference between Tailwind utilities and inline styles?",
+      "choices": [
+        { "id": "a", "text": "There is none." },
+        { "id": "b", "text": "Inline styles can't do hover, focus, dark mode, media queries, group/peer states; can't compose into a design system; have higher specificity that breaks cascade. Tailwind utilities are CSS classes from a config — support pseudo-classes, media queries, animations, AND enforce a design system scale. You can escape via arbitrary values, but the friction nudges toward consistency." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Inline is faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Utilities support pseudo-classes/media/dark AND enforce design-system scale. Inline does neither.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "`className={'bg-${color}-500'}` produces no styling. Why?",
+      "choices": [
+        { "id": "a", "text": "Tailwind bug." },
+        { "id": "b", "text": "Tailwind's JIT scans source files for FULL class strings at build time; it can't see partial template-literal constructions. Fix: use complete class names in your conditional logic so Tailwind sees them statically. `const colorClass = color === 'red' ? 'bg-red-500' : 'bg-blue-500'`. For truly dynamic combinations, add classes to the `safelist` in tailwind.config." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Colors random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JIT scans for full class strings statically. Use complete classnames in logic; or safelist.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Same Tailwind class string copied 5+ times. Right abstraction?",
+      "choices": [
+        { "id": "a", "text": "@apply to a .button class." },
+        { "id": "b", "text": "Extract a React/Vue/Svelte COMPONENT. Components are the Tailwind reuse unit — class-variance-authority or conditional classes handle variants cleanly; refactors stay in one file; types flow. `@apply` is officially discouraged for app UI by Tailwind itself: brings back CSS naming, specificity issues, variant explosion, scattered refactoring. @apply has narrow uses (base typography, third-party integration) but not for component reuse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Duplicate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Components over @apply. Tailwind team explicitly recommends.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Component takes `className` prop; user's `px-8` doesn't override internal `px-4`. Cause and fix?",
+      "choices": [
+        { "id": "a", "text": "React bug." },
+        { "id": "b", "text": "Both `px-4` and `px-8` ship in the final CSS at equal specificity; CSS source order decides which wins, not className string order. Fix: use `tailwind-merge` (`cn = (...args) => twMerge(clsx(args))`). twMerge knows Tailwind's utility groups and resolves conflicts — when two `px-*` classes appear, the last one in the string wins predictably. Every shadcn/ui component uses this pattern; standard for component libraries that accept className." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "!important." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use tailwind-merge (cn helper). Resolves utility conflicts so last-listed class wins.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why did CSS-in-JS decline in 2023-2026?",
+      "choices": [
+        { "id": "a", "text": "Random fashion." },
+        { "id": "b", "text": "Runtime cost from injecting styles at render, SSR setup complications, bundle size overhead (12-15KB), and critically — most CSS-in-JS libraries don't work with React Server Components (they need a runtime that doesn't fit RSC's serialization). As Next.js App Router and RSC became dominant, CSS-in-JS rapidly lost ground. Tailwind generates static CSS at build time (zero runtime, perfect RSC compatibility) so it became the natural successor." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Got too expensive." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Runtime cost + SSR pain + RSC incompatibility = CSS-in-JS fell. Tailwind's static CSS fits RSC perfectly.",
+      "points": 1
+    }
+  ]
+}

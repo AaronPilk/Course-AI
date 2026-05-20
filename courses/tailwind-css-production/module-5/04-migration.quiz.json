@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Migration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Right approach for migrating a CSS Modules codebase to Tailwind?",
+      "choices": [
+        { "id": "a", "text": "Big-bang rewrite over a weekend." },
+        { "id": "b", "text": "Incremental migration over months. Install Tailwind alongside existing CSS; disable Tailwind's preflight if it conflicts with your reset; write all NEW components in Tailwind from day one; convert existing components opportunistically when feature work touches them. After 6-12 months, most code is Tailwind and a focused sprint cleans up the rest. Big-bang rewrites almost always fail — too risky, too long, too much regression area, team morale erodes. Both can coexist for months without problems; pragmatism beats purity during migration. Set a goal (e.g., '5 components per sprint converted') and progress accumulates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't migrate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Incremental; new code → Tailwind; existing → convert when touched. Big-bang fails.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "After installing Tailwind alongside existing CSS, the legacy site looks different — margins changed, default styles shifted. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Tailwind broke the codebase." },
+        { "id": "b", "text": "Tailwind's preflight (CSS reset) conflicts with the legacy reset or default browser styles your site was relying on. Preflight zeroes out margins on headings, normalizes form elements, etc. — usually good but disruptive to established designs that depended on the previous defaults. Two fixes: (1) Disable preflight via `corePlugins: { preflight: false }` in tailwind.config — recommended for established codebases. The legacy reset/defaults remain; Tailwind utilities still work. Re-enable preflight later when fully migrated. (2) Audit specific conflicts and add resets back where needed. Disabling is usually simpler and lower-risk for migration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Uninstall Tailwind." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tailwind's preflight (reset) conflicts with legacy defaults. Disable via corePlugins for migration.",
+      "points": 1
+    }
+  ]
+}

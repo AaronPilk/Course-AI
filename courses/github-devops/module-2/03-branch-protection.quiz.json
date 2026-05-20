@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Branch protection",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why enable 'Include administrators' on branch protection?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Without it, admins bypass every protection rule — the rules apply to everyone except the people most likely to make 'just this once' exceptions. Whoever can bypass sets the actual norm. Including admins means the rules are real: even for emergency hotfixes, the process holds. Combined with 'no generous bypass lists' (only documented automation accounts in bypass), the team gets a real safety net that doesn't erode over time. Emergencies should go through a documented process, not become normalized exception." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by GitHub." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without admin inclusion, admins become the carve-out and the rules don't really exist.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team renames the CI job from 'test' to 'tests' (with an s). Branch protection mysteriously no longer requires CI passing. Cause?",
+      "choices": [
+        { "id": "a", "text": "GitHub bug." },
+        { "id": "b", "text": "Required status check names must match exactly what CI produces. Renaming the job from 'test' to 'tests' broke the match — the rule still requires a check named 'test' which never runs anymore; the new 'tests' check runs but isn't required. PRs can merge without CI passing. Fix: go to Settings → Branches → Branch protection rules → edit the rule → update the required check name. Audit required check names every time CI jobs are renamed; rename rules are not auto-updated. Same pitfall for splitting one job into multiple — must add all the new names." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reset to factory defaults." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Required check names must match CI job names. Renaming jobs breaks protection silently — audit on rename.",
+      "points": 1
+    }
+  ]
+}

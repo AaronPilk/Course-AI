@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operating at scale",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use Turborepo (or Nx) with a TypeScript monorepo?",
+      "choices": [
+        { "id": "a", "text": "Required." },
+        { "id": "b", "text": "Task orchestration with caching and affected-by-changes detection. Without it: every PR runs every test/lint/build for every package — slow and wasteful. With Turborepo: tasks run in dependency order, outputs cache, unchanged packages skip rebuild, `--filter=...[main]` runs only packages affected by changes since main. Remote caching shares builds across team and CI. CI scales with what changed, not with repo size. Essential past ~5 packages." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "UI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Task orchestration + caching + affected detection. CI scales with changes, not repo size.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Dependabot opens 20 PRs/week, all auto-routing to DevOps team. Reduce noise?",
+      "choices": [
+        { "id": "a", "text": "Disable Dependabot." },
+        { "id": "b", "text": "Auto-merge minor and patch updates that pass CI. Configure via the dependabot/fetch-metadata action — gates auto-merge on update-type being semver-patch or semver-minor. Reserve human review for major bumps (which may have breaking changes). With a robust CI suite, patches and minors are safe to auto-merge if tests pass. Reduces 20 PRs/week to maybe 2-3 actual review items (the major bumps). Standard pattern; keeps deps current without overwhelming reviewers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual review all." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-merge minor/patch PRs that pass CI; humans review major bumps only.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does CODEOWNERS do?",
+      "choices": [
+        { "id": "a", "text": "Grant access." },
+        { "id": "b", "text": "Auto-routes review requests based on file paths. `.github/CODEOWNERS` maps paths to teams/users; PR touching those files auto-requests reviews from listed owners. Pair with branch protection's 'Require review from CODEOWNERS' to make blocking. Doesn't grant access — owners still need normal repo permissions. Routing: payments PRs go to payments team, etc., without manual assignment. Use @org/team-name over individuals for resilience." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block commits." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-routes review requests by path. Doesn't grant access; complements branch protection.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Developer commits a real .env with AWS keys. Recovery?",
+      "choices": [
+        { "id": "a", "text": "Just remove in next commit." },
+        { "id": "b", "text": "ROTATE the AWS credentials immediately — treat as compromised. Bots scrape new commits within minutes; history is permanent; clones already exist. Steps: (1) generate new keys, revoke old, check CloudTrail for unauthorized use, (2) add .env to .gitignore, (3) set up pre-commit secret scanning (gitleaks) for prevention, (4) for high-stakes: history rewrite via git filter-repo. GitHub's secret scanning notifies many providers but rotation is your responsibility." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete the repo." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ROTATE immediately; treat as compromised. History permanent. Pre-commit hooks prevent recurrence.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Ran `git reset --hard HEAD~5`; lost work. Recovery?",
+      "choices": [
+        { "id": "a", "text": "Lost forever." },
+        { "id": "b", "text": "Use the reflog: `git reflog` shows every HEAD movement for ~90 days, including the position before the reset. Find the entry pre-reset (e.g., HEAD@{1}); checkout that commit; create a branch to save it (`git switch -c recovered`). The reflog is Git's safety net — 'lost' commits live in the object store until garbage collection (~90 days) and are reachable via reflog. First thing to check whenever 'I lost a commit' happens." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Re-clone." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`git reflog` finds the previous HEAD position; checkout and branch to save the commits.",
+      "points": 1
+    }
+  ]
+}

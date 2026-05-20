@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Deploys",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use OIDC instead of long-lived AWS keys for deploys?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "OIDC (OpenID Connect) gives the workflow a short-lived token authenticated as a specific AWS role — no long-lived credentials stored in GitHub Secrets. The cloud provider trusts GitHub as an identity provider; each workflow run gets a fresh token scoped to one role. If GitHub is compromised, attackers can't grab a permanent key. If the workflow needs new permissions, you update the IAM role (not rotate keys everywhere). Setup once via aws-actions/configure-aws-credentials with `role-to-assume`; works for all future workflows. Standard pattern in 2026 across AWS, GCP, Azure. Hugely improves security posture vs the old approach of stuffing AWS_ACCESS_KEY_ID in repository secrets." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Short-lived tokens via OIDC; no long-lived creds in GitHub. Standard 2026 pattern.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want auto-deploy to staging on every main push but human approval required for production. How?",
+      "choices": [
+        { "id": "a", "text": "Manual deploys only." },
+        { "id": "b", "text": "Two workflows. Staging workflow triggers on `push` to main, deploys automatically using staging-scoped secrets (in a `staging` environment). Production workflow triggers on `push` of version tags (`tags: ['v*']`) or `workflow_dispatch` (manual button), deploys using a `production` environment — and that environment in repo settings has 'Required reviewers' configured. The workflow pauses at the production environment gate; the reviewer gets notified; clicking 'Approve' lets it proceed. Combine with `concurrency` to prevent overlapping prod deploys. Human in the loop for production without slowing down staging iteration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Same workflow for both." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Separate workflows; production environment with required reviewers pauses deploy until approved.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Component abstraction",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Standard pattern for a styled component that accepts a className prop?",
+      "choices": [
+        { "id": "a", "text": "Concatenate strings with +." },
+        { "id": "b", "text": "Use the `cn` helper (`cn = (...args) => twMerge(clsx(args))`). The component composes internal classes with the user's className via cn(): `cn('px-4 py-2 bg-blue-600', className)`. `clsx` handles conditionals; `twMerge` resolves conflicting utilities so the user's className overrides predictably (their `px-8` wins over internal `px-4`). Also extend native HTML props (`React.ButtonHTMLAttributes<HTMLButtonElement>`) and spread `...props` onto the element — consumers can pass any standard attribute (onClick, disabled, aria-*) without enumerating them. Every shadcn/ui component follows this pattern; it's the 2026 standard for component libraries." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Inline-only, no className prop." }
+      ],
+      "correct_answer": "b",
+      "explanation": "cn() = twMerge(clsx(...)) for class composition + spread native props for full attribute support.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Button has 12 props: variant, size, icon, iconPosition, loading, loadingText, href, fullWidth, iconColor, asLink, disabled, autoFocus. Better approach?",
+      "choices": [
+        { "id": "a", "text": "Add more props." },
+        { "id": "b", "text": "Composition. Keep core variants (variant, size, disabled) as props; let consumers compose for the rest: `<Button asChild><Link href='...'><IconSave />Save</Link></Button>`. Icons become children — no iconPosition prop, just JSX order. Link behavior via asChild (Radix pattern) or `as` prop. Loading state via a `<Spinner />` rendered as children or a `<LoadingButton>` variant. Mega-buttons collapse under prop growth; composition scales. The shadcn/ui approach: small focused components, composed by consumers; almost every complex 'configurable' component is better as several primitives." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Build one giant button." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Composition over configuration. Small focused components composed by consumers beats mega-buttons with many props.",
+      "points": 1
+    }
+  ]
+}

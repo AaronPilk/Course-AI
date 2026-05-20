@@ -1,0 +1,74 @@
+{
+  "slug": "github-devops",
+  "title": "GitHub DevOps & Version Control",
+  "subtitle": "Git fundamentals, GitHub workflows, and the CI/CD patterns that ship.",
+  "category": "DevOps",
+  "level": "Intermediate",
+  "estimatedHours": 6,
+  "brand": {
+    "primary": "#181717",
+    "accent": "#3FB950",
+    "secondary": "#58A6FF",
+    "tertiary": "#FFFFFF",
+    "logo": "/brands/github-devops.svg",
+    "gradient": "linear-gradient(135deg, #0D1117 0%, #181717 50%, #3FB950 100%)"
+  },
+  "summary": "Git and GitHub are the backbone of modern software delivery. This course covers what every engineer needs: Git internals you actually need (commits, branches, rebases, conflicts), GitHub workflows that scale (PRs, code review, branch protection), and CI/CD with GitHub Actions (testing, deployment, security). Beyond the basics: production patterns for monorepos, release management, and DevOps practices that hold up at scale.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "Git fundamentals that actually matter",
+      "objective": "Build the right mental model.",
+      "lessons": [
+        { "position": 1, "title": "Commits, the object model, and what Git stores", "objective": "Git as a graph of immutable snapshots." },
+        { "position": 2, "title": "Branches and HEAD", "objective": "Pointers, not folders." },
+        { "position": 3, "title": "Merge vs rebase — when to use which", "objective": "Two ways to integrate changes." },
+        { "position": 4, "title": "Resolving conflicts confidently", "objective": "From panic to procedure." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Working with GitHub",
+      "objective": "PRs, reviews, and the collaboration model.",
+      "lessons": [
+        { "position": 1, "title": "The pull request workflow", "objective": "Branch, push, PR, merge — done right." },
+        { "position": 2, "title": "Code review patterns", "objective": "What good reviews look like." },
+        { "position": 3, "title": "Branch protection and required checks", "objective": "Process enforced by the platform." },
+        { "position": 4, "title": "GitHub Issues and Projects", "objective": "Tracking work where the code lives." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "GitHub Actions and CI/CD",
+      "objective": "Automate the unglamorous work.",
+      "lessons": [
+        { "position": 1, "title": "Actions architecture", "objective": "Workflows, jobs, steps, runners." },
+        { "position": 2, "title": "Common CI pipelines", "objective": "Test, lint, type-check on every PR." },
+        { "position": 3, "title": "Deploys via Actions", "objective": "From build to production." },
+        { "position": 4, "title": "Secrets, caching, and matrix builds", "objective": "Make Actions fast and safe." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Release management",
+      "objective": "Tag, version, and deploy with confidence.",
+      "lessons": [
+        { "position": 1, "title": "Semantic versioning and tags", "objective": "Communicate change via version numbers." },
+        { "position": 2, "title": "Conventional commits and release notes", "objective": "Generated changelogs that don't lie." },
+        { "position": 3, "title": "Trunk-based vs git-flow", "objective": "Branching strategies compared." },
+        { "position": 4, "title": "Hotfixes and rollbacks", "objective": "When production breaks." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Operating at scale",
+      "objective": "Multiple teams, monorepos, security.",
+      "lessons": [
+        { "position": 1, "title": "Monorepo strategies", "objective": "Multiple packages, one repo, sane builds." },
+        { "position": 2, "title": "CODEOWNERS and review routing", "objective": "Auto-assign experts to changes." },
+        { "position": 3, "title": "Dependabot and security", "objective": "Stay patched without drowning." },
+        { "position": 4, "title": "Common Git disasters and recovery", "objective": "Reflog, reset, and other lifelines." }
+      ]
+    }
+  ]
+}

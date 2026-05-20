@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Performance and production",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does Tailwind decide which utilities ship in production CSS?",
+      "choices": [
+        { "id": "a", "text": "Ships everything." },
+        { "id": "b", "text": "JIT compiler scans the files configured in `content` for class string literals; generates CSS only for classes found. No utilities you didn't use ever exist. Scan uses regex on source files — doesn't evaluate JS, doesn't see dynamic strings. Implication: `bg-${color}-500` won't generate (use full strings or safelist). Final CSS is typically 10-100KB even for large apps because only used utilities ship; compare to 200-500KB+ for hand-written legacy CSS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Randomly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JIT scans content paths for class strings; generates only what's found.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why animate `transform` + `opacity` over `width`/`top`/`left`?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "GPU-accelerated. Transform and opacity don't trigger layout or paint — animations stay 60fps. Width/height/top/left changes trigger layout recalculation on every frame, slow and janky for complex pages. For hover effects, `hover:translate-y-1 hover:scale-105` (transforms) over `hover:py-4` (changes padding). Same for entrance animations: translateY into place, not growing height. Lighthouse flags layout-triggering animations as 'force layout' issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller code." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Transform + opacity = GPU-accelerated. Layout properties = janky.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Modal needs exit animation. Tailwind transitions or Framer Motion?",
+      "choices": [
+        { "id": "a", "text": "Tailwind transition-opacity." },
+        { "id": "b", "text": "Framer Motion (motion.dev). Tailwind transitions only handle IN smoothly — when an element is unmounted, no element exists to transition. Framer's `AnimatePresence` keeps the element mounted until its exit animation completes, then removes. Pattern: `<AnimatePresence>{show && <motion.div initial exit animate>` — the exit prop fires when show becomes false. Combine Tailwind for static styling + Framer for dynamic motion. Or shadcn's tailwindcss-animate plugin for simpler animate-in/out cases that work via class swaps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "CSS keyframes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Framer Motion's AnimatePresence for exit animations. Tailwind transitions only handle IN.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "CSS bundle 250KB; hundreds of arbitrary values (`p-[13px]`, `bg-[#FF5733]`). Cause?",
+      "choices": [
+        { "id": "a", "text": "Tailwind broken." },
+        { "id": "b", "text": "Design system drift — the scale and palette don't cover what designs actually need, so devs reach for arbitrary values constantly. Each unique arbitrary value generates a class, bloating output. Fix: add recurring arbitrary values to tailwind.config (`13` to spacing, `'wine': '#FF5733'` to colors) so they consolidate into reused scale steps. Also audit the underlying design choices — usually drift from the system; conversation with design strengthens consistency. Bundle shrinks naturally as scale steps replace one-off arbitrary values." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Tailwind." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lots of arbitrary values = design system gap. Add to config; audit drift; consolidate.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Migrating CSS Modules codebase to Tailwind. Best approach?",
+      "choices": [
+        { "id": "a", "text": "Big-bang rewrite." },
+        { "id": "b", "text": "Incremental migration over months. Install alongside existing CSS; disable Tailwind's preflight if it conflicts with legacy reset; write all NEW components in Tailwind from day one; convert existing components opportunistically when feature work touches them. Both systems coexist for months without problems. After 6-12 months, most code is Tailwind; a focused sprint cleans up the rest. Big-bang rewrites almost always fail — too risky, too long, too much regression area. Pragmatism over purity during migration; set a goal of 'N components per sprint' and progress accumulates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't migrate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Incremental migration: new code → Tailwind, existing → convert when touched. Coexist for months.",
+      "points": 1
+    }
+  ]
+}

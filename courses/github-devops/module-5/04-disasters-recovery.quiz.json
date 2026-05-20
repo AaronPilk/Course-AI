@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Git disasters",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "You ran `git reset --hard HEAD~5` and now can't find your work. How to recover?",
+      "choices": [
+        { "id": "a", "text": "Commits are permanently lost." },
+        { "id": "b", "text": "Use the reflog: `git reflog` shows every HEAD movement for the last ~90 days, including the position before the reset. Find the entry just before the reset (e.g., HEAD@{1}); checkout that commit (`git checkout HEAD@{1}`); create a branch to save it (`git switch -c recovered`). The reflog is Git's safety net — even 'lost' commits exist in the object store and are reachable via the reflog until garbage collection (~90 days). First thing to check whenever 'I lost a commit' happens. Saves work most teams assumed was gone forever." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Clone fresh from remote." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`git reflog` shows recent HEAD movements; checkout the previous position; create a branch to save the work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You committed an AWS secret key, even briefly. What now?",
+      "choices": [
+        { "id": "a", "text": "Just remove the file in next commit." },
+        { "id": "b", "text": "ROTATE the credential immediately — treat it as compromised regardless of what you do to the repo. Bots scrape new commits within minutes; cached clones may have it; public mirrors may have it. Removing in next commit doesn't remove from history; history is permanent. Steps: (1) Generate new AWS key; revoke old; check CloudTrail for any unauthorized use during the window of exposure. (2) Add proper .gitignore for .env / config files. (3) Set up pre-commit secret scanning (gitleaks) so this can't repeat. (4) For high-stakes: rewrite history via git filter-repo to remove the file (helps clones from now on; doesn't help anything already cloned). GitHub's secret scanning notifies many providers (AWS auto-revokes some keys), but never count on that — rotation is your responsibility." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hope no one noticed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ROTATE immediately; treat as compromised. History is permanent. Pre-commit hooks prevent recurrence.",
+      "points": 1
+    }
+  ]
+}

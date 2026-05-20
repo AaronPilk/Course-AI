@@ -1,0 +1,11 @@
+{
+  "slug": "cloudflare-workers-edge",
+  "sources": [
+    { "type": "docs", "url": "https://developers.cloudflare.com/workers/", "label": "Cloudflare Workers documentation" },
+    { "type": "docs", "url": "https://developers.cloudflare.com/kv/", "label": "Workers KV" },
+    { "type": "docs", "url": "https://developers.cloudflare.com/r2/", "label": "R2 object storage" },
+    { "type": "docs", "url": "https://developers.cloudflare.com/d1/", "label": "D1 database" },
+    { "type": "docs", "url": "https://developers.cloudflare.com/durable-objects/", "label": "Durable Objects" },
+    { "type": "docs", "url": "https://hono.dev", "label": "Hono framework" }
+  ]
+}

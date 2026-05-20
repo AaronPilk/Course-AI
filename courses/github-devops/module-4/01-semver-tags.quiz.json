@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Semver and tags",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Removing a public API function — major, minor, or patch bump?",
+      "choices": [
+        { "id": "a", "text": "Patch — it's a 'fix.'" },
+        { "id": "b", "text": "Major. Removing public API is a breaking change — consumers using that function will break when they upgrade. Semantic versioning's whole point is communicating compatibility intent: a major bump (e.g., 2.5.3 → 3.0.0) warns users to read the changelog and update their code before upgrading. Skipping the major bump for 'just removing one little thing' breaks consumers silently. Same applies to: changing function signatures, renaming exports, changing behavior in ways that break existing usage, raising minimum Node version. When in doubt, bump major — overcautious annoys but protects; missed major bumps cause cascading failures across the ecosystem." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Minor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Removing public API is breaking → major bump. Skipping breaks consumers silently.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why use annotated tags (`git tag -a v1.0.0`) instead of lightweight tags (`git tag v1.0.0`)?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Annotated tags are proper Git objects with metadata: tagger name, date, GPG signature, message. They show up in `git describe`, can be signed, and behave consistently across operations. Lightweight tags are just pointers — fine for personal use but missing audit trail for releases. For production releases, you want to know WHO tagged WHEN and WHY (the message). Pair with tag protection in repo settings to prevent the tag from being moved or deleted — releases should be immutable; if someone recreates `v1.2.3` pointing to different code, deploys could pick up wrong commits." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Annotated tags have metadata (tagger, date, message, signature). Required for proper release audit trail.",
+      "points": 1
+    }
+  ]
+}

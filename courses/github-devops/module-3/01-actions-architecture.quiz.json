@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Actions architecture",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why pin action versions (e.g., `actions/checkout@v4`) instead of `@main`?",
+      "choices": [
+        { "id": "a", "text": "Just convention." },
+        { "id": "b", "text": "`@main` always pulls the latest commit on the action's main branch — breaking changes can land anytime and silently break your workflows. Pinned versions (`@v4`, `@v4.1.2`, or a commit SHA) give reproducibility: your workflow runs the same way today as it did last month. Use major version tags (`@v4`) for most cases — get patch and security updates automatically while staying within a stable API. Pin to exact SHA for high-security workflows where you want zero unverified changes. Dependabot can keep pinned versions up to date with notifications when new major versions release." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster execution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "@main can break anytime. Pin to major version (or SHA) for reproducibility and safety.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "CI builds taking 4 minutes; most of it is reinstalling npm packages. Fix?",
+      "choices": [
+        { "id": "a", "text": "Use bigger runners." },
+        { "id": "b", "text": "Cache npm installs. Easiest: use `actions/setup-node@v4` with `cache: 'npm'` — caches the npm cache directory keyed by package-lock.json hash. First build is normal; subsequent builds restore the cache and skip downloading unchanged deps. Typical: 4 minutes → 30 seconds for the install step. Same pattern works for pip (`cache: 'pip'`), yarn, pnpm, Go modules. For more control, use `actions/cache@v4` directly with custom keys. Builds get fast; team friction drops; CI minute costs drop." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove tests." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use setup-node's built-in cache (or actions/cache). 4min → 30sec is typical.",
+      "points": 1
+    }
+  ]
+}

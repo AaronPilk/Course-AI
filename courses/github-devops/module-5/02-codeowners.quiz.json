@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CODEOWNERS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does CODEOWNERS do?",
+      "choices": [
+        { "id": "a", "text": "Grant write access." },
+        { "id": "b", "text": "Auto-routes review requests based on file paths in the PR. `.github/CODEOWNERS` maps paths to teams/users; when a PR touches files matching a pattern, GitHub auto-requests reviews from the listed owners. Pair with branch protection's 'Require review from CODEOWNERS' to make these blocking. Doesn't grant any access — owners still need normal repo permissions via team membership. The point is routing: payments PRs go to payments team, security PRs go to security team, no manual assignment needed. Use @org/team-name for resilience (people come and go; team membership updates centrally)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block commits." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-routes review requests by file path. Doesn't grant access; complements branch protection.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "DevOps team is CODEOWNER for package.json. Dependabot opens 20 PRs/week, all auto-routing to DevOps. Mitigation?",
+      "choices": [
+        { "id": "a", "text": "Remove DevOps as owner." },
+        { "id": "b", "text": "Enable auto-merge for bot PRs that pass CI. Configure Dependabot (or Renovate) with auto-merge: minor and patch updates that pass all CI checks merge automatically without human review. Reserve human review for major version bumps (which actually require attention). Combine with a strict CI suite — if tests pass, the update is safe. Optionally: add a 'dependabot' team to spread CODEOWNERS load across multiple people instead of one team. The 20 PRs/week problem becomes manageable; humans review only the 2-3 majors per week that genuinely warrant attention." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Ignore Dependabot." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-merge bot PRs that pass CI; reserve human review for major bumps that actually need it.",
+      "points": 1
+    }
+  ]
+}

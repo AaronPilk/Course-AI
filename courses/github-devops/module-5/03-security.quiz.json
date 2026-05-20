@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Security",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best practice for handling Dependabot's 20 weekly version-update PRs?",
+      "choices": [
+        { "id": "a", "text": "Review and merge each manually." },
+        { "id": "b", "text": "Auto-merge minor and patch updates that pass CI; reserve human review for major version bumps (which may have breaking changes). Configure with the dependabot/fetch-metadata action — checks the semver type of the update and gates auto-merge on it. Combine with a robust CI suite — if tests pass, the update is safe. For major bumps, CI passing isn't enough because the change might be source-compatible but behave differently; humans review the changelog. This pattern keeps deps current without drowning the team. Reduces a 20-PR-per-week problem to 2-3 actual review items." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Dependabot." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-merge minor/patch PRs that pass CI; humans review major bumps only.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Developer commits a real .env file with AWS credentials by accident. Damage control?",
+      "choices": [
+        { "id": "a", "text": "Just delete the file in next commit." },
+        { "id": "b", "text": "Immediately: (1) ROTATE the credentials — they're compromised regardless of what you do to the repo (history is forever; bots scrape new commits within minutes). Generate new keys; revoke the old; check AWS CloudTrail for any unauthorized use. (2) Remove the file from current commit AND consider rewriting history if the repo is private and you can coordinate with collaborators (`git filter-repo` or BFG Repo-Cleaner). For public repos, history rewrite doesn't help — caches and clones already have the secret. (3) Add proper .gitignore for .env files. (4) Set up pre-commit secret scanning (gitleaks) so this can't happen again. The lesson: assume any secret pushed to GitHub IS compromised; rotation is non-optional. GitHub's secret scanning notifies the provider in many cases (AWS auto-revokes some keys), but treat rotation as your responsibility." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hope no one noticed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ROTATE the credentials immediately — they're compromised. Then clean history, gitignore, pre-commit hooks.",
+      "points": 1
+    }
+  ]
+}

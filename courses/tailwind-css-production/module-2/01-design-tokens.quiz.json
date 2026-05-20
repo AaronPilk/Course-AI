@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Design tokens",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `theme: { extend: { ... } }` almost always right?",
+      "choices": [
+        { "id": "a", "text": "Bug in Tailwind." },
+        { "id": "b", "text": "`extend` ADDS to Tailwind's defaults. `theme: { colors: {...} }` (without extend) REPLACES defaults entirely — you lose `gray`, `red`, `green`, all of Tailwind's well-tuned palette. The defaults are excellent and battle-tested; you want your brand colors on top, not instead. Use extend for nearly everything (colors, spacing, fontFamily, screens). Only replace when you have a deliberate reason — e.g., a brand with one mandated color palette and no need for Tailwind defaults at all." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster compilation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "extend adds; bare theme replaces. You want your tokens alongside Tailwind's defaults, not instead.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Brand has one blue color hardcoded as `#3496ff`. Designers ask for a darker hover and lighter disabled state. Approach?",
+      "choices": [
+        { "id": "a", "text": "Hardcode each shade as needed." },
+        { "id": "b", "text": "Generate a full 10-step palette (50-950) from the base color using a tool like uicolors.app. Add to tailwind.config under `extend.colors.brand`. Now `bg-brand-500` (the original), `bg-brand-600` (hover, slightly darker), `bg-brand-200` (disabled, lighter) all work consistently. Future requests for 'a bit more contrast' or 'a softer variant' have answers from the same palette. Defining once gives you expressive room without inventing one-off hex codes everywhere — and the consistency compounds across the design system." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use opacity modifiers only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generate a 50-950 scale from the base color. Express hover, disabled, etc. from the consistent palette.",
+      "points": 1
+    }
+  ]
+}

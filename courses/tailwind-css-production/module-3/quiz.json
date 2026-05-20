@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Responsive and adaptive design",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `text-base md:text-lg` mean?",
+      "choices": [
+        { "id": "a", "text": "text-lg below md." },
+        { "id": "b", "text": "Mobile-first: bare `text-base` applies at all sizes (mobile and up); `md:text-lg` ADDS the larger size from the md breakpoint (768px) and up. Default Tailwind breakpoints: sm (640), md (768), lg (1024), xl (1280), 2xl (1536). Bare = always; prefix = from that breakpoint up. Read responsive classes as scaling up from the mobile baseline." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mobile-first: bare = always; prefix = from that breakpoint up.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Reusable Card component appears in a 300px sidebar AND an 800px main column. Different layouts needed. How?",
+      "choices": [
+        { "id": "a", "text": "Two components." },
+        { "id": "b", "text": "Wrap the card in `@container` (from @tailwindcss/container-queries) and use `@sm:`, `@md:`, `@lg:` modifiers internally. The card responds to its OWN container width, not the viewport — compact in the sidebar (1 column, small text), expanded in the main column (multiple columns, larger text). Same component, different layouts per instance, no conditional rendering. This is the canonical container-query use case." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "JS-based width detection." }
+      ],
+      "correct_answer": "b",
+      "explanation": "@container + @md:/@lg: modifiers. Component adapts to its own container width.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Hero headings should scale smoothly from 32px (phone) to 80px (huge monitor). Approach?",
+      "choices": [
+        { "id": "a", "text": "Five breakpoint sizes." },
+        { "id": "b", "text": "Fluid typography via clamp(). Generate the formula with utopia.fyi (feed MIN viewport / MIN font + MAX viewport / MAX font); add to tailwind.config under `fontSize` as `'fluid-display': ['clamp(2rem, 3vw + 1rem, 5rem)', { lineHeight: '1.1' }]`. Now `text-fluid-display` scales smoothly at every width — no visible jumps at breakpoints. Use fluid for headings and hero spacing; keep breakpoints for app UI where precision matters." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just pick one." }
+      ],
+      "correct_answer": "b",
+      "explanation": "clamp() via utopia.fyi → tailwind.config → single fluid utility class.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designer wants pure black (#000) for dark mode background. Pushback?",
+      "choices": [
+        { "id": "a", "text": "Pure black is correct." },
+        { "id": "b", "text": "Pure black causes eye strain on most displays — text vibrates, OLED edge bleed is visible, long sessions become uncomfortable. Use very dark grays (#0F172A, #1E293B). Pair with off-white text (#F8FAFC) instead of pure white to reduce glare. Other dark-mode design rules: reduce shadows (look weird on dark; use subtle borders instead), desaturate bright colors (#FF0000 → softer red), re-check WCAG contrast in dark mode (4.5:1 still applies). Dark mode is its own design pass, not an invert filter." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Match the spec exactly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pure black causes eye strain. Use very dark grays. Dark mode = deliberate design pass.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Dark mode strategy for Next.js?",
+      "choices": [
+        { "id": "a", "text": "darkMode: 'media' only." },
+        { "id": "b", "text": "`darkMode: 'class'` in tailwind.config + next-themes for SSR-safe theme handling. ThemeProvider with `attribute='class'`, `defaultTheme='system'`, `enableSystem`. The `system` default reads OS preference; user can override via toggle; choice persists in localStorage; no flash of wrong theme thanks to SSR-safe class application. Pair with `suppressHydrationWarning` on <html>. CSS variables for semantic tokens (background, foreground, primary) backed by `:root` and `.dark` declarations — components use `bg-background text-foreground` and adapt automatically to theme." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Avoid dark mode." }
+      ],
+      "correct_answer": "b",
+      "explanation": "darkMode: 'class' + next-themes + CSS variables for semantic tokens.",
+      "points": 1
+    }
+  ]
+}

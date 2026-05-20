@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Code review",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are review prefixes (`nit:`, `blocking:`, `suggestion:`) useful?",
+      "choices": [
+        { "id": "a", "text": "They're stylistic." },
+        { "id": "b", "text": "They signal intent and urgency. Without prefixes, every comment can feel like equally-weighted criticism — authors don't know what's blocking vs preference. Prefixes give context: `nit:` (minor preference, not blocking — feel free to ignore), `blocking:` (must address before merge), `suggestion:` (proposed alternative; consider), `question:` (clarifying, not necessarily change), `praise:` (when something's good — builds positive culture). Authors prioritize blocking comments; reviewers don't accidentally hold up merges for trivia. Standard vocabulary (Conventional Comments) lets tools parse and report on review patterns. Reduces friction and miscommunication." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "GitHub requires them." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prefixes signal urgency (blocking vs nit), reduce friction, set clear expectations for action.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Reviewer is comfortable with the code but has 5 minor style preferences (variable names, prefer const, formatting). Block the PR?",
+      "choices": [
+        { "id": "a", "text": "Yes — Request Changes." },
+        { "id": "b", "text": "No — leave nit-prefixed comments and Approve. 'Request changes' blocks merge entirely; reserve for substantive concerns (bugs, security issues, architectural problems). For style and naming preferences, comment with `nit:` and approve so the author can merge without waiting. Better: automate the boring stuff — formatters (Prettier, Black) handle formatting on save/commit; linters (ESLint, ruff) catch style violations; pre-commit hooks block commits with lint errors. When the machine catches it, humans don't have to review for it. Frees code review for substance — logic, design, tests, edge cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't review." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Don't block PRs on style nits. Use formatter/linter automation and approve with nit comments.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Mobile-first",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `class='text-base md:text-lg'` actually mean?",
+      "choices": [
+        { "id": "a", "text": "text-lg below md; text-base above." },
+        { "id": "b", "text": "Mobile-first: bare `text-base` applies at all sizes (including mobile). `md:text-lg` ADDS the larger size from the md breakpoint (768px) and up. So mobile sees text-base; tablets and up see text-lg. Read responsive classes as scaling UP from the mobile baseline. Default Tailwind breakpoints (sm 640, md 768, lg 1024, xl 1280, 2xl 1536) work min-width style; bare classes are 'always'; prefixed are 'from this breakpoint up.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mobile-first: bare = always; prefix = from that breakpoint up. text-base everywhere; text-lg adds from md.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Card grid: 1 col mobile, 2 tablet, 3 desktop, 4 large. Clean approach?",
+      "choices": [
+        { "id": "a", "text": "`text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl` style chain." },
+        { "id": "b", "text": "`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6`. Clean, readable, follows mobile-first. Alternative for truly fluid: `grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6` — columns auto-fit based on available space, no explicit breakpoints needed. Auto-fit is great when you don't care about exact column counts and just want a responsive card grid. Pick based on whether you need precise control at each breakpoint or just 'as many columns as fit nicely.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "5 separate components, one per breakpoint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 — or auto-fit for breakpoint-less.",
+      "points": 1
+    }
+  ]
+}

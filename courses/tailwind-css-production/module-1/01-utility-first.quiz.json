@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Utility-first",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the key difference between Tailwind utilities and inline styles?",
+      "choices": [
+        { "id": "a", "text": "There is no difference." },
+        { "id": "b", "text": "Inline styles can't do hover, focus, dark mode, media queries, group/peer states; can't compose into a design system; have higher specificity that breaks cascade; can't be tree-shaken. Tailwind utilities are CSS classes generated from a config — they support pseudo-classes, media queries, animations, AND enforce a design system scale (spacing, colors, type sizes). The constraint matters: Tailwind's defaults nudge you toward consistency. You can escape via arbitrary values (`p-[17px]`) but the friction keeps the design system honest." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tailwind is slower." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Utilities support pseudo-classes/media/dark-mode AND enforce design-system constraints. Inline styles do neither.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're copying the same long Tailwind class string across 8 places. What's the right abstraction?",
+      "choices": [
+        { "id": "a", "text": "Use @apply to extract a .button CSS class." },
+        { "id": "b", "text": "Extract a React (or Vue/Svelte) COMPONENT, not a CSS class. The right unit of reuse in Tailwind is the component — `<Button variant='primary'>` lives in one file with its classes inline. @apply has subtle problems: defeats Tailwind's purging logic, hides design intent, encourages CSS-class thinking that loses utility-first benefits. Component extraction keeps classes co-located with the component, supports props and variants cleanly (especially via class-variance-authority), and refactors naturally. The Tailwind team's official guidance is the same: prefer components over @apply." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Duplicate it; it's fine." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Components are the Tailwind reuse unit. @apply hides intent and fights the utility-first model.",
+      "points": 1
+    }
+  ]
+}

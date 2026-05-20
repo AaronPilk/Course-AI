@@ -1,0 +1,10 @@
+{
+  "slug": "github-devops",
+  "sources": [
+    { "type": "docs", "url": "https://docs.github.com", "label": "GitHub documentation" },
+    { "type": "docs", "url": "https://git-scm.com/doc", "label": "Git documentation" },
+    { "type": "docs", "url": "https://docs.github.com/en/actions", "label": "GitHub Actions docs" },
+    { "type": "docs", "url": "https://semver.org", "label": "Semantic Versioning" },
+    { "type": "docs", "url": "https://www.conventionalcommits.org", "label": "Conventional Commits" }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: shadcn/ui",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's fundamentally different about shadcn/ui vs traditional component libraries?",
+      "choices": [
+        { "id": "a", "text": "It's smaller." },
+        { "id": "b", "text": "You don't install components as a dependency — you copy the source code into your repo. `npx shadcn-ui@latest add button` drops `components/ui/button.tsx` into your project. You own the file; you can edit, restyle, delete, or extend it freely with no fork. No version lock, no library updates breaking your code, no theme override gymnastics. You import from `@/components/ui/button` (your code), not `@shadcn/ui`. Built on Radix primitives for accessibility, styled with Tailwind, configured via CSS variables for theming. Default choice for React+Tailwind in 2026." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Better TypeScript." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Components are files in YOUR repo, not deps. Own, customize, no version lock.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "shadcn ships a new version of Button with a new feature you want. How to update?",
+      "choices": [
+        { "id": "a", "text": "Run `npm update`." },
+        { "id": "b", "text": "Three options. (1) Diff manually — compare the new version on the docs site to your modified file; apply only the changes you want. (2) Re-run `npx shadcn-ui@latest add button --overwrite` to take the new version, then port your customizations back. (3) Stay frozen — if your version works, you don't have to update at all; updates are optional, on your schedule. The trade-off vs installable libraries is: more manual update work, but no surprise breaking changes and total control over your component code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Can't update." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Manual diff, overwrite-and-port, or stay frozen. Updates are optional and you control timing.",
+      "points": 1
+    }
+  ]
+}

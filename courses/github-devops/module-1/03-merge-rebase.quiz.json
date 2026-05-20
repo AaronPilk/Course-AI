@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Merge vs rebase",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "The golden rule of rebase?",
+      "choices": [
+        { "id": "a", "text": "Always rebase before merging." },
+        { "id": "b", "text": "Never rebase commits that have been pushed to a SHARED branch. Rebase replaces commits with new hashes (D becomes D'); if teammates have pulled the original D, your force-push of D' creates divergent history — their pulls produce conflicts and confusion. Safe to rebase: your local feature branch you haven't pushed, or pushed only to your own fork that no one else uses. Unsafe to rebase: shared main/develop/release branches, or any branch teammates have pulled. The rule is about ownership of commits — only rewrite history you own." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always squash everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Never rebase shared commits. Rewriting commits others have pulled creates divergent history.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "PR has 12 commits — 'fix typo', 'wip', 'try again', 'fix tests', etc. How to merge cleanly?",
+      "choices": [
+        { "id": "a", "text": "Merge all 12 commits to main." },
+        { "id": "b", "text": "Use 'Squash and merge' on GitHub — combines all 12 PR commits into a single clean commit on main with a meaningful message. The feature branch keeps its original commits (deletable after merge); main gets one tidy commit per feature. Main history stays linear and readable. Pair with Conventional Commits format ('feat: add login form') so the squashed commit drives changelog generation. Alternative: interactive rebase locally to clean up the 12 commits into 1-3 meaningful ones, then regular merge. Squash-and-merge is the dominant 2026 pattern for teams valuing clean main history." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Force-push to rewrite history." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Squash and merge collapses messy PR commits into one clean commit on main.",
+      "points": 1
+    }
+  ]
+}

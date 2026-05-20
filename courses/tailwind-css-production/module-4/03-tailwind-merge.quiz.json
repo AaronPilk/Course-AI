@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: tailwind-merge",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does `className='px-4 px-8'` produce unpredictable results without tailwind-merge?",
+      "choices": [
+        { "id": "a", "text": "Tailwind rejects duplicates." },
+        { "id": "b", "text": "Both classes ship in the generated CSS at the same specificity. The CSS source order (which utility was emitted first by Tailwind's JIT) decides which wins, not the order in your className string. This means consumer-provided className overrides may or may not work depending on CSS output order. tailwind-merge fixes this: it knows Tailwind's utility groups and resolves conflicts so the LAST class in the string wins predictably. `twMerge('px-4 px-8')` returns `'px-8'`. Wrap as `cn = (...args) => twMerge(clsx(args))` and use everywhere — most predictable className composition in 2026." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Browsers vary." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Same specificity; CSS source order decides. twMerge resolves so last-in-string wins predictably.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "In cn(), what's the correct order: base classes, conditionals, prop className?",
+      "choices": [
+        { "id": "a", "text": "className first, conditionals last." },
+        { "id": "b", "text": "Base classes first, conditional overrides next, prop `className` LAST. cn() works left-to-right; later arguments override earlier ones because twMerge keeps the last conflicting class. Order: `cn('px-4 py-2 bg-blue-600', isLarge && 'px-8', className)`. The base provides defaults; conditionals can override the base; the consumer's className can override everything. Reversing order means consumer's className gets clobbered by internal classes. Predictable composition requires the right order." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random order works." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Base → conditional → prop className. Later args win in twMerge.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Container queries",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between `md:flex` and `@md:flex` in Tailwind?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "`md:flex` is a media query — responds to the VIEWPORT width (the browser window). `@md:flex` is a container query — responds to the nearest ancestor with `@container` class, i.e., the COMPONENT'S container width. Container queries unlock component-level responsiveness: the same card can be 1 column in a narrow sidebar and 3 columns in a full-width main section, just by responding to its container. Media queries fit page-level layout (show/hide sidebar, hamburger nav); container queries fit reusable components that don't know their context. Use both — they solve different problems." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "@md is for emails." }
+      ],
+      "correct_answer": "b",
+      "explanation": "md: = viewport; @md: = container. Component-level responsiveness vs page-level layout.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A `<StatCard>` component appears in a 300px sidebar, a 600px modal, and an 800px main column. Approach for its internal layout?",
+      "choices": [
+        { "id": "a", "text": "Three separate components for each context." },
+        { "id": "b", "text": "Wrap the card in `@container` and use `@sm:`, `@md:`, `@lg:` modifiers internally. The card responds to its OWN width, not the viewport — automatically compact in the sidebar (1 column, small text), balanced in the modal (2 columns), expanded in the main column (4 columns, larger text). Same component, different layouts per instance, zero conditional rendering. This is the canonical container-query use case and where it dramatically beats viewport queries. Use for any component that lives in multiple-width contexts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "JS-based width detection." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wrap in @container; use @sm/@md/@lg modifiers. Component adapts to its own container width.",
+      "points": 1
+    }
+  ]
+}

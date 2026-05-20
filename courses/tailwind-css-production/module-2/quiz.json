@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Theming and design tokens",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why `theme.extend` instead of bare `theme`?",
+      "choices": [
+        { "id": "a", "text": "Bug avoidance." },
+        { "id": "b", "text": "`extend` ADDS to Tailwind's defaults; bare `theme` REPLACES them entirely. Replacing wipes Tailwind's well-tuned base palette (`gray`, `red`, etc.) and scales. You want your brand colors alongside Tailwind's defaults, not instead. Almost always use extend." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "extend adds; bare theme replaces. Defaults are excellent — keep them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need light + dark theme, with `bg-primary/50` working for tints in both. CSS variable setup?",
+      "choices": [
+        { "id": "a", "text": "Define as `#3496ff` hex." },
+        { "id": "b", "text": "Space-separated RGB channels: `--primary: 59 130 246`. Reference in tailwind.config as `'rgb(var(--primary) / <alpha-value>)'`. Now `bg-primary` uses full opacity, `bg-primary/50` uses 50% opacity, `bg-primary/10` for subtle backgrounds. Without space-separated RGB, the `<alpha-value>` substitution can't inject opacity into a pre-formatted color string. Define light values in `:root` and dark values in `.dark { --primary: ...; }`; toggle the .dark class to swap themes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "rgba() format." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Space-separated RGB + rgb(var(--x) / <alpha-value>) enables alpha modifiers.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Light theme flashes before dark on page load. Fix?",
+      "choices": [
+        { "id": "a", "text": "Accept it." },
+        { "id": "b", "text": "Use `next-themes` (Next.js) which sets the class server-side before React hydrates — no flash. For custom: inline script in <head> that reads localStorage / `prefers-color-scheme` and adds `.dark` to documentElement synchronously BEFORE the rest of the page evaluates. Pair with `suppressHydrationWarning` on <html> to silence React's hydration warning about the class mismatch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove dark mode." }
+      ],
+      "correct_answer": "b",
+      "explanation": "next-themes or inline script setting class before React loads. Eliminates FOUC.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "When does `prose` class fit, and when does it not?",
+      "choices": [
+        { "id": "a", "text": "Always use prose." },
+        { "id": "b", "text": "Use prose for rich-text content where you don't control individual elements — Markdown rendered to HTML, CMS-authored content, blog posts, documentation. The plugin styles nested `<p>`, headings, lists, code blocks, blockquotes, links automatically with consistent typography. NOT for UI text (buttons, form labels, navigation) — those should use Tailwind's font utilities directly (`text-lg font-semibold`). Pair `prose` with `dark:prose-invert` for dark mode; customize per-element with modifiers like `prose-headings:font-display prose-a:text-blue-600`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only for headings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "prose for rich-text content; not for UI text where you control elements directly.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Need a custom `text-shadow-md` utility. Approach?",
+      "choices": [
+        { "id": "a", "text": "Inline style everywhere." },
+        { "id": "b", "text": "Write a tiny plugin: `plugin(function({ addUtilities }) { addUtilities({ '.text-shadow-md': { textShadow: '...' }, ... }) })` in tailwind.config. Now works as a real utility with all Tailwind modifiers (`hover:text-shadow-lg`, `dark:text-shadow-none`). Reference design-system values via `theme()` for consistency. Inline styles lose modifier composition; custom plugins are the right tool when you need a utility pattern across many components." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip the feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Custom plugin via addUtilities. Gets full modifier composition.",
+      "points": 1
+    }
+  ]
+}

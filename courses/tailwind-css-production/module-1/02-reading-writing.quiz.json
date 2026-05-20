@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Reading Tailwind",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why doesn't `className={`bg-${color}-500`}` work in Tailwind?",
+      "choices": [
+        { "id": "a", "text": "Bug in Tailwind." },
+        { "id": "b", "text": "Tailwind's JIT compiler scans your source files for FULL class strings at build time. It can't see partially-constructed strings like `bg-${color}-500` — the literal `bg-red-500` never appears in source, so Tailwind never generates that utility. Fix: use full class names in your logic: `const colorClass = color === 'red' ? 'bg-red-500' : 'bg-blue-500'` (both full strings are visible to the scanner). For truly dynamic combinations, add classes to the `safelist` in tailwind.config. Tailwind doesn't generate utilities at runtime — only at build time from what it can statically see." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Colors are random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tailwind scans for full class strings at build. Runtime-built strings are invisible; use complete classnames in logic.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Tailwind class order on a button feels arbitrary across files. Best practice?",
+      "choices": [
+        { "id": "a", "text": "Sort manually in PRs." },
+        { "id": "b", "text": "Install `prettier-plugin-tailwindcss`. It auto-sorts classes to Tailwind's canonical order on save/format: layout → spacing → sizing → typography → colors → borders → effects → states. Eliminates bike-shedding over class order in code review, keeps diffs clean (manual edits don't cause spurious reordering), and gives every file a predictable shape. Tailwind itself doesn't care about order; the plugin is purely for human readability and consistency. Standard part of the modern Tailwind setup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Order doesn't matter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "prettier-plugin-tailwindcss auto-sorts to canonical order. Eliminates order debates.",
+      "points": 1
+    }
+  ]
+}

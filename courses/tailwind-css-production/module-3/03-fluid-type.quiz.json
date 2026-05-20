@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Fluid type",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `clamp(1.5rem, 2.5vw, 4rem)` produce?",
+      "choices": [
+        { "id": "a", "text": "Random value between." },
+        { "id": "b", "text": "A value that's always at least 1.5rem (24px), at most 4rem (64px), and between those it scales with viewport width (2.5% of viewport = 2.5vw). At a 400px viewport: 400 × 0.025 = 10px, below MIN, so 24px. At a 1600px viewport: 1600 × 0.025 = 40px, between, so 40px. At 3000px: 3000 × 0.025 = 75px, above MAX, so 64px. Smooth scaling between min and max, clamped at the boundaries. Eliminates the visible 'jump' that happens at breakpoint thresholds in step-based responsive type." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Fixed at 2.5vw." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MIN 1.5rem, MAX 4rem, scales with 2.5vw in between. Clamped at boundaries.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer says: 'headlines should scale smoothly from 32px on phones to 80px on huge monitors.' Implementation?",
+      "choices": [
+        { "id": "a", "text": "Five breakpoint sizes." },
+        { "id": "b", "text": "Use clamp() with a fluid formula. Generate via utopia.fyi or fluid.style by feeding in MIN viewport (e.g., 320px) → MIN font (32px / 2rem) and MAX viewport (1920px) → MAX font (80px / 5rem); the tool produces the clamp(). Add to tailwind.config under `fontSize` (e.g., `'fluid-display': ['clamp(2rem, 3vw + 1rem, 5rem)', { lineHeight: '1.1' }]`). Now `text-fluid-display` scales smoothly across every width; no visible jumps at breakpoints. Pair with tight line-height for display sizes (1.0-1.2)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just pick one size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "clamp() formula via utopia.fyi → tailwind.config fontSize entry → single fluid utility class.",
+      "points": 1
+    }
+  ]
+}
