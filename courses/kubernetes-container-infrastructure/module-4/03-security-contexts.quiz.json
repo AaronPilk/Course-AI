@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Security contexts and PSS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should production Pods run as non-root with dropped capabilities and a read-only root filesystem?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Blast radius reduction. Containers share the host kernel — isolation is thinner than VMs. A container compromised while running as root with full Linux capabilities can install tools, modify the filesystem, attempt container escape via kernel exploits, and generally have a much easier path to host compromise. The same compromise in a container running as non-root, with dropped capabilities, with a read-only root filesystem, and seccomp restrictions can do dramatically less: no installation of attack tools (read-only FS), limited syscalls (seccomp), no kernel capabilities to abuse. The vulnerability is the same; the blast radius is orders of magnitude smaller. Pod Security Standards 'restricted' enforces these and more at the namespace level — non-compliant Pods can't be created. Combined with image scanning (catch known vulns), admission controllers (custom policy enforcement), and runtime security (Falco detects anomalies after deploy), you get defense in depth. Each layer prevents some class of attack; the combination is what makes the cluster defensible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "K8s requirement." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Non-root + dropped capabilities + read-only FS = smaller blast radius on compromise. Standard production posture for any cluster handling sensitive workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team enforces Pod Security Standards 'restricted' on the production namespace. Several existing Deployments fail to schedule. What's the right approach?",
+      "choices": [
+        { "id": "a", "text": "Disable PSS." },
+        { "id": "b", "text": "Treat the failures as a forced reckoning with security debt. Each blocked Deployment is a workload that was silently doing risky things — running as root, requiring privileged capabilities, mounting hostPath, etc. Fix the legitimate ones (update container images to run as non-root, drop unneeded capabilities, switch from hostPath to PVCs); document and grant exceptions for the genuine cases that need privileged access (rare; usually only system components). The forced surfacing of security debt is one of PSS's main values. Roll out gradually: start with `audit` mode (log violations) to see what would break; then `warn` (warn on creation); finally `enforce` (block non-compliant). This gives a window to fix issues before they cause downtime. Disabling PSS to make Pods schedule is regression — same security issues, but now without the policy to surface them. The pain is one-time; the security improvement is permanent. Production K8s clusters should have restricted PSS enforced as a baseline, with exceptions documented and time-bounded for legacy workloads being migrated." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Move everything to dev namespace." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PSS surfacing security debt is a feature, not a bug. Fix the workloads or grant documented exceptions. Don't disable the policy to make insecure Pods schedule.",
+      "points": 1
+    }
+  ]
+}

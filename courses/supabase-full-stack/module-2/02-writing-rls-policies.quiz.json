@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Writing RLS policies",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between USING and WITH CHECK in an UPDATE policy?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "USING decides which existing rows the user is allowed to target for update; WITH CHECK validates what the resulting row can look like after the update. Both are needed for UPDATE: USING controls the 'can I touch this row' check, WITH CHECK controls the 'is the post-update state valid' check. Without WITH CHECK, a user who can update their own posts could change author_id to someone else's — privilege escalation via UPDATE. With both `using (author_id = auth.uid())` and `with check (author_id = auth.uid())`, the user can only update their posts AND can't reassign authorship." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "USING for SELECT only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "USING = which rows can be touched. WITH CHECK = what result rows can look like.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Multi-tenant SaaS: users belong to teams, teams have projects. How to scope project access?",
+      "choices": [
+        { "id": "a", "text": "Per-user check, no team logic." },
+        { "id": "b", "text": "Build a `memberships` table linking users to teams with a role column, then write a helper function `is_team_member(team uuid)` marked `stable` and `security invoker` that checks the join. Policies on projects use `using (is_team_member(team_id))` for SELECT and team-admin-role checks for UPDATE/DELETE. The helper encapsulates the join so policies stay readable. For per-role permissions inside a team, add role checks like `role in ('owner', 'admin')`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use middleware instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memberships table + helper function. Policies stay readable via helper.",
+      "points": 1
+    }
+  ]
+}

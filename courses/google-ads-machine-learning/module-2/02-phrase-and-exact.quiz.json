@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Phrase and exact match",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does exact match still beat broad match?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "Brand defense (exact match on your brand name in a separate brand campaign), specific durable high-converting concepts you've validated, compliance-restricted verticals (crypto, supplements, financial), localized small-volume queries, and specific competitor brand bidding where legally OK. Even then 'exact' isn't literal — Google applies semantic variation to exact match too. The 80/20 hybrid pattern in mature accounts: ~80% broad, ~15% phrase, ~5% exact." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brand defense, durable specific concepts, compliance, narrow local.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account has brand keywords mixed in with general product keywords in one campaign. Why split?",
+      "choices": [
+        { "id": "a", "text": "Aesthetics." },
+        { "id": "b", "text": "Brand keyword performance is fundamentally different (very high CTR, very high conversion rate, often non-incremental). Mixing brand with non-brand distorts campaign-level metrics and prevents you from running incrementality tests on brand spend. Standard pattern: separate 'Brand - Exact' campaign with exact-match brand keywords, aggressive bid willingness, conservative tROAS or tCPA, and negatives for things like '[brand] login' if you don't want to bid on existing-customer queries. Lets you treat brand budget as a strategic decision separate from acquisition." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More work." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brand and non-brand are different jobs; separate campaigns isolate them.",
+      "points": 1
+    }
+  ]
+}

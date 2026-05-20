@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Pod networking and CNI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the CNI (Container Network Interface) plugin do in a Kubernetes cluster?",
+      "choices": [
+        { "id": "a", "text": "It's a fancy name for kube-proxy." },
+        { "id": "b", "text": "The CNI implements the Kubernetes network model: every Pod gets a unique IP address, all Pods can reach each other without NAT, all Nodes can reach all Pods, and the Pod's perceived IP matches what others see. Different CNI implementations achieve this differently — AWS VPC CNI assigns real VPC IPs to Pods (underlay routing), Cilium uses eBPF for in-kernel networking, Calico uses BGP routing, Flannel uses VXLAN overlay. You typically pick one CNI at cluster creation and forget about it. The Service abstraction (covered next) sits on top of CNI — CNI handles Pod-to-Pod connectivity; kube-proxy or the CNI's service handler manages Service-to-Pod routing. Understanding the CNI matters for capacity planning (especially AWS where Pod IPs come from VPC subnets), performance tuning, and troubleshooting connectivity issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Static IP allocation only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CNI implements Pod networking. Different plugins, same contract. Pick one at cluster creation; it usually just works for most workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An EKS cluster keeps hitting 'unable to schedule Pod, no IP available' errors. What's the likely cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes bug." },
+        { "id": "b", "text": "VPC IP exhaustion. AWS VPC CNI assigns Pod IPs from the VPC subnets where Nodes live. Each Node holds a pool of secondary IPs on its ENIs (attached based on instance type) — when the pool is exhausted across all Nodes, new Pods can't get an IP and stay Pending. Fixes: expand the VPC CIDR (sometimes possible by adding secondary CIDRs); use larger Node instance types that support more secondary IPs per ENI; switch to prefix delegation mode where each ENI gets a /28 prefix instead of individual IPs (much more Pods per Node); move sparser subnets to dedicated Pod subnets; switch CNI plugins (Cilium with overlay mode doesn't consume VPC IPs for Pods). Subnet planning at cluster creation determines how much room you have to grow — undersized VPCs become painful migrations once Pod IP exhaustion starts. This is one of the most common EKS scaling issues; addressing it requires VPC engineering, not Kubernetes engineering." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy more Nodes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VPC IP exhaustion is a common EKS scaling issue. The fix is in the VPC layer (CIDRs, prefix delegation) or in CNI choice. Subnet planning at cluster creation matters more than people expect.",
+      "points": 1
+    }
+  ]
+}

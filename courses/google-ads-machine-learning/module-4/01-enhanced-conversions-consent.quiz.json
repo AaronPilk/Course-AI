@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Enhanced Conversions and Consent Mode",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Enhanced Conversions actually do?",
+      "choices": [
+        { "id": "a", "text": "Speeds up conversion firing." },
+        { "id": "b", "text": "Sends hashed (SHA-256) first-party user data — email, phone, name, address — alongside the conversion event. Google matches the hashed data to logged-in Google users, recovering attribution that was lost to iOS ATT, Safari ITP, ad blockers, and cookie restrictions. Lift is typically 10-30% more attributed conversions plus improved match quality for Smart Bidding's signal. Email alone helps significantly; adding phone, name, and address improves further. The cumulative effect makes Smart Bidding's per-auction predictions sharper." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disables consent banners." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hashed user data sent with conversions recovers privacy-lost attribution.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "B2B lead-gen account optimizing toward leads, not closed deals. Cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Need more leads." },
+        { "id": "b", "text": "Missing offline conversion imports. Smart Bidding optimizes toward whatever you tell it counts — if 'Lead' is the primary conversion, it finds users who submit leads, not users who become customers. Fix: capture GCLID on the landing page (hidden form field), pass it to your CRM with the lead, and when the lead closes weeks later, import the closed-deal conversion back to Google with the GCLID as the key (and a meaningful value). For 2026 stack, also implement Enhanced Conversions for Leads so email/phone can bridge attribution when GCLID isn't reliably captured. The system then optimizes for closed deals, not just form submissions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Higher bid." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Import offline closed-deal conversions with GCLID. Optimize for revenue, not leads.",
+      "points": 1
+    }
+  ]
+}

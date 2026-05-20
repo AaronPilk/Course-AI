@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Networking and security",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should production app servers live in private subnets rather than public?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Reducing attack surface. Public subnets have a route to the Internet Gateway, meaning resources can have public IPs and receive unsolicited inbound traffic from the internet. App servers in public subnets are scanned constantly by bots. Private subnets (no route to IGW) keep app servers reachable only via the VPC's internal network and only through controlled entry points like load balancers in public subnets. The result: attackers on the internet can't reach app servers directly; they must go through the LB which only forwards specific HTTPS endpoints. Reserve public subnets for the small set of resources that need internet ingress: load balancers, bastion hosts, NAT gateways. Everything else belongs in private subnets behind those." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Production resources belong in private subnets behind controlled ingress. Public subnets are for the few resources that genuinely need internet ingress.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A microservices VPC has a $5K/month NAT Gateway bill, mostly traffic to S3 and DynamoDB. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add more NAT Gateways." },
+        { "id": "b", "text": "VPC endpoints for S3 and DynamoDB (free gateway endpoints) bypass NAT entirely for those services. Microservices typically generate most of their outbound traffic to AWS services rather than the broader internet — S3 for object storage, DynamoDB for data, KMS for encryption operations, Secrets Manager for credentials. All this traffic goes through NAT Gateway by default ($0.045/hour + $0.045/GB processed), which at scale produces large bills. Adding gateway endpoints for S3 and DynamoDB (free) plus interface endpoints for heavily-used services (small per-hour + per-GB) routes that traffic privately within AWS without touching NAT. Typical reduction: 70-90% of NAT bill with zero application changes. This is one of the highest-ROI AWS optimizations and is often left undone because teams don't realize how much of their NAT traffic is AWS-internal." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Leave AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VPC endpoints are one of the highest-leverage AWS optimizations. Most NAT bills are dominated by AWS-service traffic that should be routing through endpoints instead.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "How does AWS evaluate whether an IAM request is allowed?",
+      "choices": [
+        { "id": "a", "text": "First policy wins." },
+        { "id": "b", "text": "Default deny; explicit deny wins; otherwise need an explicit allow. AWS evaluates all applicable policies (identity-based, resource-based, SCPs at org level, permission boundaries, session policies). If any contains an explicit Deny matching the request, denied. If no Deny matches and any Allow matches across the combined policies, allowed. Otherwise, default deny. Practical implications: Deny is nuclear — overrides everything. Allow has to exist somewhere; no Allow means no access. Multiple policy sources combine, so debugging 'why doesn't this work?' means checking all of them. SCPs at the org level can deny actions that look allowed at the account level. Permission boundaries cap what identity policies can grant. The combination is the IAM debugging skill — knowing where each component contributes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three rules: deny wins, allow needed, default deny. All policy sources combine. This is the foundation of IAM debugging.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A team grants developers the managed policy 'AmazonS3ReadOnlyAccess' for their project. What's the issue?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Too broad — that managed policy grants read on every S3 bucket in the account, not just the project's bucket. If a developer's credentials are compromised, the blast radius is all S3 data in the account: production, customer files, backups, internal documents. The fix is a custom policy scoped to specific ARNs: `s3:GetObject` and `s3:ListBucket` on `arn:aws:s3:::project-x-data` and `arn:aws:s3:::project-x-data/*` only. Add conditions if appropriate (specific source IPs, MFA required for sensitive operations). This is least privilege in practice — slightly more work upfront, dramatically smaller risk forever. Managed policies are useful as starting templates; copy and tighten into project-specific custom policies for actual grants. AWS IAM Access Analyzer can also generate least-privilege policies from observed CloudTrail activity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance penalty." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Managed policies are convenient but usually too broad. Custom scoped policies are the right pattern for project-specific access. Access Analyzer helps generate them from real usage.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why use AWS Secrets Manager for database passwords rather than environment variables?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Rotation, audit, and reduced exposure. Env-var secrets sit there indefinitely with the same value, visible to anyone who can inspect deployment config, included in backups and snapshots, requiring manual rotation across every running instance. Secrets Manager keeps secrets encrypted at rest via KMS, accessed via IAM-controlled API with every read logged in CloudTrail, supports automatic rotation for RDS/Aurora/DocumentDB (updates database password and secret atomically on a schedule), and supports versioning for rollback. The application code references the secret name; the actual value is fetched at runtime. If a secret is compromised, rotation is a click; if env-var secrets leak, rotation requires redeploying every instance. Cost ($0.40/secret/month) is small operational insurance. For database passwords, API keys, OAuth secrets, and similar credentials, Secrets Manager is the right pattern; Parameter Store SecureString works for lighter cases that don't need rotation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mandatory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Secrets Manager is operational infrastructure for secrets. Env vars are pre-cloud thinking that produces incident-management pain.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: NetworkPolicies and DNS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is 'default-deny + explicit allow' the recommended NetworkPolicy pattern for production clusters?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Lateral movement containment. Without NetworkPolicies, every Pod can reach every other Pod by default — a compromised public-facing service has direct network access to databases, internal APIs, secrets endpoints, anything in the cluster. With default-deny in every namespace and explicit allow rules for each required service-to-service flow, a compromised Pod can only reach its declared dependencies on declared ports. The blast radius of any compromise drops dramatically. The cost is operational: every flow must be explicitly declared and maintained, and the initial rollout often breaks services that were silently relying on undeclared traffic. The benefit is permanent: a real security control that limits damage from breaches. For production workloads handling sensitive data, this is non-negotiable infrastructure. Combine with egress filtering to block direct internet outbound from application Pods — prevents data exfiltration even if a Pod is compromised. The discipline is heavier than open networking; the security improvement is dramatic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Kubernetes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default-deny + explicit allow contains lateral movement. The operational cost is real; the security benefit is permanent. Standard for production K8s clusters.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team applies default-deny NetworkPolicies and immediately half the services fail with DNS resolution errors. What's the diagnosis?",
+      "choices": [
+        { "id": "a", "text": "DNS is broken." },
+        { "id": "b", "text": "Forgot to allow DNS in the default-deny policy. CoreDNS runs in the kube-system namespace; Pods resolve names by querying CoreDNS over UDP/TCP port 53. When you apply a default-deny egress policy, that DNS traffic is blocked along with everything else. Services can't resolve any names — including Service names within the cluster. Fix: add an allow-DNS NetworkPolicy that permits UDP/TCP port 53 egress to the kube-system namespace. Apply this everywhere you use default-deny. This is one of the most common gotchas with NetworkPolicies — the policy looks complete, services start failing in mysterious ways, and the cause is the missing DNS exception. The same goes for any cluster-wide service Pods depend on (cluster CoreDNS, observability agents, metric scrapers). Best practice: have a baseline 'allow essential cluster services' policy applied alongside default-deny in every namespace, then layer application-specific policies on top. Test the default-deny rollout in staging before production; many silently-required traffic flows surface during that exercise." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart CoreDNS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forgetting to allow DNS in deny-all setups is the classic NetworkPolicy bug. Always pair default-deny with an allow-DNS policy. Test in staging.",
+      "points": 1
+    }
+  ]
+}

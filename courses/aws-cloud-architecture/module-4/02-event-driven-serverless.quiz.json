@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Event-driven patterns",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why must consumers of SQS messages be idempotent?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic preference." },
+        { "id": "b", "text": "Because SQS guarantees at-least-once delivery, not exactly-once. A message may be delivered to consumers more than once: the consumer might process a message but crash before deleting it, leading to redelivery; network issues during delete acknowledgement can cause redelivery; visibility timeouts that expire before processing completes lead to redelivery. Without idempotency, retries produce duplicate side effects — duplicate emails sent, duplicate database rows inserted, duplicate charges to customers, duplicate notifications. Idempotent handlers produce the same result whether processed once or many times: 'set order status to shipped' is idempotent (multiple sets to the same value are equivalent to one); 'increment retry count by 1' is NOT idempotent. Techniques include: use unique message IDs and a dedupe table to skip already-processed messages; use conditional updates (DynamoDB conditional writes); make operations naturally idempotent where possible. This applies to SQS, SNS, EventBridge, Kinesis — any AWS event-driven mechanism with at-least-once semantics, which is most of them." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SQS API." }
+      ],
+      "correct_answer": "b",
+      "explanation": "At-least-once delivery is the default in distributed systems. Idempotent consumers handle it cleanly; non-idempotent consumers produce duplicate side effects that compound into real problems. This is a foundational distributed-systems concept.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team builds order processing where placing an order also triggers email, analytics update, inventory adjustment, and audit logging. They wire each as a synchronous call from the order service. Performance is poor and one failed dependency breaks orders. Better architecture?",
+      "choices": [
+        { "id": "a", "text": "Faster servers." },
+        { "id": "b", "text": "Publish 'order placed' event to SNS or EventBridge; each downstream system subscribes via its own queue (SQS). The order service writes to its database and publishes the event — that's it. It returns immediately, doesn't wait on email/analytics/inventory/audit. Each consumer processes the event independently from its own queue. If email service is down, orders still succeed and emails retry from the queue when email recovers. If analytics is slow, it doesn't slow down order placement. Inventory update happens async without blocking the user. Decoupling brings: (1) faster user-facing response (no waiting on downstream), (2) resilience (one failed downstream doesn't break orders), (3) independent scaling per consumer, (4) easy addition of new consumers without changing the order service. The cost is eventual consistency — analytics might be a few seconds behind actual orders — but for most use cases that's fine. This is the canonical event-driven decomposition." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Process synchronously but on bigger boxes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SNS/EventBridge + SQS fanout is the standard pattern for decoupling order-of-magnitude wins in latency and resilience. The order service does its own work, publishes an event, and lets the rest of the world react asynchronously.",
+      "points": 1
+    }
+  ]
+}

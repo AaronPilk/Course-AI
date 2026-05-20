@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Three-tier web app",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should user-uploaded files go directly to S3 via pre-signed URLs rather than through your app servers?",
+      "choices": [
+        { "id": "a", "text": "Looks more modern." },
+        { "id": "b", "text": "App servers don't have to handle the upload bytes. The browser uploads directly to S3 using a pre-signed URL that the app server generates (a short-lived URL granting PUT permission to one specific object key for a limited time, typically minutes to an hour). Your app servers never touch the upload stream — they generate the URL, the browser uploads, S3 confirms the put. Benefits compound: app servers don't need to scale for upload bandwidth, they don't need disk space for buffering large files, network bandwidth is saved, the upload path is shorter (browser to S3 is one hop, vs. browser to app to S3 is two), and your server can handle dramatically more concurrent uploads with the same capacity. For very large files, the browser uses S3 multipart upload directly with the pre-signed URLs. This pattern is why S3 is the foundational service for AWS web apps — it removes the file-handling pipeline from your app servers entirely. Buffering uploads through a custom service is pre-cloud thinking that doesn't scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "AWS requires it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Direct-to-S3 via pre-signed URLs is the canonical upload pattern. Removes scaling concerns from your app tier entirely. Buffering through app servers is a 2005 architecture.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team's app servers spend 40% of CPU serving static files (images, CSS, JS). What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Bigger instances." },
+        { "id": "b", "text": "Move static assets to S3 with CloudFront in front. Static file serving doesn't belong on app servers — it's a separate concern that scales differently. The canonical fix: put HTML/CSS/JS/images in an S3 bucket, configure CloudFront as a distribution with that S3 bucket as origin, point your DNS at CloudFront. Requests for static paths go to CloudFront edge (cached close to users); requests for dynamic paths (your APIs) forward to the application load balancer behind your app servers. App servers go from 100% utilization with mixed work to comfortable headroom doing only dynamic work; static content serves 10-100x faster from edge cache; bandwidth costs drop (CloudFront egress is cheaper than direct from EC2); operational complexity drops (no need to optimize app servers for static delivery). For modern SPAs, the entire frontend can be S3 + CloudFront with the app servers handling only API calls. This is one of the highest-leverage performance optimizations available." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch web servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Static content belongs on S3 + CloudFront, never on app servers. Removes a whole category of load and improves user experience simultaneously. Universal optimization for any web app on AWS.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Broad match in 2026",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does broad match now beat exact match for most Smart Bidding accounts?",
+      "choices": [
+        { "id": "a", "text": "Cheaper clicks." },
+        { "id": "b", "text": "Google's NLP (BERT and successors) understands query meaning, not just words — modern broad match expands semantically, not literally. Smart Bidding's per-auction logic predicts low conversion probability on borderline queries and bids near zero, effectively self-filtering bad matches. Together they cast a wider net while Smart Bidding's filter keeps cost focused on convertible queries. Tight match types restrict the learning surface and miss volume. Requires 30+ conversions/30 days for Smart Bidding to filter cleanly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Google requires it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "NLP + Smart Bidding's per-auction filter flipped the calculus toward broad.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Launching broad match on a campaign. What's the essential paired discipline?",
+      "choices": [
+        { "id": "a", "text": "Just hit launch." },
+        { "id": "b", "text": "Build a robust negative keyword list before launch (jobs/careers, free/cheap/DIY, competitor brand names, information-only queries like 'what is', out-of-scope categories, wrong-product terms) and review the Search Terms report weekly to keep adding. Broad match without negatives is dangerous; with negatives it's safe and powerful. The pair works together — broad expands, negatives trim. Use negative phrase match type for most cases; negative broad can over-filter, negative exact under-filters." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower bids." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Broad match without negatives is dangerous. Build negatives first, audit weekly.",
+      "points": 1
+    }
+  ]
+}

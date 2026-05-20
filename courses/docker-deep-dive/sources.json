@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://docs.docker.com", "title": "Docker Documentation" },
+    { "url": "https://docs.docker.com/engine/", "title": "Docker Engine Docs" },
+    { "url": "https://docs.docker.com/build/", "title": "Docker Build Documentation" },
+    { "url": "https://opencontainers.org", "title": "Open Container Initiative" },
+    { "url": "https://kubernetes.io/docs/concepts/containers/", "title": "Kubernetes Containers" }
+  ]
+}

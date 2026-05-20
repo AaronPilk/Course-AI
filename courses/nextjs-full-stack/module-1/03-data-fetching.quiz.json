@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Data fetching",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Default cache behavior of `fetch()` in a Server Component?",
+      "choices": [
+        { "id": "a", "text": "Never cached." },
+        { "id": "b", "text": "Cached indefinitely (treated as static) until a rebuild or explicit revalidation. You opt out per call: `cache: 'no-store'` for fully dynamic, `next: { revalidate: 60 }` for time-based ISR, `next: { tags: ['posts'] }` for tag-based with `revalidateTag('posts')` to invalidate. The default-cache model means most data is fast and CDN-friendly; opt into dynamic only when content varies per request or per user. Dynamic functions (cookies(), headers(), searchParams) also force dynamic rendering for the page." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cached for 1 second." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cached by default (static). Opt out via cache: 'no-store' or next.revalidate / next.tags.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Dashboard fetches user, posts, and analytics — currently sequential, slow. Fix?",
+      "choices": [
+        { "id": "a", "text": "Cache more." },
+        { "id": "b", "text": "Parallelize independent fetches with `Promise.all`: `const [user, posts, analytics] = await Promise.all([fetchUser(), fetchPosts(), fetchAnalytics()])`. Total time becomes max(each) instead of sum(all). Sequential await is only correct when fetch B depends on the result of fetch A — and even then prefer pushing to a single query (SQL JOIN beats two HTTP round-trips). Request deduplication is automatic: if two components both fetch the same URL during one request, the actual fetch happens once." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use sequential async." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Promise.all for independent fetches. Sequential is the trap.",
+      "points": 1
+    }
+  ]
+}

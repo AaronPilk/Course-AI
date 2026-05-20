@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operating the system",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Minimum viable structure for DTC e-commerce?",
+      "choices": [
+        { "id": "a", "text": "20+ campaigns." },
+        { "id": "b", "text": "4-6 campaigns: Brand Search exact (separate budget, captures branded queries before PMax), 1-2 Non-brand Search (high-intent keywords, broad+phrase with negatives), 1-2 PMax (cross-surface acquisition with asset groups segmented by audience or product line), 1 Demand Gen (top-of-funnel video discovery), retargeting usually folded into PMax via audience signals. Fewer campaigns = each ad group hits learning threshold; signal concentrated; less audience overlap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "1 campaign for everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brand + Non-brand Search + PMax + Demand Gen. 4-6 campaigns.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Search Lost IS (budget) high, Lost IS (rank) low. Scale how?",
+      "choices": [
+        { "id": "a", "text": "Raise bid target." },
+        { "id": "b", "text": "Raise budget. Lost IS (budget) high means you're winning your auctions but running out of money before capturing more impressions — budget-constrained, not rank-constrained. Raise budget within the 20% rule per 5-7 days to capture more of the pool. If instead Lost IS (rank) were high, that would indicate the auction is the constraint — raise tCPA/loosen tROAS. The diagnostic split is the cleanest signal for whether to scale via budget or via bid target." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause campaign." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lost IS (budget) high = raise budget. Lost IS (rank) high = raise bid target.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Correct troubleshooting order?",
+      "choices": [
+        { "id": "a", "text": "Macro first." },
+        { "id": "b", "text": "Tracking → learning phase → signal volume → target → audience/creative → structure → macro. Tracking first because 80%+ of 'algorithm broken' cases are actually signal-quality problems — pixel firing wrong, wrong primary conversion, bad values, missing offline imports. Smart Bidding optimizes toward whatever you tell it counts; if that's wrong, everything downstream is wrong. After tracking, check whether recent changes triggered learning-phase reset before changing creative or strategy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Creative first." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracking → learning → signal → target → audience/creative → structure → macro.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Campaign stuck in 'Learning' for 8 weeks. Cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Wait." },
+        { "id": "b", "text": "Under-conversion. The campaign isn't accumulating 30+/30 days for tCPA (or 50 for tROAS), so Smart Bidding can't learn. Causes: budget too low for natural CPA, optimization event too narrow, audience too restricted, or frequent changes resetting the clock. Solutions: switch to a higher-volume upstream event (InitiateCheckout instead of Purchase), consolidate campaigns/ad groups to concentrate signal, use Maximize Conversions until volume builds, raise budget. Stop making frequent changes during learning." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Under 30 conv/30 days = perpetual learning. Consolidate or shift event.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When is narrow match + dedicated Search + tCPA the right pattern?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "B2B with small structural audience (e.g., 200k decision-makers at specific company types), regulated verticals requiring tight match types, high-AOV niche with thin pixel signal, or hyper-local services. The audience is structurally too small for broad match to be efficient; PMax's broad-by-design fights the offer; tCPA enforces predictable per-lead cost against tight margins. The three deviations stack because the underlying account isn't median — narrow audience + dedicated channel + controlled bidding all earn their place together." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "B2B narrow audience justifies narrow + Search-only + tCPA. Three stacked deviations.",
+      "points": 1
+    }
+  ]
+}

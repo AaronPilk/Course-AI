@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Conversion value",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why send dynamic per-conversion values instead of static?",
+      "choices": [
+        { "id": "a", "text": "Looks more professional." },
+        { "id": "b", "text": "tROAS needs accurate per-conversion values to bid properly. With static values ($100 per Purchase regardless of actual amount), the system can't distinguish a $20 order from a $2,000 order — same bid logic. With dynamic values (actual order subtotal per conversion), the system bids more aggressively on auctions predicted to drive high-value conversions and less on low-value ones. Per-impression value-bidding is the entire point of tROAS; static values forfeit it. E-commerce should always send dynamic values from the order subtotal." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Google." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dynamic values enable per-impression value-bidding. Static = forfeit tROAS's main benefit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Subscription business: optimizing for first-month payment as conversion value. Performance steady but unit economics suffer. Why?",
+      "choices": [
+        { "id": "a", "text": "Need lower bids." },
+        { "id": "b", "text": "First-month payment under-represents customer value. A subscriber paying $50/month with average retention of 14 months is worth $700, not $50 — yet the system optimizes toward first-month revenue, finding users who pay once and may churn quickly. Move to LTV-based values: send predicted lifetime value at conversion time (built from a simple cohort model — average tenure × monthly payment × renewal probability). System now bids for high-LTV customers, not just first-payment users. Requires data-science work to build the LTV model but typically delivers significant improvement in unit economics within 60-90 days." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Send LTV not first-month payment. Optimize for the real customer value.",
+      "points": 1
+    }
+  ]
+}

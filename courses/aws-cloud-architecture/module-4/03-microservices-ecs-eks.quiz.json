@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Microservices on AWS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is ECS Fargate often a better default than EKS for teams new to containers on AWS?",
+      "choices": [
+        { "id": "a", "text": "ECS is faster." },
+        { "id": "b", "text": "Less to learn and less to operate for the same job. ECS is AWS's purpose-built orchestrator with a smaller surface area: task definitions, services, clusters, scaling policies, IAM task roles. Fargate eliminates instance management — AWS picks hosts, you don't. Tight integration with ALB, IAM, CloudWatch, Secrets Manager, Cloud Map means most of what you'd need works out of the box without configuration. EKS is managed Kubernetes — bringing the full K8s ecosystem with you including Helm charts, operators, CRDs, networking concepts, RBAC, and the constant churn of K8s versions. That's powerful if you need it (existing K8s investment, multi-cloud portability, complex orchestration patterns) and unnecessary complexity if you don't. EKS also has a $0.10/hour control plane charge per cluster ($72/month) on top of compute. For greenfield AWS workloads with a team that doesn't already know K8s, ECS Fargate gets containers in production faster, with fewer concepts to manage, and lower total cost. Reach for EKS when its specific capabilities matter, not because it's the default in conference talks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "EKS only runs on Linux." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default to ECS Fargate for AWS-only container workloads. EKS is for teams that already know K8s or have specific reasons. Choosing EKS for prestige adds complexity without value.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A high-traffic service runs on ECS Fargate at $5K/month. The team wonders if there's a cheaper architecture for sustained high traffic. What might help?",
+      "choices": [
+        { "id": "a", "text": "Switch to Lambda." },
+        { "id": "b", "text": "ECS on EC2 with Savings Plans. Fargate's pay-per-task-second pricing is convenient but charges a premium over equivalent EC2 compute — roughly 2-3x more per vCPU-hour. For sustained high traffic where utilization is high and predictable, ECS on EC2 mode with 1-year or 3-year Savings Plans (covering the underlying EC2 capacity) typically cuts compute costs by 50-70%. The tradeoff is operational: you now manage EC2 capacity (autoscaling groups, AMI updates, host patching) which is real work. For early-stage workloads with variable traffic, Fargate's premium is worth paying for the operational simplicity. At significant scale with stable traffic patterns, the cost gap justifies the migration. Spot instances can drop costs further for fault-tolerant workloads. Other approaches: switch to Lambda (only if the workload genuinely fits Lambda's model — probably not here given the sustained high traffic which is exactly where Lambda gets expensive); reduce container resources (right-sizing is always worth checking); add caching to reduce backend load. The structural answer for sustained high-traffic containers is usually ECS-on-EC2 + Savings Plans." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger Fargate tasks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fargate is convenient; EC2 mode is cheaper at scale. The crossover point depends on workload, but for sustained high traffic, EC2 + Savings Plans typically wins 2-3x on compute cost.",
+      "points": 1
+    }
+  ]
+}

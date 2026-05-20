@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Streaming and Suspense",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Streaming + Suspense give you?",
+      "choices": [
+        { "id": "a", "text": "Faster builds." },
+        { "id": "b", "text": "Progressive rendering — the server sends HTML as soon as fast parts are ready, then streams in slower parts as they resolve. Each `Suspense` boundary defines a stream point: the fallback shows immediately, the real content arrives when the async component finishes. Independent boundaries don't block each other — slow chart and slow list stream in independently. Result: fast TTFB even when individual parts are slow. The header renders instantly while the dashboard's heavy queries are still running." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller bundles." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Progressive rendering: fast parts immediately, slow parts as they resolve, independently.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Dashboard has a hero, a slow analytics chart, and recent activity list. Best layout for fast perceived load?",
+      "choices": [
+        { "id": "a", "text": "One big page-level Suspense." },
+        { "id": "b", "text": "Hero renders eagerly (no Suspense — it's above-the-fold and fast). The analytics chart and activity list each get their own Suspense boundary with skeleton fallback. They fetch and stream in parallel; whichever finishes first appears first; neither blocks the other. Don't put Suspense around the hero — it's the user's first impression and should render instantly. Don't put a single page-level Suspense — it blocks the hero too. Granularity at the slow-component level is the win." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No Suspense — just await." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hero renders eagerly; slow components each get own Suspense for independent streaming.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Shared memory and tiling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does tiling with shared memory turn a memory-bound matrix multiplication into a compute-bound one?",
+      "choices": [
+        { "id": "a", "text": "Shared memory is technically also memory." },
+        { "id": "b", "text": "It increases arithmetic intensity by reusing data. Each tile of A or B loaded from global memory into shared memory gets used by all threads in the block multiple times (proportional to tile size). With a TILE×TILE tile, each global-memory byte feeds roughly TILE multiply-accumulates instead of one. Effective FLOPs per byte loaded goes up by TILE, pushing the workload from memory-bound territory (where you're waiting on memory bandwidth) into compute-bound territory (where the arithmetic units do the work). The same algorithm, same data movement total, but the structure of reuse means the compute units stay busy. This is the central pattern in GPU performance engineering for any workload with data reuse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random side effect." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tiling converts memory-bound problems into compute-bound problems via data reuse. The roofline shifts: arithmetic intensity goes up, performance ceiling moves from memory-bandwidth roof to compute-peak roof. This is the structural reason matmul is fast on GPUs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A CUDA kernel uses `__shared__ float tile[32][32]` and threads access columns: `tile[threadIdx.x][col]`. The kernel is slower than expected. What's the diagnosis?",
+      "choices": [
+        { "id": "a", "text": "Compiler bug." },
+        { "id": "b", "text": "Shared memory bank conflicts. Shared memory is divided into 32 banks; for 32-bit accesses, bank = address modulo 32. With a [32][32] array, column-direction access has all 32 threads in a warp hitting the same bank: thread i reads `tile[i][col]` which has address `i*32+col` — all map to bank `col`. This is a 32-way bank conflict that serializes the access, giving ~32x slowdown. The canonical fix is to pad the array by one element: `__shared__ float tile[32][33]`. Now `tile[i][col]` has address `i*33+col`, which maps to bank `(i*33+col) mod 32` = different banks for different i. No conflict. The '+1 padding' trick costs trivial extra shared memory but eliminates the serialization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Not enough threads." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bank conflicts are the shared-memory equivalent of coalescing failures. The +1 padding trick is a CUDA classic — appears in matmul, transpose, and many tiled kernels.",
+      "points": 1
+    }
+  ]
+}

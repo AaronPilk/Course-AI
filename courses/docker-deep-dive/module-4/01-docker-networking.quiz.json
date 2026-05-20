@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Docker networking",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use custom bridge networks instead of the default bridge?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Built-in DNS. The default bridge network doesn't resolve container names — containers must use IP addresses to reach each other. Custom bridge networks include Docker's embedded DNS resolver (at 127.0.0.11), so containers resolve each other by container name. `api`, `db`, `redis` all just work. Docker Compose creates a custom bridge automatically. Use custom bridges for any multi-container setup; reserve default bridge for one-off containers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random preference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Custom bridges have DNS; default doesn't. Use custom bridges for any multi-container setup.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An NGINX container running on host network can't bind to port 80 because another service has it. Fix?",
+      "choices": [
+        { "id": "a", "text": "Stop the other service." },
+        { "id": "b", "text": "Switch to bridge networking with port publishing. With `--network host`, the container shares the host's network namespace — no isolation, no port mapping, port conflicts with host services. With bridge networking and `-p 8080:80`, NGINX binds to port 80 inside its own namespace; Docker maps host port 8080 to it. No conflict with the other service on host port 80. Bridge + port publishing is the standard pattern; host networking is for specific performance or isolation-not-needed cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger host." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Host networking shares host's net namespace = port conflicts. Bridge + port publish isolates port spaces.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Row Level Security",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Main reason RLS beats middleware authorization?",
+      "choices": [
+        { "id": "a", "text": "Faster execution." },
+        { "id": "b", "text": "Defense in depth + single source of truth + auditable. Even if a developer writes a query that forgot the user filter, RLS still applies. The rule lives in one place (policy on the table) instead of duplicated across endpoints. All policies are queryable from pg_policies. Every consumer (auto-API, RPC, Edge Functions, direct SQL) respects the same rules. Authorization becomes a property of the data, not the code path." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Eliminates auth entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Defense in depth + single source of truth + auditable.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Just enabled RLS on a table. Queries return zero rows even from the owner. Why?",
+      "choices": [
+        { "id": "a", "text": "Postgres bug." },
+        { "id": "b", "text": "RLS is enabled but no policies are defined yet. With RLS enabled and zero policies, the table is locked — nothing is visible to non-service-role roles. Write at least one policy per action you want to allow (SELECT, INSERT, UPDATE, DELETE). RLS is opt-in security; you have to write the allow rules. Standard pattern: 'owner can SELECT where author_id = auth.uid()' plus matching INSERT/UPDATE/DELETE policies." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable RLS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RLS enabled + no policies = locked. Write policies.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Difference between USING and WITH CHECK on UPDATE?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "USING decides which existing rows the user can target for update; WITH CHECK validates what the resulting row state can look like. Both required for UPDATE — without WITH CHECK, a user who can update their own posts could change author_id to someone else's (privilege escalation). Pair both with the same expression (`author_id = auth.uid()`) so the user can update their posts AND can't reassign authorship." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "USING for SELECT only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "USING = which rows can be touched. WITH CHECK = what result rows can look like.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Implementing Google-Docs-style sharing — owner full access + specific users granted view/edit. RLS approach?",
+      "choices": [
+        { "id": "a", "text": "Public to all." },
+        { "id": "b", "text": "Create a `document_shares` join table (document_id, shared_with_user_id, permission). On documents: 'Owner full access' using `owner_id = auth.uid()`; 'Shared can view' using EXISTS on document_shares; 'Shared editors can update' with permission='edit' check. Index document_shares(shared_with_user_id, document_id). Composable: adding/removing rows from the share table grants/revokes access automatically. Database-enforced sharing model in ~30 lines of SQL." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "ACL JSONB column." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Share-table + EXISTS check. Indexable, composable, database-enforced.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Slow query after adding a complex RLS policy. Highest-leverage fix?",
+      "choices": [
+        { "id": "a", "text": "Disable RLS." },
+        { "id": "b", "text": "Run EXPLAIN ANALYZE; check for sequential scans on policy-referenced columns and repeated subquery executions. Most common fixes: (1) index columns the policy filters on, (2) mark helper functions `STABLE` so Postgres calls them once per query instead of per row (10-100x improvement), (3) index columns in EXISTS join tables (e.g., memberships(user_id, team_id)). Don't disable RLS — the fix is in indexes and function attributes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More RAM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EXPLAIN → indexes on policy columns → STABLE on helpers → indexes on join tables.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Iteration velocity",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does iterating at the ad level (not ad-set level) preserve learning?",
+      "choices": [
+        { "id": "a", "text": "Random behavior." },
+        { "id": "b", "text": "Learning-phase reset triggers on ad-set-level changes — significant budget shifts (>20%), targeting changes, optimization-event swaps, bid-strategy changes. Adding or pausing individual ads inside a healthy ad set with multiple ads does NOT trigger reset. So all creative iteration can happen at the ad level while the ad set keeps its accumulated learning, avoiding the 4-7 day re-stabilization period." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Ad-level changes always trigger reset." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ad-level changes don't reset learning; ad-set-level changes do.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account launches 1 new ad daily and ad performance feels random. Diagnosis?",
+      "choices": [
+        { "id": "a", "text": "Bad luck." },
+        { "id": "b", "text": "Single-ad daily launches never get fair exposure — Meta rotates impressions across the existing ad library, so a new ad arriving alone competes for the leftover share against incumbents that already accumulated signal. Switch to weekly batched launches: 3-5 new ads on the same day, 2-3 worst-performing paused on the same day. The algorithm now has a clean comparison set, new ads share fair exposure, and you get readable signal in 5-7 days." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run only one ad." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Batch weekly: 3-5 in, 2-3 out, same day. Daily-one launches starve new creatives.",
+      "points": 1
+    }
+  ]
+}

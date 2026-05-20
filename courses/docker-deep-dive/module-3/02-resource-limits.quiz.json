@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Resource limits",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What happens when a container exceeds its memory limit?",
+      "choices": [
+        { "id": "a", "text": "It throttles." },
+        { "id": "b", "text": "The kernel OOM killer fires inside the container's cgroup and kills a process — usually PID 1, which exits the container with code 137. `docker inspect` shows OOMKilled. CPU limits throttle (slow down), memory limits don't — they're hard caps enforced by killing. JVM heap and Node max-old-space-size must be sized below the container limit because runtime overhead counts toward the limit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Nothing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory limit = hard cap = OOMKilled. CPU limit = throttle. Size language heap below container limit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A JVM app runs in a container with `--memory 1g`. It gets OOMKilled at ~700MB heap. Why?",
+      "choices": [
+        { "id": "a", "text": "JVM bug." },
+        { "id": "b", "text": "JVM has substantial off-heap usage (metaspace, JIT code cache, thread stacks, native libs, GC structures) — typically 20-40% of total JVM memory. With `-Xmx1g` the JVM tries to use 1GB heap + overhead = ~1.4GB total, which exceeds the container limit. Fix: set heap to ~70% of container memory (`-Xmx700m` for a 1g container), or use `-XX:MaxRAMPercentage=70` and let the JVM auto-size relative to the cgroup limit. Modern JVMs read cgroup limits automatically with this flag." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JVM heap + overhead must fit in container limit. Heap = ~70% of container memory; use MaxRAMPercentage on modern JVMs.",
+      "points": 1
+    }
+  ]
+}

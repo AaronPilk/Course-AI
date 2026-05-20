@@ -1,0 +1,92 @@
+{
+  "slug": "meta-ads-algorithm",
+  "title": "Meta Ads Algorithm",
+  "subtitle": "How Meta's ad auction and ML targeting actually work — and how to operate them without burning budget",
+  "description": "A practical course on how Meta's advertising system works for engineers, marketers, and founders running paid acquisition. Covers the auction mechanics, ad delivery ML, targeting and audiences (Advantage+, custom, lookalike), creative as the new targeting, measurement and attribution after iOS 14.5, optimization patterns, and the recurring mistakes that waste budget. Not pro-Meta or anti-Meta; just how the system works in 2026 and how to operate it.",
+  "category": "Advertising",
+  "difficulty": "intermediate",
+  "audience": "Marketers, growth engineers, and founders running paid acquisition on Meta. Some ads experience helps; not required.",
+  "tags": ["meta", "facebook", "instagram", "ads", "marketing", "advertising"],
+  "estimated_minutes": 240,
+  "brand": {
+    "name": "Meta",
+    "logo": "/brands/meta-ads-algorithm.svg",
+    "gradient": ["#0866FF", "#0052CC"],
+    "tint": "#001B47"
+  },
+  "prerequisites": [
+    "Basic familiarity with online advertising concepts",
+    "Some Meta Ads Manager exposure helps but not required"
+  ],
+  "outcomes": [
+    "Explain how Meta's ad auction picks winners (bid + estimated action rates + quality)",
+    "Use the ML delivery system rather than fighting it",
+    "Build targeting strategies that respect modern signal loss",
+    "Treat creative as the dominant lever in 2026",
+    "Measure attribution honestly after iOS 14.5 and Consent Mode",
+    "Optimize budget, structure, and learning phase deliberately",
+    "Avoid the mistakes that waste budget"
+  ],
+  "modules": [
+    {
+      "title": "How the auction actually works",
+      "summary": "Bid, estimated action rate, ad quality, total value — the real ranking formula.",
+      "estimated_minutes": 50,
+      "key_concepts": ["auction", "bid", "estimated action rate", "ad quality", "total value"],
+      "lessons": [
+        { "title": "The auction in one paragraph", "objective": "Understand who wins an impression." },
+        { "title": "Bid types and what they mean", "objective": "Pick the right bid strategy." },
+        { "title": "Estimated action rate — the ML prediction", "objective": "See how Meta scores you." },
+        { "title": "Ad quality and the quality ranking", "objective": "Improve the quality multiplier." }
+      ]
+    },
+    {
+      "title": "Targeting in the Advantage+ era",
+      "summary": "Audiences, lookalikes, broad targeting, and why creative now matters more than targeting.",
+      "estimated_minutes": 50,
+      "key_concepts": ["Advantage+", "lookalikes", "custom audiences", "broad", "exclusions"],
+      "lessons": [
+        { "title": "Why broad targeting often beats narrow", "objective": "Trust the ML where it earns it." },
+        { "title": "Custom audiences and Lookalikes", "objective": "Use first-party data correctly." },
+        { "title": "Advantage+ campaigns", "objective": "Use Meta's automated campaigns when they fit." },
+        { "title": "Exclusions and audience hygiene", "objective": "Avoid overlap and waste." }
+      ]
+    },
+    {
+      "title": "Creative is the new targeting",
+      "summary": "How creative drives delivery, why creative volume matters, and the creative testing playbook.",
+      "estimated_minutes": 50,
+      "key_concepts": ["creative volume", "hook", "concept testing", "iteration"],
+      "lessons": [
+        { "title": "Why creative now determines delivery", "objective": "See the modern lever." },
+        { "title": "Creative volume and refresh", "objective": "Maintain a steady flow of new ads." },
+        { "title": "Hook, concept, format", "objective": "Build creative deliberately." },
+        { "title": "Creative testing — concepts vs variants", "objective": "Test what matters." }
+      ]
+    },
+    {
+      "title": "Measurement and attribution",
+      "summary": "Pixel, CAPI, attribution windows, and what to actually trust after signal loss.",
+      "estimated_minutes": 50,
+      "key_concepts": ["pixel", "Conversions API", "attribution window", "MMM", "incrementality"],
+      "lessons": [
+        { "title": "Pixel and Conversions API together", "objective": "Send Meta the signal it needs." },
+        { "title": "Attribution windows and reality", "objective": "Read Meta's numbers honestly." },
+        { "title": "Incrementality testing", "objective": "Measure true lift." },
+        { "title": "MMM, post-purchase surveys, and the modern measurement stack", "objective": "Triangulate honest attribution." }
+      ]
+    },
+    {
+      "title": "Operating the system",
+      "summary": "Budget structure, learning phase, scaling, troubleshooting, and the mistakes that waste budget.",
+      "estimated_minutes": 40,
+      "key_concepts": ["learning phase", "CBO", "scaling", "fatigue", "common mistakes"],
+      "lessons": [
+        { "title": "Campaign structure — CBO, ASC, manual", "objective": "Pick the right structure." },
+        { "title": "Learning phase — what it is and what to do", "objective": "Get to stable delivery faster." },
+        { "title": "Scaling and creative fatigue", "objective": "Grow spend without breaking accounts." },
+        { "title": "The Meta Ads mistakes that bite you", "objective": "Avoid the budget-wasting patterns everyone hits." }
+      ]
+    }
+  ]
+}

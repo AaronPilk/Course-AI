@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://kubernetes.io/docs/", "title": "Kubernetes Documentation" },
+    { "url": "https://kubernetes.io/docs/concepts/", "title": "Kubernetes Concepts" },
+    { "url": "https://kubernetes.io/docs/tasks/", "title": "Kubernetes Tasks" },
+    { "url": "https://kubernetes.io/docs/reference/", "title": "Kubernetes Reference" },
+    { "url": "https://landscape.cncf.io", "title": "CNCF Cloud Native Landscape" }
+  ]
+}

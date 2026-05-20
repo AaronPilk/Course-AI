@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Registries",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why reference production images by digest rather than tag?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Tags are mutable; digests are immutable content hashes. Someone with push access can retag `v1.0` to point at a different image — supply-chain attack risk, or just human error. Digests (sha256:abc123...) always reference the same content; can't be silently changed. For production K8s manifests, use digest references; for human-readable handles, keep tags. Combined with image signing and admission controllers, you get strong supply-chain integrity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster pulls." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tags are mutable; digests are immutable. Use digests in production references.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "K8s cluster's deploys keep failing with 'too many requests' from Docker Hub. Fix?",
+      "choices": [
+        { "id": "a", "text": "Buy bigger nodes." },
+        { "id": "b", "text": "Pull-through cache or mirror. Docker Hub limits anonymous pulls (100 per 6h per IP) and authenticated free pulls (200). Production clusters with many Pods pulling base images hit these limits, especially during scale-up events. Mitigation: deploy a pull-through cache (ECR Public, Harbor, distribution registry) in your cluster's region; configure containerd or Docker to use it; cache transparently serves repeated pulls. Or mirror needed base images to your own registry (ECR, GHCR) and update mirrors on a schedule. Or pay for Docker Hub (higher limits). For any production K8s on a cloud provider, the cloud's own registry (ECR for AWS, GAR for GCP, ACR for Azure) hosts your application images close to the cluster — fast pulls, no rate limits." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stop deploying." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pull-through cache or registry mirror avoids Docker Hub rate limits in production.",
+      "points": 1
+    }
+  ]
+}

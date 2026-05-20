@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Bid strategies",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the right default bid strategy for a new Meta Ads campaign?",
+      "choices": [
+        { "id": "a", "text": "Bid cap at $1." },
+        { "id": "b", "text": "Lowest cost with a daily budget. The system bids dynamically to maximize results within budget; no caps to constrain it from finding cheap auctions. New campaigns have no historical CPA data, so caps are guessed and usually too tight — underspending or no delivery. Once you have 2-4 weeks of stable CPA data, you can consider cost cap at ~10-20% above current average if predictable cost matters more than maximum volume. Bid cap is the most restrictive; reserve for advanced cases with strict discipline. Don't switch strategies frequently — each switch restarts learning phase." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual bidding." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lowest cost + daily budget for new campaigns. Add caps only with data showing them necessary.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Should you use Campaign Budget Optimization (CBO) or manual ad-set budgets?",
+      "choices": [
+        { "id": "a", "text": "Always manual." },
+        { "id": "b", "text": "CBO (a.k.a. Advantage Campaign Budget) for most cases. Meta moves budget to the best-performing ad sets in real time based on the auction signal it sees. Manual ad-set budgets fight the ML — you allocate based on yesterday's data while the system sees fresher signal. The historical 'manual allocation beats CBO' wisdom was true in earlier eras; today the ML is good enough that CBO wins for most accounts. Exception: when you have specific structural reasons to constrain spend (e.g., brand campaigns vs. acquisition vs. retargeting must have separate budgets for accounting), use manual. Otherwise, trust CBO with broad audiences and let the system find efficiency." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Doesn't matter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CBO/Advantage Campaign Budget beats manual allocation at scale. Manual only when you need structural separation.",
+      "points": 1
+    }
+  ]
+}

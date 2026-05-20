@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: File-based routing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What do the special filenames do in the App Router?",
+      "choices": [
+        { "id": "a", "text": "They're just naming conventions." },
+        { "id": "b", "text": "Each enables specific behavior automatically: `page.tsx` makes a folder a route; `layout.tsx` wraps children persistently (doesn't re-mount across navigations); `loading.tsx` is wrapped in a Suspense boundary; `error.tsx` is wrapped in an error boundary (must be a Client Component); `not-found.tsx` shows when notFound() is called; `route.ts` defines HTTP API endpoints. The framework wires these up by filename — no router config needed. Layouts and error boundaries compose by directory nesting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Each filename enables a specific behavior automatically via convention.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want marketing pages and the logged-in app to have completely different chrome (header, layout, fonts). How to structure without affecting URLs?",
+      "choices": [
+        { "id": "a", "text": "Two separate Next.js projects." },
+        { "id": "b", "text": "Use route groups: `app/(marketing)/about/page.tsx` and `app/(app)/dashboard/page.tsx` produce URLs `/about` and `/dashboard` respectively. Parens in folder names organize files without affecting URLs. Each route group can have its own layout (or even root layout) — `app/(marketing)/layout.tsx` for marketing chrome and `app/(app)/layout.tsx` for app chrome. Lets you ship two visually-distinct experiences from one codebase, both deployed together, with clean URL structure." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use URL prefixes like /marketing/." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Route groups (parens) organize without affecting URLs; can have distinct layouts.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: How the auction works",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the auction actually rank ads on?",
+      "choices": [
+        { "id": "a", "text": "Highest bid wins." },
+        { "id": "b", "text": "Total value: bid times estimated action rate times ad quality. A great ad with strong predicted relevance can outbid a higher dollar bid from a weaker ad. The system optimizes for predicted user value, not pure dollar bids." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Total value, not bid alone. Predicted relevance is the lever.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Optimizing for link clicks but not getting purchases. Fix?",
+      "choices": [
+        { "id": "a", "text": "Higher bid." },
+        { "id": "b", "text": "Optimize for purchases instead. EAR predicts the event you specified. Click optimization finds clickers; purchase optimization finds buyers — different ML signals. Switch the optimization event to the conversion you want, with pixel + CAPI sending purchase events accurately." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run more ads." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimize for the event you actually want.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Default bid strategy for new campaigns?",
+      "choices": [
+        { "id": "a", "text": "Bid cap." },
+        { "id": "b", "text": "Lowest cost with daily budget. System bids dynamically to maximize results. Caps need historical CPA data to set sensibly; on new campaigns they typically underspend. Add caps later if predictable cost matters more than volume." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lowest cost for new campaigns; add caps after data.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why does fragmenting budget across many ad sets hurt performance?",
+      "choices": [
+        { "id": "a", "text": "It doesn't." },
+        { "id": "b", "text": "ML needs roughly 50 conversion events per ad set per week to exit learning phase. Many ad sets at low spend means none reaches the threshold; all remain exploratory with high CPA variance. Consolidate to fewer ad sets that each get learning-phase volume." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More work for the system." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Consolidate budget; let ad sets reach learning threshold.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Three Ad Relevance Diagnostics rankings tell you what?",
+      "choices": [
+        { "id": "a", "text": "Brand health." },
+        { "id": "b", "text": "Quality, engagement rate, and conversion rate rankings vs competing ads in the same audience — Below Average / Average / Above Average. Below Average dimensions reduce effective bid; the diagnostic tells you which dimension to fix. Quality = creative + post-click; engagement = hook + format; conversion = landing page + pixel accuracy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Account-wide ratings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three rankings = which dimension to fix.",
+      "points": 1
+    }
+  ]
+}

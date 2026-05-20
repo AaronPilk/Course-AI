@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Production deployment",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Should most teams host Next.js on Vercel or self-host?",
+      "choices": [
+        { "id": "a", "text": "Always self-host." },
+        { "id": "b", "text": "Vercel for most teams under 50 engineers — tight Next.js integration (git deploys, branch previews, edge network, image optimization, ISR caching, edge middleware, serverless Server Actions) saves dramatically more engineering time than its bill costs. Self-hosting requires reverse proxy, CDN, image optimization, monitoring, CI/CD, SSL — each a chunk of work. Self-host only for specific triggers: compliance/residency, on-prem requirements, extreme cost optimization at very high traffic with dedicated DevOps capacity, or specific infrastructure needs (long-running WebSockets, etc.)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always Vercel, no exceptions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vercel for most teams; self-host for specific needs only.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server Action returns `process.env.STRIPE_SECRET_KEY` to the client. Issue?",
+      "choices": [
+        { "id": "a", "text": "Fine — Server Actions are server-side." },
+        { "id": "b", "text": "Catastrophic — Server Actions run server-side but their return values are serialized and sent to the client. Returning a secret key transmits it to every caller. The action should USE the secret server-side (call Stripe with it) and return only what the client needs (a payment intent ID, status, redirect URL). The 'server-side' guarantee is about where the code runs, not about hiding return values. Never return secrets; perform the secret-requiring operation inside the action and return only safe data." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encrypted in transit." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Return values cross to the client. Use secrets server-side; return only safe data.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Minimum observability stack for a production Next.js app?",
+      "choices": [
+        { "id": "a", "text": "Just console.log." },
+        { "id": "b", "text": "Sentry (or equivalent) for error tracking — auto-configured for client + server + edge runtime, captures stack traces, frequency, affected users, optional session replays. Structured logging via pino or similar for searchable JSON logs. Web Vitals tracking via Vercel Analytics or equivalent RUM tool so you see what real users experience (not just synthetic Lighthouse). These three cover ~80% of production debugging needs. Add log aggregation (Axiom, Logtail, Datadog) as scale grows beyond a single deployment." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Datadog enterprise only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sentry + structured logging + Web Vitals = 80% of debugging coverage.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Hydration mismatch error in production. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Next.js bug." },
+        { "id": "b", "text": "Server-rendered HTML differs from what React renders during client hydration. Common triggers: using `Date.now()`, `Math.random()`, or `new Date().toLocaleString()` directly in render (server and client compute different values); accessing `window`/`localStorage` in code that also runs on the server; CSS-in-JS misconfigured for SSR; browser extensions modifying the page. Fix: move client-only logic to useEffect; for genuinely-different content use `suppressHydrationWarning`; for theme switching, use `next-themes` that handles SSR properly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server/client divergence (Date, random, window). Move to useEffect.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Vercel build fails but local build succeeds. Most common cause?",
+      "choices": [
+        { "id": "a", "text": "Random failure." },
+        { "id": "b", "text": "Environment differences. Most common: (1) Node version mismatch — pin via `\"engines\": { \"node\": \"20.x\" }` in package.json; (2) Case sensitivity — macOS dev is case-insensitive, Linux production is case-sensitive (`import './Foo'` with file `foo.tsx` works locally but breaks on Linux); (3) Missing committed files — gitignored files needed at build time; (4) Env vars set locally but not in Vercel's Production scope. Reproduce by running `npm run build` on a clean checkout in a Linux container or Vercel preview deployment." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Vercel is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Node version, case sensitivity, missing files, or env vars not configured in production scope.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: The App Router model",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Default rendering location for components in the App Router?",
+      "choices": [
+        { "id": "a", "text": "Client side." },
+        { "id": "b", "text": "Server side. Server Components are the default — they run on the server at request time, can directly access databases/secrets/filesystem, never ship JavaScript to the client, and can be async functions. Client Components opt in via `'use client'` directive — they hydrate in the browser, can use hooks and handle events, but ship JavaScript bundles. Default to Server; reach for Client only when you need state, effects, browser APIs, or event handlers. Compose by passing Server Components as children/props of Client Components." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Both equally." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server is default. Client opts in via 'use client' directive.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Marketing pages and the logged-in app need very different chrome. Structure?",
+      "choices": [
+        { "id": "a", "text": "Two separate Next.js projects." },
+        { "id": "b", "text": "Use route groups: `app/(marketing)/about/page.tsx` produces `/about`; `app/(app)/dashboard/page.tsx` produces `/dashboard`. Parens in folder names organize files without affecting URLs. Each group can have its own `layout.tsx` — marketing chrome and app chrome live cleanly side by side. Lets you ship two visually-distinct experiences from one codebase, deployed together, with clean URLs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "URL prefixes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Route groups (parens) organize without affecting URLs; per-group layouts.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Default caching behavior of `fetch()` in Server Components?",
+      "choices": [
+        { "id": "a", "text": "Never cached." },
+        { "id": "b", "text": "Cached indefinitely (static) until rebuild or explicit revalidation. Opt out: `cache: 'no-store'` for fully dynamic, `next: { revalidate: N }` for ISR with N-second freshness, `next: { tags: ['key'] }` for tag-based invalidation via `revalidateTag('key')`. Dynamic functions (cookies(), headers(), searchParams) also force the page to dynamic rendering. Cache by default = fast and CDN-friendly; opt into dynamic only when content varies per request or user." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cached for one minute." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cached by default; opt out via cache: 'no-store' or next.revalidate / next.tags.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Dashboard fetches user + posts + analytics sequentially. Total time is slow. Fix?",
+      "choices": [
+        { "id": "a", "text": "Cache more." },
+        { "id": "b", "text": "Parallelize via Promise.all: `const [user, posts, analytics] = await Promise.all([fetchUser(), fetchPosts(), fetchAnalytics()])`. Total time becomes max(each) instead of sum(all). Sequential await is only correct when fetch B depends on fetch A — and even then, prefer collapsing to one query (SQL JOIN beats two HTTP round-trips). Next.js dedupes identical fetches within a single request automatically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase RAM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Promise.all for independent fetches; sequential await is the trap.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best Suspense layout for a dashboard with a hero, slow chart, and slow list?",
+      "choices": [
+        { "id": "a", "text": "One Suspense around the whole page." },
+        { "id": "b", "text": "Hero renders eagerly (no Suspense — fast and above-the-fold). Chart and list each get their own Suspense with skeleton fallback. They fetch and stream in parallel; neither blocks the other. The user sees the hero instantly, then chart and list fade in independently as each finishes loading. Page-level Suspense would block the hero too; no Suspense at all blocks the page on the slowest fetch. Granularity at the slow-component level is the win." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No Suspense." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Eager hero + per-slow-component Suspense = fast perceived load.",
+      "points": 1
+    }
+  ]
+}

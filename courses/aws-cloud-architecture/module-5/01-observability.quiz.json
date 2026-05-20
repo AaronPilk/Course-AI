@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Observability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is X-Ray (or equivalent distributed tracing) essential in a microservices architecture but unnecessary in a monolith?",
+      "choices": [
+        { "id": "a", "text": "Microservices are slower." },
+        { "id": "b", "text": "In a monolith, a request's entire processing happens in one process — logs from that process tell the whole story. Standard logs and metrics are sufficient. In microservices, a single user request flows through many services: API gateway -> auth service -> orchestrator -> three downstream services -> two databases. Logs from each service are separate; correlating them requires either correlation IDs propagated through every call or distributed tracing. X-Ray (or equivalent) automatically traces a request's path across services, showing time spent in each, errors at each step, and dependencies. Without tracing, debugging 'why was this request slow?' becomes forensic work piecing together logs across services. With tracing, it becomes 'click on the slow trace and see where it spent time.' For monoliths, tracing is overkill. For anything with more than a couple of service boundaries, tracing pays for itself the first time you debug a production issue with it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random tool." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Distributed tracing is for distributed systems. Monoliths can debug with logs alone; microservices need tracing to reconstruct request flows.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team has 200+ CloudWatch alarms. Most fire multiple times per day. Engineers stopped checking them. A real incident's alarm got lost in the noise. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Add more alarms." },
+        { "id": "b", "text": "Audit and prune ruthlessly. Alarms exist to drive human action; ones that fire constantly without action being needed are noise. Walk through every alarm: does this require someone to do something when it fires? If not, delete it or convert to a dashboard signal. Tune thresholds so they fire on actual problems, not normal variability. Use composite alarms to reduce noise (e.g., 'alert when error rate is high AND traffic is non-trivial' instead of two separate alarms). Reserve paging alarms for things that need a human now; use lower-severity notifications for things that need attention within a day; let everything else flow to dashboards. Most production setups need 10-30 carefully-tuned alarms, not 200. Alarm fatigue is one of the most common operational dysfunctions — teams build up alarms over years without pruning, and the entire alarm system becomes noise that hides real signal. Periodic alarm review (quarterly) prevents this from accumulating. Treat alarms like code: review, tune, refactor, delete what's not earning its keep." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire more engineers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alarm fatigue is operational dysfunction. Fewer, tuned, actionable alarms beat hundreds of noisy ones. Prune regularly; reserve paging for actual urgency.",
+      "points": 1
+    }
+  ]
+}

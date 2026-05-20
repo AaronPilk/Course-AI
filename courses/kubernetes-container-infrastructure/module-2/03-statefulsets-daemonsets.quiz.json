@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: StatefulSets and DaemonSets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does a StatefulSet use a headless Service (clusterIP: None) and not a regular Service?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Stable per-Pod DNS. A regular Service gives one cluster IP that load-balances to all matching Pods — you can reach the Service but not any specific Pod. A headless Service (clusterIP: None) skips the virtual IP and instead creates DNS records for each individual Pod: db-0.db.namespace.svc.cluster.local, db-1.db.namespace.svc.cluster.local, etc. This stable per-Pod DNS is critical for StatefulSet workloads where Pods aren't interchangeable: a Postgres primary always needs to be addressed individually for write traffic; Kafka brokers identify themselves via these names for inter-broker communication; Elasticsearch nodes use them for cluster formation. Without headless Service, you can't reliably address individual replicas — defeating the point of StatefulSet's stable-identity promise. The pattern: StatefulSet + headless Service + volumeClaimTemplates work together; each Pod gets a stable name, a stable DNS entry, and its own persistent volume that follows it across restarts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random pairing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "StatefulSet + headless Service together give stable per-Pod identity and DNS. The combination is what makes StatefulSet useful for stateful workloads where Pods aren't interchangeable.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team standardizes on Kubernetes and considers running Postgres on it via a StatefulSet. They're AWS-only. What's the honest tradeoff?",
+      "choices": [
+        { "id": "a", "text": "Always run Postgres on K8s." },
+        { "id": "b", "text": "For AWS-only teams, RDS or Aurora is usually the better choice. Managed databases are highly engineered: automatic failover, point-in-time recovery, backups, version upgrades, scaling — all operated by AWS at enormous scale. Running Postgres on K8s (even with good operators like CloudNativePG or Zalando) requires K8s + Postgres operational expertise: understanding StatefulSet behavior, PVC management, operator quirks, failover semantics, backup configuration, network policies, monitoring. This is real operational work that managed services eliminate. The case for K8s Postgres: multi-cloud portability (run the same database on AWS, GCP, on-prem), specific configurations not supported by managed services, building internal platform consistency, very large teams where K8s expertise is universal. For an AWS-only team without strong reasons to break out of managed services, RDS is the right answer. K8s for the application tier; managed databases for state. The 'everything on K8s' position is more popular at conferences than appropriate in practice for most teams." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never use any database." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Databases on Kubernetes is a real choice but rarely the right default for AWS-only teams. Managed services win on operational maturity. K8s databases for specific reasons (portability, custom needs), not by default.",
+      "points": 1
+    }
+  ]
+}

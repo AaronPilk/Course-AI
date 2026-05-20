@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Negative keywords",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the default match type for most negative keywords?",
+      "choices": [
+        { "id": "a", "text": "Negative broad." },
+        { "id": "b", "text": "Negative phrase. Negative phrase blocks queries containing your phrase in that order without over-blocking semantic neighbors. Negative broad can over-filter — adding 'cheap' as negative broad blocks both 'cheap running shoes' (intended) and 'cheapest insurance' (collateral damage). Negative exact under-filters — only blocks the exact query, misses variants. Default to negative phrase; escalate to negative broad only when confident; use negative exact rarely (a single specific query you want gone)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Negative exact." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Negative phrase by default. Broad over-filters; exact under-filters.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account running broad match for 30 days, spend looks bloated. First thing to do?",
+      "choices": [
+        { "id": "a", "text": "Pause all broad keywords." },
+        { "id": "b", "text": "Open the Search Terms report, sort by impressions descending, scan the top queries for ones that don't match target intent (jobs, free, info-only, wrong category, competitor brand drift), add them as negatives at the appropriate level — usually negative phrase. A 15-minute weekly session catches 90% of waste. Skipping this audit is how broad-match accounts bleed money. Privacy aggregation hides long-tail queries but you'll see the spend-relevant majority. Don't kill broad match before doing the negatives work — it's almost always fixable through filtering." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to exact match." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Search Terms report → add negative phrases. Don't kill broad; filter it.",
+      "points": 1
+    }
+  ]
+}

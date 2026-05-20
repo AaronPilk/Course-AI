@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: IAM in depth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does AWS evaluate whether an IAM request is allowed when multiple policies apply?",
+      "choices": [
+        { "id": "a", "text": "First matching policy wins." },
+        { "id": "b", "text": "Default deny, explicit deny always wins, otherwise need an explicit allow somewhere. AWS evaluates all applicable policies: identity-based (attached to the user/role), resource-based (attached to the target resource), permission boundaries, SCPs at the organization level, and session policies. If any policy contains an explicit Deny matching the request, the request is denied regardless of any Allow. If no Deny matches and any Allow matches across the combined policies, the request is allowed. If neither condition applies, default deny kicks in. Practical implications: Deny is the nuclear option — use it sparingly and carefully because it overrides everything. Allow has to exist somewhere; default behavior is no permissions. Multiple policies combine: a user can have permissions from identity policy + group policies + role assumption + resource policies all contributing. When debugging 'why doesn't this work?', check all five policy sources and look for any Deny statements that might be blocking." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Whichever policy was attached most recently." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deny wins, Allow needed, default deny. This three-rule evaluation logic is the foundation of IAM debugging. Most 'why can't I do this?' issues trace to either a missing Allow or an unexpected Deny.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A developer needs read access to one S3 bucket for a project. The team attaches the managed policy 'AmazonS3ReadOnlyAccess'. What's the issue and what's the fix?",
+      "choices": [
+        { "id": "a", "text": "Nothing wrong." },
+        { "id": "b", "text": "Way too broad — the managed policy grants read access to ALL S3 buckets in the account, not just the project's bucket. If the developer's credentials are compromised or misused, the blast radius is everything stored in S3 across the entire account, including production data, customer files, backups, internal documents. The fix is a custom policy scoped to exactly what's needed: `s3:GetObject` and `s3:ListBucket` on `arn:aws:s3:::project-x-data` and `arn:aws:s3:::project-x-data/*` (the bucket itself for listing and the objects within for reading). Add conditions if appropriate (specific source IP, MFA required for sensitive data). This is least privilege in action — slightly more work upfront, dramatically smaller blast radius forever. The managed-policy shortcut is convenient but accumulates risk: every developer with 'AmazonS3ReadOnlyAccess' is an account-wide data exposure waiting to happen if their credentials get compromised. Use managed policies as starting templates; copy and tighten them into project-specific custom policies for actual grants." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to root account." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Managed policies are convenient but usually too broad for least privilege. Custom policies scoped to specific ARNs are the right pattern for project-specific access. AWS IAM Access Analyzer can help generate these from observed usage.",
+      "points": 1
+    }
+  ]
+}

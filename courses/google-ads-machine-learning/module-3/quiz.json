@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Performance Max and the campaign mix",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best summary of when PMax wins vs loses?",
+      "choices": [
+        { "id": "a", "text": "Always wins or always loses." },
+        { "id": "b", "text": "Wins: e-commerce with clean product feed, multi-surface customer journey, strong first-party audience signals, adequate creative variety (5+ headlines, 4+ descriptions, multi-ratio images, 1+ video), $10k+/mo with mature pixel signal. Loses: thin conversion volume (<30/30 days), tiny creative library, B2B narrow audiences, strict reporting/compliance needs. Bad creative + thin audience signals + sparse feed = bad PMax regardless of automation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PMax for e-commerce with feed + audience + creative volume; not for thin signal or B2B narrow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "ROAS great on PMax but new customers flat. Fix?",
+      "choices": [
+        { "id": "a", "text": "Increase budget." },
+        { "id": "b", "text": "Enable Customer Acquisition mode in the PMax campaign settings — 'Bid higher for new customers only' (still serves existing but de-prioritizes) or 'Bid for new customers only' (excludes existing). Upload the full customer list as the existing-customer signal. PMax was likely repainting existing buyers and inflating ROAS with non-incremental sales. ROAS will dip short-term but new-customer rate should climb. One of PMax's most underused settings." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause PMax." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable Customer Acquisition mode with customer list uploaded.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "How should you handle asset performance labels in PMax?",
+      "choices": [
+        { "id": "a", "text": "Pause Best assets." },
+        { "id": "b", "text": "Replace Low assets weekly with new variants; let Best assets continue running. Best assets are doing the work — pausing them concedes delivery to weaker creative. Goal is fresh variety at the bottom while top performers keep delivering. Aim for 1-2 Low-asset replacements per asset group per week. Over time new variants may surface as winners and rotate labels — healthy evolution." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause Low only, don't replace." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Replace Low, keep Best. Refresh the bottom weekly.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Mature PMax campaign with 800-SKU catalog, generic feed titles. Top-leverage fix?",
+      "choices": [
+        { "id": "a", "text": "Add more creative." },
+        { "id": "b", "text": "Feed optimization. Generic titles forfeit search-term matching — PMax can't match products to user intent without meaningful text. Rewrite titles like SEO content: brand + product type + key attributes + color/size where relevant. Add descriptive descriptions. Populate custom labels (margin tier, hero/long-tail, seasonality) so asset groups can be segmented by product strategy. Typical feed-optimization lift on a mature PMax account is 20-40% — bigger than most creative tests." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Higher bid target." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Feed is half the campaign. Rewrite titles, add descriptions, populate custom labels.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Mature account hits new-customer plateau on Search + PMax. Missing channel?",
+      "choices": [
+        { "id": "a", "text": "Display." },
+        { "id": "b", "text": "Demand Gen — visual ads on YouTube Shorts, Discover, Gmail optimized for top-of-funnel awareness and consideration. Search and PMax harvest existing demand; they can't grow without something feeding the consideration pool. Allocate 10-20% of paid budget to Demand Gen for awareness/consideration. Measure with brand-search lift, direct traffic increases, longer-window attribution. Short-window CPA looks worse but downstream lift is real." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More Search budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Demand Gen for top-of-funnel. Search/PMax can't grow without it.",
+      "points": 1
+    }
+  ]
+}

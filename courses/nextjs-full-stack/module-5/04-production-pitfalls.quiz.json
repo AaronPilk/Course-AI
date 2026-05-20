@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Production pitfalls",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Most common cause of hydration mismatch errors?",
+      "choices": [
+        { "id": "a", "text": "Next.js bug." },
+        { "id": "b", "text": "Server-rendered HTML differs from what React tries to render during client hydration. Triggers: using `Date.now()`, `Math.random()`, or `new Date()` directly in render (different value server vs client); accessing `window`/`localStorage`/`navigator` in code paths that also run on the server; CSS-in-JS not properly configured for SSR; browser extensions modifying HTML. Fix: move client-only logic into useEffect so it runs only after hydration; for genuinely-different content like timestamps, use `suppressHydrationWarning`; for theme switching, use libraries like next-themes that handle the SSR case properly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server/client divergence — Date.now, random, window access. Move to useEffect.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Production build fails on Vercel but works locally. Common causes?",
+      "choices": [
+        { "id": "a", "text": "Random Vercel issue." },
+        { "id": "b", "text": "Multiple possibilities to check: (1) Node version mismatch — pin via `\"engines\": { \"node\": \"20.x\" }` in package.json so local and Vercel use the same version; (2) Case sensitivity — macOS dev is case-insensitive but Linux production is case-sensitive, so `import './Foo'` works locally with `foo.tsx` but fails on Linux; (3) Missing committed files — something in .gitignore that's needed at build time; (4) Different env vars — variables set locally in .env.local but not configured in Vercel Production scope. Reproduce by running `npm run build` on a clean checkout in a Linux environment (Docker locally or Vercel preview)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Try again." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Node version, case sensitivity, missing files, or env vars not in production scope.",
+      "points": 1
+    }
+  ]
+}

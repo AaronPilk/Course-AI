@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Creative is the new targeting",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is the hook the highest-leverage lever?",
+      "choices": [
+        { "id": "a", "text": "It looks nice." },
+        { "id": "b", "text": "Average Meta ad watch time is under 4 seconds — whether the user stops depends almost entirely on the first 1-3 seconds. Everything downstream (value prop, social proof, CTA) only happens if the hook earns it. Spread between top-performing and bottom-performing hooks in the same ad set is typically 2-3x. A strong hook can carry an average offer; a weak hook kills a great offer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It saves money." }
+      ],
+      "correct_answer": "b",
+      "explanation": "First 2-3 seconds decides if the rest of the ad matters.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Library of 12 ads, all featuring the founder, all 30s talking-head, all anti-aging angle. Performance plateau. Best move?",
+      "choices": [
+        { "id": "a", "text": "Make 12 more founder videos." },
+        { "id": "b", "text": "Diversify on every axis — that's 12 variants of one ad, not a diversified library. Add UGC (real customers or creators producing UGC-style), different creators reaching different demos, formats beyond talking-head (demos, before/after, carousels), and new angles (acne, sensitive-skin, routine-simplifier). Goal is 8-12 ads varying on multiple dimensions. Most scaling accounts run a creator pool — 2-5 creators on retainer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Variety beats variants. Diversify creator, format, angle, tone, hook.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What triggers learning-phase reset?",
+      "choices": [
+        { "id": "a", "text": "Any change." },
+        { "id": "b", "text": "Ad-set-level changes: significant budget shifts (>20% in 7 days), targeting changes (audiences/exclusions), optimization-event swaps, bid-strategy changes. Adding/pausing individual ads inside a healthy ad set does NOT trigger reset. So creative iteration at the ad level preserves the ad set's accumulated signal — the modern operating pattern is to keep ad sets stable and rotate creative inside them weekly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Adding any ad." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ad-set-level edits reset learning; ad-level changes don't.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Daily-one-ad launches are giving random results. Fix?",
+      "choices": [
+        { "id": "a", "text": "Launch slower." },
+        { "id": "b", "text": "Batch weekly: 3-5 new ads launched together on the same day, 2-3 worst-performing paused the same day. Single-ad daily launches starve new ads — Meta rotates impressions across the existing library and a lone new ad competes against incumbents that already have signal. Batched launches give new ads fair shared exposure and a clean comparison set; readable results in 5-7 days." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more single ads." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Weekly batches of 3-5 in / 2-3 out, same day.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Daily dashboard for an active account — which 6 metrics?",
+      "choices": [
+        { "id": "a", "text": "Reach, reactions, comments, shares, saves, video plays." },
+        { "id": "b", "text": "Spend, CPA, ROAS, CTR, hook rate, frequency. These cover all three creative layers (stop / hold / convert) and surface the most common failure modes — rising frequency, falling hook rate, CPA drift, ROAS breach. Engagement metrics are diagnostics, not goals; ignore them on the daily view. Weekly view adds prior-week deltas on the same six." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Every column." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Six metrics: spend, CPA, ROAS, CTR, hook rate, frequency.",
+      "points": 1
+    }
+  ]
+}

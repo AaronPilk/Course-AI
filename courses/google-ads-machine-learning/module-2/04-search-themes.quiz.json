@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: PMax search themes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Are search themes in Performance Max the same as keywords?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — they're soft hints to PMax's ML about which queries to consider matching, not match-typed targeting. You add 5-25 short phrases per asset group; Google's NLP interprets them alongside audience signals, product feed content, and asset content to decide which queries trigger the ad. No match types, no individual bids — PMax decides where and when based on the full signal mix. Search themes complement audience signals (which are usually the bigger lift driver) and creative assets." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Yes, but with no match types." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Search themes are hints, not constraints. PMax is signal-driven, not keyword-driven.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Launching first PMax campaign for an e-commerce brand. Single biggest lift driver to set up?",
+      "choices": [
+        { "id": "a", "text": "Long ad copy." },
+        { "id": "b", "text": "First-party audience signals — upload your existing customer list as a Customer Match audience and add it as the primary audience signal for asset groups. PMax uses it to identify lookalikes and weight delivery toward likely buyers. Combined with a clean Merchant Center product feed and varied creative (5+ headlines, 4+ descriptions, 4+ images in multiple ratios, 1+ video), this is the foundation. Without strong audience signals, PMax relies on weaker inputs (search themes alone, generic in-market segments) and underperforms its potential significantly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bid cap." }
+      ],
+      "correct_answer": "b",
+      "explanation": "First-party customer-list audience signals drive the biggest PMax lift.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Operating rhythm",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What belongs in the daily check vs the weekly session?",
+      "choices": [
+        { "id": "a", "text": "Same things, different cadence." },
+        { "id": "b", "text": "Daily is monitor-only: glance at 3-day-old spend/CPA/ROAS/hook rate/frequency, note anomalies, no edits. Weekly is action: 60-90 minute session covering creative refresh (3-5 new ads, 2-3 paused), performance review, hygiene, budget decisions, planning. Doing weekly work daily resets learning and over-reacts to noise. Doing daily work weekly misses fires." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only weekly matters." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Daily = monitor; weekly = action. Don't conflate them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account has been running 8 months. Daily ops only, no monthly or quarterly review. Performance slowly worse. Why?",
+      "choices": [
+        { "id": "a", "text": "Algorithm got worse." },
+        { "id": "b", "text": "Skipped higher-order rhythms. Monthly audit catches stale CRM uploads, lookalike seed decay, audience overlap drift, AEM event-priority issues, retired campaigns lingering — each adds 2-5% efficiency loss compounding to 20-30% over months. Quarterly lift tests ground attribution; without them you're scaling on inflated numbers. Add a 2-3 hour monthly audit and an annual lift test; most of the recoverable performance is hidden in skipped hygiene." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random variance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Skipped monthly + quarterly = silent decay. Add the higher rhythms.",
+      "points": 1
+    }
+  ]
+}

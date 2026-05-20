@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Nsight profiling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `nvidia-smi` showing 100% GPU utilization not the same as 'the GPU is being used well'?",
+      "choices": [
+        { "id": "a", "text": "It is the same." },
+        { "id": "b", "text": "nvidia-smi reports the percentage of time the GPU has at least one kernel running, not whether those kernels are doing useful work efficiently. A kernel that spins in a memory-stall loop, or that runs at 5% of peak FLOPS, still registers as '100% util' on nvidia-smi because the GPU is technically active. Real utilization quality requires deeper profiling — Nsight Compute can show SM throughput (% of compute peak), memory throughput (% of bandwidth peak), and occupancy. A GPU at nvidia-smi 100% but Nsight 'SM throughput 8%' is running poorly-tuned kernels and there's huge optimization opportunity. Conversely, a GPU at nvidia-smi 60% might actually be well-optimized but limited by data loading or other host-side factors. nvidia-smi is a sanity check, not a diagnostic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random metric." }
+      ],
+      "correct_answer": "b",
+      "explanation": "nvidia-smi tells you 'is the GPU doing anything?' It doesn't tell you 'is it doing the right thing efficiently?' That requires Nsight.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Nsight Systems shows the timeline has long gaps between GPU kernels. The GPU sits idle while the CPU is busy. What's the diagnosis?",
+      "choices": [
+        { "id": "a", "text": "GPU is too fast." },
+        { "id": "b", "text": "CPU-side bottleneck — the GPU is being starved of work. Common causes: slow data loading (single dataloader worker, no pinned memory, slow disk); heavy CPU preprocessing of each batch; Python overhead from many small framework calls; synchronization points that force the CPU to wait for the GPU. Fixes depend on the specific cause: more dataloader workers and pinned memory for data loading; move preprocessing to GPU; reduce Python overhead via torch.compile or batching; eliminate unnecessary synchronizations (no .item() calls in hot loops). The general principle is that GPU performance is only relevant when the GPU has work to do — feeding the GPU is a separate engineering problem from making kernels fast." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy a faster GPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Many performance problems are CPU-side or I/O-side, not GPU-side. The Nsight Systems timeline reveals this immediately. Optimizing the GPU when the GPU isn't the bottleneck wastes effort.",
+      "points": 1
+    }
+  ]
+}

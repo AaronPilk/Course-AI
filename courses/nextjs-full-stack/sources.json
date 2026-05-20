@@ -1,0 +1,10 @@
+{
+  "slug": "nextjs-full-stack",
+  "sources": [
+    { "type": "docs", "url": "https://nextjs.org/docs", "label": "Next.js documentation" },
+    { "type": "docs", "url": "https://nextjs.org/docs/app", "label": "App Router documentation" },
+    { "type": "docs", "url": "https://react.dev/reference/react", "label": "React documentation" },
+    { "type": "docs", "url": "https://vercel.com/docs", "label": "Vercel documentation" },
+    { "type": "docs", "url": "https://web.dev/vitals", "label": "Web Vitals" }
+  ]
+}

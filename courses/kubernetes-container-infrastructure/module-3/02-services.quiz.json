@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Services",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is creating a separate LoadBalancer Service per microservice an antipattern at scale?",
+      "choices": [
+        { "id": "a", "text": "It's not — that's the recommended pattern." },
+        { "id": "b", "text": "Cost and infrastructure churn. Each LoadBalancer Service on AWS provisions a real cloud load balancer (ALB or NLB) — roughly $16-30/month each plus per-LCU charges. Fifty microservices × $25/month = $1250/month just for load balancers, before traffic costs. Each LB also occupies AWS resources (security groups, target groups, listener rules) and adds DNS to manage. The standard pattern is one Ingress controller (NGINX, AWS LB Controller, Traefik) with one load balancer that routes paths and hosts to many internal ClusterIP Services. Same external surface, dramatically less cost and operational overhead. LoadBalancer Service is the right pattern when you need a dedicated LB per service (different SSL certs, different security postures, distinct external addresses) — but for typical microservice fleets, Ingress is the answer. Internal services should be ClusterIP only; external entry should usually be one or a few Ingress-managed LBs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's free." }
+      ],
+      "correct_answer": "b",
+      "explanation": "LoadBalancer-per-Service is expensive and operationally noisy. Ingress + ClusterIP Services is the standard pattern for many services behind one LB.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team's gRPC client sends 1000 requests to a Service backed by 5 Pods. All 1000 requests hit the same Pod. Why?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes is broken." },
+        { "id": "b", "text": "gRPC uses HTTP/2 which multiplexes many requests over a single long-lived connection. When the client first opens a connection to the Service's ClusterIP, kube-proxy's iptables routes that connection to one specific Pod — for the connection's lifetime. All subsequent requests on the same connection arrive at the same Pod. The Service routes connections, not individual requests. For balanced gRPC distribution, the standard fixes are: (1) use a headless Service (clusterIP: None) so the client gets a list of Pod IPs from DNS and can do client-side load balancing — most modern gRPC libraries support this; (2) use a service mesh (Istio, Linkerd) where the sidecar proxy load-balances request-by-request transparently; (3) configure the gRPC client with a load balancing policy and reconfigure connections periodically. This pattern surprises teams the first time because HTTP/1.1 services seem to load-balance fine — the difference is HTTP/2's connection multiplexing. Same issue affects any long-lived connection protocol (some database drivers, queue clients)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart the cluster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HTTP/2 multiplexing + connection-level Service routing = single Pod gets all requests. Fix: client-side load balancing via headless Service, or service mesh, or driver-specific policies. This bites many teams once.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Estimated action rate",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does fragmenting budget across many ad sets often hurt performance?",
+      "choices": [
+        { "id": "a", "text": "More ad sets = more spend." },
+        { "id": "b", "text": "The ML model behind estimated action rate needs roughly 50 conversion events per ad set per week to escape learning phase and reach stable predictions. Fragmented budget means many ad sets each get a few events; none reach the learning threshold; all stay exploratory with high CPA variance. Consolidating to fewer ad sets, each getting enough events, lets the model learn and stabilize. Modern best practice: a few broad ad sets at higher per-set budget beats many narrow ad sets at lower per-set budget." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random advice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ML needs volume to learn. Consolidate budget into fewer ad sets above the learning threshold.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "EMQ (Event Match Quality) is 4.5. What does it mean and how to fix?",
+      "choices": [
+        { "id": "a", "text": "Doesn't matter." },
+        { "id": "b", "text": "Meta is struggling to match conversion events back to users; the ML can't learn well. Below 6.0 is a problem. Fixes: (1) Send events server-side via Conversions API in addition to pixel — server-side reliably captures events that browsers block; (2) Include hashed user data (email, phone, IP, user agent) on each event so Meta has matching keys; (3) Deduplicate pixel + CAPI events with the same event_id so they're not double-counted; (4) Send relevant funnel events (ViewContent, AddToCart, Purchase), not just the final conversion. Each step improves match rate. Combined with iOS 14.5 signal-loss mitigations, you can usually get EMQ to 7-9 — well above the 6.0 threshold for effective ML." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stop running ads." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EMQ below 6 hurts EAR. Fix via CAPI, hashed user data, deduplicated events, full funnel coverage.",
+      "points": 1
+    }
+  ]
+}

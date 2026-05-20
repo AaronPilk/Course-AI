@@ -1,0 +1,74 @@
+{
+  "slug": "supabase-full-stack",
+  "title": "Supabase Full Stack Development",
+  "subtitle": "Postgres, Auth, Realtime, Storage, and Edge Functions — the open-source Firebase, but stronger.",
+  "category": "Engineering",
+  "level": "Intermediate",
+  "estimatedHours": 6,
+  "brand": {
+    "primary": "#3ECF8E",
+    "accent": "#1F1F1F",
+    "secondary": "#249361",
+    "tertiary": "#FFFFFF",
+    "logo": "/brands/supabase-full-stack.svg",
+    "gradient": "linear-gradient(135deg, #1F1F1F 0%, #249361 55%, #3ECF8E 100%)"
+  },
+  "summary": "Supabase gives you a production-grade Postgres database with auth, realtime subscriptions, storage, edge functions, and a generated REST + GraphQL API on top — all open source and self-hostable. This course walks through building a real full-stack application with Supabase: schema design and Row Level Security, auth flows with magic links and OAuth, realtime channels, storage with policies, and edge functions for server logic. By the end you can architect a Supabase backend that scales from prototype to production.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "Postgres is the platform",
+      "objective": "Understand why Postgres-first changes the architecture.",
+      "lessons": [
+        { "position": 1, "title": "Why Postgres beats NoSQL for most apps", "objective": "Relational guarantees + JSONB flexibility." },
+        { "position": 2, "title": "Schema design with extensions and types", "objective": "UUIDs, enums, JSONB, generated columns." },
+        { "position": 3, "title": "The auto-generated API", "objective": "PostgREST and what it gives you for free." },
+        { "position": 4, "title": "Migrations and database branching", "objective": "Manage schema changes without fear." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Row Level Security — the right way to do authz",
+      "objective": "Push authorization into the database.",
+      "lessons": [
+        { "position": 1, "title": "Why RLS changes everything", "objective": "Database-enforced authorization beats middleware." },
+        { "position": 2, "title": "Writing RLS policies", "objective": "USING, WITH CHECK, and auth.uid()." },
+        { "position": 3, "title": "Common patterns: owner, team, public-read", "objective": "Recipes for typical authorization needs." },
+        { "position": 4, "title": "Testing and debugging RLS", "objective": "Diagnostics, performance, and edge cases." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Auth — magic links, OAuth, JWT",
+      "objective": "Real-world authentication done right.",
+      "lessons": [
+        { "position": 1, "title": "Supabase Auth architecture", "objective": "JWTs, sessions, refresh tokens." },
+        { "position": 2, "title": "Email/password, magic links, OTP", "objective": "Passwordless and password flows." },
+        { "position": 3, "title": "OAuth providers and SSO", "objective": "Google, GitHub, Apple, and enterprise SAML." },
+        { "position": 4, "title": "Custom claims and authorization patterns", "objective": "Roles, permissions, multi-tenancy." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Realtime, storage, and edge",
+      "objective": "Beyond CRUD — the additional primitives.",
+      "lessons": [
+        { "position": 1, "title": "Realtime subscriptions explained", "objective": "Postgres logical replication and channels." },
+        { "position": 2, "title": "Storage: buckets, policies, and CDN", "objective": "S3-compatible storage with RLS." },
+        { "position": 3, "title": "Edge functions for server logic", "objective": "Deno-based serverless functions." },
+        { "position": 4, "title": "Vector embeddings with pgvector", "objective": "AI features inside Postgres." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Production operations",
+      "objective": "Run Supabase like a serious team.",
+      "lessons": [
+        { "position": 1, "title": "Performance: indexes, EXPLAIN, connection pooling", "objective": "Where Postgres apps fail at scale." },
+        { "position": 2, "title": "Backups, point-in-time recovery, and disaster planning", "objective": "Don't lose your data." },
+        { "position": 3, "title": "Self-hosting vs managed", "objective": "When to make the switch." },
+        { "position": 4, "title": "Cost optimization at scale", "objective": "Where money leaks and how to plug it." }
+      ]
+    }
+  ]
+}

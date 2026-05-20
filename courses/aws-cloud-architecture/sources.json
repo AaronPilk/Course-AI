@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://docs.aws.amazon.com", "title": "AWS Documentation" },
+    { "url": "https://aws.amazon.com/whitepapers/", "title": "AWS Whitepapers" },
+    { "url": "https://aws.amazon.com/architecture/", "title": "AWS Architecture Center" },
+    { "url": "https://aws.amazon.com/architecture/well-architected/", "title": "AWS Well-Architected Framework" },
+    { "url": "https://aws.amazon.com/blogs/architecture/", "title": "AWS Architecture Blog" }
+  ]
+}

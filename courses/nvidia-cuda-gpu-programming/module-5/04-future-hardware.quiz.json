@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: The future of GPU hardware",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is the trend toward lower-precision data types (FP16 → FP8 → FP4) such a recurring feature of each NVIDIA generation?",
+      "choices": [
+        { "id": "a", "text": "Cost cutting only." },
+        { "id": "b", "text": "Each precision halving roughly doubles peak throughput and halves memory traffic, two of the dominant constraints on AI workloads. Tensor Cores at lower precision can do more operations per cycle because the math units are simpler and more of them fit in the same silicon area. Memory traffic drops proportionally — fewer bytes per parameter means less work for the memory subsystem. The cost is potential accuracy loss, but careful precision management (Transformer Engine, quantization-aware training, mixed-precision training) has shown that modern models tolerate lower precision better than was previously assumed. The structural reason this keeps happening: as compute gets faster, memory becomes more of a bottleneck, and lower precision attacks both compute and memory simultaneously. Hardware roadmaps will likely continue this trend until precision floors hit accuracy limits that algorithm improvements can't compensate for." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lower precision is the most effective lever for hardware doubling at the same silicon budget. The trend will continue as long as model accuracy holds at lower precision. Modern training and inference stacks treat precision as a tunable optimization, not a fixed choice.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team designing AI infrastructure for the next 3 years is debating: buy H100s now or wait for Blackwell B200s. What's the right framing?",
+      "choices": [
+        { "id": "a", "text": "Always wait for newer." },
+        { "id": "b", "text": "Decide based on the value of compute now vs. later. H100 is available, has mature software (PyTorch, TensorRT-LLM, etc. all well-tuned for it), and supply is recovering. B200 offers roughly 2x throughput but is more expensive per unit, has newer software (potentially less mature), and supply is constrained early in availability. The right call depends on: how time-sensitive the work is (if you need compute this quarter, H100); how scale-sensitive the workload is (frontier training benefits more from B200's doubling); and whether budget supports waiting (lost productivity vs. better hardware later). Most large AI organizations do both — buy H100 for immediate needs, plan B200 expansion as availability and software mature. The bad choices are: pure waiting (deferring everything until next gen, missing windows) and pure newest-only (paying premiums for not-yet-mature ecosystems on new hardware). Pragmatic phased adoption fits most situations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy whatever is cheapest." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hardware refresh decisions involve compute-now value vs. wait-for-better cost. Most organizations do phased buys. Pure waiting or pure newest-only strategies leave value on the table.",
+      "points": 1
+    }
+  ]
+}

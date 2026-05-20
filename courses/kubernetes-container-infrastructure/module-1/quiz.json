@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Kubernetes mental model",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most accurate description of how Kubernetes works?",
+      "choices": [
+        { "id": "a", "text": "Manual container placement." },
+        { "id": "b", "text": "Declarative API + controller loop. You declare desired state in YAML (e.g., '3 replicas of this image'), the API server stores it, controllers watch for differences between desired and actual state, and take actions to close the gap. Everything else — Deployments, Services, Ingress — is a layer on top of this control-loop pattern. Internalizing this changes how you debug: most behavior is explained by 'a controller observed a gap and acted to close it.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random scheduling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The control loop is the foundation. State desired, controllers reconcile. Once internalized, most Kubernetes behavior becomes predictable rather than mysterious.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You scale a Deployment from 3 to 10 replicas. Pods stay Pending with 'Insufficient cpu'. What's happening and what's the fix?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes is broken." },
+        { "id": "b", "text": "The scheduler can't find Nodes with sufficient free CPU based on the Pods' resource requests. The Deployment and ReplicaSet controllers did their job — created the Pod objects in the API. The scheduler is trying to assign them but no Node has the capacity. Pods stay Pending until capacity becomes available. Fixes: enable Cluster Autoscaler or Karpenter to add Nodes automatically; right-size Pod resource requests (often over-provisioned); manually add Nodes; reduce other workloads. The control loop is doing exactly what it should; capacity is the bottleneck. Events on the Pod show the scheduling decisions, which is the primary debugging tool for this kind of issue." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart the cluster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pending + Insufficient cpu is a capacity issue, not a Kubernetes bug. The control loop tells you exactly what's blocking it (Events). Add capacity (Autoscaler) or reduce requests.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is etcd the most operationally critical component in a Kubernetes cluster?",
+      "choices": [
+        { "id": "a", "text": "Fastest component." },
+        { "id": "b", "text": "etcd stores all cluster state — every object, every status, every config. The API server is stateless; it reads and writes etcd. Controllers, kubelets, and clients derive their view from etcd's contents. Lose etcd without backup and you lose the cluster's mind: every Deployment, Service, ConfigMap, Secret, Node assignment. Running workloads keep running briefly (cached state on kubelets) but nothing new can happen and recovery is impossible. Managed services run etcd HA across AZs with regular snapshots; self-managed clusters require careful etcd operation. The combination of GitOps (cluster config in git) + etcd snapshots provides defense in depth — but snapshots are the fast restore path." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Largest binary." }
+      ],
+      "correct_answer": "b",
+      "explanation": "etcd is the source of truth. Protect it accordingly. Managed services handle this; self-managed clusters require careful engineering around it.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "When is ECS Fargate a better choice than EKS for an AWS-only Series A startup?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "Almost always for this profile. AWS-only with no existing K8s expertise strongly favors ECS Fargate: simpler concepts (task definitions, services, clusters), tighter AWS integration (IAM task roles, ALB, CloudWatch, Secrets Manager work seamlessly without K8s ecosystem layers), no K8s ecosystem to manage (no Helm, operators, CRDs, version churn every 3-4 months), no $72/month control plane charge per cluster. A team can be productive on ECS in days versus weeks for EKS. Six to ten microservices is comfortably within ECS's sweet spot. EKS makes sense when there's existing K8s expertise, real multi-cloud or hybrid requirements, K8s-specific patterns (operators, custom schedulers, complex orchestration), or hiring strategy targeting K8s-experienced engineers. At Series A stage, engineering time spent learning K8s is engineering time not spent shipping product — usually the wrong tradeoff. If requirements shift later (acquisition brings K8s expertise, multi-cloud becomes a real plan), revisiting EKS is a future decision. ECS Fargate is the right default for this profile." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "When using Windows." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AWS-only + no K8s experience + small team = ECS Fargate. EKS is for teams with specific reasons (existing expertise, portability, special patterns). Match tool to situation.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does it mean that Kubernetes' API is 'declarative'?",
+      "choices": [
+        { "id": "a", "text": "It uses JSON." },
+        { "id": "b", "text": "You submit desired state (what you want), not imperative commands (what to do). Apply YAML describing '3 replicas of this image'; the API stores it; controllers reconcile toward it. This makes operations naturally idempotent — applying the same YAML twice is a no-op. It enables GitOps workflows where git is the source of truth and tools continuously apply what's in the repo to the cluster. It allows recovery from arbitrary state by reapplying the desired state. It separates 'what should be true' (in the API) from 'how to make it true' (in the controllers). Imperative scripts have to handle 'is X already there? did the last step finish? what do I do if this fails halfway through?' Declarative APIs make these questions disappear — submit state, trust reconciliation. This is fundamental to how Kubernetes works and to the GitOps deployment patterns built on top of it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Declarative state + reconciliation is the foundation. Idempotency, GitOps, self-healing — all flow from this. Worth internalizing deeply.",
+      "points": 1
+    }
+  ]
+}

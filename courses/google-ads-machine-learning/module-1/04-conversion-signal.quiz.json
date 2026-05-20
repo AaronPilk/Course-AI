@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Conversion signal",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Three dimensions of conversion signal quality?",
+      "choices": [
+        { "id": "a", "text": "Speed, depth, color." },
+        { "id": "b", "text": "Coverage (tracking the events that actually matter, including upstream predictors), accuracy (events firing once with correct values, GCLID present, deduplicated), and differentiation (different conversion types and values distinguished — a $50 lead and a $5,000 lead are not the same). Smart Bidding can only optimize toward what you measure; thin/inaccurate/undifferentiated signal caps performance regardless of strategy choice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bid, audience, creative." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Coverage, accuracy, differentiation. ML can only optimize what you measure.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "E-commerce account has Purchase, Add to Cart, View Product all marked as 'Include in Conversions' (primary). CPA fine but new-customer revenue weak. Cause?",
+      "choices": [
+        { "id": "a", "text": "Need more keywords." },
+        { "id": "b", "text": "Optimization is diluted. Including Add to Cart and View Product as primary means Smart Bidding bids toward those events alongside Purchase — the system finds users who cart and view, not buyers. Reported 'conversions' look high but new-customer revenue lags because most counted conversions never paid. Fix: set Purchase as the only primary (Include); set Add to Cart and View Product to 'See in conversions reporting' / secondary. Smart Bidding now optimizes solely for sales; secondary events still feed audiences and reporting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase bids." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Too many primary events dilute the optimization. Pick the real outcome.",
+      "points": 1
+    }
+  ]
+}

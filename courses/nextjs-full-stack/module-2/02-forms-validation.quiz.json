@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Forms and validation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why validate on the server in addition to (or instead of) the client?",
+      "choices": [
+        { "id": "a", "text": "Server validation is faster." },
+        { "id": "b", "text": "Server validation is authoritative — it's the security boundary. Malicious actors can bypass any client-side validation by calling the action directly or modifying client code. Server-side validation also works when JavaScript fails (progressive enhancement). Client-side validation is fine as a UX enhancement to give instant feedback without a round-trip, but the server validates again on submit. Use the same Zod schema in both for consistency; one source of truth. Pattern: server is the truth, client is the polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Client validation is unreliable." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server validation is authoritative (security + progressive enhancement). Client is UX polish.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a 'like' button — toggling should feel instant but write to the DB. How?",
+      "choices": [
+        { "id": "a", "text": "Disable until DB confirms." },
+        { "id": "b", "text": "Use `useOptimistic` to update the UI immediately before the server confirms. Set the optimistic state to the new value, fire the Server Action, and React reverts if it fails. Pattern: `const [optimisticLiked, setOptimisticLiked] = useOptimistic(post.liked, (s, newState) => newState)`. Click handler sets the optimistic value then awaits the action. The button shows the new state instantly; the server catches up. Use for simple, easily-reversible mutations like likes, toggles, and adds. Don't use for complex multi-step operations where rollback would confuse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "useState before await." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useOptimistic for instant UI feedback with automatic revert on failure.",
+      "points": 1
+    }
+  ]
+}

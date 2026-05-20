@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Custom audiences and lookalikes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What makes a good lookalike seed?",
+      "choices": [
+        { "id": "a", "text": "Site visitors from last 30 days." },
+        { "id": "b", "text": "1k-10k recent high-quality conversion events, ideally CRM purchasers from last 180 days. Tiny seeds (<1k) produce noisy similarity math; old seeds point at past-customer behavior, not current. Site visitors include too many non-buyers, so the lookalike points at window-shoppers, not buyers. Value-based seeds with LTV column weight toward your best customers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "10k random emails." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Recent, large, high-quality buyer seed — CRM purchasers last 180 days is gold.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account runs broad + 1% lookalike + interest stack in same campaign. Performance is unstable. Why?",
+      "choices": [
+        { "id": "a", "text": "Too few ad sets." },
+        { "id": "b", "text": "Audience overlap — the three ad sets share most of their users, so they bid against each other in the auction. Meta picks one ad per user but the overlap creates inefficiency. Use the audience overlap tool; >20% overlap is a sign to consolidate. Modern practice: one acquisition audience (broad OR a single lookalike) plus separated retargeting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong objective." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stacked overlapping prospecting audiences = self-competition. Consolidate.",
+      "points": 1
+    }
+  ]
+}

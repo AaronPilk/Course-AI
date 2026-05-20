@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CUDA math libraries",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should you almost always use cuBLAS for matrix multiplication instead of writing your own?",
+      "choices": [
+        { "id": "a", "text": "Brand loyalty." },
+        { "id": "b", "text": "Performance and engineering cost. cuBLAS achieves 70-90% of peak FLOPS on matrix multiply because NVIDIA engineers have spent years tuning it with intimate knowledge of each GPU architecture — Tensor Core paths, optimal tile sizes, memory access patterns, async loads, instruction scheduling. A custom kernel by a competent CUDA programmer typically reaches 20-40% of peak; matching cuBLAS requires hundreds of hours of expert work. The library is free, well-tested, version-stable, and updated for new hardware. Writing your own matmul is reinventing a wheel that NVIDIA spent millions of dollars making perfectly round. The exception: when you need fused operations (matmul plus something else) that the library doesn't support, you build on CUTLASS or similar lower-level template libraries — but you still don't start from scratch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Library matmul is one of NVIDIA's most-optimized pieces of code. Beating it is a research project. Use it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team building an LLM inference engine considers whether to write their own attention kernels. What's the right approach?",
+      "choices": [
+        { "id": "a", "text": "Always write custom." },
+        { "id": "b", "text": "Build on existing kernels first; write custom only for specific gaps. Modern cuDNN includes fused attention kernels (FlashAttention-style). TensorRT-LLM provides production-ready transformer inference primitives. CUTLASS exposes the building blocks for tuned matmul+softmax+matmul fusion. Production inference engines (vLLM, TensorRT-LLM, SGLang) compose these existing pieces rather than starting from scratch. Custom kernels are written for specific innovations not covered by existing libraries — e.g., novel attention variants, particular quantization schemes, or hardware-specific optimizations. The right approach is: identify what's truly novel about your workload, use libraries for everything else, write custom only for the specific gap. This focuses engineering effort on the 5-10% where you have real differentiation rather than reinventing the 90% NVIDIA already optimized." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never write custom." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The build-vs-buy decision for CUDA kernels is structural. Libraries cover the common cases superbly; custom kernels exist for the specific gaps. Knowing what exists saves enormous engineering time.",
+      "points": 1
+    }
+  ]
+}

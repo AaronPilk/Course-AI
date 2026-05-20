@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Kubernetes operations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the standard observability stack for Kubernetes?",
+      "choices": [
+        { "id": "a", "text": "kubectl logs only." },
+        { "id": "b", "text": "Prometheus + Grafana for metrics (with kube-state-metrics, node-exporter, cAdvisor as built-in sources), Fluentd or Vector forwarding logs to Loki or Elasticsearch, and OpenTelemetry instrumentation exporting traces to Jaeger or Tempo. Plus alarms on actionable conditions and dashboards the on-call team actually uses. Commercial alternatives (Datadog, New Relic) provide similar capabilities with less operational burden. The discipline is more important than the tool choice: instrument what matters, alert on actionable conditions, prune alarm fatigue regularly, and tie alarms to SLOs and error budgets so the team responds to genuine problems rather than every individual symptom." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prometheus + Grafana + log forwarder + tracing is the open-source K8s stack; commercial APM is an alternative. Discipline (alarm pruning, SLOs) matters more than tools.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "How do HPA and Karpenter (or Cluster Autoscaler) work together?",
+      "choices": [
+        { "id": "a", "text": "Conflicting tools." },
+        { "id": "b", "text": "Complementary scaling layers. HPA scales Pod count up/down based on metrics — CPU, memory, or custom metrics via prometheus-adapter or KEDA. When HPA wants more Pods than current Node capacity allows, those Pods sit Pending. Karpenter (or Cluster Autoscaler) sees Pending Pods and provisions additional Nodes — Karpenter is faster (seconds via direct EC2 API) and picks instance types matching Pod requirements; Cluster Autoscaler uses ASGs (minutes, fixed types). When traffic drops, HPA scales Pods down; Karpenter notices underutilized Nodes and removes them (respecting PodDisruptionBudgets). Together they produce a cluster that scales to load and idles down to save cost without manual intervention. KEDA layers on top for richer triggering (SQS queue depth, Kafka lag, cron schedules) — especially useful for event-driven workloads that scale to zero." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pick one only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HPA scales Pods; Karpenter/Cluster Autoscaler scales Nodes. KEDA extends HPA with richer triggers. Together they enable autoscaling at both layers.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does every K8s deploy produce a 30-second error spike on some teams' clusters?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes bug." },
+        { "id": "b", "text": "Missing graceful shutdown handling in the application. During a rolling update, old Pods receive SIGTERM; without proper handling, they exit immediately, dropping in-flight requests. The fix has multiple parts: (1) handle SIGTERM in the application — stop accepting new connections, finish active requests, then exit; (2) set terminationGracePeriodSeconds longer than your slowest reasonable request; (3) add a preStop lifecycle hook with `sleep 15` so load balancers have time to remove the Pod from rotation before it stops accepting connections; (4) ensure readiness probes correctly report Not Ready during shutdown so Service endpoints exclude the terminating Pod. Combined, these produce truly zero-downtime deploys. The 'every deploy errors briefly' pattern is one of the most common K8s operational issues, and the fix is at the application layer, not in Kubernetes itself." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just deploy less often." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Graceful shutdown is application work. SIGTERM handling + preStop sleep + readiness updates produce true zero-downtime deploys. Without them, K8s rolling updates always error briefly.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A Pod is in CrashLoopBackOff. What's the diagnostic flow?",
+      "choices": [
+        { "id": "a", "text": "Restart the cluster." },
+        { "id": "b", "text": "`kubectl describe pod <name>` for state and recent events (often surfaces the immediate cause), then `kubectl logs <name> --previous` for logs from the last crashed container (the current container is usually empty because it just restarted), then `kubectl exec` into a debugging container for deeper inspection if needed. Common causes: missing ConfigMap or Secret, bad environment variable, dependency unavailable at startup, application startup error, OOMKilled. The discipline of describe-logs-previous-exec, in that order, before guessing, surfaces the cause within minutes for most cases. Without the discipline, debugging becomes speculative and slow. After seeing each failure mode once, on-call work becomes pattern recognition rather than novel investigation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete the Pod." }
+      ],
+      "correct_answer": "b",
+      "explanation": "describe, logs (current + previous), exec — in that order. The universal K8s debug flow. Internalize it.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What separates productive K8s operations from heroic firefighting?",
+      "choices": [
+        { "id": "a", "text": "More on-call engineers." },
+        { "id": "b", "text": "Engineering discipline: observability stack with actionable alarms; runbooks for common failure modes; defensive defaults (resource requests/limits, readiness/liveness probes, PodDisruptionBudgets, default-deny NetworkPolicies, Pod Security Standards restricted, GitOps for deploys); tested backups; cost tagging and budget alerts; periodic security and RBAC reviews. Each is one-time setup; collectively they make the cluster operable rather than mysterious. Productive teams encounter the same failure modes as everyone else but recognize them quickly and apply documented fixes. Heroic teams keep rediscovering the same issues. The shift is treating K8s operations as engineering work — invest in patterns, tooling, and documentation — not as a series of emergencies to handle. After 6-12 months of disciplined operation, most incidents are routine; the team handles them via runbooks rather than novel investigation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Better tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Operating discipline beats heroics. Invest in observability, runbooks, defensive defaults, and patterns. The cluster becomes predictable rather than mysterious.",
+      "points": 1
+    }
+  ]
+}

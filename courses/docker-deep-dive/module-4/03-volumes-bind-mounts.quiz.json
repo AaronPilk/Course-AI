@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Volumes vs bind mounts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use a named volume vs a bind mount?",
+      "choices": [
+        { "id": "a", "text": "Always bind mount." },
+        { "id": "b", "text": "Volumes for production data; bind mounts for development. Volumes are Docker-managed (lives in /var/lib/docker/volumes), portable, survive container lifecycle, no host-path coupling. Bind mounts tie containers to specific host paths and inherit host UID/permission semantics — useful for mounting source code in dev for hot reload, but fragile for production. Always volume-mount database data directories so data survives container recreation. tmpfs for sensitive temp data that shouldn't touch disk." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always volume." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Volumes for production data, bind mounts for dev, tmpfs for sensitive temp.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team runs Postgres in Docker. Data disappears on container restart. Why?",
+      "choices": [
+        { "id": "a", "text": "Docker bug." },
+        { "id": "b", "text": "No volume mounted at /var/lib/postgresql/data. Without a volume, the database files live in the container's writable layer, which is destroyed when the container is removed. Each `docker run postgres` is a fresh database. Fix: mount a named volume at the data directory (`-v pgdata:/var/lib/postgresql/data`). The volume persists across container removals; data survives. Common mistake; obvious in hindsight; bites everyone the first time." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Postgres bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stateful workloads need volume-mounted data directories. Containers are ephemeral; volumes persist.",
+      "points": 1
+    }
+  ]
+}

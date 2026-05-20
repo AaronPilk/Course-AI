@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Host and device memory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is the 'round-trip' pattern (copy to GPU, kernel, copy back, CPU function, repeat) so damaging to performance?",
+      "choices": [
+        { "id": "a", "text": "It's not — looks fine." },
+        { "id": "b", "text": "PCIe bandwidth (~32-64 GB/s) is roughly 50x slower than GPU memory bandwidth (~3,000 GB/s on H100). Each round-trip in the inner loop pays two PCIe transfers plus latency overhead per iteration. For a workload doing many iterations with small per-iteration compute, the transfer time dominates wall-clock time — the kernel could be 10x faster and total runtime would barely change. The fix is to keep data on the GPU as long as possible: convert the CPU function to a GPU kernel, batch operations, and only transfer at program boundaries or for checkpointing. Profiling tools specifically flag this anti-pattern because it's both common and devastating." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Higher electricity bill." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PCIe is the throat of the GPU. Inner-loop transfers force every operation through that throat. Keeping data on the GPU and doing all compute there is one of the most important CUDA optimizations.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team wants simpler code and adopts cudaMallocManaged (unified memory) everywhere. Performance drops 30% vs. their explicit-copy version. Why?",
+      "choices": [
+        { "id": "a", "text": "Bug in unified memory." },
+        { "id": "b", "text": "Unified memory auto-migrates pages on demand — convenient, but the runtime decides when to move data, often suboptimally. Pages may migrate to CPU when the program accesses them there, then need to migrate back when the GPU touches them next. Each migration costs PCIe time, and the migrations often happen at moments that block compute. Explicit cudaMemcpy lets you control timing precisely: transfer everything up front, do all the compute on GPU, transfer results back at the end. For predictable access patterns this is much faster. Unified memory shines for complex data structures (linked lists, trees) and rapid prototyping where you don't want to manage transfers manually. For performance-critical kernels with predictable patterns, explicit management usually wins by 20-40%." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardware mismatch." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unified memory trades performance for programmer convenience. The runtime's migration decisions are reasonable but not optimal. For predictable, performance-critical code, explicit cudaMemcpy + cudaMalloc is faster despite being more code.",
+      "points": 1
+    }
+  ]
+}

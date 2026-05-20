@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: pgvector",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does pgvector beat a dedicated vector DB like Pinecone?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "Apps already on Postgres/Supabase, datasets under 10M vectors, workloads where you need to filter by relational data (user_id, project_id, language, etc.), and one-system simplicity. pgvector keeps vectors next to relational data with one auth system (RLS), one backup story, and one operational stack. Dedicated vector DBs win at hundreds-of-millions+ scale, multi-tenant vector workloads at massive scale, or specialized index needs. For 95% of teams in 2026, pgvector is the right tool — and the metadata-filtering story is materially better than dedicated vector DBs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pinecone always wins." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sub-10M vectors + relational filtering + one-system simplicity = pgvector wins.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building production semantic search. Pure vector search misses some exact keyword matches. Fix?",
+      "choices": [
+        { "id": "a", "text": "Increase match threshold." },
+        { "id": "b", "text": "Hybrid search — combine full-text search and vector similarity. Add a tsvector column on the content with a GIN index, then a search function that ranks by a weighted blend: e.g., `0.5 * ts_rank(content_tsv, query) + 0.5 * (1 - (embedding <=> query_embedding))`. Filter to candidates from either signal (full-text match OR vector similarity above threshold) then rank by the combined score. Hybrid consistently outperforms pure vector for production search because pure vector struggles with exact terms (proper nouns, product names, technical jargon) while full-text struggles with semantic paraphrases. The combination catches both." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More dimensions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hybrid (full-text + vector) consistently beats pure vector for production search.",
+      "points": 1
+    }
+  ]
+}

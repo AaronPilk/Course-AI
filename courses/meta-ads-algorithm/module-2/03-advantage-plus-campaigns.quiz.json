@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Advantage+ campaigns",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the Existing Customer Budget Cap in Advantage+ Shopping Campaigns do?",
+      "choices": [
+        { "id": "a", "text": "Caps total budget." },
+        { "id": "b", "text": "Specifies a CRM customer list and a percentage of campaign budget that may reach those existing customers. The rest goes to net-new acquisition. Lets ASC go broad (including retargeting overlap) while you control how much budget repaints existing buyers. Typical: 20-30% for established brands, 10-15% for new-acquisition focus." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pauses ads after target spend." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cap controls retargeting-vs-new-acquisition split inside ASC.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Advantage+ campaign with 2 creatives running 4 days, CPA way above manual. Diagnosis?",
+      "choices": [
+        { "id": "a", "text": "ASC is broken." },
+        { "id": "b", "text": "Two reasons usually compound. (1) ASC's learning phase is longer than manual because it explores a wider audience — 4 days is too early to judge, wait 5-7 days. (2) ASC rotates aggressively across creatives; with only 2 it can't optimize variety. Add 5-10 more creatives (videos + statics + UGC) and let it run a full week before deciding. Pausing prematurely or operating with a thin creative library are the two most common ASC failure modes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Raise the bid." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Too early + too few creatives. ASC needs time and a library.",
+      "points": 1
+    }
+  ]
+}

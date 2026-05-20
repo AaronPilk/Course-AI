@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Occupancy and bottlenecks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why isn't targeting 100% occupancy always the right optimization goal?",
+      "choices": [
+        { "id": "a", "text": "100% is always best." },
+        { "id": "b", "text": "Occupancy is a means to latency hiding, not an end. Above ~40-50% occupancy, additional warps give diminishing returns because the scheduler already has enough work to swap between during stalls. Meanwhile, the cost of high occupancy can be real: limiting registers per thread forces register spilling to slow local memory; limiting shared memory per block prevents effective tiling; smaller blocks reduce intra-block cooperation opportunities. Sometimes a kernel with 50% occupancy and lots of per-thread registers + heavy shared-memory reuse outperforms the same kernel restructured to hit 100% occupancy. The right target is the occupancy value that maximizes actual performance for your specific kernel, which often isn't the maximum. Profile to find it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random nuance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Occupancy is a popular metric because it's easy to compute, but it's not the goal. The goal is performance, which depends on the bottleneck — sometimes that's latency hiding (where occupancy helps), sometimes it's per-thread work (where occupancy hurts).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Nsight Compute shows: SM throughput 30%, memory bandwidth utilization 95%, achieved occupancy 80%, warp stall reason 'Memory Dependency'. What's the bottleneck and what should you fix?",
+      "choices": [
+        { "id": "a", "text": "Occupancy is too low; add more threads." },
+        { "id": "b", "text": "Memory-bound. The memory bandwidth at 95% of peak is the signal — you're saturating DRAM. Compute is idle (30%) because threads are waiting on memory. Occupancy is fine (80%) so you have warps to hide latency, but there's no escape from the memory bandwidth ceiling itself. The fix isn't more threads or more occupancy — it's reducing memory traffic. Options: shared-memory tiling to reuse data, switch to lower-precision data types (FP16 = half the bytes), better coalescing if it's not already optimal, vectorized loads (float4 instead of float), or algorithmic changes to do more work per byte loaded. After these, the bandwidth utilization should drop (you're reading less) and compute utilization should rise (more work per byte). This is the classic memory-bound diagnosis and fix sequence." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy a bigger GPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory-bound kernels need traffic-reduction strategies, not more parallelism. Reading the profiler correctly is what separates effective CUDA optimization from guesswork.",
+      "points": 1
+    }
+  ]
+}

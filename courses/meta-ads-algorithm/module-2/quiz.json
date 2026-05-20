@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Targeting in the Advantage+ era",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Sweet-spot audience size for broad prospecting in a mature account?",
+      "choices": [
+        { "id": "a", "text": "100k." },
+        { "id": "b", "text": "2-10M. Below 1M the algorithm can't find enough lookalike events to stabilize EAR predictions; above 50M, broad only works if creative pre-qualifies. The 2-10M range gives ML enough room to explore while staying tight enough that creative + pixel signal keep delivery focused." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "All of US, all ages." }
+      ],
+      "correct_answer": "b",
+      "explanation": "2-10M is the comfortable range; smaller is unstable, larger needs strong creative.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a lookalike. Three seed options. Which is best?",
+      "choices": [
+        { "id": "a", "text": "10k 90-day site visitors." },
+        { "id": "b", "text": "5k CRM-uploaded purchasers from last 180 days with name + email + phone. Recent, large, high-quality buyer signal — uncorrupted by tracking loss because the data came from your business, not the pixel. Site-visitor seeds point at window-shoppers; old seeds reflect past buying behavior, not current. Value-based version with LTV column weights toward top customers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "500 email subscribers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Recent CRM purchasers = clean buyer signal. Size and quality both matter.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "ASC creative library best practice?",
+      "choices": [
+        { "id": "a", "text": "One hero ad." },
+        { "id": "b", "text": "5-15 ads mixing short-form video (vertical 9:16, 15-30s), static images/carousels, and UGC style. ASC rotates aggressively across users and placements; thin libraries underutilize the engine. Within days a few creatives dominate delivery — refresh weekly: add 2-3 new, remove bottom 2-3, don't pause winners." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "150 random images." }
+      ],
+      "correct_answer": "b",
+      "explanation": "5-15 mixed-format ads, weekly rotation; don't pause winners.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Three prospecting ad sets (broad + 1% LAL + interest stack) in one campaign. Why is performance unstable?",
+      "choices": [
+        { "id": "a", "text": "Too few ad sets." },
+        { "id": "b", "text": "Audience overlap. The three sets share most users, so they bid against each other in the auction — Meta picks one ad per user but the overlap creates inefficiency and fragments learning across sets that should be one. Audit with the audience overlap tool; >20% overlap = consolidate. Modern practice: one acquisition audience (broad OR a single lookalike) plus separated retargeting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong placement." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Overlap = self-competition. Consolidate.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Monthly hygiene priority?",
+      "choices": [
+        { "id": "a", "text": "Bidding strategy review." },
+        { "id": "b", "text": "Refresh CRM customer-list upload (so it includes recent purchasers), audit audience overlap between active ad sets, confirm post-purchase exclusion is still wired, check retargeting frequency for fatigue (>10), verify geo/age/language settings, refresh lookalike seeds. 15-minute monthly habit. Most 'account stopped working' stories trace to skipped hygiene, not algorithm changes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower bids." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Monthly hygiene prevents most performance decay.",
+      "points": 1
+    }
+  ]
+}

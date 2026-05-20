@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Layouts and templates",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the key benefit of `layout.tsx` over rendering shared UI in each page?",
+      "choices": [
+        { "id": "a", "text": "Smaller bundles." },
+        { "id": "b", "text": "Layouts persist across client-side navigations between sibling routes — they don't re-mount, don't re-fetch, and preserve state. Going from /dashboard to /dashboard/settings keeps the sidebar's accordion state, form input, and scroll position; only the page content swaps. Sharing UI by importing it into every page would re-render and re-fetch every navigation. Layouts compose by directory nesting; each layout wraps everything below it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster builds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layouts persist across sibling navigations — no re-mount, state preserved.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need an animation that runs on every page transition. layout or template?",
+      "choices": [
+        { "id": "a", "text": "layout." },
+        { "id": "b", "text": "template.tsx. Templates work like layouts but re-mount on every navigation, firing useEffect and animation lifecycles each transition. Layouts persist across navigations, so an animation defined in a layout's mount effect only fires once. Use templates sparingly — they're the right tool for per-navigation animations or per-navigation state resets, but they sacrifice the state-preservation win that makes layouts so useful. For 95% of cases, layouts are correct; templates are a specialized escape hatch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Neither." }
+      ],
+      "correct_answer": "b",
+      "explanation": "template.tsx re-mounts on each navigation; right for per-transition animations.",
+      "points": 1
+    }
+  ]
+}

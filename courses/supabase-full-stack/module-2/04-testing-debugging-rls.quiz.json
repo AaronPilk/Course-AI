@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Testing RLS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does RLS deny a SELECT — error or empty result?",
+      "choices": [
+        { "id": "a", "text": "Throws permission-denied error." },
+        { "id": "b", "text": "Rows the user can't see appear as if they don't exist — empty result, no error. This is a deliberate security property: 'permission denied' would reveal the row's existence (enumeration attack). The pattern: assert empty results in tests, not error responses. A query that returns 0 rows where the user shouldn't see them passes; a query that returns the row when it shouldn't is the bug. Use integration tests with multiple test users to verify both directions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Crash the database." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Empty result, no error — prevents enumeration attacks.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "RLS policy is causing slow queries on a 10M-row table. Diagnostic and fix?",
+      "choices": [
+        { "id": "a", "text": "Disable RLS." },
+        { "id": "b", "text": "Run `EXPLAIN ANALYZE` on the query — look for sequential scans on columns the policy references and for repeated subquery executions. Common fixes: (1) add an index on the column the policy filters on (`author_id` if `using (author_id = auth.uid())`); (2) mark helper functions `STABLE` so Postgres calls them once per query instead of per row (10-100x improvement); (3) index columns in EXISTS subqueries (e.g., memberships(user_id, team_id) for team-membership checks); (4) simplify deeply nested policy expressions. Don't disable RLS — fix the index and function attributes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase database size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EXPLAIN → index policy columns → mark helpers STABLE → index EXISTS join tables.",
+      "points": 1
+    }
+  ]
+}

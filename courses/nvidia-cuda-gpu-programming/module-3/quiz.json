@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Memory hierarchy and performance",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Rank these CUDA memory spaces from fastest to slowest access.",
+      "choices": [
+        { "id": "a", "text": "Global > Shared > Registers." },
+        { "id": "b", "text": "Registers (fastest, ~1 cycle, per-thread) > Shared memory (~20-30 cycles, per-block, on-chip) > L1/L2 cache (automatic, varies) > Global memory (slowest, ~400-800 cycles, off-chip HBM/GDDR). Constant memory has its own cache and is fast when broadcast to all threads in a warp. Texture/surface memory has spatial caching for 2D/3D patterns. The hierarchy is exposed to the programmer — you choose where data lives. Fast CUDA code uses registers and shared memory aggressively; global memory accesses are coalesced and minimized." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "They're all the same speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Knowing the hierarchy is the foundation of CUDA performance. Programmers explicitly manage what goes in shared memory and how data flows up the hierarchy — unlike CPUs where caches handle most of this automatically.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team converts their particle simulation from `struct Particle { float3 pos; float3 vel; }; Particle particles[N];` to separate arrays `pos_x[N], pos_y[N], pos_z[N], vel_x[N], vel_y[N], vel_z[N]`. Performance jumps 8x. What was happening?",
+      "choices": [
+        { "id": "a", "text": "Random variation." },
+        { "id": "b", "text": "The AoS-to-SoA conversion fixed memory coalescing. With array-of-structs, thread i accessing `particles[i].pos.x` reads from offset (i * sizeof(Particle)) = i * 24 bytes — adjacent threads access non-adjacent memory because pos.y, pos.z, vel.x, vel.y, vel.z sit between consecutive pos.x values. The hardware can't combine those reads into a single transaction; effective bandwidth is a fraction of peak. With struct-of-arrays, thread i's access to `pos_x[i]` lands in fully contiguous memory with neighbors' accesses. The hardware combines all 32 threads' reads in a warp into a single 128-byte transaction. Coalescing restored. This is one of the most important data-layout transformations in CUDA, separating CPU-style design (AoS for cache locality and OO patterns) from GPU-style design (SoA for coalescing)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compiler upgrade." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AoS-to-SoA is the textbook CUDA refactor. CPU developers default to AoS; GPU performance requires SoA. The 8x speedup here is typical.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does shared-memory tiling do to a matrix multiplication kernel's performance?",
+      "choices": [
+        { "id": "a", "text": "Makes it slower." },
+        { "id": "b", "text": "Increases arithmetic intensity by amortizing global memory loads across many computations. In the naive version, each input element is loaded from global memory once per thread that needs it — many redundant loads. In the tiled version, each block loads a TILE×TILE sub-matrix of A and B into shared memory once, then all threads in the block do TILE×TILE×TILE multiply-accumulate operations using the shared tiles. Global memory traffic drops by a factor of TILE; compute units stay busy because shared memory feeds them fast. Naive matmul reaches ~5% of peak FLOPS; tiled reaches ~30%; production library code (cuBLAS) with Tensor Cores reaches 70-90%. The structural lesson: when an algorithm has data reuse, exposing that reuse through shared memory transforms memory-bound into compute-bound." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Has no effect." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tiling is the canonical CUDA optimization. It converts memory-bound algorithms to compute-bound by exploiting data reuse. The same pattern appears in convolutions, stencils, and many other algorithms.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Nsight Compute shows: memory bandwidth 95% of peak, compute utilization 30%, achieved occupancy 80%, warp stall reason 'Memory Dependency'. Diagnose and prescribe.",
+      "choices": [
+        { "id": "a", "text": "Add more threads." },
+        { "id": "b", "text": "Memory-bound — the kernel is saturating DRAM bandwidth and compute is waiting on memory. Occupancy isn't the bottleneck (80% is plenty for latency hiding); the issue is the bandwidth ceiling itself. Fixes target reducing memory traffic: shared-memory tiling for data reuse, switching to lower-precision data types (FP16 cuts bytes in half), vectorized loads (float4 instead of float), better coalescing if it's not already perfect, or algorithmic changes to do more work per byte loaded. After these, memory bandwidth utilization should drop (reading less) and compute utilization should rise (more work per byte loaded). Adding more threads or boosting occupancy further would not help because you're already saturating the memory bus." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy faster GPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory-bound diagnosis is straightforward when you read the profiler. The fix is traffic reduction, not more parallelism. Knowing which optimization fits which bottleneck saves enormous engineering time.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When does the +1 padding trick (`__shared__ float arr[32][33]` instead of `[32][32]`) help, and why?",
+      "choices": [
+        { "id": "a", "text": "It's just a coding style." },
+        { "id": "b", "text": "It eliminates shared-memory bank conflicts in column-wise access patterns. Shared memory is divided into 32 banks; for 32-bit data, bank = address modulo 32. A `[32][32]` array accessed column-wise has all 32 threads in a warp hitting the same bank because `arr[i][col]` for i=0..31 all map to bank `col`. This is a 32-way bank conflict that serializes the access — 32x slower. Padding to `[32][33]` shifts the column mapping: `arr[i][col]` has address `i*33+col` which lands in different banks for different i. The conflict is gone, access runs at full speed. The cost is trivial extra shared memory. This pattern appears in matmul kernels, transpose operations, and many tiled algorithms — anywhere column-direction access on stride-32 data would otherwise cause conflicts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compiler hint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The +1 padding trick is a CUDA classic. Shared-memory bank conflicts are the equivalent of coalescing failures, and this padding pattern fixes one of the most common cases. Worth recognizing in any shared-memory tile code.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tensor cores",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does switching a training run from FP32 to mixed-precision (FP16/BF16) typically give a 2-3x speedup beyond just halving memory?",
+      "choices": [
+        { "id": "a", "text": "FP16 math is intrinsically faster." },
+        { "id": "b", "text": "Tensor Cores. Modern NVIDIA GPUs have specialized hardware units called Tensor Cores that perform small matrix multiplications in one operation at much higher throughput than standard CUDA cores. Tensor Cores activate when matmul inputs are FP16, BF16, TF32, FP8, or other supported low-precision types — but not pure FP32. So when training runs in FP32, the matmuls go through CUDA cores at ~1x throughput. When training runs in mixed-precision (FP16 matmuls with FP32 optimizer state), the matmuls go through Tensor Cores at 8-10x throughput. The wall-clock speedup is smaller (2-3x) because not everything is matmul, but for matmul-dominated workloads like transformers, Tensor Cores are the structural reason mixed-precision is dramatically faster. The framework (PyTorch autocast, etc.) handles the precision casting automatically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random hardware behavior." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tensor Cores are the hardware reason mixed-precision is fast. The framework setting (autocast on/off) controls whether you use them. Forgetting to enable autocast leaves a massive speedup on the table.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A production LLM inference service runs in FP16 on H100. They want more throughput per dollar. What's the typical next optimization?",
+      "choices": [
+        { "id": "a", "text": "Switch to CPU." },
+        { "id": "b", "text": "Move to FP8 (via Transformer Engine) or INT8/INT4 (via TensorRT-LLM or similar quantization). H100's Tensor Cores support FP8 at roughly 2x the throughput of FP16, with the Transformer Engine handling dynamic-range tracking automatically per layer. Many production LLM serving stacks now run FP8 weights/activations with comparable accuracy to FP16 on most benchmarks. For even higher throughput, INT4 or INT8 quantization (weights stored in low precision, activations computed in higher) trades some accuracy for memory savings and throughput — fitting larger models or bigger batches on the same hardware. Quality measurement matters: validate accuracy on your evaluation suite before deploying lower precision in production. Quantization-aware training and post-training quantization techniques exist to mitigate accuracy loss when needed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more GPUs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lower precision is the inference workhorse for cost optimization. FP8 on Hopper, INT8/INT4 with quantization elsewhere. Modern inference serving stacks make this nearly turnkey for popular models.",
+      "points": 1
+    }
+  ]
+}

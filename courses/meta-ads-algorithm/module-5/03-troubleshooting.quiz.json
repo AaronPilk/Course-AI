@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Troubleshooting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Correct diagnostic order when CPA breaks?",
+      "choices": [
+        { "id": "a", "text": "Creative first." },
+        { "id": "b", "text": "Tracking → structure → targeting → creative → bidding → macro. Tracking checks first because measurement bugs masquerade as performance issues constantly — broken pixel/CAPI looks identical to demand collapse in the dashboard. After tracking is verified, check whether learning-phase reset, audience overlap, or wrong-pool structural issues are the cause before changing creative or bidding. Most problems live in layers 1-4; only after exhausting those should you consider seasonal/macro." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random order." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracking first. Otherwise you're solving the wrong problem.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Ad set has been in 'Learning' for 6 weeks straight. Why and what to do?",
+      "choices": [
+        { "id": "a", "text": "Meta is buggy." },
+        { "id": "b", "text": "Under-conversion — the ad set isn't accumulating 50+ optimization events per week, so it never exits learning phase. Causes: budget too low ($20/day with $20 CPA = 7 events/week), optimization event too narrow (Complete Registration getting 20/week), audience too small, or bid cap too tight. Fixes: consolidate budget into fewer ad sets to push each over the threshold, switch optimization to a higher-volume upstream event (InitiateCheckout instead of Purchase if Purchase is too rare), open targeting, or remove caps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Under 50 events/week = never exits learning. Consolidate or shift event.",
+      "points": 1
+    }
+  ]
+}

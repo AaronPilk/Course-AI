@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Postgres is the platform",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why Postgres beats NoSQL for most app workloads in 2026?",
+      "choices": [
+        { "id": "a", "text": "It's newer." },
+        { "id": "b", "text": "ACID transactions across multiple rows/tables, native joins, strong typing with JSONB for flexibility, mature query planner with EXPLAIN, and a rich extension ecosystem (PostGIS, pgvector, pg_trgm). Modern Postgres handles tens of thousands of writes/sec on a primary; replicas and sharding scale further. NoSQL still wins for massive horizontal write scale or pure key-value workloads, but most B2C/B2B SaaS, e-commerce, and marketplace apps are fundamentally relational." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Relational guarantees + JSONB + extensions fit most app workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Choosing primary keys for user-facing tables. Recommendation?",
+      "choices": [
+        { "id": "a", "text": "Auto-increment integers." },
+        { "id": "b", "text": "UUIDs via `gen_random_uuid()` (pgcrypto). Generated client-side so no server round-trip to know the ID; no information leakage (incrementing integers expose row counts); distributed-friendly with no collision risk across regions or shards; compatible with Supabase Auth's `auth.users.id` type. Exception: high-volume internal tables where bigint sequential IDs save storage — but for user-facing data, UUIDs are the right default." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Strings of arbitrary text." }
+      ],
+      "correct_answer": "b",
+      "explanation": "UUIDs are the right default for user-facing tables.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does PostgREST give you for free?",
+      "choices": [
+        { "id": "a", "text": "Frontend code." },
+        { "id": "b", "text": "A REST API generated from your Postgres schema — every table becomes an endpoint, every column queryable. SELECT/INSERT/UPDATE/DELETE with rich filter operators (eq, gt, in, contains, etc.), foreign-key-based embedding for joins in one request, upsert, RPC for SQL functions. Authentication via JWT; authorization enforced by RLS policies. For ~80% of CRUD operations, you don't write API code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "A separate database." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-generated CRUD REST from schema; RLS handles authz.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Need posts with authors and comments-with-authors in one request. How?",
+      "choices": [
+        { "id": "a", "text": "Three client-side queries." },
+        { "id": "b", "text": "Use PostgREST embedded resources via foreign-key traversal: `.select('id, title, author:author_id(id, username), comments(id, body, author:author_id(username))')`. One HTTP request, one SQL query underneath. Solves N+1 cleanly. Aliases like `author:author_id` rename embedded fields; nested embedding works recursively as long as foreign keys are defined." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "JSONB everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Embedded resources via FK traversal in one `.select()`.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Adding a NOT NULL column to a 5M-row table safely?",
+      "choices": [
+        { "id": "a", "text": "ALTER TABLE ADD NOT NULL in one shot." },
+        { "id": "b", "text": "Three-step migration: (1) add the column nullable, (2) backfill in batches (1k-10k row chunks via loop or pg_cron — avoids whole-table locks), (3) ALTER to NOT NULL once backfilled. Pair with `CREATE INDEX CONCURRENTLY` for any new index. The pattern: additive first, fill safely, tighten constraints last. Test on a staging branch database before prod." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Drop and recreate the table." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add nullable → batched backfill → set NOT NULL. CONCURRENTLY for indexes.",
+      "points": 1
+    }
+  ]
+}

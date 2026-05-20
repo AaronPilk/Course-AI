@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: VPC basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should production app servers run in private subnets rather than public subnets?",
+      "choices": [
+        { "id": "a", "text": "Public subnets are slower." },
+        { "id": "b", "text": "Reducing attack surface. A 'public' subnet is just a subnet with a route to the Internet Gateway — resources in public subnets can have public IPs and receive unsolicited inbound traffic from the internet. App servers in public subnets are scanned constantly by bots looking for vulnerabilities, exposed admin interfaces, or weak credentials. Putting them in private subnets (no route to IGW, only private IPs) means they're not directly reachable from the internet. Traffic from users reaches them only through a load balancer in a public subnet, which terminates the public connection and forwards to the app via the VPC's internal network. Outbound traffic (downloading packages, calling APIs) goes through a NAT Gateway. The result: an attacker on the internet has no direct path to your app servers — they have to go through the load balancer, which only forwards on specific HTTPS endpoints. This is the canonical defense-in-depth pattern; reserved for load balancers, bastion hosts (if any), and NAT Gateways." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Production resources belong in private subnets behind controlled ingress (load balancers). Public subnets are for the small set of resources that genuinely need internet ingress.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A microservices architecture in private subnets has a $5K/month NAT Gateway bill, dominated by traffic to S3 and DynamoDB. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Buy more NAT Gateways." },
+        { "id": "b", "text": "Add VPC endpoints for S3 and DynamoDB. NAT Gateways charge $0.045/hour plus $0.045/GB processed — at high traffic, the per-GB charges dominate. The vast majority of typical microservices' outbound traffic goes to AWS services (S3 for storage, DynamoDB for data, KMS for encryption, etc.). VPC endpoints provide private routes from your VPC to AWS services without going through NAT or the internet: gateway endpoints (for S3 and DynamoDB) are free; interface endpoints (for most other services) cost $0.01/hour + per-GB but much less than NAT for high volume. Adding S3 and DynamoDB gateway endpoints typically drops NAT bills by 70-90% with zero code changes — the application calls the same APIs, the traffic routes through endpoints instead of NAT. This is one of the highest-leverage AWS optimizations and is often left undone because teams don't realize the NAT bill is mostly AWS-service traffic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Migrate off AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VPC endpoints are one of the highest-ROI AWS optimizations. Most NAT bills are dominated by AWS-service traffic that should be going through endpoints, not NAT.",
+      "points": 1
+    }
+  ]
+}

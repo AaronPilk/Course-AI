@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Incrementality testing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between attribution and incrementality?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Attribution credits an ad for sales within its window (last-touch + view-through). Incrementality measures sales that wouldn't have happened without the ad. They diverge most for retargeting (high attributed ROAS, low lift — buyers were returning anyway) and branded search (high credit, near-zero incrementality — users typing brand were buying regardless). Most accounts overstate true contribution by 10-30%; lift tests ground the real number." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Incrementality is older." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Attribution = credit; incrementality = causation. Retargeting + branded search usually overcredited.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "First lift test shows retargeting at 0.5x incremental ROAS vs prospecting at 1.8x incremental. Action?",
+      "choices": [
+        { "id": "a", "text": "Increase retargeting." },
+        { "id": "b", "text": "Reallocate budget toward prospecting (and away from retargeting), which is delivering more genuine new revenue per dollar. Retargeting at 0.5x incremental means the ads are mostly re-claiming credit for sales that would have happened anyway. Shift a meaningful portion (often 20-40% of retargeting budget) to prospecting and retest in 6-12 months. Don't kill retargeting entirely — some lift exists — but rebalance to where the causal money is." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Ignore the test." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reallocate toward prospecting; retargeting was claiming inevitable sales.",
+      "points": 1
+    }
+  ]
+}

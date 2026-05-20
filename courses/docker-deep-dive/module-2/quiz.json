@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Building images well",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is exec form CMD preferred over shell form in production?",
+      "choices": [
+        { "id": "a", "text": "Style." },
+        { "id": "b", "text": "Signal handling. Shell form wraps in /bin/sh -c; your app runs as a child of sh, not as PID 1. SIGTERM goes to sh, which usually doesn't forward it. Your app gets no graceful-shutdown signal, drops in-flight requests, eventually SIGKILL'd. Exec form runs the binary directly as PID 1; signals reach it; clean shutdown. Universal rule: exec form in production." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exec form = direct exec, PID 1, signals work. Shell form breaks signal forwarding.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why does `COPY . .` before `RUN npm install` ruin build speed?",
+      "choices": [
+        { "id": "a", "text": "It doesn't." },
+        { "id": "b", "text": "Cache cascade. Docker's cache invalidates on COPY when any file in the context changes. With COPY before install, every source change reinvalidates the cache, forcing npm install to rerun. Fix: copy package.json/lock first, run install (cached when lock unchanged), then copy source. Builds drop from minutes to seconds for source-only changes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disk speed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lock-files-then-install-then-source ordering preserves cache. Universal Dockerfile discipline.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does multi-stage build actually achieve?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic separation." },
+        { "id": "b", "text": "Build tools in one stage, runtime artifacts in the final stage. The builder stage has compilers, dev deps, source code; the final stage starts from a minimal base and only COPYs the artifacts the running app needs. Build stage layers are discarded. Result: small production images (10-100x smaller for many workloads) with reproducible builds (still inside Docker). Universal pattern for modern Dockerfiles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster builds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-stage separates build from runtime. Small, secure final images with reproducible builds.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A Python app on Alpine has 20-minute builds because pip compiles NumPy from source. Fix?",
+      "choices": [
+        { "id": "a", "text": "Wait longer." },
+        { "id": "b", "text": "Switch to python:3.12-slim (Debian-based). Alpine uses musl libc; many Python packages with native code (NumPy, Pandas, lxml, cryptography) don't have musl wheels and must compile from source — slow. Debian-slim uses glibc; pip pulls prebuilt manylinux wheels — installs in seconds. Slightly larger image, dramatically faster builds. Right base for native-dependency workloads." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Drop NumPy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alpine = musl; native-dep Python apps want glibc (Debian-slim) for prebuilt wheels.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why does an SSH key COPY'd then RM'd in a Dockerfile still leak?",
+      "choices": [
+        { "id": "a", "text": "It doesn't." },
+        { "id": "b", "text": "Layers are immutable. Deleting in a later layer creates a whiteout but leaves the file in the earlier layer where it was added. Anyone with the image can extract it via `docker save` or `dive`. Fix: BuildKit `--secret` flag (secret mounted only during the RUN, never persisted in any layer) or multi-stage builds where credentials only live in discarded stages. Rotate any keys that have ever been in a published image." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "rm is a no-op in Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layer immutability: secrets in any layer persist regardless of later deletion. Use BuildKit secrets.",
+      "points": 1
+    }
+  ]
+}

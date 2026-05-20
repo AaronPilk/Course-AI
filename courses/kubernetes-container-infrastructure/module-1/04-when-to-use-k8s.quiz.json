@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: When to use Kubernetes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the honest framework for deciding whether to use Kubernetes for a new workload?",
+      "choices": [
+        { "id": "a", "text": "Always use it — industry standard." },
+        { "id": "b", "text": "Match workload requirements + team capabilities to K8s' actual costs and benefits. Ask: what specific K8s capabilities will I use (service discovery, rolling updates, custom operators, portability)? What does it cost in engineering time, operations, complexity, cluster cost, and ongoing upgrades? Are there simpler alternatives (PaaS, ECS Fargate, App Runner, Lambda) that solve the actual problem? Do I have or am I committing to K8s expertise on the team? Will this workload grow into K8s' sweet spot or stay simple? K8s shines when you have multiple services with consistent orchestration needs, variable scale, existing K8s expertise, real multi-cloud or hybrid requirements, or specific patterns (operators, CRDs) you need. K8s loses for simple single-service workloads, small teams without K8s expertise, hobby projects, AWS-only greenfield (ECS Fargate is usually better), and workloads that don't fit (stateful databases, latency-critical kernel work). The mistake to avoid is choosing K8s by default because conferences say so. Workload-driven choice beats fashion-driven choice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Coin flip." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Honest evaluation matches workload + team to K8s' real costs and benefits. Default-K8s is fashion; deliberate-K8s is engineering.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Series A startup with 6 microservices, AWS-only, no existing K8s experience, considers ECS Fargate vs EKS. What's the right default?",
+      "choices": [
+        { "id": "a", "text": "Always EKS — K8s is industry standard." },
+        { "id": "b", "text": "ECS Fargate. AWS-only with no K8s experience strongly favors ECS: simpler concepts (task definitions, services, clusters vs. Pods, Deployments, ReplicaSets, plus K8s ecosystem); tighter AWS integration (IAM task roles, ALB, CloudWatch, Secrets Manager work seamlessly); no K8s ecosystem to manage (no Helm, operators, CRDs, version churn); no $72/month control plane charge per cluster. The team can be productive on ECS in days, not weeks. Six microservices is well within ECS's sweet spot. EKS makes sense when there's existing K8s investment, when multi-cloud portability is a real plan (not aspirational), or when K8s-specific patterns (operators, custom schedulers) matter. None of those apply here. The Series A stage especially favors simplicity — engineering time spent learning K8s is engineering time not spent shipping product. If requirements shift later (acquired company brings K8s, hire a K8s-heavy team, multi-cloud becomes real), reconsidering EKS is a future decision. For now, ECS Fargate gets the job done with less friction." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always EKS for the resume value." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AWS-only + no K8s experience + small team = ECS Fargate by a wide margin. EKS is for teams that genuinely need its capabilities, not for prestige.",
+      "points": 1
+    }
+  ]
+}

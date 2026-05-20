@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Autoscaling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How do HPA, Cluster Autoscaler/Karpenter, and KEDA work together?",
+      "choices": [
+        { "id": "a", "text": "They conflict and shouldn't be combined." },
+        { "id": "b", "text": "Different layers of the scaling stack, complementary. HPA scales Pod count up and down based on metrics (CPU, memory, custom via prometheus-adapter, external via KEDA). When HPA wants more Pods than current Node capacity allows, those Pods sit Pending. Cluster Autoscaler or Karpenter sees the Pending Pods and provisions additional Nodes — Karpenter is faster (provisions directly via EC2 in seconds) and picks instance types matching Pod requirements; Cluster Autoscaler uses ASGs (minutes, fixed instance types). KEDA extends HPA with many event-source scalers (SQS queue depth, Kafka lag, custom metrics, cron schedules) — useful for event-driven workloads that scale to zero when idle and scale up rapidly on demand. The combination: HPA decides desired replica count from metrics; Cluster Autoscaler / Karpenter ensures Nodes exist to run those replicas; KEDA provides richer triggering for event-driven cases. For mature production, all three together produce a cluster that scales to load and idles down to save cost without manual intervention." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pick one only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HPA + Cluster Autoscaler/Karpenter + KEDA are complementary scaling layers. Pod count from HPA; Node count from Autoscaler/Karpenter; richer triggers from KEDA.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team configures HPA to scale on memory. Pods oscillate up and down, never settling. Why and what's the fix?",
+      "choices": [
+        { "id": "a", "text": "K8s bug." },
+        { "id": "b", "text": "Memory is sticky — once allocated by a process (especially Go GC or JVM heap), it doesn't release immediately even when no longer 'needed.' HPA sees high memory and scales up; the new Pods take traffic; memory on existing Pods stays high because heap is still allocated; HPA sees no improvement and scales further; eventually traffic drops, memory still high, scale-down trigger never fires reliably. The result is oscillation or being stuck high. Fixes: scale on CPU instead of memory for most workloads (CPU is responsive); size memory for peak with adequate headroom and don't autoscale on it; use custom metrics that reflect actual demand (request rate, queue depth) via prometheus-adapter or KEDA; if memory is the real signal, configure aggressive scale-down stabilization windows to avoid thrashing. The general rule: HPA works best on metrics that respond quickly to load changes (CPU, request rate, queue depth); memory's stickiness makes it a poor autoscale signal." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more replicas manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory stickiness makes it a poor autoscale signal. CPU or custom metrics that respond quickly to load are better. If memory is genuinely the signal, tune stabilization windows aggressively.",
+      "points": 1
+    }
+  ]
+}

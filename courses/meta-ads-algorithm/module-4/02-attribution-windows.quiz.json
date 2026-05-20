@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Attribution windows",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Default attribution window in 2026 and why?",
+      "choices": [
+        { "id": "a", "text": "28-day click + 28-day view." },
+        { "id": "b", "text": "7-day click + 1-day view. Shortened after iOS 14.5 ATT because iOS users' attribution signal degrades quickly past 24 hours and Meta needed a defensible default. Click attribution is the dominant signal — a verified action linking the user to the ad. View-through is real but inflates easily, especially for users who would have converted anyway. Read 7-day click for daily decisions; check 28-day click monthly if sales cycle is long." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "1-day click only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "7-day click + 1-day view is the default. Click is the load-bearing signal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Meta reports $100k revenue, Shopify shows $50k. What's going on?",
+      "choices": [
+        { "id": "a", "text": "One is wrong; trust Meta." },
+        { "id": "b", "text": "Different attribution rules. Meta credits every conversion within 7-click + 1-view of an ad interaction, including users who would have bought anyway (last-touch + view-through). Shopify just reports total orders. Meta also includes modeled conversions for iOS-blocked events. Other channels' contribution gets diluted in Meta's view. Reasonable practice: pick e-commerce platform revenue as source of truth, use Meta as a diagnostic, and accept that Meta typically overstates its contribution by 10-30%. Periodic incrementality tests ground the real causal lift." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Average them." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Meta's attribution overstates vs platform actual. Pick one source of truth, reconcile.",
+      "points": 1
+    }
+  ]
+}

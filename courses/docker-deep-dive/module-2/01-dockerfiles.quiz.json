@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dockerfiles",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is exec form `CMD [\"node\", \"server.js\"]` preferred over shell form `CMD node server.js`?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Signal handling. Shell form is shorthand for `CMD [\"/bin/sh\", \"-c\", \"node server.js\"]` — your application runs as a child of /bin/sh, not as PID 1 in the container. When Docker sends SIGTERM (during `docker stop`, orchestrator scale-down, or rolling update), it goes to the shell, which often doesn't forward it to children. Your app doesn't get SIGTERM; it doesn't get a chance to gracefully shut down; eventually SIGKILL after the grace period drops in-flight requests. Exec form runs the binary directly as PID 1; signals reach the app; graceful shutdown works. Same issue applies to ENTRYPOINT — use exec form. The shell-form vs exec-form distinction is one of the most common sources of 'why does my container drop requests on shutdown' bugs. Universal best practice: exec form for production." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random preference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exec form runs the binary as PID 1 directly; signals reach it. Shell form wraps in /bin/sh, breaking signal forwarding. Always exec form in production.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Dockerfile has `RUN apt-get update && apt-get install -y curl` followed by `RUN rm -rf /var/lib/apt/lists/*`. Image is still bloated. Why?",
+      "choices": [
+        { "id": "a", "text": "rm doesn't work." },
+        { "id": "b", "text": "The cleanup is in a separate RUN, so it creates a new layer that hides /var/lib/apt/lists/* but doesn't remove it from the layer where apt-get install added it. Layers are immutable; deleting in a later layer creates a whiteout. The apt cache files still take space in the earlier layer; the final image size is the sum of all layers. Fix: combine into a single RUN: `RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*`. The single RUN's final layer doesn't include the apt cache (deleted within the layer), so image size reflects the actual end state. This pattern applies to any 'install + clean up' operations: combine into one RUN. Common offenders: pip caches (`--no-cache-dir` or rm), npm caches (`npm cache clean --force && rm -rf ~/.npm`), apt lists. Combining cleanup with install is one of the highest-impact Dockerfile optimizations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rebuild from scratch." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cleanup must be in the same RUN as the install. Layers are immutable; later-layer deletions don't reduce earlier-layer sizes.",
+      "points": 1
+    }
+  ]
+}

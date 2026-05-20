@@ -1,0 +1,94 @@
+{
+  "slug": "kubernetes-container-infrastructure",
+  "title": "Kubernetes Container Infrastructure",
+  "subtitle": "How Kubernetes actually works — Pods, Deployments, Services, networking, and the orchestration patterns that scale",
+  "description": "A practical course on Kubernetes for engineers and operators. Covers the mental model (the control loop, declarative API, controllers), core objects (Pods, ReplicaSets, Deployments, StatefulSets, DaemonSets), networking (Services, Ingress, NetworkPolicies), storage (PV/PVC, StorageClasses), security (RBAC, secrets, security contexts), and operations (observability, autoscaling, upgrades, common failure modes). Built from the official Kubernetes documentation, the CNCF ecosystem, and battle-tested patterns. Not Kubernetes-evangelism; just how it works, when it fits, and how to operate it without losing weekends.",
+  "category": "Infrastructure",
+  "difficulty": "intermediate",
+  "audience": "Developers and ops engineers running or planning to run containerized workloads. Container familiarity helps; Kubernetes background not required.",
+  "tags": ["kubernetes", "containers", "orchestration", "cloud-native", "infrastructure"],
+  "estimated_minutes": 270,
+  "brand": {
+    "name": "Kubernetes",
+    "logo": "/brands/kubernetes-container-infrastructure.svg",
+    "gradient": ["#326CE5", "#1A4FBE"],
+    "tint": "#001638"
+  },
+  "prerequisites": [
+    "Basic familiarity with containers (you've used Docker)",
+    "Comfort with YAML and command-line tools",
+    "No Kubernetes background required"
+  ],
+  "outcomes": [
+    "Explain Kubernetes' control loop and declarative API",
+    "Use the core objects (Pods, Deployments, Services, StatefulSets) confidently",
+    "Design networking with Services, Ingress, and NetworkPolicies",
+    "Configure storage with PV/PVC and StorageClasses",
+    "Apply RBAC, secrets, and security contexts correctly",
+    "Run autoscaling and rolling updates without outages",
+    "Diagnose common failure modes (CrashLoopBackOff, ImagePullBackOff, OOMKilled, etc.)",
+    "Know when Kubernetes is the right tool and when it isn't"
+  ],
+  "modules": [
+    {
+      "title": "Kubernetes mental model",
+      "summary": "What Kubernetes actually is, the control loop, the declarative API, and where it fits.",
+      "estimated_minutes": 50,
+      "key_concepts": ["control loop", "declarative API", "controllers", "kubectl", "cluster architecture"],
+      "lessons": [
+        { "title": "What Kubernetes actually is", "objective": "Build the right mental model." },
+        { "title": "The control loop and controllers", "objective": "Understand how Kubernetes maintains desired state." },
+        { "title": "Cluster architecture — control plane and nodes", "objective": "Know which component does what." },
+        { "title": "When Kubernetes is the right tool (and when it isn't)", "objective": "Decide if you actually need K8s." }
+      ]
+    },
+    {
+      "title": "Core objects",
+      "summary": "Pods, ReplicaSets, Deployments, StatefulSets, DaemonSets, Jobs, CronJobs — the workhorses.",
+      "estimated_minutes": 60,
+      "key_concepts": ["Pod", "Deployment", "StatefulSet", "DaemonSet", "Job", "ConfigMap", "Secret"],
+      "lessons": [
+        { "title": "Pods — the unit of work", "objective": "Understand what a Pod actually is." },
+        { "title": "Deployments and ReplicaSets — stateless workloads", "objective": "Run and update stateless apps cleanly." },
+        { "title": "StatefulSets and DaemonSets", "objective": "Handle stateful workloads and per-node services." },
+        { "title": "Jobs, CronJobs, ConfigMaps, Secrets", "objective": "Run batch work and inject configuration." }
+      ]
+    },
+    {
+      "title": "Networking",
+      "summary": "How traffic actually flows — Services, Ingress, NetworkPolicies, DNS, and the CNI plugins underneath.",
+      "estimated_minutes": 55,
+      "key_concepts": ["Service", "Ingress", "NetworkPolicy", "CNI", "DNS", "kube-proxy"],
+      "lessons": [
+        { "title": "Pod networking and the CNI", "objective": "Understand the network plumbing." },
+        { "title": "Services — ClusterIP, NodePort, LoadBalancer", "objective": "Expose workloads correctly." },
+        { "title": "Ingress and gateway API", "objective": "Route external HTTP traffic into the cluster." },
+        { "title": "NetworkPolicies and DNS", "objective": "Lock down traffic and resolve names." }
+      ]
+    },
+    {
+      "title": "Storage, security, and configuration",
+      "summary": "Persistent storage, RBAC, secrets, security contexts — the foundations for production workloads.",
+      "estimated_minutes": 55,
+      "key_concepts": ["PV/PVC", "StorageClass", "RBAC", "ServiceAccount", "Pod security"],
+      "lessons": [
+        { "title": "Persistent volumes and storage classes", "objective": "Run stateful workloads correctly." },
+        { "title": "RBAC and ServiceAccounts", "objective": "Control who can do what in the cluster." },
+        { "title": "Security contexts and Pod Security Standards", "objective": "Limit what containers can do." },
+        { "title": "Secrets and configuration patterns", "objective": "Inject credentials and config safely." }
+      ]
+    },
+    {
+      "title": "Operations — running Kubernetes for real",
+      "summary": "Observability, autoscaling, rolling updates, and the failure modes that bite you.",
+      "estimated_minutes": 50,
+      "key_concepts": ["HPA", "rolling updates", "observability", "troubleshooting", "CrashLoopBackOff"],
+      "lessons": [
+        { "title": "Observability — logs, metrics, events", "objective": "See what's actually happening." },
+        { "title": "Autoscaling — HPA, VPA, Cluster Autoscaler", "objective": "Scale pods and nodes without intervention." },
+        { "title": "Rolling updates and rollback", "objective": "Deploy safely." },
+        { "title": "Failure modes — the K8s mistakes that bite you", "objective": "Recognize and fix the common breakages." }
+      ]
+    }
+  ]
+}

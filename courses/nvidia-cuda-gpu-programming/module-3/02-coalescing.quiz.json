@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Coalescing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is memory coalescing and why does it matter so much for CUDA performance?",
+      "choices": [
+        { "id": "a", "text": "A garbage collection technique." },
+        { "id": "b", "text": "When threads in a warp access memory, the hardware combines their requests into transactions of 32, 64, or 128 bytes. If 32 threads each read 4 consecutive bytes starting at an aligned address (= 128 bytes total), the hardware serves them in ONE transaction — peak bandwidth. If those same threads read 32 scattered addresses, the hardware issues up to 32 separate transactions, achieving roughly 3% of peak bandwidth. Same compute, same number of bytes loaded, dramatically different wall-clock time. Most simple CUDA kernels are memory-bound, so coalescing is often the difference between a kernel running at 80% of peak vs. 5%. The rule: adjacent threads should access adjacent memory." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "A compiler optimization." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Coalescing is the single highest-leverage CUDA performance topic. Getting it right takes you from 5% to 80%+ of peak bandwidth with minimal algorithmic change.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A particle simulation uses `struct Particle { float3 pos; float3 vel; float mass; }; Particle particles[N];`. Threads update positions in a kernel. Performance is poor. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Add more threads." },
+        { "id": "b", "text": "Convert array-of-structs (AoS) to struct-of-arrays (SoA). With AoS, thread i accessing `particles[i].pos.x` reads from offset (i * sizeof(Particle)), and adjacent threads access non-adjacent memory because the velocity and mass fields sit between consecutive position fields. Each access requires multiple transactions; coalescing fails. With SoA — separate arrays `pos_x[N], pos_y[N], pos_z[N], vel_x[N], vel_y[N], vel_z[N], mass[N]` — thread i's access to `pos_x[i]` lands in contiguous memory with neighbors' accesses. Coalesced. Typically 5-10x speedup just from this reorganization, no algorithm change. This is one of the most important data-layout optimizations in CUDA, sufficiently widespread that it gets its own acronym (SoA vs AoS)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use unified memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AoS-to-SoA is a canonical CUDA refactor. CPU code often uses AoS for cache locality and OO conventions; GPU code wants SoA for coalescing. Knowing when to flip the layout is core skill.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: CUDA programming basics",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does the canonical CUDA kernel always include a bounds check (e.g., `if (i < n)`)?",
+      "choices": [
+        { "id": "a", "text": "Defensive coding habit." },
+        { "id": "b", "text": "The block count is computed with ceiling division so all data is covered, which means the launch grid usually has slightly more threads than data elements. Without the bounds check, those extra threads would write past the end of the array, causing memory corruption or crashes. The check makes them no-op safely. This pattern is in virtually every CUDA program because n almost never divides evenly into the block size." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's a compiler requirement." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ceiling-division launch + in-kernel bounds check is the universal pattern. Skipping the check produces hard-to-debug memory corruption.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A CUDA kernel uses `__syncthreads()` inside `if (threadIdx.x < 16) { ... }`. The program hangs. Why?",
+      "choices": [
+        { "id": "a", "text": "Compiler bug." },
+        { "id": "b", "text": "Deadlock. `__syncthreads()` is a block-wide barrier requiring every thread in the block to reach it. When only half the threads enter the branch and hit the barrier while the others skip it, the threads at the barrier wait forever for the others. The fix is to structure the code so all threads in the block reach the sync — typically by moving the sync outside the conditional. This is one of the most common CUDA bugs; older CUDA versions silently hang while newer versions sometimes detect and warn." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Race condition." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Barriers in divergent branches deadlock. Block-wide syncs must be reached by every thread in the block, no exceptions.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why are warp-level operations (shuffles) often faster than equivalent shared-memory operations?",
+      "choices": [
+        { "id": "a", "text": "They're not." },
+        { "id": "b", "text": "Warp shuffles exchange register values directly between threads in the same warp — no memory writes, no memory reads, no synchronization. Shared-memory operations require writing to shared memory, a `__syncthreads()` barrier, reading from shared memory, possibly repeating. Each shared-memory round-trip costs cycles plus the barrier. A 5-step warp reduction in shuffles is faster than a 5-step shared-memory reduction with syncs at each step. For block-wide work, the optimal pattern is often warp shuffles within each warp + one shared-memory step to combine warps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Register-to-register exchange beats memory round-trips. Modern fast CUDA kernels use shuffles wherever possible for small-group coordination.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A program does many small `cudaMemcpy` calls in an inner loop. Profiling shows transfer overhead dominates runtime. What's the right fix?",
+      "choices": [
+        { "id": "a", "text": "Buy faster PCIe." },
+        { "id": "b", "text": "Batch the transfers. PCIe transfers have significant per-call latency (~10-20 microseconds) on top of bandwidth cost. For many small transfers, latency dominates and effective bandwidth is far below peak. The fixes: combine small transfers into one large transfer; pre-allocate buffers and reuse them; use async transfers with streams to overlap with compute; and most importantly, restructure the algorithm to keep data on GPU and avoid transfers entirely where possible. If transfers are truly unavoidable, use pinned memory (`cudaMallocHost`) for a 2x boost. Buying faster PCIe helps marginally but doesn't fix the fundamental issue of round-trip overhead in tight loops." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch GPU vendor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Small frequent transfers are an anti-pattern. The fix is restructuring to amortize overhead — batching, pinning, async streams, or keeping data on GPU. Hardware upgrades don't address the root cause.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the right block size for a CUDA kernel and why?",
+      "choices": [
+        { "id": "a", "text": "Always 1024 threads." },
+        { "id": "b", "text": "Always 1 thread." },
+        { "id": "c", "text": "A multiple of 32 (warp size), typically 128, 256, or 512. Multiples of 32 ensure no warp slots are wasted; the GPU rounds up internally otherwise. Common defaults: 256 threads per block for general kernels (8 warps, good occupancy/resources balance); 128 for kernels with high register usage; 512+ for kernels with heavy shared-memory cooperation; 1024 only when needed for specific patterns. The optimal value depends on per-thread register usage, shared memory per block, and occupancy goals. Profile with Nsight if performance matters. But 256 is a safe starting point that works well for most kernels." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Block size is a tunable parameter, not a fixed answer. Multiples of 32 are mandatory; 256 is a strong default; profile to refine. Never use sizes that aren't multiples of 32.",
+      "points": 1
+    }
+  ]
+}

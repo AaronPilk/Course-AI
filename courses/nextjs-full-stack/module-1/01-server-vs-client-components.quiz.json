@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Server vs Client Components",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Key difference between Server and Client Components in the App Router?",
+      "choices": [
+        { "id": "a", "text": "Server Components are slower." },
+        { "id": "b", "text": "Server Components are the default — they run on the server at request time, can directly access databases, secrets, and filesystem, never ship JavaScript to the client, can be async functions, and emit a serialized React tree. They CAN'T use hooks (useState, useEffect), handle browser events, or use browser APIs. Client Components opt in via `'use client'` directive — they hydrate in the browser, can use hooks and handle events, but ship JavaScript and can't directly access server-only resources. Default to Server; reach for Client only when you need state/effects/events/browser APIs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server = default, no JS shipped, server-only resources. Client = opt-in via 'use client', hooks + interactivity.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want a SearchBar Client Component on an otherwise server-rendered page. How to compose without dragging the whole page into the client bundle?",
+      "choices": [
+        { "id": "a", "text": "Put `'use client'` on the page." },
+        { "id": "b", "text": "Push `'use client'` to the leaf SearchBar component file only. The Server Page imports and renders SearchBar as a child — the framework serializes the boundary, the rest of the page stays server-rendered (no JS shipped for header, content, layout), and only the SearchBar tree becomes a client bundle. Composition matters: a `'use client'` at the page level pulls everything into the client bundle; pushed to a leaf, it stays small. Use the 'islands of interactivity' pattern: server-rendered page with small client components inside." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Server Components can't render Client Components." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Push 'use client' to the leaf. Server can render Client; the rest stays server.",
+      "points": 1
+    }
+  ]
+}

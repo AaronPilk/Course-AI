@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Data-driven attribution",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Data-Driven Attribution do that last-click doesn't?",
+      "choices": [
+        { "id": "a", "text": "Fires faster." },
+        { "id": "b", "text": "Uses ML to look at actual conversion paths and assign fractional credit to each touchpoint based on its observed contribution — considering path length, touchpoint order, ad surface mix, time between touches, and what separates converting paths from non-converting ones. Top-of-funnel touchpoints that contribute to consideration but rarely close get credit they earned. Smart Bidding then bids more accurately because the signal reflects the real customer journey, not the fiction that only the last click matters. Total conversions are the same; credit is just redistributed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Doubles all credit." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DDA distributes fractional credit across touchpoints based on observed contribution.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "After switching from last-click to DDA, top-of-funnel conversions look 30% higher and brand campaign conversions look 25% lower. Concerning?",
+      "choices": [
+        { "id": "a", "text": "Yes — revert to last-click." },
+        { "id": "b", "text": "No — this is the expected and correct shift. Last-click systematically over-credited bottom-funnel (brand, retargeting) while starving top-of-funnel of the credit it earned. DDA redistributes credit to reflect actual contribution. Total conversions across all campaigns still equal the actual conversion count — no double-counting. Smart Bidding will rebalance toward upper funnel over the next 14-30 days as it sees the more honest signal. Don't revert; the older model was giving you inflated bottom-funnel numbers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause brand campaign." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Expected and correct. Top-of-funnel gets earned credit; total reconciles.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Account structure",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do fewer campaigns usually beat many in 2026?",
+      "choices": [
+        { "id": "a", "text": "Less work." },
+        { "id": "b", "text": "Consolidation wins on three axes: (1) each ad set reaches the 50-conversions/week learning threshold instead of all fragmenting below it, (2) less audience overlap and auction self-competition, (3) clearer signal to read and easier hygiene. Minimum viable account for a DTC brand: one ASC prospecting + one retargeting + one brand/seasonal. Add structure only for genuine reasons (different margins, different geos, different objectives), not for reporting granularity — use breakdowns for that." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Meta requires it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Consolidation = learning threshold + less overlap + cleaner signal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account has 28 active campaigns, most under $40/day. CPA broadly poor. Restructure?",
+      "choices": [
+        { "id": "a", "text": "Add more campaigns." },
+        { "id": "b", "text": "Consolidate aggressively. Most of those campaigns are below learning-phase volume (<50 conv/week each), so none has stable EAR predictions. Merge into one ASC prospecting at consolidated budget, one retargeting, one brand/seasonal — total 3-5 campaigns. Concentrating budget pushes each surviving campaign over the learning threshold. Expect short-term disruption as you cut/merge; medium-term CPA usually improves materially because the algorithm finally has signal it can act on." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower bids." }
+      ],
+      "correct_answer": "b",
+      "explanation": "28 campaigns below learning threshold = no signal. Consolidate to 3-5.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: GPUs vs CPUs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most accurate framing of the difference between CPUs and GPUs?",
+      "choices": [
+        { "id": "a", "text": "GPUs are simply faster CPUs." },
+        { "id": "b", "text": "CPUs and GPUs are different kinds of processors optimized for different workloads. CPUs have few cores (8-64) but each core is sophisticated — out-of-order execution, branch prediction, large caches — optimized for low latency on individual threads. GPUs have thousands of simpler cores (10,000+) optimized for high throughput across many parallel threads doing the same kind of work on different data. The right tool depends on the workload: CPUs win for sequential branchy code (databases, web servers, OS code); GPUs win for data-parallel arithmetic (matrix math, AI inference, simulations, image processing). Saying 'GPUs are faster' misses the point — they're better at certain workloads and worse at others." },
+        { "id": "c", "text": "GPUs only do graphics." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The framing matters because it determines what you can actually use a GPU for. Workloads with lots of independent parallel work suit GPUs; sequential branchy workloads don't. Knowing this in advance saves expensive rewrites.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team has a web server handling 10,000 requests per second. Each request requires database queries, business logic, and JSON serialization. They consider running the web server on GPUs to scale further. Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — more parallel is always better." },
+        { "id": "b", "text": "No. Web request handling is dominated by I/O wait, branching business logic, sequential dependencies, and unpredictable memory access patterns — exactly the workload CPUs are designed for and GPUs are bad at. Each request is doing different work, not the same operation on different data. There's no embarrassingly parallel computation to extract. Putting this on GPUs would be both expensive and slower. The right scaling approach is horizontal CPU scaling (more web server instances) or optimizing the database and business logic. GPUs are the wrong tool for this entire class of problem." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch programming languages instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GPU acceleration only helps when the workload is data-parallel. Web serving isn't. Most general business logic isn't. Picking the right hardware for a workload requires understanding what the workload actually does, not just throwing more parallelism at it.",
+      "points": 1
+    }
+  ]
+}

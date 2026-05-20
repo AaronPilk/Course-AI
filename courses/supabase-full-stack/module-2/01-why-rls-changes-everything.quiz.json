@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Why RLS matters",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does database-enforced authorization beat middleware-based?",
+      "choices": [
+        { "id": "a", "text": "Faster execution." },
+        { "id": "b", "text": "Defense in depth — even if a developer writes a query that forgot the user_id filter, RLS still applies. Single source of truth — the rule lives in one place (the policy) instead of duplicated across every endpoint. Auditable — all policies are queryable from pg_policies. Every consumer (auto-API, RPC, Edge Functions, direct SQL) respects the same rules. Middleware-based authz can be forgotten on a new endpoint, duplicated inconsistently, or bypassed by direct DB access. RLS makes authorization a property of the data, not the code path." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Postgres." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Defense in depth + single source of truth + auditable. Database enforces.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Enabled RLS on a new `posts` table. Queries return zero rows even for the table's owner. Why?",
+      "choices": [
+        { "id": "a", "text": "Postgres bug." },
+        { "id": "b", "text": "RLS is enabled but no policies are defined. With RLS enabled and no policies, the table is locked — nothing is visible to non-superuser roles. You need to write at least one policy per action you want to allow (SELECT, INSERT, UPDATE, DELETE). Common pattern: 'Users can SELECT their own rows where author_id = auth.uid()' plus matching policies for INSERT/UPDATE/DELETE with appropriate WITH CHECK clauses. RLS is opt-in security; you have to write the rules." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable RLS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RLS enabled with no policies = locked. Write at least one policy per action.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Campaign mix",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why run brand Search exact-match as a separate campaign when PMax is also running?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "Google's documented rule: exact-match Search keywords take priority over PMax for matching that query. Brand Search exact-match catches brand queries before PMax does — with the granular control, reporting visibility, and tight bid management you want for brand. Without it, PMax absorbs brand queries with inferior handling: blended audience signals, less precise matching, and no isolation for measuring brand-specific performance. Always run brand Search exact-match in its own campaign with aggressive bid willingness." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cost reasons." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exact-match Search wins priority over PMax. Always isolate brand Search.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mature performance account spending $50k/mo on Search and PMax. New-customer growth has plateaued. What's missing?",
+      "choices": [
+        { "id": "a", "text": "More keywords." },
+        { "id": "b", "text": "Top-of-funnel investment. Search and PMax both optimize for users with existing intent — they harvest demand that already exists. Without a discovery-stage channel feeding the consideration funnel, you eventually saturate the existing-demand pool and new-customer growth flatlines. Allocate 10-20% of paid budget to Demand Gen (visual ads on YouTube Shorts, Discover, Gmail) to drive awareness and consideration. Measure with brand-search lift, direct traffic increases, and longer-window attribution — short-window CPA will look worse but the downstream lift is real." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More Search budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add Demand Gen for top-of-funnel discovery. Search/PMax can't grow without it.",
+      "points": 1
+    }
+  ]
+}

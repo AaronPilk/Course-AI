@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Middleware",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's appropriate work for middleware?",
+      "choices": [
+        { "id": "a", "text": "Database queries." },
+        { "id": "b", "text": "Fast cross-cutting checks: auth gating (cookie/JWT presence and validity), redirects and rewrites, A/B testing routing, geo-based routing, locale detection, security headers, rate limiting via HTTP-based stores (Upstash, Vercel KV). Middleware runs on every matched request at the edge — heavy work like database queries adds latency to everything. Edge runtime also has constraints (no Node APIs, no direct DB connections, strict timeouts). Save real work for pages and Server Actions; use middleware for the unglamorous fast gating logic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Heavy logic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fast cross-cutting checks: auth, redirects, A/B, geo, headers, rate limiting.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Middleware matcher is `'/(.*)'` — matches everything. Performance issue?",
+      "choices": [
+        { "id": "a", "text": "No, fine." },
+        { "id": "b", "text": "Yes — middleware now runs on every request including static assets (CSS, JS, images, favicons). Each one pays the middleware execution cost, multiplying edge invocations and latency. Fix the matcher to exclude assets: `'/((?!api|_next/static|_next/image|favicon.ico).*)'` — runs middleware on real pages but skips static files. This is the standard exclude pattern. Edge time costs add up; a broad matcher can easily 5-10x your middleware bill without changing functionality." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Broaden further." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exclude static assets via matcher; otherwise middleware runs on every CSS/JS/image too.",
+      "points": 1
+    }
+  ]
+}

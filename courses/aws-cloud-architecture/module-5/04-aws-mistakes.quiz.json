@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: AWS mistakes to avoid",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do leaked AWS access keys produce such fast and expensive damage compared to other types of credential leaks?",
+      "choices": [
+        { "id": "a", "text": "AWS keys are particularly valuable." },
+        { "id": "b", "text": "AWS access keys are continuously scanned for by automated bots — within hours of being committed to a public repo, they're found and used. The standard attack pattern: bots scan GitHub commits for AWS-style key patterns; on hit, the bot uses the keys to launch EC2 instances (often GPU instances for crypto mining) across multiple regions simultaneously; charges accumulate at hundreds of dollars per hour. By the time a human notices, multi-thousand-dollar bills are common. The structural fix is to eliminate long-term keys: use IAM roles for services (temporary credentials, automatically rotated), Identity Center for human access (SSO with short-lived sessions), and OIDC trust for CI/CD systems (assumed roles, no long-term keys in pipelines). Pre-commit hooks (git-secrets) and GitHub's automatic secret scanning catch commits before damage. Budget alerts notify within hours of unusual spending. AWS often credits fraud charges as a courtesy when keys leak via supported scanning, but recovery isn't guaranteed and the operational scramble is real. The modern AWS stack avoids long-term keys almost entirely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bots are slow." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Leaked AWS keys get exploited within hours by automated systems. Roles + SSO eliminate the exposure surface. Long-term keys are 2015-era practice that produces preventable incidents.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team has 'backups enabled' on RDS. During an incident, they attempt to restore — and discover the backups were misconfigured (1-day retention when they assumed 7). Data is lost. What's the systemic fix?",
+      "choices": [
+        { "id": "a", "text": "More backups." },
+        { "id": "b", "text": "Test restoration regularly. 'Backups enabled' is a configuration claim, not operational reality. Until you've actually restored from a backup, you don't know if it works at the retention you expect, in the format you expect, in the time you expect. Quarterly (or monthly for critical data) restoration drills catch this — restore to a sandbox, verify data integrity, document the procedure. Other improvements: review backup configuration against what the application actually needs (retention period, point-in-time recovery enabled or not, cross-region copy for true DR); document the restoration runbook so incidents don't require figuring out the procedure mid-fire; alarms on backup failures (RDS sometimes fails snapshots silently); cross-region backup copies for disaster recovery scenarios. The principle 'you don't have backups until you've restored from them' is universal in operations. Many teams discover their backup gaps during real incidents — exactly the worst time to find out." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Trust the configuration." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Untested backups are unproven backups. Restoration drills convert hopeful assumptions into known capabilities. Every operations team should be doing this.",
+      "points": 1
+    }
+  ]
+}

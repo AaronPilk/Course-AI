@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Warps in depth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are warp-level reductions (using __shfl_sync) faster than shared-memory reductions?",
+      "choices": [
+        { "id": "a", "text": "They're not faster." },
+        { "id": "b", "text": "Warp shuffles operate directly on registers between threads in the same warp, without writing to or reading from any memory. A shared-memory reduction requires writes to shared memory, a __syncthreads() barrier, reads from shared memory, repeated for each tree-reduction step. Each shared-memory round-trip costs cycles and forces synchronization. Warp shuffles complete in a handful of cycles with no memory traffic and no explicit sync (the warp is already in lockstep). A typical warp reduction is 5 shuffle operations vs. 10+ shared-memory operations with barriers. For block-wide reductions, the optimal pattern is warp-level shuffles within each warp, then one shared-memory step to combine warp results — best of both." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Marketing claim." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Warp shuffles are register-to-register data exchange, no memory involved. This is much faster than shared memory for small-group operations. Modern high-performance reduction code uses warp shuffles as the inner step.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A kernel uses atomicAdd to a single global variable for a reduction. Performance is terrible. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Add more threads." },
+        { "id": "b", "text": "Hierarchical reduction. Single atomic to a global variable serializes all threads — every thread waits for every other thread, defeating parallelism entirely. The standard fix is hierarchical: each warp does a 5-step warp-level reduction in registers using __shfl_sync, producing one value per warp; warps in a block combine via shared memory (one __syncthreads); blocks combine via atomics or a second kernel launch. With 256 threads per block and the right structure, you go from 256 serialized atomics down to 1 atomic per block — and many blocks can issue their atomics concurrently. Speedup can be 50-100x. Atomic operations are sometimes unavoidable but should be the last step of a hierarchical pattern, never the inner loop." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to CPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Atomics serialize. Hierarchical reductions push the parallelism through warp/block levels before any contention. This is the canonical fast-reduction pattern; libraries like CUB implement it under the hood.",
+      "points": 1
+    }
+  ]
+}

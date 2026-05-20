@@ -1,0 +1,12 @@
+{
+  "slug": "supabase-full-stack",
+  "sources": [
+    { "type": "docs", "url": "https://supabase.com/docs", "label": "Supabase documentation" },
+    { "type": "docs", "url": "https://supabase.com/docs/guides/database", "label": "Database guides" },
+    { "type": "docs", "url": "https://supabase.com/docs/guides/auth", "label": "Auth documentation" },
+    { "type": "docs", "url": "https://supabase.com/docs/guides/realtime", "label": "Realtime documentation" },
+    { "type": "docs", "url": "https://supabase.com/docs/guides/storage", "label": "Storage documentation" },
+    { "type": "docs", "url": "https://supabase.com/docs/guides/functions", "label": "Edge Functions documentation" },
+    { "type": "docs", "url": "https://www.postgresql.org/docs/", "label": "PostgreSQL documentation" }
+  ]
+}

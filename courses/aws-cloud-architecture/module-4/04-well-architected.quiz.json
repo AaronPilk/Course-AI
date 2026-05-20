@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Well-Architected Framework",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the six pillars of the AWS Well-Architected Framework?",
+      "choices": [
+        { "id": "a", "text": "Speed, security, scale, savings, simplicity, support." },
+        { "id": "b", "text": "Operational Excellence (can you run, monitor, and evolve the system?), Security (are data and systems protected?), Reliability (can the system recover from failures?), Performance Efficiency (are resources used effectively?), Cost Optimization (are you spending the right amount?), and Sustainability (are you minimizing environmental impact?). Each pillar has design principles and best practices. The framework gives you vocabulary for design tradeoffs and a structured way to review existing architectures. Use it at design time, before launch, annually for important workloads, and after major incidents. The AWS Well-Architected Tool walks through the questions and produces a risk list. Pillars trade off against each other — multi-AZ for reliability costs more; tight IAM for security may slow deployment; bigger instances for performance cost more. Conscious tradeoffs beat accidental ones, which is the whole point of the framework." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just security and cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The six pillars are the structured way AWS thinks about workload quality. Knowing them gives you the vocabulary to discuss tradeoffs and to make conscious design decisions instead of accidental ones.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "When should a team run a Well-Architected Review on a workload?",
+      "choices": [
+        { "id": "a", "text": "Never — it's bureaucracy." },
+        { "id": "b", "text": "At design time for new significant workloads, before launching to production, annually for important running workloads, after major incidents to apply lessons, and when adding new compliance requirements. Don't run formal reviews on every tiny service — apply judgment. Major architectural decisions deserve the structured review; small utility services don't. The biggest value isn't the formal output but the structured questions surfacing things the team hadn't considered. Annual reviews catch drift: dev permissions that accidentally leaked into prod, capacity that was right-sized two years ago but isn't anymore, old encrypted-by-default settings missed when accounts were created. Pre-launch reviews catch the most expensive mistakes — going to production with an open S3 bucket or single-AZ database is much cheaper to fix before launch than after. The framework is a thinking tool for important decisions, not a checkbox for every change." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only on Tuesdays." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Apply Well-Architected reviews to significant workloads at meaningful moments. Pre-launch, annual, post-incident. Skipping it on important workloads creates avoidable expensive mistakes.",
+      "points": 1
+    }
+  ]
+}

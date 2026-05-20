@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Postgres vs NoSQL",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Postgres beat NoSQL for most app workloads?",
+      "choices": [
+        { "id": "a", "text": "It's faster at every workload." },
+        { "id": "b", "text": "ACID transactions across multiple rows/tables, joins, strong typing with JSONB for flexibility, mature query planner with EXPLAIN, and extensions (PostGIS, pgvector, pg_trgm). Modern Postgres handles tens of thousands of writes/sec on a primary; sharding handles more. NoSQL still wins for massive horizontal write scale (100k+/sec across regions) or pure key-value workloads, but most B2C SaaS, B2B, e-commerce, and marketplace apps are fundamentally relational and benefit from the structure." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "NoSQL is deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Relational guarantees + JSONB + mature ecosystem fit most app workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building an analytics events table with frequently-changing event property keys. Best approach in Supabase?",
+      "choices": [
+        { "id": "a", "text": "Use MongoDB instead." },
+        { "id": "b", "text": "Model the relational core in typed columns (id, user_id, event_type, occurred_at) and put the flexible event-specific properties in a JSONB column. Index the JSONB with a GIN index for query performance. Query with JSONB operators like properties->>'plan' and properties->'metadata'->>'campaign_id'. You get Postgres's strengths (joins to users table, time-range queries, transactions) plus document-DB flexibility for the genuinely-variable parts. This is the Postgres-first pattern that replaces most reasons people reach for NoSQL." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "One row per property." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Typed columns for the relational core + JSONB for flexible payloads + GIN index.",
+      "points": 1
+    }
+  ]
+}

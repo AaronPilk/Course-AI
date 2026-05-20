@@ -1,0 +1,74 @@
+{
+  "slug": "google-ads-machine-learning",
+  "title": "Google Ads Machine Learning Systems",
+  "subtitle": "How Smart Bidding, automation layers, and the modern auction actually work — and how to operate them.",
+  "category": "Advertising",
+  "level": "Intermediate",
+  "estimatedHours": 6,
+  "brand": {
+    "primary": "#4285F4",
+    "accent": "#EA4335",
+    "secondary": "#FBBC04",
+    "tertiary": "#34A853",
+    "logo": "/brands/google-ads-machine-learning.svg",
+    "gradient": "linear-gradient(135deg, #4285F4 0%, #34A853 35%, #FBBC04 65%, #EA4335 100%)"
+  },
+  "summary": "Google Ads has shifted from a manual bidding platform to an AI-driven auction system where Smart Bidding, broad match, and Performance Max do most of the work. This course explains what each ML system optimizes for, why traditional tactics (exact match keywords, manual CPC, granular ad groups) often hurt now, and how to operate the new account structure: signal-rich conversion tracking, audience layering, creative variety, and disciplined measurement. Built for marketers who want to stop fighting the machine.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "How the modern Google Ads auction works",
+      "objective": "Understand what the system optimizes and what your levers are.",
+      "lessons": [
+        { "position": 1, "title": "Ad Rank reimagined — the four signals", "objective": "Quality, bid, expected impact, and context." },
+        { "position": 2, "title": "Smart Bidding — what each strategy optimizes for", "objective": "Target CPA, Target ROAS, Maximize Conversions, Maximize Conversion Value." },
+        { "position": 3, "title": "The end of manual bidding", "objective": "When manual still wins, why most accounts should abandon it." },
+        { "position": 4, "title": "Conversion signal as the fuel", "objective": "Why tracking quality determines auction performance." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Match types and keywords in the AI era",
+      "objective": "Use keywords the way Google's NLP expects them now.",
+      "lessons": [
+        { "position": 1, "title": "Broad match is the new default — really", "objective": "Why Google's NLP changed the calculus." },
+        { "position": 2, "title": "Phrase and exact match — when they still help", "objective": "Branded, exact-intent, narrow vertical use cases." },
+        { "position": 3, "title": "Negative keywords as the steering wheel", "objective": "Filter waste in a broad-match world." },
+        { "position": 4, "title": "Search themes vs keywords (Performance Max)", "objective": "How signal feeding works in PMax." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Performance Max and the campaign mix",
+      "objective": "Use Google's full-automation tier without losing the wheel.",
+      "lessons": [
+        { "position": 1, "title": "What PMax is and isn't", "objective": "Cross-channel automation with strict tradeoffs." },
+        { "position": 2, "title": "Asset groups and creative ingestion", "objective": "Feed PMax the variety it needs." },
+        { "position": 3, "title": "Audience signals and feed quality", "objective": "First-party data and product feeds drive PMax." },
+        { "position": 4, "title": "PMax vs Search vs Demand Gen", "objective": "When to run each, when they overlap." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Measurement, attribution, and conversion data",
+      "objective": "Give Smart Bidding clean signal.",
+      "lessons": [
+        { "position": 1, "title": "Enhanced Conversions and consent mode", "objective": "Server-side and privacy-aware tracking." },
+        { "position": 2, "title": "Data-driven attribution explained", "objective": "Why last-click attribution is over." },
+        { "position": 3, "title": "Conversion value and bidding signals", "objective": "Beyond binary conversions — value, margin, LTV." },
+        { "position": 4, "title": "Incrementality on Google", "objective": "Geo lift, drafts & experiments, brand suppression." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Operating the system",
+      "objective": "Account structure, rhythm, and breaking-the-rules.",
+      "lessons": [
+        { "position": 1, "title": "Modern account structure", "objective": "Fewer campaigns, broader ad groups, layered audiences." },
+        { "position": 2, "title": "Scaling cleanly — budget and bid behavior", "objective": "How Smart Bidding responds to changes." },
+        { "position": 3, "title": "Troubleshooting Smart Bidding", "objective": "Diagnose tracking, learning, and signal issues." },
+        { "position": 4, "title": "When to break the rules", "objective": "Manual CPC, narrow match, and other deliberate exceptions." }
+      ]
+    }
+  ]
+}

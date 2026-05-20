@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Threads, blocks, and grids",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does CUDA have a two-level hierarchy (threads in blocks) instead of just one flat pool of threads?",
+      "choices": [
+        { "id": "a", "text": "Historical accident." },
+        { "id": "b", "text": "It maps to hardware constraints and enables scaling. Blocks are the unit the hardware schedules onto SMs. Threads within a block can cooperate (shared memory, barriers) because they live on the same SM with shared resources. Threads in different blocks cannot cooperate because they may run on different SMs at different times. This independence between blocks is what lets the same kernel scale from a small GPU (few SMs) to a huge GPU (many SMs) without code changes — the hardware just runs more blocks in parallel when more SMs are available. A flat pool of threads would either require expensive global synchronization or sacrifice the within-group cooperation that enables shared-memory optimization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Marketing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The hierarchy is a compromise between cooperation (within block) and scaling (across blocks). It's why CUDA kernels work on any NVIDIA GPU — the hardware decides how many blocks run in parallel based on its size.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A CUDA kernel uses `__syncthreads()` inside a branch like `if (threadIdx.x < 16) { __syncthreads(); }`. What happens?",
+      "choices": [
+        { "id": "a", "text": "Works fine." },
+        { "id": "b", "text": "Deadlock or undefined behavior. `__syncthreads()` is a barrier that requires every thread in the block to reach it before any can proceed. If only some threads enter the branch and hit the barrier while others skip it, the threads at the barrier wait forever for the others to arrive. This is one of the most common CUDA bugs. The rule: `__syncthreads()` must be on a code path that all threads in the block execute. If you need to synchronize after a branch, structure it as: do the conditional work, exit the branch, then sync — outside the conditional. Newer CUDA versions sometimes detect and warn about this; older ones silently hang." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster execution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Block-wide barriers in divergent branches deadlock. Sync points must be reached by all threads in the block. This is a classic CUDA bug that causes mysterious hangs.",
+      "points": 1
+    }
+  ]
+}

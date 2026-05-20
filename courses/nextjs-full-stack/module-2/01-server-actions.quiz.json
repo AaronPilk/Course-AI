@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Server Actions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What do Server Actions replace?",
+      "choices": [
+        { "id": "a", "text": "React state." },
+        { "id": "b", "text": "Most REST/tRPC mutation endpoints. A Server Action is an async function with `'use server'` directive that runs on the server but is called from Client Components as if local. Next.js auto-generates the RPC plumbing (serialization, transport, error handling); types flow through end-to-end. Replaces hand-written `/api/posts/create` endpoints + fetch wrappers + duplicated types. Works with native HTML forms via `action={fn}` for progressive enhancement — forms work even when JavaScript fails. Keep REST endpoints for external consumers (mobile, webhooks); use Server Actions for app-internal mutations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Routes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server Actions replace most REST mutation endpoints with co-located, type-safe server functions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server Action creates a post, then redirects to /posts list. List still shows old data after redirect. Cause?",
+      "choices": [
+        { "id": "a", "text": "Race condition." },
+        { "id": "b", "text": "Missing `revalidatePath('/posts')` (or `revalidateTag('posts')` if you used tags) before the redirect. The /posts page was cached; the redirect navigates there, the cache serves stale data. The fix: call `revalidatePath('/posts')` after the DB write but before `redirect()`. Same pattern for dynamic routes: `revalidatePath('/posts/[slug]')` or use tags on the fetches and invalidate the tag. Forgetting revalidation after a mutation is the most common Server Actions bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bug in Next.js." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Call revalidatePath / revalidateTag before redirect. Otherwise cache serves stale.",
+      "points": 1
+    }
+  ]
+}

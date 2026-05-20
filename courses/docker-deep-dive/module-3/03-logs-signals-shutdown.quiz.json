@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Logs, signals, shutdown",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `docker run --init` for many apps?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic flag." },
+        { "id": "b", "text": "Linux treats PID 1 specially: it must reap zombie children and signals require explicit handlers (default actions don't fire). Many apps weren't written as init programs — they leak zombies and ignore SIGTERM when running as PID 1. `--init` runs tini as PID 1; tini reaps zombies and forwards signals to your app, which now runs as a normal child. For Node/Python/Java/Ruby apps in production, this is recommended. In Kubernetes, the pause container handles PID 1 and you don't need `--init`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster startup." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PID 1 is special in Linux. tini (via --init) handles the kernel's expectations so your app doesn't have to.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Docker host's disk fills up after a few weeks. Logs are configured to json-file. What's missing?",
+      "choices": [
+        { "id": "a", "text": "Bigger disk." },
+        { "id": "b", "text": "Log rotation. The default json-file driver writes container logs to /var/lib/docker/containers/<id>/*-json.log forever, no rotation. Busy containers can produce GBs per day. Fix: set `--log-opt max-size=10m --log-opt max-file=3` per container, or configure defaults in the Docker daemon config (/etc/docker/daemon.json). Or switch to a shipping driver (fluentd, awslogs) that doesn't store locally." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "json-file driver never rotates by default. Set max-size/max-file or use a shipping driver. Standard production hygiene.",
+      "points": 1
+    }
+  ]
+}

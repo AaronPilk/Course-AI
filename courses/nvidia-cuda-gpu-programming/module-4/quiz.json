@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: The CUDA ecosystem",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you write a custom CUDA kernel instead of using cuBLAS or cuDNN?",
+      "choices": [
+        { "id": "a", "text": "Always — custom is always faster." },
+        { "id": "b", "text": "Almost never, with specific exceptions. cuBLAS/cuDNN achieve 70-90% of peak FLOPS because NVIDIA engineers have spent years tuning them — Tensor Core paths, optimal tiling, async loads, instruction scheduling. A custom kernel by a competent CUDA programmer typically reaches 20-40% of peak; matching the libraries requires hundreds of hours of expert work. Write custom when: (1) the operation isn't in any library (novel ML primitive, specialized scientific computation); (2) you need fused operations combining multiple library calls into one kernel pass to avoid intermediate memory writes; (3) you have specialized data layouts the libraries don't handle efficiently. For everything else — matmul, convolution, FFT, sort, reduction — use the library. Even when you do write custom, build on CUTLASS, CUB, or Triton rather than starting from scratch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The library-vs-custom decision is structural. Libraries cover common cases superbly; custom kernels exist for the specific gaps. Most teams should spend their effort on the 5-10% that's actually novel, not the 90% NVIDIA has already optimized.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A researcher building a novel attention variant for a research paper has moderate CUDA experience. What tool should they use?",
+      "choices": [
+        { "id": "a", "text": "Raw CUDA C++." },
+        { "id": "b", "text": "Triton. It's a Python-like DSL designed for this exact case — writing custom GPU kernels for ML without dropping to CUDA C++. Triton handles block-level boilerplate, masking, and memory access patterns while letting the developer control performance-critical decisions. It integrates with PyTorch's autograd via custom op definitions. Development time is days vs. weeks, performance is typically within 10-20% of expert CUDA. Modern ML codebases use Triton extensively (FlashAttention, custom quantization, fused operations). For a researcher with moderate CUDA familiarity, Triton beats both pure PyTorch (not flexible enough) and raw CUDA (too slow to develop), hitting the productivity-performance sweet spot." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never write any kernel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool choice matters as much as kernel design. Triton is purpose-built for custom ML kernels — Python-like, PyTorch-integrated, performance within striking distance of CUDA C++. The right tool for the right job.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why do async memory transfers require pinned host memory?",
+      "choices": [
+        { "id": "a", "text": "API convention." },
+        { "id": "b", "text": "Async transfers use DMA between host and GPU memory, which requires host pages to be locked in physical memory (pinned) so they don't get swapped by the OS during the transfer. Regular pageable memory can be moved by the OS at any time, which would break DMA. When you call cudaMemcpyAsync on pageable memory, the runtime falls back to a synchronous copy through an internal pinned staging buffer — the 'async' behavior is lost and overlap with compute doesn't happen. To get genuine async transfer, allocate host buffers with cudaMallocHost (pinned) or use cudaHostRegister to pin existing allocations. Forgetting this is one of the most common reasons stream-based overlap optimizations don't deliver expected speedups." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random rule." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Async + pinned go together. Without pinning, the async API falls back to synchronous behavior internally. Verify with Nsight Systems that transfers actually overlap with compute.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "An ML training loop runs at 30% GPU utilization. What's the diagnostic process to figure out why?",
+      "choices": [
+        { "id": "a", "text": "Add more layers." },
+        { "id": "b", "text": "Profile with Nsight Systems first (or PyTorch profiler) to see the timeline. The 30% utilization means the GPU is idle 70% of the time — the question is what's happening during the idle time. Common causes visible on the timeline: long CPU dataloader gaps between batches (fix: more workers, pinned memory, prefetch); synchronous Python operations forcing CPU-GPU sync (fix: avoid .item(), .cpu() in hot loops, use torch.compile); CPU-side preprocessing of each batch (fix: move to GPU or pre-compute offline); slow disk I/O (fix: faster storage, dataset caching). The fix is always specific to what the profile shows. Tuning the GPU side (kernels, batch size, mixed precision) only helps when the GPU is actually the bottleneck — and at 30% util, it usually isn't. Most ML perf wins live in the data pipeline, not the model code." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy more GPUs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Low GPU utilization usually means CPU-side bottleneck. The profiler timeline reveals exactly where time goes. Without that diagnosis, optimizations are guesswork.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does Nsight Compute's 'warp stall reason: Memory Dependency' indicate about a kernel?",
+      "choices": [
+        { "id": "a", "text": "Compiler bug." },
+        { "id": "b", "text": "Warps are spending most of their time waiting on global memory loads — the kernel is memory-bound. Compute units sit idle while threads wait for data. The fix targets reducing memory traffic or hiding latency better: shared-memory tiling for data reuse, switching to lower-precision data types (FP16 = half the bytes), vectorized loads (float4 instead of float), improved coalescing if access patterns aren't optimal, or algorithmic changes that increase arithmetic intensity. Adding more threads or pushing occupancy higher doesn't fix the underlying ceiling — you're already saturating memory bandwidth. The stall-reason taxonomy in Nsight is what makes the diagnosis precise; memory-dependency-dominant kernels need traffic-reduction strategies, not more parallelism." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random metric." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reading stall reasons gives you the exact bottleneck. Memory-dominated stalls call for traffic reduction (tiling, lower precision, better coalescing). Different stalls call for different fixes. Profile-driven diagnosis is the difference between effective optimization and guesswork.",
+      "points": 1
+    }
+  ]
+}

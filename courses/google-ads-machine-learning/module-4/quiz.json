@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Measurement and attribution",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Enhanced Conversions do?",
+      "choices": [
+        { "id": "a", "text": "Speeds up the pixel." },
+        { "id": "b", "text": "Sends hashed (SHA-256) first-party user data (email, phone, name, address) alongside the conversion event. Google matches the hashed data to logged-in Google users, recovering attribution lost to iOS ATT, Safari ITP, ad blockers, and cookie restrictions. Lift is typically 10-30% more attributed conversions and improved match quality for Smart Bidding's signal. Email alone helps significantly; adding phone, name, and address improves further." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disables consent." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hashed user data sent with conversions recovers privacy-lost attribution.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Migrating from last-click to DDA, brand campaign conversions show 25% lower. Action?",
+      "choices": [
+        { "id": "a", "text": "Revert to last-click." },
+        { "id": "b", "text": "Don't revert. The shift is expected and correct — last-click was over-crediting bottom-funnel touchpoints (brand, retargeting) while starving top-of-funnel of credit it earned. Total conversions across all campaigns are unchanged; credit is just redistributed to reflect actual contribution. Smart Bidding rebalances toward upper funnel over 14-30 days as it sees the more honest signal. Older models were giving you inflated bottom-funnel numbers; DDA is the more accurate read." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause brand campaign." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DDA's shift is expected and correct. Don't revert.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does e-commerce need dynamic conversion values?",
+      "choices": [
+        { "id": "a", "text": "Required by law." },
+        { "id": "b", "text": "tROAS bids more aggressively on auctions predicted to drive high-value conversions and less on low-value ones — per-impression value-bidding. Static values ($100 per Purchase regardless of actual amount) hide the difference between a $20 sale and a $2,000 sale, so the system can't differentiate bid logic between them. Dynamic values (actual order subtotal per conversion) are what makes tROAS work as designed. Send the order subtotal from your checkout into the conversion fire." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reporting clarity." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dynamic values enable per-impression value-bidding. The whole point of tROAS.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Subscription business, optimizing on first-month payment. Unit economics weak. Move?",
+      "choices": [
+        { "id": "a", "text": "Raise bids." },
+        { "id": "b", "text": "Send LTV as the conversion value, not first-month payment. First-month payment under-represents customer value — a $50/month subscriber with 14-month average tenure is worth ~$700, not $50. Build a simple LTV model (average tenure × monthly payment × renewal probability per cohort) and pass predicted LTV at conversion time. Smart Bidding now optimizes for high-LTV customers, not just first-payment users. Typical unit-economics improvement within 60-90 days. Requires data-science work to build the LTV model but the ROI is high for businesses with significant LTV variance." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cut budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Send LTV not first-month. Optimize for real customer value.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Cheap, high-value incrementality test on Google?",
+      "choices": [
+        { "id": "a", "text": "Full MMM." },
+        { "id": "b", "text": "Brand search suppression test. Pause your branded Search campaign for 2-3 weeks (or run as Drafts & Experiments at 50/50), track branded organic clicks (typically rise as paid vanishes) and total revenue. Common finding: 60-90% of brand search revenue is non-incremental. Cheap, fast, immediately actionable. Most accounts over-spend on brand Search; right-sizing recovers 10-25% of brand budget without revenue loss." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Geo holdout." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brand search suppression. Cheap, fast, high-value entry point.",
+      "points": 1
+    }
+  ]
+}

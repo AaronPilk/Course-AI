@@ -1,0 +1,11 @@
+{
+  "slug": "google-ads-machine-learning",
+  "sources": [
+    { "type": "docs", "url": "https://support.google.com/google-ads", "label": "Google Ads Help Center" },
+    { "type": "docs", "url": "https://developers.google.com/google-ads/api", "label": "Google Ads API documentation" },
+    { "type": "docs", "url": "https://support.google.com/google-ads/answer/2979071", "label": "About Smart Bidding" },
+    { "type": "docs", "url": "https://support.google.com/google-ads/answer/10724817", "label": "About Performance Max campaigns" },
+    { "type": "docs", "url": "https://support.google.com/google-ads/answer/13258081", "label": "About enhanced conversions" },
+    { "type": "docs", "url": "https://support.google.com/google-ads/answer/9744275", "label": "About attribution models" }
+  ]
+}

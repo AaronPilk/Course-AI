@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: What containers actually are",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does a container actually differ from a VM at the technical level?",
+      "choices": [
+        { "id": "a", "text": "Container = small VM." },
+        { "id": "b", "text": "A VM virtualizes hardware via a hypervisor; each VM has its own kernel, init, drivers. A container is a process (or process tree) on the host kernel, isolated by Linux kernel features: namespaces (what's seen — filesystem, processes, network), cgroups (what's used — CPU, memory, I/O), capabilities, and seccomp. No virtualized hardware, no guest OS. Containers start in milliseconds vs seconds-to-minutes for VMs; containers are 10-50x denser per host; VM isolation is stronger because guest kernels are independent. For trusted workloads, container isolation is fine. For multi-tenant untrusted code, microVMs (Firecracker, Kata) or gVisor provide VM-grade isolation with container-grade ergonomics." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Containers = isolated processes; VMs = virtualized hardware. Different mechanisms, different security and density tradeoffs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "What's the security implication of mounting /var/run/docker.sock into a container?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Effectively root on the host. The Docker socket is the API for the Docker daemon, which runs as root and can create privileged containers, mount any host path, install rootkits. A container with the socket mounted can trivially escape and take over the host. Avoid this pattern unless you genuinely need it; even then, use a scoped API (proxy) instead of raw socket access. This pattern is common in tutorials and dangerous in production. Audit existing setups and remove socket mounts where not strictly necessary." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mounts more files." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Docker socket access = host root. Treat accordingly. Use scoped APIs or isolated runtimes when containers need Docker-like control.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does Dockerfile instruction order matter so much for build performance?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Docker's build cache reuses layers when an instruction's inputs haven't changed. Each filesystem-modifying instruction produces a layer; Docker hashes the instruction + inputs and reuses cached layers on match. Cache misses cascade: once one instruction misses, all subsequent ones miss too. Order stable instructions early (base image, dependency installs that depend only on lock files); order frequently-changing instructions late (source code copy). The canonical optimization: COPY package.json/lock first, run npm install (cached when lock unchanged), then COPY source. Builds drop from minutes to seconds for source-only changes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random rule." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stable-first, frequent-last preserves build cache. Lock files before sources; install before copying code. Universal Dockerfile discipline.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A Dockerfile COPYs an SSH key for build, RM's it later. Image is pushed. Did the key get removed?",
+      "choices": [
+        { "id": "a", "text": "Yes, it's gone." },
+        { "id": "b", "text": "No. Layers are immutable; deleting a file in a later layer creates a whiteout that hides the file in the merged view but leaves it in the earlier layer. Anyone with the image can extract the key from the COPY layer using `docker save`, `dive`, or similar tools. This is one of the most common credential leaks via container images. Fix: use BuildKit's `--secret` flag, which mounts secrets into specific RUN commands without persisting in layers. Or use multi-stage builds where credentials only live in discarded stages. For existing images that may have leaked: rotate credentials immediately, scan all images, audit registry access logs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Maybe." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Secrets in layers persist even after deletion. Use BuildKit secrets or multi-stage builds. Rotate any leaked credentials.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does the OCI (Open Container Initiative) standardize?",
+      "choices": [
+        { "id": "a", "text": "Docker-specific features." },
+        { "id": "b", "text": "Container image format and runtime behavior. The OCI Image Spec defines how images are structured (layers, manifest, config); the OCI Runtime Spec defines how a runtime creates a container from a filesystem and configuration JSON; the OCI Distribution Spec defines registry behavior. This standardization is why an image built with Docker runs on containerd, CRI-O, or Podman without changes; why registries (Docker Hub, ECR, GHCR, Harbor) interoperate; and why alternative runtimes (gVisor, Kata) can swap in for runc transparently. The whole 'container ecosystem' relies on these standards. When someone says 'Docker image,' they almost always mean 'OCI image' — Docker is one of many tools producing and consuming them." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pricing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OCI standardizes image format, runtime behavior, and registry distribution. The interoperability that makes the container ecosystem work.",
+      "points": 1
+    }
+  ]
+}

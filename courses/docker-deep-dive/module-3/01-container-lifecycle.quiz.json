@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Container lifecycle",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `docker stop` actually do?",
+      "choices": [
+        { "id": "a", "text": "Kills the container immediately." },
+        { "id": "b", "text": "Sends SIGTERM to PID 1, waits grace period (default 10s), then SIGKILL if still alive. The app must handle SIGTERM to shut down gracefully — finish in-flight requests, close connections, exit. Apps that ignore it get killed hard. Configure grace with `-t SECONDS`; configure SIGTERM handling in your app." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pauses the container." }
+      ],
+      "correct_answer": "b",
+      "explanation": "stop = SIGTERM + grace + SIGKILL. Graceful shutdown requires the app to handle SIGTERM.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A production container disappears on host reboot. Restart policy?",
+      "choices": [
+        { "id": "a", "text": "no (default)." },
+        { "id": "b", "text": "`--restart unless-stopped`. Survives daemon restarts and host reboots; doesn't restart if you explicitly `docker stop` it. For Kubernetes/Compose-managed services, set `no` and let the orchestrator handle restarts. For raw single-host Docker, unless-stopped is the default for production services." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual restart only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "unless-stopped for single-host production; let orchestrator handle restarts when one exists.",
+      "points": 1
+    }
+  ]
+}

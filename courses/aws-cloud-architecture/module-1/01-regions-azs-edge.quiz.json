@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Regions, AZs, and edge locations",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does deploying production workloads across multiple Availability Zones matter even within a single region?",
+      "choices": [
+        { "id": "a", "text": "It doesn't matter — AZs are the same thing." },
+        { "id": "b", "text": "AZs are physically separate clusters of data centers within a region — miles apart, on different power grids, independent failure domains. Connected by fast low-latency networking (under 2ms) but designed so that one AZ failing (power outage, network issue, cooling failure) doesn't take down the others. A production workload running in a single AZ goes down when that AZ has issues. Deploying across 2-3 AZs (load balancer spanning AZs, app servers in multiple AZs, database with multi-AZ replication) means a single AZ failure leaves the system serving traffic from healthy AZs. This is the baseline durability pattern for production on AWS. Single-AZ deployments are appropriate for dev, test, or cost-sensitive non-critical workloads only. The cross-AZ data transfer cost is real but trivial compared to downtime cost." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pricing arbitrage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-AZ is the durability baseline for production. AZs are independent failure domains by design. Skipping multi-AZ to save trivial transfer cost is a classic AWS mistake that produces outages.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team defaults to us-east-1 for everything because 'it's the cheapest region with the most services.' What's the concern?",
+      "choices": [
+        { "id": "a", "text": "No concern." },
+        { "id": "b", "text": "us-east-1 (Virginia) is the original AWS region, has the most services, and is typically the cheapest — but it's also the busiest region and has seen the most significant outages in AWS history (December 2021 multi-service outage being the most notable example). Many global AWS control-plane operations depend on us-east-1, so outages there can cascade beyond just us-east-1-hosted workloads. For non-critical workloads, the cost/service benefit may still win. For mission-critical workloads, consider us-east-2 (Ohio) or us-west-2 (Oregon) — comparable cost, similar service breadth, less concentrated impact during major incidents. The choice isn't 'never use us-east-1' but 'choose region with eyes open about exposure.' Teams running everything in us-east-1 should at least understand the risk and plan accordingly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Higher taxes there." }
+      ],
+      "correct_answer": "b",
+      "explanation": "us-east-1's history is part of its profile. Cheap and full-featured but the most-impacted by outages. The right region depends on workload criticality and the team's tolerance for concentrated exposure.",
+      "points": 1
+    }
+  ]
+}

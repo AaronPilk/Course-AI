@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cost optimization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where does most cost optimization come from in a Supabase account?",
+      "choices": [
+        { "id": "a", "text": "Negotiating with Supabase." },
+        { "id": "b", "text": "The 80/20: right-sizing compute (overpaying for headroom is the most common leak), index audit (unused indexes cost storage and slow writes — find via pg_stat_user_indexes with idx_scan = 0), egress reduction (compression, caching, image transforms, CDN cache headers), and storage cleanup (orphan files, old data archived via partitioning to external storage). Get these four right and most cost optimization is done. The rest is incremental tuning of Realtime subscriptions, Edge Function batching, branch cleanup. Audit monthly; alert on daily anomalies." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random changes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "80/20: compute sizing + index audit + egress + storage cleanup.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Database storage growing 10GB/month from an events table. Sustainable approach?",
+      "choices": [
+        { "id": "a", "text": "Bigger compute." },
+        { "id": "b", "text": "Partition the table by month using Postgres native partitioning (`partition by range (occurred_at)` with monthly partitions). Old partitions can be detached and archived to cheaper external storage (S3 in Parquet format) or simply dropped after a retention period. Schedule partition creation and rotation via pg_cron. Queries on recent data stay fast (only the relevant partitions scan); cold historical data lives cheaply outside the live DB. The pattern works for any time-series data — events, logs, audit trails, metrics. Avoids the trap where 'historical data' grows the live DB indefinitely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy more storage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Partition by month + detach old partitions + archive externally.",
+      "points": 1
+    }
+  ]
+}

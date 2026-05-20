@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Base images",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use Alpine vs Debian-slim as a base?",
+      "choices": [
+        { "id": "a", "text": "Alpine always." },
+        { "id": "b", "text": "Alpine for simple apps and statically-compiled workloads where its 5 MB base wins on size. Debian-slim for apps with native dependencies compiled against glibc — NumPy, Pandas, many Node native modules, anything with prebuilt wheels. Alpine uses musl libc (not glibc), so glibc-compiled binaries either don't run or require compilation from source (slow, sometimes broken). Distroless variants beat both for production runtime images. Pin the version (e.g., alpine:3.19, not alpine:latest) for reproducibility." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Debian always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alpine for static/simple; Debian-slim for native-dep workloads; distroless beats both for production minimal runtime.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Go service ships in a 1 GB image. What's the minimum viable size?",
+      "choices": [
+        { "id": "a", "text": "1 GB is normal for Go." },
+        { "id": "b", "text": "5-20 MB. Multi-stage build: golang base for builder, then `FROM gcr.io/distroless/static-debian12:nonroot` (or scratch) for runtime with just the static binary copied in. CGO_ENABLED=0 for static linking; strip debug symbols with -ldflags='-s -w'. Result: tiny image, no shell for attackers, fast pulls, minimal attack surface. Standard pattern for any statically-compiled language." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run on bare metal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-stage + distroless/scratch + static binary = ~10-20 MB Go images. Universal pattern for static binaries.",
+      "points": 1
+    }
+  ]
+}

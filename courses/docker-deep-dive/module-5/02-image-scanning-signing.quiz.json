@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Image scanning and signing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where in a CI/CD pipeline should image vulnerability scanning happen?",
+      "choices": [
+        { "id": "a", "text": "Only at runtime." },
+        { "id": "b", "text": "Multiple points, with CI as the highest-leverage. In CI: scan the built image; fail the build on Critical CVEs before push. In the registry: continuous scans of pushed images so new CVEs against existing images alert. At deploy: admission controllers verify signatures and re-check scan status. At runtime: monitor for new CVEs against deployed images. CI scanning is the highest-impact point because it stops vulnerable images from ever reaching production. Tune severity thresholds (Critical-only vs Critical+High) to balance security with alert noise. Allowlist specific CVEs you've assessed and accepted." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Once a year manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Scan in CI to fail fast; scan in registry for ongoing visibility; verify at deploy. Multi-point defense.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team wants to verify only signed images can deploy to production. How?",
+      "choices": [
+        { "id": "a", "text": "Manual review." },
+        { "id": "b", "text": "Sign images with Cosign at build time; verify signatures at deploy via an admission controller (Kyverno, OPA Gatekeeper, cosigned). The CI pipeline signs images after building and pushing; the Kubernetes admission controller blocks Pods whose image manifests aren't signed by an approved key. Combined with image-pull policies that require digest references (not floating tags), you get strong supply-chain integrity: only images built by your CI, signed by your key, can run. SLSA-style supply chain protection. Sigstore's ecosystem (Cosign, Rekor, Fulcio) is the modern standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Trust everyone." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cosign for signing + admission controller for verification. Standard supply-chain integrity pattern.",
+      "points": 1
+    }
+  ]
+}

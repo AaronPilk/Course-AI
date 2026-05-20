@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: S3",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does adding a lifecycle policy that transitions old data to Glacier and eventually deletes it often reduce S3 costs by 90%+?",
+      "choices": [
+        { "id": "a", "text": "Glacier is faster." },
+        { "id": "b", "text": "Storage class pricing differs by roughly 20x between Standard and Deep Archive. Standard is ~$0.023/GB/month; Glacier Flexible is ~$0.0036/GB/month; Deep Archive is ~$0.00099/GB/month. For data accessed rarely (logs, backups, old uploads), keeping everything in Standard wastes the price difference. A lifecycle policy automatically transitions objects through cheaper tiers based on age (e.g., 30 days Standard, 90 days IA, 1 year Glacier, expire after 5 years), so each object lives in the cheapest tier that still meets its access pattern. For 50 TB of mostly-archive data, this can drop costs from ~$1100/month to ~$60/month with no application changes — same data, same accessibility when needed, just placed in cheaper storage as it ages. The retrieval cost for Glacier is real, but for data that's genuinely rarely accessed, the storage savings vastly exceed occasional retrieval costs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "AWS discount." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Storage-class lifecycle is one of the highest-leverage S3 optimizations. Set it up early on any data with predictable access decay; retrofit it for accumulated data.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A web application needs to let users upload large files. The team considers building an upload service that buffers files on the app server before sending to S3. Is this right?",
+      "choices": [
+        { "id": "a", "text": "Yes — secure by design." },
+        { "id": "b", "text": "No, use pre-signed PUT URLs instead. Buffering uploads through the app server costs you: server CPU/memory to handle the bytes, network bandwidth in (from user) and out (to S3), and the operational burden of scaling the upload service. Pre-signed URLs are the right pattern: the app server generates a temporary URL granting PUT permission to a specific S3 object key for a limited time (say, 1 hour), the browser uploads directly to S3 using that URL, the app server never sees the bytes. Scales infinitely, costs nothing beyond URL generation, and is more secure because the signed URL can be scoped to one specific key with size limits via the signature. For very large uploads, the browser uses S3 multipart upload directly. This pattern is why S3 is the foundational service — it removes the upload pipeline from your app servers entirely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to HTTP/3." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pre-signed URLs for direct-to-S3 uploads is the canonical pattern. Buffering through your servers is unnecessary work that doesn't scale.",
+      "points": 1
+    }
+  ]
+}

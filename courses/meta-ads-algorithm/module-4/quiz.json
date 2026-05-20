@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Measurement and attribution",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is CAPI now mandatory for serious accounts?",
+      "choices": [
+        { "id": "a", "text": "Meta says so." },
+        { "id": "b", "text": "Pixel fires from the browser and is suppressed by iOS 14.5 ATT, Safari ITP, ad blockers, and privacy extensions — losing 20-40% of conversion events. CAPI sends server-to-server and carries clean hashed user data (email, phone, IDs) that boosts Event Match Quality. Combined with pixel via event_id deduplication, pixel + CAPI gives Meta the complete signal it needs to predict EAR accurately and match users for lookalike/retargeting. Enabling CAPI typically lifts attributed conversions 10-25%." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pixel is deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CAPI recovers iOS/browser-blocked events. Critical foundation for ML signal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Reported ROAS 4x, Shopify shows 2x. Cause?",
+      "choices": [
+        { "id": "a", "text": "Wrong currency only." },
+        { "id": "b", "text": "Deduplication failure. Pixel + CAPI both firing Purchase events without a shared event_id — Meta counts each separately, doubling reported conversions. Fix: generate a per-conversion event_id (the order ID from your e-commerce platform works well) and send the same ID in both pixel and CAPI fires; Meta will dedupe. Confirm in Events Manager that combined Purchase count ≈ actual order count, not 2x. Also check currency mismatches — sending USD value for EUR orders inflates reported ROAS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Meta is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Missing shared event_id = double-count. Use order ID as event_id.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is 7-day-click + 1-day-view the modern default?",
+      "choices": [
+        { "id": "a", "text": "Random choice." },
+        { "id": "b", "text": "After iOS 14.5 ATT, iOS attribution signal degrades quickly past 24 hours, and Meta needed a defensible default that survives the privacy environment. Click is the dominant signal — a verified action linking user to ad. View-through is real but inflates easily, especially for users who would have converted anyway. Read 7-click for daily decisions; check 28-click monthly if sales cycle is long; treat view-through skeptically for direct-response campaigns." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Internal optimization window changed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Post-iOS 14.5, click is durable, view is fragile, 7 days is defensible.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Lift test finds retargeting at 0.5x incremental ROAS, prospecting at 1.8x. Move?",
+      "choices": [
+        { "id": "a", "text": "Increase retargeting." },
+        { "id": "b", "text": "Reallocate toward prospecting. Retargeting's 0.5x means it's mostly claiming credit for sales that would have happened anyway (cart-abandoners coming back regardless). Prospecting is delivering genuine new revenue. Shift 20-40% of retargeting budget to prospecting; retest in 6-12 months. Don't kill retargeting fully — some lift remains and frequency caps still benefit from a retargeting layer — but rebalance to where the causal money is." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Ignore the test." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Move budget toward incremental winners. Common finding: retargeting overcredited.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Clean vertical scaling rules?",
+      "choices": [
+        { "id": "a", "text": "Double budget weekly." },
+        { "id": "b", "text": "20-30% budget increments at most (40% for Advantage+); 3-4 days between raises; watch CPA at each step. If CPA holds within 10-20% of baseline, next raise is safe. If CPA jumps, hold or roll back — the campaign hit its current ceiling. Forcing more budget at the ceiling pays premium prices for marginal users. When vertical is capped, switch to horizontal: new geos, new angles, new offers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never raise budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "20-30% increments, 3-4 day gaps, hold when CPA breaks.",
+      "points": 1
+    }
+  ]
+}

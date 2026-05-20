@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multi-GPU scaling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does tensor parallelism typically stay within a single server rather than spanning servers?",
+      "choices": [
+        { "id": "a", "text": "Random configuration." },
+        { "id": "b", "text": "Tensor parallelism splits weights across GPUs and requires frequent intra-layer communication — every matmul in a transformer block involves an all-reduce or all-gather across the tensor-parallel group. Within a server, NVLink connects 8 GPUs at 600-1800 GB/s bandwidth and microsecond latency, making this frequent communication affordable. Between servers, InfiniBand provides 400-800 Gbps per link with much higher latency than NVLink. The same all-reduce that takes microseconds over NVLink takes milliseconds over InfiniBand, and at the frequency tensor parallel needs it, this overhead overwhelms the compute benefit. The standard pattern is tensor parallel within a server (using NVLink), pipeline parallel between servers in a rack (less frequent communication), data parallel across racks (least frequent communication). The 3D parallelism scheme matches communication patterns to network bandwidth at each level." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Configuration restriction." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Network topology dictates parallelism strategy. The hierarchy (NVLink within server, InfiniBand between servers) maps to which parallelism scheme works at each level. Crossing the wrong boundary kills performance.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A 1000-GPU training run loses one node on day 14 of a 30-day training. What enables the cluster to recover gracefully instead of restarting from scratch?",
+      "choices": [
+        { "id": "a", "text": "Faith." },
+        { "id": "b", "text": "Periodic checkpointing combined with elastic training framework support. Modern distributed training writes model and optimizer state to durable storage every 30 minutes to 6 hours, depending on the run. When a node fails, the framework (TorchElastic, MosaicML Composer, etc.) detects the failure, can either drop the failed node and continue with reduced parallelism (elastic), or restart all workers from the last checkpoint (resume). Without checkpointing, the entire 14 days of compute would be lost — at thousands of dollars per GPU-hour, this is a catastrophic loss. Hardware failures at thousand-GPU scale are essentially certain over long training runs, so failure handling isn't optional. Best practices include: checkpoint frequency tuned to wall time of failure vs. checkpoint overhead, redundant copies of checkpoints, automatic detection of slow/flaky GPUs before they cause silent corruption, and spare nodes ready to swap in." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart from scratch." }
+      ],
+      "correct_answer": "b",
+      "explanation": "At thousand-GPU scale, hardware failures are routine. Checkpointing and elastic training are non-negotiable infrastructure. Without them, long training runs fail catastrophically; with them, failures are merely annoying.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "slug": "aws-cloud-architecture",
+  "title": "AWS Cloud Architecture for Beginners",
+  "subtitle": "How AWS actually works — regions, services, networking, security, and the patterns that make cloud architectures durable",
+  "description": "A practical course on Amazon Web Services for engineers and technical practitioners new to cloud. Covers the core mental model (regions, AZs, the shared-responsibility model), the workhorse services (EC2, S3, RDS, Lambda, VPC), networking and security, architecture patterns (multi-tier apps, event-driven, serverless, microservices), the Well-Architected Framework, and cost optimization. Built from AWS official documentation, AWS whitepapers, and standard cloud architecture references. Practical, focused on what you'll actually use day-to-day rather than encyclopedic service coverage.",
+  "category": "Cloud",
+  "difficulty": "beginner",
+  "audience": "Developers, engineers, founders, and curious learners new to AWS or to cloud in general. Some basic technical familiarity (you know what a server is) helps but no AWS background required.",
+  "tags": ["aws", "cloud", "infrastructure", "architecture", "ec2", "s3"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "AWS",
+    "logo": "/brands/aws-cloud-architecture.svg",
+    "gradient": ["#FF9900", "#232F3E"],
+    "tint": "#1B0F00"
+  },
+  "prerequisites": [
+    "Basic technical familiarity (you know what a server, database, and DNS are)",
+    "No AWS background required",
+    "Comfort with reading configuration and command-line examples"
+  ],
+  "outcomes": [
+    "Explain AWS's global infrastructure (regions, AZs, edge locations) and what it means for your architecture",
+    "Use the core services (EC2, S3, RDS, Lambda, VPC) confidently",
+    "Design networking and security with VPC, security groups, IAM",
+    "Recognize and apply standard cloud architecture patterns",
+    "Apply the Well-Architected Framework principles to design choices",
+    "Reason about cost across compute, storage, and data transfer",
+    "Avoid the common AWS mistakes that produce surprise bills and outages"
+  ],
+  "modules": [
+    {
+      "title": "AWS Mental Model",
+      "summary": "Regions, availability zones, the shared-responsibility model, and how AWS is organized.",
+      "estimated_minutes": 50,
+      "key_concepts": ["regions", "availability zones", "edge locations", "shared responsibility", "IAM"],
+      "lessons": [
+        { "title": "Regions, AZs, and edge locations", "objective": "Understand AWS's global topology and why it matters." },
+        { "title": "The shared-responsibility model", "objective": "Know what AWS handles vs what you handle." },
+        { "title": "Accounts, IAM, and organizations", "objective": "Map how access and isolation work." },
+        { "title": "How you actually pay for AWS", "objective": "Understand pricing dimensions and surprise-bill risks." }
+      ]
+    },
+    {
+      "title": "Core Compute and Storage",
+      "summary": "The services you'll touch every day: EC2, S3, EBS, and Lambda.",
+      "estimated_minutes": 55,
+      "key_concepts": ["EC2", "S3", "EBS", "Lambda", "AMIs", "storage classes"],
+      "lessons": [
+        { "title": "EC2 — virtual machines on AWS", "objective": "Use EC2 effectively." },
+        { "title": "S3 — object storage and how it really works", "objective": "Understand S3's model and storage classes." },
+        { "title": "EBS, instance store, and EFS — block and file storage", "objective": "Pick the right storage service for the workload." },
+        { "title": "Lambda — serverless compute", "objective": "When to use Lambda vs EC2 vs containers." }
+      ]
+    },
+    {
+      "title": "Networking and Security",
+      "summary": "VPCs, security groups, IAM, and how you actually build secure cloud architectures.",
+      "estimated_minutes": 55,
+      "key_concepts": ["VPC", "subnets", "security groups", "NACLs", "IAM policies", "encryption"],
+      "lessons": [
+        { "title": "VPC — your private network in the cloud", "objective": "Design a working VPC layout." },
+        { "title": "Security groups, NACLs, and route tables", "objective": "Understand how traffic actually flows." },
+        { "title": "IAM in depth", "objective": "Write good policies and avoid bad ones." },
+        { "title": "Encryption, secrets, and the security baseline", "objective": "Know what to encrypt and how." }
+      ]
+    },
+    {
+      "title": "Architecture Patterns",
+      "summary": "Multi-tier web apps, event-driven, serverless, microservices, and the Well-Architected Framework.",
+      "estimated_minutes": 55,
+      "key_concepts": ["multi-tier", "event-driven", "serverless", "microservices", "Well-Architected"],
+      "lessons": [
+        { "title": "The classic three-tier web app", "objective": "Map a working architecture across AWS services." },
+        { "title": "Event-driven and serverless patterns", "objective": "Use SQS, SNS, EventBridge, and Lambda together." },
+        { "title": "Microservices on AWS — ECS, EKS, and beyond", "objective": "Choose between container orchestration options." },
+        { "title": "The Well-Architected Framework", "objective": "Apply the five pillars to real designs." }
+      ]
+    },
+    {
+      "title": "Operations, Cost, and What to Avoid",
+      "summary": "Monitoring, deployment, cost optimization, and the patterns that bite you in production.",
+      "estimated_minutes": 50,
+      "key_concepts": ["CloudWatch", "CI/CD on AWS", "cost optimization", "common mistakes", "scaling"],
+      "lessons": [
+        { "title": "Observability — CloudWatch, X-Ray, logs", "objective": "Know what's happening in your stack." },
+        { "title": "Deployment and infrastructure as code", "objective": "Use CloudFormation, CDK, or Terraform sanely." },
+        { "title": "Cost optimization that actually works", "objective": "Reduce AWS bills without breaking things." },
+        { "title": "The AWS mistakes that bite you", "objective": "Avoid the failure modes everyone hits once." }
+      ]
+    }
+  ]
+}

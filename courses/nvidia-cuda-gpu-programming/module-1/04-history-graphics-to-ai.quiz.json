@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: From graphics to AI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is NVIDIA's lead in AI compute durable beyond just hardware quality?",
+      "choices": [
+        { "id": "a", "text": "Marketing budget." },
+        { "id": "b", "text": "The software ecosystem is the moat. CUDA (2007), cuDNN, cuBLAS, NCCL, TensorRT, plus deep integration with PyTorch and TensorFlow, plus 15+ years of CUDA-targeted research code, plus optimized kernels for every common operation — together this is a massive accumulated investment that competitors must match before their hardware becomes useful. AMD's ROCm has improved but lags meaningfully on coverage and performance. Custom AI chips (TPUs, various startups) compete in narrow niches but can't match the general-purpose framework support. NVIDIA's 2007 CUDA bet looked premature for over a decade; the compound effect of being the default platform turned it into structural advantage. Switching off CUDA requires porting custom kernels, validating framework support, and accepting performance gaps — most teams don't pay the cost." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Government regulation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Software ecosystems compound. Every year of CUDA-default research and production code makes the moat deeper. NVIDIA's hardware lead matters but the ecosystem lead is what locks in pricing power and customer loyalty.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team using PyTorch on NVIDIA GPUs considers switching to AMD GPUs to save on hardware cost. What should they expect?",
+      "choices": [
+        { "id": "a", "text": "Drop-in replacement, instant savings." },
+        { "id": "b", "text": "Significant migration effort with mixed results. AMD's Instinct GPUs are capable hardware and ROCm has improved substantially in recent years, but the migration involves: porting any custom CUDA kernels to HIP/ROCm equivalents; validating that the PyTorch ROCm build supports every operation the team uses (some niche ops lag); dealing with subtly different numerical behavior; benchmarking actual performance vs. claimed performance (often a gap); handling tooling and debugging that doesn't have CUDA's maturity. Total project time is typically months, not days. The savings on hardware can be real but are partially offset by engineering time and ongoing maintenance burden. The right calculation depends on workload size — large training runs may justify the effort, small teams usually don't." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Impossible to migrate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Software ecosystem switching costs are real. AMD hardware is competitive on paper; the cost is in migration effort and ongoing ecosystem gaps. Most teams stay on NVIDIA not because they love it but because the switching cost exceeds the savings.",
+      "points": 1
+    }
+  ]
+}

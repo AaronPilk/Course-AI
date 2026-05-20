@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Shared responsibility",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Under AWS's shared-responsibility model, who is responsible for patching the operating system on an EC2 instance?",
+      "choices": [
+        { "id": "a", "text": "AWS — they manage everything." },
+        { "id": "b", "text": "You. AWS launches your EC2 instance from an AMI that was patched at the AMI build time, but the running OS — kernel updates, package patches, security advisories — is the customer's responsibility for as long as the instance lives. AWS handles the physical hardware, hypervisor, and network underneath; you handle anything above the hypervisor including OS patches, runtime updates, application code, and configuration. This is why many teams move to managed services (Lambda, Fargate, RDS) where AWS handles more of the operational burden. For EC2 specifically, you should automate patching via AWS Systems Manager Patch Manager or equivalent — leaving it manual produces the 'instance compromised via 6-month-old vulnerability' scenario that's a routine cause of breaches." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "The hosting provider." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EC2 OS patching is customer responsibility. AWS gives you a patched starting point; ongoing maintenance is yours. This is one of the most-misunderstood pieces of shared responsibility.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An S3 bucket with customer data was found to be world-readable. Who's responsible?",
+      "choices": [
+        { "id": "a", "text": "AWS — they should have prevented it." },
+        { "id": "b", "text": "The customer. AWS provides safe defaults (S3 Block Public Access is on by default at the account level for new accounts; bucket creation prompts you about public access). To make a bucket world-readable, someone on the customer side had to explicitly override the defaults — turning off Block Public Access, writing a bucket policy with `Principal: *`, or setting object ACLs to public-read. AWS provided the tools and the safety nets; the customer chose to disable them. This is shared responsibility in action: AWS protects against the easy mistakes by default, but you can always override defaults if you understand what you're doing. The protection AWS provides is necessary but not sufficient — you also need governance (Config rules, automated audits, IAM controls) to catch the cases where someone disables a default for a one-off task and never reverts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "The OS vendor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Open S3 buckets are the canonical 'customer-side' breach. AWS gives you locked-down defaults; overriding them is your call and your consequence. Use Block Public Access at account level plus automated auditing.",
+      "points": 1
+    }
+  ]
+}

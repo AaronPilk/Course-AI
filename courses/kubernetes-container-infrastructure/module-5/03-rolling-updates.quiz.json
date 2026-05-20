@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Rolling updates and rollback",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is the readiness probe critical for zero-downtime rolling updates?",
+      "choices": [
+        { "id": "a", "text": "It's optional decoration." },
+        { "id": "b", "text": "Readiness probes determine whether a Pod receives traffic from Services. During a rolling update, Kubernetes starts new Pods, waits for them to be Ready, then scales down old Pods. Without a readiness probe (or with one configured too permissively), new Pods become endpoints immediately and receive traffic before they're actually ready to serve — connections fail or hang during the startup window. With a probe that's too strict, new Pods never become Ready and the rollout stalls forever. The probe needs to reflect 'is this Pod actually ready to serve traffic?' — typically a /ready endpoint that verifies dependencies are connected, caches warmed, config loaded. Combined with `maxUnavailable: 0`, this ensures no Pod accepts traffic until it's actually serving, producing genuinely zero-downtime deploys. Without it, rolling deploys produce error spikes that pass for 'how K8s works' but are actually a configuration issue." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required for billing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Readiness probes gate traffic to Pods. Configured well: zero-downtime deploys. Misconfigured: error spikes or stuck rollouts. Test in staging.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team's deploys produce a 30-second error spike every time. They blame Kubernetes. What's actually happening?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes bug." },
+        { "id": "b", "text": "Missing graceful shutdown. When old Pods receive SIGTERM during rolling update, they immediately exit instead of finishing in-flight requests. Connections fail; errors spike for the brief window before traffic shifts entirely to new Pods. Fixes: (1) handle SIGTERM in the application — stop accepting new connections, finish active requests, then exit; (2) set `terminationGracePeriodSeconds` longer than your slowest reasonable request (default 30s, sometimes needs to be 60+); (3) add a preStop lifecycle hook with `sleep 15` so load balancers stop sending traffic before the app receives SIGTERM; (4) ensure readiness probes mark Pods Not Ready immediately on shutdown so Service endpoints exclude them. Combined: SIGTERM handling + preStop sleep + readiness updates produce truly zero-downtime deploys. The 'every deploy has errors' pattern is one of the most common K8s operational issues; the fix is at the application layer, not in K8s." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stop deploying." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Graceful shutdown handling is the application's responsibility. Without it, every K8s deploy produces brief error spikes. SIGTERM handling + preStop sleep + readiness updates fix it.",
+      "points": 1
+    }
+  ]
+}

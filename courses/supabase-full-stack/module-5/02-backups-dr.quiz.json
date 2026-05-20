@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Backups and DR",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is testing restores quarterly important?",
+      "choices": [
+        { "id": "a", "text": "It's not." },
+        { "id": "b", "text": "Backups that haven't been verified might not work. Hidden corruption, schema mismatches, missing permissions, or restore-procedure bugs only surface during an actual restore. Teams that skip restore drills almost always discover bugs the day they really need it — exactly the worst time. A 15-minute quarterly drill (restore yesterday's backup to a new project, verify row counts and key tables, delete the test project) gives you confidence the process works and familiarity with the steps. The day you need a real restore, you'll know exactly what to do." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Supabase." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Untested backups aren't backups. Practice quarterly so the procedure works under pressure.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "GDPR compliance — user requests their data deleted. Schema readiness?",
+      "choices": [
+        { "id": "a", "text": "Manual deletion per table." },
+        { "id": "b", "text": "Set up cascade deletes from `auth.users` throughout the schema: every user-owned table references `auth.users(id)` with `on delete cascade`. Then deletion is one call: `supabaseAdmin.auth.admin.deleteUser(userId)` — the cascade graph removes profiles, posts, comments, settings, audit log entries, all linked data. Test this BEFORE the first request comes in: create a test user, populate associated rows, delete the user, verify all linked rows are gone. Discovering missing cascades during an enforcement deadline is a fire drill." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Soft delete only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cascade FKs from auth.users + one-call deletion. Test before you need it.",
+      "points": 1
+    }
+  ]
+}

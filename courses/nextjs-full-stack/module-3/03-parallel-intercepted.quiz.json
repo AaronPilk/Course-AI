@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Parallel and intercepted routes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the killer feature of parallel routes (slots) for dashboards?",
+      "choices": [
+        { "id": "a", "text": "Smaller bundles." },
+        { "id": "b", "text": "Independent loading and error states per slot. A `@analytics` slot has its own loading.tsx and error.tsx; a `@team` slot has its own. The analytics slot's spinner shows independently of team's; an error in analytics doesn't break team's render. Each slot's data fetches in parallel; slow slots don't block fast ones. Combined with bookmarkable URL state per slot, this is dramatically cleaner than building one giant dashboard page. Receive both `children` and named slot props in the layout." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster builds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Independent loading, error, and data fetching per slot — perfect for dashboards.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Photo gallery: clicking a photo should show a modal, but the URL should change and the modal URL should be bookmarkable. Pattern?",
+      "choices": [
+        { "id": "a", "text": "Local state, no URL change." },
+        { "id": "b", "text": "Intercepted routes. Create a normal `app/photos/[id]/page.tsx` for the full-page view, plus `app/@modal/(..)photos/[id]/page.tsx` that intercepts the same URL from `/photos` context and renders a modal. Click from grid → modal opens, URL updates to /photos/123, grid stays rendered underneath. Direct link to /photos/123 → full-page view renders. Bookmarkable both ways. `router.back()` from the modal closes it. The `(..)` syntax means 'intercept from one level up.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two different URLs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Intercepted routes (`(..)`) render one route in another's context. Same URL = two renders.",
+      "points": 1
+    }
+  ]
+}

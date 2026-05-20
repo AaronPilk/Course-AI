@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Infrastructure as code",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is click-ops (building AWS infrastructure through the console) a problem for production workloads?",
+      "choices": [
+        { "id": "a", "text": "Slower than CLI." },
+        { "id": "b", "text": "Configuration drift, tribal knowledge, no history, slow recovery, inconsistent environments. Click-ops works fine for learning and one-off experiments but breaks down at production scale because: (1) drift accumulates as prod and staging diverge through manual changes nobody documents; (2) only the person who built it remembers exactly how (and they might leave); (3) there's no audit trail of who created what or why; (4) rebuilding after a disaster is a manual error-prone process; (5) dev/staging/prod inevitably differ in subtle ways that cause hard-to-debug issues. Infrastructure as Code — CloudFormation, CDK, or Terraform — treats infrastructure like application code: versioned in git, reviewed via PRs, deployed via CI/CD, reproducibly rebuildable. The discipline takes time to establish but pays back enormously — production incidents from 'I forgot what we did last time' become rare, environments stay consistent, and disaster recovery becomes 'redeploy the IaC' instead of 'reconstruct from notes.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More expensive." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Click-ops fails the moment your team needs to reproduce, audit, or recover infrastructure. IaC is the foundation of mature cloud operations.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team is choosing between AWS CDK and Terraform for a new AWS-only project. The team has TypeScript expertise. What's the right call?",
+      "choices": [
+        { "id": "a", "text": "Always Terraform." },
+        { "id": "b", "text": "Likely AWS CDK. For AWS-only workloads with TypeScript-fluent teams, CDK is the more pleasant fit: write infrastructure in real TypeScript with type safety, loops, conditionals, and abstractions; AWS-native (always supports new services at launch); compiles to CloudFormation under the hood; high-level constructs handle common patterns concisely (e.g., a Lambda + API Gateway + DynamoDB setup is dramatically shorter in CDK than equivalent CloudFormation YAML). Terraform's main advantages — multi-cloud portability and a large ecosystem — don't apply when you're AWS-only. If the team had existing Terraform expertise or might eventually need multi-cloud, Terraform would be the right call. If they had Python expertise instead, CDK's Python support is equally good. The honest answer: all three (CloudFormation, CDK, Terraform) are production-grade. Pick based on team skills and constraints, not industry buzz. Stick with one consistently rather than mixing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use console clicks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IaC tool choice depends on team skills, multi-cloud needs, and existing investment. There's no universally right answer; pick consistently and don't mix.",
+      "points": 1
+    }
+  ]
+}

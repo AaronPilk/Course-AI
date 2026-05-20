@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Storage",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does Storage enforce authorization for private buckets?",
+      "choices": [
+        { "id": "a", "text": "API key checks." },
+        { "id": "b", "text": "RLS policies on the `storage.objects` table. Policies check `bucket_id` and use `storage.foldername(name)` to extract path components — typical pattern is to encode the owner's user_id as the first folder (avatars/{user_id}/...) and check `(storage.foldername(name))[1] = auth.uid()::text`. Same RLS engine as your data tables; same security model. Subscribers, uploaders, and viewers all run through the policies; the database denies what isn't allowed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "S3 bucket policies." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RLS on storage.objects with path-based checks via storage.foldername().",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to serve resized avatars (200x200) without storing every size. Approach?",
+      "choices": [
+        { "id": "a", "text": "Resize client-side before upload." },
+        { "id": "b", "text": "Use on-the-fly image transformations via getPublicUrl/createSignedUrl with the `transform` option: `{ width: 200, height: 200, resize: 'cover', format: 'webp', quality: 80 }`. Storage processes the transformation on the edge and caches the result at the CDN; subsequent requests for the same transform are fast. You store one high-res master per file and serve any size on demand. Saves storage cost (one source) and bandwidth (modern formats like webp). Particularly useful for responsive images at multiple device sizes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pre-generate every size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "On-the-fly transformations + edge-cache. Store one master, serve many sizes.",
+      "points": 1
+    }
+  ]
+}

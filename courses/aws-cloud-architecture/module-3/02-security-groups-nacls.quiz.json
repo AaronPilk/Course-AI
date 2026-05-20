@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Security groups and NACLs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the practical difference between security groups (stateful) and NACLs (stateless), and when do you customize each?",
+      "choices": [
+        { "id": "a", "text": "They're the same thing." },
+        { "id": "b", "text": "Security groups are stateful — when an inbound packet is allowed, the response packet is automatically permitted regardless of outbound rules. NACLs are stateless — each direction's rules are evaluated independently, so customizing them means specifying both inbound and outbound rules (and remembering ephemeral ports 1024-65535 for return traffic). Security groups are the primary firewalling mechanism for AWS: they're applied at the instance level, default-deny, allow-only (no deny rules), and can reference other security groups for clean tier-based architectures. NACLs are subnet-level, default-allow, and support deny rules. For most workloads, leave NACLs at default (allow everything) and rely on security groups. Customize NACLs only when you have a specific reason: explicit denies (block specific IPs), defense-in-depth where SG misconfiguration shouldn't be the only barrier, or subnet-wide rules. The common NACL bug is forgetting return-traffic rules — connections appear to hang because the response packet is dropped." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stateful security groups are simpler and the right primary firewall. NACLs are a less-used secondary layer with specific use cases. The stateful/stateless distinction is the root of most NACL bugs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "EC2 instances need SSH access for admins. The team currently has port 22 open from 0.0.0.0/0 in the security group. What's the better pattern?",
+      "choices": [
+        { "id": "a", "text": "Add fail2ban and call it done." },
+        { "id": "b", "text": "Use AWS Systems Manager Session Manager instead of open SSH. SSM Session Manager provides shell access to EC2 instances through the AWS API — no inbound port needed at all, no public SSH endpoint, no SSH key management. Access is IAM-controlled (you grant SessionManager permissions to specific users/roles), session activity is logged to CloudWatch, and you can require MFA. The security group can stay tight (no port 22 from anywhere). For audit trails, this beats SSH significantly because every command is captured. If you genuinely need SSH (legacy tools that require it, automation that doesn't support SSM), restrict to a tight set of source IPs (office network, VPN range, bastion host) — never 0.0.0.0/0. The 0.0.0.0/0 pattern on SSH is consistently in the top sources of compromised cloud instances; bots scan and attempt credentials constantly. SSM eliminates the entire attack surface." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Move to Azure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSM Session Manager is the modern pattern. No open ports, IAM-controlled, logged. Open SSH to the internet is 2015 thinking that produces preventable breaches.",
+      "points": 1
+    }
+  ]
+}

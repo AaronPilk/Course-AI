@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Layer caching",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Docker's build cache 'cascade' — one miss invalidating all subsequent layers?",
+      "choices": [
+        { "id": "a", "text": "Random behavior." },
+        { "id": "b", "text": "Each layer's filesystem state depends on the previous layer's. If layer N changes, layer N+1's starting point is different, so its result would be different, so its cache is invalid. Docker's cache key for each instruction includes the parent layer; once a parent is invalidated, children inherit the invalidation. The discipline that flows from this: put stable instructions early (base image, system packages, dependency installs that depend only on lock files) and frequently-changing instructions late (source code copy). A single `COPY . .` early in the Dockerfile invalidates the cache for everything after every time any file in the build context changes. The fix is sequencing: COPY lock files first, install dependencies (cached when lock files unchanged), then COPY source. Source-only changes skip dependency installation. This single ordering rule is the highest-leverage Dockerfile optimization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compiler bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache cascades because layers chain on filesystem state. Ordering for cache hits is the fundamental Dockerfile optimization.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team's CI builds take 4 minutes; local builds take 30 seconds. Why and what's the fix?",
+      "choices": [
+        { "id": "a", "text": "CI runs are intrinsically slower." },
+        { "id": "b", "text": "Local builds reuse the layer cache from previous builds on the same machine. CI runs start fresh each time — no local cache; every build from scratch. The fix is registry-backed cache via BuildKit: `--cache-from type=registry,ref=registry.example.com/myapp:cache` and `--cache-to type=registry,ref=registry.example.com/myapp:cache,mode=max`. The first CI build is still slow but pushes its layers to the cache registry. Subsequent runs pull the cache, hit instructions that haven't changed, and only execute new ones. CI build times drop to local-build speeds for incremental changes. Alternatives: GitHub Actions has a built-in cache backend for `--cache-to type=gha`; some CI systems offer shared cache volumes. Without explicit cache configuration in CI, every build is a from-scratch build — surprising teams when they wonder why local feels fast and CI feels slow. The cache infrastructure has to be configured; it's not automatic in ephemeral CI runners." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy faster CI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CI runners are ephemeral; without explicit cache (registry-backed or platform-specific), every build is from scratch. Configure cache-from / cache-to for big speedups.",
+      "points": 1
+    }
+  ]
+}

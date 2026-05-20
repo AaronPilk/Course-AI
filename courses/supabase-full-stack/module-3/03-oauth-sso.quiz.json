@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OAuth and SSO",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is account auto-linking by email risky if email isn't verified?",
+      "choices": [
+        { "id": "a", "text": "Performance issue." },
+        { "id": "b", "text": "Account takeover vector. Attacker creates an account with the victim's email (unverified), then victim signs in with their real Google account using the same email. Auto-linking would merge them — attacker now has access to victim's account, including any history from the attacker's pre-existing account. Production-safe approach: only auto-link when both identities have verified emails, or keep auto-link off entirely and expose 'link more providers' in account settings requiring re-auth before linking." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's not risky." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unverified email + auto-link = takeover vector. Require verification or manual linking.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "B2B SaaS chasing enterprise deals at $50k+ ACVs. Auth requirement?",
+      "choices": [
+        { "id": "a", "text": "Email/password only." },
+        { "id": "b", "text": "SAML SSO. Enterprise customers require their IT to manage user access centrally via Okta, Azure AD, Google Workspace, OneLogin, or JumpCloud. Without SAML, you lose deals at this level — it's a checkbox item in enterprise procurement. Supabase supports SAML on Pro plans and above. Setup per customer: collect their SAML metadata, configure a connection scoped to their domain, expose a `signInWithSSO({ domain })` button. JIT provisioning creates users on first login. SCIM for full lifecycle management is the next step up but rarely blocks deals." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just OAuth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SAML SSO is non-negotiable for enterprise deals at $50k+ ACVs.",
+      "points": 1
+    }
+  ]
+}

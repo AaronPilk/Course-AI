@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Mutations with Server Actions",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What do Server Actions replace?",
+      "choices": [
+        { "id": "a", "text": "React state." },
+        { "id": "b", "text": "Most REST/tRPC mutation endpoints. A Server Action is an async function with `'use server'` directive that runs on the server but is called from Client Components as if local. Next.js auto-generates the RPC plumbing; types flow through. Works with native HTML forms via `action={fn}` for progressive enhancement — forms work even without JavaScript. Keep REST endpoints for external consumers (mobile apps, webhooks); use Server Actions for app-internal mutations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Routes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server Actions replace most REST mutation endpoints with type-safe co-located functions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server Action creates a post and redirects to /posts. List shows stale data. Cause?",
+      "choices": [
+        { "id": "a", "text": "Race condition." },
+        { "id": "b", "text": "Missing revalidation before the redirect. Call `revalidatePath('/posts')` (or `revalidateTag('posts')`) after the DB write and before `redirect()`. The /posts page was cached; without invalidation the redirected page serves stale data. Forgetting revalidation after a mutation is the most common Server Actions bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Next.js bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Call revalidatePath/revalidateTag before redirect. Otherwise cache serves stale.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why validate server-side in addition to (or instead of) client-side?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "Server validation is authoritative — the security boundary. Malicious actors bypass client-side validation by calling actions directly. Server validation also works without JavaScript (progressive enhancement). Client-side validation is fine as a UX enhancement giving instant feedback without a round-trip, but the server validates on submit regardless. Use the same Zod schema in both for consistency. The server is the truth; the client is the polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Client validation is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server is the security boundary; client validation is UX polish.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Building a like button — toggling should feel instant but write to the DB. Pattern?",
+      "choices": [
+        { "id": "a", "text": "Disable button until DB confirms." },
+        { "id": "b", "text": "Use `useOptimistic` to update the UI immediately before the server confirms. Click handler calls `addOptimistic(newValue)` to flip the local state, then awaits the Server Action. The button shows the new state instantly; on success the real data syncs; on failure React reverts. Use for high-frequency low-risk mutations (likes, toggles, adds). Don't use for complex multi-step or irreversible operations where rollback would confuse." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "useState before await." }
+      ],
+      "correct_answer": "b",
+      "explanation": "useOptimistic for instant UI; auto-reverts on failure.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Where should real auth checks happen?",
+      "choices": [
+        { "id": "a", "text": "Only middleware." },
+        { "id": "b", "text": "Middleware does cheap checks (cookie exists? JWT valid? not expired?) to redirect early; layouts/Server Actions do the full check (load user, check status, RBAC). Server Actions ALWAYS verify on their own — never trust UI-level gating. An attacker can call any action directly via browser devtools or curl regardless of what UI you hide; only the server's `if (!session) throw` is real security. Hide buttons for UX; verify on server for safety." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only client." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Middleware (cheap) + Layout/Action (deep). Server is the security boundary.",
+      "points": 1
+    }
+  ]
+}

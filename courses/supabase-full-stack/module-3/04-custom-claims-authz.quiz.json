@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Custom claims and authz",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Roles in JWT claims vs roles in a database table — when to use which?",
+      "choices": [
+        { "id": "a", "text": "Always use JWT." },
+        { "id": "b", "text": "JWT claims (via Custom Access Token Hook): fast (no DB lookup per query), but changes require token refresh — suitable for slowly-changing global roles (admin, user, plan tier). DB table: changes take effect immediately, supports per-resource fine-grained permissions, but adds a join per query — suitable for granular permissions, team-scoped roles, dynamic permission changes. Many apps use both: global role in JWT for fast access; per-resource permissions in tables." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always use DB table." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JWT for slow-changing fast-read roles; DB for dynamic granular permissions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Multi-tenant SaaS where each user can belong to multiple orgs and switch between them. How to scope queries?",
+      "choices": [
+        { "id": "a", "text": "Use one org per user." },
+        { "id": "b", "text": "Membership table linking users to tenants with a role column. JWT carries a `current_tenant_id` claim set when the user picks an org from a dropdown — your server function re-issues the JWT with the new claim. RLS policies check `tenant_id = current_tenant_id()` AND `EXISTS in tenant_members` so users only see the currently-selected tenant's data AND only tenants they're a member of. Tenant switching = token refresh; policies enforce isolation; admins can do everything inside their tenant via role checks in tenant_members." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Single shared tenant." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memberships table + current_tenant_id claim + policies checking both tenant match and membership.",
+      "points": 1
+    }
+  ]
+}

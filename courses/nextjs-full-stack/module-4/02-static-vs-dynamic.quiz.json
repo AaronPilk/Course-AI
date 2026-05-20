@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Static vs dynamic",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What makes Next.js render a route dynamically (vs statically)?",
+      "choices": [
+        { "id": "a", "text": "Page size." },
+        { "id": "b", "text": "Any of: using `cookies()`, `headers()`, or `searchParams` (request-time data); using `fetch()` with `cache: 'no-store'`; explicitly declaring `export const dynamic = 'force-dynamic'`. Without these, routes render statically at build time and serve from CDN. Add `cookies()` for auth and the page becomes dynamic automatically. This is why marketing pages stay fast (no opt-in needed) while dashboards naturally become dynamic just by virtue of reading the session cookie." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dynamic functions (cookies/headers/searchParams) or no-store fetches force dynamic.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Blog with 5,000 posts that update occasionally. Best rendering strategy?",
+      "choices": [
+        { "id": "a", "text": "Force dynamic." },
+        { "id": "b", "text": "ISR: `generateStaticParams()` returns all post slugs (pre-rendered at build); `export const revalidate = 3600` re-generates each post at most every hour. With `dynamicParams = true` (default), new posts render on-demand at first hit and cache. Result: existing posts served from CDN at ~50ms; updates propagate within an hour without rebuilding; new posts work immediately. Best of static (fast) + dynamic (fresh-enough) for content-heavy sites that don't need real-time updates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pure static, rebuild daily." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ISR: generateStaticParams + revalidate window. Fast + fresh-enough.",
+      "points": 1
+    }
+  ]
+}

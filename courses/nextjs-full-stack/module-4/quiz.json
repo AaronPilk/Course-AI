@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Caching and performance",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Next.js has how many distinct caches?",
+      "choices": [
+        { "id": "a", "text": "One." },
+        { "id": "b", "text": "Four: (1) Request memoization — dedupes identical fetch() within a render; per-request, automatic. (2) Data cache — persists fetch results across requests; invalidated by `cache: 'no-store'`, `next.revalidate`, revalidateTag/Path. (3) Full route cache — caches rendered HTML for static routes; invalidated by revalidatePath or ISR. (4) Router cache — client-side cache of RSC payloads for visited routes; invalidated by router.refresh() or revalidation. Debugging stale data starts by identifying which cache is serving old data." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Request memoization + data cache + full route cache + router cache.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server Action mutated DB, redirected to /posts, page shows old data. Cause?",
+      "choices": [
+        { "id": "a", "text": "Race." },
+        { "id": "b", "text": "Missing `revalidatePath('/posts')` (or `revalidateTag` if you tag fetches) in the Server Action before redirect. The data cache and full route cache still hold the old version; the redirect lands on the cached page. Call revalidation before the redirect. Most common Next.js mutation bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Next.js bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Missing revalidation in the Server Action. Cache serves stale.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Blog with 5,000 occasionally-updated posts. Best rendering strategy?",
+      "choices": [
+        { "id": "a", "text": "Force dynamic." },
+        { "id": "b", "text": "ISR: `generateStaticParams()` returns all post slugs (build-time pre-render); `export const revalidate = 3600` regenerates each post at most every hour. With `dynamicParams = true` (default), new posts render on-demand at first hit then cache. Result: existing posts CDN-served at ~50ms; updates propagate within an hour; new posts work without rebuild. Static + dynamic hybrid." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pure static, daily rebuild." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ISR via generateStaticParams + revalidate window.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Page LCP is 4.5s. Hero is a 2MB JPG served via `<img>`. Fastest fix?",
+      "choices": [
+        { "id": "a", "text": "Increase server CPU." },
+        { "id": "b", "text": "Switch to `<Image>` from `next/image` with explicit width/height and `priority`. Next.js automatically serves WebP/AVIF (typically 50-70% smaller than JPG), generates appropriate resolutions for retina, prevents CLS by reserving space via width/height, and pre-loads via `priority`. The 2MB JPG becomes a ~400KB WebP, served from CDN, properly sized. LCP typically drops to <2s on this change alone. Pair with `sizes` for responsive variants on mobile." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduce image quality manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Switch to next/image with priority + dimensions. Auto WebP/AVIF + multi-res.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Where should you measure performance — dev mode or production?",
+      "choices": [
+        { "id": "a", "text": "Dev mode." },
+        { "id": "b", "text": "Production. Dev mode disables minification, runs React DevMode (slower), no caching, no bundle optimization. Lighthouse scores in dev are misleadingly bad and don't reflect what real users see. Run Lighthouse against production URLs (Vercel preview deployments or the live site). Use `npm run build && npm run start` for local production testing. For real-user data beyond synthetic tests, use RUM tools (Vercel Analytics, Google Search Console's Core Web Vitals report)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Localhost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Always production. Dev mode is misleadingly slow.",
+      "points": 1
+    }
+  ]
+}

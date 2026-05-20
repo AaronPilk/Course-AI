@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Docker, containerd, runc",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why doesn't Kubernetes need the Docker daemon to run containers (since K8s 1.24)?",
+      "choices": [
+        { "id": "a", "text": "K8s doesn't actually run containers." },
+        { "id": "b", "text": "K8s talks to a container runtime via the Container Runtime Interface (CRI). Originally, K8s had a 'dockershim' that translated CRI calls to Docker API calls — Docker's daemon was an extra layer in the path. As containerd matured into a first-class CRI-compatible runtime (extracted from Docker, donated to CNCF), the dockershim became unnecessary indirection. K8s 1.24 removed it. Modern K8s nodes run containerd (or CRI-O) directly: kubelet talks CRI to containerd; containerd unpacks OCI images and calls runc to create containers; runc invokes Linux kernel features to set up namespaces, cgroups, etc. The Docker daemon isn't in this picture. The same OCI images work everywhere — built with Docker on developer laptops, run with containerd on K8s nodes. The 'Docker is leaving Kubernetes' framing made headlines but is technically just 'one of several abstractions in the path is being removed.' Production stacks are simpler and more focused as a result." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "K8s built its own runtime." }
+      ],
+      "correct_answer": "b",
+      "explanation": "containerd + runc + CRI replaced the Docker daemon path in K8s. Same OCI images; simpler runtime stack. Don't conflate 'Docker images' (still standard) with 'Docker daemon as runtime' (no longer required).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A SaaS team wants stronger container isolation than plain Docker without giving up container ergonomics. What's an option?",
+      "choices": [
+        { "id": "a", "text": "Just use VMs." },
+        { "id": "b", "text": "Configure containerd to use gVisor or Kata as the runtime for specific workloads. gVisor (runsc) is a user-space kernel that intercepts container syscalls and handles them in user space — adds a security boundary between container and host kernel without VM overhead. Kata wraps each container in a microVM (typically Firecracker-based), providing VM-grade isolation with near-container startup times. Both are OCI-compatible runtimes that containerd can use alongside or instead of runc on a per-container basis (via runtime classes in K8s). Same OCI images work; same operations work; the runtime swap is transparent to application teams. AWS Lambda and Fargate use Firecracker microVMs for similar reasons — multi-tenant code execution needs stronger boundaries than plain containers provide. For trusted workloads (your own services), runc is fine. For workloads where isolation matters more (customer code, sandboxed builds), gVisor or Kata are the production-ready answers. The pattern: keep developer experience as containers; gain isolation at the runtime layer via configuration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run nothing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "gVisor and Kata are OCI-compatible runtimes that swap in for runc to add isolation. Container ergonomics preserved; isolation strengthened. Standard pattern for multi-tenant workloads.",
+      "points": 1
+    }
+  ]
+}

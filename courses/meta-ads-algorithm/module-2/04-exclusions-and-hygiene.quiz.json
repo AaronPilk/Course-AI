@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Exclusions and audience hygiene",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the minimum exclusion every prospecting campaign should have?",
+      "choices": [
+        { "id": "a", "text": "No exclusions — let the algorithm decide." },
+        { "id": "b", "text": "Past purchasers (60-180 days depending on repeat cycle) and current customers via CRM upload — so prospecting budget doesn't repaint people you already have. For Advantage+ Shopping, use the existing-customer budget cap (20-30%) instead of explicit exclusion. Don't over-exclude: excluding all site visitors 90d kills retargeting; excluding lookalikes from broad is counterproductive." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Everyone under 25." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Exclude existing customers from prospecting. Don't over-exclude beyond that.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Retargeting frequency hit 14, CPA climbing. Fix?",
+      "choices": [
+        { "id": "a", "text": "Lower the bid." },
+        { "id": "b", "text": "Three levers: (1) expand the retargeting window (7d → 14d or 14d → 30d) so more users enter the pool and frequency averages down, (2) add more retargeting creatives so rotation distributes impressions across messages, (3) rotate to a different angle (e.g., social-proof message after the cart-abandon message). Frequency >10 with rising CPA = ad fatigue; refresh the audience pool or the creative variety." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause retargeting." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fatigue. Expand window, add creatives, rotate angle.",
+      "points": 1
+    }
+  ]
+}

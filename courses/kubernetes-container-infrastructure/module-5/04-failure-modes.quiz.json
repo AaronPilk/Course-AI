@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Kubernetes failure modes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the diagnostic flow for a Pod stuck in CrashLoopBackOff?",
+      "choices": [
+        { "id": "a", "text": "Restart the cluster." },
+        { "id": "b", "text": "describe, logs, logs --previous, exec. `kubectl describe pod <name>` shows the container state, last termination reason, and recent Events — often surfaces the immediate cause (OOMKilled, image issue, probe failure). `kubectl logs <name>` shows current container output (often empty for crashed containers since they just restarted). `kubectl logs <name> --previous` shows the logs from the most recently crashed container — usually has the actual error message that caused the crash. If logs aren't enough, `kubectl exec` into a debugging container in the same Pod (via `kubectl debug`) lets you inspect filesystem, network, environment from inside. Common causes that surface via this flow: missing config (Secret/ConfigMap not mounted), bad environment variable, dependency unavailable, application startup error, OOMKilled (memory limit too low or memory leak). The discipline: describe-logs-previous-exec, in that order, before guessing. Five minutes through the diagnostic flow usually surfaces the cause; without the discipline, debugging becomes hours of speculation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete the Deployment." }
+      ],
+      "correct_answer": "b",
+      "explanation": "describe, logs (current and previous), exec is the universal K8s debug flow. Internalize it; most issues surface within minutes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A liveness probe keeps killing healthy Pods during peak traffic. What's likely happening and how to fix?",
+      "choices": [
+        { "id": "a", "text": "Add more Pods." },
+        { "id": "b", "text": "The liveness probe is too aggressive — it interprets transient slowness under load as an unhealthy container and triggers a restart, which itself reduces capacity and worsens the load problem. Common patterns: probe endpoint runs heavy work (queries the database, checks dependencies, does deep validation) and times out under load; probe timeout is too short; failureThreshold too low. Fixes: make the liveness endpoint cheap and shallow — it should answer 'is this process responsive enough to keep around?' not 'is the entire system healthy?' Heavy health checks belong in readiness, not liveness (readiness failure removes traffic but doesn't restart). Tune timeoutSeconds and failureThreshold so transient slowness doesn't trigger restart. Use a startupProbe for slow-starting apps so liveness only kicks in after the app is stable. The general principle: liveness should be conservative (rarely fail); readiness should be more responsive (fail when traffic shouldn't come). Aggressive liveness probes cause restart loops that mimic application failures and waste capacity exactly when you need it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable probes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Liveness should be cheap and conservative; readiness can be deeper. Aggressive liveness probes cause restart loops that look like app failures.",
+      "points": 1
+    }
+  ]
+}

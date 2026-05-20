@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Incrementality",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Cheapest entry point for incrementality testing on Google?",
+      "choices": [
+        { "id": "a", "text": "Hire a vendor for MMM." },
+        { "id": "b", "text": "Brand search suppression test. Pause your branded Search campaign for 2-3 weeks (or use Drafts & Experiments at 50/50 split), track branded organic clicks (should rise as paid vanishes) and total revenue. Compare paid revenue lost vs organic revenue gained. Common finding: 60-90% of brand search revenue is non-incremental — users typing your brand were going to find you regardless. The cheapest, highest-value incrementality lesson most accounts can run. Don't kill brand search after the test; right-size it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Geo holdouts." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brand search suppression is the cheap, high-value entry point.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Lift test shows top-of-funnel YouTube at 1.6x incremental ROAS, brand Search at 0.4x. Reallocation?",
+      "choices": [
+        { "id": "a", "text": "Keep allocations the same." },
+        { "id": "b", "text": "Move budget from brand Search to YouTube. Brand Search at 0.4x incremental means 60% of its credited revenue would have happened anyway via organic — heavily overcredited. YouTube at 1.6x is delivering genuine new revenue. Shift 30-50% of brand Search budget to YouTube and retest in 6-12 months. Don't kill brand Search entirely — some incremental contribution remains (especially against competitor brand bidding), but right-size it to the real causal contribution. Update tROAS targets to reflect true incremental cost." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Ignore the test." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reallocate toward incremental winners. Brand commonly over-credited; YouTube under.",
+      "points": 1
+    }
+  ]
+}

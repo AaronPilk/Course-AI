@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: The runtime",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `docker stop` actually do?",
+      "choices": [
+        { "id": "a", "text": "Immediate kill." },
+        { "id": "b", "text": "SIGTERM to PID 1, wait grace period (default 10s), SIGKILL if still alive. App must handle SIGTERM to shut down gracefully. Configure grace with `-t SECONDS`; configure SIGTERM handler in app." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause." }
+      ],
+      "correct_answer": "b",
+      "explanation": "stop = SIGTERM + grace + SIGKILL.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "JVM container with `--memory 1g` gets OOMKilled at 700MB heap. Why?",
+      "choices": [
+        { "id": "a", "text": "JVM bug." },
+        { "id": "b", "text": "JVM off-heap overhead (metaspace, JIT, native libs, GC) is 20-40% of total. -Xmx1g + overhead exceeds 1GB container limit. Set heap to ~70% of container memory, or use `-XX:MaxRAMPercentage=70` so JVM auto-sizes from cgroup limit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JVM heap + overhead must fit in container limit. Heap ≈ 70% of container memory.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use `docker run --init` for many apps?",
+      "choices": [
+        { "id": "a", "text": "Faster startup." },
+        { "id": "b", "text": "Linux PID 1 has special semantics: must reap zombies, default signal actions don't fire. Apps not written as init programs leak zombies and ignore SIGTERM as PID 1. tini (via --init) handles these as PID 1 and execs your app as a normal child. Recommended for Node/Python/Java/Ruby apps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cosmetic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "tini handles PID 1 responsibilities so your app doesn't have to.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Docker host disk fills up after weeks. Logs are json-file. Fix?",
+      "choices": [
+        { "id": "a", "text": "Bigger disk." },
+        { "id": "b", "text": "Add log rotation. json-file driver doesn't rotate by default — busy containers can produce GBs/day. Set `--log-opt max-size=10m --log-opt max-file=3` per container or in daemon config. Or use a shipping driver (fluentd, awslogs) that doesn't store locally." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Always configure log rotation. Standard production hygiene.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What makes a good HEALTHCHECK endpoint?",
+      "choices": [
+        { "id": "a", "text": "Full integration test." },
+        { "id": "b", "text": "Cheap, fast (<1s), verifies real readiness — process responsive plus key dependencies reachable (DB connection alive, downstream up). Returns 200 only when ready to serve traffic. Avoids heavy operations (no DB queries per check) and start-period grace handles slow startup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "TCP port check." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Healthcheck: cheap, fast, reflects real readiness.",
+      "points": 1
+    }
+  ]
+}

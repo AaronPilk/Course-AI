@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Port mapping",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between EXPOSE in Dockerfile and `-p` at run time?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "EXPOSE is documentation only — declares which ports the container listens on. Doesn't actually open anything to the host. `-p HOST:CONTAINER` (or `ports:` in Compose) creates the actual traffic flow via iptables DNAT — host port forwards to container port. To make a container's port reachable from outside the host, you must publish; EXPOSE alone does nothing for connectivity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "EXPOSE opens firewall." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EXPOSE = metadata; `-p` = actual port mapping. Both for different purposes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A container is published with `-p 8080:80` but external clients can't reach it. App inside is listening. What's likely?",
+      "choices": [
+        { "id": "a", "text": "Docker bug." },
+        { "id": "b", "text": "App is listening on `127.0.0.1:80` inside the container instead of `0.0.0.0:80`. Inside the container, localhost is the container itself, not the host. Docker's port mapping forwards traffic to the container's IP on port 80, but if the app only listens on the container's loopback, nothing on the bridge IP accepts the traffic. Fix: bind the app to `0.0.0.0` (all interfaces inside the container). Common Node/Python misconfiguration; in Express, default is 0.0.0.0; in some Python frameworks, default is 127.0.0.1. Other suspects: host firewall blocking, wrong host IP binding (`-p 127.0.0.1:8080:80` instead of `0.0.0.0`)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger ports." }
+      ],
+      "correct_answer": "b",
+      "explanation": "App must listen on 0.0.0.0 inside the container, not 127.0.0.1. Container's localhost is the container.",
+      "points": 1
+    }
+  ]
+}

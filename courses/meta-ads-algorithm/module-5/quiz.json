@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operating the system",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Minimum viable account structure for a single-product DTC brand?",
+      "choices": [
+        { "id": "a", "text": "1 campaign per audience." },
+        { "id": "b", "text": "Three campaigns: 1 ASC prospecting (CBO, 8-15 ads, existing-customer cap set), 1 retargeting campaign (1-2 ad sets covering cart-abandoners and site visitors, 3-5 ads), 1 brand/seasonal campaign (often paused outside launches). Consolidation beats fragmentation: each ad set hits learning threshold, audience overlap is contained, signal is readable, hygiene is light." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "20+ campaigns." }
+      ],
+      "correct_answer": "b",
+      "explanation": "1 ASC + 1 retargeting + 1 brand/seasonal. Three campaigns covers most accounts.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Daily ops only for 8 months, no monthly/quarterly review, performance slowly worse. Fix?",
+      "choices": [
+        { "id": "a", "text": "More daily checks." },
+        { "id": "b", "text": "Add monthly audit (2-3 hours) and quarterly lift testing. Skipped higher-order rhythms cause silent decay: stale CRM uploads, lookalike seed age, audience overlap drift, AEM event priority issues, retired campaigns lingering — each adds 2-5% efficiency loss that compounds to 20-30% over months. Quarterly lift grounds attribution; otherwise scaling decisions ride on inflated numbers. The fix is rhythm, not more daily intervention." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add monthly + quarterly rhythms. Daily isn't the leak; higher orders are.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Correct troubleshooting order?",
+      "choices": [
+        { "id": "a", "text": "Creative first." },
+        { "id": "b", "text": "Tracking → structure → targeting → creative → bidding → macro. Tracking first because pixel/CAPI bugs masquerade as performance issues — broken measurement and real demand collapse look identical in the dashboard. After verifying tracking, check learning-phase status and audience overlap before changing creative. Most issues live in layers 1-4; only after exhausting them should you blame seasonality or macro shifts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Macro first." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracking → structure → targeting → creative → bidding → macro.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Ad set stuck in 'Learning' for 6 weeks. Cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Bug." },
+        { "id": "b", "text": "Under 50 optimization events per week. Causes: budget too low for the CPA (e.g., $20/day with $20 CPA = 7 events/week), optimization event too rare (Complete Registration getting 20/week), audience too small, or bid cap too tight. Fixes: consolidate budget into fewer ad sets so each crosses the threshold, switch optimization to a higher-volume upstream event (InitiateCheckout instead of Purchase), open targeting, or remove caps. Ad sets that never exit learning never have stable EAR predictions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wait longer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Under 50 events/week. Consolidate or shift event.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When is narrow targeting + manual + cost cap the right pattern?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "B2B with small structural audience (e.g., 200k decision-makers at specific company types), regulated verticals requiring explicit audience definitions, high-AOV niche with weak pixel signal, or hyper-local services. The pool is structurally too small for broad to be efficient; ASC's broad-by-design fights the offer's natural audience; cost cap enforces predictable CPA against a tight margin. The three deviations stack because the underlying account isn't median." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Small structural audience + tight margin = narrow + manual + cost cap.",
+      "points": 1
+    }
+  ]
+}

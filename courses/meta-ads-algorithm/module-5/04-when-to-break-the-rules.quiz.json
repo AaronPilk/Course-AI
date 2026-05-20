@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: When to break the rules",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Three checks before deviating from a default?",
+      "choices": [
+        { "id": "a", "text": "Trust your gut." },
+        { "id": "b", "text": "(1) Have you tried the default first cleanly — not a half-hearted version? Many 'this doesn't work for me' claims come from never running the standard pattern long enough to read. (2) Do you have data showing the default fails — hypothesis isn't data; run the test. (3) Can you articulate WHY the default fails for your case — not just restating that it does. If all three check out, deviating is right; otherwise the default is your safest bet." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Read more blogs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tried default, have data, can articulate why. All three required.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "B2B SaaS account selling to 200k decision-makers at specific company types. Broad targeting and ASC failing. What's the justified deviation?",
+      "choices": [
+        { "id": "a", "text": "Keep broad and wait." },
+        { "id": "b", "text": "Switch to narrow targeting (CRM upload of target accounts, or title + industry targeting), manual campaigns instead of ASC, and likely cost cap to control CPA. The pool is structurally too small (200k) for broad to be efficient; broad would waste 99% of impressions on irrelevant users. ASC's broad-by-design fights the offer's actual audience. The narrow + manual + cost cap combination is the documented exception case: small structural audience, specific filter requirements, predictable CPA target. Run that pattern for 4 weeks before judging." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Spend more." }
+      ],
+      "correct_answer": "b",
+      "explanation": "B2B with narrow structural audience justifies all three deviations together.",
+      "points": 1
+    }
+  ]
+}

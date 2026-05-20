@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Realtime, storage, edge",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Does Realtime respect RLS?",
+      "choices": [
+        { "id": "a", "text": "No, it bypasses RLS for performance." },
+        { "id": "b", "text": "Yes — when a row changes, the broadcast goes only to subscribers who have SELECT permission on that row (or DELETE policy permission for delete events). Subscribers don't get notifications for changes on rows they couldn't read normally. RLS-protected Realtime is safe by default: write your policies on the table; Realtime evaluates them per subscriber per change. The same security model used by the auto-API extends to real-time notifications." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only for some operations." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Realtime respects RLS. Subscribers see only changes for rows they can read.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building cursor-sharing for collaborative editing. Best Realtime primitive?",
+      "choices": [
+        { "id": "a", "text": "Database Changes." },
+        { "id": "b", "text": "Broadcast — cursor positions are ephemeral, high-frequency (potentially 60 events/sec per user), and don't need persistence. Writing every move to the database would saturate it and tank performance. Broadcast sends messages directly between clients via channels without DB involvement — fast, ephemeral, perfect for cursors, typing indicators, ephemeral game state. Use Presence to track who's online in the document; Broadcast for the cursor positions themselves." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Presence only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Broadcast for ephemeral high-frequency. DB for durable. Presence for online tracking.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "How does Storage enforce authz on private buckets?",
+      "choices": [
+        { "id": "a", "text": "API key checks." },
+        { "id": "b", "text": "RLS policies on the `storage.objects` table. Policies check bucket_id and use `storage.foldername(name)` to extract path components — typical pattern encodes the owner's user_id as the first folder (avatars/{user_id}/...) and policies check `(storage.foldername(name))[1] = auth.uid()::text`. Same RLS engine as data tables; same security model. Uploaders, viewers, and updaters all run through policies; the database denies what isn't allowed. Use signed URLs with short expirations to share private files." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "S3 IAM policies." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RLS on storage.objects + path-based checks via storage.foldername().",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Need to call OpenAI with a secret API key after the user submits a query. Auto-API or Edge Function?",
+      "choices": [
+        { "id": "a", "text": "Auto-API." },
+        { "id": "b", "text": "Edge Function. Secrets can't go to the client (they'd be exposed); the auto-API is generated from the schema and doesn't run server-side code. Create an Edge Function that takes the user query, calls OpenAI using `Deno.env.get('OPENAI_API_KEY')` (set via `supabase secrets set`), returns the result. Verify the user's auth header inside the function to apply per-user rate limiting and authorization. For chat-style UIs, stream the response via ReadableStream so the user sees output progressively. CORS headers required for browser calls." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardcode in the client." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Edge Function — secret stays server-side; supports streaming and auth verification.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best practice for production semantic search?",
+      "choices": [
+        { "id": "a", "text": "Pure vector similarity." },
+        { "id": "b", "text": "Hybrid search — combine pgvector cosine similarity with full-text search via tsvector + GIN index, scoring rows by a weighted blend (e.g., 0.5 * ts_rank + 0.5 * vector similarity). Pure vector struggles with exact terms (proper nouns, product names, technical jargon); full-text struggles with semantic paraphrases. The combination catches both. Build an HNSW index on the embedding for fast ANN. Tune the weights by evaluating on real query/result pairs from your domain." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No index." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hybrid (full-text + vector) outperforms pure vector for production search.",
+      "points": 1
+    }
+  ]
+}

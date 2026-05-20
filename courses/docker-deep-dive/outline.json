@@ -1,0 +1,94 @@
+{
+  "slug": "docker-deep-dive",
+  "title": "Docker Deep Dive",
+  "subtitle": "How containers actually work — images, layers, the runtime, networking, and the production patterns that make Docker a foundation rather than a tool",
+  "description": "A practical course on containers and Docker for engineers who use them every day but want to understand what's actually happening. Covers the mental model (namespaces, cgroups, union filesystems), image building (Dockerfiles, layers, multi-stage builds, optimization), the runtime (containerd, runc, what `docker run` actually does), networking (bridges, host, overlay, port mapping), volumes and data persistence, and production patterns (security, image scanning, registries, orchestration). Not a tutorial on first commands; a deep dive into the mechanics and disciplines.",
+  "category": "Infrastructure",
+  "difficulty": "intermediate",
+  "audience": "Developers and engineers who use Docker daily and want to understand what's underneath. Some Docker familiarity helps but not required for the conceptual lessons.",
+  "tags": ["docker", "containers", "infrastructure", "devops", "images"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "Docker",
+    "logo": "/brands/docker-deep-dive.svg",
+    "gradient": ["#2496ED", "#1D63ED"],
+    "tint": "#001F3D"
+  },
+  "prerequisites": [
+    "Basic Docker familiarity (you've run docker run)",
+    "Comfort with command line and Linux concepts",
+    "No deep systems background required"
+  ],
+  "outcomes": [
+    "Explain what containers actually are (namespaces, cgroups, union filesystems)",
+    "Write efficient Dockerfiles with proper layering and multi-stage builds",
+    "Understand the relationship between Docker, containerd, runc, and OCI",
+    "Configure Docker networking (bridge, host, overlay) confidently",
+    "Manage volumes and data persistence correctly",
+    "Secure containers (non-root, minimal images, scanning, signing)",
+    "Use registries effectively (ECR, GHCR, Docker Hub)",
+    "Avoid the common Docker mistakes that produce bloated images and security issues"
+  ],
+  "modules": [
+    {
+      "title": "What containers actually are",
+      "summary": "The kernel mechanisms (namespaces, cgroups) and the union filesystem that make containers work.",
+      "estimated_minutes": 50,
+      "key_concepts": ["namespaces", "cgroups", "union filesystem", "containerd", "OCI"],
+      "lessons": [
+        { "title": "Containers vs VMs — the actual difference", "objective": "Understand what isolation containers provide." },
+        { "title": "Namespaces and cgroups — the kernel features under containers", "objective": "Know what gives containers their boundaries." },
+        { "title": "The union filesystem — layered images explained", "objective": "Understand why images are layered and what that buys you." },
+        { "title": "Docker, containerd, runc, OCI — who does what", "objective": "Map the runtime architecture." }
+      ]
+    },
+    {
+      "title": "Building images well",
+      "summary": "Dockerfiles, layer caching, multi-stage builds, and the discipline of small fast images.",
+      "estimated_minutes": 55,
+      "key_concepts": ["Dockerfile", "layer caching", "multi-stage build", "base images", "BuildKit"],
+      "lessons": [
+        { "title": "Dockerfiles — instruction by instruction", "objective": "Understand each directive and when to use it." },
+        { "title": "Layer caching — making builds fast", "objective": "Order instructions for maximum cache hit." },
+        { "title": "Multi-stage builds — the modern pattern", "objective": "Produce small production images." },
+        { "title": "Base images and image size", "objective": "Pick base images deliberately." }
+      ]
+    },
+    {
+      "title": "The runtime — what `docker run` does",
+      "summary": "From `docker run` to a running process, in detail.",
+      "estimated_minutes": 55,
+      "key_concepts": ["docker daemon", "containerd", "runc", "container lifecycle", "logging"],
+      "lessons": [
+        { "title": "The container lifecycle in detail", "objective": "Walk from `docker run` to a running process." },
+        { "title": "Container resource limits and behavior", "objective": "Apply CPU, memory, and other constraints." },
+        { "title": "Logs, signals, and shutdown", "objective": "Handle container output and termination cleanly." },
+        { "title": "Healthchecks and restart policies", "objective": "Make containers self-healing." }
+      ]
+    },
+    {
+      "title": "Networking and storage",
+      "summary": "How containers talk to each other and to the outside; how data persists.",
+      "estimated_minutes": 55,
+      "key_concepts": ["bridge network", "host networking", "overlay", "volumes", "bind mounts"],
+      "lessons": [
+        { "title": "Docker networking — bridge, host, overlay", "objective": "Pick the right network mode." },
+        { "title": "Port mapping and exposure", "objective": "Get traffic in and out correctly." },
+        { "title": "Volumes vs bind mounts", "objective": "Persist data correctly." },
+        { "title": "Docker Compose — multi-container apps", "objective": "Define and run app stacks." }
+      ]
+    },
+    {
+      "title": "Production patterns",
+      "summary": "Security, registries, scanning, signing, and the disciplines for running containers in production.",
+      "estimated_minutes": 50,
+      "key_concepts": ["non-root", "image scanning", "signing", "registries", "best practices"],
+      "lessons": [
+        { "title": "Container security — non-root, capabilities, seccomp", "objective": "Limit what containers can do." },
+        { "title": "Image scanning and signing", "objective": "Verify images are clean and authentic." },
+        { "title": "Registries — ECR, GHCR, Docker Hub", "objective": "Manage images and access at scale." },
+        { "title": "The Docker mistakes that bite you", "objective": "Avoid the failure modes everyone hits once." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Performance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use the pooled connection (port 6543) instead of direct (5432) for app traffic?",
+      "choices": [
+        { "id": "a", "text": "Faster network." },
+        { "id": "b", "text": "Postgres connections are expensive — each eats ~10MB and a backend process. A Node.js or serverless app that spawns new connections per request will exhaust the database's connection cap quickly. Port 6543 is PgBouncer in transaction-mode: connections are leased per transaction and returned to a small backend pool, letting hundreds of app clients share a small number of real DB connections. Direct connection (5432) bypasses the pooler — use for migrations and tools that need session-level features, NEVER for app traffic at scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Supabase." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pooled (6543) for app; direct (5432) only for migrations and session-dependent tools.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Common query suddenly slow after adding RLS. Diagnostic and fix?",
+      "choices": [
+        { "id": "a", "text": "Disable RLS." },
+        { "id": "b", "text": "Run EXPLAIN ANALYZE on the query (in a session impersonating the user) to see the plan. Common findings: (1) sequential scan on policy-referenced columns — add an index, (2) helper functions in the policy being called per row instead of per query — mark them `STABLE`, (3) EXISTS subqueries on join tables (memberships, shares) with no index — add a composite index like memberships(user_id, team_id). Most RLS performance issues are fixable through indexes and function attributes; don't disable RLS — fix the indexes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase RAM." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EXPLAIN → index policy columns → STABLE helpers → index EXISTS join tables.",
+      "points": 1
+    }
+  ]
+}

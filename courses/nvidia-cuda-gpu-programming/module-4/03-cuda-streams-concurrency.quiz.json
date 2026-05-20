@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CUDA streams",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does async memory transfer (cudaMemcpyAsync) require pinned host memory?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic API requirement." },
+        { "id": "b", "text": "Async transfers use direct DMA between host memory and GPU memory, which requires the host pages to be locked in physical memory (pinned) so they don't get swapped out by the OS. Regular pageable memory can be moved by the OS at any time, which would break the DMA. When you call cudaMemcpyAsync on pageable memory, the runtime falls back to a synchronous copy through an internal pinned staging buffer — the 'async' behavior is lost. To actually get async transfer (and overlap with compute), you must allocate the host buffer with cudaMallocHost (which gives pinned memory) or use cudaHostRegister to pin an existing allocation. Forgetting this is one of the most common reasons streams don't deliver the expected speedup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random rule." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Async + pinned is a pair. One without the other defeats the purpose. Profile with Nsight Systems to confirm transfers are actually overlapping with compute.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A workload processes a 50 GB dataset on a 24 GB GPU. Naive approach: load chunk, compute, save, repeat — slow. What's the better pattern?",
+      "choices": [
+        { "id": "a", "text": "Buy more GPU memory." },
+        { "id": "b", "text": "Pipeline with multiple streams. Split the dataset into chunks (say 1-2 GB each). Use 4 streams. For each chunk: cudaMemcpyAsync upload, kernel launch, cudaMemcpyAsync download — all on the same stream so they serialize within the chunk. Different chunks go to different streams so they pipeline: while chunk N is computing, chunk N-1 is downloading, chunk N+1 is uploading. The GPU has separate engines for H2D copy, D2H copy, and compute, so all three can run simultaneously. Total wall time approaches file_size / max(upload_bandwidth, compute_throughput, download_bandwidth) instead of the sum of all three phases. Typically 1.5-2.5x speedup vs. naive sequential processing. Required: pinned host memory, non-default streams, careful chunk sizing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Process on CPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pipelining via streams is the canonical pattern for out-of-core processing. The 3-way overlap (upload + compute + download) lets you process datasets larger than GPU memory at near-bandwidth-limited throughput.",
+      "points": 1
+    }
+  ]
+}

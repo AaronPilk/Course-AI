@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cost optimization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the correct order for cost-optimizing an AWS account?",
+      "choices": [
+        { "id": "a", "text": "Buy Reserved Instances first." },
+        { "id": "b", "text": "Visibility first (tagging + Cost Explorer + budgets), then quick cleanup (unused resources, snapshots, log retention), then right-sizing based on actual utilization, then commitments (Savings Plans for steady workloads), then spot for interruption-tolerant work, then architectural changes (managed services, serverless, caching), then continuous monitoring to prevent regression. Each step has higher engineering cost but bigger savings. The mistake is jumping straight to commitments without cleanup — buying a 3-year Savings Plan on a fleet you haven't right-sized locks in waste at a discount. Cleanup typically saves 20-30%, right-sizing another 20-30%, commitments another 30-40% on the resulting baseline. By the time you're considering architectural changes, you've already captured most of the savings; architectural moves are for the next 10-20%. Skipping visibility means optimization is guesswork. Skipping cleanup means commitments lock in waste. Skipping right-sizing means you're committing to oversized capacity. Order matters." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random order." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Visibility, then cleanup, then right-size, then commit, then spot, then architectural. Reverse this and you optimize in the wrong direction.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cost Anomaly Detection alerts that CloudWatch Logs jumped from $50/day to $400/day overnight. What's the likely cause?",
+      "choices": [
+        { "id": "a", "text": "AWS price increase." },
+        { "id": "b", "text": "A recent code deploy enabled verbose logging (DEBUG level or similar) in production, dramatically increasing log volume and therefore CloudWatch Logs ingestion costs. CloudWatch Logs bills $0.50/GB ingested plus $0.03/GB stored, so a 10x increase in log volume produces a 10x increase in ingestion charges immediately. Check the recent deploys, identify the change, revert the log level. Additionally: set retention policies on log groups (many default to never-expire and accumulate storage costs forever); use log sampling for high-volume scenarios; consider structured logging with appropriate filtering to capture useful signals without floods of noise. Cost Anomaly Detection's value here is speed of detection — catching this within 24 hours instead of waiting for the monthly bill. Setting up Anomaly Detection plus budget alerts is one of the highest-ROI cost-management investments because it converts month-long surprises into day-long discoveries." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hacker activity." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Verbose logging in production is one of the classic cost surprises. Detection + retention policies prevent recurrence.",
+      "points": 1
+    }
+  ]
+}

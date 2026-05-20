@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Training and inference workloads",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are LLM prefill and decode phases optimized differently?",
+      "choices": [
+        { "id": "a", "text": "They're not — same optimization." },
+        { "id": "b", "text": "They have fundamentally different arithmetic intensities. Prefill processes the entire input prompt in parallel through the model — many tokens at once, lots of matrix multiplications, high arithmetic intensity, compute-bound. Tensor Cores stay busy; the workload looks similar to a training forward pass. Decode generates one token at a time, each requiring a full read of the model weights to produce a single token. Low arithmetic intensity (only one token's worth of activations), memory-bandwidth-bound, compute units mostly idle waiting on weight loads. The optimizations diverge: prefill benefits from raw FLOPS, larger batches, and Tensor Core throughput; decode benefits from batching across requests (to amortize weight reads), KV caching (to avoid recomputing attention), speculative decoding (to verify multiple tokens per big-model pass), and quantization (smaller weights = less memory traffic). A production LLM inference engine treats these as separate optimization targets." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prefill is compute-bound; decode is memory-bound. This is one of the most important framings in LLM inference engineering. Production systems (vLLM, TensorRT-LLM) implement separate optimization paths for each.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team trains a 70B-parameter LLM and runs out of memory on a single GPU. What's the standard approach?",
+      "choices": [
+        { "id": "a", "text": "Buy smaller models." },
+        { "id": "b", "text": "Distributed training with model sharding. A 70B model in BF16 alone is ~140 GB; plus gradients (~140 GB), optimizer state (Adam stores 2 extra FP32 tensors per weight, so ~560 GB), and activations — total well over 1 TB, far beyond any single GPU. The standard approach combines: data parallelism (each GPU holds a copy of the model and processes different examples), tensor parallelism (split each layer's weights across GPUs), pipeline parallelism (split layers across GPUs as pipeline stages), and PyTorch's FSDP or similar to shard everything (weights, gradients, optimizer state) across many GPUs. Activation checkpointing trades compute for memory by recomputing activations during backward instead of storing them. Mixed precision (BF16 + FP32 optimizer state) further saves memory. Frameworks like FSDP, DeepSpeed, Megatron-LM orchestrate these combinations. Training a 70B model typically uses 64-256 GPUs working together with one of these stacks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Train on CPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Single-GPU training stops working at frontier scale. Distributed training with the right parallelism strategy is the only way forward. Modern frameworks make this approachable, but understanding which strategy fits your model and hardware is essential.",
+      "points": 1
+    }
+  ]
+}

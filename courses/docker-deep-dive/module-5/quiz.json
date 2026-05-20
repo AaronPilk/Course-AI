@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Production patterns",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why run containers as non-root?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Containers share the host kernel; a compromise as root makes container escape and host compromise dramatically easier. Non-root + dropped capabilities + read-only FS restrict post-compromise actions. Standard production hardening: USER directive in Dockerfile, --cap-drop=ALL at runtime, --read-only with tmpfs for needed writable paths." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Non-root + minimal capabilities + read-only = smaller blast radius on compromise.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Where should image vulnerability scanning happen in CI/CD?",
+      "choices": [
+        { "id": "a", "text": "Once a year." },
+        { "id": "b", "text": "Multiple points; CI is the highest-leverage. In CI: fail builds on Critical CVEs before image push. In the registry: continuous scans of pushed images so new CVEs alert. At deploy: admission controllers verify signatures and scan status. At runtime: monitor deployed images for newly-disclosed CVEs. Tools: Trivy, Grype, Snyk, Docker Scout, registry-native scanners." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only at runtime." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Scan in CI to fail fast; in registry for ongoing visibility; verify at deploy. Multi-point defense.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why reference production images by digest rather than mutable tags?",
+      "choices": [
+        { "id": "a", "text": "Faster pulls." },
+        { "id": "b", "text": "Tags can be retagged silently — supply chain attack risk or human error. Digests (sha256:...) are immutable content hashes; same digest always means same content. Production manifests reference digests; humans use tags for readability. Combined with Cosign signing and admission controllers verifying signatures, you get strong supply-chain integrity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Aesthetic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Digests immutable; tags mutable. Production references = digests.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "K8s cluster deploys fail with Docker Hub 'too many requests' errors. Fix?",
+      "choices": [
+        { "id": "a", "text": "Buy more nodes." },
+        { "id": "b", "text": "Pull-through cache or mirror. Docker Hub limits anonymous pulls (100 per 6h) and authenticated free pulls (200) per IP. Production clusters hit these during scale-up events. Mitigation: deploy a pull-through cache (ECR Public, Harbor, distribution registry) in the cluster's region; configure containerd to use it; cached pulls don't hit Docker Hub. Or mirror base images to your own registry on a schedule. Or pay for Docker Hub. For new cloud K8s deployments, use the cloud's native registry (ECR/GAR/ACR) for application images and a cache for upstream images." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wait." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pull-through cache or mirrors avoid Docker Hub rate limits.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Three tools for a quick image audit?",
+      "choices": [
+        { "id": "a", "text": "ls, cat, grep." },
+        { "id": "b", "text": "`docker history image` (layers, sizes, instructions — surfaces bloat), `dive image` (interactive layer browser — reveals leftover artifacts, missing cleanup, accidental secrets), `trivy image image` (vulnerability scan — known CVEs with severity). Run all three on any image to surface most common issues within minutes. For runtime check, `docker inspect` shows configured user and security flags." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "vim, less, more." }
+      ],
+      "correct_answer": "b",
+      "explanation": "history + dive + trivy is the quick image audit kit.",
+      "points": 1
+    }
+  ]
+}

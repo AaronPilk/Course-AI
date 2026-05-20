@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: The hook",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'hook rate' measure and what's a healthy baseline?",
+      "choices": [
+        { "id": "a", "text": "Total clicks / impressions; 5% is healthy." },
+        { "id": "b", "text": "3-second video plays divided by impressions — the share of users who stopped scrolling long enough to absorb the first few seconds. Industry baseline 25-35%, strong 40-50%, below 20% means the hook is failing. Compared across creatives in the same ad set, the spread between top and bottom is usually 2-3x — confirming hook is the highest-leverage lever." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Frequency / reach; 1.5 is healthy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hook rate = 3s plays / impressions. 25-35% baseline.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cleanly isolating the hook in an A/B test means what?",
+      "choices": [
+        { "id": "a", "text": "Run full creative variations." },
+        { "id": "b", "text": "Keep the body (5-30 seconds after the hook) identical across variants and only swap the first 2-3 seconds — different opening line, opening visual, or opening action. Run 5-7 variants in one ad set with equal exposure for 7-10 days; compare hook rate (3s plays/impressions). Testing full creatives against full creatives introduces too many variables to attribute the change to the hook." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Test the headline only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hold body constant; swap only the first 2-3 seconds.",
+      "points": 1
+    }
+  ]
+}

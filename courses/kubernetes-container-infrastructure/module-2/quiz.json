@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Core Kubernetes objects",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Kubernetes use Pods as the scheduling unit instead of containers directly?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Pods package tightly-coupled containers that share network (one IP, localhost-reachable), storage (shared volumes), and lifecycle (scheduled together, terminated together). Most Pods have one container, but the multi-container capability supports sidecar patterns (logging agents, service mesh proxies, secret injectors) cleanly. If containers were the scheduling unit, expressing 'these two containers must run together with shared resources' would require additional concepts. The Pod abstraction handles it as one primitive. The cost is one level of indirection — operators and tools work on Pods, not directly on containers — but the simplification of shared-resource cases is worth it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pods exist to package tightly-coupled containers with shared resources. Most Pods have one container; the multi-container capability supports specific sidecar patterns.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "During a rolling update, error rate spikes due to a bug in the new version. How do you respond?",
+      "choices": [
+        { "id": "a", "text": "Delete the Deployment." },
+        { "id": "b", "text": "`kubectl rollout undo deployment/web`. The Deployment controller scales the previous ReplicaSet (still existing at 0 replicas because Deployments keep history) back up while scaling the current ReplicaSet down. Within rolling-update mechanics (maxSurge/maxUnavailable), traffic shifts back to the old version's Pods. Total time: typically under a minute. The old version's Pods are still running during the rollout (rolling updates don't terminate old Pods until new ones are ready), so often no Pod restart is needed at all — just the scale shift. Investigate the bug separately while the rollback completes. Without ReplicaSet history, rollback would require finding the old image tag, building YAML, redeploying — minutes to hours. With it, rollback is a single command. This is why rolling updates + ReplicaSet history are the foundational deploy safety net in Kubernetes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart the cluster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rollback is fast because the old ReplicaSet still exists. One command, minutes to recover. Make rollback drills routine.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does a StatefulSet require a headless Service (clusterIP: None)?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Stable per-Pod DNS. A regular Service load-balances to all matching Pods via one virtual IP — you can reach the service but not any specific Pod. A headless Service skips the virtual IP and creates DNS records for each individual Pod: db-0.db.namespace.svc.cluster.local, db-1.db.namespace.svc.cluster.local, etc. Critical for stateful workloads where Pods aren't interchangeable — Postgres primary needs individual addressing for writes; Kafka brokers identify each other via these names; Elasticsearch nodes use them for cluster formation. The combination of StatefulSet + headless Service + volumeClaimTemplates gives each Pod a stable name, stable DNS, and its own persistent volume that follows it across restarts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mandatory naming convention." }
+      ],
+      "correct_answer": "b",
+      "explanation": "StatefulSet + headless Service + volumeClaimTemplates give stable per-Pod identity. The combination is what makes StatefulSet useful.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A team commits production database credentials base64-encoded in a Kubernetes Secret YAML file to their git repo. What's the issue?",
+      "choices": [
+        { "id": "a", "text": "Nothing — base64 is encrypted." },
+        { "id": "b", "text": "Base64 is encoding, not encryption. Anyone with access to the git repo can trivially decode the values. Even private repos get cloned to laptops, leaked accidentally, or accessed by more people than expected. Git history keeps secrets indefinitely even after removal. Production-grade secret management uses external systems as the source of truth: AWS Secrets Manager, HashiCorp Vault, GCP Secret Manager. External Secrets Operator syncs them into K8s Secrets at runtime; pods consume from K8s Secrets as usual. This gives proper access control, rotation, and audit. The YAML in git references the external secret by name, not by value. For early development convenience, tools like SOPS encrypt YAML files with KMS — better than plaintext but still inferior to external secret stores. The 'commit secrets to git' pattern produces routine credential leaks; modern production stacks avoid it entirely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only old systems do this." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Secrets in git is a routine pattern that produces avoidable leaks. External secret stores + External Secrets Operator is the modern pattern.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When is a DaemonSet the right Kubernetes pattern instead of a Deployment?",
+      "choices": [
+        { "id": "a", "text": "Whenever you want." },
+        { "id": "b", "text": "When you need exactly one Pod per Node — for per-Node infrastructure like log forwarders (Fluentd, Vector), monitoring agents (node-exporter, Datadog agent), CNI components, kube-proxy, storage drivers, runtime security scanners. DaemonSets automatically run a Pod on every Node (or selected Nodes via nodeSelector/affinity/tolerations); when new Nodes join the cluster, a Pod is created on them; when Nodes leave, the Pod goes with them. Deployments don't have this Node-aware behavior — they just maintain a replica count, distributed across Nodes by the scheduler based on resource availability and other constraints. For application workloads, you want Deployments (or StatefulSets for stateful ones); the scheduler decides placement. For per-Node infrastructure, you want DaemonSets so the coverage tracks Node lifecycle automatically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random pattern." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DaemonSet is for per-Node infrastructure. The 'one Pod per Node, follows Node lifecycle' guarantee is what makes it valuable. Use Deployments for application workloads.",
+      "points": 1
+    }
+  ]
+}

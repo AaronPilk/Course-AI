@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Ad quality",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What do the three Ad Relevance Diagnostics rankings tell you?",
+      "choices": [
+        { "id": "a", "text": "Nothing useful." },
+        { "id": "b", "text": "Quality ranking, engagement rate ranking, and conversion rate ranking each show how your ad compares to others competing for the same audience — Below Average, Average, or Above Average. Below Average dimensions reduce effective bid substantially in the auction. The diagnostic explicitly tells you which dimension is weak: low quality = creative or post-click issues; low engagement = hook/format problems; low conversion = LP or pixel issues. Read it, address the specific issue, and total value goes up." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brand-level ratings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three rankings = quality, engagement, conversion. Below Average = lever to fix.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An ad has 'Below Average' conversion rate ranking. What's the diagnostic process?",
+      "choices": [
+        { "id": "a", "text": "Higher bid." },
+        { "id": "b", "text": "Check the post-click experience. Conversion rate ranking compares your click-to-conversion rate vs others targeting the same audience. Below Average means clicks aren't converting. Check: landing page speed (slow LP = bounces), mobile-friendliness, promise-fulfillment (does the LP deliver what the ad promised?), conversion path complexity, pixel/CAPI accuracy (bad data can show as low conversion rate). Fix the weakest link. Also verify the right conversion event is being tracked — if Meta is optimizing for purchases but the pixel fires for any page view, the system has wrong signal. Bid changes alone don't fix conversion rate problems." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Ignore it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Conversion rate ranking = post-click issue. Fix LP speed, mobile, promise-fulfillment, pixel accuracy.",
+      "points": 1
+    }
+  ]
+}

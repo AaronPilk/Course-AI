@@ -1,0 +1,74 @@
+{
+  "slug": "nextjs-full-stack",
+  "title": "Next.js Full Stack Development",
+  "subtitle": "App Router, Server Components, Server Actions, and the new full-stack React.",
+  "category": "Web",
+  "level": "Intermediate",
+  "estimatedHours": 6,
+  "brand": {
+    "primary": "#000000",
+    "accent": "#ffffff",
+    "secondary": "#0070F3",
+    "tertiary": "#FF0080",
+    "logo": "/brands/nextjs-full-stack.svg",
+    "gradient": "linear-gradient(135deg, #000000 0%, #1A1A1A 50%, #0070F3 100%)"
+  },
+  "summary": "Next.js has become the default full-stack React framework — and the App Router rewrote what 'full-stack' means in React. Server Components run on the server by default; Client Components opt in. Server Actions replace REST and tRPC. Streaming and Suspense are first-class. This course walks through the modern App Router model — routing, data fetching, mutations, caching, deployment — and the patterns that work in production.",
+  "modules": [
+    {
+      "position": 1,
+      "title": "The App Router model",
+      "objective": "How Next.js works in 2026.",
+      "lessons": [
+        { "position": 1, "title": "Server Components vs Client Components", "objective": "Where each runs and why it matters." },
+        { "position": 2, "title": "File-based routing in the App Router", "objective": "layouts, pages, loading, error, not-found." },
+        { "position": 3, "title": "Data fetching on the server", "objective": "fetch, caching, revalidation, dynamic vs static." },
+        { "position": 4, "title": "Streaming and Suspense", "objective": "Progressive rendering for fast TTFB." }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Mutations with Server Actions",
+      "objective": "The new way to handle forms and writes.",
+      "lessons": [
+        { "position": 1, "title": "Server Actions explained", "objective": "Type-safe RPCs without REST endpoints." },
+        { "position": 2, "title": "Forms, validation, and useFormState", "objective": "Progressive enhancement that works." },
+        { "position": 3, "title": "Revalidation and optimistic UI", "objective": "Make mutations feel instant." },
+        { "position": 4, "title": "Authentication patterns", "objective": "Cookies, middleware, and route protection." }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Routing patterns",
+      "objective": "Layouts, parallel routes, intercepted routes.",
+      "lessons": [
+        { "position": 1, "title": "Layouts and templates", "objective": "Shared UI without re-rendering." },
+        { "position": 2, "title": "Dynamic routes and route groups", "objective": "Catch-alls, optional segments, organization." },
+        { "position": 3, "title": "Parallel and intercepted routes", "objective": "Modals, dashboards, tabs done right." },
+        { "position": 4, "title": "Middleware and edge logic", "objective": "Auth, A/B testing, geo, redirects." }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Caching, revalidation, and performance",
+      "objective": "Make it fast and keep it fresh.",
+      "lessons": [
+        { "position": 1, "title": "The four caches", "objective": "Request, data, full route, router caches." },
+        { "position": 2, "title": "Static vs dynamic rendering", "objective": "ISR, SSG, SSR — when to use which." },
+        { "position": 3, "title": "Image and font optimization", "objective": "next/image, next/font, and edge delivery." },
+        { "position": 4, "title": "Performance debugging", "objective": "Lighthouse, Web Vitals, bundle analyzer." }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Production deployment",
+      "objective": "Ship and operate Next.js apps.",
+      "lessons": [
+        { "position": 1, "title": "Vercel vs self-hosted", "objective": "Where Next.js wins or loses on each." },
+        { "position": 2, "title": "Environment variables and secrets", "objective": "Build-time vs runtime; client vs server." },
+        { "position": 3, "title": "Monitoring, logging, and error tracking", "objective": "Production observability." },
+        { "position": 4, "title": "Common production pitfalls", "objective": "Hydration errors, cache misses, build failures." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Vercel vs self-hosted",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When does Vercel typically win vs self-hosting?",
+      "choices": [
+        { "id": "a", "text": "Always self-host." },
+        { "id": "b", "text": "Most teams under 50 engineers — Vercel's tight Next.js integration (git deploys, branch previews, edge network, automatic image optimization, ISR caching, serverless Server Actions, edge middleware) saves dramatically more engineering time than its bill costs. Self-hosting requires reverse proxy setup, CDN, image optimization, monitoring, CI/CD, SSL — each a chunk of work. Total cost of ownership including engineering hours almost always favors Vercel until you hit specific triggers (compliance requirements, on-prem deployments, extreme cost optimization at very high traffic, custom infrastructure needs)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never use Vercel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vercel wins on engineering simplicity for most teams. Self-host for specific needs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Started on Vercel; might need to migrate later. How to keep options open?",
+      "choices": [
+        { "id": "a", "text": "Lock into all Vercel features." },
+        { "id": "b", "text": "Design for portability. Don't depend on Vercel-specific environment quirks. Use abstractions for image storage (e.g., S3-compatible interfaces), databases (Postgres anywhere), queues (BullMQ + Redis vs Vercel-only Inngest). Keep state in your own database, not Vercel KV unless you're committed. Pin Node version explicitly in package.json engines. If you stay on Vercel, no cost; if you migrate later, the work is a containerization + CDN + reverse proxy setup rather than a full rewrite. Open-source PaaS options like Coolify, Dokku, and Caprover bridge if you want PaaS DX on your own infrastructure." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't worry about it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use portable abstractions; pin Node; avoid Vercel-only storage. Migration becomes containerization, not rewrite.",
+      "points": 1
+    }
+  ]
+}

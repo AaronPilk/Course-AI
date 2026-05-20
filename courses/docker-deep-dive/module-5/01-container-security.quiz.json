@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Container security",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is running containers as non-root important?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Containers share the host kernel; a container compromise as root makes container escape and host compromise dramatically easier. Non-root + dropped capabilities + read-only filesystem + seccomp restrict what an attacker can do post-compromise: can't write to FS, can't install tools, can't make privileged syscalls. The same vulnerability has vastly smaller blast radius. Production posture: USER directive in Dockerfile + `--cap-drop=ALL` + `--read-only` + minimal base image." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Docker requires it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Non-root + dropped caps + read-only FS reduces blast radius on compromise. Standard production hardening.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An operator's installation guide says `docker run --privileged ...`. Should you use it?",
+      "choices": [
+        { "id": "a", "text": "Yes, follow the guide." },
+        { "id": "b", "text": "Be skeptical. `--privileged` removes most isolation: all capabilities, no AppArmor/SELinux, no seccomp, device access, can mount filesystems. Compromise inside a privileged container is effectively host compromise. Many tools include `--privileged` in install guides for convenience when they actually need specific capabilities (e.g., NET_ADMIN for network tools, SYS_PTRACE for debuggers). Check what the container actually needs and grant specific capabilities: `--cap-add=NET_ADMIN` instead of full privileged. If the docs don't explain why privileged is needed, push back or skip the tool. Reserve `--privileged` for genuine needs like Docker-in-Docker." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run as root." }
+      ],
+      "correct_answer": "b",
+      "explanation": "--privileged removes most isolation. Grant specific capabilities instead; reserve full privileged for genuine needs.",
+      "points": 1
+    }
+  ]
+}

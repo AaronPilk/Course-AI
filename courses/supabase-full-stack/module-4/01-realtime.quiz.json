@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Realtime",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does Realtime interact with RLS?",
+      "choices": [
+        { "id": "a", "text": "Ignores RLS." },
+        { "id": "b", "text": "Respects RLS — when a row changes, the broadcast goes only to subscribers who have permission to see that row. Subscribers don't get notifications for changes on rows they couldn't read via normal SELECT. This means RLS-protected realtime is safe by default: you write RLS policies on the table; Realtime evaluates them per subscriber per row-change. For INSERT/UPDATE the subscriber needs SELECT on the new state; for DELETE on the old state. RLS is the foundation; Realtime inherits its enforcement." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bypasses RLS for performance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Realtime respects RLS — subscribers see only changes for rows they can read.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building cursor-sharing in a collaborative editor. Database Changes, Broadcast, or Presence?",
+      "choices": [
+        { "id": "a", "text": "Database Changes — write each position to DB." },
+        { "id": "b", "text": "Broadcast — cursors are ephemeral, high-frequency (potentially 60 events/sec per user), and don't need persistence. Writing to the DB on every cursor move would saturate the database and tank performance. Broadcast sends messages directly between clients via the channel without DB involvement; fast, ephemeral, perfect for cursor positions, typing indicators, ephemeral game state. Use Presence to track who's online in the document; Broadcast for the cursor positions themselves." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Presence only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Broadcast for ephemeral high-frequency. DB for durable state. Presence for who's online.",
+      "points": 1
+    }
+  ]
+}

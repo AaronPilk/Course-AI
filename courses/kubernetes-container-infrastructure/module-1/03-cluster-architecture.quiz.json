@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cluster architecture",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is etcd considered the most critical component in a Kubernetes cluster?",
+      "choices": [
+        { "id": "a", "text": "It's the fastest." },
+        { "id": "b", "text": "etcd stores all cluster state — every object, every status, every config. The API server is stateless; it just reads and writes to etcd. Controllers, kubelets, and clients all derive their view of the cluster from what's in etcd. Lose etcd without backup and you've lost the cluster's mind: every Deployment, Service, ConfigMap, Secret, Node assignment, and historical decision. Running workloads keep running for a while (the kubelet has cached the Pods assigned to it), but nothing new can happen, and the cluster can't recover from any failure. This is why managed services run etcd HA with 3-5 nodes across AZs and snapshot it regularly, and why self-managed clusters require careful etcd operation. For backup: etcd snapshots, taken regularly, stored off-cluster. Combined with GitOps (cluster config in git), recovery from total etcd loss is possible — but slow and lossy compared to restoring from a snapshot." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It runs on Windows." }
+      ],
+      "correct_answer": "b",
+      "explanation": "etcd is the source of truth. Lose it without backup and you've lost the cluster. Managed services protect it; self-managed clusters require careful operation around it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A bunch of Pods are stuck in `Pending` across your cluster. `kubectl describe pod` shows 'FailedScheduling: Insufficient cpu'. Which Kubernetes component is reporting this, and what does it mean?",
+      "choices": [
+        { "id": "a", "text": "The kubelet refused the Pods." },
+        { "id": "b", "text": "The scheduler can't find Nodes with enough free CPU based on the Pods' resource requests. The Deployment and ReplicaSet controllers have already done their jobs — they created the Pod objects in the API. The scheduler is the next step: it tries to assign each Pod to a Node by filtering Nodes that have sufficient resources (CPU, memory, ephemeral storage) and matching constraints (nodeSelector, affinity, tolerations), then scoring eligible Nodes. 'Insufficient cpu' means none of the existing Nodes have enough allocatable CPU left to satisfy this Pod's requests. The fixes: enable Cluster Autoscaler or Karpenter to add Nodes automatically when scheduling fails; manually add Nodes; reduce the Pod's CPU requests (often Pods are configured with conservative high requests that aren't really needed); or scale down lower-priority workloads to free capacity. The Pods will sit in Pending until the situation changes — the scheduler keeps retrying. Events on the Pod show the scheduling decisions and failures, which is the primary debugging tool for this kind of issue." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "The control plane is down." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pending Pods + Insufficient cpu is a scheduling capacity issue. Add capacity (Autoscaler), reduce requests, or wait. The scheduler keeps trying.",
+      "points": 1
+    }
+  ]
+}

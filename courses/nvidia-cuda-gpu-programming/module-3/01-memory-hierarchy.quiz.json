@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: CUDA memory hierarchy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is shared memory roughly 100x faster than global memory?",
+      "choices": [
+        { "id": "a", "text": "Marketing claim." },
+        { "id": "b", "text": "Physical location. Shared memory is on-chip SRAM physically next to the compute units — access takes ~20-30 cycles. Global memory (HBM or GDDR) is off-chip DRAM connected by a memory controller — access takes ~400-800 cycles uncached. Shared memory also has higher bandwidth per access because it doesn't have to traverse the chip boundary. The cost is size: shared memory is 48-228 KB per SM, while global memory is 24-80 GB. The performance pattern this enables is: load data once from global into shared, then have all threads in a block reuse it from shared many times. For algorithms with data reuse (like matrix multiplication or convolution), this transforms memory-bound kernels into compute-bound ones." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "On-chip vs off-chip is the physical reason. Shared memory is the GPU's superpower for algorithms with data reuse — load once from global, reuse many times from shared.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A CUDA kernel uses 128 registers per thread. Performance is mediocre. The profiler shows low occupancy (1-2 blocks per SM). What's happening and how do you fix it?",
+      "choices": [
+        { "id": "a", "text": "Hardware limit, nothing to do." },
+        { "id": "b", "text": "Register pressure is limiting occupancy. The SM's register file (typically 64K registers) divided by registers-per-thread sets the maximum resident threads. At 128 registers/thread, 65536/128 = 512 threads fit, so with 256-thread blocks you get only 2 blocks per SM = 16 resident warps. Low occupancy means fewer warps for the scheduler to swap to during memory stalls — less latency hiding, worse performance. Fixes: reduce register usage by restructuring the kernel (split into smaller kernels, push intermediate values into shared memory, use `-maxrregcount` compiler flag to cap registers and accept some spilling, or simplify expressions to use fewer temporaries). Sometimes high register usage is the right tradeoff (single-thread perf > occupancy), but usually you want to bring registers down to ~32-64 per thread for healthy occupancy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more threads." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Register pressure is one of the most common CUDA performance issues. The fix is structural — restructuring the kernel to use fewer registers, often at the cost of more shared-memory or arithmetic-intensity tradeoffs.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Edge Functions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use Edge Functions instead of the auto-API?",
+      "choices": [
+        { "id": "a", "text": "All CRUD operations." },
+        { "id": "b", "text": "When logic doesn't fit a single SQL query or simple CRUD: webhooks from external services (Stripe, Twilio), calling third-party APIs that require secret keys (OpenAI, payment gateways), background processing of uploaded files, complex multi-step workflows, AI/LLM streaming endpoints, cron-triggered tasks (paired with pg_cron), and email sending with custom logic. The auto-API handles ~80% of operations as CRUD; Edge Functions handle the rest. Keep CRUD in the auto-API for free; reserve Edge Functions for genuine logic." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhooks, external APIs with secrets, complex workflows, AI streaming, cron tasks.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Edge Function that should act as the calling user (respecting RLS). How?",
+      "choices": [
+        { "id": "a", "text": "Use service_role." },
+        { "id": "b", "text": "Forward the Authorization header from the incoming request when creating the Supabase client inside the function: `createClient(url, anonKey, { global: { headers: { Authorization: req.headers.get('Authorization')! } } })`. The supabase client now carries the user's JWT; any queries through it run as the authenticated user with RLS applied. Call `supabase.auth.getUser()` to verify and retrieve the user. Use service_role only when explicitly bypassing RLS for admin operations after verifying the caller is authorized." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always bypass auth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forward Authorization header to the Supabase client; RLS applies as that user.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Match types and keywords",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is broad match the new default for Smart Bidding accounts?",
+      "choices": [
+        { "id": "a", "text": "Cheap clicks." },
+        { "id": "b", "text": "Google's NLP (BERT and successors) now understands query meaning, not just words — broad match expands semantically, not literally. Smart Bidding's per-auction logic predicts low conversion probability for borderline queries and bids near zero, self-filtering bad matches. Together they cast a wider net while keeping cost focused on convertible queries. Tight match types restrict the learning surface and miss volume. Requires 30+ conv/30 days for filtering to work cleanly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Google." }
+      ],
+      "correct_answer": "b",
+      "explanation": "NLP + Smart Bidding's per-auction filter flipped the calculus.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Broad match account spending bloated. First action?",
+      "choices": [
+        { "id": "a", "text": "Switch to exact match." },
+        { "id": "b", "text": "Open Search Terms report, sort by impressions, scan top queries for non-target intent (jobs, free, info-only, wrong category, competitor drift), add them as negative phrase keywords at the appropriate level (account list for universal exclusions, campaign for specific). A 15-minute weekly session catches most waste. Don't kill broad match before doing the negatives work — broad is almost always fixable through filtering, not by abandoning the match type." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower bids." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Negatives first. Don't kill broad; filter it.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When does exact match still beat broad?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "Brand defense (separate brand campaign with exact-match brand keywords), specific durable high-converting concepts you've validated, compliance-restricted verticals (crypto, supplements, regulated financial), localized small-volume queries, and specific competitor brand bidding. Even exact isn't literal — Google applies semantic variation. 80/20 hybrid in mature accounts: ~80% broad, ~15% phrase, ~5% exact." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Brand defense, durable specific concepts, compliance, narrow local.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Setting up a PMax campaign for an e-commerce brand. Biggest single lift driver?",
+      "choices": [
+        { "id": "a", "text": "Long descriptions." },
+        { "id": "b", "text": "First-party audience signals — upload your existing customer list as Customer Match and add it as the primary audience signal for each asset group. PMax uses it to identify lookalikes and weight delivery toward likely buyers. Combined with a clean Merchant Center feed and varied creative (5+ headlines, 4+ descriptions, 4+ images in multiple ratios, 1+ video), it's the foundation. Without strong audience signals, PMax relies on weaker inputs and underperforms significantly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bidder strategy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "First-party customer list audience signal is the biggest PMax lift.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Default match type for negative keywords?",
+      "choices": [
+        { "id": "a", "text": "Negative broad." },
+        { "id": "b", "text": "Negative phrase. Negative broad over-filters (negating 'cheap' as broad blocks 'cheapest insurance' too). Negative exact under-filters (only the literal query). Negative phrase blocks queries containing the phrase in order — the right balance for most cases. Use negative broad only when confident the words shouldn't appear together; use negative exact rarely for a specific single query to kill." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Negative exact." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Negative phrase by default.",
+      "points": 1
+    }
+  ]
+}

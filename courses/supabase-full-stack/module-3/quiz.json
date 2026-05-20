@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Auth",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where should authorization-affecting fields like role live?",
+      "choices": [
+        { "id": "a", "text": "user_metadata." },
+        { "id": "b", "text": "app_metadata (server-controlled, only Supabase or trusted backend code can write) or a dedicated user_roles table. NEVER user_metadata — users can update it via updateUser, allowing them to escalate their own privileges. Same rule for plan tier, subscription, admin flags, internal status — anything an authz decision depends on. user_metadata is for profile fields the user owns (display name, theme preference)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "JWT body directly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "app_metadata or DB table; never user_metadata (user-editable).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server-side API route. getUser() vs getSession()?",
+      "choices": [
+        { "id": "a", "text": "getSession() is faster." },
+        { "id": "b", "text": "getUser() — it verifies the JWT against the auth server, returning trusted identity. getSession() reads locally-stored session without verification; fine for client-side UI state (am I logged in?) but insufficient for server-side authz decisions because a forged or tampered local session would pass. For SSR routes and API endpoints, always getUser(). The trade-off is one network call's latency for trusted identity — non-negotiable on the server." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Either." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server-side: getUser() (verifies JWT). Client UI: getSession() (fast local).",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Difference between magic link and OTP code email flows?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Magic link: user clicks a one-tap link in email; the token in the link authenticates them when followed. Lower friction but requires opening email on the device used for sign-in, and some email providers flag the links. OTP code: user enters a 6-digit code from email; works universally across devices (sign in on desktop using code from phone) and survives email-provider weirdness, but adds friction of copying a code. Pick magic link for B2B/desktop primary; OTP for mobile or cross-device fallback." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Same flow." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Magic link = click. OTP = enter code. Different friction/universality.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "B2B SaaS chasing $50k+ ACV enterprise deals. Auth requirement?",
+      "choices": [
+        { "id": "a", "text": "Email + password only." },
+        { "id": "b", "text": "SAML SSO. Enterprise customers require IT to manage user access centrally via Okta, Azure AD, Google Workspace, OneLogin, JumpCloud. Without SAML you lose deals — it's a checkbox in enterprise procurement. Supabase supports SAML on Pro plans. Per customer: collect their SAML metadata, configure a connection scoped to their domain, expose `signInWithSSO({ domain })` button. JIT provisioning creates users on first login. SCIM for full lifecycle is the next step up but rarely blocks deals." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "OAuth only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SAML SSO is mandatory for enterprise deals at $50k+ ACVs.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Multi-tenant SaaS with users in multiple orgs. How to scope data?",
+      "choices": [
+        { "id": "a", "text": "One global tenant." },
+        { "id": "b", "text": "tenant_members table (tenant_id, user_id, role) + a `current_tenant_id` JWT claim set when the user picks a tenant. RLS policies check both `tenant_id = current_tenant_id()` and `EXISTS in tenant_members` so users see only the currently-selected tenant's data AND only tenants they're members of. Tenant switching = token refresh with the new claim. Policies enforce isolation; admins can do anything inside their tenant via role checks in tenant_members." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardcoded per-account." }
+      ],
+      "correct_answer": "b",
+      "explanation": "tenant_members + current_tenant_id claim + policies checking both.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Smart Bidding strategies",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you pick tROAS over tCPA?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "When you have accurate conversion value tracking and varied AOV. tROAS bids more aggressively on auctions predicted to drive high-value conversions and less on low-value ones — perfect for e-commerce where buying a $50 product is a different signal than buying a $500 product. tCPA treats every conversion equally regardless of value, so it's right when conversion value is roughly flat (lead-gen with uniform lead value, app installs). Requires 50+ value-attributed conversions/30 days." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "tROAS = varied AOV with value tracking. tCPA = flat conversion value.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Brand-new campaign, 8 conversions in last 30 days. Setting tCPA at historical $40. Performance erratic. Why?",
+      "choices": [
+        { "id": "a", "text": "Wrong target value." },
+        { "id": "b", "text": "Below the signal threshold. Smart Bidding (especially tCPA) needs roughly 30+ conversions/30 days to learn reliably; with 8 conversions, the algorithm has too little data to predict per-auction conversion probability, so bids are noisy. Switch to Maximize Conversions or Maximize Clicks to accumulate data faster, then move to tCPA once you have 30+ conversions and a defensible target. Forcing tCPA on thin signal produces exactly the erratic pattern you're seeing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase target." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Below 30 conversions/30 days, switch to Max Conversions until you have signal.",
+      "points": 1
+    }
+  ]
+}

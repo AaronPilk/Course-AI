@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Migrations and branching",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are Supabase migrations forward-only by default?",
+      "choices": [
+        { "id": "a", "text": "Postgres limitation." },
+        { "id": "b", "text": "Down-migrations are tricky in practice: dropping a column loses data permanently; renaming back can break already-deployed code; the half-applied state during rollback is often worse than rolling forward. Forward-only forces you to think about safe schema changes upfront and write corrective migrations when something needs to be undone. If a bad migration ships, you write a new migration to fix it — don't try to undo by deleting migration files from history." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forward-only avoids the worst-case rollback scenarios; write corrective migrations.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Adding a NOT NULL column to a 5M-row production table. Safe pattern?",
+      "choices": [
+        { "id": "a", "text": "Drop and recreate." },
+        { "id": "b", "text": "Three-step migration: (1) add the column as nullable (no lock issues, fast), (2) backfill values in batches (UPDATE in chunks of 1000-10000 rows, via a loop or pg_cron job — avoids locking the whole table), (3) once backfilled, alter the column to NOT NULL. Pair with `CREATE INDEX CONCURRENTLY` for any new index so it doesn't block writes. The pattern: additive first, fill safely, tighten constraints last. Always test on a staging branch database before applying to prod." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add NOT NULL directly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add nullable → batched backfill → set NOT NULL. CONCURRENTLY for indexes.",
+      "points": 1
+    }
+  ]
+}

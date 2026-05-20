@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Creative diversification",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between variant testing and variety testing?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Variants: 10 minor versions of the same angle/format/creator — useful but low-leverage. Variety: fundamentally different ads varying angle (problem solved), format (talking head vs UGC vs demo), creator, tone, and hook mechanism. Variety reaches multiple audience slices and lets the algorithm find local maxima per slice; variants only optimize within one slice. A library of 12 truly different ads outperforms 50 variants of one ad." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Variants are faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Variety beats variants. Diversify on multiple dimensions, not one.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account at $50k/mo running 4 polished video ads, no UGC, all featuring the founder. Where to invest creative budget?",
+      "choices": [
+        { "id": "a", "text": "More polished founder videos." },
+        { "id": "b", "text": "Diversify on every axis: add UGC (real customers or paid creators producing UGC-style), add other faces (creators on retainer reaching different demos), add formats beyond talking-head (product demos, before/after, carousels), add new angles beyond founder-story. Goal is 8-12 active ads varying on multiple dimensions, not 12 versions of one ad. Most scaling accounts run a creator-pool model — 2-5 creators on retainer producing 4-8 ads each per month." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause everything and start over." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Diversify across UGC, creators, formats, and angles. Build a library, not more hero ads.",
+      "points": 1
+    }
+  ]
+}

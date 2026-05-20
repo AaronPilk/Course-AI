@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Routing patterns",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Key benefit of layout.tsx over rendering shared UI in each page?",
+      "choices": [
+        { "id": "a", "text": "Smaller bundles." },
+        { "id": "b", "text": "Layouts persist across client-side navigations between sibling routes — they don't re-mount, don't re-fetch, and preserve state. Going from /dashboard to /dashboard/settings keeps sidebar state, form inputs, scroll position; only the page content swaps. Layouts compose via directory nesting. The root layout is required and must include `<html>` and `<body>`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster builds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layouts persist across sibling navigations; state preserved.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Pre-rendering 5,000 blog posts but want to add new ones without rebuilding entire site. Setup?",
+      "choices": [
+        { "id": "a", "text": "Rebuild on every new post." },
+        { "id": "b", "text": "Export `generateStaticParams()` returning all existing slugs; pair with `export const revalidate = 60` for ISR. Build time pre-renders 5,000 posts. With `dynamicParams = true` (default), requests for new slugs render on-demand and cache. Existing posts served from CDN; new ones generate at first hit then cache. Best of static + dynamic without rebuilding the whole site." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "dynamicParams = false." }
+      ],
+      "correct_answer": "b",
+      "explanation": "generateStaticParams + revalidate + dynamicParams=true.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Parallel routes (`@slot`) — killer use case?",
+      "choices": [
+        { "id": "a", "text": "Smaller bundles." },
+        { "id": "b", "text": "Dashboards with independent panels. Each slot has its own loading.tsx and error.tsx; data fetches in parallel; one slot's error doesn't break another's render; one slot's slow query doesn't block other panels. Combined with bookmarkable URL state, dramatically cleaner than building one giant dashboard page. The layout receives `children` plus named slot props." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Forms." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dashboards with independent loading/error/data per panel.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Bookmarkable modal for photo gallery (click → modal; direct link → full page)?",
+      "choices": [
+        { "id": "a", "text": "Local state, no URL change." },
+        { "id": "b", "text": "Intercepted routes. Create `app/photos/[id]/page.tsx` for full-page view + `app/@modal/(..)photos/[id]/page.tsx` to intercept from `/photos`. Click from grid → modal opens, URL updates; grid stays rendered underneath. Direct link to /photos/123 → full page renders. Both bookmarkable. `router.back()` closes modal. The `(..)` syntax means 'intercept from one level up.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two URLs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Intercepted routes (`(..)`) render one route in another's context.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the right work for middleware?",
+      "choices": [
+        { "id": "a", "text": "Database queries." },
+        { "id": "b", "text": "Fast cross-cutting checks: auth gating (cookie/JWT presence and validity), redirects and rewrites, A/B testing routing, geo-based routing, locale detection, security headers, rate limiting via HTTP-based KV stores. Middleware runs at edge on every matched request; heavy work or DB queries add latency to everything. Edge has constraints (no Node APIs, strict timeouts). Use middleware for unglamorous fast gating; save real work for pages/actions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Page rendering." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fast cross-cutting checks only; real work belongs in pages/actions.",
+      "points": 1
+    }
+  ]
+}

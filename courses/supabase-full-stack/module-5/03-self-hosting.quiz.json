@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Self-hosting vs managed",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should a team realistically consider self-hosting Supabase?",
+      "choices": [
+        { "id": "a", "text": "To save money on hobby projects." },
+        { "id": "b", "text": "Specific compliance/data-residency requirements (data must stay in regions Supabase managed doesn't offer), air-gapped or on-prem enterprise deployments, very high scale where the cost equation flips (typically $5k+/month managed bill + dedicated platform engineering capacity), need for custom Postgres extensions or PG versions not on managed, or white-labeling Supabase inside your own product. For nearly every other team, managed wins decisively — automated backups, patches, monitoring, scaling, and support are far cheaper than the engineering time to self-manage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always self-host." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compliance/residency, on-prem, very high scale, custom Postgres needs, or white-labeling.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Small team migrates to self-hosted Supabase to save money. Six months later, hit by data corruption. Cost?",
+      "choices": [
+        { "id": "a", "text": "Just restore from backup." },
+        { "id": "b", "text": "Likely catastrophic — many self-hosted setups skip backups during initial deployment to save effort, and only discover this when they need them. Without automated backups, PITR, and verified restores, corruption can mean total data loss. The 'cheap' self-hosted setup costs days/weeks of recovery work, possible permanent data loss, and downtime that exceeds many months of managed-plan cost. Lesson: if you self-host, ALL the operational work (backups, monitoring, security, patches) is on you. Managed's value is in the unglamorous infrastructure work that's invisible until it's missing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Negligible." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Self-hosting without ops discipline = data-loss risk. Managed's value is the invisible work.",
+      "points": 1
+    }
+  ]
+}

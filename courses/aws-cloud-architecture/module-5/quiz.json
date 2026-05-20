@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operations, cost, and what to avoid",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is X-Ray (or equivalent distributed tracing) essential in a microservices architecture?",
+      "choices": [
+        { "id": "a", "text": "It's faster than logs." },
+        { "id": "b", "text": "A single user request flows through many services: API gateway, auth service, orchestrator, downstream services, databases. Logs from each service are separate; correlating them requires either correlation IDs propagated through every call or distributed tracing. X-Ray automatically traces a request's path across services, showing time spent at each step, errors at each step, and dependencies. Without tracing, debugging 'why was this request slow?' becomes forensic work piecing together logs across services with manually-propagated correlation IDs. With tracing, it becomes 'click on the slow trace and see where it spent time.' The discipline transfers — Datadog, Honeycomb, or any OpenTelemetry-based system provides the same value. For monoliths, tracing is overkill. For anything with several service boundaries, tracing pays for itself the first time you debug a production issue with it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracing is for distributed systems. Monoliths can debug with logs alone; microservices need tracing to reconstruct request flows.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why is click-ops (building AWS infrastructure through the console) a problem at production scale?",
+      "choices": [
+        { "id": "a", "text": "Slower than CLI." },
+        { "id": "b", "text": "Drift, tribal knowledge, no audit trail, slow recovery, inconsistent environments. Click-ops works for learning and one-off experiments but breaks down because manual changes accumulate as drift between environments, only the person who built it remembers exactly how, there's no history of what changed when and why, rebuilding after disaster is manual and error-prone, and dev/staging/prod inevitably differ. Infrastructure as Code (CloudFormation, CDK, Terraform) treats infrastructure like application code: versioned in git, reviewed via PRs, deployed via CI/CD, deterministically rebuildable. The discipline pays back enormously — environments stay consistent, disaster recovery becomes redeploying IaC, audit trails are automatic, and 'I forgot what we did' incidents stop. Building this discipline takes time but produces dramatically more maintainable infrastructure than click-ops at any meaningful scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mouse repetitive strain." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Click-ops fails the moment your team needs to reproduce, audit, or recover. IaC is the foundation of mature cloud operations.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the correct order for cost-optimizing an AWS account?",
+      "choices": [
+        { "id": "a", "text": "Buy Savings Plans first." },
+        { "id": "b", "text": "Visibility (tagging + Cost Explorer + budgets), then cleanup (unused resources, snapshots, log retention), then right-sizing based on actual utilization, then commitments (Savings Plans), then spot for tolerant workloads, then architectural changes, then continuous monitoring. Each step has higher engineering cost but bigger savings on a cleaner baseline. The classic mistake is jumping to commitments first — locking in a 3-year discount on capacity you haven't right-sized commits you to waste. Cleanup typically saves 20-30% immediately. Right-sizing saves another 20-30%. Commitments save 30-40% on the resulting baseline. Architectural changes (managed services, serverless, caching) come last because they're the highest engineering cost per dollar saved. The order matters — reversing it locks in waste at a discount and produces minimal real savings." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random order." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Visibility, cleanup, right-size, commit, spot, architectural, monitor. Reverse this order and you optimize the wrong direction.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why do leaked AWS access keys produce such fast and damaging incidents?",
+      "choices": [
+        { "id": "a", "text": "Lucky bots." },
+        { "id": "b", "text": "Automated scanning. Bots continuously scan public repositories for AWS-style credential patterns. Within hours of a commit (sometimes minutes), keys are found and used. The standard attack: launch EC2 instances across multiple regions for crypto mining or other expensive workloads; charges accumulate at hundreds of dollars per hour. By the time a human notices, multi-thousand-dollar bills are routine. Structural fix: eliminate long-term keys. Use IAM roles for services (automatic temporary credentials), Identity Center for human access (SSO with short-lived sessions), OIDC trust for CI/CD pipelines (no long-term keys needed). Defense-in-depth: pre-commit hooks (git-secrets), GitHub's automatic secret scanning, budget alerts that notify within hours of unusual spending. AWS often credits fraud charges as a courtesy when keys leak via supported scanning, but recovery isn't guaranteed and the operational scramble is real. Modern AWS practice eliminates long-term keys almost entirely; their existence is the underlying risk." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hackers are smart." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AWS keys get exploited within hours of leaking. IAM roles + SSO + OIDC eliminate the long-term-key surface. Modern stacks don't rely on keys for the vast majority of access.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does it actually mean to 'have backups' for a production database?",
+      "choices": [
+        { "id": "a", "text": "Backups enabled in the console." },
+        { "id": "b", "text": "Tested restoration. 'Backups enabled' is a configuration claim; restoration drills convert it to operational reality. Until you've actually restored from a backup to a sandbox, verified data integrity, and timed the restoration, you don't know that your backups work at the retention you expect, in the format you expect, in the time window you expect. Many teams discover their backup gaps during real incidents — wrong retention period, missing point-in-time recovery, cross-region replication misconfigured. Quarterly restoration drills catch this. Other components of a real backup capability: documented restoration runbook so incidents don't require figuring out the procedure mid-fire; alarms on backup failures (RDS sometimes fails silently); cross-region backup copies for true disaster recovery; clear retention periods aligned with business requirements. The principle 'you don't have backups until you've restored from them' applies universally — to RDS, DynamoDB, EFS, S3 versioning, custom snapshots. Every operations team should be running restoration drills regularly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hoping for the best." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Untested backups are unproven backups. Drills convert hopes into known capabilities. The cost of restoration drills is trivial compared to the cost of finding out your backups are broken during a real incident.",
+      "points": 1
+    }
+  ]
+}

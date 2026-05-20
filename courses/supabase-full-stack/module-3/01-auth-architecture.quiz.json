@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Auth architecture",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between app_metadata and user_metadata in Supabase Auth?",
+      "choices": [
+        { "id": "a", "text": "Same thing, different name." },
+        { "id": "b", "text": "app_metadata is server-controlled — only Supabase or trusted backend code can write to it. Use for roles, subscription tier, admin flags, internal status — anything that affects authorization. user_metadata is user-controlled — users can update via signup or updateUser. Use for display preferences and profile fields the user owns. Critical rule: NEVER put authorization-affecting data in user_metadata; the user can change it and escalate privileges. Roles always go in app_metadata." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random buckets." }
+      ],
+      "correct_answer": "b",
+      "explanation": "app_metadata = server-controlled for authz. user_metadata = user-controlled for profile.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server-side route needs to know who's logged in. Use getSession() or getUser()?",
+      "choices": [
+        { "id": "a", "text": "Either is fine." },
+        { "id": "b", "text": "getUser() — it verifies the JWT against the auth server, returning a trusted user. getSession() reads the locally-stored session without verification; fine for client-side UI state (am I logged in?) but insufficient for server-side authorization decisions because a forged or tampered local session would pass. For SSR and API routes, always getUser(). The trade-off is one network call's latency for trusted identity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always getSession()." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Server-side: getUser() (verified). Client-side UI: getSession() (fast, local).",
+      "points": 1
+    }
+  ]
+}

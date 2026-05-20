@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Union filesystem and layers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does the order of instructions in a Dockerfile matter so much for build performance?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Docker's build cache reuses previously-built layers when an instruction's inputs haven't changed. Each Dockerfile instruction that modifies the filesystem produces a layer; Docker hashes the instruction plus its inputs and looks for a cached layer with that hash. Cache hits skip the work entirely. Once any instruction's cache misses (because its inputs changed), all subsequent instructions cache-miss too. So the canonical pattern: put stable instructions early (base image, dependency installs that depend only on lock files), put frequently-changing instructions late (source code copy). The classic mistake is `COPY . .` early in the Dockerfile — any change to any source file invalidates the cache for that copy and everything after, including dependency installs. The fix: COPY only package.json/lock files first, run npm install (cached when lock unchanged), then COPY source. Builds drop from minutes to seconds for source-only changes. This single discipline transforms Docker development experience." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random pattern." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stable-first, frequent-last ordering preserves build cache. Copy lock files before sources; install dependencies before copying code. Universal Dockerfile discipline.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Dockerfile COPYs an SSH key to clone a private repo during build, then RM's the key. The image is pushed to a registry. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Nothing — the key was removed." },
+        { "id": "b", "text": "The key is still in the image. Layers are immutable; deleting a file in a later layer creates a 'whiteout' in that layer that hides the file in the merged view but doesn't remove it from the lower layer where it was added. Anyone with the image can extract the SSH key by examining the COPY layer — `docker save` exports all layers as tarballs; tools like `dive` browse layer contents interactively; even just `docker history` shows the layer where the key was added. This is one of the most common ways credentials leak via container images. The fix: use BuildKit's `--secret` flag, which mounts the secret into a specific RUN command but doesn't persist it in any layer. Or use multi-stage builds where the secret is only in a stage that's discarded. Or use the host's git config / SSH agent forwarding via BuildKit. For existing images that may have leaked secrets: rotate the credentials, audit registry access logs to see who pulled, scan all images for similar issues. The 'rm the secret after using it' pattern is widely-used and uniformly broken." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layers are immutable; deletion in a later layer doesn't remove from earlier ones. Use BuildKit secrets or multi-stage builds for build-time credentials. Rotate any leaked secrets immediately.",
+      "points": 1
+    }
+  ]
+}

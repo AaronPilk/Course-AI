@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Docker Compose",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `depends_on: condition: service_healthy` instead of plain `depends_on`?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Plain `depends_on` only orders startup — Compose starts the dependency first but doesn't wait for it to be ready before starting dependents. The app may crash on startup because the database isn't accepting connections yet. With `condition: service_healthy`, Compose waits for the dependency's healthcheck to pass before starting the dependent. Requires defining a healthcheck on the dependency (e.g., `pg_isready` for Postgres). Result: app starts only when DB is actually ready. Standard pattern for any service-with-dependencies setup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plain depends_on = order only. service_healthy = wait for actual readiness via healthcheck.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "When is Docker Compose appropriate for production?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "Small single-host production deployments where you don't need auto-scaling, multi-host orchestration, rolling updates, or self-healing across hosts. Compose works fine for internal tools, demos, pet projects, single-VPS hosting, dev/staging environments. For real production scale (multi-host, HA, autoscaling), Kubernetes (covered in the K8s course) or Nomad. The decision is workload-driven: if one host can serve your traffic with acceptable reliability and Compose's restart policies are enough, ship it. If you need scale, HA, or rolling deploys across hosts, you need an orchestrator. Many teams successfully run Compose in production for years; many others outgrow it and move to K8s." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compose for small single-host production; K8s for scale and HA. Match tool to workload.",
+      "points": 1
+    }
+  ]
+}

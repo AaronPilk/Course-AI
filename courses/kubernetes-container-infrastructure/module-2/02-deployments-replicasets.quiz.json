@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Deployments and ReplicaSets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Kubernetes have the Deployment -> ReplicaSet -> Pod chain instead of a single object?",
+      "choices": [
+        { "id": "a", "text": "Over-engineering." },
+        { "id": "b", "text": "Each layer adds specific capability. The Pod is the actual running container set; the ReplicaSet ensures a count of identical Pods exists; the Deployment manages ReplicaSets across versions to support rolling updates and rollback. When you update a Deployment's image, the Deployment controller creates a new ReplicaSet with the new spec and scales it up while scaling down the old ReplicaSet — that's a rolling update. To rollback, the Deployment scales the old ReplicaSet back up and the new one down — fast because the old ReplicaSet still exists at 0 replicas. If only a ReplicaSet existed, you'd have no clean way to coordinate versioned rollouts. If only Deployments existed, you'd lose the ability to scale replicas independently of version changes. Each level has one job; composition produces the rolling-update behavior. You almost always write Deployments, never bare ReplicaSets, and the chain works behind the scenes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Historical accident." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Each layer has one job; composition produces rolling-update behavior. Deployment manages ReplicaSets across versions; ReplicaSet manages Pod count; Pod runs the containers. You write Deployments; the chain handles the rest.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "During a rolling update, error rate spikes because the new version has a bug. How do you respond?",
+      "choices": [
+        { "id": "a", "text": "Delete the whole Deployment." },
+        { "id": "b", "text": "Roll back. `kubectl rollout undo deployment/web` reverses the rollout — the Deployment controller scales the previous ReplicaSet (still existing at 0 replicas because Deployments keep history) back up while scaling the current ReplicaSet down. Within the rolling-update mechanics (maxSurge / maxUnavailable), traffic shifts back to the old version's Pods. Total time: typically under a minute for moderate-sized Deployments. The old version Pods are still running during the rollout (rolling updates don't terminate old Pods until new ones are ready), so often no Pod restart is needed at all — just the scale shift. Investigate the bug separately while the rollback is complete. Without the ReplicaSet history, rollback would require finding the old image tag, building YAML, redeploying — minutes to hours. With it, rollback is a single command. This is why rolling updates + ReplicaSet history are the foundational deploy safety net in Kubernetes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Drain all nodes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rollback is fast in K8s because the old ReplicaSet still exists. One command, minutes to recover. Make rollback drills routine so the process is familiar when needed urgently.",
+      "points": 1
+    }
+  ]
+}

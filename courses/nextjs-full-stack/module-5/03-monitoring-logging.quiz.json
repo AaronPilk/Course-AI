@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Monitoring and logging",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Minimum observability stack for a production Next.js app?",
+      "choices": [
+        { "id": "a", "text": "console.log only." },
+        { "id": "b", "text": "Error tracking (Sentry with auto-configured client + server + edge runtime), structured logging (pino or similar with JSON output), and Web Vitals tracking (Vercel Analytics or equivalent). Add log aggregation (Axiom, Logtail, Datadog) as you scale beyond a single deployment. Sentry catches unhandled errors with stack traces, frequency, affected users, and session replays for UX debugging. Structured logs are searchable at scale. Web Vitals via RUM shows what real users experience (not just synthetic Lighthouse). Three components cover 80% of production debugging needs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Datadog full enterprise." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sentry (errors) + structured logging + Web Vitals = 80% of debugging coverage.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Sentry has 200 unique errors logged but nobody acts on them. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Ignore Sentry." },
+        { "id": "b", "text": "Triage and fix. Errors that go unaddressed defeat the purpose of tracking them. Workflow: (1) sort errors by frequency × affected-users-count, (2) fix top 5-10 each sprint, (3) mark fixed errors as resolved (Sentry will re-alert on regressions), (4) tune alerting so new error types notify but stable ones don't spam. Resolved-but-regressed errors are the high-signal alerts — they mean something just broke that was previously working. Aim for errors trending down over time, not piling up indefinitely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Track but never fix." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Errors that pile up unaddressed = tracking without observability value. Fix top issues; resolve fixed; alert on regression.",
+      "points": 1
+    }
+  ]
+}

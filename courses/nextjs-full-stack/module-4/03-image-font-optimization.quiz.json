@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Image and font optimization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does `next/image` do automatically?",
+      "choices": [
+        { "id": "a", "text": "Nothing special." },
+        { "id": "b", "text": "Serves modern formats (WebP, AVIF) to supporting browsers; generates multiple resolutions for retina; lazy-loads off-screen images by default; requires width/height (or fill) to prevent CLS; caches optimized variants. With `priority` for hero images and `sizes` for responsive layouts, it dramatically improves LCP. External images need `remotePatterns` config in next.config.js. Replacing `<img>` with `<Image>` is one of the highest-leverage performance wins in Next.js." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stretches images." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto format conversion, multi-resolution, lazy-loading, dimensions enforced.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Page using Google Fonts via `<link>` has slow LCP and noticeable layout shift on first load. Fix?",
+      "choices": [
+        { "id": "a", "text": "Use system fonts only." },
+        { "id": "b", "text": "Switch to `next/font/google` — downloads the font at build time, self-hosts on your domain (no third-party request), inlines critical font CSS (eliminates flash of unstyled text), subsets to characters used (smaller bundle), preloads automatically. `import { Inter } from 'next/font/google'`; specify `subsets: ['latin']` and only the `weight` array you use. Pair with `display: 'swap'` (default) to prevent invisible text. Zero external font requests, zero layout shift from font loading, optimal CWV scores." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add `display=swap` to the link." }
+      ],
+      "correct_answer": "b",
+      "explanation": "next/font self-hosts, subsets, preloads — eliminates third-party requests and layout shift.",
+      "points": 1
+    }
+  ]
+}

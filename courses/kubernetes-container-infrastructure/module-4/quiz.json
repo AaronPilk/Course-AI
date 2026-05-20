@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Storage, security, and configuration",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `volumeBindingMode: WaitForFirstConsumer` instead of `Immediate` for cloud-provider storage?",
+      "choices": [
+        { "id": "a", "text": "It's faster." },
+        { "id": "b", "text": "Cloud volumes (EBS, Azure Disk, GCP PD) are AZ-scoped — only attachable in the same AZ. With `Immediate`, the volume is provisioned when the PVC is created, possibly in a different AZ from where the Pod will eventually be scheduled. Result: Pod stays Pending because the volume can't attach. With `WaitForFirstConsumer`, the PVC stays Pending until a Pod is scheduled; the provisioner sees the Pod's target AZ and creates the volume there. This is the right default for any AZ-scoped storage and avoids a common surprise." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random preference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "WaitForFirstConsumer avoids AZ mismatch between volume and Pod. Standard default for cloud-volume StorageClasses.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "What's the recommended pattern for AWS API access from Pods on EKS?",
+      "choices": [
+        { "id": "a", "text": "Long-lived access keys as Secrets." },
+        { "id": "b", "text": "IRSA (IAM Roles for Service Accounts). Create an IAM role with required permissions, annotate the ServiceAccount with the role ARN, and Pods using that SA automatically get temporary AWS credentials via the SDK's credential chain. No long-lived AWS keys in the cluster, no rotation overhead, per-workload roles for least privilege, full CloudTrail audit. The old pattern of storing AWS access keys as Kubernetes Secrets has been superseded — those keys don't rotate, can leak via any Secret-read path, and offer no audit visibility. GKE has Workload Identity; AKS has Azure AD workload identity. Federated identity is the modern standard for K8s-to-cloud access across all major clouds." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardcode in image." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IRSA replaces long-lived AWS keys with temporary credentials per ServiceAccount. Standard for EKS in 2026.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why should production Pods run as non-root with dropped capabilities and a read-only root filesystem?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Container isolation is thinner than VM isolation. A container compromise as root with full capabilities can install attack tools, modify the filesystem, attempt container escape via kernel exploits. The same compromise in a container running as non-root with dropped capabilities, read-only root filesystem, and seccomp restrictions can do dramatically less. Pod Security Standards 'restricted' enforces these protections at the namespace level — non-compliant Pods can't be created. Combined with image scanning (catch known vulns), admission controllers (custom policy), and runtime security (Falco detects anomalies post-deploy), this is defense in depth. Each layer prevents a class of attacks; the combination is what makes the cluster genuinely defensible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by K8s." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Non-root + dropped capabilities + read-only FS reduces blast radius on compromise. PSS 'restricted' is the production posture.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "What's the production-grade pattern for managing K8s secrets?",
+      "choices": [
+        { "id": "a", "text": "Base64 in git." },
+        { "id": "b", "text": "External secret store (AWS Secrets Manager, HashiCorp Vault, GCP Secret Manager) as source of truth; External Secrets Operator (ESO) syncs them into Kubernetes Secrets; Pods consume K8s Secrets normally. Real secrets are encrypted with KMS, rotated automatically, audited per-read, accessible across environments via proper IAM. ESO with IRSA fetches them and creates K8s Secrets per namespace. Rotation in the external store propagates via ESO automatically. The K8s Secret is runtime delivery; the external store is governance. This pattern gives encryption, rotation, audit, and cross-environment access that K8s Secrets alone don't provide. The legacy pattern (Secrets in git, even base64-encoded) leaks through repo history, laptop clones, and overly-permissive access." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Image layers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "External store + ESO + IRSA is the production-grade secret pattern. Secrets in git is leak-prone and inferior on every operational axis.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why doesn't a ConfigMap update automatically reload in a Pod?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes bug." },
+        { "id": "b", "text": "Depends on consumption pattern. ConfigMaps mounted as env vars don't update — env vars are set at Pod startup and don't change. ConfigMaps mounted as volumes do update (with a delay), but the application has to actively re-read the files. Fix options: (1) mount as volume + app-level file reload; (2) restart the Deployment when ConfigMap changes (`kubectl rollout restart deployment/web`); (3) use versioned ConfigMap names so updates force Deployment update, triggering rolling restart automatically; (4) install Reloader, an open-source controller that watches ConfigMaps and Secrets and restarts referencing Deployments on change. For most workloads, restart on config change is acceptable; for rotation-critical secrets (DB passwords with strict TTL), app-level hot reload from mounted files. Pick a reload strategy and apply it consistently — the 'I changed the config and nothing happened' surprise is one of the most common K8s gotchas." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random behavior." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Env-var ConfigMaps don't auto-reload; mounted volumes do (with delay). Choose your reload strategy explicitly.",
+      "points": 1
+    }
+  ]
+}

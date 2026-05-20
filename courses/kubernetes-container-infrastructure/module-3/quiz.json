@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Kubernetes networking",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the CNI (Container Network Interface) plugin do?",
+      "choices": [
+        { "id": "a", "text": "Provides DNS." },
+        { "id": "b", "text": "Implements the Kubernetes network model: every Pod gets a unique IP, all Pods reach each other without NAT, all Nodes reach all Pods, the Pod's perceived IP matches what others see. Different CNI implementations satisfy this contract differently — AWS VPC CNI assigns real VPC IPs (underlay), Cilium uses eBPF, Calico uses BGP routing, Flannel uses VXLAN overlay. You pick a CNI at cluster creation; it usually just works for most workloads. Service routing sits on top of CNI (via kube-proxy or eBPF). Understanding the CNI matters for capacity planning (IP space on AWS), performance tuning, and troubleshooting connectivity issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CNI provides Pod networking. The plugin choice affects capacity, performance, and features but the network contract is the same.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why does running 30 LoadBalancer Services on AWS get expensive?",
+      "choices": [
+        { "id": "a", "text": "It doesn't." },
+        { "id": "b", "text": "Each LoadBalancer Service provisions a separate cloud LB (~$16-30/month each on AWS plus per-LCU charges). 30 microservices = $750+/month just in LBs, before traffic. The standard fix is one Ingress controller (NGINX, AWS Load Balancer Controller) with one or a few LBs that route paths/hosts to many internal ClusterIP Services. Same external surface, dramatically less cost. Plus Layer 7 features (path-based routing, host-based routing, TLS termination, header manipulation) that LoadBalancer Services don't provide. LoadBalancer-per-Service is right for non-HTTP services or where each service needs a dedicated LB; Ingress is right for HTTP microservices." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random pricing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "One LB per Service is expensive at scale. Ingress + ClusterIP Services + one LB is the standard pattern.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does a gRPC client sending many requests to a Service hit only one Pod?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes bug." },
+        { "id": "b", "text": "HTTP/2 connection multiplexing. gRPC uses HTTP/2 which multiplexes many requests over a single long-lived connection. When the client opens a connection to the Service's ClusterIP, kube-proxy routes that connection to one specific Pod — for the connection's lifetime. All subsequent requests on the same connection arrive at the same Pod. The Service routes connections, not individual requests. Fixes: use a headless Service so the client gets a list of Pod IPs and does client-side load balancing; or use a service mesh where sidecar proxies load-balance request-by-request; or configure the gRPC client with a load-balancing policy that periodically reconnects. The default Service behavior is fine for HTTP/1.1 (short connections) and most modern HTTP/2 setups with proper client configuration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HTTP/2 multiplexing + connection-level Service routing = one Pod gets everything on a connection. Fix at client side or via service mesh.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A team applies default-deny NetworkPolicy and services start failing with DNS resolution errors. Why?",
+      "choices": [
+        { "id": "a", "text": "DNS is broken." },
+        { "id": "b", "text": "Forgot to allow DNS in the deny-all policy. Pods resolve names via CoreDNS in kube-system on UDP/TCP port 53. Default-deny egress blocks that traffic. Fix: pair default-deny with an allow-DNS policy that permits port 53 to kube-system. This is one of the most common NetworkPolicy gotchas. Always have a baseline 'allow essential cluster services' policy alongside default-deny in every namespace. Test deny-all rollouts in staging — many silently-required traffic flows surface during that exercise (cluster DNS, observability scrapers, log forwarders, metric collectors). Production rollout should be gradual per namespace with monitoring." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Always allow DNS in deny-all NetworkPolicies. Forgetting this is the classic NetworkPolicy bug; results look like 'DNS is broken' but actually it's policy.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the standard pattern for TLS certificate management in production Kubernetes?",
+      "choices": [
+        { "id": "a", "text": "Manual renewal every 90 days." },
+        { "id": "b", "text": "cert-manager + Let's Encrypt (or ACM for AWS-specific deployments). Install cert-manager in the cluster; configure a ClusterIssuer pointing at Let's Encrypt ACME servers; create Certificate resources for each domain. cert-manager handles the ACME challenge, issues the cert, writes a Kubernetes Secret with the cert and key, and Ingress resources reference that Secret. Renewal is automatic — well before expiration. No more 'we forgot to renew' incidents. For AWS-specific deployments, ACM (AWS Certificate Manager) integrates with the AWS Load Balancer Controller — reference cert ARNs from Ingress annotations and AWS handles everything. Manual cert renewal is a 2015 pattern that produces avoidable production outages." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Self-signed certs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "cert-manager + Let's Encrypt for portable K8s; ACM for AWS-specific. Both handle issuance and rotation automatically. Manual cert management is a recipe for outages.",
+      "points": 1
+    }
+  ]
+}

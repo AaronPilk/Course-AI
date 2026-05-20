@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Email auth flows",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between magic link and OTP code flows?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Magic link: user clicks a one-tap link in email; the link contains a token that authenticates them when followed. Lower friction but requires opening the email on the device they want to sign in on, and some email providers flag the links. OTP code: user enters a 6-digit code from email; works universally across devices (sign in on desktop using code from phone) and survives email-provider weirdness, but adds the friction of copying a code. Many apps offer both — magic link for desktop, OTP fallback for mobile or sign-in-from-another-device cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different prices." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Magic link = click; OTP = enter code. Different friction/universality trade-offs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Production app sending confirmation emails. Stuck in spam folders. Cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Random." },
+        { "id": "b", "text": "Default Supabase SMTP has low rate limits and weaker sender reputation than dedicated providers. Set up custom SMTP via SendGrid, Postmark, Resend, or AWS SES with proper SPF, DKIM, and DMARC records on your sending domain. Use branded custom email templates (Auth → Email Templates) so emails look like your app, not generic Supabase. Monitor bounce rates and remove invalid addresses promptly — high bounces hurt sender reputation. For high-volume apps this is non-negotiable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Send more emails." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Custom SMTP + SPF/DKIM/DMARC + branded templates + bounce monitoring.",
+      "points": 1
+    }
+  ]
+}

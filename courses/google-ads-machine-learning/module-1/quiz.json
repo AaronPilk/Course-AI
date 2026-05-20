@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: How the modern auction works",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What determines Ad Rank?",
+      "choices": [
+        { "id": "a", "text": "Highest bid." },
+        { "id": "b", "text": "Bid combined with ad quality (expected CTR, ad relevance, landing-page experience, history), Ad Rank thresholds, user context (device/location/time/intent/audience signals), and expected impact of assets/formats. Bid alone hasn't been dominant since 2002. A lower bid with strong quality and context routinely outranks a higher-bid weaker ad — Google's ML predicts the higher-quality ad will produce a better user experience." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Account spend." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bid + quality + context + asset impact, not bid alone.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "E-commerce with varied AOV, 80 value-attributed conversions/month. Which bid strategy?",
+      "choices": [
+        { "id": "a", "text": "Maximize Clicks." },
+        { "id": "b", "text": "Target ROAS. Varied AOV means buying a $50 product vs a $500 product is a different signal — tROAS bids more aggressively on auctions predicted to drive high-value conversions and less on low-value ones. 80 value-attributed conversions/month is above the 50-conv/30-day threshold the system needs for reliable predictions. Set the target near current achieved ROAS (e.g., if hitting 3x set 3-3.3x), not aspirational; aspirational targets starve volume." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual CPC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "tROAS for varied-AOV e-commerce with conversion volume above threshold.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does manual CPC underperform Smart Bidding for most accounts?",
+      "choices": [
+        { "id": "a", "text": "Slower interface." },
+        { "id": "b", "text": "Manual sets one bid per keyword applied to every auction — context-blind. Smart Bidding sets a different bid for each auction based on per-impression context (user, query intent, device, time, audience signals, conversion history). It uses signals manual can't access at the per-auction level. Clean migrations typically report 15-30% efficiency improvements after the learning phase settles. Manual still wins for tiny accounts with no conversion volume or specific regulated environments — not for typical performance accounts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual costs more." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Per-impression contextual bidding beats one-bid-per-keyword.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Account on manual for years, switching to Smart Bidding. Right sequence?",
+      "choices": [
+        { "id": "a", "text": "Tight tCPA day 1." },
+        { "id": "b", "text": "Audit conversion tracking first (Smart Bidding only works on clean signal). Record 30-day baseline CPA on manual or Max Clicks. Switch to Maximize Conversions for 14 days; note the new CPA the system finds. Switch to tCPA at new CPA + 10%; allow 7-14 day learning. Then tighten target 10-15% every 14 days until the efficient frontier where lowering more crushes volume. Jumping straight to tight tCPA combines learning shock with aggressive target — bad early data leads to bad decisions and false 'Smart Bidding doesn't work' conclusions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip tracking audit." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracking → Max Conversions → tCPA at baseline +10% → tighten in steps.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Smart Bidding optimizes toward...?",
+      "choices": [
+        { "id": "a", "text": "All conversion events equally." },
+        { "id": "b", "text": "Only the conversion actions marked 'Include in Conversions' as primary. Adding Add to Cart and View Product as primary alongside Purchase means the system bids toward carters and viewers, not buyers — diluting optimization and inflating reported conversions while real revenue lags. For purchase-driven accounts: Purchase = primary, everything else = secondary (visible in reporting, useful for audiences, not optimized). Pick the real outcome you want and exclude the upstream events from primary." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random events." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Only primary conversions drive optimization. Pick the real outcome.",
+      "points": 1
+    }
+  ]
+}

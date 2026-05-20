@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Scaling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does 2x'ing budget overnight break performance?",
+      "choices": [
+        { "id": "a", "text": "Google penalty." },
+        { "id": "b", "text": "Triggers Smart Bidding's learning-phase reset. Big budget jumps register as structural change; the algorithm re-enters 7-14 days of unstable bidding while it re-stabilizes. Even after learning clears, the system now has to find users at higher daily spend in the same audience pool — frequency rises, marginal users have lower conversion probability. Combined: spike CPA, broken ROAS. Clean pattern: +20% per 5-7 days while CPA holds; switch to horizontal expansion when vertical caps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Big budget jumps trigger learning reset and force the system into weaker audience.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Search Lost IS (budget) is high; Search Lost IS (rank) is low. What does that tell you?",
+      "choices": [
+        { "id": "a", "text": "Pause the campaign." },
+        { "id": "b", "text": "Budget-constrained, not rank-constrained. You're winning the auctions you enter but running out of budget before capturing more impressions. Raise budget (within the 20% rule per 5-7 days) to capture more of the available pool. If you raised rank target instead (tCPA up or tROAS down), you'd just pay more for impressions you were already winning. The Lost IS diagnostic split is the cleanest signal for whether to scale via budget or via bid target." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower the budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lost IS (budget) = raise budget. Lost IS (rank) = raise bid target.",
+      "points": 1
+    }
+  ]
+}

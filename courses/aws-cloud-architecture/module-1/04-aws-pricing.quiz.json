@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: AWS pricing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most notorious source of 'surprise' AWS bills?",
+      "choices": [
+        { "id": "a", "text": "EC2 instance prices going up." },
+        { "id": "b", "text": "Data transfer out to the internet, plus its cousins (cross-region transfer, NAT Gateway processing charges, accumulated unattached EBS volumes and snapshots). At roughly $0.09/GB to the internet from us-east-1, a workload doing 100 TB/month of egress generates $9,000/month in transfer charges alone — separate from any compute. NAT Gateways charge $0.045/hour plus $0.045/GB processed, which adds up for high-throughput private subnets. Cross-region replication doubles storage and adds transfer cost. EBS volumes from terminated EC2 instances keep billing if not explicitly deleted, and snapshot lineage accumulates indefinitely. The pattern: AWS bills you per-byte for things that feel free in most contexts, and small per-byte costs become large monthly bills at scale. Mitigation requires monitoring, tagging, lifecycle policies, VPC endpoints to bypass NAT for AWS service traffic, CloudFront for cheaper internet egress, and regular cleanup of unused resources." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lambda function durations." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Data transfer is the canonical AWS billing surprise. It's not usually one line item — it's lots of small things adding up. Defending against it requires architectural awareness (VPC endpoints, CloudFront) plus operational hygiene (cleanup, monitoring).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team's EC2 spend is high. They consider buying Reserved Instances. What should they do first?",
+      "choices": [
+        { "id": "a", "text": "Buy 3-year RIs immediately." },
+        { "id": "b", "text": "Right-size and clean up before committing. The cost-optimization order is: (1) Terminate unused — dev instances running 24/7, orphaned resources, instances created for one-off tasks and never deleted; (2) Right-size — many instances are over-provisioned because the team picked sizes conservatively without measuring; CloudWatch shows actual CPU/memory utilization. Reducing from t3.xlarge to t3.large when utilization is 15% saves immediately. (3) Then buy Savings Plans or RIs for the resulting steady-state. Buying RIs before cleanup commits you to paying for capacity you didn't need; you save 30% but on 2x the necessary compute. After cleanup, the RI commitment matches actual usage and savings compound. Many teams skip the cleanup step because RI purchases feel like obvious wins; the real win is the combined effect of right-sizing first, then committing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to Azure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost optimization has an order: clean up first (immediate savings), then commit (steady savings). Committing before cleaning up locks in wasted capacity.",
+      "points": 1
+    }
+  ]
+}

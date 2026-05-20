@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Ad Rank",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What determines Ad Rank in the modern Google Ads auction?",
+      "choices": [
+        { "id": "a", "text": "Highest bid wins." },
+        { "id": "b", "text": "Bid combined with ad quality (multi-component prediction: expected CTR, ad relevance, landing-page experience, history), Ad Rank thresholds, user context (device/location/time/intent/audience signals), and expected impact of assets/formats. A $5 bid with quality 9 routinely outranks a $15 bid with quality 4 — Google's ML predicts the higher-quality ad will produce a better user experience and more clicks, so it wins position at lower bid." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bid + quality + context + asset impact. Bid alone hasn't won since 2002.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account spends time setting manual device, location, and time-of-day bid adjustments. Performance below benchmarks. Suspect cause?",
+      "choices": [
+        { "id": "a", "text": "Bids not high enough." },
+        { "id": "b", "text": "Fighting the system. In the Smart Bidding era, context (device/location/time/intent) is handled automatically — the algorithm adjusts per impression based on conversion probability at that moment. Manual bid adjustments overlay another signal that often contradicts what Smart Bidding learned. Remove the manual adjustments (or set them to 0%) so Smart Bidding can operate cleanly. Focus on what you do control: conversion tracking, audience signals, creative variety, and Smart Bidding targets." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more manual adjustments." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Manual context adjustments fight Smart Bidding. Remove and let the system handle context.",
+      "points": 1
+    }
+  ]
+}

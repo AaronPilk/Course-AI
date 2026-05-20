@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Why GPUs",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most useful framing of when to reach for a GPU vs. a CPU?",
+      "choices": [
+        { "id": "a", "text": "GPU when speed matters, CPU when it doesn't." },
+        { "id": "b", "text": "GPU when the workload is data-parallel (same operation on lots of independent data, like matrix math or image processing), arithmetic-heavy, and large enough to amortize PCIe transfer and kernel launch overhead. CPU when the workload is sequential, branchy, latency-critical, or so small that overhead dominates. The decision is workload-shape-driven, not 'speed' in general. A CPU is faster than a GPU for a single small calculation; a GPU is dramatically faster than a CPU for batch matrix multiplications. Knowing the shape of your workload determines the right tool." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always GPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workload shape is the question. Embarrassingly parallel + arithmetic-heavy + large enough = GPU wins. Anything else, CPU is often the right answer.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An LLM inference team reports GPU compute utilization at 25% but memory bandwidth utilization at 95%. What does this tell you about the workload?",
+      "choices": [
+        { "id": "a", "text": "Buy more GPUs." },
+        { "id": "b", "text": "It's memory-bandwidth-bound, not compute-bound. The decode phase of LLM inference reads the full model weights from memory for each generated token but performs relatively little compute per byte loaded — low arithmetic intensity. Compute units sit idle waiting for memory. Adding more GPUs doesn't help because each one is just as memory-bound. The fix is increasing arithmetic intensity: larger batch sizes (amortize weight reads across queries), KV-caching, speculative decoding, quantization (smaller weights = less memory traffic), or fused kernels that reuse data through registers/shared memory. The roofline model predicts exactly this pattern." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to JavaScript." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Roofline analysis in production. Memory-bound workloads don't benefit from more compute. The optimizations that help are about data reuse and arithmetic intensity, not raw FLOPs.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why do branches that diverge within a warp cause performance problems?",
+      "choices": [
+        { "id": "a", "text": "Compiler bugs." },
+        { "id": "b", "text": "SIMT hardware shares one instruction fetcher across 32 threads in a warp. If some threads take an `if` branch and others take the `else` branch, both paths must execute serially — first the if-path runs with else-threads masked off, then the else-path runs with if-threads masked off. Total wall-clock cost is the sum of both paths, not the maximum. Heavily divergent code can run 5-10x slower than convergent code where all threads in a warp take the same path. The fix is restructuring data so threads in the same warp tend to take the same branch, or moving the divergent decision to a different level (separate kernels, sorted data, etc.)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random scheduling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Branch divergence is the signature SIMT performance bug. The serialization cost is fundamental to the hardware design, not a bug. Convergent code is the goal.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why did NVIDIA's 2007 bet on CUDA become a structural advantage by the 2020s?",
+      "choices": [
+        { "id": "a", "text": "Random luck." },
+        { "id": "b", "text": "Compound effects of ecosystem lock-in. CUDA launched with no obvious application beyond graphics-adjacent compute, but NVIDIA invested heavily in compilers, libraries (cuBLAS, cuDNN), and developer tools regardless. When deep learning took off in 2012-2017, CUDA was already the most mature general-purpose GPU programming platform. Researchers wrote CUDA-targeted code; frameworks like PyTorch and TensorFlow defaulted to CUDA backends; production systems built on CUDA libraries. Each year of CUDA-first development made the moat deeper. By 2024, switching off CUDA requires porting kernels, validating framework support, accepting performance gaps, and tolerating tooling immaturity — costs most teams won't pay. The lesson: platform bets that look premature can become structural if the underlying capability is real and you're patient." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brand recognition." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Software ecosystems compound. NVIDIA's CUDA bet looked premature for 15 years and then suddenly was the only viable foundation for the AI era. The hardware advantage is real; the software ecosystem advantage is larger.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the correct block size choice for a CUDA kernel and why?",
+      "choices": [
+        { "id": "a", "text": "Always 1024 threads." },
+        { "id": "b", "text": "Always 1 thread." },
+        { "id": "c", "text": "A multiple of 32 (the warp size), typically 128, 256, or 512 threads. Multiples of 32 ensure no warp slots are wasted — a block of 100 threads still occupies 4 warps (128 thread slots) with 28 idle slots per warp executing no-ops. Common defaults like 256 work well for most kernels because they balance occupancy (more blocks per SM = more latency hiding) against per-block resource usage (registers, shared memory). The actual optimal value depends on the kernel: occupancy-bound kernels prefer smaller blocks; kernels that benefit from heavy shared-memory cooperation use larger blocks. But 256 is a safe starting point that gets reasonable performance for most workloads. Then profile with Nsight if you need more." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Block size is a tunable that interacts with warps, occupancy, and resources. Multiples of 32 are mandatory to avoid waste; 128-512 is the typical sweet spot. Profile to refine.",
+      "points": 1
+    }
+  ]
+}

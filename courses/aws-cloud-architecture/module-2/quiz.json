@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Core compute and storage",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should EC2 instances use IAM roles instead of long-term access keys?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic preference." },
+        { "id": "b", "text": "Security and rotation. IAM roles provide temporary, automatically-rotated credentials via the EC2 metadata service that AWS SDKs use transparently. Access keys are long-term credentials that don't expire automatically — if leaked (via SSH access, a compromised process, accidental commit to a repo), the attacker has indefinite access until manually rotated. Roles also enable per-workload least privilege without the hassle of creating and rotating keys per use case. Modern EC2 metadata service (IMDSv2) uses session-token auth to prevent SSRF attacks. Long-term access keys on EC2 are a 2015-era pattern that produces avoidable security incidents." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by AWS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Temporary credentials via roles is the modern pattern. Long-term keys on instances are an anti-pattern that produces preventable incidents.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An S3 bucket with 50 TB of accumulated logs costs $1100/month. What's the simplest cost optimization?",
+      "choices": [
+        { "id": "a", "text": "Delete everything." },
+        { "id": "b", "text": "Add a lifecycle policy that transitions old objects to cheaper storage classes and eventually expires them. Standard storage at ~$0.023/GB/month is ~20-25x more expensive than Glacier Deep Archive at ~$0.00099/GB/month. A policy like '30 days in Standard, 90 days in Standard-IA, 1 year in Glacier Flexible, expire after 5 years' moves objects through cheaper tiers as they age. For logs and similar predictable-decay data, this often drops costs by 90%+ with no application changes — same data, same retrieval (when needed), just placed in cheaper storage as it ages. For 50 TB of logs, this might drop the monthly cost from $1100 to ~$60. Set lifecycle policies on any data with predictable access patterns; retrofit them on accumulated data." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Move to Azure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lifecycle policies are one of the highest-leverage S3 optimizations. Set them up early; retrofit them on accumulated data.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When should you use instance store rather than EBS for a workload?",
+      "choices": [
+        { "id": "a", "text": "Always — instance store is free." },
+        { "id": "b", "text": "Use instance store for ephemeral, performance-critical scratch data — Spark shuffle space, Cassandra/Aerospike nodes with built-in replication, local caches, CI build workspaces. Instance store sits physically on the host (very fast, GB/s throughput, hundreds of thousands of IOPS) and costs nothing extra beyond the instance itself, but the data is lost the moment the instance stops, terminates, or the underlying hardware fails. Use EBS for anything that must survive instance lifecycle events: root volumes, database storage without built-in replication, application data, anywhere data loss would matter. The mistake to avoid is putting persistent application data on instance store — works great until the first instance failure, after which the data is gone forever." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Instance store is ephemeral by design. Free and fast where ephemerality is acceptable; never for persistent data.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A web app cluster of 10 EC2 instances serves user-uploaded images. The team considers EFS for shared file storage. Better option?",
+      "choices": [
+        { "id": "a", "text": "EFS is correct." },
+        { "id": "b", "text": "S3 + CloudFront. EFS would technically work — all 10 instances mount the file system and read/write shared. But it costs ~$0.30/GB/month vs. S3 Standard at ~$0.023/GB/month, requires NFS mount management, and doesn't scale as elegantly as object storage. The cleaner architecture: uploads go directly to S3 via pre-signed URLs (no app server traffic for the upload itself), images served via CloudFront for edge caching and low latency, the application stores S3 keys in the database. Costs a fraction of EFS, scales infinitely, integrates with CDN, no file-system semantics to manage. EFS is appropriate for legacy apps that require POSIX file-system semantics or for specific workloads (shared HPC scratch, certain container patterns). For greenfield web apps storing user uploads, S3 is almost always the right choice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sync EBS volumes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default to S3 for shared, immutable, web-accessible data. EFS is for legacy apps or specific POSIX requirements.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When does Lambda stop being cheaper than running containers on Fargate or EC2?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When traffic is sustained and high-throughput. Lambda's per-invocation pricing ($0.20 per million requests + GB-second compute) is dramatically cheaper than always-on EC2 for sporadic or variable workloads — a scheduled daily job runs for pennies vs. tens of dollars for a 24/7 t3.nano. But at sustained high traffic (thousands of requests per second around the clock), the per-invocation pricing adds up faster than the equivalent Fargate or EC2 compute. The crossover varies by workload shape but typically lands somewhere around 1000-10000 sustained RPS depending on duration per request. Plus Lambda's other constraints (15-minute timeout, 10 GB memory cap, no GPU, cold starts) make it unsuitable for some workloads regardless of cost. Decision: Lambda for variable/event-driven/sporadic. Fargate for sustained containerized workloads. EC2 when you need specialized control or runtime. The right answer depends on the actual traffic shape, not blanket preference." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random threshold." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Each AWS compute service has a sweet spot. Lambda is great for sporadic/event-driven. Fargate for sustained containers. EC2 for specialized control. Pick based on workload shape, not preference.",
+      "points": 1
+    }
+  ]
+}

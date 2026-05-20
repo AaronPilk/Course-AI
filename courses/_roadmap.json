@@ -43,7 +43,9 @@
       "slug": "nvidia-cuda-gpu-programming",
       "title": "NVIDIA CUDA & GPU Programming Simplified",
       "category": "Engineering",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://docs.nvidia.com/cuda/",
         "https://developer.nvidia.com/cuda-zone",
@@ -177,7 +179,9 @@
       "slug": "aws-cloud-architecture",
       "title": "AWS Cloud Architecture for Beginners",
       "category": "Cloud",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://aws.amazon.com/whitepapers/",
         "https://docs.aws.amazon.com",
@@ -190,7 +194,9 @@
       "slug": "kubernetes-container-infrastructure",
       "title": "Kubernetes & Container Infrastructure",
       "category": "Infrastructure",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://kubernetes.io/docs/home/",
         "https://kubernetes.io/blog/",
@@ -201,7 +207,9 @@
       "slug": "docker-deep-dive",
       "title": "Docker Deep Dive",
       "category": "Infrastructure",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://docs.docker.com",
         "https://www.docker.com/blog/"
@@ -211,7 +219,9 @@
       "slug": "meta-ads-algorithm",
       "title": "Meta Ads Algorithm & Optimization Systems",
       "category": "Advertising",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://www.facebook.com/business/help",
         "https://www.facebook.com/business/learn"
@@ -221,7 +231,9 @@
       "slug": "google-ads-machine-learning",
       "title": "Google Ads Machine Learning Systems",
       "category": "Advertising",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://support.google.com/google-ads",
         "https://skillshop.withgoogle.com"
@@ -229,16 +241,20 @@
     },
     {
       "slug": "supabase-full-stack",
-      "title": "Supabase Full Stack Backend Engineering",
+      "title": "Supabase Full Stack Development",
       "category": "Backend",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://supabase.com/docs"]
     },
     {
       "slug": "nextjs-full-stack",
       "title": "Next.js Full Stack Development",
       "category": "Web",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://nextjs.org/docs"]
     },
     {

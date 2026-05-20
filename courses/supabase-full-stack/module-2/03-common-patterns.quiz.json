@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: RLS patterns",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How do you make a table append-only via RLS?",
+      "choices": [
+        { "id": "a", "text": "Set table to read-only." },
+        { "id": "b", "text": "Define an INSERT policy (with appropriate WITH CHECK to validate ownership/team) and optionally a SELECT policy. OMIT UPDATE and DELETE policies entirely. With RLS enabled and no UPDATE/DELETE policies, those operations are denied for non-service-role users. The table accepts new rows but no one can modify or remove them — audit trails, transaction history, immutable logs. Database-enforced immutability." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Set columns to read-only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Omit UPDATE/DELETE policies; RLS denies them by default.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building Google-Docs-style sharing — owner full access, specific other users granted view/edit. RLS approach?",
+      "choices": [
+        { "id": "a", "text": "Single 'public to all' policy." },
+        { "id": "b", "text": "Create a `document_shares` join table with (document_id, shared_with_user_id, permission). On the documents table: 'Owner full access' policy using `owner_id = auth.uid()`; 'Shared users can view' policy using EXISTS check on document_shares; 'Shared editors can update' policy with permission = 'edit' check. Index document_shares(shared_with_user_id, document_id) for fast policy lookups. Composable, follows access changes automatically as you add/remove rows from the share table." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Store ACLs in JSONB." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Join table + EXISTS check in policies. Clean and indexable.",
+      "points": 1
+    }
+  ]
+}

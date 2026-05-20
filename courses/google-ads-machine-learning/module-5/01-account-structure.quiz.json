@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Account structure",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Minimum viable structure for a single-product DTC e-commerce brand?",
+      "choices": [
+        { "id": "a", "text": "1 campaign per keyword." },
+        { "id": "b", "text": "4-6 campaigns: Brand Search (exact match, separate budget, captures branded queries before PMax), 1-2 Non-brand Search (high-intent keywords, broad + phrase with negatives), 1-2 PMax (cross-surface acquisition with asset groups by audience or product line), 1 Demand Gen (top-of-funnel video), and retargeting usually folded into PMax via audience signals. Fewer campaigns = each ad set reaches learning threshold; consolidated signal; less audience overlap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "30+ campaigns." }
+      ],
+      "correct_answer": "b",
+      "explanation": "4-6 campaigns: Brand + Non-brand Search + PMax + Demand Gen.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account has 30 ad groups each with 1 keyword and a dedicated campaign. Performance poor. What to do?",
+      "choices": [
+        { "id": "a", "text": "Add more ad groups." },
+        { "id": "b", "text": "Consolidate aggressively. Single-keyword ad groups are a 2015 anti-pattern that starves Smart Bidding of conversion volume — each ad group sits below the 30-conv/30-day threshold and learning never stabilizes. Merge into 3-8 ad groups per campaign organized by intent or product category, each with 5-15 broad-match keywords. Move to a 4-6 campaign account structure (Brand + Non-brand Search + PMax + Demand Gen). Concentrating conversion signal at the ad-group level lets the algorithm finally bid accurately." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More keywords per ad group only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Consolidate to 3-8 ad groups/campaign, 5-15 keywords each. Concentrate signal.",
+      "points": 1
+    }
+  ]
+}

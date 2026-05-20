@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Schema design",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why UUIDs as primary keys for user-facing tables in Supabase?",
+      "choices": [
+        { "id": "a", "text": "Random preference." },
+        { "id": "b", "text": "Generated client-side (no server round-trip needed to know the ID), no information leakage (incrementing integers expose row counts), distributed-friendly (no collisions across regions or shards), and compatible with Supabase Auth's auth.users.id type. Default with `gen_random_uuid()` from pgcrypto. Exception: high-volume internal tables where bigint sequential IDs save storage and index size — but for user-facing data, UUIDs are the right default." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Postgres requires UUIDs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Client-generation, no leakage, distributed-safe, matches auth.users.id.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designing a `posts` table that needs a status field (draft, published, archived). Enum or lookup table?",
+      "choices": [
+        { "id": "a", "text": "Free-text column." },
+        { "id": "b", "text": "Use a Postgres enum (`create type post_status as enum (...)`). The set is stable, the values are type-safe and indexable, and the schema documents the allowed values explicitly. Lookup tables shine when values evolve frequently (tag categories, plan tiers that change with business decisions) — for those, the join cost is worth the flexibility. Status codes for posts are set-in-stone; enum is the cleaner choice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Store as JSON." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enum for stable sets; lookup table for evolving sets.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Persistent volumes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `volumeBindingMode: WaitForFirstConsumer` better than `Immediate` for cloud-provider volumes like EBS?",
+      "choices": [
+        { "id": "a", "text": "It's not — Immediate is faster." },
+        { "id": "b", "text": "Cloud volumes (EBS, Azure Disk, GCP PD) are AZ-scoped — they can only be attached to instances in the same AZ. With `Immediate` binding, the StorageClass provisioner creates the volume as soon as the PVC is created — possibly in a different AZ from where the Pod will eventually be scheduled. When the Pod is then scheduled to a different AZ, volume attachment fails, the Pod stays Pending, and you need to delete the PVC and start over. With `WaitForFirstConsumer`, the PVC stays in Pending state until a Pod is scheduled; the scheduler picks a Node (and AZ); the provisioner creates the volume in the same AZ as the Node. Attachment succeeds the first time. This is the right default for any AZ-scoped storage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random preference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "WaitForFirstConsumer avoids the AZ mismatch that plagues cloud-volume provisioning. Use it as the default for any AZ-scoped storage class.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team takes snapshots of their PVCs but has never tested restoration. During a real incident, they discover the snapshots can't be restored. What's the systemic fix?",
+      "choices": [
+        { "id": "a", "text": "Take more snapshots." },
+        { "id": "b", "text": "Test restoration regularly as part of operational practice. Snapshots that haven't been restored are unproven — until you've actually restored from one and verified data integrity, you don't know that the snapshot mechanism, the restore process, the IAM permissions, the storage class compatibility, and the application's behavior on restored data all work as expected. Schedule quarterly (or monthly for critical data) restoration drills: snapshot production, restore to a sandbox cluster or namespace, validate the restored data, document the procedure. Common issues that surface during drills: wrong region for snapshots, incompatible storage classes, missing IAM permissions, finalizers that block restore, application config that doesn't survive restore. Without regular drills, you discover all of these during real incidents — exactly the worst time. Treat backup testing as a recurring operational task, not a hopeful assumption. Tools like Velero help automate snapshot-and-restore workflows for K8s; AWS Backup integrates with EBS. Document the runbook so anyone on the team can execute it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy more storage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Untested backups are unproven backups. Quarterly restoration drills convert hopeful assumptions into known capabilities. Standard operational discipline.",
+      "points": 1
+    }
+  ]
+}

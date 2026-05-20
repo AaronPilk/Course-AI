@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Troubleshooting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "First thing to check when Smart Bidding looks broken?",
+      "choices": [
+        { "id": "a", "text": "Creative." },
+        { "id": "b", "text": "Tracking layer. Smart Bidding optimizes toward whatever you tell it counts — if pixel/Enhanced Conversions are firing inconsistently, wrong events are marked primary, values are wrong, or offline conversions aren't importing, the system reaches wrong conclusions. 80%+ of 'algorithm broken' cases are signal-quality problems. Run the tracking audit (Tag Assistant + Enhanced Conversions match rate + value spot-check + currency + DDA confirmation) before blaming the algorithm or making other changes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bid strategy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracking first. Most algorithm issues are actually signal issues.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Campaign has been in 'Learning' for 8 weeks. Why?",
+      "choices": [
+        { "id": "a", "text": "Bug." },
+        { "id": "b", "text": "Under-conversion. The campaign isn't accumulating enough conversions for Smart Bidding to learn from — likely fewer than 30 per 30 days for tCPA (50 for tROAS). Causes: budget too low for the natural CPA, optimization event too narrow, audience too restricted, or frequent changes resetting the clock. Solutions: switch to a higher-volume upstream event (InitiateCheckout instead of Purchase), consolidate campaigns/ad groups to concentrate signal, use Maximize Conversions until volume builds, raise budget, and stop making frequent changes during learning." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wait longer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Under 30 conv/30 days = never exits learning. Consolidate or shift event.",
+      "points": 1
+    }
+  ]
+}

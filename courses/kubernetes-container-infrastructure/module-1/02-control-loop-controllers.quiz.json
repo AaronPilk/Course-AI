@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Control loop and controllers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is `kubectl apply` idempotent — running it twice produces the same result as running it once?",
+      "choices": [
+        { "id": "a", "text": "kubectl deduplicates requests." },
+        { "id": "b", "text": "Because the Kubernetes API is declarative — you submit desired state, not commands. When you apply YAML, the API server stores it (overwriting the previous desired state if the object exists, creating it if not). The actual reconciliation toward that state is done by controllers, not by kubectl. Applying the same YAML twice sets the desired state to the same value both times; the second apply is a no-op from the cluster's perspective because there's nothing new to reconcile. This is fundamentally different from imperative scripts where 'run this script twice' might double-create resources or fail because the resource already exists. The declarative pattern makes apply safe to run repeatedly, makes git the source of truth, and enables GitOps workflows where applying YAML continuously converges the cluster toward what's in the repo." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Magic caching." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Declarative APIs are naturally idempotent. State the goal, not the steps. This is foundational to how Kubernetes works and to GitOps workflows built on it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You scale a Deployment from 3 to 10 replicas. New Pods stay in `Pending`. `kubectl describe pod` shows 'Events: Insufficient cpu'. What's happening?",
+      "choices": [
+        { "id": "a", "text": "Kubernetes is broken." },
+        { "id": "b", "text": "The scheduler can't find Nodes with enough CPU capacity to place the new Pods. You changed desired state (10 replicas); the Deployment controller created the new Pod objects; the scheduler tried to assign them to Nodes; none had enough free CPU based on requests vs. allocatable. The Pods sit in `Pending` until either Nodes become available (something terminates, or Cluster Autoscaler adds new Nodes), or you reduce the Pods' resource requests, or you scale back down. The fix depends on the situation: enable Cluster Autoscaler so K8s adds Nodes when needed; right-size the Pod resource requests (often over-provisioned by default); manually add Nodes; or accept fewer replicas. The control-loop pattern: you stated desired state; the cluster will eventually reach it when conditions allow, and tells you (via Events) what's blocking it in the meantime. No further action from you is needed beyond enabling capacity." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pending Pods waiting for capacity is a classic K8s pattern. The scheduler's job is placement; if it can't, the Pods wait. Events tell you why. Cluster Autoscaler is the standard answer.",
+      "points": 1
+    }
+  ]
+}

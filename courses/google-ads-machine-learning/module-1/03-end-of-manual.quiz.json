@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: End of manual bidding",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Smart Bidding outperform manual CPC for most accounts?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "Per-impression bid optimization. Manual sets one bid per keyword applied to every auction. Smart Bidding sets a different bid for each auction based on user-level context — query intent, device, time, audience signals, conversion history, browse behavior — and uses ML to predict conversion probability per impression. Plus it uses signals manual can't access at the per-auction level. Most clean migrations report 15-30% efficiency improvements after the learning phase settles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Per-impression bidding with rich signal beats one-bid-per-keyword.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account has been on manual CPC for years. Migrating to Smart Bidding. What sequence?",
+      "choices": [
+        { "id": "a", "text": "Switch to tight tCPA immediately." },
+        { "id": "b", "text": "Audit conversion tracking first (Smart Bidding only works on clean signal). Record 30-day baseline CPA. Switch to Maximize Conversions for 14 days; note new CPA. Switch to tCPA at the new CPA +10%, expect 7-14 day learning. Then tighten the target in 10-15% steps every 14 days until you find the efficient frontier. Jumping straight to tight tCPA combines learning-phase chaos with an aggressive target — bad early data and worse decisions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stay on manual." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tracking → Max Conversions → tCPA at baseline +10% → tighten in steps.",
+      "points": 1
+    }
+  ]
+}

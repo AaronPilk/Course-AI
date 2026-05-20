@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Architecture patterns",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the canonical three-tier web architecture on AWS?",
+      "choices": [
+        { "id": "a", "text": "EC2 + EC2 + EC2." },
+        { "id": "b", "text": "CloudFront/CDN at the edge, Application Load Balancer in public subnets, app compute (EC2 ASG / ECS / Lambda) in private subnets, and managed database (RDS / Aurora / DynamoDB) in private database subnets. Static assets in S3 served via CloudFront. User uploads go directly to S3 via pre-signed URLs (bypassing app servers). Async work goes through SQS queues to worker fleets. Secrets in Secrets Manager. All tiers span multiple AZs for high availability. This pattern covers most production web workloads — from simple APIs to complex SaaS — with variations based on specific needs. The discipline is making sure each tier is in its right place (databases never in public subnets, static content never served by app servers, async work never blocking user requests) and that multi-AZ is the baseline, not an afterthought." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "S3 + S3 + S3." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three tiers, each in its right place, multi-AZ, with proper offloading (static to CDN, uploads direct to S3, async work to queues). Variations exist but the core pattern fits most production workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An order service synchronously calls four downstream services (email, analytics, inventory, audit). Performance is poor and one downstream failure breaks orders. How to refactor?",
+      "choices": [
+        { "id": "a", "text": "Bigger instances." },
+        { "id": "b", "text": "Decouple via SNS or EventBridge fanout. Order service writes to its database and publishes an 'order placed' event — returns immediately to the user. Each downstream system subscribes via its own SQS queue and processes the event independently and asynchronously. Email service down? Orders still succeed, emails retry from queue when email recovers. Analytics slow? Doesn't affect order placement. New downstream system needed? Add a queue subscription without changing the order service. The fan-out pattern brings latency improvements (no waiting on downstream), resilience (one failure doesn't cascade), independent scaling per consumer, and extensibility. The cost is eventual consistency — analytics might lag actual orders by seconds — which is fine for most use cases. This pattern is universal: any time service A calls service B 'because A needs B to know something', that's a signal A should publish an event and let B subscribe." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Synchronous on bigger boxes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Event-driven decoupling is the structural fix for tightly-coupled service chains. The order service does its own work, publishes an event, lets the world react.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When is ECS Fargate the right container default for AWS workloads?",
+      "choices": [
+        { "id": "a", "text": "Never — always use Kubernetes." },
+        { "id": "b", "text": "For most teams running greenfield container workloads on AWS without existing Kubernetes investment. ECS is AWS's purpose-built orchestrator with a smaller surface area than EKS: simpler concepts (task definitions, services, clusters), tighter AWS-service integration (IAM task roles, ALB, CloudWatch, Secrets Manager work seamlessly), no K8s ecosystem to manage (no Helm charts, CRDs, operators, version churn). Fargate adds serverless containers — AWS picks hosts, you don't manage EC2 instances. The combination gets containers in production faster with less operational burden. Use EKS when your team already knows K8s deeply, when multi-cloud portability is a real requirement, when you need K8s-specific orchestration patterns, or when hiring matters (K8s skills are more transferable than ECS skills). Use ECS on EC2 (instead of Fargate) when you've outgrown Fargate's pricing premium and want Savings Plans on the underlying compute. The default for new AWS-only container workloads is ECS Fargate; EKS is for specific reasons, not prestige." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only for Windows containers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default to ECS Fargate for AWS-only container workloads. EKS for specific reasons (existing K8s, portability). Both are valid; choose based on your situation, not industry buzz.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why must SQS consumers be idempotent?",
+      "choices": [
+        { "id": "a", "text": "They don't need to be." },
+        { "id": "b", "text": "SQS guarantees at-least-once delivery, not exactly-once. A message may be delivered to consumers more than once: a consumer might process a message but crash before deleting it (leading to redelivery); network issues during delete-acknowledgment cause redelivery; visibility timeouts that expire before processing completes lead to redelivery. Without idempotency, retries produce duplicate side effects — duplicate emails sent to users, duplicate database rows inserted, duplicate charges to customer credit cards, duplicate notifications. Idempotent handlers produce the same result whether processed once or many times: 'set order status to shipped' is idempotent (multiple sets to the same value are equivalent to one); 'increment retry count by 1' is NOT idempotent. Techniques to achieve idempotency: use unique message IDs and a deduplication table to skip already-processed messages, use conditional updates (DynamoDB conditional writes prevent duplicate inserts), or design operations to be naturally idempotent where possible. This applies to SQS, SNS, EventBridge, Kinesis — any event-driven mechanism with at-least-once semantics, which is most of them. Idempotency isn't optional; it's a foundational distributed-systems requirement that event-driven systems make immediately visible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by SQS API." }
+      ],
+      "correct_answer": "b",
+      "explanation": "At-least-once delivery is the default in distributed messaging. Idempotent consumers handle it cleanly; non-idempotent consumers produce duplicate side effects that compound into real problems.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does 'well-architected' actually mean for a production workload on AWS?",
+      "choices": [
+        { "id": "a", "text": "Hitting every checkbox in the framework." },
+        { "id": "b", "text": "Conscious tradeoffs across the six pillars (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability) with the production baseline in place. The baseline: encryption at rest and in transit, IAM least-privilege, multi-AZ for HA, monitoring and alarms, infrastructure as code, automated deployments, backups taken and tested, incident response plans. Above the baseline, tradeoffs are workload-specific — a small SaaS doesn't need global multi-region; a global product probably does. A latency-sensitive API needs Provisioned Concurrency or always-on instances; a batch job doesn't. The framework gives you the vocabulary and structured questions to make those tradeoffs consciously instead of accidentally. The point isn't religious adherence to every recommendation — that produces over-engineered systems. The point is knowing the choices you've made and being able to defend them. A 'well-architected' workload at one scale isn't the same as at another scale; the framework adapts. Run a review at design time, before launch, annually for important workloads, and after incidents. Steady incremental improvement beats trying to perfect everything at once." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just having backups." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Well-architected is conscious tradeoffs with the baseline in place. Not checkbox adherence; not over-engineering. Production baseline plus workload-specific decisions made deliberately.",
+      "points": 1
+    }
+  ]
+}

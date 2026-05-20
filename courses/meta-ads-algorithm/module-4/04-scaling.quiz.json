@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Scaling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does 2x'ing budget overnight break performance?",
+      "choices": [
+        { "id": "a", "text": "Meta penalizes you." },
+        { "id": "b", "text": "Triggers learning-phase reset (large budget jumps register as structural change), so the ad set re-enters 4-7 days of unstable CPA. Even after reset clears, the algorithm now has to find users at higher daily spend in the same pool — frequency rises, audience saturates faster, marginal users have lower EAR. Combined effect: spike CPA, broken ROAS. Clean approach: 20-30% increments, 3-4 days between raises, watch CPA at each step; stop when CPA breaks." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random behavior." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Big budget jumps trigger reset and force the algorithm to find weaker users. Increment 20-30%.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Campaign capped — frequency rising, CPM climbing, CPA up 30%. Vertical scaling done. Next move?",
+      "choices": [
+        { "id": "a", "text": "Force more budget." },
+        { "id": "b", "text": "Horizontal scaling — capture new pool the existing campaign can't reach. Options: new geos (additional countries you can serve), new angles (different problem framings creating new creative), new offers (different price point or value-add), new placements you weren't fully using. Each new vehicle adds incremental pool without further saturating the original. Manage with CBO at the campaign level so budget moves toward whichever new campaign earns it. The original campaign holds at its capacity ceiling while overall account spend scales." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause the account." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vertical is capped; go horizontal with new geos / angles / offers / placements.",
+      "points": 1
+    }
+  ]
+}

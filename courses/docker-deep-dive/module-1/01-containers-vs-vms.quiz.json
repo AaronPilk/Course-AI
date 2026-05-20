@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Containers vs VMs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the structural difference between a container and a VM?",
+      "choices": [
+        { "id": "a", "text": "Containers are just smaller VMs." },
+        { "id": "b", "text": "A VM runs a full guest operating system on virtualized hardware — its own kernel, init, drivers — orchestrated by a hypervisor (KVM, ESXi, Hyper-V). A container is a process (or set of processes) running directly on the host kernel, isolated by Linux kernel features: namespaces (controlling what the process sees — filesystem, network, processes, users), cgroups (controlling what the process consumes — CPU, memory, I/O), capabilities, and seccomp. There's no virtualized hardware and no guest OS for a container. Consequences: containers start in milliseconds vs seconds-to-minutes for VMs; containers are 10-50x more dense per host; VM isolation is stronger because guest kernels are independent of the host. For trusted workloads (your own services), container isolation is fine and dramatically more efficient. For untrusted multi-tenant code, microVMs (Firecracker, Kata) or gVisor add stronger isolation while preserving most of containers' operational benefits. Calling containers 'lightweight VMs' is a useful initial intuition but technically wrong — they're a fundamentally different mechanism." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Containers = isolated processes on host kernel; VMs = virtualized hardware running guest OS. Different mechanisms, different tradeoffs. The distinction matters for security and operational decisions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A SaaS company wants customers to upload and run their own code on the platform. They consider plain Docker containers. Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — Docker is the standard." },
+        { "id": "b", "text": "Risky. Plain Docker containers share the host kernel; a malicious customer's container could potentially exploit kernel vulnerabilities to escape and affect other tenants. For trusted workloads (your own services), container isolation is sufficient. For untrusted code execution, you need VM-grade isolation: AWS Firecracker microVMs (what Lambda and Fargate use under the hood), Kata Containers (containers wrapped in microVMs), or gVisor (a user-space kernel that handles container syscalls). These provide isolation comparable to VMs while preserving container-like startup times and operational ergonomics. For a SaaS hosting customer code, the additional security is worth the complexity. The pattern is widely used — Lambda is the most common example. Plain Docker is appropriate for your own trusted services running on shared infrastructure; untrusted multi-tenant code execution requires stronger isolation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't allow customer code." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plain containers for trusted workloads; microVMs (Firecracker, Kata) or gVisor for untrusted code. Multi-tenant SaaS hosting customer code needs VM-grade isolation.",
+      "points": 1
+    }
+  ]
+}

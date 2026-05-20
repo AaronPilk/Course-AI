@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Ingress and Gateway API",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is one Ingress controller fronting many Services usually better than one LoadBalancer Service per microservice?",
+      "choices": [
+        { "id": "a", "text": "It's not — LoadBalancer per Service is best." },
+        { "id": "b", "text": "Cost, operational overhead, and Layer 7 routing capability. Each LoadBalancer Service provisions a separate cloud load balancer ($16-30/month each on AWS plus per-LCU charges). Fifty microservices = $1000+/month just in LBs, before traffic. An Ingress controller (NGINX, AWS Load Balancer Controller, etc.) uses one or a few cloud load balancers and routes HTTP traffic to many internal ClusterIP Services based on path and host. Same external surface; dramatically less cost and operational noise. Plus you get Layer 7 features that LoadBalancer Services don't have: path-based routing, host-based routing, TLS termination, header manipulation, canary weights, rate limiting. For HTTP/HTTPS workloads with multiple services, Ingress is the standard pattern. LoadBalancer Service remains right for non-HTTP services or cases where each service needs its own dedicated LB." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random architecture preference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ingress + ClusterIP Services + one LB is the standard pattern for HTTP microservices. LoadBalancer-per-Service is for specific cases where dedicated LBs are needed.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team manually renews TLS certificates every 90 days. They've missed renewal twice in the past year. What's the standard fix?",
+      "choices": [
+        { "id": "a", "text": "Set calendar reminders." },
+        { "id": "b", "text": "cert-manager + Let's Encrypt. Install cert-manager in the cluster; configure a ClusterIssuer pointing at Let's Encrypt ACME servers; create Certificate resources for each domain. cert-manager handles the ACME challenge (HTTP-01 or DNS-01), gets the cert, writes a Kubernetes Secret with the cert and key, and Ingress resources reference that Secret. Renewal is automatic — cert-manager monitors expiration and renews well before expiry. No more 'we forgot to renew' incidents. For corporate or internal CAs, cert-manager supports those issuers too via Issuer configuration. Setup is a one-time effort; ongoing operation requires no human attention. Manual cert renewal is a 2015 pattern that produces avoidable incidents in 2026. The combination of cert-manager + Ingress + ACME is now the industry-standard automation for K8s TLS. Worth noting: managed services (AWS Certificate Manager) integrate directly with cloud Ingress controllers (AWS Load Balancer Controller) — you can let ACM handle certs entirely and reference them by ARN. For pure K8s portability, cert-manager + Let's Encrypt. For AWS-only, ACM is also fine." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy more LBs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automated cert management is non-negotiable in 2026. cert-manager + Let's Encrypt for portable K8s; ACM for AWS-specific. Manual cert renewal is a recipe for outages.",
+      "points": 1
+    }
+  ]
+}

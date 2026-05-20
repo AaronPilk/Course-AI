@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: The four caches",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are Next.js's four caches?",
+      "choices": [
+        { "id": "a", "text": "Only one cache." },
+        { "id": "b", "text": "(1) Request memoization — dedupes identical fetch() calls within a single render pass; per-request, no manual invalidation needed. (2) Data cache — persists fetch results across requests/users/deployments until revalidation; invalidated by `cache: 'no-store'`, `next.revalidate`, or revalidateTag/Path. (3) Full route cache — caches rendered HTML for static routes; invalidated by revalidatePath or ISR. (4) Router cache — client-side cache of RSC payloads for visited routes; invalidated by router.refresh() or revalidation calls. Each layer has its own invalidation; debugging stale data starts by identifying which cache is serving the old version." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two caches." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Request memoization + data cache + full route cache + router cache.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Server Action ran, mutation succeeded, but the page still shows old data after redirect. Which cache is stale?",
+      "choices": [
+        { "id": "a", "text": "Router cache only." },
+        { "id": "b", "text": "Data cache (and consequently full route cache if the page is static). The Server Action mutated the database, but the cached fetch results still hold the old data. Fix: call `revalidatePath(path)` or `revalidateTag(tag)` in the Server Action BEFORE the redirect. This invalidates the data cache and full route cache; the next render fetches fresh data. The router cache also gets cleared on next navigation via the same call. Forgetting revalidation after mutations is the most common Next.js bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Request memoization." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Data cache still has old. Call revalidatePath/revalidateTag in the action.",
+      "points": 1
+    }
+  ]
+}

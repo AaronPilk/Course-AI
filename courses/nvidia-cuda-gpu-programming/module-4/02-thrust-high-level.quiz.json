@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Thrust and high-level abstractions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you choose raw CUDA C++ over a higher-level abstraction like Thrust, Triton, or CuPy?",
+      "choices": [
+        { "id": "a", "text": "Always — raw CUDA is fastest." },
+        { "id": "b", "text": "Only when the higher-level abstraction has measurably failed for your specific workload AND you have the expertise to do better. The spectrum runs PyTorch/CuPy at the top, through Thrust and Triton in the middle, down to raw CUDA C++ at the bottom. Each lower level costs significant engineering time but offers more control. For most workloads, the abstractions get within 10-30% of expert CUDA performance — and the abstractions often ARE the expert CUDA code under the hood (Thrust uses CUB; PyTorch uses cuBLAS/cuDNN). Most user-written CUDA kernels are actually slower than the equivalent high-level abstraction because the writer lacks the depth of optimization knowledge in the underlying libraries. Drop to raw CUDA only for novel operations not covered by libraries, custom fused kernels where the fusion is the win, or genuine bottlenecks you've profiled and confirmed. Skipping straight to raw CUDA for everything is reinventing wheels and burning engineering budget." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never — only use Python." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pick the abstraction level that matches the task. Most CUDA development should stay high-level; custom kernels are for the specific bottlenecks you can prove need them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A machine learning researcher needs a custom attention kernel for a novel architecture. They have moderate CUDA familiarity. What's the right tool?",
+      "choices": [
+        { "id": "a", "text": "Raw CUDA C++." },
+        { "id": "b", "text": "Triton. It's a Python-like DSL designed exactly for this case — writing custom GPU kernels for ML workloads without dropping all the way to CUDA C++. Triton handles much of the boilerplate (block-level thinking, masks, memory access patterns) while still letting the developer control performance-critical decisions. It integrates with PyTorch's autograd via custom op definitions, so the kernel plugs into existing models. Development time is days instead of weeks compared to CUDA C++, and performance is typically within 10-20% of expert-written CUDA. This is why Triton has become popular in modern ML codebases — many production attention kernels, fused operations, and quantization kernels are written in Triton. For a researcher with moderate CUDA familiarity, Triton hits the sweet spot of productivity and performance better than either pure PyTorch (not flexible enough) or raw CUDA (too time-consuming)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't write any kernel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Triton is purpose-built for the 'custom ML kernel' use case. Choosing the right tool matters as much as the kernel design itself.",
+      "points": 1
+    }
+  ]
+}

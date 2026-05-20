@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Your first CUDA kernel",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does the canonical CUDA kernel include `if (i < n)` even when you carefully computed the number of blocks?",
+      "choices": [
+        { "id": "a", "text": "Defensive paranoia." },
+        { "id": "b", "text": "Ceiling division is used to compute block count so that all `n` elements are covered: `blocks = (n + threadsPerBlock - 1) / threadsPerBlock`. For n=1,000,000 and threadsPerBlock=256, this gives 3907 blocks × 256 threads = 1,000,192 total threads — 192 more than n. Without the bounds check, those extra 192 threads would write past the end of the output array, causing memory corruption or crashes. The `if (i < n)` guard makes the extra threads do nothing harmlessly. This pattern (ceiling-division block count + bounds check inside kernel) is in virtually every CUDA program because n rarely divides evenly into the block size." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's a typo." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The launch grid always has slightly more threads than data elements (when n isn't a multiple of block size). The bounds check is the safety net. Forgetting it produces memory corruption that's hard to debug.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A CUDA program runs fine for 1000 iterations then crashes with 'out of memory.' What's the most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Bug in the GPU hardware." },
+        { "id": "b", "text": "Missing cudaFree calls — a GPU memory leak. CUDA allocations don't get garbage collected; each cudaMalloc must be paired with a cudaFree. In a loop that allocates without freeing (or frees fail silently because of skipped error checks), GPU memory exhausts after enough iterations. The fix: ensure every cudaMalloc has a matching cudaFree, ideally using RAII patterns like thrust::device_vector or a smart-pointer wrapper. CUDA memory leaks are common because the cleanup isn't automatic and the failure mode (crash later, far from the source) is hard to debug. Tools like compute-sanitizer can help detect these. This is one of the reasons frameworks like PyTorch are popular — they handle memory automatically via Python's reference counting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong block size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GPU memory leaks are the classic CUDA bug. Allocation without matching free, executed in a loop, exhausts memory and crashes far from the source. RAII patterns or framework abstractions prevent this; raw CUDA C++ requires discipline.",
+      "points": 1
+    }
+  ]
+}

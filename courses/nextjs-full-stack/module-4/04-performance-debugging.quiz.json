@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Performance debugging",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Three Core Web Vitals that matter and their targets?",
+      "choices": [
+        { "id": "a", "text": "Page weight, page count, load time." },
+        { "id": "b", "text": "LCP (Largest Contentful Paint) <2.5s — time until the largest element renders, usually the hero image; INP (Interaction to Next Paint) <200ms — how snappy interactions feel; CLS (Cumulative Layout Shift) <0.1 — how much layout shifts during load. Google uses these in search ranking. Users feel them as 'fast, snappy, stable.' Get these right with `next/image` priority on hero + `next/font` for self-hosted typography + dynamic imports for heavy client components, and you're 80% of the way to good Web Vitals." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random metrics." }
+      ],
+      "correct_answer": "b",
+      "explanation": "LCP <2.5s + INP <200ms + CLS <0.1. The three vitals Google tracks.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Page slow despite using `next/image`. Bundle analyzer shows 1.5MB of JS shipped for a content page with no heavy interactivity. Cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Bundle size is fine." },
+        { "id": "b", "text": "Likely a charting library, rich text editor, markdown renderer, or similar heavy library bundled unnecessarily into the client. Common culprits: full lodash import (`import _ from 'lodash'` instead of `import { specific } from 'lodash/specific'`); a charting library pulled into a Server Component-suitable page; date library (moment.js); a Client Component near the top of the tree pulling everything into client bundle. Fixes: dynamic imports for components that need heavy libraries (`dynamic(() => import('./chart'), { ssr: false })`), tree-shake imports, push `'use client'` to leaf components, smaller alternatives (Day.js vs Moment). Bundle analyzer shows you exactly what's in the bundle." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Upgrade Node." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Heavy library bundled where it shouldn't be. Dynamic imports + tree-shaking + push 'use client' to leaves.",
+      "points": 1
+    }
+  ]
+}

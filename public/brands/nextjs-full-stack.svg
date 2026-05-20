@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="nx-bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000000"/>
+      <stop offset="1" stop-color="#1A1A1A"/>
+    </linearGradient>
+    <linearGradient id="nx-stroke" x1="20" y1="20" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#0070F3"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#nx-bg)"/>
+  <circle cx="32" cy="32" r="18" stroke="url(#nx-stroke)" stroke-width="1.5" fill="none"/>
+  <path d="M22 18 L22 46 M22 18 L44 46" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <path d="M42 18 L42 36" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+</svg>

@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Production operations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Pooled (6543) vs direct (5432) connection — when to use which?",
+      "choices": [
+        { "id": "a", "text": "Pooled never; direct always." },
+        { "id": "b", "text": "Pooled (port 6543, PgBouncer transaction-mode) for application traffic — lets hundreds of clients share a small pool of real DB connections, preventing exhaustion. Direct (port 5432) for migrations and tools needing session-level features (LISTEN/NOTIFY, prepared statements, advisory locks). Never use direct from app code at scale — connections are expensive (~10MB each plus backend process), and serverless / Node apps can exhaust the cap quickly without pooling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pooled (6543) for app traffic; direct (5432) only for migrations / session-dependent tools.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Slow query after adding RLS. Highest-leverage fix?",
+      "choices": [
+        { "id": "a", "text": "Disable RLS." },
+        { "id": "b", "text": "EXPLAIN ANALYZE the query (as the user). Common findings and fixes: (1) sequential scan on policy-referenced columns → add an index, (2) helper functions called per row instead of per query → mark them `STABLE`, (3) EXISTS subqueries on join tables (memberships, shares) with no index → add composite index. Most RLS performance issues are fixable through indexes and function attributes; don't disable RLS." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase compute." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EXPLAIN → indexes on policy columns → STABLE helpers → indexes on EXISTS join tables.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why test restore from backup quarterly?",
+      "choices": [
+        { "id": "a", "text": "Cost reasons." },
+        { "id": "b", "text": "Backups that haven't been verified might not work. Hidden corruption, schema mismatches, missing permissions, restore-procedure bugs only surface during actual restores. Teams that skip drills discover bugs the day they really need it. A 15-min quarterly exercise (restore yesterday's backup to a new project, verify row counts and key tables, delete the test) builds confidence and familiarity. The day you need a real restore — production database corrupted at 3 AM — you'll know exactly what to do instead of learning on the fly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's not necessary." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Untested backups aren't backups. Practice = procedure works under pressure.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "When should a team genuinely consider self-hosting Supabase?",
+      "choices": [
+        { "id": "a", "text": "Always to save money." },
+        { "id": "b", "text": "Specific compliance/data-residency requirements (data must stay in regions Supabase managed doesn't offer), air-gapped or on-prem enterprise deployments, very high scale where the cost equation flips (typically $5k+/mo managed + dedicated platform engineering capacity), custom Postgres extensions/versions not on managed, or white-labeling Supabase inside your product. For nearly every other team, managed wins decisively — backups, patches, monitoring, scaling, security are far cheaper than the engineering time to self-manage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hobby projects." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compliance/residency, on-prem, very high scale, custom Postgres, or white-labeling.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Where does most cost optimization come from?",
+      "choices": [
+        { "id": "a", "text": "Tiny tweaks." },
+        { "id": "b", "text": "Four areas cover ~80% of savings: right-sizing compute (overpaying for headroom is the most common leak), index audit (drop unused indexes via pg_stat_user_indexes idx_scan = 0), egress reduction (compression, caching, image transforms, CDN cache headers), and storage cleanup (orphan files, old data partitioned and archived externally). Get these four right and most cost optimization is done. The rest is incremental tuning of Realtime, Edge Functions, branch cleanup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch providers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "80/20: compute sizing + index audit + egress + storage cleanup.",
+      "points": 1
+    }
+  ]
+}

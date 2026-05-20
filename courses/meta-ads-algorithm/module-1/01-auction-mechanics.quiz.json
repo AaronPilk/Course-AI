@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: The auction",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why can't you just outbid your way to better Meta Ads performance?",
+      "choices": [
+        { "id": "a", "text": "You can." },
+        { "id": "b", "text": "Auctions are won on total value, roughly bid × estimated action rate × ad quality. EAR is the ML-predicted probability the user takes your optimized action; ad quality is composite signals from creative and post-click experience. A 2x bid cannot compensate for a 5x worse EAR. Better creative + better targeting + better post-click experience raise EAR and quality; that's the lever. The system rewards predicted relevance, not just dollars." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's banned." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Total value = bid × EAR × quality. EAR and quality are the levers; bid alone can't overcome them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Optimizing for 'link clicks' produces clicks but no purchases. Why?",
+      "choices": [
+        { "id": "a", "text": "Bad luck." },
+        { "id": "b", "text": "EAR predicts the optimization event you specified. If you optimize for link clicks, the ML finds users likely to click — not users likely to buy. Different audiences, different intent, different conversion behavior. The system did exactly what you asked for. Fix: optimize for purchases (or whatever bottom-funnel event matters) with proper conversion tracking (pixel + Conversions API). Volume of conversion events affects ML quality — if too few, optimize for a higher-funnel proxy like 'add to cart' while you build conversion volume." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Meta is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimize for the event you actually want. EAR finds users likely to take that specific action.",
+      "points": 1
+    }
+  ]
+}

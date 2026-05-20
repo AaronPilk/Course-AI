@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Pixel and Conversions API",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does CAPI matter more than pixel alone?",
+      "choices": [
+        { "id": "a", "text": "CAPI is required by law." },
+        { "id": "b", "text": "Pixel fires from the browser and is subject to iOS 14.5 ATT, Safari ITP, ad blockers, and privacy extensions — losing 20-40% of events. CAPI sends events server-to-server, bypassing browser-side suppression, and carries clean hashed user data (email, phone, name, IDs) that boost Event Match Quality. Used together with deduplication via event_id, pixel + CAPI gives the most complete signal — typically 10-25% lift in attributed conversions after enabling CAPI." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pixel is deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pixel misses iOS users; CAPI reaches Meta server-to-server. Use both with event_id dedupe.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Reported ROAS is 4x; actual revenue from analytics shows 2x. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Meta is overreporting on purpose." },
+        { "id": "b", "text": "Deduplication failure between pixel and CAPI. Both are firing Purchase events but without a shared event_id, Meta counts each separately — doubling the recorded conversions and inflating ROAS. Fix: generate a unique event_id (commonly the order ID from your e-commerce platform) and send it in both the pixel fire and the CAPI fire. Meta will dedupe on that key. Verify in Events Manager that combined Purchase count ≈ actual order count, not 2x." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong currency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Missing event_id = double-count. Always send shared event_id (order ID works).",
+      "points": 1
+    }
+  ]
+}

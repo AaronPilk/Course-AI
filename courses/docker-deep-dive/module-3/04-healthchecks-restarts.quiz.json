@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Healthchecks and restarts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What should a good HEALTHCHECK endpoint do?",
+      "choices": [
+        { "id": "a", "text": "Run a full integration test." },
+        { "id": "b", "text": "Quick verification of real readiness — hit a cheap endpoint that confirms the process is responsive and key dependencies are reachable (DB connection alive, downstream service responding). Keep it fast (<1s). Don't query the DB on every check (cascading load). Return 200 only when actually ready to serve traffic. Return non-zero/non-200 during startup or when degraded." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just check the port is open." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Healthcheck = cheap, fast, reflects real readiness. Not just process-alive; not heavy validation.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A container restart loops every 30 seconds with `--restart always`. What's happening?",
+      "choices": [
+        { "id": "a", "text": "Docker bug." },
+        { "id": "b", "text": "App crashes immediately on startup; restart policy relaunches it; same crash; loop. Docker applies exponential backoff (10s, 20s, 40s, capped), but eventually the container is marked dead. Restart policy doesn't fix bad apps — it handles transient failures. Diagnostic flow: `docker logs container` to see why startup fails (usually missing config, dependency, env var, file). Fix the root cause; don't just keep restarting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Restart loops indicate app issues, not infrastructure. Check logs; fix the app.",
+      "points": 1
+    }
+  ]
+}

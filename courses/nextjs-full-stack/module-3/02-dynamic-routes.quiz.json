@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dynamic routes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between `[slug]`, `[...slug]`, and `[[...slug]]`?",
+      "choices": [
+        { "id": "a", "text": "Same thing, different syntax." },
+        { "id": "b", "text": "`[slug]` matches exactly one segment (params.slug is a string). `[...slug]` is catch-all — matches one or more segments (params.slug is an array). `[[...slug]]` is optional catch-all — matches zero or more segments, including the bare path. Example: with `[slug]`, /docs and /docs/a/b don't match. With `[...slug]`, /docs/a/b matches but /docs alone doesn't. With `[[...slug]]`, /docs (slug undefined) AND /docs/a/b (slug = ['a','b']) both match. Pick based on URL depth flexibility needed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "All identical." }
+      ],
+      "correct_answer": "b",
+      "explanation": "[slug] one segment; [...slug] one-or-more; [[...slug]] zero-or-more.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Pre-rendering 5,000 blog posts but want to add new ones without rebuilding the entire site. Setup?",
+      "choices": [
+        { "id": "a", "text": "Rebuild on every new post." },
+        { "id": "b", "text": "Export `generateStaticParams()` returning the slugs of all existing posts; combine with `export const revalidate = 60` (or another time) for ISR. At build time, 5,000 posts are pre-rendered. When a request comes for a new slug not in the build set, `dynamicParams = true` (the default) renders it on-demand and caches it. Existing posts are served from CDN; new ones generate at first hit then cache. Best of static + dynamic without rebuilding the whole site." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Set dynamicParams = false." }
+      ],
+      "correct_answer": "b",
+      "explanation": "generateStaticParams for existing + dynamicParams=true + revalidate for new posts on-demand.",
+      "points": 1
+    }
+  ]
+}

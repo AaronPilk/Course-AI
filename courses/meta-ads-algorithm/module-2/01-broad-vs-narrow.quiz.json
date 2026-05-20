@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Broad vs narrow targeting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does broad targeting often beat narrow in 2026?",
+      "choices": [
+        { "id": "a", "text": "More users equals more sales." },
+        { "id": "b", "text": "Meta's optimization layer (EAR + pixel + CAPI signal) is now precise enough to find the right slice inside a big pool. Narrow interest filters cut the pool the ML has to learn from, fragment delivery, and bet your interest guess beats the algorithm's behavioral inference. Sweet spot is 2-10M; below 1M delivery gets erratic. Broad works only when the creative pre-qualifies — vague creative + broad targeting wastes spend." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Meta forces it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimization layer is strong enough that narrow filtering now hurts; creative becomes the filter.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "When does narrow still beat broad?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "B2B with job title filters (CRM lists or title targeting), regulated verticals (compliance), hyper-local services (zip-code radius), and high-AOV niche where lookalikes-of-buyers convert better than broad. For mass-market DTC, app installs, and lead-gen, broad usually wins by 10-30% CPA after learning phase. Test broad vs narrow head-to-head with identical creative to see which your account is in." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "B2B, regulated, hyper-local, and high-AOV niche still benefit from narrow. Test to be sure.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multi-stage builds",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is multi-stage build the modern standard for production Docker images?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "It separates build-time tools from runtime artifacts. A builder stage has everything needed to compile/bundle (full SDK, dev dependencies, source code, build tools); a final runtime stage starts from a minimal base and only COPYs the artifacts the running application actually needs. The build stage's layers are discarded; only the final stage ships. Without multi-stage, you'd either ship a bloated image with all the build tools (security risk, slow pulls, expensive storage) or build outside Docker and lose reproducibility. With multi-stage: build is reproducible (inside Docker), final image is minimal (only runtime artifacts). For Go: full Go toolchain in builder, static binary copied to distroless final → 10-20 MB image. For Node: full Node + npm + source in builder, alpine + node_modules + dist in runtime → 150 MB vs 1 GB. For Java: Maven + JDK in builder, JRE only in runtime → 200 MB vs 1.5 GB. The pattern works for every compiled language and most interpreted ones. Modern production Dockerfiles almost always use multi-stage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Docker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-stage separates build from runtime. Smaller images, smaller attack surface, faster pulls. Universal pattern for production Dockerfiles.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Go service ships in a 1 GB image with full golang base. What's the minimal viable image size for it?",
+      "choices": [
+        { "id": "a", "text": "Can't go below 1 GB for Go." },
+        { "id": "b", "text": "10-20 MB with the right multi-stage build. Use `FROM golang:1.21 AS builder` for the build stage; compile a statically-linked binary with `CGO_ENABLED=0 go build -o /out/server`. Then use `FROM gcr.io/distroless/static-debian12:nonroot` (or even `FROM scratch` for true minimal) as the final stage; COPY the binary; set the entrypoint. The final image has no shell, no package manager, no userspace beyond what the binary needs — just the Go binary, a few CA certificates, and TLS roots. Pulls in seconds. Attack surface is dramatically smaller because there's literally nothing for an attacker to abuse if they get code execution — no /bin/sh to spawn, no curl to exfiltrate with, no package manager to install tools. For Go specifically (static binaries), this is the canonical production pattern. Rust, C++, and other statically-compiled languages can do the same. The Go-in-1GB-image antipattern usually indicates a single-stage Dockerfile that ships the whole Go toolchain to production; multi-stage + distroless fixes it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run on bare metal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Go binaries with distroless or scratch = 10-20 MB images. Multi-stage build is the path. Same applies to other statically-compiled languages.",
+      "points": 1
+    }
+  ]
+}

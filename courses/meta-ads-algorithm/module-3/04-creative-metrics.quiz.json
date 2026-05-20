@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Creative metrics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Hook rate is 45% but CTR is 0.4%. Diagnosis?",
+      "choices": [
+        { "id": "a", "text": "Hook is bad." },
+        { "id": "b", "text": "Hook is strong — 45% is above the strong-baseline 40-50%. But the body isn't converting attention into clicks. CTR 0.4% on broad placements is well below the 1%+ healthy range. Pattern reads: the first 2-3 seconds stops scrolling but the body fails to make the user want to click. Fix the body (value prop clarity, social proof, CTA prominence); keep the hook." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Kill the ad." }
+      ],
+      "correct_answer": "b",
+      "explanation": "High hook + low CTR = hook stops scroll, body fails to convert attention. Fix the body.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Account at 2x ROAS, hitting target. CPM rose 25% but CVR rose 40% over same period. Concerning?",
+      "choices": [
+        { "id": "a", "text": "Yes, CPM rising is bad." },
+        { "id": "b", "text": "No — net positive. CPM in isolation isn't the problem; CPM vs CVR is. Here CVR grew faster than CPM, so revenue per impression actually improved. The auction got pricier (competition or saturation), but your creative + landing-page conversion improved more. Watch the trajectory — if CPM keeps rising while CVR plateaus, the picture flips. CPM matters relative to CVR change, not absolutely." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pause everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CPM is meaningful only relative to CVR. Here CVR grew faster — net win.",
+      "points": 1
+    }
+  ]
+}

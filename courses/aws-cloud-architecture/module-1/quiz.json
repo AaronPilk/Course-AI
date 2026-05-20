@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: AWS mental model",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is deploying production workloads across multiple AZs the durability baseline on AWS?",
+      "choices": [
+        { "id": "a", "text": "Marketing requirement." },
+        { "id": "b", "text": "AZs are physically separate clusters of data centers within a region — different power grids, different buildings, independent failure domains. Connected by fast low-latency networking (under 2ms) so apps can communicate freely, but designed so that one AZ losing power or network doesn't take down others. A workload in a single AZ goes down when that AZ has problems. Multi-AZ (load balancer spanning AZs, app servers in 2-3 AZs, database with Multi-AZ replication) means a single-AZ failure leaves the system serving from healthy AZs. This is the baseline durability pattern for production workloads. Cross-AZ data transfer is roughly $0.01/GB — trivial compared to the cost of downtime. Single-AZ is appropriate only for dev/test or cost-sensitive non-critical workloads." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's free." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-AZ deployment is the production minimum on AWS. AZs are independent failure domains. Skipping multi-AZ to save trivial transfer cost produces outages that dwarf the savings.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An S3 bucket containing customer data was discovered to be world-readable. Who's responsible under AWS's shared-responsibility model?",
+      "choices": [
+        { "id": "a", "text": "AWS." },
+        { "id": "b", "text": "The customer. AWS provides locked-down defaults (S3 Block Public Access enabled at the account level for new accounts; explicit warnings when you try to make a bucket public). Making a bucket world-readable requires actively overriding these defaults by disabling Block Public Access, writing a public bucket policy, or setting public ACLs. AWS handles the physical durability, hardware, and the underlying service. The customer handles bucket policies, encryption choice, IAM access, data classification, and lifecycle. Open S3 buckets are the canonical customer-side breach — AWS gave you the safe path; you actively stepped off it. Prevention: SCPs enforcing Block Public Access organization-wide, AWS Config rules flagging public buckets, and governance review for any change that exposes data." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "The internet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Customer-side configuration is the customer's responsibility. AWS provides safe defaults and tools; overriding them is the customer's call. The vast majority of AWS-related breaches are customer-side, not AWS-side.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why do mature AWS deployments use many accounts (one per team, environment, workload) rather than one large account?",
+      "choices": [
+        { "id": "a", "text": "Cost savings." },
+        { "id": "b", "text": "Blast radius, management clarity, and compliance. A single account means an IAM mistake, misconfigured policy, or compromised credential affects everything. Multiple accounts (dev, staging, prod each separate; per-team or per-workload accounts) contain damage to the account where it happens. Beyond blast radius: clearer per-account billing breakdowns, more service-limit headroom (most AWS limits are per-account), simpler permissions design (broad access in your own account vs. fine-grained shared-account policies), and compliance scope reduction (PCI data in its own account keeps the rest out of scope). AWS Organizations + Identity Center + Control Tower make multi-account manageable. Small startups can survive 1-3 accounts; serious companies have 50-500. Most teams that started single-account later wish they'd separated earlier — migration is painful." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-account is the right AWS pattern beyond trivial scale. The benefits compound; the cost of staying single-account compounds against you.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A team's monthly AWS bill jumped $30,000 with no obvious change. Where to look first?",
+      "choices": [
+        { "id": "a", "text": "Email AWS support." },
+        { "id": "b", "text": "Cost Explorer broken down by service, then by region and tag. The first question is which service category jumped — typically data transfer, compute, or storage. Common culprits when bills spike: cross-region replication misconfigured pointing at expensive destinations; an application bug producing high-volume traffic into NAT Gateway or to the internet; left-on dev/test resources that grew (Aurora clusters spun up for testing, GPU instances forgotten); CloudWatch Logs accumulating with no retention policy; new feature shipping that does unexpected egress (image processing, video, large API responses to clients). Cost Explorer's daily granularity often shows when the increase started, which narrows down what changed. Set up Cost Anomaly Detection and budget alerts so future spikes trigger alarms within a day, not a month. After identifying the source, the fix is usually straightforward: lifecycle policies, VPC endpoints, log retention, terminating unused resources. AWS often credits genuine billing surprises if you contact support, but prevention beats remediation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase the budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost Explorer is the diagnostic tool. Service breakdown + daily timeline + tag analysis reveals the source. Budget alerts and Anomaly Detection are preventive infrastructure.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the correct order for cost-optimizing an AWS account?",
+      "choices": [
+        { "id": "a", "text": "Buy Reserved Instances first." },
+        { "id": "b", "text": "Clean up and right-size first, then commit with Savings Plans/RIs, then consider architectural changes. Clean up: terminate unused, delete unattached EBS volumes and old snapshots, kill abandoned NAT Gateways, shut down dev instances after hours. Right-size: many instances are over-provisioned by 2-4x because the team picked sizes conservatively without measuring CloudWatch utilization. After cleanup and right-sizing, the steady-state baseline reflects actual needs — that's what you commit to with 1-year or 3-year Savings Plans (up to 72% savings on committed compute). Architectural changes (move to managed services, use spot for batch, multi-region tradeoffs) come last because they're the highest engineering cost per dollar saved. Buying RIs before cleanup locks you into paying for capacity you didn't need — saves 30% on 2x necessary compute. The right order produces compounding savings; the wrong order leaves money on the table." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch clouds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost optimization order matters. Cleanup is immediate savings; commitment is steady savings; architecture is long-term savings. Reversing the order commits to waste.",
+      "points": 1
+    }
+  ]
+}

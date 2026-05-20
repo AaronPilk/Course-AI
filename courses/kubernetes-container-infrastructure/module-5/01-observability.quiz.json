@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Observability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the standard open-source observability stack for Kubernetes?",
+      "choices": [
+        { "id": "a", "text": "Just kubectl logs." },
+        { "id": "b", "text": "Prometheus + Grafana for metrics (with kube-state-metrics, node-exporter, cAdvisor as built-in sources), Fluentd/Vector forwarding logs to Loki or Elasticsearch, and OpenTelemetry instrumentation exporting traces to Jaeger or Tempo. Prometheus scrapes /metrics endpoints exposed by Pods at intervals; ServiceMonitor or PodMonitor CRDs declare what to scrape. Grafana visualizes via dashboards. The log forwarder runs as a DaemonSet, tails container log files on each Node, enriches with K8s metadata, and ships to a backend. OpenTelemetry SDKs in apps export spans to a collector, which forwards to the trace backend. Commercial alternatives (Datadog, New Relic, Dynatrace) provide similar capabilities with less operational burden and higher cost. For production: pick a stack, instrument early, alert on actionable conditions, and prune alarm fatigue continuously." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prometheus + Grafana + log forwarder + tracing is the open-source K8s stack. Commercial APM provides the same with less operational burden.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team has 100+ alarms; most fire daily; real incidents get lost in the noise. What's the systemic fix?",
+      "choices": [
+        { "id": "a", "text": "Add more alarms." },
+        { "id": "b", "text": "Ruthless pruning. Walk through every alarm: does it require human action when it fires? If not, delete it or convert to a dashboard signal. Tune thresholds so alarms fire on actual problems, not normal variability. Use composite alarms to reduce noise (alert when error rate is high AND traffic is non-trivial, instead of two separate alarms). Reserve paging alarms for things that need a human now; lower-severity notifications for things that need attention within a day; everything else flows to dashboards for review. Most production setups need 10-30 carefully-tuned alarms, not 100+. Treat alarms like code: review, tune, refactor, delete what's not earning its keep. Periodic alarm review (quarterly) prevents accumulation. Alarm fatigue is one of the most common operational dysfunctions; pruning is the fix. Bonus: tie alarms to SLOs and error budgets — alert when burn rate threatens the SLO, not on every individual symptom." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire more on-call." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alarm fatigue is operational dysfunction. Fewer, tuned, actionable alarms beat hundreds of noisy ones. Periodic review prevents accumulation.",
+      "points": 1
+    }
+  ]
+}

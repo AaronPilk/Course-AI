@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: AI workloads and the GPU era",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does enabling mixed-precision training (FP16/BF16) typically give 2-3x speedup beyond just halving memory?",
+      "choices": [
+        { "id": "a", "text": "FP16 math is intrinsically faster." },
+        { "id": "b", "text": "Tensor Cores. Modern NVIDIA GPUs have specialized hardware units that perform small matrix multiplications in one operation at much higher throughput than standard CUDA cores. Tensor Cores activate for FP16, BF16, TF32, FP8, and similar low-precision matmul — but not pure FP32. Training in FP32 forces matmuls onto CUDA cores at ~1x throughput; mixed-precision training (FP16/BF16 matmuls with FP32 optimizer state) uses Tensor Cores at 8-10x. Wall-clock speedup is smaller (2-3x) because not everything is matmul, but for transformer-dominated workloads the speedup is dramatic. Framework abstractions (PyTorch autocast) handle the precision casting automatically — the user just enables mixed precision and Tensor Cores get used wherever applicable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random observation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tensor Cores are the structural reason mixed-precision is fast. The framework setting (autocast) controls whether you use them. Always-on for modern training.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An LLM inference service running FP16 wants more throughput per dollar. What's the typical next step?",
+      "choices": [
+        { "id": "a", "text": "Switch to CPU." },
+        { "id": "b", "text": "Move to FP8 (Hopper+ with Transformer Engine) or INT8/INT4 (TensorRT-LLM-style quantization). H100's Tensor Cores support FP8 at roughly 2x the throughput of FP16, with Transformer Engine handling dynamic range automatically per layer. Many production LLM serving stacks now run FP8 weights/activations with comparable accuracy on most benchmarks. For more throughput, INT4 quantization (weights in low precision, activations higher) trades accuracy for memory savings — fitting larger models or bigger batches on the same hardware. Validate accuracy on your evaluation suite before deploying. Quantization-aware training and post-training quantization techniques mitigate accuracy loss. The general pattern: lower precision = more throughput + less memory, with careful accuracy validation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more GPUs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lower precision is the inference workhorse for cost optimization. The order of attack: FP16 → FP8/INT8 → INT4. Each step should be validated for accuracy on representative workloads.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why are LLM prefill and decode phases optimized differently?",
+      "choices": [
+        { "id": "a", "text": "They're identical." },
+        { "id": "b", "text": "Prefill is compute-bound; decode is memory-bandwidth-bound. Prefill processes the entire input prompt in parallel — many tokens at once, lots of matmuls, high arithmetic intensity, Tensor Cores fully utilized. Decode generates one token at a time, each requiring a full read of all the model weights to produce a single token — low arithmetic intensity, memory-bound, compute units mostly idle waiting on weight loads. The optimizations diverge: prefill benefits from larger batches, Tensor Core throughput, and chunked processing for memory limits. Decode benefits from cross-request batching (continuous batching to amortize weight reads), KV caching (avoid recomputing attention), speculative decoding (verify multiple tokens per big-model pass), and quantization (less memory traffic). Production LLM inference engines (vLLM, TensorRT-LLM, SGLang) implement separate optimization paths for each phase." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random distinction." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prefill/decode split is one of the most important framings in LLM inference. Different bottlenecks call for different optimizations.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why does tensor parallelism stay within a single server rather than spanning servers?",
+      "choices": [
+        { "id": "a", "text": "Configuration restriction." },
+        { "id": "b", "text": "Tensor parallel requires frequent intra-layer communication — every matmul in a transformer block involves an all-reduce or all-gather across the tensor-parallel group. Within a server, NVLink connects 8 GPUs at 600-1800 GB/s bandwidth and microsecond latency, making frequent communication affordable. Between servers, InfiniBand provides 400-800 Gbps per link with much higher latency. The same all-reduce that takes microseconds over NVLink takes milliseconds over InfiniBand — at tensor parallel's frequency, this overhead overwhelms compute benefit. Standard pattern: tensor parallel within a server (NVLink), pipeline parallel between servers in a rack (less frequent), data parallel across racks (least frequent). 3D parallelism matches communication frequency to network bandwidth at each level. Cross-server tensor parallel is a classic performance bug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random rule." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Network topology dictates parallelism strategy. Communication frequency must match network bandwidth at each level. This is one of the most important rules of distributed training.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the durable lesson from a decade of GPU hardware progression for software practitioners?",
+      "choices": [
+        { "id": "a", "text": "Hardware changes too fast to plan around." },
+        { "id": "b", "text": "The disciplines persist even as numbers change. Specific FLOPS, memory sizes, and precision modes evolve every 2 years, but the underlying optimization patterns — memory coalescing, shared memory tiling, occupancy management, communication overlap, profile-driven optimization, library-first development — are stable. Code written with these disciplines runs well on each new generation; code written without them runs poorly on every generation. The Tensor Core era added new optimization dimensions (precision selection, Transformer Engine) but didn't invalidate the older lessons. CUDA's stability as a programming model (since 2007) has been a strategic advantage — code written years ago still runs on modern hardware with comparable or better relative performance. For practitioners: invest in the disciplines, use the highest-level abstraction that fits, profile rigorously, and stay current with library and framework updates. The hardware will keep evolving; the methods will keep working." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy new hardware constantly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The disciplines transfer across generations. Coalescing, tiling, occupancy, profiling — these have been the GPU optimization toolkit for over a decade and will continue to be. Investing in these skills pays dividends across hardware refreshes.",
+      "points": 1
+    }
+  ]
+}

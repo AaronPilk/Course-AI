@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: What Kubernetes is",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most accurate one-sentence description of how Kubernetes works?",
+      "choices": [
+        { "id": "a", "text": "You manually place containers on specific machines." },
+        { "id": "b", "text": "You declare desired state in YAML (e.g., '3 replicas of this image'), the API server stores it, and controllers continuously reconcile observed state toward desired state by taking actions like creating Pods, scheduling them onto nodes, restarting failed ones, or replacing them when nodes disappear. This control-loop pattern is the foundation of how Kubernetes works — everything else (Deployments, Services, Ingress, etc.) is a layer on top of this declarative API + controller-loop model. You never tell Kubernetes 'run this on that machine'; you tell it what you want, and the system figures out where and how to make it true. Internalizing this changes how you debug and operate Kubernetes — most behavior is explained by 'a controller observed a gap and acted to close it.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's a brand of cloud." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The control loop is the fundamental Kubernetes pattern. Declare desired state; controllers reconcile. Once you internalize this, most behavior becomes predictable rather than mysterious.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A solo developer with one Node.js service considers deploying on Kubernetes because 'it's the industry standard.' Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — K8s is always the right choice." },
+        { "id": "b", "text": "Almost certainly not. Kubernetes shines for multi-service architectures with variable scale and existing K8s expertise. For a single Node.js service from a solo developer, K8s adds substantial operational burden (cluster upgrades, networking debugging, RBAC, observability stack) for benefits that won't materialize at single-service scale. The alternatives are dramatically simpler: a managed PaaS like Render, Railway, or Fly.io can deploy from git in minutes with built-in HTTPS, scaling, and logging; AWS App Runner or Google Cloud Run handle containers with zero infrastructure setup; even a humble VPS with a process manager is faster to operate at this scale. Choosing K8s because it's industry-standard at conferences ignores the fit-for-purpose question. The honest tradeoff: K8s rewards complex deployments at meaningful scale with existing expertise; for simple workloads, it's mostly cost — engineering time and operational burden. Reach for K8s when its specific capabilities matter; default to simpler tools otherwise." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to Windows." }
+      ],
+      "correct_answer": "b",
+      "explanation": "K8s is a powerful tool when its capabilities are needed. Choosing it by default for simple workloads adds complexity without commensurate benefit. Match tool to job.",
+      "points": 1
+    }
+  ]
+}
