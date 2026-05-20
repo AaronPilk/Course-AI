@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Scoping v1",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You're scoping v1 of an autonomous assistant. The team wants to support 'knowledge workers' broadly with 12 tool integrations. Right move?",
+      "choices": [
+        { "id": "a", "text": "Build all 12 integrations and ship to everyone." },
+        { "id": "b", "text": "Scope hard: one specific persona, one job-to-be-done, 2–5 tools, level 3 autonomy. 'Knowledge workers' is too broad to design for; specific personas drive specific decisions. Better to ship a great narrow assistant than a mediocre wide one. Expand after v1 wins." },
+        { "id": "c", "text": "Use Opus to make up for breadth." },
+        { "id": "d", "text": "Add voice + mobile + multi-user to compete." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generalist v1s nearly always fail. Pick one persona (executive coaches, engineering managers, solo founders), one JTBD (pre-meeting prep, daily briefing, inbox triage), 2–5 connectors, level 3 autonomy. Earn expansion through wins.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the typical right autonomy level for an assistant's v1?",
+      "choices": [
+        { "id": "a", "text": "Level 5 — full background autonomy." },
+        { "id": "b", "text": "Level 3 — propose then approve. Lower trust requirement, easier debugging, smaller eval surface, faster iteration with real users. Level 4 (scheduled) is the next step once level 3 is loved; level 5 is a later phase requiring strong trust and evals." },
+        { "id": "c", "text": "Level 1 — pure chatbot." },
+        { "id": "d", "text": "Whichever competitors are at." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Level 3 is the canonical v1 autonomy: useful (proactive proposals) without dangerous (no unilateral irreversible actions). The path to higher autonomy goes through proving level 3 works for your users in your scope.",
+      "points": 1
+    }
+  ]
+}

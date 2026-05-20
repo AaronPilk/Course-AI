@@ -1,0 +1,92 @@
+{
+  "slug": "anthropic-ai-engineering",
+  "title": "Anthropic AI Engineering & Prompting",
+  "subtitle": "Ship reliable products on Claude — the prompting, tools, and production patterns Anthropic actually recommends",
+  "description": "A practical, source-grounded course on building with Anthropic's Claude. Built directly from Anthropic's published documentation, prompt engineering guides, and engineering blog. Covers the Claude API surface, prompt techniques the model is specifically tuned for (XML tags, prefilling, examples), tool use, the agentic loop, long-context patterns like contextual retrieval, and production essentials — caching, batches, evals, and safety. Pairs with the OpenAI course; together they give you both major AI labs covered.",
+  "category": "AI Engineering",
+  "difficulty": "intermediate",
+  "audience": "Engineers and AI product builders working on top of Anthropic's API who want the patterns Claude is actually trained for, not generic LLM advice. Comfortable reading code.",
+  "tags": ["anthropic", "claude", "ai-engineering", "prompting", "tool-use", "rag", "production"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "Anthropic",
+    "logo": "/brands/anthropic.svg",
+    "gradient": ["#D97757", "#B85A3C"],
+    "tint": "#1A0D08"
+  },
+  "prerequisites": [
+    "Comfortable reading code (any language)",
+    "Have made at least one HTTP API call before",
+    "An Anthropic API key (free tier is fine)"
+  ],
+  "outcomes": [
+    "Understand Claude's model family and pick the right one for a task",
+    "Write prompts that use the techniques Claude is specifically trained for",
+    "Build tool-using agents with Claude's tool API",
+    "Apply long-context and contextual-retrieval patterns",
+    "Use prompt caching and batches to control cost",
+    "Run evals and ship Claude-powered features safely to production"
+  ],
+  "modules": [
+    {
+      "title": "Working with Claude",
+      "summary": "What Claude is, the model family, the Messages API, and how Claude responds to prompts compared to other LLMs.",
+      "estimated_minutes": 55,
+      "key_concepts": ["claude model family", "messages api", "system prompts", "tokens"],
+      "lessons": [
+        { "title": "Meet Claude — the model family and what each one is for", "objective": "Pick the right Claude (Opus, Sonnet, Haiku) for a given task." },
+        { "title": "The Messages API — how to actually call Claude", "objective": "Make a Claude API call, understand the request/response shape, and handle multi-turn conversations." },
+        { "title": "System prompts that work", "objective": "Write system prompts using the structure Claude is tuned for." },
+        { "title": "Tokens, context windows, and pricing", "objective": "Estimate tokens, plan around context limits, and reason about Claude's cost model." }
+      ]
+    },
+    {
+      "title": "Prompt Engineering for Claude",
+      "summary": "The prompting techniques Claude is specifically trained for: XML tags, examples, prefilling, chain-of-thought, and role assignment.",
+      "estimated_minutes": 60,
+      "key_concepts": ["xml tags", "few-shot", "prefilling", "chain of thought", "role prompting"],
+      "lessons": [
+        { "title": "XML tags — Claude's preferred structure", "objective": "Use XML tags to delimit instructions, context, and examples reliably." },
+        { "title": "Few-shot examples and how Claude uses them", "objective": "Build example sets that nudge Claude toward your target output." },
+        { "title": "Prefilling and shaping Claude's response", "objective": "Use response prefilling to lock format and skip preambles." },
+        { "title": "Chain-of-thought prompting that actually helps", "objective": "Add thinking steps to prompts where they improve quality, skip them where they don't." }
+      ]
+    },
+    {
+      "title": "Tool Use and Agents",
+      "summary": "Claude's tool-use API, the agentic loop, parallel tool calls, and MCP for connecting to external systems.",
+      "estimated_minutes": 55,
+      "key_concepts": ["tool use", "agent loop", "parallel tools", "mcp"],
+      "lessons": [
+        { "title": "Tool use — letting Claude call your functions", "objective": "Define a tool, handle Claude's tool_use response, and return tool_result." },
+        { "title": "The agent loop with Claude", "objective": "Build a multi-step agent that uses tools to complete a goal." },
+        { "title": "Parallel tool calls and structured outputs", "objective": "Use parallel tool calls and JSON schemas to get structured data reliably." },
+        { "title": "MCP — Model Context Protocol in production", "objective": "Connect Claude to external systems via MCP servers instead of one-off integrations." }
+      ]
+    },
+    {
+      "title": "Long Context, RAG, and Documents",
+      "summary": "How to use Claude's long context window well — contextual retrieval, citations, PDFs, and large document workflows.",
+      "estimated_minutes": 50,
+      "key_concepts": ["long context", "contextual retrieval", "citations", "pdfs"],
+      "lessons": [
+        { "title": "Long context with Claude — when to stuff vs. retrieve", "objective": "Decide between long-context stuffing and RAG for your data size and access pattern." },
+        { "title": "Contextual Retrieval — Anthropic's RAG upgrade", "objective": "Apply Contextual Retrieval to drop retrieval failures by 40-67%." },
+        { "title": "Citations — grounding Claude's answers in sources", "objective": "Use Claude's citation features to return verifiable answers." },
+        { "title": "PDFs, documents, and vision with Claude", "objective": "Pass PDFs and images directly to Claude for parsing and analysis." }
+      ]
+    },
+    {
+      "title": "Production with Claude",
+      "summary": "Prompt caching, batch processing, evals, safety, and the launch checklist for Claude-powered features.",
+      "estimated_minutes": 45,
+      "key_concepts": ["prompt caching", "batches", "evals", "safety", "deployment"],
+      "lessons": [
+        { "title": "Prompt caching with Claude — 90% cost cuts on repeated context", "objective": "Use cache_control breakpoints to slash bills on repeated prompts." },
+        { "title": "Message Batches API — 50% off for offline workloads", "objective": "Process large batches at half price within 24 hours." },
+        { "title": "Evals and quality control for Claude apps", "objective": "Build an eval set for Claude that catches regressions before users do." },
+        { "title": "Safety and the Claude production checklist", "objective": "Apply Anthropic's safety patterns and ship Claude features confidently." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multimodal",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Your team needs to extract data from receipt photos uploaded by users (merchant, date, amount, line items). What's the right OpenAI capability?",
+      "choices": [
+        { "id": "a", "text": "Use a separate OCR library, then feed the OCR text to GPT-5." },
+        { "id": "b", "text": "Use vision input on a GPT-5 family model — pass the receipt image directly. The model handles OCR implicitly and you can combine with structured output to return typed fields. Single call, simpler pipeline." },
+        { "id": "c", "text": "Use image generation to recreate the receipt." },
+        { "id": "d", "text": "Use speech-to-text." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Modern GPT-5 family models read text in images natively — no separate OCR step. Combine with structured output (Lesson 2.2) and you get a typed object back from a single API call. Simpler pipeline, often higher accuracy than OCR + LLM as separate steps.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're building a phone-call-style AI agent where users talk and the agent talks back. Latency matters — long pauses break the experience. Which OpenAI capability is the right tool?",
+      "choices": [
+        { "id": "a", "text": "Speech-to-text → GPT-5 → text-to-speech, called sequentially. Simple." },
+        { "id": "b", "text": "The Realtime API — bidirectional streaming designed for sub-second voice responses including model processing. Sequential STT → LLM → TTS will introduce 2–4 second latency per turn, breaking the interactive feel." },
+        { "id": "c", "text": "Image generation." },
+        { "id": "d", "text": "The embeddings API." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sequential STT → LLM → TTS works for any voice product, but the latency (2–4 seconds per turn) makes it feel slow for interactive voice. The Realtime API streams audio in and out with sub-second latency including model processing. It's more complex to integrate, but worth it when latency is the product.",
+      "points": 1
+    }
+  ]
+}

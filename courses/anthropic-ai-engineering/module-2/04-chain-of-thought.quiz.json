@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Chain-of-thought",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A teammate adds 'think step by step' to your intent classifier prompt. Latency doubles, cost doubles, accuracy is unchanged. Why?",
+      "choices": [
+        { "id": "a", "text": "The model is broken." },
+        { "id": "b", "text": "Intent classification doesn't benefit from reasoning — the answer is one inference, not a multi-step problem. CoT adds tokens without value. Reserve CoT for tasks where a smart human would naturally pause and think: math, logic, multi-step analysis, planning." },
+        { "id": "c", "text": "You need Opus." },
+        { "id": "d", "text": "Add more examples." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forced CoT on easy tasks burns budget and adds latency for zero quality gain. Use CoT when the task is genuinely multi-step. Use a classifier upfront to route — only hard cases get the thinking prompt.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the best way to structure chain-of-thought on Claude so the output stays parseable?",
+      "choices": [
+        { "id": "a", "text": "Just add 'think step by step' and parse the answer with regex." },
+        { "id": "b", "text": "Use XML tags: ask the model to think inside `<thinking>` and give the final answer inside `<answer>` (or `<decision>`/`<output>`). Parse the answer block; surface the thinking only for debugging or audit. Combine with prefilling for guaranteed structure." },
+        { "id": "c", "text": "Hide the reasoning entirely." },
+        { "id": "d", "text": "Skip CoT — it's never worth it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured CoT with XML tags gives you both: the model thinks (improving accuracy on hard tasks) and the output stays parseable (your downstream code only reads the answer block). This is the canonical pattern on Claude and pairs naturally with prefilling, citations, and tagged few-shot examples.",
+      "points": 1
+    }
+  ]
+}

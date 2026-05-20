@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: System prompts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why are XML tags the recommended way to pass content to Claude?",
+      "choices": [
+        { "id": "a", "text": "They look more professional in code." },
+        { "id": "b", "text": "Claude is specifically trained on XML-tagged prompts. Tags delimit content unambiguously, let you reference specific sections in instructions, and reduce prompt-injection risk because tagged content reads as data, not instructions." },
+        { "id": "c", "text": "They're required by the API." },
+        { "id": "d", "text": "They cost fewer tokens." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anthropic explicitly recommends XML tags because Claude's training reinforces their use. Wrapping user-supplied or untrusted content in tags like <user_input> or <document> tells Claude to treat it as data and makes prompt injection harder to pull off.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your bot has inconsistent tone. Your system prompt says 'Be friendly and professional.' What's the better fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Replace the vague descriptor with specific rules: 'Use first-person plural. Use contractions. Never start with phrases like ''I understand'' or ''Great question.'' Keep replies under 4 sentences unless asked for detail.' Specific rules produce consistent behavior; vague descriptors don't." },
+        { "id": "c", "text": "Add more emoji." },
+        { "id": "d", "text": "Remove the system prompt entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Claude follows specific rules well and interprets vague descriptors inconsistently. Convert each tone goal into a concrete rule the model can verify it's following. If you can imagine multiple outputs all satisfying your description, the description is too vague.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Workers runtime",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your Worker logs analytics inline before returning the response. Latency is poor. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Disable logging." },
+        { "id": "b", "text": "Use `ctx.waitUntil(logAnalytics(...))` — fire-and-forget pattern. The response returns immediately; the log call continues in the background after response. CPU time still counts but wall-clock latency drops. Canonical pattern for any non-blocking side effect (analytics, cache updates, audit logs)." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Use D1 instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`ctx.waitUntil` is how Workers handle background work. The response returns immediately; the registered promise continues until completion. Use for any side effect that shouldn't block the user response.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How should you store secrets (API keys, DB passwords) for a Worker?",
+      "choices": [
+        { "id": "a", "text": "In wrangler.toml as plain `[vars]`." },
+        { "id": "b", "text": "Via `wrangler secret put NAME` — Cloudflare encrypts and stores; secrets appear on `env.NAME` at runtime. NEVER in wrangler.toml (which is in git). Plain `[vars]` are for non-sensitive config; `wrangler secret` is for anything actually secret." },
+        { "id": "c", "text": "In environment variables at deploy time." },
+        { "id": "d", "text": "Hardcoded in the source file." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Secrets must use `wrangler secret put`. They never enter git or the wrangler.toml file. Cloudflare encrypts and provisions them to your Worker; access via `env.NAME` at runtime.",
+      "points": 1
+    }
+  ]
+}

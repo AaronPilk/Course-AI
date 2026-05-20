@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
+import { CourseFactoryMark } from "@/components/public/course-factory-mark";
 
 const items = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -26,12 +27,10 @@ export function AdminSidebar({ email }: { email?: string | null }) {
   const pathname = usePathname();
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 h-screen sticky top-0 border-r border-border/70 bg-card/50 backdrop-blur-xl">
-      <div className="px-6 py-5 flex items-center gap-2">
-        <div className="size-8 rounded-xl bg-foreground text-background grid place-items-center font-bold">
-          C
-        </div>
+      <div className="px-6 py-5 flex items-center gap-2.5">
+        <CourseFactoryMark className="size-9 text-accent dark:text-white shrink-0" />
         <div>
-          <div className="text-sm font-semibold">Course Factory</div>
+          <div className="text-sm font-semibold text-foreground">Course Factory</div>
           <div className="text-xs text-mutedForeground">Admin</div>
         </div>
       </div>

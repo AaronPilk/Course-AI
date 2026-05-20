@@ -1,32 +1,44 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const params = useSearchParams();
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [state, setState] = useState<
-    { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string }
+    | { kind: "idle" }
+    | { kind: "submitting" }
+    | { kind: "error"; message: string }
   >({ kind: "idle" });
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setState({ kind: "sending" });
-    const supabase = createSupabaseBrowserClient();
-    const redirectTo = params.get("redirectTo") ?? "/admin";
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/api/auth/callback?redirectTo=${encodeURIComponent(redirectTo)}`,
-      },
-    });
-    if (error) setState({ kind: "error", message: error.message });
-    else setState({ kind: "sent" });
+    setState({ kind: "submitting" });
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setState({ kind: "error", message: data.error ?? "Invalid password" });
+        return;
+      }
+      const redirectTo = params.get("redirectTo") ?? "/admin";
+      router.push(redirectTo);
+      router.refresh();
+    } catch (e) {
+      setState({
+        kind: "error",
+        message: e instanceof Error ? e.message : "Login failed",
+      });
+    }
   }
 
   return (
@@ -37,10 +49,11 @@ export default function AdminLoginPage() {
             C
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">
-            Sign in to Course Factory
+            Course Factory
           </h1>
           <p className="text-sm text-mutedForeground">
-            We&apos;ll email you a one-time sign-in link.
+            Admin sign-in. Local mode — set <code>ADMIN_PASSWORD</code> in
+            your <code>.env.local</code>.
           </p>
         </div>
 
@@ -48,29 +61,24 @@ export default function AdminLoginPage() {
           <CardContent className="pt-6">
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="password">Admin password</Label>
                 <Input
-                  id="email"
-                  type="email"
+                  id="password"
+                  type="password"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  autoFocus
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <Button
                 type="submit"
                 className="w-full"
-                disabled={state.kind === "sending"}
+                disabled={state.kind === "submitting"}
               >
-                {state.kind === "sending" ? "Sending..." : "Send sign-in link"}
+                {state.kind === "submitting" ? "Signing in…" : "Sign in"}
               </Button>
 
-              {state.kind === "sent" && (
-                <p className="text-sm text-emerald-600 dark:text-emerald-400">
-                  Check your inbox for a sign-in link.
-                </p>
-              )}
               {state.kind === "error" && (
                 <p className="text-sm text-red-500">{state.message}</p>
               )}
@@ -79,8 +87,8 @@ export default function AdminLoginPage() {
         </Card>
 
         <p className="text-center text-xs text-mutedForeground">
-          Admin access only. New accounts default to <code>user</code> role —
-          ask the platform owner to elevate.
+          Local development mode. Multi-user auth is wired when we migrate
+          to Supabase at launch.
         </p>
       </div>
     </main>

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tunnel",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You want to expose a service running on your home machine to the internet. Your ISP blocks port 80 and you don't have a public IP. Right tool?",
+      "choices": [
+        { "id": "a", "text": "Ask the ISP for a static IP." },
+        { "id": "b", "text": "Cloudflare Tunnel. Install `cloudflared`, create a tunnel, route a DNS name to it, run the daemon. Outbound-only connection — works behind NAT, on residential networks, with ISP port-blocking. Five minutes of setup; no firewall changes needed. Combine with Access for identity-aware gating." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run a VPN server." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tunnel's killer feature is outbound-only — works through any NAT, firewall, or ISP restrictions. Five-minute setup; no public IP needed; secured by Cloudflare's network. Combine with Access (Lesson 5.1) for authenticated access.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How do you achieve high availability for a Cloudflare Tunnel?",
+      "choices": [
+        { "id": "a", "text": "Pay for HA tier." },
+        { "id": "b", "text": "Run multiple `cloudflared` instances on different servers, all using the same tunnel ID. Cloudflare load-balances across the connections automatically and fails over if one goes down. Same tunnel name, same credentials, multiple processes — that's HA." },
+        { "id": "c", "text": "Tunnel doesn't support HA." },
+        { "id": "d", "text": "Run two tunnels with different names." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HA tunnels are built-in: multiple cloudflared instances connect to the same tunnel; Cloudflare load-balances. No special config required. Combine with systemd / process supervision for auto-restart on individual instances.",
+      "points": 1
+    }
+  ]
+}

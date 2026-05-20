@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Evals",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Your eval suite has 40 cases and they all pass at 100%. What does that mean?",
+      "choices": [
+        { "id": "a", "text": "You're done — ship with confidence." },
+        { "id": "b", "text": "Your eval is probably too easy. Healthy evals live in the 70–90% range. A 100% suite has stopped catching the things you ship to improve. Add harder cases, sample real production failures, and rotate easy cases out." },
+        { "id": "c", "text": "Switch models — the current one is overqualified." },
+        { "id": "d", "text": "Stop running the eval; it's a waste of tokens." }
+      ],
+      "correct_answer": "b",
+      "explanation": "An eval at 100% has hit ceiling and can no longer measure improvements or regressions. It's a sign you've trained the prompt against those cases or the model has gotten too good for them. Add adversarial, edge, and regression cases sourced from real production failures.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to grade whether a support bot's response is helpful and accurate. The right answer isn't a fixed string — tone, completeness, and faithfulness matter. What grading approach fits?",
+      "choices": [
+        { "id": "a", "text": "Regex matching against expected keywords." },
+        { "id": "b", "text": "Model-based grading (LLM-as-judge) with a structured rubric returning JSON. Use a strong judge model, calibrate it against a sample of human ratings first, and add explicit rubric items so the judge doesn't just prefer longer answers." },
+        { "id": "c", "text": "Skip grading; ship it." },
+        { "id": "d", "text": "Have a human grade every single output forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Subjective qualities like helpfulness and tone are exactly where LLM-as-judge shines. The catches: use a capable judge model, write a clear rubric, and calibrate against ~30 human-graded examples so you know the judge agrees with humans. Once calibrated, the judge scales cheaply.",
+      "points": 1
+    }
+  ]
+}

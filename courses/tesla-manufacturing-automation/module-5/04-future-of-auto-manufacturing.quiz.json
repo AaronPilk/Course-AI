@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Future of auto manufacturing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most credible challenger to Tesla on manufacturing efficiency in 2026, and why?",
+      "choices": [
+        { "id": "a", "text": "Lucid — better engineering." },
+        { "id": "b", "text": "Rivian — better trucks." },
+        { "id": "c", "text": "BYD. They've achieved comparable or better cost-per-vehicle than Tesla, deeper vertical integration in some areas (notably their LFP Blade Battery chemistry), higher total volume when combining EVs and plug-in hybrids, and Chinese cost structure plus government support. The gap to Tesla closes most in mid-low segments; Tesla retains lead in software-defined operations and premium brand positioning. Other Chinese OEMs (NIO, Xpeng, Li Auto, Geely) are credible but smaller; legacy auto remains behind." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "BYD is the credible peer competitor on manufacturing cost. Dismissing them as 'just Chinese' misreads the operational reality. Tesla and BYD plus possibly one transformed Western legacy are the likely structural winners by 2030.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're running a Western legacy automaker in 2026 and need to plan EV manufacturing strategy. What's the highest-leverage move?",
+      "choices": [
+        { "id": "a", "text": "Match Tesla's gigacasting exactly." },
+        { "id": "b", "text": "Wait until autonomy is settled." },
+        { "id": "c", "text": "Embed software-defined operations as the primary discipline across all plants — instrumentation, dashboards, workflow-as-code, continuous improvement culture. Then selectively vertically integrate on strategic components (cells, motors, key electronics, software). Then redesign vehicle architecture for manufacturability (fewer parts, structural simplifications). This sequence builds the operating muscle before betting on specific tactics like gigacasting. The mistake is copying Tesla's tactics without the underlying discipline; the win is the discipline plus tactics adapted to your context, your supplier ecosystem, and your existing footprint." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Discipline before tactics. Hyundai is the clearest Western legacy example of doing this credibly. Volkswagen has invested heavily but software-defined operations remains uneven. The transformation is multi-year and requires sustained leadership commitment, but the principle of operating discipline first, specific tactics second, is the durable lesson.",
+      "points": 1
+    }
+  ]
+}

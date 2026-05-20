@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Contextual Retrieval",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What problem does Contextual Retrieval solve?",
+      "choices": [
+        { "id": "a", "text": "Slow embedding lookups." },
+        { "id": "b", "text": "Chunks losing context when split from their parent document. Prepending a 1–3 sentence context to each chunk before embedding (and indexing for BM25) restores enough information to make retrieval work on cross-referencing queries — dropping failure rates 35–67%." },
+        { "id": "c", "text": "Hallucinations in long context." },
+        { "id": "d", "text": "Token cost on long prompts." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Chunking is destructive — a chunk that says 'It was reduced 15% YoY' loses the entity, year, and document context. Contextual Retrieval restores that signal by prepending a short Claude-generated context. The chunk becomes self-describing for retrieval purposes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A 500K-token corpus needs Contextual Retrieval. Naive cost looks scary. What's the standard cost-control pattern?",
+      "choices": [
+        { "id": "a", "text": "Skip Contextual Retrieval." },
+        { "id": "b", "text": "Use Haiku for generation and turn on prompt caching for the whole document in the system prompt. Each chunk's generation re-uses the cached document at ~10% cost. Total cost typically drops from hundreds of dollars to a few dollars one-time." },
+        { "id": "c", "text": "Generate context for only the first chunk of each doc." },
+        { "id": "d", "text": "Use Opus to be safe." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Haiku + prompt caching is the canonical pattern from Anthropic's writeup. Caching makes the whole-document re-send nearly free; Haiku is cheap per call. A 1M-token corpus costs roughly $1 to fully process with context.",
+      "points": 1
+    }
+  ]
+}

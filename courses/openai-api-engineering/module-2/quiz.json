@@ -1,0 +1,77 @@
+{
+  "module": 2,
+  "title": "Module 2 quiz — Core Capabilities",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your prompt is producing mediocre output. What's the highest-leverage fix to try BEFORE upgrading to a larger model?",
+      "choices": [
+        { "id": "a", "text": "Add 'You are a world-class expert' to the system prompt." },
+        { "id": "b", "text": "Make the prompt more specific (role, audience, tone, length, format) AND add 1–2 labeled examples of the expected output. Specificity + examples routinely match or exceed a model upgrade at a fraction of the cost." },
+        { "id": "c", "text": "Add temperature: 2." },
+        { "id": "d", "text": "Wrap everything in ALL CAPS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Specificity is the most underrated lever in prompt engineering. Vague prompts produce vague output regardless of model. One well-chosen labeled example often outperforms paragraphs of description. Try this before switching models — the cost difference is often 5–10× for marginal quality gain.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which OpenAI feature guarantees the model's response is parseable JSON conforming to a schema?",
+      "choices": [
+        { "id": "a", "text": "Asking for JSON in the prompt." },
+        { "id": "b", "text": "Structured output with strict: true, an explicit `required` array, and additionalProperties: false. The model is constrained at token generation time and can't emit malformed JSON or skip required fields." },
+        { "id": "c", "text": "Temperature: 0." },
+        { "id": "d", "text": "A reasoning model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured output is the actual API feature. With strict mode + required + additionalProperties:false, structural conformance is enforced. Asking for JSON in a prompt is a soft request — the model usually complies but not always. Use the real feature.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Your function call to fetch user data fails with a database error. What should you send back to the model?",
+      "choices": [
+        { "id": "a", "text": "Crash your code with an exception." },
+        { "id": "b", "text": "Send the error back as a tool result (e.g., { error: 'Database unreachable' }). The model sees the error and can respond appropriately — apologize, retry, try a different tool, or ask the user for clarification. Tool errors are first-class data, not crashes." },
+        { "id": "c", "text": "Return fake successful data so the user doesn't notice." },
+        { "id": "d", "text": "Silently ignore the error and return nothing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Errors flow back as tool results, not as exceptions. The model handles them gracefully — it can apologize, retry, or try a different approach. This is what makes agents recoverable instead of fragile. Faking data is the worst option; it produces hallucinations.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "You're embedding a 10,000-word internal manual for semantic search. What's the right chunking strategy?",
+      "choices": [
+        { "id": "a", "text": "Embed the whole document as a single vector." },
+        { "id": "b", "text": "Chunk into ~500–800-token passages (with some overlap), embed each chunk separately, store both the embedding and the chunk text. Whole-document embeddings smear meaning across topics and produce weak retrieval." },
+        { "id": "c", "text": "Embed each sentence individually." },
+        { "id": "d", "text": "Chunk into 50-token mini-passages." }
+      ],
+      "correct_answer": "b",
+      "explanation": "500–800-token chunks are the typical sweet spot: large enough to carry meaningful context, small enough that each chunk represents one coherent idea. Whole-document embeddings average meaning across many topics; sentence-level chunks lose context. Always store both the vector AND the original text.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "You're building a phone-call-style AI agent. Users expect natural back-and-forth. Which OpenAI capability should you reach for?",
+      "choices": [
+        { "id": "a", "text": "Sequential STT → GPT-5 → TTS calls — it's the simplest." },
+        { "id": "b", "text": "The Realtime API. Sequential calls introduce 2–4 seconds of latency per turn, which breaks the interactive feel. Realtime streams bidirectional audio with sub-second response latency including model processing." },
+        { "id": "c", "text": "Image generation." },
+        { "id": "d", "text": "Embeddings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "For interactive voice where latency is the product, the Realtime API is the right tool — sub-second latency, bidirectional streaming, supports tools mid-conversation. Sequential STT → LLM → TTS works for any voice product but feels clunky for live conversation. Use Realtime when latency matters; sequential when it doesn't.",
+      "points": 1
+    }
+  ]
+}

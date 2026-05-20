@@ -1,0 +1,71 @@
+{
+  "title": "Module 2 quiz: Accepting a payment",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You fulfill orders by reading the Checkout Session on the success page. Users sometimes close the tab before redirect. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Force users to wait." },
+        { "id": "b", "text": "Fulfill via `checkout.session.completed` webhook, not the success URL redirect. Webhooks fire regardless of whether the user returned to your site. Treat webhooks as source of truth; success page is for UX only." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Email a fulfillment form." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhooks are durable; success URL redirects aren't. Build fulfillment on webhooks; success page is the UX courtesy for returning users."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A developer built a custom card input form sending card numbers to your backend. Compliance audit fails. Why?",
+      "choices": [
+        { "id": "a", "text": "It lacks accessibility." },
+        { "id": "b", "text": "Receiving raw card data triggers PCI-DSS scope — heavy compliance burden. Migrate to Stripe Elements: card data goes directly from browser to Stripe; your server never sees raw card numbers. Use Appearance API for custom design while keeping PCI scope minimal." },
+        { "id": "c", "text": "It's not encrypted." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Elements keep PCI scope minimal by handling card data client-side. Appearance API lets you match brand design without taking on full PCI compliance."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "A B2B SaaS charges $5K-$50K per invoice. Card fees are ~$150 per charge. Cost-saving move?",
+      "choices": [
+        { "id": "a", "text": "Use a different processor." },
+        { "id": "b", "text": "Add ACH / bank debits for large invoices. ACH fees cap at ~$5 vs. percentage-based card fees. Settlement is slower (3-5 days) and chargeback windows different, but acceptable for B2B contracts. Often saves tens of thousands per year." },
+        { "id": "c", "text": "Cards only; raise prices." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ACH/SEPA fees are capped, not percentage-based. For large amounts, dramatically cheaper than cards. Trade-off: slower settlement and different chargeback rules; usually acceptable for B2B."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What's the simplest way to enable the right payment methods per customer?",
+      "choices": [
+        { "id": "a", "text": "Manual selection per request." },
+        { "id": "b", "text": "Use `automatic_payment_methods: { enabled: true }` and configure supported methods in Stripe Dashboard. Stripe optimizes the subset shown per customer based on geo, currency, amount. One configuration; correct behavior automatically." },
+        { "id": "c", "text": "Custom router." },
+        { "id": "d", "text": "Always show all methods." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automatic payment methods is the canonical pattern. Configure once; Stripe optimizes per transaction."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Subscription renewal off-session fails with `requires_action`. Right pattern?",
+      "choices": [
+        { "id": "a", "text": "Retry off-session forever." },
+        { "id": "b", "text": "Catch `invoice.payment_action_required` webhook; mark user 'needs payment action'; surface banner + email. On next visit, complete saved PaymentIntent via Stripe.js (which handles 3DS). After auth, subscription resumes. Off-session 3DS requires user-present completion." },
+        { "id": "c", "text": "Cancel the subscription immediately." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Off-session 3DS needs user-present auth. Recovery flow: webhook → mark user → banner/email → user authenticates via Stripe.js → subscription resumes."
+    }
+  ]
+}

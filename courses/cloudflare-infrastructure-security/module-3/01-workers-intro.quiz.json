@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Workers basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What JavaScript runtime do Cloudflare Workers use?",
+      "choices": [
+        { "id": "a", "text": "Node.js" },
+        { "id": "b", "text": "V8 isolates (the same engine Chrome uses for JS). Not Node — `fs`, native bindings, and many npm packages that rely on Node internals don't work. Web-standard APIs (fetch, Request/Response, crypto, URL) do. WASM is supported. Sub-5ms cold starts." },
+        { "id": "c", "text": "Deno" },
+        { "id": "d", "text": "Bun" }
+      ],
+      "correct_answer": "b",
+      "explanation": "V8 isolates give Workers fast cold starts (<5ms) and a web-standard API surface. Migrating Node code can require adjustments — particularly anywhere `fs`, native modules, or process-level Node features were used. Modern frameworks (Hono, Next.js Edge Runtime) target this environment.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to validate JWT tokens before requests reach your origin, rejecting invalid ones at the edge. Right tool?",
+      "choices": [
+        { "id": "a", "text": "Origin middleware only." },
+        { "id": "b", "text": "A Cloudflare Worker bound to your route. Validates tokens at the edge; returns 401 for invalid; passes valid requests through to origin. Origin stops wasting CPU on bad requests; rejected requests have near-zero latency. Canonical use case for Workers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Edge auth checks are one of the highest-leverage Worker patterns. The Worker runs at every PoP, validates the token, and either rejects or forwards. Origin only sees authenticated traffic; rejected traffic never burns origin resources.",
+      "points": 1
+    }
+  ]
+}

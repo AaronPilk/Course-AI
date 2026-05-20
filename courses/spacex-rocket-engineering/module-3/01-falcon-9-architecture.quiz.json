@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Falcon 9 architecture",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why did SpaceX switch Falcon 9's grid fins from aluminum to titanium despite the mass penalty?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Aluminum grid fins survived ascent but charred and warped during reentry, requiring replacement or significant refurbishment between flights — which broke the rapid-reuse economics. Titanium fins are heavier (~250 kg each, mounted high on the booster where mass is most expensive for ascent performance) but survive 20+ flights without refurbishment. The operational savings from durability across many flights vastly exceed the per-launch ascent performance cost. This is a recurring pattern in reusable hardware: choose for the operational tempo, not just the single-flight performance." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random change." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Durability beats ascent performance when you're optimizing for fleet operations. Falcon 9's titanium fins, the stainless-steel Starship, and the increasingly hardened heat shields all reflect this principle — every part on a reusable vehicle must be designed for repeated cycles, not single use.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Falcon 9 loses a single Merlin engine in the first stage during ascent. What happens?",
+      "choices": [
+        { "id": "a", "text": "Catastrophic failure." },
+        { "id": "b", "text": "Mission usually succeeds. Falcon 9's nine-engine first stage is designed for engine-out tolerance: if one Merlin shuts down mid-ascent, the flight computer compensates by burning the remaining 8 engines longer and adjusting trajectory. CRS-1 in 2012 demonstrated this in practice — one Merlin shut down due to an anomaly, the rocket reached orbit anyway, and Dragon completed its ISS resupply mission. Losing 2 engines is tighter but probably still survivable. Losing the upper-stage Merlin Vacuum, however, is mission-ending because there's only one of them. The architecture deliberately puts redundancy where engines can be many and accepts a single point of failure where one large engine is more efficient." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rocket pauses mid-flight." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Engine-out tolerance is a major Falcon 9 design feature. It's why 9 engines were chosen instead of 3-5. The cost is interfaces and complexity; the benefit is the ability to reach orbit despite engine anomalies. SpaceX has demonstrated this in real flight.",
+      "points": 1
+    }
+  ]
+}

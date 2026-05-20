@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Privacy & audit",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the strongest pattern to prevent cross-user data leaks?",
+      "choices": [
+        { "id": "a", "text": "Application-level filtering on every query." },
+        { "id": "b", "text": "Row-level security at the database (or equivalent storage-layer enforcement). Application filtering depends on every query being written correctly; RLS makes wrong queries physically impossible. App-level scoping is the floor; storage-level enforcement is the safety net." },
+        { "id": "c", "text": "Encryption of query strings." },
+        { "id": "d", "text": "Smaller models." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Application-only scoping is fragile — one buggy query and you have a cross-user leak. RLS (or equivalent enforcement at the storage layer) makes the leak impossible by construction. Cheap to add; catches the bugs you didn't anticipate.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "User submits GDPR deletion request. Your DB delete is soft-delete. What's still wrong?",
+      "choices": [
+        { "id": "a", "text": "Nothing — soft delete is fine." },
+        { "id": "b", "text": "Soft delete doesn't satisfy GDPR or user trust. Real deletion must propagate to derived data: embeddings, summaries in memory layers, indexed content, possibly audit logs (with documented retention exceptions). Build the deletion plumbing as architecture — every storage layer needs a 'really delete' path." },
+        { "id": "c", "text": "Wait for the user to re-request." },
+        { "id": "d", "text": "Delete only the account row." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real deletion is the GDPR/CCPA bar. It includes derived data — embeddings, summaries, indexed chunks. Soft-delete leaves shadow data that compliance regulators (and users who care) won't accept. Build deletion as a first-class capability across every storage layer.",
+      "points": 1
+    }
+  ]
+}

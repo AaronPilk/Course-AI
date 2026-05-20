@@ -7,95 +7,91 @@ An AI-powered course manufacturing engine — two systems on one stack:
 - **Course Portal (public)** — browse, buy, and learn from finished
   courses with a premium player UX. *(Batch 3+)*
 
-This batch (Batch 1) ships the foundation: scaffold, auth, admin
-dashboard, project CRUD, PDF / URL / text ingestion with chunking and
-vector embeddings, and an AI-driven course outline generator.
+This repo is **local-first**. Everything runs on your Mac with a SQLite
+file and your API keys. No Supabase, no Cloudflare, no GitHub-required
+auth — that all gets wired in when you're ready to launch.
 
 See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## Stack
+## Stack (local mode)
 
 - Next.js 14 (App Router, TypeScript, Tailwind)
-- Supabase (Postgres, Auth, Storage, pgvector)
+- SQLite (via `better-sqlite3` + Drizzle ORM) → one file at `./.local-data/course-factory.db`
 - Anthropic Claude (generation) + OpenAI (embeddings)
-- Cloudflare Pages (deployment target — Batch 1+)
+- Admin auth: single-password gate via `ADMIN_PASSWORD` env var
+- In-memory cosine vector search (good for thousands of chunks)
+
+When you launch, all of this swaps to **Supabase + Cloudflare Pages** in
+one batch — the Drizzle schema and API routes barely change.
 
 ---
 
 ## Quickstart
 
-### 1. Install dependencies
-
 ```bash
+# 1. install
+cd "/Users/pilksclaes/Course AI"
 npm install
-```
 
-### 2. Create a Supabase project
+# 2. env is already created at .env.local with your Anthropic/OpenAI keys
+# (set during scaffolding). To rotate the password or AI keys, edit it.
 
-1. Create a new project at https://supabase.com.
-2. In **Project Settings → API**, copy the **Project URL**, **anon key**,
-   and **service role key**.
-3. Open the **SQL Editor** and run the contents of
-   [`supabase/migrations/0001_init.sql`](./supabase/migrations/0001_init.sql).
-4. Create a private storage bucket named `sources` (uncomment and run the
-   storage SQL at the bottom of the migration, or create via the UI).
-
-### 3. Configure environment
-
-Copy `.env.example` to `.env.local` and fill in:
-
-```bash
-cp .env.example .env.local
-```
-
-You'll need:
-
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY` *(server-only, never expose to the client)*
-- `ANTHROPIC_API_KEY`
-- `OPENAI_API_KEY`
-
-### 4. Promote your account to admin
-
-After your first sign-in (magic link), the `handle_new_user` trigger
-creates a row in `public.profiles` with role `user`. Promote yourself:
-
-```sql
-update public.profiles set role = 'admin' where email = 'you@example.com';
-```
-
-### 5. Run the app
-
-```bash
+# 3. run
 npm run dev
 ```
 
-Then open <http://localhost:3000> and click **Admin sign in**.
+Open <http://localhost:3000>. Click **Admin sign in**, enter the password
+from `.env.local` (`ADMIN_PASSWORD`). You're in.
+
+The SQLite database, schema, and `.local-data/` folder are all created
+automatically on first request — no separate migration step.
 
 ---
 
-## What works in Batch 1
+## What works right now
 
-- [x] Magic-link admin sign-in via Supabase
-- [x] Premium admin dashboard shell with dark/light mode
+- [x] Local single-admin auth (password + signed cookie)
+- [x] Premium admin dashboard with dark/light mode
 - [x] Course project CRUD (`/admin/projects`)
 - [x] Source ingestion — PDF upload, URL scrape, pasted text
 - [x] Token-aware chunking with overlap
 - [x] OpenAI `text-embedding-3-large` at 1536 dims, batched
 - [x] Heuristic copyright-risk scoring
-- [x] Vector retrieval over the project corpus
-  (`match_chunks` SQL function)
+- [x] In-memory cosine vector retrieval over the project corpus
 - [x] AI outline generation with Claude (tool-use enforced JSON schema)
 - [x] Module + lesson stubs persisted from generated outlines
 
 ## Coming next
 
-- Batch 2 — full lesson body generation, quizzes, glossary, editor
-- Batch 3 — publish flow, public course pages, player, progress
-- Batch 4 — Stripe, user dashboards, certificates
-- Batch 5 — diagrams, AI tutor, safety scanner
+- **Batch 2** — full lesson body generation, quizzes, glossary, in-place editor
+- **Batch 3** — publish flow, public course pages, course player, progress
+- **Batch 4** — Stripe, user dashboards, certificates
+- **Batch 5** — diagrams, AI tutor, safety scanner
+- **Launch batch** — swap SQLite → Supabase, deploy to Cloudflare Pages
 
-See [`SETUP.md`](./SETUP.md) for deployment notes.
+---
+
+## File layout
+
+```
+/Users/pilksclaes/Course AI/
+├── .local-data/                    ← gitignored
+│   ├── course-factory.db           ← SQLite database
+│   └── sources/{projectId}/...pdf  ← uploaded PDFs
+├── docs/ARCHITECTURE.md
+├── src/
+│   ├── app/                        ← Next.js routes
+│   ├── components/                 ← UI components
+│   └── lib/
+│       ├── db/                     ← Drizzle schema + client + vector search
+│       ├── ai/                     ← chunk, embed, scrape, outline
+│       └── auth.ts                 ← local password auth
+└── supabase/migrations/            ← saved for launch — not used locally
+```
+
+`./.local-data/` is the only place data lives. Back it up like any other
+file. Delete it to start fresh.
+
+See [`SETUP.md`](./SETUP.md) for deployment notes (when the time comes).

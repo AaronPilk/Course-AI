@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Search Console",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "In the Page Indexing report, you see a URL listed as 'Crawled — currently not indexed.' What does this mean and what's the right fix?",
+      "choices": [
+        { "id": "a", "text": "It means Googlebot can't reach the page. Fix robots.txt." },
+        { "id": "b", "text": "It means Googlebot fetched the page successfully, but Google's indexing system chose not to store it — typically a content quality / value signal. The fix is usually content (originality, depth, substance), not technical." },
+        { "id": "c", "text": "It means the URL has a noindex tag. Remove it." },
+        { "id": "d", "text": "It means the page is duplicate. Add a canonical." }
+      ],
+      "correct_answer": "b",
+      "explanation": "'Crawled — currently not indexed' is the indexing system's way of saying 'we saw it and chose not to store it.' Almost always a content-quality decision: too thin, too duplicate, too templated, too low-value. Submitting again won't change Google's mind. The fix is to make the page substantively worth indexing.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "In the Performance report, you find a query where you have high impressions but very low CTR. What's the most likely fix?",
+      "choices": [
+        { "id": "a", "text": "Add more keywords to the article body." },
+        { "id": "b", "text": "Your <title> and/or meta description for that page aren't compelling for users seeing it on the SERP. Rewrite them to be more accurate, clear, and click-worthy for the query." },
+        { "id": "c", "text": "Ask Google to re-crawl." },
+        { "id": "d", "text": "Add nofollow to all external links." }
+      ],
+      "correct_answer": "b",
+      "explanation": "High impressions = you're showing up. Low CTR = users see your listing and don't click. The SERP entry — primarily your title link and meta description — is doing the convincing. Rewrite them to be more useful and accurate for the query, and CTR typically responds within weeks.",
+      "points": 1
+    }
+  ]
+}

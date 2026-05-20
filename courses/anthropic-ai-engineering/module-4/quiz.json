@@ -1,0 +1,71 @@
+{
+  "title": "Module 4 quiz: Long context, RAG, and documents",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your knowledge base is 12K tokens of stable docs. Build RAG or stuff?",
+      "choices": [
+        { "id": "a", "text": "Build RAG — modern default." },
+        { "id": "b", "text": "Stuff with `cache_control`. The corpus fits comfortably, caching makes repeat calls cheap, and you skip the multi-week build of embeddings + vector index + retrieval logic. Promote to RAG when the corpus is too big to stuff or when access control / multi-tenant requirements appear." },
+        { "id": "c", "text": "Fine-tune Claude on the docs." },
+        { "id": "d", "text": "Truncate the docs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stuff small corpora, RAG large ones. The dividing line is roughly 30K tokens for cost reasons. Caching makes stuffing competitive on small data; build RAG when corpus size, query narrowness, or access scope makes retrieval necessary."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What does Contextual Retrieval do?",
+      "choices": [
+        { "id": "a", "text": "Replaces vector embeddings with keyword search." },
+        { "id": "b", "text": "Generates a 1–3 sentence context per chunk (using Claude) and prepends it before embedding and BM25 indexing. The augmented chunk carries its original document context — entity names, dates, surrounding topic — so retrieval works on cross-referencing queries. Drops failure rate 35–67% depending on stack." },
+        { "id": "c", "text": "Doubles the embedding dimensions." },
+        { "id": "d", "text": "Eliminates the need for chunking." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Contextual Retrieval restores context that chunking destroys. Each chunk gets a short Claude-generated context prepended; both embeddings and BM25 are computed on the augmented version. Anthropic's writeup shows 35% reduction with embeddings alone, 49% with BM25 hybrid, 67% with reranking."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Contextual Retrieval for a 1M-token corpus sounds expensive — running Claude on every chunk. What's the cost-control pattern?",
+      "choices": [
+        { "id": "a", "text": "Skip Contextual Retrieval — it's not worth the cost." },
+        { "id": "b", "text": "Use Haiku + prompt caching. The whole document goes in the system block with `cache_control`; each chunk's context generation re-uses the cached doc at ~10% cost. Anthropic's writeup shows ~$1/M tokens of corpus — pennies to dollars one-time for the whole pipeline." },
+        { "id": "c", "text": "Use Opus to be safe." },
+        { "id": "d", "text": "Generate context for only some chunks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Haiku + caching is the canonical pattern from Anthropic's research. The repeated whole-doc context is the expensive part; caching makes it nearly free on repeat calls. The chunk-specific output is small. Total cost is modest one-time, then forever free at query time."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What's the gold-standard pattern for accuracy-critical answers (legal, medical, policy)?",
+      "choices": [
+        { "id": "a", "text": "Use Opus for everything." },
+        { "id": "b", "text": "Built-in Citations API: pass documents with `citations: { enabled: true }`, surface citations in UI prominently. Combine with chain-of-thought (`<thinking>` + `<answer>`) so users see both the reasoning and the source text. Users can audit every claim in one click." },
+        { "id": "c", "text": "Add a disclaimer." },
+        { "id": "d", "text": "Skip RAG." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Span-level citations + visible reasoning = auditable answers. Built-in citations point at exact text in the source; chain-of-thought shows how Claude got there. UI surfaces both so users can verify every claim — turning AI from black box to reading assistant."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Receipts need to be turned into structured data. Old stack: OCR service + LLM + JSON parsing. New approach?",
+      "choices": [
+        { "id": "a", "text": "Pass receipt images to Claude with a tool defining the receipt schema, and force tool_choice. Single call: Claude reads the image natively (OCR implicit) and returns typed structured data. One service replaces three; schema enforces validity." },
+        { "id": "b", "text": "Add a second LLM pass." },
+        { "id": "c", "text": "Use Opus and hope." },
+        { "id": "d", "text": "Train a custom model." }
+      ],
+      "correct_answer": "a",
+      "explanation": "Vision + tool-call structured output is the standard modern pattern for document parsing. Cuts service count, reduces failures, makes the output schema-safe by construction. Used in production for receipts, invoices, IDs, forms, and many similar workflows."
+    }
+  ]
+}

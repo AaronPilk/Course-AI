@@ -1,0 +1,71 @@
+{
+  "title": "Module 3 quiz: Scheduled and background tasks",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Daily digest runs every morning but most days have nothing notable. Mute rate is rising. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add more content to every day's digest." },
+        { "id": "b", "text": "Skip days with nothing notable. Silence is information — users learn to read when the digest arrives because the assistant filtered. Add per-task disable, vacation pause, day-of-week overrides for full control." },
+        { "id": "c", "text": "Switch to weekly." },
+        { "id": "d", "text": "Use Opus to write fancier prose." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forcing daily output trains users to ignore. Skipping when nothing's notable trains them to attend. Embrace silence; surface only when there's signal."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's non-negotiable in scheduled-task UX?",
+      "choices": [
+        { "id": "a", "text": "Beautiful HTML emails." },
+        { "id": "b", "text": "Pause and disable controls: per-task pause, vacation mode, quiet hours, day-of-week overrides. Users need to halt scheduled work instantly when life happens. Without it, retention drops during every vacation and busy week." },
+        { "id": "c", "text": "More frequent runs." },
+        { "id": "d", "text": "Cron syntax UI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pause controls are some of the most-used assistant features once they exist. First-class, not v2-maybe."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Webhook storm fires dozens of unrelated events. Without protections, what happens?",
+      "choices": [
+        { "id": "a", "text": "Nothing — webhooks are resilient." },
+        { "id": "b", "text": "Notification flood. Defenses: per-event circuit breakers (stop firing after N events/min from a source), per-user rate limits, dedup keys, engineering alerts on storm patterns. One upstream incident can otherwise mute the assistant for every user." },
+        { "id": "c", "text": "Queue grows quietly." },
+        { "id": "d", "text": "Cost stays flat." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Event firehoses are real. Circuit breakers + rate limits + dedup + alerting. Catch storms before user trust erodes."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "When an event-triggered notification fires, what should always be shown?",
+      "choices": [
+        { "id": "a", "text": "Nothing — keep it minimal." },
+        { "id": "b", "text": "What triggered it: 'Triggered by: new email from Sarah (VIP rule)' or 'Triggered by: calendar conflict detected'. Users distrust unexplained interruptions; surfacing the trigger ties the alert to a rule they understand and can edit." },
+        { "id": "c", "text": "Trace IDs." },
+        { "id": "d", "text": "Provider name only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trigger transparency builds trust over time. Users learn 'why this fired' — they can adjust rules, ignore intentionally, or appreciate the catch."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the right default delivery channel for a new assistant notification?",
+      "choices": [
+        { "id": "a", "text": "SMS — fastest." },
+        { "id": "b", "text": "In-app inbox or daily digest email. Push is precious; reserve for things the user explicitly told you matter (VIP emails, security, on-call). Default conservative; let users tune up specific rules." },
+        { "id": "c", "text": "Push notification by default." },
+        { "id": "d", "text": "Multiple channels simultaneously." }
+      ],
+      "correct_answer": "b",
+      "explanation": "User attention is finite. Default to less-urgent surfaces; the user opts up the rules they actually care about. Push-by-default leads to fatigue and mute."
+    }
+  ]
+}

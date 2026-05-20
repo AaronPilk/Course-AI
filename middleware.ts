@@ -1,51 +1,52 @@
-// Refreshes Supabase session cookies on every request so server components
-// see a logged-in user. Also enforces admin login on /admin/*.
+// Gate /admin/* on a valid signed session cookie. No Supabase, no remote
+// session — just our local admin password cookie.
 import { NextResponse, type NextRequest } from "next/server";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+const COOKIE_NAME = "cf_session";
+
+// Re-implemented here because middleware runs on the Edge runtime by
+// default and we want to keep this file lean. We do `export const runtime`
+// below to opt into Node so node:crypto works.
+function verify(payload: string, signature: string, secret: string): boolean {
+  const expected = createHmac("sha256", secret).update(payload).digest("hex");
+  if (expected.length !== signature.length) return false;
+  try {
+    return timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+  } catch {
+    return false;
+  }
+}
+
+function isValid(value: string | undefined): boolean {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) return false;
+  if (!value) return false;
+  const parts = value.split(".");
+  if (parts.length !== 3) return false;
+  const [role, issuedAt, sig] = parts;
+  if (role !== "admin") return false;
+  if (!Number.isFinite(Number(issuedAt))) return false;
+  return verify(`${role}.${issuedAt}`, sig, secret);
+}
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next({ request: { headers: request.headers } });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          response.cookies.set({ name, value, ...options });
-        },
-        remove(name: string, options: CookieOptions) {
-          response.cookies.set({ name, value: "", ...options });
-        },
-      },
-    }
-  );
-
-  // Touch the session so cookies refresh.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   const { pathname } = request.nextUrl;
-  const isAdmin = pathname.startsWith("/admin");
-  const isAdminLogin = pathname === "/admin/login";
+  if (!pathname.startsWith("/admin")) return NextResponse.next();
+  if (pathname === "/admin/login") return NextResponse.next();
 
-  if (isAdmin && !isAdminLogin && !user) {
+  const cookie = request.cookies.get(COOKIE_NAME);
+  if (!isValid(cookie?.value)) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
     url.searchParams.set("redirectTo", pathname);
     return NextResponse.redirect(url);
   }
-
-  return response;
+  return NextResponse.next();
 }
 
+export const runtime = "nodejs";
+
 export const config = {
-  matcher: [
-    // Run on everything except static + image assets and favicon.
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
+  matcher: ["/admin/:path*"],
 };

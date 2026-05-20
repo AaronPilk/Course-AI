@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Where to focus + agentic SEO",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Google explicitly calls out one factor as having more impact on AI search success 'than any of the other suggestions in this guide.' What is it?",
+      "choices": [
+        { "id": "a", "text": "Adding llms.txt files." },
+        { "id": "b", "text": "Creating non-commodity content — unique, expert, first-hand information that doesn't exist elsewhere." },
+        { "id": "c", "text": "Restructuring pages into 80-word chunks." },
+        { "id": "d", "text": "Buying mention networks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "From the AI Optimization Guide: 'Creating content that people find unique, compelling, and useful will likely influence your website's presence in generative AI search in the long run more than any of the other suggestions in this guide.' Of everything in the guide, non-commodity content is the single biggest lever.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your ecommerce site implemented aggressive bot-blocking that catches AI agents from major tools. You start hearing from customers that AI assistants 'can't check your prices' or 'can't reach your site.' What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Keep the blocks — agents shouldn't access your site anyway." },
+        { "id": "b", "text": "Allowlist legitimate AI agents (from Anthropic, OpenAI, Google, etc.) so they can fetch product info on behalf of users. Reflexive blocks make you invisible to agent-mediated transactions, which is increasingly how customers research and buy." },
+        { "id": "c", "text": "Add a captcha to every page." },
+        { "id": "d", "text": "Move the site behind a login wall." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AI agents are becoming a real driver of traffic and transactions. Aggressive bot-blocking from before the agentic era catches both bad actors and legitimate AI tools that customers are using to interact with sites. The right answer is to allowlist intentionally — block scrapers, allow agents — not block everything.",
+      "points": 1
+    }
+  ]
+}

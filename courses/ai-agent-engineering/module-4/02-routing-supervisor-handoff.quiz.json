@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multi-agent topologies",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You have a research feature that needs to plan, run several sub-research queries, and synthesize findings — with the sub-queries depending on the plan. Which pattern fits?",
+      "choices": [
+        { "id": "a", "text": "Routing — pick one specialist." },
+        { "id": "b", "text": "Supervisor — a manager agent orchestrates specialist sub-agents as tools. The supervisor reasons about the plan, calls specialists for sub-queries, then composes the final synthesis. Fits tasks that decompose into specialized work but require holistic integration at the end." },
+        { "id": "c", "text": "Hand-off — pass the user from one agent to another." },
+        { "id": "d", "text": "Single agent with all tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Supervisor is the canonical pattern for decompose-then-synthesize work. Routing fits clear category separation (this question = support, that one = billing). Hand-off fits conversational personas. Supervisor fits when one brain needs to coordinate multiple specialists and produce a unified result.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What should flow between agents to keep multi-agent systems efficient?",
+      "choices": [
+        { "id": "a", "text": "Full conversation history every time." },
+        { "id": "b", "text": "Structured handoff payloads — a schema-defined object with `{ task, context, constraints }` — when possible. Falls back to summaries for conversational agents. Full history is the lazy default; it's expensive and confuses specialists with irrelevant context." },
+        { "id": "c", "text": "No state — each agent starts fresh." },
+        { "id": "d", "text": "Encrypted blobs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured payloads are the cleanest pattern: the supervisor packages exactly what the specialist needs; the specialist returns exactly what the supervisor needs to continue. Cheaper than full history, more focused than summaries. Use summaries only when conversational continuity matters.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "module": 4,
+  "title": "Module 4 quiz — SEO in the AI Search Era",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What technical pattern do Google's AI Overviews use to ground answers in current web content?",
+      "choices": [
+        { "id": "a", "text": "Pre-training on the entire web every night." },
+        { "id": "b", "text": "Retrieval-Augmented Generation (RAG): search the Google index for relevant pages, retrieve them, and synthesize an answer with citations." },
+        { "id": "c", "text": "A private knowledge graph that bypasses Search." },
+        { "id": "d", "text": "Direct submission portals for publishers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AI Overviews and AI Mode use RAG: a retrieval step grounded in Google's normal Search index, followed by a generation step that synthesizes the answer with citations. This is why classic SEO eligibility is the price of admission — your page has to make it through the retrieval step first.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which of these is the eligibility bar for appearing in AI Overviews?",
+      "choices": [
+        { "id": "a", "text": "Pay Google for AI placement." },
+        { "id": "b", "text": "Add an llms.txt file." },
+        { "id": "c", "text": "Be indexed and eligible to appear as a normal Search snippet (i.e., no noindex, no nosnippet, technical requirements met)." },
+        { "id": "d", "text": "Get verified by an AEO certification body." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Direct quote from Google: 'To be eligible to be shown in generative AI features on Google Search, a page must be indexed and eligible to be shown in Google Search with a snippet, fulfilling the Search technical requirements.' Classic SEO eligibility is the bar — nothing AI-specific is required.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "A vendor pitches you on 'content chunking' for AI — restructuring pages into 60–80 word self-contained chunks because 'AI consumes content in chunks.' What's the most accurate response?",
+      "choices": [
+        { "id": "a", "text": "Sounds smart — chunking is the future." },
+        { "id": "b", "text": "Google explicitly says chunking content for AI is unnecessary. Their systems understand multi-topic pages and quote relevant sentences from normal prose. Forced chunking can hurt human readability without helping AI visibility." },
+        { "id": "c", "text": "Only true for technical content." },
+        { "id": "d", "text": "Only true if you also add FAQ schema to every chunk." }
+      ],
+      "correct_answer": "b",
+      "explanation": "From the AI Optimization Guide myth section: 'There's no requirement to break your content into tiny pieces for AI to better understand it. Google systems are able to understand the nuance of multiple topics on a page and show the relevant piece to users.' Write paragraphs the way the topic naturally needs them.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What kind of content does Google explicitly say has more impact on AI search visibility than anything else in the AI Optimization Guide?",
+      "choices": [
+        { "id": "a", "text": "Highly structured schema markup." },
+        { "id": "b", "text": "Long-form keyword-stuffed listicles." },
+        { "id": "c", "text": "Non-commodity content — unique, first-hand, expert content that doesn't exist elsewhere on the web." },
+        { "id": "d", "text": "Content with the most internal links." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Google's exact words: 'Creating content that people find unique, compelling, and useful will likely influence your website's presence in generative AI search in the long run more than any of the other suggestions in this guide.' The single biggest lever is non-commodity content.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "An AEO consultancy promises to make your site visible in AI Overviews through proprietary tactics. None of their methods appear in Google's documentation. Their results are vague. What's the most accurate take?",
+      "choices": [
+        { "id": "a", "text": "Trust them — they probably have inside info." },
+        { "id": "b", "text": "Skeptical default. Tactics that don't appear in Google's documentation should be treated as folklore until proven otherwise. The real path is classic SEO done well plus the few small additions Google actually names (non-commodity content, technical clarity, freshness, Merchant Center for ecommerce)." },
+        { "id": "c", "text": "AEO is a separate field from SEO — Google is just hiding the truth." },
+        { "id": "d", "text": "Sign a long contract — the longer the more guaranteed results." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google has explicitly stated: 'From Google Search's perspective, optimizing for generative AI search is optimizing for the search experience, and thus still SEO.' Vendors selling AEO/GEO as separate disciplines are typically selling rebranded classic SEO at a markup, or worse, tactics Google has explicitly debunked.",
+      "points": 1
+    }
+  ]
+}

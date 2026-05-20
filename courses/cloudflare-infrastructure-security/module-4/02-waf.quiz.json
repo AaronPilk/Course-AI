@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: WAF",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You're about to deploy a new WAF rule blocking traffic with empty User-Agent strings. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Ship it straight to Block." },
+        { "id": "b", "text": "Start the rule in Log mode for at least a week. Monitor Firewall Events for false positives (legitimate traffic that matches). Adjust the rule (carve out internal monitoring, mobile apps with missing UAs, etc.). Only switch to Block once confident no legitimate users are affected. Ship-and-pray blocks regularly take down customer flows." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip WAF." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Log mode → monitor → refine → Block is the canonical WAF rollout pattern. Without false-positive monitoring, real users are blocked silently and you discover it from customer complaints. Always log first.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's a balanced WAF configuration for a typical production app?",
+      "choices": [
+        { "id": "a", "text": "Disable all rules to avoid false positives." },
+        { "id": "b", "text": "Managed rules enabled, 5-10 targeted custom rules covering app-specific risks (auth endpoint protection, admin path challenges, known abuse patterns), rate limits on sensitive endpoints, log review weekly. Don't over-engineer — hundreds of custom rules become unmaintainable and create false positives." },
+        { "id": "c", "text": "Block all traffic by default and allow specifically." },
+        { "id": "d", "text": "Enable every managed ruleset including ones for tech you don't use." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Right-size your WAF. Managed rules cover OWASP basics. Add app-specific custom rules where you have known patterns. Rate-limit auth and expensive endpoints. Skip irrelevant rulesets (WordPress rules if you don't run WordPress). Review weekly.",
+      "points": 1
+    }
+  ]
+}

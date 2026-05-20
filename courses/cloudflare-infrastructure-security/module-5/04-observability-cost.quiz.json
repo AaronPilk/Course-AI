@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Observability & cost",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your team noticed cache hit rate dropped from 65% to 28% over a week. What's the impact and where do you investigate?",
+      "choices": [
+        { "id": "a", "text": "No big deal; users don't notice cache hit rate." },
+        { "id": "b", "text": "Origin traffic just doubled (cache misses up); latency on uncached requests adds up; origin load and DB load increased. Investigate: recent changes that might have added varying headers (cookies, query params, dynamic timestamps), cache-control headers, or invalidation patterns. Weekly dashboard review catches this kind of drift early." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Disable caching entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache hit rate is a high-leverage operational metric. Drops mean origin sees more traffic, latency rises, and bills can grow. Common causes: vary-by-cookie / vary-by-query changes, cache-control header drift, missing edge cache rules. Catch in weekly review before it becomes an incident.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Where do Cloudflare cost surprises typically come from?",
+      "choices": [
+        { "id": "a", "text": "Always from the DDoS protection." },
+        { "id": "b", "text": "Viral Workers traffic blowing through included tiers, R2 Class A/B operations at scale, D1 per-row read pricing under heavy reads, Workers AI inference scaling beyond expectations, Logpush destinations (Datadog/Splunk) charging by ingest. Set per-product alerts and review weekly." },
+        { "id": "c", "text": "DNS overage charges." },
+        { "id": "d", "text": "SSL cert costs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DDoS protection is free. Cost surprises usually live in usage-based items: Workers requests/CPU, R2 ops, D1 reads, Workers AI. Set alerts when daily/weekly usage exceeds expected; review monthly bills against projections.",
+      "points": 1
+    }
+  ]
+}

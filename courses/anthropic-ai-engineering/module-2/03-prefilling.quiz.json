@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Prefilling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Your JSON parser breaks 5% of the time because Claude wraps responses in markdown fences. What's the canonical Claude fix?",
+      "choices": [
+        { "id": "a", "text": "Strip markdown with regex after the fact." },
+        { "id": "b", "text": "Prefill the assistant message with `{` so Claude continues from there. Markdown fences and 'Sure! Here's...' preamble disappear because there's no room for them. Combine with few-shot for total reliability." },
+        { "id": "c", "text": "Switch from Sonnet to Opus." },
+        { "id": "d", "text": "Use temperature 0 only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prefilling is Claude's built-in feature for locking response format. By adding `{ role: 'assistant', content: '{' }` as the last message, you start Claude's response mid-document. Parse failures drop to zero, no post-processing needed.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to extract ONLY a French translation, with no commentary. What pattern works best?",
+      "choices": [
+        { "id": "a", "text": "Prefill `<french>` and set `stop_sequences: ['</french>']`. Claude generates only the translation, stopping before any wrap-up commentary. Bonus: latency drops because there's less to generate." },
+        { "id": "b", "text": "Increase max_tokens to give room for commentary then strip it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Trust the model to be terse." }
+      ],
+      "correct_answer": "a",
+      "explanation": "Prefilling + stop sequences is the standard Claude pattern for extracting a single field. The opening tag locks where the response starts; the stop sequence ensures Claude doesn't keep going. Clean, fast, deterministic.",
+      "points": 1
+    }
+  ]
+}

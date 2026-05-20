@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Plan-then-act vs react",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your support chatbot answers routine questions in 2 seconds. A teammate adds a planning step 'to make it smarter' and latency jumps to 6 seconds with no measurable quality gain. Right move?",
+      "choices": [
+        { "id": "a", "text": "Keep the planning step everywhere." },
+        { "id": "b", "text": "Drop planning on routine questions. Reserve plan-then-act for genuinely complex queries (5+ tool calls, deep dependencies, costly wrong sequences). Detect complexity with a small classifier or simple heuristics; route easy ones to plain react. Best of both worlds." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Add a second planning step." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plan-then-act earns its cost on complex multi-step problems where wrong sequences are expensive. On routine queries it's pure latency overhead. Use intent-based routing: easy → react, complex → plan-then-act. Same agent, different loops based on task shape.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the production sweet spot for agent loop architecture?",
+      "choices": [
+        { "id": "a", "text": "Pure react, always." },
+        { "id": "b", "text": "Plan the outline, react within each step. Macro structure from planning; micro flexibility from react. Surface the plan to users so they can edit/abort. Re-plan only when observations contradict the plan — not on every step." },
+        { "id": "c", "text": "Pure plan-then-act, always." },
+        { "id": "d", "text": "Re-plan every step." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plan-then-react is the canonical production pattern for non-trivial agents. The plan gives the user a preview and the agent a structure; react inside each step handles the details. Re-planning is reserved for the cases where the world contradicts the plan — not as a constant overhead.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,587 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-19",
+  "note": "50-course production roadmap. Each entry has a working slug, status, sources, and a few notes. Add/edit freely; the importer doesn't read this file.",
+  "courses": [
+    {
+      "slug": "google-search-ai-era",
+      "title": "Ranking on Google in the AI Era",
+      "category": "SEO",
+      "status": "shipped",
+      "sources": [
+        "https://developers.google.com/search/docs"
+      ],
+      "notes": "Course #1. 22 lessons, 5 modules. Full English crawl already done."
+    },
+    {
+      "slug": "spacex-rocket-engineering",
+      "title": "SpaceX Rocket Engineering Fundamentals",
+      "category": "Aerospace",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "sources": [
+        "https://www.spacex.com",
+        "https://www.spacex.com/vehicles/falcon-9/",
+        "https://www.spacex.com/vehicles/falcon-heavy/",
+        "https://www.spacex.com/vehicles/starship/",
+        "https://www.spacex.com/updates/",
+        "https://api.spacexdata.com/v4/",
+        "https://ntrs.nasa.gov",
+        "https://www.nasa.gov"
+      ],
+      "videos": [
+        "https://www.youtube.com/@SpaceX",
+        "https://www.youtube.com/watch?v=921VbEMAwwY",
+        "https://www.youtube.com/watch?v=tdUX3ypDVwI",
+        "https://www.youtube.com/watch?v=uLW12L2nAHc",
+        "https://www.youtube.com/watch?v=sOpMrVnjYeY"
+      ],
+      "notes": "Research-heavy. May need supplementary academic papers from arxiv. NTRS gives technical depth."
+    },
+    {
+      "slug": "nvidia-cuda-gpu-programming",
+      "title": "NVIDIA CUDA & GPU Programming Simplified",
+      "category": "Engineering",
+      "status": "planned",
+      "sources": [
+        "https://docs.nvidia.com/cuda/",
+        "https://developer.nvidia.com/cuda-zone",
+        "https://developer.nvidia.com/blog",
+        "https://resources.nvidia.com/en-us-tensor-core",
+        "https://developer.nvidia.com/deep-learning"
+      ],
+      "videos": [
+        "https://www.youtube.com/@NVIDIADeveloper",
+        "https://www.youtube.com/watch?v=nRSxp8jKwhQ",
+        "https://www.youtube.com/watch?v=4sgKnKbR-WE"
+      ]
+    },
+    {
+      "slug": "openai-api-engineering",
+      "title": "OpenAI API Engineering Masterclass",
+      "category": "AI Engineering",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 22, "lessonQuizzes": 22, "moduleQuizzes": 5 },
+      "sources": [
+        "https://platform.openai.com/docs",
+        "https://cookbook.openai.com",
+        "https://platform.openai.com/docs/guides/prompt-engineering",
+        "https://platform.openai.com/docs/guides/agents",
+        "https://platform.openai.com/docs/models"
+      ],
+      "videos": [
+        "https://www.youtube.com/@OpenAI",
+        "https://www.youtube.com/watch?v=outcGtbnMuQ",
+        "https://www.youtube.com/watch?v=5uQw7A4wA3Q"
+      ]
+    },
+    {
+      "slug": "anthropic-ai-engineering",
+      "title": "Anthropic AI Engineering & Prompting",
+      "category": "AI Engineering",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 }
+    },
+    {
+      "slug": "anthropic-ai-engineering",
+      "title": "Anthropic AI Engineering & Prompting (canonical entry above; this block carried orphaned sources)",
+      "_orphaned_sources": [
+        "https://docs.anthropic.com",
+        "https://www.anthropic.com/engineering",
+        "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview"
+      ],
+      "status": "merge-into-canonical-above"
+    },
+    {
+      "slug": "ai-agent-engineering",
+      "title": "AI Agent Engineering Systems",
+      "category": "AI Engineering",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "sources": [
+        "https://platform.openai.com/docs/guides/agents",
+        "https://docs.anthropic.com/en/docs/agents-and-tools/building-effective-agents",
+        "https://modelcontextprotocol.io",
+        "https://langchain-ai.github.io/langgraph/"
+      ]
+    },
+    {
+      "slug": "autonomous-ai-assistants",
+      "title": "Building Autonomous AI Assistants",
+      "category": "AI Engineering",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "sources": [
+        "https://docs.anthropic.com/en/docs/agents-and-tools/building-effective-agents",
+        "https://modelcontextprotocol.io",
+        "https://platform.openai.com/docs/guides/agents"
+      ]
+    },
+    {
+      "slug": "cloudflare-infrastructure-security",
+      "title": "Cloudflare Infrastructure & Internet Security",
+      "category": "Infrastructure",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "sources": [
+        "https://developers.cloudflare.com",
+        "https://www.cloudflare.com/learning/",
+        "https://blog.cloudflare.com",
+        "https://developers.cloudflare.com/workers/",
+        "https://developers.cloudflare.com/pages/"
+      ],
+      "videos": [
+        "https://www.youtube.com/@Cloudflare",
+        "https://www.youtube.com/watch?v=-Xn6IDytVGw",
+        "https://www.youtube.com/watch?v=TG3U9IkL1mc"
+      ]
+    },
+    {
+      "slug": "stripe-payments-infrastructure",
+      "title": "Stripe Payments Infrastructure Explained",
+      "category": "Payments",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "sources": [
+        "https://stripe.com/docs",
+        "https://stripe.com/blog/engineering",
+        "https://stripe.com/guides",
+        "https://docs.stripe.com/api"
+      ],
+      "videos": [
+        "https://www.youtube.com/@stripe"
+      ]
+    },
+    {
+      "slug": "tesla-manufacturing-automation",
+      "title": "Tesla Manufacturing Systems & Automation",
+      "category": "Manufacturing",
+      "status": "shipped",
+      "shippedAt": "2026-05-19",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
+      "sources": [
+        "https://www.tesla.com/AI",
+        "https://ir.tesla.com",
+        "https://www.tesla.com/blog"
+      ]
+    },
+    {
+      "slug": "aws-cloud-architecture",
+      "title": "AWS Cloud Architecture for Beginners",
+      "category": "Cloud",
+      "status": "planned",
+      "sources": [
+        "https://aws.amazon.com/whitepapers/",
+        "https://docs.aws.amazon.com",
+        "https://aws.amazon.com/architecture/",
+        "https://aws.amazon.com/training/",
+        "https://aws.amazon.com/blogs/architecture/"
+      ]
+    },
+    {
+      "slug": "kubernetes-container-infrastructure",
+      "title": "Kubernetes & Container Infrastructure",
+      "category": "Infrastructure",
+      "status": "planned",
+      "sources": [
+        "https://kubernetes.io/docs/home/",
+        "https://kubernetes.io/blog/",
+        "https://www.cncf.io"
+      ]
+    },
+    {
+      "slug": "docker-deep-dive",
+      "title": "Docker Deep Dive",
+      "category": "Infrastructure",
+      "status": "planned",
+      "sources": [
+        "https://docs.docker.com",
+        "https://www.docker.com/blog/"
+      ]
+    },
+    {
+      "slug": "meta-ads-algorithm",
+      "title": "Meta Ads Algorithm & Optimization Systems",
+      "category": "Advertising",
+      "status": "planned",
+      "sources": [
+        "https://www.facebook.com/business/help",
+        "https://www.facebook.com/business/learn"
+      ]
+    },
+    {
+      "slug": "google-ads-machine-learning",
+      "title": "Google Ads Machine Learning Systems",
+      "category": "Advertising",
+      "status": "planned",
+      "sources": [
+        "https://support.google.com/google-ads",
+        "https://skillshop.withgoogle.com"
+      ]
+    },
+    {
+      "slug": "supabase-full-stack",
+      "title": "Supabase Full Stack Backend Engineering",
+      "category": "Backend",
+      "status": "planned",
+      "sources": ["https://supabase.com/docs"]
+    },
+    {
+      "slug": "nextjs-full-stack",
+      "title": "Next.js Full Stack Development",
+      "category": "Web",
+      "status": "planned",
+      "sources": ["https://nextjs.org/docs"]
+    },
+    {
+      "slug": "react-frontend",
+      "title": "React Frontend Engineering",
+      "category": "Web",
+      "status": "planned",
+      "sources": ["https://react.dev"]
+    },
+    {
+      "slug": "tailwind-css-production",
+      "title": "Tailwind CSS Production UI Design",
+      "category": "Web",
+      "status": "planned",
+      "sources": ["https://tailwindcss.com/docs"]
+    },
+    {
+      "slug": "github-devops",
+      "title": "GitHub DevOps & Version Control",
+      "category": "DevOps",
+      "status": "planned",
+      "sources": ["https://docs.github.com"]
+    },
+    {
+      "slug": "cloudflare-workers-edge",
+      "title": "Cloudflare Workers & Edge Computing",
+      "category": "Infrastructure",
+      "status": "planned",
+      "sources": ["https://developers.cloudflare.com/workers/"]
+    },
+    {
+      "slug": "ai-agent-engineering",
+      "title": "AI Agent Engineering Systems",
+      "category": "AI Engineering",
+      "status": "planned",
+      "sources": [
+        "https://python.langchain.com/docs/introduction/",
+        "https://platform.openai.com/docs"
+      ]
+    },
+    {
+      "slug": "autonomous-ai-assistants",
+      "title": "Building Autonomous AI Assistants",
+      "category": "AI Engineering",
+      "status": "planned",
+      "sources": [
+        "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "https://cookbook.openai.com"
+      ]
+    },
+    {
+      "slug": "trading-systems-algo-bots",
+      "title": "Trading Systems & Algorithmic Bots",
+      "category": "Trading",
+      "status": "planned",
+      "sources": [
+        "https://interactivebrokers.github.io",
+        "https://docs.alpaca.markets"
+      ]
+    },
+    {
+      "slug": "linux-command-line",
+      "title": "Linux Command Line & Server Infrastructure",
+      "category": "Systems",
+      "status": "planned",
+      "sources": ["https://ubuntu.com/server/docs"]
+    },
+    {
+      "slug": "cybersecurity-ethical-hacking",
+      "title": "Cybersecurity & Ethical Hacking Basics",
+      "category": "Security",
+      "status": "planned",
+      "sources": [
+        "https://owasp.org",
+        "https://www.kali.org/docs/"
+      ]
+    },
+    {
+      "slug": "networking-internet-infrastructure",
+      "title": "Networking & Internet Infrastructure",
+      "category": "Systems",
+      "status": "planned",
+      "sources": ["https://www.netacad.com"]
+    },
+    {
+      "slug": "api-rest-engineering",
+      "title": "API Engineering & REST Systems",
+      "category": "Backend",
+      "status": "planned",
+      "sources": ["https://learning.postman.com"]
+    },
+    {
+      "slug": "saas-product-architecture",
+      "title": "SaaS Product Architecture",
+      "category": "Architecture",
+      "status": "planned",
+      "sources": ["https://learn.microsoft.com/en-us/azure/architecture/"]
+    },
+    {
+      "slug": "apple-hig-design",
+      "title": "Apple Human Interface Design Systems",
+      "category": "Design",
+      "status": "planned",
+      "sources": ["https://developer.apple.com/design/human-interface-guidelines/"]
+    },
+    {
+      "slug": "figma-ui-ux-masterclass",
+      "title": "Figma UI/UX Design Masterclass",
+      "category": "Design",
+      "status": "planned",
+      "sources": ["https://help.figma.com"]
+    },
+    {
+      "slug": "adobe-premiere-editing",
+      "title": "Adobe Premiere & Content Editing Systems",
+      "category": "Creative",
+      "status": "planned",
+      "sources": ["https://helpx.adobe.com/premiere-pro/user-guide.html"]
+    },
+    {
+      "slug": "blender-3d-cgi",
+      "title": "Blender 3D & CGI Fundamentals",
+      "category": "Creative",
+      "status": "planned",
+      "sources": ["https://docs.blender.org"]
+    },
+    {
+      "slug": "unreal-engine-game-dev",
+      "title": "Unreal Engine Game Development",
+      "category": "Game Dev",
+      "status": "planned",
+      "sources": ["https://dev.epicgames.com/documentation/en-us/unreal-engine"]
+    },
+    {
+      "slug": "unity-game-dev",
+      "title": "Unity Game Development Systems",
+      "category": "Game Dev",
+      "status": "planned",
+      "sources": ["https://learn.unity.com"]
+    },
+    {
+      "slug": "stable-diffusion-gen-ai-art",
+      "title": "Stable Diffusion & Generative AI Art",
+      "category": "AI Art",
+      "status": "planned",
+      "sources": ["https://huggingface.co/docs/diffusers/index"]
+    },
+    {
+      "slug": "hugging-face-ai-engineering",
+      "title": "Hugging Face AI Engineering",
+      "category": "AI Engineering",
+      "status": "planned",
+      "sources": ["https://huggingface.co/docs"]
+    },
+    {
+      "slug": "langgraph-multi-agent",
+      "title": "LangGraph Multi-Agent Workflows",
+      "category": "AI Engineering",
+      "status": "planned",
+      "sources": ["https://langchain-ai.github.io/langgraph/"]
+    },
+    {
+      "slug": "pine-script-tradingview",
+      "title": "Pine Script TradingView Automation",
+      "category": "Trading",
+      "status": "planned",
+      "sources": ["https://www.tradingview.com/pine-script-docs/"]
+    },
+    {
+      "slug": "solana-blockchain-dev",
+      "title": "Solana Blockchain Development",
+      "category": "Blockchain",
+      "status": "planned",
+      "sources": ["https://solana.com/docs"]
+    },
+    {
+      "slug": "ethereum-smart-contracts",
+      "title": "Ethereum Smart Contract Engineering",
+      "category": "Blockchain",
+      "status": "planned",
+      "sources": ["https://ethereum.org/en/developers/docs/"]
+    },
+    {
+      "slug": "bitcoin-technical-architecture",
+      "title": "Bitcoin Technical Architecture",
+      "category": "Blockchain",
+      "status": "planned",
+      "sources": [
+        "https://bitcoin.org/bitcoin.pdf",
+        "https://developer.bitcoin.org"
+      ]
+    },
+    {
+      "slug": "seo-technical-search",
+      "title": "SEO & Technical Search Systems",
+      "category": "SEO",
+      "status": "redundant",
+      "sources": ["https://developers.google.com/search"],
+      "notes": "Largely covered by Course #1 already. Consider merging or skipping."
+    },
+    {
+      "slug": "ai-search-optimization-aeo-geo",
+      "title": "AI Search Optimization (AEO/GEO)",
+      "category": "SEO",
+      "status": "redundant",
+      "sources": [
+        "https://platform.openai.com/docs",
+        "https://blog.google/products/search/"
+      ],
+      "notes": "Module 4 of Course #1 already covers this. Skip unless we want a standalone short-form course."
+    },
+    {
+      "slug": "robotics-engineering-fundamentals",
+      "title": "Robotics Engineering Fundamentals",
+      "category": "Robotics",
+      "status": "planned",
+      "sources": ["https://docs.ros.org"]
+    },
+    {
+      "slug": "nasa-aerospace-concepts",
+      "title": "NASA Aerospace Engineering Concepts",
+      "category": "Aerospace",
+      "status": "planned",
+      "sources": [
+        "https://www.nasa.gov/learning-resources/",
+        "https://ntrs.nasa.gov"
+      ]
+    },
+    {
+      "slug": "faa-aviation-systems",
+      "title": "FAA Aviation Systems & Airspace",
+      "category": "Aviation",
+      "status": "planned",
+      "sources": [
+        "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation"
+      ]
+    },
+    {
+      "slug": "construction-project-management",
+      "title": "Construction Project Management Systems",
+      "category": "Construction",
+      "status": "planned",
+      "sources": [
+        "https://www.osha.gov/construction",
+        "https://www.procore.com/library"
+      ]
+    },
+    {
+      "slug": "crm-sales-automation",
+      "title": "CRM & Sales Automation Engineering",
+      "category": "Sales",
+      "status": "planned",
+      "sources": [
+        "https://academy.hubspot.com",
+        "https://help.gohighlevel.com"
+      ]
+    },
+    {
+      "slug": "cold-email-deliverability",
+      "title": "Cold Email Infrastructure & Deliverability",
+      "category": "Marketing",
+      "status": "planned",
+      "sources": [
+        "https://support.google.com/a/answer/81126",
+        "https://www.mailgun.com/resources/guides/"
+      ]
+    },
+    {
+      "slug": "youtube-algorithm-content",
+      "title": "YouTube Algorithm & Content Systems",
+      "category": "Creator",
+      "status": "planned",
+      "sources": ["https://creatoracademy.youtube.com"]
+    },
+    {
+      "slug": "tiktok-content-growth",
+      "title": "TikTok Content Growth Systems",
+      "category": "Creator",
+      "status": "planned",
+      "sources": ["https://ads.tiktok.com/business/learn"]
+    },
+    {
+      "slug": "ai-powered-business-automation",
+      "title": "AI-Powered Business Automation Systems",
+      "category": "Automation",
+      "status": "planned",
+      "sources": [
+        "https://zapier.com/blog/automation/",
+        "https://www.make.com/en/help",
+        "https://zapier.com/blog/ai/",
+        "https://www.notion.com/help/guides",
+        "https://airtable.com/guides"
+      ]
+    },
+    { "slug": "personal-finance-wealth-building", "title": "Personal Finance & Wealth Building", "category": "Finance", "status": "planned", "sources": ["https://www.investopedia.com/personal-finance-4427760", "https://www.consumerfinance.gov/consumer-tools/", "https://www.sec.gov/investor", "https://www.nerdwallet.com", "https://www.fdic.gov/resources/consumers/"] },
+    { "slug": "real-estate-investing", "title": "Real Estate Investing Fundamentals", "category": "Real Estate", "status": "planned", "sources": ["https://www.investopedia.com/real-estate-4689743", "https://www.biggerpockets.com/guides", "https://www.nar.realtor/research-and-statistics", "https://www.hud.gov/topics/buying_a_home"] },
+    { "slug": "luxury-real-estate-sales", "title": "Luxury Real Estate Sales Psychology", "category": "Real Estate", "status": "planned", "sources": ["https://www.nar.realtor/research-and-statistics", "https://www.nar.realtor/education", "https://www.inman.com", "https://www.luxuryrealestate.com/blog"] },
+    { "slug": "social-media-growth-virality", "title": "Social Media Growth & Virality", "category": "Creator", "status": "planned", "sources": ["https://blog.hootsuite.com", "https://later.com/blog/", "https://buffer.com/resources/", "https://sproutsocial.com/insights/", "https://www.socialmediaexaminer.com"] },
+    { "slug": "tiktok-content-masterclass", "title": "TikTok Content Creation Masterclass", "category": "Creator", "status": "planned", "sources": ["https://ads.tiktok.com/business/learn", "https://newsroom.tiktok.com", "https://support.tiktok.com", "https://www.tiktok.com/business/en"] },
+    { "slug": "youtube-channel-growth", "title": "YouTube Channel Growth Systems", "category": "Creator", "status": "planned", "sources": ["https://creatoracademy.youtube.com", "https://support.google.com/youtube", "https://www.youtube.com/creators/", "https://blog.youtube"] },
+    { "slug": "high-ticket-sales-psychology", "title": "High-Ticket Sales Psychology", "category": "Sales", "status": "planned", "sources": ["https://www.salesforce.com/resources/", "https://blog.hubspot.com/sales", "https://www.gong.io/blog/", "https://www.pipedrive.com/en/blog/sales"] },
+    { "slug": "negotiation-persuasion", "title": "Negotiation & Persuasion Masterclass", "category": "Communication", "status": "planned", "sources": ["https://www.pon.harvard.edu", "https://online.hbs.edu/blog/", "https://www.mindtools.com/communication-skills/negotiation", "https://www.psychologytoday.com/us/basics/persuasion"] },
+    { "slug": "entrepreneurship-startup-building", "title": "Entrepreneurship & Startup Building", "category": "Business", "status": "planned", "sources": ["https://www.ycombinator.com/library", "https://www.startupschool.org", "https://www.sba.gov/business-guide", "https://hbr.org/topic/subject/entrepreneurship"] },
+    { "slug": "ecommerce-brand-building", "title": "E-Commerce Brand Building", "category": "Ecommerce", "status": "planned", "sources": ["https://www.shopify.com/blog", "https://www.shopify.com/learn", "https://www.bigcommerce.com/blog/", "https://www.klaviyo.com/blog"] },
+    { "slug": "dropshipping-product-research", "title": "Dropshipping & Product Research", "category": "Ecommerce", "status": "planned", "sources": ["https://www.shopify.com/blog/dropshipping", "https://www.shopify.com/blog/product-research", "https://www.alibaba.com", "https://www.aliexpress.com"] },
+    { "slug": "fitness-coaching-transformation", "title": "Fitness Coaching & Body Transformation", "category": "Health", "status": "planned", "sources": ["https://www.mayoclinic.org/healthy-lifestyle/fitness", "https://www.acefitness.org/resources/everyone/", "https://www.nasm.org/resources", "https://www.bodybuilding.com"] },
+    { "slug": "nutrition-meal-planning", "title": "Nutrition & Meal Planning", "category": "Health", "status": "planned", "sources": ["https://www.eatright.org", "https://www.myplate.gov", "https://www.hsph.harvard.edu/nutritionsource/", "https://www.healthline.com/nutrition"] },
+    { "slug": "muscle-building-science", "title": "Muscle Building Science", "category": "Health", "status": "planned", "sources": ["https://pubmed.ncbi.nlm.nih.gov", "https://www.strongerbyscience.com", "https://examine.com/articles/", "https://www.nsca.com/education/"] },
+    { "slug": "longevity-biohacking", "title": "Longevity & Biohacking", "category": "Health", "status": "planned", "sources": ["https://www.ncbi.nlm.nih.gov", "https://www.foundmyfitness.com", "https://www.nih.gov/news-events/nih-research-matters", "https://www.health.harvard.edu/topics/healthy-aging"] },
+    { "slug": "cooking-fundamentals", "title": "Cooking Fundamentals", "category": "Lifestyle", "status": "planned", "sources": ["https://www.seriouseats.com", "https://www.allrecipes.com", "https://www.thekitchn.com", "https://www.foodsafety.gov"] },
+    { "slug": "luxury-interior-design", "title": "Luxury Interior Design", "category": "Design", "status": "planned", "sources": ["https://www.architecturaldigest.com", "https://www.dezeen.com", "https://www.elledecor.com", "https://www.interiordesign.net"] },
+    { "slug": "photography-masterclass", "title": "Photography Masterclass", "category": "Creative", "status": "planned", "sources": ["https://digital-photography-school.com", "https://www.adobe.com/creativecloud/photography/discover.html", "https://www.nikonusa.com/learn-and-explore", "https://www.usa.canon.com/learning"] },
+    { "slug": "cinematic-videography", "title": "Cinematic Videography", "category": "Creative", "status": "planned", "sources": ["https://nofilmschool.com", "https://www.premiumbeat.com/blog/", "https://www.studiobinder.com/blog/", "https://www.blackmagicdesign.com/products/davinciresolve/training"] },
+    { "slug": "drone-aerial-cinematics", "title": "Drone Filming & Aerial Cinematics", "category": "Creative", "status": "planned", "sources": ["https://www.dji.com/support", "https://www.faa.gov/uas", "https://www.faa.gov/uas/getting_started", "https://pilotinstitute.com"] },
+    { "slug": "music-production-fundamentals", "title": "Music Production Fundamentals", "category": "Creative", "status": "planned", "sources": ["https://www.ableton.com/en/manual/", "https://learningmusic.ableton.com", "https://support.image-line.com", "https://www.apple.com/logic-pro/resources/"] },
+    { "slug": "dj-live-performance", "title": "DJ & Live Performance Skills", "category": "Creative", "status": "planned", "sources": ["https://www.pioneerdj.com/en/support/", "https://rekordbox.com/en/support/manual/", "https://www.native-instruments.com/en/learn/"] },
+    { "slug": "podcast-production-growth", "title": "Podcast Production & Growth", "category": "Creator", "status": "planned", "sources": ["https://podcasters.spotify.com/resources", "https://support.spotify.com/us/podcasters/", "https://podcast.adobe.com", "https://riverside.fm/blog"] },
+    { "slug": "public-speaking-confidence", "title": "Public Speaking & Confidence", "category": "Communication", "status": "planned", "sources": ["https://www.toastmasters.org/resources", "https://www.coursera.org/articles/public-speaking", "https://www.mindtools.com/a2e1v0l/public-speaking"] },
+    { "slug": "dating-psychology-communication", "title": "Dating Psychology & Communication", "category": "Psychology", "status": "planned", "sources": ["https://www.psychologytoday.com/us/basics/relationships", "https://greatergood.berkeley.edu/topic/relationships", "https://www.gottman.com/blog/", "https://www.helpguide.org/relationships"] },
+    { "slug": "fashion-styling-branding", "title": "Fashion Styling & Personal Branding", "category": "Lifestyle", "status": "planned", "sources": ["https://www.vogue.com/fashion", "https://www.gq.com/style", "https://www.businessoffashion.com", "https://www.whowhatwear.com"] },
+    { "slug": "luxury-brand-building", "title": "Luxury Brand Building", "category": "Business", "status": "planned", "sources": ["https://hbr.org/topic/subject/branding", "https://www.forbes.com/leadership/", "https://www.businessoffashion.com", "https://www.luxurysociety.com"] },
+    { "slug": "airbnb-short-term-rentals", "title": "Airbnb Hosting & Short-Term Rentals", "category": "Real Estate", "status": "planned", "sources": ["https://www.airbnb.com/resources/hosting-homes", "https://www.airbnb.com/help/topic/1440", "https://www.airdna.co/blog", "https://www.biggerpockets.com/guides/airbnb-hosting"] },
+    { "slug": "car-detailing-ceramic-coating", "title": "Car Detailing & Ceramic Coating", "category": "Trades", "status": "planned", "sources": ["https://www.detailingwiki.org", "https://www.autogeek.net/detailingtips.html", "https://www.chemicalguys.com/blogs/exterior-how-tos", "https://www.meguiars.com/professional/resources"] },
+    { "slug": "watch-collecting-timepieces", "title": "Watch Collecting & Luxury Timepieces", "category": "Lifestyle", "status": "planned", "sources": ["https://www.hodinkee.com", "https://www.watchtime.com", "https://www.fratellowatches.com", "https://www.chrono24.com/magazine/"] },
+    { "slug": "wine-whiskey-education", "title": "Wine & Whiskey Education", "category": "Lifestyle", "status": "planned", "sources": ["https://winefolly.com", "https://www.wsetglobal.com/knowledge-centre/", "https://www.whisky.com", "https://www.masters-of-malt.com/blog/"] },
+    { "slug": "survival-preparedness", "title": "Survival Skills & Preparedness", "category": "Lifestyle", "status": "planned", "sources": ["https://www.ready.gov", "https://www.redcross.org/get-help/how-to-prepare-for-emergencies.html", "https://www.fema.gov/emergency-managers/national-preparedness", "https://www.cdc.gov/emergency/index.html"] },
+    { "slug": "homesteading-self-sufficiency", "title": "Homesteading & Self-Sufficiency", "category": "Lifestyle", "status": "planned", "sources": ["https://www.almanac.com/gardening", "https://www.motherearthnews.com", "https://extension.org", "https://www.usda.gov/topics/rural"] },
+    { "slug": "gardening-food-growing", "title": "Gardening & Food Growing", "category": "Lifestyle", "status": "planned", "sources": ["https://extension.org", "https://www.almanac.com/gardening", "https://www.gardeners.com/how-to", "https://www.rhs.org.uk/advice"] },
+    { "slug": "dog-training-animal-psychology", "title": "Dog Training & Animal Psychology", "category": "Lifestyle", "status": "planned", "sources": ["https://www.akc.org/expert-advice/training/", "https://www.aspca.org/pet-care/dog-care", "https://www.humanesociety.org/resources/dog-training", "https://vcahospitals.com/know-your-pet/dog-behavior-and-training"] },
+    { "slug": "parenting-child-development", "title": "Parenting & Child Development", "category": "Family", "status": "planned", "sources": ["https://www.cdc.gov/parents/", "https://developingchild.harvard.edu", "https://www.healthychildren.org", "https://childmind.org/resources/"] },
+    { "slug": "meditation-mindfulness", "title": "Meditation & Mindfulness", "category": "Psychology", "status": "planned", "sources": ["https://www.mindful.org", "https://www.headspace.com", "https://www.nccih.nih.gov/health/meditation-and-mindfulness-effectiveness-and-safety", "https://greatergood.berkeley.edu/topic/mindfulness"] },
+    { "slug": "stoicism-philosophy", "title": "Stoicism & Philosophy for Modern Life", "category": "Philosophy", "status": "planned", "sources": ["https://iep.utm.edu/stoicism/", "https://plato.stanford.edu/entries/stoicism/", "https://www.gutenberg.org/ebooks/45109", "https://www.gutenberg.org/ebooks/2680"] },
+    { "slug": "psychology-human-behavior", "title": "Psychology & Human Behavior", "category": "Psychology", "status": "planned", "sources": ["https://www.simplypsychology.org", "https://www.psychologytoday.com", "https://www.apa.org/topics", "https://openstax.org/details/books/psychology-2e"] },
+    { "slug": "body-language-social-intel", "title": "Body Language & Social Intelligence", "category": "Communication", "status": "planned", "sources": ["https://www.psychologytoday.com/us/topics/body-language", "https://www.helpguide.org/relationships/communication/nonverbal-communication", "https://www.skillsyouneed.com/ips/nonverbal-communication.html"] },
+    { "slug": "copywriting-persuasive-writing", "title": "Copywriting & Persuasive Writing", "category": "Communication", "status": "planned", "sources": ["https://copyblogger.com", "https://blog.hubspot.com/marketing", "https://www.grammarly.com/blog/writing-tips/", "https://www.nngroup.com/articles/"] },
+    { "slug": "storytelling-script-writing", "title": "Storytelling & Script Writing", "category": "Creative", "status": "planned", "sources": ["https://www.studiobinder.com/blog/", "https://screencraft.org/blog/", "https://www.writersdigest.com/write-better-fiction"] },
+    { "slug": "freelancing-client-acquisition", "title": "Freelancing & Client Acquisition", "category": "Business", "status": "planned", "sources": ["https://www.upwork.com/resources", "https://www.fiverr.com/resources/guides", "https://www.freelancersunion.org/resources/", "https://blog.hubspot.com/sales/client-acquisition"] },
+    { "slug": "personal-branding-influence", "title": "Personal Branding & Influence", "category": "Business", "status": "planned", "sources": ["https://www.linkedin.com/business/marketing/blog", "https://blog.hubspot.com/marketing/personal-branding", "https://www.forbes.com/sites/forbescoachescouncil/", "https://hbr.org/topic/subject/personal-branding"] },
+    { "slug": "remote-business-operations", "title": "Remote Business Operations", "category": "Business", "status": "planned", "sources": ["https://slack.com/resources", "https://asana.com/resources", "https://www.notion.com/help/guides", "https://basecamp.com/guides"] },
+    { "slug": "event-planning-luxury-experiences", "title": "Event Planning & Luxury Experiences", "category": "Business", "status": "planned", "sources": ["https://www.eventbrite.com/blog/", "https://www.cvent.com/en/blog/events", "https://www.socialtables.com/blog/", "https://www.bizbash.com"] },
+    { "slug": "restaurant-food-truck-business", "title": "Restaurant & Food Truck Business", "category": "Business", "status": "planned", "sources": ["https://restaurant.org", "https://pos.toasttab.com/blog", "https://www.sba.gov/business-guide/launch-your-business/pick-your-business-location", "https://www.foodsafety.gov"] },
+    { "slug": "sales-funnels-lead-gen", "title": "Sales Funnels & Lead Generation", "category": "Sales", "status": "planned", "sources": ["https://blog.hubspot.com/sales", "https://blog.hubspot.com/marketing", "https://clickfunnels.com/blog/", "https://www.salesforce.com/resources/"] },
+    { "slug": "construction-business-operations", "title": "Construction Business Operations", "category": "Construction", "status": "planned", "sources": ["https://www.osha.gov/construction", "https://www.procore.com/library", "https://www.autodesk.com/construction/resources", "https://www.sba.gov/business-guide"] },
+    { "slug": "ai-for-business-owners", "title": "AI for Everyday Business Owners", "category": "AI Business", "status": "planned", "sources": ["https://openai.com/business", "https://platform.openai.com/docs", "https://www.anthropic.com", "https://docs.anthropic.com", "https://zapier.com/blog/ai/", "https://www.make.com/en/help"] }
+  ]
+}

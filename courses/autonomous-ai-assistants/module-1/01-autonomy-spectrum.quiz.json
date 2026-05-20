@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Autonomy spectrum",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A startup launches 'your AI executive assistant' that books meetings, responds to emails, and reschedules autonomously on day one. Within a week, three users have high-profile mistakes (wrong cancellations). What went wrong?",
+      "choices": [
+        { "id": "a", "text": "They picked the wrong LLM provider." },
+        { "id": "b", "text": "They launched at level 5 (background coworker acting autonomously) before building user trust or eval coverage. Most successful 'autonomous' products start lower (level 3 — propose then approve, or level 4 — scheduled with surfacing) and ramp up as trust and evals catch up. Level 5 in high-impact domains is the hardest place to start." },
+        { "id": "c", "text": "Marketing budget too small." },
+        { "id": "d", "text": "Not enough tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Autonomy and trust are coupled. Launching at the highest autonomy level with zero trust account means the first big mistake torches the product. Successful ramp: start at level 2-3 with approval, build trust through transparency and reversibility, opt users up to higher autonomy on narrow domains where evals are strong.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the right default autonomy level for a new assistant feature?",
+      "choices": [
+        { "id": "a", "text": "Level 5 — full background autonomy." },
+        { "id": "b", "text": "Level 3 — initiative assistant: bot proposes actions, executes after approval. Lets the bot show value through proactive suggestions without taking irreversible actions. Easiest path to building user trust; easy to step up to level 4-5 on opt-in once evals and trust support it." },
+        { "id": "c", "text": "Level 1 — pure chatbot." },
+        { "id": "d", "text": "Skip levels and launch where competitors are." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Level 3 is the sweet spot for shipping a new assistant: enough autonomy to be useful (proactive proposals) without enough to break trust (no unilateral irreversible actions). Once users like the suggestions and evals look solid, you can offer level 4 (scheduled) and level 5 (background) as opt-in upgrades on specific tasks.",
+      "points": 1
+    }
+  ]
+}

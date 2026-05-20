@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Structured output",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You're asking the model to extract structured fields from text, and you keep getting parser errors (markdown fences, missing fields, wrong types). What's the right fix?",
+      "choices": [
+        { "id": "a", "text": "Write a more defensive JSON repair function." },
+        { "id": "b", "text": "Use the structured output / JSON schema feature with strict: true, required arrays, and additionalProperties: false. The model is then forced — at token-generation time — to produce schema-conforming JSON. No more repair needed." },
+        { "id": "c", "text": "Switch to a reasoning model." },
+        { "id": "d", "text": "Add 'Please return valid JSON' three times to the prompt." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured output is the actual API feature for this. With strict: true the model can't emit malformed JSON. With required arrays, all fields are present. With additionalProperties: false, no surprise fields. JSON repair functions are a workaround for not using the real feature.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which guarantee does OpenAI's structured output (with strict: true) provide?",
+      "choices": [
+        { "id": "a", "text": "The values in the response are factually correct." },
+        { "id": "b", "text": "The response is valid JSON conforming to the schema you provided (correct shape, required fields present, correct types, no extra fields). Value semantics (real data, correct logic) is still your responsibility to validate." },
+        { "id": "c", "text": "The model will refuse if it doesn't have enough information." },
+        { "id": "d", "text": "The response will be the smallest possible JSON." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured output guarantees structural conformance — the JSON parses, fields match the schema, types are right. It doesn't guarantee semantic correctness — the model can still hallucinate values within valid types. Always validate values in business logic.",
+      "points": 1
+    }
+  ]
+}

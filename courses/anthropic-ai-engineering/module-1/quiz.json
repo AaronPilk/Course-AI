@@ -1,0 +1,71 @@
+{
+  "title": "Module 1 quiz: Working with Claude",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which Claude tier should be your starting default?",
+      "choices": [
+        { "id": "a", "text": "Always Opus." },
+        { "id": "b", "text": "Sonnet — strong general intelligence at fraction of Opus cost. Move down to Haiku for cheap simple tasks, up to Opus for hard reasoning, only when there's a reason." },
+        { "id": "c", "text": "Always Haiku." },
+        { "id": "d", "text": "Whichever was most recently released." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sonnet is the production default. Always-Opus is wasteful; always-Haiku misses nuance. Mixed-tier routing — easy → Haiku, hard → Opus — is the biggest cost lever after caching."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Where does the system prompt go in the Messages API?",
+      "choices": [
+        { "id": "a", "text": "As a `{role: 'system', ...}` entry in `messages`." },
+        { "id": "b", "text": "As a top-level `system` field on the request, separate from `messages`. The messages array contains only user/assistant turns, must alternate, and must start with user." },
+        { "id": "c", "text": "Inside the first user message." },
+        { "id": "d", "text": "Anywhere — Claude figures it out." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Claude's API has a dedicated `system` field at the top level — this is the most common mistake for engineers migrating from OpenAI."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "You're storing only `response.content[0].text` in your agent's history. Tool calls keep repeating. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Tool use isn't supported in Sonnet." },
+        { "id": "b", "text": "`response.content` is an array of typed blocks — text, tool_use, image, etc. Storing only the first block loses tool_use data, so on the next turn Claude doesn't know it already called the tool. Always append the full `response.content` array to history." },
+        { "id": "c", "text": "You need Opus for tools." },
+        { "id": "d", "text": "Send messages in reverse order." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-block responses are how Claude returns tool calls alongside text. Persist the entire `content` array — never strip blocks before appending to history."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Which is the strongest pattern for passing user-supplied content to Claude?",
+      "choices": [
+        { "id": "a", "text": "Concatenate everything in one big string." },
+        { "id": "b", "text": "Wrap untrusted content in XML tags like `<user_input>...</user_input>` and tell Claude in the system prompt to treat tagged content as data, not instructions. Reduces prompt injection risk and lets you reference content unambiguously elsewhere in the prompt." },
+        { "id": "c", "text": "Encode it in base64." },
+        { "id": "d", "text": "Put it in the system prompt." }
+      ],
+      "correct_answer": "b",
+      "explanation": "XML tags are Anthropic's recommended pattern. Claude is specifically trained on them; they delimit content cleanly and harden the prompt against injection attempts hidden inside user data."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "A 60K-token knowledge base is being stuffed into every Claude call. Bill is 5× budget. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Upgrade to Opus." },
+        { "id": "b", "text": "Switch to RAG: embed the corpus, retrieve only the 2–5K tokens relevant to each query, pass those instead. Stack with prompt caching on the system prompt for additional savings. Typical reduction: 90%+ input cost with no quality loss." },
+        { "id": "c", "text": "Truncate randomly." },
+        { "id": "d", "text": "Disable the feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stuffing entire corpora is the most common Claude cost mistake. RAG retrieves only relevant chunks; caching discounts repeat content; both stack. Module 4 covers contextual retrieval, Anthropic's RAG upgrade that drops failures 40–67%."
+    }
+  ]
+}

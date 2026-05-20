@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Customer Portal",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your team is planning weeks of work to build a custom self-service billing UI (card update, plan changes, cancel). What should you do first?",
+      "choices": [
+        { "id": "a", "text": "Hire designers." },
+        { "id": "b", "text": "Try Stripe's Customer Portal. 30-minute setup; customizable functionality (which features users can self-serve); branded with logo + brand color; webhooks fire on changes so your DB syncs normally. For 90% of subscription management needs, Portal is sufficient and saves weeks of development. Build custom only when you've validated Portal isn't enough." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip self-service entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Customer Portal is the canonical self-service billing UX. It handles card updates, plan changes, cancellations, invoice history. Configurable, branded, free with Stripe Billing. The premium-brand argument for custom UX rarely outweighs the weeks of dev cost.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When should you use Stripe Checkout vs. Customer Portal?",
+      "choices": [
+        { "id": "a", "text": "They're interchangeable." },
+        { "id": "b", "text": "Checkout for NEW sales (first subscription, one-time purchases). Customer Portal for MANAGING existing subscriptions (update card, change plan, cancel, view invoices). Both are hosted by Stripe; both can coexist in your product. Use the right one for the flow." },
+        { "id": "c", "text": "Always Checkout." },
+        { "id": "d", "text": "Always Portal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Different purposes: Checkout = new sales; Portal = managing existing subscriptions. Both are Stripe-hosted, both save dev time, both webhook into your system. Use each where it fits.",
+      "points": 1
+    }
+  ]
+}

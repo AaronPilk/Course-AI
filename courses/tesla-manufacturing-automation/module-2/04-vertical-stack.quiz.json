@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Vertical stack",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Tesla make stationary storage (Powerwall, Megapack) at the same Gigafactories as vehicles?",
+      "choices": [
+        { "id": "a", "text": "Lack of land for separate factories." },
+        { "id": "b", "text": "Cells are the common platform. Same cells go into vehicle packs and storage products. Shared engineering investments benefit both. Capex amortizes across more revenue. Demand cycles differ — when EV demand softens, storage demand may not — so plant utilization smooths. Strategic optionality: allocate cells to whichever product has best margin or highest demand at the moment." },
+        { "id": "c", "text": "Marketing." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cell-as-common-platform is the unifier. Shared cells, shared engineering, shared capex amortization, smoothed demand, strategic optionality. The vertical stack is a real operational + strategic advantage, not vanity.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Lucid makes vehicles only. Northvolt made batteries only. Why hasn't Tesla's stack-everything model been universally copied?",
+      "choices": [
+        { "id": "a", "text": "Tesla has patents preventing it." },
+        { "id": "b", "text": "Hard to copy — requires multiple product lines built up over years, cell technology has steep learning curves, vertical integration capex is in the billions. Specialized competitors (vehicle-only or battery-only) have simpler operations but lose the cross-product engineering and demand-smoothing dividends. The stack model creates value when integration costs less than benefits — that calculation requires scale and patience few competitors have." },
+        { "id": "c", "text": "Tesla's branding." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stack-everything requires capital, time, and tolerance for organizational complexity. Specialized players (Lucid, Northvolt) optimize differently: simpler operations, narrower bet. Each model has its place; Tesla's bet pays off when integration dividends justify the complexity cost.",
+      "points": 1
+    }
+  ]
+}

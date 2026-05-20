@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Stripe Tax",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Stripe Tax do — and NOT do?",
+      "choices": [
+        { "id": "a", "text": "Files all your taxes for you." },
+        { "id": "b", "text": "DOES: auto-detect customer tax location, calculate correct rates per jurisdiction + product tax code, add tax to invoices, track liability, generate reports. DOES NOT: register you in jurisdictions, determine your nexus / obligation (your accountant does), file your taxes (you still file). The tool handles calculation; you're responsible for registration and filing." },
+        { "id": "c", "text": "Replaces your accountant." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe Tax is calculation automation, not a full compliance solution. It replaces error-prone manual tax tables but you still register in jurisdictions, decide where you have nexus, and file on schedule. Pair with an accountant.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team sells SaaS to EU consumers. You just crossed the €10K cross-border threshold. What's the right response?",
+      "choices": [
+        { "id": "a", "text": "Ignore it; threshold is informal." },
+        { "id": "b", "text": "Register for EU OSS (One Stop Shop) in your home country. Enable Stripe Tax with OSS configured. Stripe collects the correct VAT per EU country based on customer location; you file once via OSS instead of per-country. Above the threshold, charging VAT is mandatory for cross-border B2C." },
+        { "id": "c", "text": "Stop selling to EU." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "EU cross-border B2C above €10K triggers VAT obligation. OSS (One Stop Shop) consolidates the filing: register once in your home country; collect proper VAT per destination country; file all EU in one OSS return. Stripe Tax handles the per-charge calculation; you handle the OSS registration and quarterly filings.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "slug": "google-search-ai-era",
+  "title": "Ranking on Google in the AI Era",
+  "subtitle": "A practical SEO course built from Google's own documentation — for the AI Overviews + AI Mode world",
+  "description": "Most SEO courses are written by SEO agencies selling something. This one is built directly from Google's primary source documents — Search Central's own guides — and translates them into a practical course on how Google Search actually works today. You'll build a real mental model of crawling, indexing, ranking, and AI search; learn the technical SEO that still matters; and develop a content philosophy aligned with what Google's automated systems actually reward. Includes Google's own explicit debunking of popular 'AEO/GEO' myths.",
+  "category": "SEO",
+  "difficulty": "intermediate",
+  "audience": "Marketing managers, content strategists, founders, and small-business owners who care about ranking in both classic Google results and AI Overviews / AI Mode, and who want a real mental model rather than gimmicky tactics.",
+  "tags": ["seo", "ai-search", "google", "content-strategy", "technical-seo", "e-e-a-t", "ai-overviews"],
+  "brand": {
+    "name": "Google",
+    "logo": "/brands/google.svg",
+    "gradient": ["#4285F4", "#34A853", "#FBBC05", "#EB4335"],
+    "tint": "#1A0F2E"
+  },
+  "estimated_minutes": 300,
+  "prerequisites": [
+    "Basic familiarity with what a website is and how to navigate one",
+    "Access to a website you can examine (yours, your employer's, or a test site)",
+    "A Google account (used for Search Console in Module 5)"
+  ],
+  "outcomes": [
+    "Explain the 3-stage Google Search pipeline (crawl, index, serve) and use it to diagnose ranking problems",
+    "Audit your own content using Google's E-E-A-T and Who/How/Why frameworks",
+    "Identify and fix the technical SEO issues that actually move the needle",
+    "Articulate how AI Overviews and AI Mode generate answers, and what that means for your content",
+    "Avoid the common SEO myths and 'AEO/GEO' snake oil",
+    "Use Search Console to diagnose a traffic drop or visibility issue",
+    "Make an informed decision about whether to hire an SEO — and how to vet one"
+  ],
+  "modules": [
+    {
+      "title": "How Google Search Actually Works",
+      "summary": "The mental model that explains everything else. We unpack the three stages of Search — crawling, indexing, and serving — and why each one is a separate decision point that your content has to pass through.",
+      "estimated_minutes": 50,
+      "key_concepts": ["Googlebot", "URL discovery", "indexing", "canonicalization", "ranking signals", "SERP features"],
+      "lessons": [
+        {
+          "title": "The 3-stage pipeline — why 'I'm indexed' doesn't mean 'I'm ranking'",
+          "objective": "Distinguish the three independent stages of Google Search and explain why each can fail separately."
+        },
+        {
+          "title": "Crawling — how Googlebot finds you (and what stops it)",
+          "objective": "Explain URL discovery, the role of links and sitemaps, and identify the top reasons Googlebot fails to reach a page."
+        },
+        {
+          "title": "Indexing — canonicals, clustering, and what gets stored",
+          "objective": "Describe how Google clusters duplicate pages, picks a canonical, and decides what makes it into the index."
+        },
+        {
+          "title": "Serving — relevance, context, and the SERP that's different for every user",
+          "objective": "Articulate the factors that decide which results show for which user, and why two people get different SERPs for the same query."
+        }
+      ]
+    },
+    {
+      "title": "Helpful, Reliable, People-First Content",
+      "summary": "Google's content philosophy in plain English. We turn E-E-A-T, YMYL, and the Who/How/Why framework into a practical audit you can run on any page.",
+      "estimated_minutes": 70,
+      "key_concepts": ["E-E-A-T", "Experience", "Expertise", "Authoritativeness", "Trustworthiness", "YMYL", "Who/How/Why", "commodity vs non-commodity content", "scaled content abuse"],
+      "lessons": [
+        {
+          "title": "E-E-A-T isn't a ranking factor (but it's how Google measures whether you're winning)",
+          "objective": "Explain what E-E-A-T actually is, why Google says it's not a ranking factor, and how to use it as a diagnostic tool anyway."
+        },
+        {
+          "title": "Who, How, Why — the three questions that decide if your content is real",
+          "objective": "Apply Google's Who/How/Why framework to audit a page's bylines, methodology, and intent."
+        },
+        {
+          "title": "Commodity vs non-commodity content — the most important distinction nobody talks about",
+          "objective": "Identify whether a piece of content is commodity (recyclable, generic) or non-commodity (first-hand, expert) and rewrite a commodity piece into a non-commodity one."
+        },
+        {
+          "title": "YMYL — when trust is everything",
+          "objective": "Recognize 'Your Money or Your Life' topics and apply the heightened E-E-A-T bar Google uses for them."
+        },
+        {
+          "title": "AI-assisted content without crossing the line",
+          "objective": "Use AI tools to research, structure, and draft content while staying clear of Google's scaled-content-abuse policy."
+        }
+      ]
+    },
+    {
+      "title": "Technical SEO That Actually Matters",
+      "summary": "The technical surface area that has real ranking impact — titles, structure, canonicals, images — and a tour of the popular technical SEO myths Google itself says to ignore.",
+      "estimated_minutes": 75,
+      "key_concepts": ["title element", "meta description", "anchor text", "URL structure", "breadcrumbs", "canonical URL", "rel=canonical", "alt text", "structured data", "robots.txt", "sitemap.xml"],
+      "lessons": [
+        {
+          "title": "Titles, headings, and meta descriptions — what AI summarizers read first",
+          "objective": "Write a title and meta description that influence both the SERP snippet and the AI summary."
+        },
+        {
+          "title": "Site structure — URLs, directories, and breadcrumbs",
+          "objective": "Design a URL structure and directory layout that Google can crawl efficiently and users can understand."
+        },
+        {
+          "title": "Canonicals, duplicates, and the truth about the 'duplicate content penalty'",
+          "objective": "Explain why the duplicate content penalty isn't real, when to use rel=canonical vs. a 301 redirect, and how to consolidate variant URLs."
+        },
+        {
+          "title": "Images, alt text, and visual search",
+          "objective": "Place, name, and describe images so they help both human visitors and Google's image search."
+        },
+        {
+          "title": "The myths to ignore — meta keywords, word count, heading order, and more",
+          "objective": "Recognize the SEO advice Google explicitly says doesn't matter, and stop spending time on it."
+        }
+      ]
+    },
+    {
+      "title": "SEO in the AI Search Era",
+      "summary": "How AI Overviews and AI Mode actually generate answers, why classic SEO still applies, and why most 'AEO/GEO' advice on the internet is — by Google's own admission — wrong.",
+      "estimated_minutes": 55,
+      "key_concepts": ["AI Overviews", "AI Mode", "Retrieval-Augmented Generation (RAG)", "query fan-out", "AEO", "GEO", "llms.txt", "scaled content abuse", "agentic SEO", "browser agents"],
+      "lessons": [
+        {
+          "title": "How AI Overviews and AI Mode actually generate answers",
+          "objective": "Describe the RAG + query fan-out pipeline Google uses to ground AI search results in the regular Search index."
+        },
+        {
+          "title": "Why classic SEO still applies — fully",
+          "objective": "Explain why a page must be eligible for a normal Search snippet to appear in AI features, and why that means classic SEO is the price of admission."
+        },
+        {
+          "title": "The AEO/GEO snake oil — Google's own debunking",
+          "objective": "Identify the popular 'AI optimization' tactics Google says to ignore — llms.txt files, content chunking for AI, inauthentic mentions — and explain why they don't work."
+        },
+        {
+          "title": "Where to actually focus, plus a preview of agentic SEO",
+          "objective": "Apply the two things Google says matter for AI search (non-commodity content + technical clarity) and understand what's coming with browser agents and protocols like UCP."
+        }
+      ]
+    },
+    {
+      "title": "Strategy, Hiring, and Ongoing SEO",
+      "summary": "From learning to doing. A decision framework for whether SEO is worth your time, how to use Search Console as your dashboard, how to hire (or fire) an SEO without getting scammed, and how to diagnose a traffic drop without panicking.",
+      "estimated_minutes": 50,
+      "key_concepts": ["Search Console", "URL Inspection Tool", "core update", "shadow domain", "doorway page", "link scheme", "manual action"],
+      "lessons": [
+        {
+          "title": "Do you even need SEO? A decision framework",
+          "objective": "Decide whether to invest in SEO based on your business model, traffic dependence, and competitive landscape."
+        },
+        {
+          "title": "Search Console as your dashboard",
+          "objective": "Set up Search Console and identify the three reports that tell you whether your SEO is working."
+        },
+        {
+          "title": "How to hire (or fire) an SEO without getting scammed",
+          "objective": "Vet an SEO using Google's own interview questions and recognize the red flags — shadow domains, doorway pages, link schemes, ranking guarantees."
+        },
+        {
+          "title": "Diagnosing a traffic drop without panicking",
+          "objective": "Triage a drop in organic traffic by distinguishing core updates, technical regressions, and content quality issues — and pick the right fix."
+        }
+      ]
+    }
+  ]
+}

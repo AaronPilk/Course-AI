@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Stainless steel and manufacturing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does SpaceX manufacture Starship's stainless steel structure in shipyard-style facilities rather than aerospace clean rooms?",
+      "choices": [
+        { "id": "a", "text": "Cost cutting on facility build." },
+        { "id": "b", "text": "Stainless steel enables shipyard-style manufacturing — rolled sheets formed into rings and welded into cylindrical sections. This work doesn't require aerospace clean rooms because steel is forgiving of typical industrial contamination (vs. composites which require pristine conditions, or aluminum-lithium which needs specific environmental controls). Tents and gantries replace expensive clean rooms. The factory operates more like a refinery or shipyard than a traditional aerospace plant. Output rate goes up; capex per Starship goes down. This is part of why steel was chosen: not just for material properties but because it allows a fundamentally different manufacturing approach that scales to Starship's required cadence. Composites or aluminum would have required slower, more expensive facilities that couldn't support 50+ Starships per year." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random decision." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The material choice and the manufacturing approach are coupled. Steel + shipyard methods enables a production scale that aerospace conventions can't match. This is design-for-manufacture taken to its logical conclusion.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A traditional aerospace company watches SpaceX lose multiple test vehicles to explosions during Starship development. What's the lesson, if any, that translates?",
+      "choices": [
+        { "id": "a", "text": "Don't lose hardware ever." },
+        { "id": "b", "text": "The lesson is iterative engineering at speed: build multiple test vehicles, fly them aggressively, accept some failures as the cost of learning fast, apply each failure's data to the next iteration. This wouldn't work in legacy aerospace where each vehicle costs $300M+ and a single loss can end a program — but it works for SpaceX because Starship hardware is cheap enough at scale that vehicle loss is recoverable. The general lesson translates: design hardware cheap enough to lose, iterate fast, learn from failure. The specific lesson doesn't translate where unit costs are too high to lose. This is why legacy aerospace can't easily copy SpaceX's tempo — their hardware is too expensive per unit to risk in failure-learning loops." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Iteration is always wrong." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Iterative engineering at speed requires hardware cheap enough to lose. SpaceX achieved this via stainless construction and Raptor cost reduction. Legacy aerospace can't iterate the same way because their hardware is fundamentally too expensive — and they can't make it cheaper without redesigning their entire manufacturing approach.",
+      "points": 1
+    }
+  ]
+}

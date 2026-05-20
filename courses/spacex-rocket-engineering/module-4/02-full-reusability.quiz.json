@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Full reusability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Starship's upper-stage reuse much harder than Falcon 9's first-stage reuse?",
+      "choices": [
+        { "id": "a", "text": "It isn't — same problem." },
+        { "id": "b", "text": "Energy and heat. Falcon 9's first stage separates at ~70 km altitude at relatively modest velocity (~7,000 km/h), giving it manageable reentry conditions and reasonable refurbishment requirements. Starship's upper stage reaches orbital velocity (~7.8 km/s) and must reenter from orbit — speeds and heating dramatically higher than first-stage reentry. Peak temperatures during Starship reentry reach 1500C+, requiring extensive heat-shield tiles. The belly-flop maneuver presents the broad windward side to airflow for maximum aerodynamic deceleration without using propellant, but the entire trajectory is harsher than anything Falcon 9 ever sees. This is why no orbital upper stage has been reused successfully before — the Space Shuttle managed it but with months of refurbishment per flight; Starship targets days." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Upper-stage reuse is the harder unsolved problem. The Shuttle achieved it slowly and expensively; everyone else gave up on it. Starship's belly-flop architecture, stainless construction, and tile system are SpaceX's bet on solving it for the first time at scale with rapid turnaround.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "What does the launch tower 'chopstick catch' of Super Heavy save vs. landing on legs like Falcon 9?",
+      "choices": [
+        { "id": "a", "text": "Nothing — same thing." },
+        { "id": "b", "text": "Significant mass and operational gains. Landing legs add dry mass at the bottom of the booster (hundreds of kilograms per leg), which costs payload over every flight. The legs also require deployment mechanisms, hydraulic systems, and post-landing folding for storage — all of which fail occasionally and require inspection. Chopstick catch eliminates all of this: the booster has no legs at all (just attachment hardware for the chopstick clamp points). Mass budget improves; turnaround time shortens (no leg refurbishment); fewer parts means fewer failure modes. The cost is operational complexity at the tower (precision catch mechanism, tower investment per launch site) and the risk that a missed catch could be catastrophic. SpaceX accepted these costs because the per-flight savings compound across high-cadence operations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just looks cooler." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The chopstick catch is mass-saving and operations-streamlining. The tradeoff is concentrating risk at the tower instead of distributing it via legs. For SpaceX's high-cadence vision, the trade pays back across many flights.",
+      "points": 1
+    }
+  ]
+}

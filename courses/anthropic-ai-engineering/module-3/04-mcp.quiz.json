@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: MCP",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is the Model Context Protocol (MCP)?",
+      "choices": [
+        { "id": "a", "text": "Anthropic's proprietary API." },
+        { "id": "b", "text": "An open standard for exposing tools, resources, and prompt templates to LLMs uniformly. Build an integration once as an MCP server; any MCP-aware client (Claude Desktop, IDE, your own app) can use it. Replaces one-off integrations duplicated across apps." },
+        { "id": "c", "text": "A new model from Anthropic." },
+        { "id": "d", "text": "A type of fine-tuning." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP is the deployment-and-reuse layer that sits on top of tool calling. It standardizes how tools, resources (read-only data), and prompts are exposed so the same integration works across multiple LLM-powered apps without rewriting.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're considering writing an MCP server for a tool. When is MCP NOT the right choice?",
+      "choices": [
+        { "id": "a", "text": "When the tool is one-off and specific to a single app — keep it as an inline tool in that app's Messages API call. Promote to MCP only when you find yourself copying the integration into a second app or want to use it from Claude Desktop." },
+        { "id": "b", "text": "When the tool will be reused across apps." },
+        { "id": "c", "text": "When you want auditability." },
+        { "id": "d", "text": "When you want Claude Desktop access." }
+      ],
+      "correct_answer": "a",
+      "explanation": "Inline tools (defined in the API call) are simpler when scope is single-app. MCP servers add value when reuse, sharing, or Claude Desktop access is in scope. Start inline; promote to MCP when the value of standalone-service architecture exceeds the cost of running a separate process.",
+      "points": 1
+    }
+  ]
+}

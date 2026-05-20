@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Refunds",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Customers complain their refunds 'haven't arrived' minutes after you process them. What's actually happening?",
+      "choices": [
+        { "id": "a", "text": "Refunds are stuck." },
+        { "id": "b", "text": "Refunds processed instantly in Stripe still take 5-10 business days to appear on the customer's bank/card statement — that's the issuer's timing, not Stripe's. Set expectation in your refund confirmation email: 'Your refund of $X was processed. It will appear on your statement within 5-10 business days, listed as [descriptor].' Complaints disappear when expectations match reality." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stripe is broken." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Refund settlement lag is normal and unavoidable — the issuing bank handles the credit on their schedule. Setting expectation upfront eliminates 'where's my refund' tickets. Always include refund timing in your confirmation messaging.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A churning subscriber asks for a refund. You'd rather keep them. What's a useful alternative to a full refund?",
+      "choices": [
+        { "id": "a", "text": "Refuse and ban them." },
+        { "id": "b", "text": "Offer a credit on their customer balance ('3 months at 50% off' or similar). Apply via `customerBalanceTransactions.create` with negative amount; reduces future invoices automatically. They get value; you keep them; no money out of pocket. Pair with proactive outreach asking what's wrong — sometimes churn is about a fixable issue." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel without refund." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Customer balance credits are a retention tool. They reduce future invoices without any actual money movement. Use for retention offers; use refunds for genuine service recovery where the customer wants to leave.",
+      "points": 1
+    }
+  ]
+}

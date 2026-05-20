@@ -1,0 +1,71 @@
+{
+  "title": "Module 4 quiz: Webhooks and event-driven integration",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your webhook handler runs heavy DB writes inline. P99 is 45s. Stripe times out half your webhooks. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable webhooks." },
+        { "id": "b", "text": "Acknowledge fast, process async. Verify signature → enqueue → return 200. Background worker does heavy work. Stripe times out at ~30s; quick ack prevents retry storms." },
+        { "id": "c", "text": "Switch processor." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Canonical pattern: verify + enqueue + ack. Heavy work runs in background; handler is sub-second."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your webhook signatures started failing after a framework upgrade. Most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Stripe rotated the secret." },
+        { "id": "b", "text": "Middleware parses JSON before your handler, modifying raw bytes. Signature is HMAC over raw body — any reformatting breaks verification. Preserve raw body on webhook route (express.raw / request.text()) before stripe.webhooks.constructEvent." },
+        { "id": "c", "text": "Need new API key." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Raw-body bug is the #1 cause of mysterious signature failures. Preserve raw bytes on the webhook route specifically."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Your handler assumes events arrive in order: created → invoice → paid. Sometimes paid arrives first; handler errors. Fix?",
+      "choices": [
+        { "id": "a", "text": "Tell Stripe to deliver in order." },
+        { "id": "b", "text": "Refactor to upsert based on the authoritative state in the event payload, not a state machine your code imposes. Stripe doesn't guarantee order; build order-independent handlers." },
+        { "id": "c", "text": "Disable webhooks." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe is at-least-once and not strictly ordered. Upsert by event payload; refetch from Stripe for canonical state when stakes warrant."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Why dedupe by event.id in your webhook handler?",
+      "choices": [
+        { "id": "a", "text": "Stripe requires it." },
+        { "id": "b", "text": "Stripe is at-least-once: same event may deliver multiple times due to retries, network blips, redeliveries. Without dedup, duplicate side effects (duplicate emails, double grants, duplicate metric inserts). Store event IDs with unique constraint; skip on duplicate." },
+        { "id": "c", "text": "For analytics." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "At-least-once delivery makes idempotency mandatory. Atomic check + insert on event.id with unique index; subsequent deliveries skip."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "For a subscription SaaS, what's the right webhook subscription strategy?",
+      "choices": [
+        { "id": "a", "text": "Subscribe to all events." },
+        { "id": "b", "text": "Subscribe to ~13 specific event types covering subscription lifecycle (created, updated, deleted, trial_will_end), invoice lifecycle (paid, payment_failed, payment_action_required), payments (intent succeeded/failed), refunds, disputes. Pair with daily reconciliation job. Specific events = cleaner logs, faster handlers, lower cost." },
+        { "id": "c", "text": "Just subscribe to invoice.paid." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Selective event subscription beats firehose. Webhooks for immediate sync; reconciliation for drift recovery. Together they're robust."
+    }
+  ]
+}

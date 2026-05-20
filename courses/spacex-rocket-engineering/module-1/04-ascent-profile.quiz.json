@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Trajectory and ascent profile",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does a rocket pitch over and follow a curved 'gravity turn' instead of going straight up to altitude and then turning horizontal?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Gravity losses dominate when burning vertically. A vertical burn loses one g of velocity per second to gravity (sin(90°) = 1.0); a horizontal burn loses zero (sin(0°) = 0). The gravity turn curves smoothly from vertical to nearly horizontal as the rocket accelerates, minimizing total integrated gravity loss across the ascent. Going straight up first and then turning would waste enormous propellant fighting gravity throughout the vertical phase, and would also require accelerating from a standstill horizontally at altitude. The gravity turn is the fuel-optimal trajectory for getting both altitude and horizontal velocity from a single ascent." },
+        { "id": "c", "text": "Aerodynamic restrictions only." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The gravity turn is the result of an optimization between gravity loss (which favors horizontal) and drag loss (which favors going through the atmosphere quickly). The curve that minimizes total losses is what you see in every orbital launch.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A satellite operator needs a polar orbit. Should they launch from Cape Canaveral or Vandenberg, and why?",
+      "choices": [
+        { "id": "a", "text": "Cape Canaveral — better weather." },
+        { "id": "b", "text": "Vandenberg. Cape Canaveral launches eastward over the Atlantic at 28° N latitude — great for low-inclination orbits because Earth's rotation provides ~0.41 km/s of free velocity. But polar orbits need ~90° inclination; launching from Cape and then changing inclination to 90° would cost roughly 7 km/s of delta-v — completely infeasible. Vandenberg launches southward over the Pacific (no land overflight) into polar orbits directly. You lose the Earth-rotation gift but avoid the inclination-change penalty. The right launch site depends entirely on the target inclination of the orbit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Doesn't matter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Launch-site selection is dominated by inclination. Equatorial sites (or near-equatorial like Kourou) are best for low-inclination, low-altitude orbits and GEO. High-latitude or coastal-south sites like Vandenberg are best for polar orbits. Russia uses Plesetsk (high-latitude) for polar; Baikonur for inclined orbits.",
+      "points": 1
+    }
+  ]
+}

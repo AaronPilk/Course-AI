@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: When NOT to build an agent",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You're routing customer messages. Audit shows your 6-tool agent always calls `classify_intent` then `route_to_team` in the same order every time. Right move?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Replace with a workflow — actually, a single LLM call returning structured output `{intent, team}`. The agent is doing fixed work; the agent overhead buys nothing. Cost typically drops 90%+, latency drops from seconds to sub-second, and reliability improves because there are fewer moving parts." },
+        { "id": "c", "text": "Add more tools." },
+        { "id": "d", "text": "Increase max steps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "When the steps are predictable, agents add cost and failure modes for no benefit. Single LLM call with structured output is the cheapest, fastest, most reliable pattern for classify-and-route. Save agents for tasks where the path genuinely depends on intermediate results.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the right bootstrap order for AI features?",
+      "choices": [
+        { "id": "a", "text": "Always start with an agent — promote down only if necessary." },
+        { "id": "b", "text": "Start with the simplest pattern: (1) single LLM call with the best prompt + structured output you can write; (2) if not enough, a workflow (predetermined steps); (3) if not enough, an agent with step caps and observability; (4) if still not enough, multi-agent. Most teams skip 1–2 and build agents that should have been single calls." },
+        { "id": "c", "text": "Start with multi-agent and trim." },
+        { "id": "d", "text": "Always use the most capable model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bootstrap upward, not downward. Single calls are cheapest, fastest, most reliable; workflows are next; agents are expensive flexible options for genuinely open-ended problems. Most production AI value is created by good single calls and workflows — agents are a smaller slice than the marketing implies.",
+      "points": 1
+    }
+  ]
+}

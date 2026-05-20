@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Approval gates",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which tools should always be behind an approval gate?",
+      "choices": [
+        { "id": "a", "text": "Every tool, for safety." },
+        { "id": "b", "text": "Tools with irreversible side effects: sending messages (email/SMS), moving money (charge/refund), deleting data, changing external state irreversibly (publish, cancel). Read-only tools and reversible internal actions don't need gates — gating everything creates friction without safety value." },
+        { "id": "c", "text": "Only refund tools." },
+        { "id": "d", "text": "None — approvals slow down agents." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Approval gates earn their friction on irreversible side effects. Read-only tools, reversible internal actions, and the user's own draft work don't need them. The line is: 'could a wrong call cause harm we can't reverse?' If yes, gate it. If no, don't.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team gates every refund for human review. Throughput suffers. Better pattern?",
+      "choices": [
+        { "id": "a", "text": "Drop all approvals." },
+        { "id": "b", "text": "Add a rule engine that auto-approves low-risk refunds (small amounts + customers in good standing) and routes only ambiguous or high-risk cases to humans. Layer with post-hoc audit on the auto-approved bucket so a human reviews periodically. Three-way routing: auto-approve, escalate, auto-reject by rules." },
+        { "id": "c", "text": "Require two-person approval to slow it down further." },
+        { "id": "d", "text": "Switch to Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three-way routing keeps human pressure on the cases that need it. Auto-approve the clear-cut safe ones; auto-reject the clear-cut risky ones; escalate the middle. Combine with audit logging so even auto-approvals are auditable post-hoc. Captures most of the safety value with most of the throughput.",
+      "points": 1
+    }
+  ]
+}

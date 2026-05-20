@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Starship",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Starship made of stainless steel rather than carbon composites or aluminum-lithium?",
+      "choices": [
+        { "id": "a", "text": "Random material choice." },
+        { "id": "b", "text": "Stainless steel optimizes a different set of constraints than traditional aerospace materials. It handles re-entry temperatures (1500C+) without ablative shielding for much of the vehicle (composites char, aluminum melts). It retains strength at cryogenic temperatures. It can be manufactured in shipyard-style facilities using rolling, forming, and welding — vastly cheaper and faster than composite layup or aerospace aluminum work. The cost is higher structural mass (steel is denser), but for a vehicle optimizing for full reuse, manufacturability at high cadence, and heat resistance, those trades pay back. The choice is design-for-manufacture and design-for-reuse, not single-flight performance optimization. The shipyard manufacturing approach is what scales Starship production to the rates SpaceX needs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tradition." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Steel choice is a multi-constraint optimization. The mass penalty (structural density) is real but offset by the heat resistance and manufacturability gains. For Starship's specific design space, this is the right trade.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Compare Falcon 9's first-stage reuse with Starship's full reuse. Why is upper-stage reuse so much harder?",
+      "choices": [
+        { "id": "a", "text": "It's not — same problem." },
+        { "id": "b", "text": "Energy and heat. Falcon 9's first stage separates at ~70 km altitude at ~7,000 km/h — manageable re-entry conditions, modest refurbishment needs. Starship's upper stage reaches orbital velocity (~7.8 km/s) and must re-enter from orbit at hypersonic speeds with 1500C+ heating. Peak heat loads are dramatically higher; the trajectory is harsher; thermal protection must work reliably across many flights. The Space Shuttle achieved orbital upper-stage reuse but with months of refurbishment per flight. No commercial orbital upper stage has been reused with rapid turnaround. Starship's belly-flop re-entry profile, stainless steel construction, and tile system are SpaceX's bet on solving this for the first time at scale. It's the hardest unsolved problem in launch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Upper-stage reuse is the long-standing hard problem in launch. Every reusable-rocket program has either skipped it or struggled with it. Starship's success or failure here will define the next decade of launch economics.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does the launch tower 'chopstick catch' eliminate from Super Heavy's design?",
+      "choices": [
+        { "id": "a", "text": "Engines." },
+        { "id": "b", "text": "Landing legs. By catching the booster with tower arms, SpaceX removes the need for Super Heavy to have its own landing legs — which on Falcon 9 add several hundred kilograms at the bottom of the booster plus deployment mechanisms, hydraulics, and post-landing folding for storage. Mass budget improves, parts count drops, turnaround time shortens. The cost is operational complexity at the launch tower (precision catch mechanism, tower investment per launch site) and risk concentration (a missed catch could damage both booster and tower). For SpaceX's high-cadence vision, the trade pays back because operational savings compound over many flights." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Fuel tanks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The chopstick catch is mass-saving and turnaround-shortening. Falcon 9's landing legs work but cost mass per flight. Super Heavy's catch concentrates risk at the tower in exchange for booster mass savings across many flights.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why does SpaceX's iterative testing approach (build several Starships, fly them, accept some losses) work for SpaceX but not for legacy aerospace?",
+      "choices": [
+        { "id": "a", "text": "Different physics." },
+        { "id": "b", "text": "Hardware unit cost. SpaceX's stainless-steel manufacturing and Raptor engine cost reductions make each Starship cheap enough that losing one to learning is recoverable. A traditional aerospace vehicle (SLS, ULA, Boeing) costs $300M+ per unit; losing one ends a program and triggers congressional investigations. SpaceX's stated target is Starship hardware costs around $10-20M per vehicle at scale — cheap enough to risk in failure-learning loops, then iterate the next vehicle with the learnings. The general principle (iterate at speed) is universal; the specific application (lose some hardware as cost of learning) requires hardware cheap enough to lose. This is why legacy aerospace can't easily copy SpaceX's tempo — they can't make their hardware cheap enough without redesigning their entire manufacturing approach." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different countries." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Iterate-fast-and-lose-hardware requires hardware cheap enough to lose. SpaceX achieved this via stainless steel + Raptor cost reductions + shipyard-style production. Legacy aerospace can't iterate the same way without restructuring their cost base.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Which Starship mission category provides the near-term economic engine while Mars architecture matures?",
+      "choices": [
+        { "id": "a", "text": "Tourist flights." },
+        { "id": "b", "text": "Starlink v2 plus NASA Artemis HLS. Starlink v2 satellites are too heavy for Falcon 9, so Starship is needed to deploy the v2 constellation at scale — and Starlink is a SpaceX-internal customer providing steady, predictable launch demand. NASA's HLS contract pays multi-billion dollars and drives a major development path (lunar Starship). Together, these two revenue streams sustain Starship economics while Mars architecture (multi-decade) develops, while commercial GEO and constellation customers emerge, and while Earth-to-Earth speculation stays speculative. The architecture is structured so the near-term Starlink/Artemis revenue funds the long-term Mars vision." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mars cargo flights." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Starlink + Artemis HLS = near-term economics. Mars is the long-term vision but doesn't generate revenue yet. The financial architecture has Starlink demand funding the operational tempo and HLS funding lunar development, with everything else as upside.",
+      "points": 1
+    }
+  ]
+}

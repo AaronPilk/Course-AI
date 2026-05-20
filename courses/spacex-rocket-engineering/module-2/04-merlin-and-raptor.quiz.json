@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Merlin and Raptor",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do Falcon 9 and Super Heavy use many small engines (9 and 33 respectively) rather than a few large ones?",
+      "choices": [
+        { "id": "a", "text": "Fashion." },
+        { "id": "b", "text": "Engine-out redundancy plus manufacturing scale. Many small engines mean a single engine failure isn't mission-ending — Falcon 9 has flown to orbit after losing a Merlin mid-flight (CRS-1). Small engines are also easier to develop, transport, test, and manufacture at scale than giant ones. The Soviet N1 lesson was about lacking the control systems to coordinate many engines; modern flight computers handle 33-engine clusters precisely. SpaceX explicitly chose this architecture to enable rapid iteration and serial production — they can build, test, and fly hundreds of engines per year, which would be impossible with monolithic Saturn V F-1-style engines." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It was an accident." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Many-engine clusters are deliberate. Redundancy, manufacturability, and fine-grained thrust control all favor smaller engines in larger numbers — given modern flight computers and engine-monitoring systems that can coordinate them reliably.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why did SpaceX redesign Raptor from version 1 to version 2 with explicit manufacturing-simplification goals, when Raptor 1 already worked?",
+      "choices": [
+        { "id": "a", "text": "Engineering boredom." },
+        { "id": "b", "text": "Cadence requires cost. Starship needs roughly 39 Raptors per stack (33 booster + 6 ship) and SpaceX targets high launch cadence — that's potentially hundreds of engines per year. Raptor 1 worked but was expensive and time-consuming to manufacture. Raptor 2 was redesigned for fewer parts, integrated welds, simpler plumbing — explicitly to bring engine cost down and production rate up. Performance went up at the same time because the simpler design also enabled higher chamber pressure. This 'manufacturing-driven engine design' is a recurring SpaceX pattern: design for the rate you need to fly at, not just for performance." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cosmetic update." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Engine cost and cadence are limiting variables for a high-flight-rate program. Raptor 1 was 'works'; Raptor 2 is 'works AND can be made by the hundreds.' Raptor 3 pushes further on both fronts. Manufacturing is engine design.",
+      "points": 1
+    }
+  ]
+}

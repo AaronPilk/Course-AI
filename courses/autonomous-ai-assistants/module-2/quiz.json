@@ -1,0 +1,71 @@
+{
+  "title": "Module 2 quiz: Connecting the assistant to the real world",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the right OAuth scope strategy for an assistant's v1?",
+      "choices": [
+        { "id": "a", "text": "Ask for everything up front." },
+        { "id": "b", "text": "Least-privilege + incremental: smallest scope that does the job; add broader scopes only when users try features that need them. Each ask is tied to a specific value moment. Major providers (Google, Microsoft, Salesforce) support this pattern." },
+        { "id": "c", "text": "Skip OAuth entirely." },
+        { "id": "d", "text": "Use admin-only scopes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Narrow + incremental scoping is the canonical pattern. Reduces consent-screen drop-off, limits blast radius on incidents, builds user trust through ramped permission asks."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why is MCP especially valuable for assistant products?",
+      "choices": [
+        { "id": "a", "text": "It's mandatory for major LLM providers." },
+        { "id": "b", "text": "Assistants need many tools, last years, ship on multiple surfaces, and share integrations across products. MCP turns integrations from per-product code into shared infrastructure — build once, reuse across many assistants. The reuse compounds." },
+        { "id": "c", "text": "It encrypts traffic." },
+        { "id": "d", "text": "It's faster than direct API calls." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP value scales with assistant lineup. Build once; reuse across products. Combine community servers (filesystem, GitHub, Slack) with your custom MCP servers for proprietary tools."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "User clicks 'disconnect Google.' Your code deletes tokens from your DB. Next reconnect skips the consent screen — they get the same scopes silently. Why?",
+      "choices": [
+        { "id": "a", "text": "Browser cache." },
+        { "id": "b", "text": "You deleted locally but didn't revoke at the provider. Google still has the app authorized. Clean disconnect = revoke at provider via their API + delete from your DB + halt dependent background tasks + surface the impact to the user." },
+        { "id": "c", "text": "Provider bug." },
+        { "id": "d", "text": "User confusion." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Half-disconnects break trust. Always revoke at the provider on user disconnect. Then delete locally, halt schedules, surface clearly."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "How should OAuth tokens be stored in your assistant's backend?",
+      "choices": [
+        { "id": "a", "text": "Plaintext in a database column." },
+        { "id": "b", "text": "Encrypted at rest with strong keys, strictly scoped per user, never logged, with audit access controls. Treat tokens like passwords — their blast radius if leaked is the assistant's full OAuth scope on the user's account." },
+        { "id": "c", "text": "In application logs for debugging." },
+        { "id": "d", "text": "In browser localStorage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tokens are password-equivalent. Encrypt, scope per user, never log. Rotate refresh tokens; revoke on disconnect; audit access."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Your v1 design has 28 tools. Pre-launch trimming: what's the heuristic?",
+      "choices": [
+        { "id": "a", "text": "Keep them all." },
+        { "id": "b", "text": "For each tool: does v1 JTBD genuinely need it? If not, cut. Default v1 to read-heavy / write-light / no-destructive. Each tool is risk surface — eval needs, failure modes, prompt cost, approval decisions. Earn the surface area as trust grows." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "v1 surface area should be ruthlessly cut. Read-heavy gives value at low risk; writes come with trust; destructive tools wait for proven patterns. 'While we're at it' tools balloon surface area silently."
+    }
+  ]
+}

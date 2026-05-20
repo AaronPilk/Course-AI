@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: The Tsiolkovsky rocket equation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is going from 90% propellant to 99% propellant much less helpful than the linear improvement suggests?",
+      "choices": [
+        { "id": "a", "text": "It is linear — 10% more propellant is 10% more capability." },
+        { "id": "b", "text": "It's actually a regression." },
+        { "id": "c", "text": "The Tsiolkovsky equation contains a natural logarithm of the mass ratio. ln(10) = 2.30 corresponds to 90% propellant; ln(100) = 4.60 corresponds to 99% propellant. So going from 90% to 99% propellant only doubles your delta-v, not 10x it. To double again you'd need 99.99% propellant, which is structurally impossible with real materials. This is why no chemical rocket can reach orbit as a single stage in any economical way — the log function caps single-stage capability." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "The log function is the central constraint of rocketry. It's why staging exists. Doubling propellant fraction is much less powerful than naive intuition suggests, and the only way past it is throwing away parts of the rocket mid-flight.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An aerospace startup pitches a single-stage-to-orbit (SSTO) rocket. What's the right diagnostic question?",
+      "choices": [
+        { "id": "a", "text": "How tall is it?" },
+        { "id": "b", "text": "Which constraint do you think you've beaten — propellant fraction above 90%, structural mass below 10%, or engine Isp above ~450 seconds, simultaneously? SSTO has been studied for 60+ years. The Tsiolkovsky math says it requires extreme values on all three constraints at once. It's marginally feasible with massive engineering effort but never economical compared to staging. When someone pitches SSTO, you want them to articulate which physical constraint they've actually moved the needle on, with evidence." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Where will it launch?" }
+      ],
+      "correct_answer": "b",
+      "explanation": "SSTO pitches keep appearing because they sound elegant. The math has been understood since Tsiolkovsky in 1903. Without a real breakthrough on propellants, materials, or engine cycles, SSTO can't compete with staged reusable rockets like Falcon 9 or Starship.",
+      "points": 1
+    }
+  ]
+}

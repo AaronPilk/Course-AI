@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Lessons and the future",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which Tesla manufacturing principle transfers most cleanly outside automotive?",
+      "choices": [
+        { "id": "a", "text": "Gigacasting." },
+        { "id": "b", "text": "Software-defined operations — instrumentation, dashboards, workflow-as-code, continuous improvement loop. Works in aerospace (SpaceX), consumer electronics (Apple/Foxconn), robotics, food and beverage processing, pharmaceuticals (at slower tempo), construction (modular housing), and even software companies via CI/CD and SRE. The underlying loop — observe, hypothesize, change, deploy, measure — is industry-agnostic; the specific physical tactics like gigacasting are not." },
+        { "id": "c", "text": "The Supercharger network." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The discipline is the durable, transferable lesson. The specific physical tactics depend on product geometry, market, and supply ecosystem and don't generalize literally.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An investor reads about Tesla's vertical integration and asks 'why don't all carmakers do this?' Best one-sentence answer?",
+      "choices": [
+        { "id": "a", "text": "They're lazy." },
+        { "id": "b", "text": "Vertical integration requires capital intensity, deep technical talent, and tolerance for execution risk that most automakers' valuations and balance sheets won't support — Tesla could fund vertical because they were valued like a tech company and raised equity aggressively; a legacy automaker valued at auto-industry multiples couldn't fund the equivalent program without diluting shareholders or taking on existential debt." },
+        { "id": "c", "text": "It's illegal." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Capital access is the most underappreciated piece of why Tesla's playbook is hard to copy. Without sustained equity-market support, vertical ambition bankrupts you (see Katerra, Lordstown).",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the consistent binding constraint on total Tesla vehicle output across the global plant network?",
+      "choices": [
+        { "id": "a", "text": "Showroom space." },
+        { "id": "b", "text": "Marketing budget." },
+        { "id": "c", "text": "Cell production capacity. Vehicle assembly can be scaled faster than cells because cell manufacturing requires longer construction lead time, more capital, more specialized equipment, and depends on upstream materials supply (lithium, nickel, graphite). When Tesla plans output expansion, cell capacity dominates the gating math, which is why their strategic focus on 4680, multi-supplier partnerships, and upstream mining matters more than any single vehicle plant decision." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Cells are the binding constraint at network scale. Internal vehicle-line optimization plateaus when cell supply caps total output, which is why Tesla treats cell production as a separate strategic problem.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A startup wants to copy Tesla's vertical integration play but doesn't have Tesla-style equity-market access. Most likely outcome?",
+      "choices": [
+        { "id": "a", "text": "Success — vertical integration always wins." },
+        { "id": "b", "text": "Likely Katerra/Lordstown failure pattern. Vertical integration is capital-intensive and persistent — you commit to capex now and recover via long-run efficiency. Without sustainable funding access, capex commitments outrun cash flow and the company runs out of money before efficiency gains materialize. The right play for a capital-constrained startup is to pick one or two strategic integrations, buy commodities and ecosystem-mature components, validate product-market fit and operations, then expand vertical scope as funding allows." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Outsource everything indefinitely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Capital is the unspoken prerequisite. Vertical integration only works for companies that can sustain heavy capex through long cycles. Without it, the strategy bankrupts you on the way to the efficiency payoff.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the universal lesson for any manufacturer in 2026, regardless of industry?",
+      "choices": [
+        { "id": "a", "text": "Automate everything immediately." },
+        { "id": "b", "text": "Outsource everything to suppliers." },
+        { "id": "c", "text": "Software-defined operations are no longer optional — instrumentation, dashboards, workflow-as-code, and continuous improvement culture are now competitive necessities, not differentiators. The plants that achieved this in the 2020s pulled ahead; plants that haven't will struggle to compete on cost, quality, and iteration speed. Add selective vertical integration on strategic components, design for manufacture aggressively, and invest in the talent that makes the system work — but software-defined operations is the floor, not the ceiling." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "The discipline is the universal lesson. Specific tactics adapt to industry context; the operating model of instrumented, data-driven, continuously-iterated manufacturing is the durable competitive baseline that Tesla forced on the industry.",
+      "points": 1
+    }
+  ]
+}

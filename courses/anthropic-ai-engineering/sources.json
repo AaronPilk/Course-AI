@@ -1,0 +1,18 @@
+{
+  "slug": "anthropic-ai-engineering",
+  "sources": [
+    { "title": "Anthropic API documentation", "url": "https://docs.anthropic.com/en/docs/welcome", "type": "documentation", "author": "Anthropic" },
+    { "title": "Models overview", "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview", "type": "documentation", "author": "Anthropic" },
+    { "title": "Messages API reference", "url": "https://docs.anthropic.com/en/api/messages", "type": "documentation", "author": "Anthropic" },
+    { "title": "Prompt engineering overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview", "type": "documentation", "author": "Anthropic" },
+    { "title": "Use XML tags", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags", "type": "documentation", "author": "Anthropic" },
+    { "title": "Prefill Claude's response", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prefill-claudes-response", "type": "documentation", "author": "Anthropic" },
+    { "title": "Tool use overview", "url": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview", "type": "documentation", "author": "Anthropic" },
+    { "title": "Model Context Protocol", "url": "https://modelcontextprotocol.io", "type": "documentation", "author": "Anthropic" },
+    { "title": "Contextual Retrieval", "url": "https://www.anthropic.com/news/contextual-retrieval", "type": "engineering-blog", "author": "Anthropic" },
+    { "title": "Prompt caching", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching", "type": "documentation", "author": "Anthropic" },
+    { "title": "Message Batches API", "url": "https://docs.anthropic.com/en/docs/build-with-claude/batch-processing", "type": "documentation", "author": "Anthropic" },
+    { "title": "Citations", "url": "https://docs.anthropic.com/en/docs/build-with-claude/citations", "type": "documentation", "author": "Anthropic" },
+    { "title": "Vision (images and PDFs)", "url": "https://docs.anthropic.com/en/docs/build-with-claude/vision", "type": "documentation", "author": "Anthropic" }
+  ]
+}

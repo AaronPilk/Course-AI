@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Gigacasting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's gigacasting and what does it replace?",
+      "choices": [
+        { "id": "a", "text": "3D printing entire vehicle bodies." },
+        { "id": "b", "text": "High-pressure die casting at automotive scale: one ~80kg aluminum casting replaces ~70 stamped-and-welded parts (e.g. Model Y rear underbody). Eliminates the equivalent stamping operations, welds, inspection points, and BOM complexity. Structural cost reduction, not incremental." },
+        { "id": "c", "text": "Hand-forging parts at scale." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting consolidates dozens of parts into one casting via high-pressure die casting with very large presses (6,000+ ton clamping force). Eliminates welds, simplifies assembly, reduces inspection points — a category change in body manufacturing, not just an optimization.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A Tesla owner has a minor rear-end collision. Their vehicle is totaled. Why might gigacasting be relevant?",
+      "choices": [
+        { "id": "a", "text": "Gigacasting makes vehicles less crashworthy." },
+        { "id": "b", "text": "Gigacast structural parts are harder to repair than welded structures — a crack typically means replacing the entire casting. Minor damage that would have been a fender repair on a traditional body can total a gigacast vehicle. The production cost win comes with a repair-cost externality borne by insurers and owners. Insurance premiums on some Tesla models reflect this." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random insurance pricing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting's tradeoff: lower production cost, higher repair cost. Cast parts can't be welded back together like steel panels. Insurance and consumer total-cost-of-ownership reflect this. It's the externality of the production innovation.",
+      "points": 1
+    }
+  ]
+}

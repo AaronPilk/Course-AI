@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Pages",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's one major economic advantage of Cloudflare Pages vs Vercel/Netlify for bandwidth-heavy sites?",
+      "choices": [
+        { "id": "a", "text": "Faster CDN." },
+        { "id": "b", "text": "Free egress. Cloudflare doesn't bill bandwidth for Pages or R2; Vercel and Netlify do (with allowances, then per-GB). For video-heavy or download-heavy sites, this can mean thousands per month in savings." },
+        { "id": "c", "text": "Better build speeds." },
+        { "id": "d", "text": "More CPU per Function." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Free egress is Cloudflare's structural advantage on bandwidth-heavy workloads. For traffic-light sites the difference is marginal; for media/video/file-heavy sites, it can be a huge cost difference. Bandwidth bills are why teams sometimes migrate to Pages from competitors.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have a Next.js app heavily using ISR and specific Node APIs that don't fit Edge Runtime. Should you ship on Pages or Vercel?",
+      "choices": [
+        { "id": "a", "text": "Pages — always cheaper." },
+        { "id": "b", "text": "Vercel has the deepest Next.js integration and supports the full Node runtime, including ISR and Node-specific APIs. Pages supports Next.js via Edge Runtime, which has gaps for some advanced features. For pure Next.js with advanced features, Vercel often wins. Hybrid: keep Cloudflare for edge concerns (DNS, security, caching in front), Vercel for the Next.js app." },
+        { "id": "c", "text": "Always Pages." },
+        { "id": "d", "text": "Netlify only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pick by framework fit. Pages is excellent for static, Jamstack, and Next.js Edge Runtime workloads — but full Next.js Node runtime with all features is Vercel's strength. Hybrid (Cloudflare in front + Vercel app) is the canonical pattern when each excels at different parts.",
+      "points": 1
+    }
+  ]
+}

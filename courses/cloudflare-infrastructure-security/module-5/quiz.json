@@ -1,0 +1,71 @@
+{
+  "title": "Module 5 quiz: Zero Trust and production patterns",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the core idea of Zero Trust?",
+      "choices": [
+        { "id": "a", "text": "Block everything." },
+        { "id": "b", "text": "No implicit trust by network location. Every request is authenticated and authorized by identity + context (device, location, time), not by being 'inside the corporate network.' Replaces network-as-moat with identity-aware per-request access control." },
+        { "id": "c", "text": "Distrust users." },
+        { "id": "d", "text": "Encrypt everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Identity, not network location, decides access. Compromised laptop on corporate wifi has no more access than a coffee-shop laptop."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to expose a service running at home (behind NAT, ISP blocks port 80, no static IP). Right tool?",
+      "choices": [
+        { "id": "a", "text": "Ask for a static IP." },
+        { "id": "b", "text": "Cloudflare Tunnel. cloudflared dials outbound; works through any NAT/firewall/ISP restriction. Five minutes of setup; no public IP; combines with Access for SSO gating. Replaces VPN for most internal-service access patterns." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "VPN server." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tunnel's outbound-only design works through any NAT/firewall/ISP block. Combine with Access for identity gating. Replaces VPN for most teams."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the canonical production pattern for most SaaS apps?",
+      "choices": [
+        { "id": "a", "text": "All on Cloudflare or all on AWS." },
+        { "id": "b", "text": "Hybrid: Cloudflare for edge (DNS, security, caching, sometimes Workers/R2), cloud provider for compute and primary DB. Each for what it's best at. Often cheaper and more performant than all-one-provider." },
+        { "id": "c", "text": "Multi-region everywhere." },
+        { "id": "d", "text": "Free tier only forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hybrid is canonical. Cloudflare's edge strengths complement cloud's compute/data strengths. All-in on one provider often costs more for worse fit."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Adding Cloudflare to an existing production setup. Safe approach?",
+      "choices": [
+        { "id": "a", "text": "Flip everything to orange-cloud at once with defaults." },
+        { "id": "b", "text": "Gradual: DNS in Cloudflare with records gray-cloud first, SSL mode to Full (strict), Origin Cert installed, orange-cloud one record at a time with verification, WAF in Log mode initially, monitor for false positives, promote to Block over weeks, lock origin firewall to Cloudflare IPs once stable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete current setup." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradual migration limits blast radius. Big-bang flips routinely cause outages (wrong SSL mode, mail breakage, WAF blocking real users). Record-by-record + Log-mode + monitoring lets you catch issues at each step."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Where do Cloudflare cost surprises typically come from?",
+      "choices": [
+        { "id": "a", "text": "DDoS protection charges." },
+        { "id": "b", "text": "Viral Workers traffic exceeding included tier, R2 Class A/B operations at scale, D1 per-row read pricing under heavy reads, Workers AI inference, Logpush destination charges (Datadog etc.). DDoS is free; usage-based items are where bills sneak up. Set alerts on growth; review weekly." },
+        { "id": "c", "text": "DNS overages." },
+        { "id": "d", "text": "SSL cert renewals." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost surprises live in usage-based items, not fixed-tier features. DDoS, DNS, SSL are free. Workers, R2 ops, D1 reads, AI inference scale with usage. Alerts on growth catch surprises."
+    }
+  ]
+}

@@ -1,32 +1,41 @@
-// GET  /api/projects        — list current user's projects
-// POST /api/projects        — create a new project
+// GET  /api/projects   — list projects
+// POST /api/projects   — create a new project
 import { NextResponse, type NextRequest } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { randomUUID } from "node:crypto";
+import { desc } from "drizzle-orm";
 import { getProfile } from "@/lib/auth";
+import { getDb, courseProjects } from "@/lib/db";
 import { createProjectSchema } from "@/lib/validators";
 
 export const runtime = "nodejs";
 
 export async function GET() {
   const profile = await getProfile();
-  if (!profile) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!profile)
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
-  const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("course_projects")
-    .select("id,name,category,difficulty,status,tags,updated_at,created_at")
-    .order("updated_at", { ascending: false });
+  const db = getDb();
+  const rows = await db
+    .select({
+      id: courseProjects.id,
+      name: courseProjects.name,
+      category: courseProjects.category,
+      difficulty: courseProjects.difficulty,
+      status: courseProjects.status,
+      tags: courseProjects.tags,
+      updatedAt: courseProjects.updatedAt,
+      createdAt: courseProjects.createdAt,
+    })
+    .from(courseProjects)
+    .orderBy(desc(courseProjects.updatedAt));
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ projects: data ?? [] });
+  return NextResponse.json({ projects: rows });
 }
 
 export async function POST(request: NextRequest) {
   const profile = await getProfile();
-  if (!profile) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  if (profile.role !== "admin") {
-    return NextResponse.json({ error: "forbidden" }, { status: 403 });
-  }
+  if (!profile)
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await request.json().catch(() => null);
   const parsed = createProjectSchema.safeParse(body);
@@ -37,17 +46,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const supabase = createSupabaseServerClient();
-  const { data, error } = await supabase
-    .from("course_projects")
-    .insert({
-      ...parsed.data,
-      tags: parsed.data.tags ?? [],
-      owner_id: profile.id,
-    })
-    .select("id")
-    .single();
+  const id = randomUUID();
+  const db = getDb();
+  await db.insert(courseProjects).values({
+    id,
+    name: parsed.data.name,
+    category: parsed.data.category ?? null,
+    difficulty: parsed.data.difficulty ?? null,
+    audience: parsed.data.audience ?? null,
+    learningGoals: parsed.data.learning_goals ?? null,
+    tags: JSON.stringify(parsed.data.tags ?? []),
+    estimatedMinutes: parsed.data.estimated_minutes ?? null,
+  });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ id: data.id }, { status: 201 });
+  return NextResponse.json({ id }, { status: 201 });
 }

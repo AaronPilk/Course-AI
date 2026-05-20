@@ -1,0 +1,71 @@
+{
+  "title": "Module 5 quiz: Evals, safety, and shipping",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What axes should an agent eval cover beyond final output quality?",
+      "choices": [
+        { "id": "a", "text": "Just output quality." },
+        { "id": "b", "text": "Tool selection (right tools, right order, right args), efficiency (step count), and safety (approvals respected). Each catches a different failure mode that end-to-end output grading would miss." },
+        { "id": "c", "text": "Just token count." },
+        { "id": "d", "text": "Just latency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Final output quality is necessary but not sufficient. A 12-step agent that produces a correct answer at 2.5× the cost would pass output grading. Multi-axis evals catch tool-selection regressions, efficiency drift, and safety bypasses."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your agent has a code execution tool. Where should the code run?",
+      "choices": [
+        { "id": "a", "text": "On your production server." },
+        { "id": "b", "text": "In a sandboxed container with scoped filesystem, no network unless explicit, time and memory caps. Disposable per execution. The first successful prompt injection that gets shell access must not be able to touch anything real." },
+        { "id": "c", "text": "On a dev laptop." },
+        { "id": "d", "text": "Anywhere — sandboxing is overkill." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Code/file/system execution tools must run sandboxed. e2b, modal, or your own Docker handles this. Treat agent execution as untrusted by default."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Agent averages $0.04/run. Total bill 3× expected. Average looks fine. Where's the cost?",
+      "choices": [
+        { "id": "a", "text": "Misread the average." },
+        { "id": "b", "text": "The tail. p99 runs are typically 10–100× the median. A 1% tail at $5/run can dominate. Track p50/p95/p99, alert on tail growth, investigate every run above a threshold (e.g. $1+) until patterns emerge." },
+        { "id": "c", "text": "Network latency." },
+        { "id": "d", "text": "No issue." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Agent cost distributions are heavy-tailed. Averages mislead. Track percentiles, alert on drift, decompose expensive traces by per-step cost to find the dominant operation."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What's the most common cause of silent agent cost regressions?",
+      "choices": [
+        { "id": "a", "text": "Users querying more." },
+        { "id": "b", "text": "A prompt change introducing variance into a previously stable prefix — killing the prompt cache. Per-call cost on the cached portion jumps from ~10% rate to 100%, daily total quadruples silently. Drift alerts on cache hit rate catch this in hours." },
+        { "id": "c", "text": "Provider price increases." },
+        { "id": "d", "text": "Network issues." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache regressions are the most common silent cost regression. Timestamps, request IDs, or user-specific data templated into 'stable' content invalidate the cache. Drift alerts on cache hit rate catch the regression while the bill is still small."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Of the production-launch items, which five are the minimum bar?",
+      "choices": [
+        { "id": "a", "text": "Marketing, demo video, blog post, press release, internal demo." },
+        { "id": "b", "text": "Eval suite (≥30 cases) wired into CI; per-request logging with trace IDs; daily spend cap on the API key; feature flag with one-click disable; approval gates on irreversible tool calls. These five catch the majority of production agent disasters." },
+        { "id": "c", "text": "Multi-region, multi-agent, fine-tuning, vector DB, A/B testing." },
+        { "id": "d", "text": "Just use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "These five address the highest-risk production failure modes. Everything else on the launch checklist is hardening for the long tail — but these are the floor below which you shouldn't ship an agent."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Why rockets stage",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do most orbital rockets use exactly two stages?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic preference." },
+        { "id": "b", "text": "Two stages provide the big delta-v jump from suborbital (~3-4 km/s as a single stage) into orbital territory (~5-6+ km/s as two stages). A third stage adds modest additional delta-v but disproportionate complexity (interstage mass, separation events, extra engine systems, manufacturing cost). For LEO and GTO missions, two stages are sufficient and economically optimal. Apollo's Saturn V used three stages because lunar missions need ~12-13 km/s of delta-v, which two stages couldn't deliver with 1960s engines. Modern launchers (Falcon 9, Starship, most others) use two stages because that's where the cost/capability curve flattens." },
+        { "id": "c", "text": "FAA regulation." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stage count is an optimization between delta-v capability and complexity. Two stages crosses the orbital threshold with manageable complexity. Three stages helps for high-energy missions but isn't worth it for most LEO/GTO work. Reusability further favors fewer stages (more separation events = more failure modes).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why does Falcon 9 deliver about 30% less payload to LEO when the first stage is recovered vs. expended?",
+      "choices": [
+        { "id": "a", "text": "Random variation." },
+        { "id": "b", "text": "A recoverable first stage carries landing legs, grid fins, additional propellant for the boost-back / entry / landing burns, and heat-shielding mass — all of which add dry mass that the rocket has to lift but doesn't help reach orbit. Plus the boost-back burn for return-to-launch-site missions uses propellant that could otherwise have accelerated the upper stage and payload. The Tsiolkovsky equation is unforgiving: every kg of additional dry mass costs about a kg of payload. SpaceX accepts the ~30% payload hit because the cost-per-launch savings from recovering and reusing the stage are far larger than the lost payload value." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bad weather." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reusability isn't free — it costs payload. The economic case is that the operational savings from reuse exceed the lost payload value. For high-cadence operators with non-maximal payloads, this is the right trade. For one-shot deep-space probes that need every kg, expendable mode (or Falcon Heavy) is still used.",
+      "points": 1
+    }
+  ]
+}

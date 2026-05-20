@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Connectors",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Your assistant needs to read a user's Gmail. What's the right OAuth scope choice?",
+      "choices": [
+        { "id": "a", "text": "`gmail.modify` — full access, simpler." },
+        { "id": "b", "text": "`gmail.readonly` if you only need reads. Add narrower write scopes (`gmail.send`) only when level-3+ features require sending. Principle of least privilege: ask for the smallest scope that does the job. Each broader scope is a wider incident blast radius." },
+        { "id": "c", "text": "`gmail.*` so you have flexibility." },
+        { "id": "d", "text": "Skip OAuth entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Least-privilege scoping is the default. Read-only first; add write scopes only when features require them, with explicit user consent at the upgrade. Smaller scopes mean smaller incidents when something goes wrong.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Users hit your 'disconnect Google' button. Your code deletes tokens from your DB. They reconnect expecting fresh consent — but get the same tokens back without seeing the OAuth screen. Why?",
+      "choices": [
+        { "id": "a", "text": "Browser cache." },
+        { "id": "b", "text": "You deleted tokens locally but didn't revoke at the provider. Google still considers your app authorized, so the next connect short-circuits the consent flow. Always revoke at the provider on user disconnect, then delete locally. Clean disconnect = revoke + delete + halt dependent tasks + surface the impact." },
+        { "id": "c", "text": "Use a different model." },
+        { "id": "d", "text": "Switch to GitHub OAuth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Half-disconnects break trust. The 'disconnect' button should revoke at the provider's API, delete tokens locally, halt any tasks that depend on the connector, and surface the change to the user ('Calendar disconnected — morning brief will skip calendar context until reconnected').",
+      "points": 1
+    }
+  ]
+}

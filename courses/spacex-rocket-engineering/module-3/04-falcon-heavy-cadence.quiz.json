@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Falcon Heavy and cadence",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why did SpaceX abandon propellant crossfeed on Falcon Heavy?",
+      "choices": [
+        { "id": "a", "text": "It violated physics." },
+        { "id": "b", "text": "Complexity-to-payoff ratio didn't justify it. Crossfeed (piping propellant from side boosters to the center core during ascent so the center core stays full until side-booster separation) would have boosted Falcon Heavy LEO payload by ~10-15%. But it required novel plumbing between the cores, thermal challenges, and significant validation. Meanwhile, Falcon 9 itself was improving (more thrust, sub-cooled propellants, etc.), which expanded what single-stick Falcon 9 could do and reduced how often FH was needed. Plus Starship was clearly going to supersede FH for the heaviest missions. SpaceX dropped crossfeed to ship FH faster and put engineering effort into Starship instead." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Government banned it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The crossfeed decision is a clean example of opportunity-cost engineering: a feature that works in theory but doesn't pay back enough to justify the development time, especially when better alternatives (Falcon 9 improvements, then Starship) cover the same ground.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why is launch cadence (launches per year) itself a strategic competitive advantage, beyond just generating revenue?",
+      "choices": [
+        { "id": "a", "text": "Pure ego." },
+        { "id": "b", "text": "Several compounding benefits. High cadence generates telemetry from every launch — SpaceX learns faster than slower-cadence competitors and improves the fleet continuously. It amortizes fixed costs (range operations, manufacturing capacity, workforce) over more flights, lowering per-launch cost. It validates reusability economics (more flights per booster = better amortization). It provides customer flexibility (short lead times to launch, slot availability). And it builds operational expertise (range coordination, recovery operations, refurbishment cycles) that competitors can't replicate quickly. Together these create a moat: a competitor with one launch per quarter can't match SpaceX's cost or reliability even with similar hardware. This is why Starlink internal demand matters — it sustains the high cadence that makes everything else work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random metric." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cadence is its own capability with compounding effects. SpaceX's launch-rate moat is hard for competitors to cross because it requires simultaneous capacity across manufacturing, range, recovery, and refurbishment — and the per-flight learning advantage compounds over years.",
+      "points": 1
+    }
+  ]
+}

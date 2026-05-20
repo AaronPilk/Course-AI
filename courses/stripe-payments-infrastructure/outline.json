@@ -1,0 +1,93 @@
+{
+  "slug": "stripe-payments-infrastructure",
+  "title": "Stripe Payments Infrastructure Explained",
+  "subtitle": "How Stripe actually works — payments, subscriptions, webhooks, and the integration patterns that hold up in production",
+  "description": "A practical course on Stripe built from their developer docs and engineering posts. Covers the payment model (PaymentIntents, customers, products, prices), subscriptions and billing, webhooks done right, dispute handling, tax and compliance basics, and the integration patterns that survive contact with real customers and real money.",
+  "category": "Payments",
+  "difficulty": "intermediate",
+  "audience": "Developers and technical founders integrating Stripe into a product. Comfortable with REST APIs and HTTP; some familiarity with payments helps but isn't required.",
+  "tags": ["stripe", "payments", "subscriptions", "webhooks", "billing", "fintech"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "Stripe",
+    "logo": "/brands/stripe-payments-infrastructure.svg",
+    "gradient": ["#635BFF", "#9D60FF"],
+    "tint": "#0A0A2E"
+  },
+  "prerequisites": [
+    "Comfortable with REST APIs and HTTP",
+    "Have a Stripe account (test mode is free)",
+    "Familiarity with at least one server-side language"
+  ],
+  "outcomes": [
+    "Understand the Stripe data model — Customers, PaymentIntents, Products, Prices, Subscriptions",
+    "Accept a payment end-to-end using Stripe.js + Checkout or Elements",
+    "Build subscription billing including trials, upgrades, and dunning",
+    "Handle webhooks correctly — verification, idempotency, retries",
+    "Manage disputes, refunds, and customer support cases",
+    "Apply tax and compliance basics (Stripe Tax, SCA, 3DS)",
+    "Ship a Stripe integration that survives real customers and edge cases"
+  ],
+  "modules": [
+    {
+      "title": "The Stripe Mental Model",
+      "summary": "Stripe's data model — Customers, PaymentIntents, Products, Prices — and how the pieces fit together.",
+      "estimated_minutes": 50,
+      "key_concepts": ["data model", "payment intent", "customer", "test mode"],
+      "lessons": [
+        { "title": "How Stripe sees the world — the data model", "objective": "Map Customers, PaymentIntents, Products, Prices, and how they relate." },
+        { "title": "PaymentIntents — the modern payment primitive", "objective": "Understand what a PaymentIntent is, why it replaced Charges, and how to use it." },
+        { "title": "Test mode and the Stripe sandbox", "objective": "Set up test mode, use test cards, and never accidentally charge real cards in development." },
+        { "title": "Idempotency — Stripe's superpower", "objective": "Use idempotency keys to make payment operations safe to retry." }
+      ]
+    },
+    {
+      "title": "Accepting a Payment",
+      "summary": "End-to-end payment flow using Stripe Checkout, Elements, and the PaymentIntents API.",
+      "estimated_minutes": 60,
+      "key_concepts": ["checkout", "elements", "payment methods", "3ds"],
+      "lessons": [
+        { "title": "Stripe Checkout — the fastest path to accepting payments", "objective": "Implement Stripe Checkout end-to-end in under an hour." },
+        { "title": "Stripe Elements — custom checkout UI", "objective": "Build a branded checkout with Elements when Checkout's defaults don't fit." },
+        { "title": "Payment methods — cards, wallets, bank transfers, and BNPL", "objective": "Enable the payment methods relevant to your customers." },
+        { "title": "3D Secure (3DS) and SCA — the auth flow that catches you off-guard", "objective": "Handle 3DS authentication challenges correctly." }
+      ]
+    },
+    {
+      "title": "Subscriptions and Recurring Billing",
+      "summary": "Stripe Billing — subscriptions, trials, upgrades, proration, dunning, and the patterns for managing recurring revenue.",
+      "estimated_minutes": 60,
+      "key_concepts": ["subscriptions", "products and prices", "trials", "dunning"],
+      "lessons": [
+        { "title": "Subscriptions 101 — Products, Prices, and the billing cycle", "objective": "Set up a subscription product with multiple price options." },
+        { "title": "Trials, upgrades, downgrades, and proration", "objective": "Handle plan changes mid-cycle correctly." },
+        { "title": "Dunning — when payments fail and what to do", "objective": "Configure retries and recovery flows to minimize involuntary churn." },
+        { "title": "Customer Portal — letting customers manage their own subscriptions", "objective": "Add Stripe's hosted portal so customers handle their own billing." }
+      ]
+    },
+    {
+      "title": "Webhooks and Event-Driven Integration",
+      "summary": "Webhooks done right — verification, idempotency, retries, and the events you actually need to listen to.",
+      "estimated_minutes": 50,
+      "key_concepts": ["webhooks", "event types", "signature verification", "retries"],
+      "lessons": [
+        { "title": "Webhooks 101 — what they are and why every integration needs them", "objective": "Set up a webhook endpoint and process events." },
+        { "title": "Verification and security — the signature header that prevents disasters", "objective": "Verify webhook signatures so attackers can't forge events." },
+        { "title": "Idempotency, retries, and event ordering", "objective": "Handle Stripe's at-least-once delivery without breaking your database." },
+        { "title": "The events you actually need to listen to", "objective": "Build a minimal but complete webhook handler for common product types." }
+      ]
+    },
+    {
+      "title": "Production Stripe — Disputes, Tax, and the Long Tail",
+      "summary": "Disputes, refunds, Stripe Tax, SCA edge cases, and the operational patterns that keep payments healthy at scale.",
+      "estimated_minutes": 50,
+      "key_concepts": ["disputes", "refunds", "stripe tax", "compliance"],
+      "lessons": [
+        { "title": "Disputes and chargebacks — what to do when they arrive", "objective": "Build a dispute response workflow that minimizes losses." },
+        { "title": "Refunds, credits, and customer service edge cases", "objective": "Handle the long tail of refund scenarios cleanly." },
+        { "title": "Stripe Tax and compliance basics", "objective": "Enable tax collection in the regions you operate." },
+        { "title": "The Stripe production checklist — going from sandbox to live", "objective": "Walk the full pre-launch checklist for a payments integration." }
+      ]
+    }
+  ]
+}

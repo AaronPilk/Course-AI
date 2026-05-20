@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: OAuth scoping",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your onboarding asks for gmail.modify + calendar + drive + contacts up front. Drop-off at the consent screen is 60%. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Add testimonials before the consent screen." },
+        { "id": "b", "text": "Switch to incremental authorization: start with the narrowest needed scope (e.g. calendar.readonly), then request additional scopes at the moment the user tries a feature that needs them. Each ask is tied to a specific value moment; trust ramps with autonomy. Typical effect: drop-off falls dramatically." },
+        { "id": "c", "text": "Use a different OAuth provider." },
+        { "id": "d", "text": "Reduce scopes by removing features." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Incremental authorization is the canonical fix for consent-screen drop-off. Most major providers (Google, Microsoft, Salesforce) support it. Each scope upgrade is tied to a feature the user actually wants — easier to approve in context.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How should OAuth tokens be handled in your assistant's backend?",
+      "choices": [
+        { "id": "a", "text": "Like configuration — store in env vars." },
+        { "id": "b", "text": "Like passwords: encrypt at rest with strong keys, scope strictly per user, never log them, audit access to the encrypted store, rotate refresh tokens when providers issue new ones, revoke at the provider on disconnect (not just delete locally)." },
+        { "id": "c", "text": "In application logs for debugging." },
+        { "id": "d", "text": "In browser localStorage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tokens grant the assistant's full OAuth scope on the user's account. The blast radius of a leak is huge. Treat them like passwords — even your debugging practices should never expose them.",
+      "points": 1
+    }
+  ]
+}

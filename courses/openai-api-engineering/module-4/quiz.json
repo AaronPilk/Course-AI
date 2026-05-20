@@ -1,0 +1,110 @@
+{
+  "title": "Module 4 quiz: State, performance, and evaluation",
+  "scoring": { "passing_score": 6, "total_questions": 8, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is streaming better than blocking for chat UI even though total latency is the same?",
+      "choices": [
+        { "id": "a", "text": "It actually isn't — they feel identical." },
+        { "id": "b", "text": "Time to first token (TTFT) is much lower. The user sees output start within ~300ms instead of staring at a spinner for 4 seconds. Perceived latency is what users feel, not total wall time." },
+        { "id": "c", "text": "Streaming is cheaper per token." },
+        { "id": "d", "text": "Streaming gives more accurate output." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Streaming wins on perceived latency. The total time to complete the generation is the same (or slightly higher due to network overhead), but TTFT drops from seconds to hundreds of milliseconds. Users feel the difference dramatically."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're storing chat history server-side and sending the last 30 turns on every request. Cost is creeping up. What's the right pattern?",
+      "choices": [
+        { "id": "a", "text": "Send only the last 1 turn — context doesn't matter." },
+        { "id": "b", "text": "Compact older turns into a rolling summary, keep the most recent N turns verbatim. Cap input growth so cost stays roughly flat per turn instead of growing linearly with history." },
+        { "id": "c", "text": "Switch to GPT-5 to handle more context for free." },
+        { "id": "d", "text": "Disable chat history." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compaction is the answer. Keep recent turns verbatim (so immediate context isn't lost), summarize older turns into a single block. This caps input size and keeps cost stable across long conversations."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Which prompt structure benefits most from OpenAI's prompt caching?",
+      "choices": [
+        { "id": "a", "text": "User query first, system instructions at the end." },
+        { "id": "b", "text": "Stable content (system prompt, tool definitions, few-shot examples, RAG context) at the start, byte-identical across requests. User query last. The cached prefix is billed at ~50% off and processes faster." },
+        { "id": "c", "text": "Randomize the prompt order to avoid bias." },
+        { "id": "d", "text": "Never use caching — it makes outputs stale." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Caching matches prompt prefixes byte-by-byte. Stable content at the start lets every subsequent call hit the cache for the stable portion. Even one character difference at the start invalidates everything after it, so put the variable content last."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You ship a prompt change. It feels better. A customer reports a regression three days later. What's missing?",
+      "choices": [
+        { "id": "a", "text": "Nothing — that's how AI products work." },
+        { "id": "b", "text": "An eval suite. Without an eval, every prompt change is a leap of faith. With one, you'd have caught the regression before shipping. The fix: add a regression case for this bug, then run the eval before any future change." },
+        { "id": "c", "text": "More training data." },
+        { "id": "d", "text": "A bigger model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AI products without evals ship on vibes and break in production. An eval set covering happy paths, edge cases, adversarial cases, and past bugs catches regressions before users do. Every fixed bug should leave a regression case behind."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When should you use Batch API instead of the standard API?",
+      "choices": [
+        { "id": "a", "text": "Whenever you want to save money — even on user-facing requests." },
+        { "id": "b", "text": "When latency doesn't matter (analytics backfills, bulk document processing, periodic content generation, embedding large corpora). Batch API gives ~50% off but takes up to 24 hours. Never for real-time user-facing flows." },
+        { "id": "c", "text": "Only for embeddings." },
+        { "id": "d", "text": "Never — it's deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Batch API trades latency (~24 hours) for ~50% cost reduction. Perfect for offline pipelines, useless for real-time. Always check whether a workload is genuinely batchable before paying full price."
+    },
+    {
+      "position": 6,
+      "type": "multiple_choice",
+      "prompt": "You want to grade output helpfulness. Programmatic graders don't fit. What's the right approach?",
+      "choices": [
+        { "id": "a", "text": "Skip grading; ship it." },
+        { "id": "b", "text": "Model-based grading (LLM-as-judge): a strong model evaluates outputs against a rubric and returns structured JSON. Calibrate the judge against ~30 human-graded samples before trusting its scores at scale." },
+        { "id": "c", "text": "Have humans grade every single output forever." },
+        { "id": "d", "text": "Use regex." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Helpfulness, tone, and faithfulness are subjective — they don't fit string matching. LLM-as-judge with a clear rubric and structured output works well, *if* you calibrate against human ratings first to confirm the judge agrees with people."
+    },
+    {
+      "position": 7,
+      "type": "scenario",
+      "prompt": "A team wants to cut their AI bill 70%. They're using full GPT-5 for every turn, no caching, no compaction, conversations averaging 30 turns. What's the highest-ROI move first?",
+      "choices": [
+        { "id": "a", "text": "Switch the team to building everything in-house." },
+        { "id": "b", "text": "Implement prompt caching and conversation compaction. These two patterns alone typically cut bills 70–90% on chat workloads. Then add selective routing (mini for easy turns, full GPT-5 for hard ones) for another major drop." },
+        { "id": "c", "text": "Stop using AI altogether." },
+        { "id": "d", "text": "Switch to nano tier for everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Caching plus compaction is the highest-ROI pair in production AI cost optimization. Caching saves ~50% on the stable prefix; compaction caps history growth. Together they routinely deliver 70–90% savings without quality loss. Then route easy turns to mini for another drop."
+    },
+    {
+      "position": 8,
+      "type": "multiple_choice",
+      "prompt": "In production, which order of optimization usually makes sense?",
+      "choices": [
+        { "id": "a", "text": "Latency first, then quality, then cost." },
+        { "id": "b", "text": "Quality first (get evals passing), then cost (caching, compaction, smaller models on easy traffic), then latency (streaming, parallel tools, smaller hot-path models). Optimizing cost or latency on a broken product is wasted work." },
+        { "id": "c", "text": "All three simultaneously on day one." },
+        { "id": "d", "text": "Cost first — the bill is what matters most." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Order matters: quality → cost → latency. A cheap fast broken product is still broken. Once evals are passing, cost is the next biggest lever (often 70–90% savings available). Latency optimizations are the polish step. Trying all three on day one usually means none get done well."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Latency, cost, accuracy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You're building a phone-based voice assistant. Users speak; the agent talks back. A teammate suggests using a reasoning model so the agent is 'smarter.' How should you respond?",
+      "choices": [
+        { "id": "a", "text": "Great idea — reasoning models are always better." },
+        { "id": "b", "text": "Push back. Reasoning models add several seconds of latency per turn because they generate reasoning tokens before output. Voice agents live or die on sub-second response. Use a fast model in the hot path; if you need reasoning, do it offline or behind a 'I'll think about this' acknowledgment." },
+        { "id": "c", "text": "Use the reasoning model with maximum reasoning_effort to be safe." },
+        { "id": "d", "text": "Add image generation to the agent for good measure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Voice products are dominated by the latency corner of the triangle. Reasoning models trade speed for depth — the opposite of what a voice agent needs. The right pattern: fast model in the hot path, optionally with tool calls to specialized systems. Reasoning belongs in research pipelines, not voice loops.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "A new AI feature is live but slightly buggy and expensive. You can fix one thing first. Which order makes sense?",
+      "choices": [
+        { "id": "a", "text": "Cut costs first — the bill is what stakeholders see." },
+        { "id": "b", "text": "Fix quality first. Cost optimization on a broken product is wasted work. Once quality clears the bar via evals, then squeeze cost (caching, compaction, smaller models on easy turns), then optimize latency (streaming, parallel tool calls)." },
+        { "id": "c", "text": "Latency — perceived speed matters most." },
+        { "id": "d", "text": "All three in parallel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Order of optimization is quality → cost → latency. Cheap fast garbage is still garbage. Once the product works (evals look good), cost is the next biggest lever (caching and compaction routinely cut bills 70–90%). Latency optimizations are the last polish.",
+      "points": 1
+    }
+  ]
+}

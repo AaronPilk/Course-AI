@@ -1,34 +1,7 @@
-// Server-side Supabase client wired to Next.js cookies.
-// Use this in Server Components, Route Handlers, and Server Actions.
-import { cookies } from "next/headers";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-
-export function createSupabaseServerClient() {
-  const cookieStore = cookies();
-
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value, ...options });
-          } catch {
-            // called from a Server Component — middleware refreshes instead
-          }
-        },
-        remove(name: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value: "", ...options });
-          } catch {
-            // see above
-          }
-        },
-      },
-    }
+// Local mode has no Supabase. This stub exists so any forgotten import
+// throws loudly at request time instead of compiling to nothing.
+export function createSupabaseServerClient(): never {
+  throw new Error(
+    "Supabase is not used in local mode. Use the Drizzle client from @/lib/db."
   );
 }

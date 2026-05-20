@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Agent launch checklist",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the minimum bar for shipping an agent to production?",
+      "choices": [
+        { "id": "a", "text": "Marketing landing page and a demo." },
+        { "id": "b", "text": "Eval suite (≥30 cases) wired into CI; per-request logging with trace IDs; daily spend cap on the API key; feature flag with one-click disable; approval gates on irreversible tool calls. These five catch the majority of production agent disasters." },
+        { "id": "c", "text": "Switch from Sonnet to Opus." },
+        { "id": "d", "text": "Multi-agent orchestration framework." }
+      ],
+      "correct_answer": "b",
+      "explanation": "These five address the most common production failure modes: silent quality regressions (eval), invisible bugs (logging), runaway cost (cap), unfixable incidents (flag), and irreversible actions (approval gates). Everything else on the launch checklist is hardening — these are the floor.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your agent is live. Six months in, eval pass rate has drifted from 91% to 78%. The agent hasn't changed. What's the right response?",
+      "choices": [
+        { "id": "a", "text": "Roll back the agent — it's broken." },
+        { "id": "b", "text": "User request distribution has shifted to harder shapes. Sample real production failures, rotate stale eval cases out, add the new failure patterns as cases, refine prompts and tools to handle them. This is normal post-launch maintenance — agents drift not because they change but because the world they serve does." },
+        { "id": "c", "text": "Wait — see if it recovers on its own." },
+        { "id": "d", "text": "Switch to Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Post-launch agent maintenance is real work. Eval suites drift if they aren't refreshed with new production patterns. The agent doesn't have to change for its environment to. Monthly cost reviews, weekly expensive-trace reviews, quarterly safety re-audits, and continuous eval evolution are the price of running an agent in production over time.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Few-shot examples",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your classifier is 68% accurate using only a description of the task. Best next move?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Add 3–5 few-shot examples wrapped in <example>/<input>/<output> tags. Cover the input distribution and at least one edge case. This is the highest-ROI improvement for classification tasks — typically jumps 15–30 points without changing the model." },
+        { "id": "c", "text": "Add more adjectives to the description." },
+        { "id": "d", "text": "Lower temperature to 0 and hope." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Examples capture patterns descriptions can't. Three rules for good few-shot: cover the input distribution, include edge cases, show output exactly as you want it. Wrap each example in tags so Claude can parse the structure cleanly.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Your stable example block is 1,500 tokens and you make 20,000 calls/day. What pattern keeps the quality without crushing the bill?",
+      "choices": [
+        { "id": "a", "text": "Drop to one example." },
+        { "id": "b", "text": "Mark the example block as cacheable with `cache_control: { type: 'ephemeral' }` in the system or user content. Cached input on Claude is ~10% the price of fresh input, so repeat calls within the cache window pay almost nothing for the example block." },
+        { "id": "c", "text": "Switch to a different model every other call." },
+        { "id": "d", "text": "Concatenate all 20,000 user inputs into one giant call." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prompt caching is the right pattern for stable example blocks. Module 5 covers caching in depth — the short version is: a one-line config change unlocks ~90% cost reduction on the cached portion when calls share a prefix.",
+      "points": 1
+    }
+  ]
+}

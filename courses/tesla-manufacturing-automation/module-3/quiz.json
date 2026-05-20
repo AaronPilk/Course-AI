@@ -1,0 +1,71 @@
+{
+  "title": "Module 3 quiz: Gigacasting and body manufacturing",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's gigacasting and what does it replace?",
+      "choices": [
+        { "id": "a", "text": "3D printing entire vehicle bodies." },
+        { "id": "b", "text": "High-pressure die casting at automotive scale: one ~80kg aluminum casting replaces ~70 stamped-and-welded parts. Eliminates stamping operations, welds, inspection points, and BOM complexity. Structural cost reduction at scale." },
+        { "id": "c", "text": "Hand-forging parts." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting consolidates dozens of parts into one casting via large high-pressure die-casting presses. Category change in body manufacturing, not just optimization."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A legacy OEM with 15 EV models at 30-80K units/year each considers gigacasting. Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — copy Tesla." },
+        { "id": "b", "text": "Probably not at current volumes. Gigacasting breakeven is ~300K+ units/year per program. Die capex sunk per design. Stay with stamping; revisit when platforms consolidate to higher volumes." },
+        { "id": "c", "text": "Always cast." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting requires scale. Below ~300K per program, the capex doesn't amortize. Volume-blind adoption burns capital."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between cell-to-pack and structural battery?",
+      "choices": [
+        { "id": "a", "text": "Synonyms." },
+        { "id": "b", "text": "Cell-to-pack (CTP) skips the module layer — cells directly in pack (BYD Blade, CATL). Structural battery goes further — the pack IS the chassis floor with cells contributing structural rigidity (Tesla 4680). Each step trades repairability for weight, volume, and structural efficiency." },
+        { "id": "c", "text": "CTP is software." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Two steps along the integration journey. CTP removes modules; structural battery integrates the pack into the chassis. Each step compounds the trade-offs."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Tesla announced 4680 cells in 2020 with ambitious volume targets. Ramp took years longer than projected. Why?",
+      "choices": [
+        { "id": "a", "text": "Patents." },
+        { "id": "b", "text": "New cell formats require new manufacturing equipment, new process control, new chemistry optimized for the new geometry. Lab cells differ from factory cells. Yield, defect rate, cost per cell take years to optimize at production scale. Cell innovation is hard at scale — paper specs ≠ production reality." },
+        { "id": "c", "text": "Bad marketing." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cell manufacturing has one of the steepest learning curves in industry. New formats take years to ramp."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's gigacasting's structural risk beyond per-vehicle economics?",
+      "choices": [
+        { "id": "a", "text": "Cast parts are weaker." },
+        { "id": "b", "text": "Supply chain concentration. Press suppliers (Idra dominant), alloy producers, die makers are thin markets. Single supplier issues = months of production delay. Stamping has diversified supply chains; gigacasting doesn't. Combined with high fixed-cost capex, risk profile is meaningfully different." },
+        { "id": "c", "text": "Aluminum allergies." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Supply concentration is gigacasting's structural risk. Stamping has mature, diversified supply; gigacasting depends on a thin supplier ecosystem with no redundancy."
+    }
+  ]
+}

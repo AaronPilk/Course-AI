@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: SSL/TLS modes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the only correct Cloudflare SSL mode for production?",
+      "choices": [
+        { "id": "a", "text": "Flexible — fast and easy." },
+        { "id": "b", "text": "Full (strict). TLS on both legs (user↔Cloudflare and Cloudflare↔origin), with cert validation at origin. Other modes either skip encryption on Cloudflare↔origin (Flexible — never use) or skip cert validation (Full — accepts self-signed). Only Full (strict) actually delivers end-to-end TLS." },
+        { "id": "c", "text": "Off — encryption isn't worth the latency." },
+        { "id": "d", "text": "Full — same as strict for most purposes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Full (strict) is the only mode that's actually end-to-end TLS. Flexible is the security anti-pattern (looks encrypted to users; isn't on the back leg). Full without strict accepts self-signed origin certs and doesn't prevent MITM between Cloudflare and origin.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your origin needs a cert for Cloudflare to validate (Full strict mode). What's the simplest option that needs no renewal management?",
+      "choices": [
+        { "id": "a", "text": "Self-signed cert renewed yearly." },
+        { "id": "b", "text": "Cloudflare Origin Certificate — free, long-lived (up to 15 years), issued by Cloudflare specifically for Cloudflare↔origin traffic. Cloudflare's edge trusts it; browsers don't (by design — origin certs aren't for direct browser access). Install at origin, set Full (strict), done." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable cert validation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare Origin Certs are the canonical pattern: free, long-lived, zero renewal hassle, only valid for Cloudflare-to-origin traffic. Generate in dashboard, install at origin (NGINX/Apache/hosting platform), enable Full (strict). Public Let's Encrypt certs also work but require renewal automation.",
+      "points": 1
+    }
+  ]
+}

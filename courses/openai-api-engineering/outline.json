@@ -1,0 +1,98 @@
+{
+  "slug": "openai-api-engineering",
+  "title": "OpenAI API Engineering Masterclass",
+  "subtitle": "Build production AI products with OpenAI's APIs — from first call to live system",
+  "description": "Most OpenAI tutorials stop at 'here's how to call the chat endpoint.' This course is for engineers and product builders who need to ship real AI products: agents that take action, tools that work in production, evals that catch regressions, systems that don't melt under load. Grounded in OpenAI's primary documentation — what the docs actually say, what they imply, and what they don't tell you.",
+  "category": "AI Engineering",
+  "difficulty": "intermediate",
+  "audience": "Software engineers, technical founders, and AI product builders shipping real systems on top of OpenAI's APIs. Comfortable reading code; need a real mental model for choosing models, designing agents, and getting production-grade reliability.",
+  "tags": ["openai", "ai-engineering", "llm", "agents", "rag", "tool-use", "production"],
+  "brand": {
+    "name": "OpenAI",
+    "logo": "/brands/openai.svg",
+    "logoColor": "#FFFFFF",
+    "gradient": ["#10A37F", "#0E8C6E"],
+    "tint": "#04140F"
+  },
+  "estimated_minutes": 320,
+  "prerequisites": [
+    "Comfortable reading code (JS, Python, or similar)",
+    "Have made at least one HTTP request to an API before",
+    "An OpenAI API key (free tier is fine for following along)",
+    "No machine learning background required — we cover the mental model from scratch"
+  ],
+  "outcomes": [
+    "Explain how OpenAI's models actually work at a level that informs engineering decisions",
+    "Choose the right model and API surface for any given task",
+    "Design prompts and structured outputs that are reliable across runs",
+    "Build an agent that uses tools safely, with guardrails and approvals",
+    "Implement RAG with embeddings + vector search",
+    "Set up evals that catch regressions before they ship",
+    "Optimize for the right axis (cost vs latency vs accuracy) per use case",
+    "Take a prototype through OpenAI's production checklist"
+  ],
+  "modules": [
+    {
+      "title": "The OpenAI Mental Model",
+      "summary": "What you actually need to know about how OpenAI's models work to make good engineering decisions. The API surface, the models, the tokens, the cost — everything that compounds.",
+      "estimated_minutes": 55,
+      "key_concepts": ["transformer", "token", "context window", "Responses API", "Chat Completions", "rate limits", "GPT family", "reasoning models"],
+      "lessons": [
+        { "title": "How OpenAI's models actually work (no math required)", "objective": "Build a working mental model of how LLMs generate text — enough to predict their behavior in your code." },
+        { "title": "The API surface — Responses, Chat Completions, and what's actually different", "objective": "Pick the right OpenAI API for any task and understand why the surface is the way it is." },
+        { "title": "Models, capabilities, and how to pick the right one", "objective": "Choose between GPT-5 family, reasoning models, and specialized variants based on task, budget, and latency." },
+        { "title": "Tokens, context windows, and the things that decide your cost", "objective": "Predict the token cost of a request before you send it, and structure prompts to stay within budget." }
+      ]
+    },
+    {
+      "title": "Core Capabilities",
+      "summary": "Prompting, structured output, function calling, embeddings, multimodal. The building blocks that show up in every real product.",
+      "estimated_minutes": 80,
+      "key_concepts": ["system prompt", "structured output", "JSON mode", "function calling", "tool use", "embeddings", "semantic search", "vision", "audio"],
+      "lessons": [
+        { "title": "Text generation and prompting — what actually works", "objective": "Write prompts that produce reliable output, using the patterns OpenAI's own prompt engineering guide endorses." },
+        { "title": "Structured output — making the model return JSON you can trust", "objective": "Use structured output and JSON schema mode to get parseable, predictable responses." },
+        { "title": "Function calling and tool use", "objective": "Wire OpenAI models up to call your own functions and external APIs, with proper error handling." },
+        { "title": "Embeddings and semantic search", "objective": "Build a working semantic search / RAG system with text-embedding-3 and a vector store." },
+        { "title": "Images, vision, audio, and the multimodal stack", "objective": "Generate images, parse documents and screenshots, transcribe audio, and synthesize speech with the OpenAI multimodal APIs." }
+      ]
+    },
+    {
+      "title": "Agents and Tools",
+      "summary": "What an agent actually is, the Agents SDK, how tool use works in production, and the safety patterns you need before going live.",
+      "estimated_minutes": 80,
+      "key_concepts": ["agent", "agent loop", "Agents SDK", "MCP", "connector", "guardrail", "approval", "orchestration"],
+      "lessons": [
+        { "title": "What an agent actually is (and isn't)", "objective": "Define the agent loop, distinguish agents from chatbots and pipelines, and recognize when an agent is the right architecture." },
+        { "title": "The Agents SDK — building your first one", "objective": "Build a working OpenAI Agent that takes a task, uses tools, and returns a structured result." },
+        { "title": "Tool use patterns that work in production", "objective": "Design tools (function schemas, error handling, retry logic) that survive real user input and edge cases." },
+        { "title": "MCP and Connectors — the standard for tool ecosystems", "objective": "Use OpenAI's MCP support to plug into existing tool servers, and decide when to build your own MCP server." },
+        { "title": "Guardrails, approvals, and keeping agents safe", "objective": "Apply OpenAI's guardrail and approval patterns to prevent your agent from taking dangerous or unintended actions." }
+      ]
+    },
+    {
+      "title": "Production Systems",
+      "summary": "What separates a prototype from a live product. Conversation state, streaming, prompt caching, evals, and picking what to optimize.",
+      "estimated_minutes": 60,
+      "key_concepts": ["conversation state", "streaming", "webhook", "prompt caching", "context compaction", "evals", "latency optimization", "cost optimization"],
+      "lessons": [
+        { "title": "Conversation state, streaming, and webhooks", "objective": "Persist conversation state across turns, stream responses for fast perceived latency, and handle async work via webhooks." },
+        { "title": "Prompt caching, context compaction, and the cost game", "objective": "Cut request cost and latency dramatically by structuring prompts for caching and compacting long histories." },
+        { "title": "Evals — how to know if your AI product is getting better", "objective": "Set up evals that catch regressions before they hit users, using OpenAI's evals tooling." },
+        { "title": "Latency, cost, accuracy — picking what to optimize", "objective": "Diagnose which dimension is hurting your product and apply the right optimization technique without making the others worse." }
+      ]
+    },
+    {
+      "title": "Advanced Patterns and Going Live",
+      "summary": "Fine-tuning when it helps, reasoning models, multi-step workflows, and OpenAI's production deployment checklist.",
+      "estimated_minutes": 60,
+      "key_concepts": ["supervised fine-tuning", "DPO", "RFT", "reasoning model", "deep research", "computer use", "voice agent", "production checklist"],
+      "lessons": [
+        { "title": "Fine-tuning — when it actually helps (and when it doesn't)", "objective": "Decide whether fine-tuning is the right tool for your problem, and what kind (supervised, DPO, RFT) to use." },
+        { "title": "Reasoning models and the new 'think first' paradigm", "objective": "Use OpenAI's reasoning models effectively, understand reasoning_effort, and know when they're worth the cost." },
+        { "title": "Multi-step workflows: deep research, computer use, voice agents", "objective": "Build longer-horizon AI products using OpenAI's specialized capabilities: deep research, computer use, real-time voice." },
+        { "title": "The production checklist — going from prototype to live system", "objective": "Apply OpenAI's production best practices checklist to harden your AI product for real users." }
+      ]
+    }
+  ]
+}

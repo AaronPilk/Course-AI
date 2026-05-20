@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Fine-tuning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your support bot doesn't know your product's pricing or feature details. A teammate suggests fine-tuning on your docs to fix it. Good plan?",
+      "choices": [
+        { "id": "a", "text": "Yes — fine-tuning is how you teach a model facts." },
+        { "id": "b", "text": "No. Fine-tuning is for behavior, tone, and format — not for teaching facts. The bot will memorize the docs fuzzily and still hallucinate. Use RAG: retrieve relevant doc chunks at query time and pass them as context. Hallucinations drop, and updating the docs doesn't require retraining." },
+        { "id": "c", "text": "Yes, but only if you fine-tune on GPT-5." },
+        { "id": "d", "text": "Yes, fine-tuning replaces RAG entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fine-tuning shapes how the model talks, not what it knows. Facts learned in fine-tuning are unreliable — the model treats them statistically rather than as ground truth. RAG is the right tool for fact lookup: retrieve, then condition the model on retrieved text.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "You have a 3,000-token system prompt enforcing a specific brand voice. Outputs are mostly right but drift, and the long prompt makes every call slow and expensive. What's the natural fit for fine-tuning?",
+      "choices": [
+        { "id": "a", "text": "Not a fit — fine-tuning won't help with voice." },
+        { "id": "b", "text": "Strong fit. Collect 200–500 examples of on-voice copy, fine-tune a mini-tier model on them. The resulting model 'knows' your voice from training, so you can use a much shorter inference-time prompt. Cost drops, latency drops, consistency improves." },
+        { "id": "c", "text": "Switch to GPT-5 with the same long prompt." },
+        { "id": "d", "text": "Train a new model from scratch." }
+      ],
+      "correct_answer": "b",
+      "explanation": "This is the canonical fine-tuning use case: narrow stylistic behavior the base model can do but doesn't do consistently. Fine-tuning compresses the long system prompt into the model weights, so inference-time prompts get shorter and outputs more consistent. Best paired with a mini-tier base for cost savings.",
+      "points": 1
+    }
+  ]
+}

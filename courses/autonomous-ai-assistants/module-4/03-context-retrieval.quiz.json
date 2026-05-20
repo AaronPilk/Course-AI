@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Context retrieval",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your assistant retrieves from 8 sources for every query. Per-query latency is 4-6 seconds; cost is high. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Add source routing — most queries don't need all 8 sources. Rule-based or LLM-classifier picks the 2-3 sources likely relevant to the current message. Latency drops to 1-2s; cost drops 50-70%; quality holds because irrelevant context wasn't helping anyway." },
+        { "id": "c", "text": "Cache everything." },
+        { "id": "d", "text": "Remove some sources permanently." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-source retrieval scales badly without routing. A small classifier (or rule-based heuristics) picks relevant sources per query. Calendar queries don't need Slack history; deal-context queries don't need user profile. Route, then retrieve, then rerank, then inject.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's a critical privacy pattern for assistant retrieval?",
+      "choices": [
+        { "id": "a", "text": "Encrypt query strings." },
+        { "id": "b", "text": "Permission-aware filtering: cross-reference current user permissions before returning context. A user moved off a Slack channel? Don't return cached context from that channel. Per-user scoping is the baseline; permission-aware filtering catches the case where a user's access has changed since indexing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Encrypt embeddings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "User-scoped retrieval is the floor. Permission-aware retrieval (validating current access at query time, not just at index time) catches the harder case where access changed after indexing. Test for both — cross-user leaks AND cross-permission leaks within a user.",
+      "points": 1
+    }
+  ]
+}

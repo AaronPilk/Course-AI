@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: E-E-A-T",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these statements is the most accurate description of E-E-A-T?",
+      "choices": [
+        { "id": "a", "text": "It's the single most important ranking factor in Google's algorithm." },
+        { "id": "b", "text": "It's a framework Google's quality raters use to evaluate content. It's not a direct ranking factor — the algorithm uses many separate signals that correlate with good E-E-A-T." },
+        { "id": "c", "text": "It only applies to medical and financial websites." },
+        { "id": "d", "text": "It's a score Google computes for every page in the index." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google explicitly says E-E-A-T 'isn't a specific ranking factor.' Quality raters use the E-E-A-T framework to evaluate whether Google's algorithm is producing good results. The algorithm then uses many independent signals — bylines, citations, link patterns, content accuracy — that collectively correlate with what raters would call good E-E-A-T.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Of the four letters in E-E-A-T, which one does Google call the 'most important'?",
+      "choices": [
+        { "id": "a", "text": "Experience — first-hand familiarity with the topic." },
+        { "id": "b", "text": "Expertise — formal subject-matter knowledge." },
+        { "id": "c", "text": "Authoritativeness — reputation in the field." },
+        { "id": "d", "text": "Trustworthiness — honesty, accuracy, transparency. The other three contribute to trust." }
+      ],
+      "correct_answer": "d",
+      "explanation": "Google's documentation states it plainly: 'Of these aspects, trust is most important. The others contribute to trust, but content doesn't necessarily have to demonstrate all of them.' A page can succeed with strong Experience or Expertise even without all four — but if it's not trustworthy, the rest doesn't save it.",
+      "points": 1
+    }
+  ]
+}

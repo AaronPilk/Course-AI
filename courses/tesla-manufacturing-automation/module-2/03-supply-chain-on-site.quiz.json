@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Supply chain on-site",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Tesla co-locate suppliers at the Gigafactory campus?",
+      "choices": [
+        { "id": "a", "text": "Real-estate efficiency." },
+        { "id": "b", "text": "Lower logistics cost (heavy/bulky parts cost a lot to ship far), reduced inventory (JIT works better at minute-scale than day-scale), faster engineering velocity (supplier engineers in the next building can iterate same-day instead of weeks of remote back-and-forth), better quality coordination, and supply continuity (less exposure to shipping disruptions). The combination is the operational dividend." },
+        { "id": "c", "text": "Government mandates." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Co-location compresses logistics, inventory, engineering iteration, and quality coordination — multiple dividends from physical proximity. The downside is concentration risk and lock-in, which Tesla manages with multi-site strategy and selective vertical integration.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Should commodity fasteners (basic screws, bolts) be co-located with the Gigafactory?",
+      "choices": [
+        { "id": "a", "text": "Yes — everything benefits from co-location." },
+        { "id": "b", "text": "No. Commodities don't justify the costs of co-location (reduced supplier competition, real estate commitments, lock-in). Reserve co-location for: high-volume parts where logistics dominates (cells, seats); items with engineering iteration where supplier collaboration matters; strategic suppliers where lock-in is worth the dependency. Commodities should stay competitive: many suppliers, lowest bid wins, ship from wherever." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only if Tesla also makes screws." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Co-location is expensive. It pays back on heavy/bulky parts, on parts requiring engineering iteration, on supply-continuity-critical inputs. Commodities don't fit — keep them competitive and ship from wherever is cheapest.",
+      "points": 1
+    }
+  ]
+}

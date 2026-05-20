@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Single-agent vs multi-agent",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team prototypes a 4-agent system (planner, researcher, writer, editor) for content generation. Cost is $0.40/run, latency 35s. A single agent with the same tools costs $0.10/run, 12s latency, and matches quality on evals. Right move?",
+      "choices": [
+        { "id": "a", "text": "Add a fifth agent for editing." },
+        { "id": "b", "text": "Ship the single-agent version. Multi-agent was complexity for its own sake — same quality at 4× the cost and 3× the latency. Reserve multi-agent for cases where the work cleanly splits into roles with different tools/models/safety profiles, or where tool overload (15+) forces a split." },
+        { "id": "c", "text": "Use Opus on every agent." },
+        { "id": "d", "text": "Add more multi-agent coordination." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-agent earns complexity when single-agent is genuinely cracking. When a single-agent matches quality at a fraction of the cost, the multi-agent design was vanity, not value. Default single-agent; promote when there's a clear concrete reason.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When is multi-agent the right call?",
+      "choices": [
+        { "id": "a", "text": "Whenever you have multiple LLM calls." },
+        { "id": "b", "text": "When roles cleanly differ (different prompts, tools, models, or safety profiles); when a single agent has too many tools to reason about (15+); when logical workstreams can run in parallel; when you need to tightly scope an agent's safety surface. Otherwise, single-agent + workflow scaffolding around it." },
+        { "id": "c", "text": "Whenever the demo looks impressive." },
+        { "id": "d", "text": "Never — single-agent always wins." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Clear role differentiation is the main signal. A 'reader' agent with read-only tools + a 'writer' agent with approval gates makes sense. A 'planner' that just hands off to a 'executor' without any role difference is overhead. Test multi-agent design by writing the agent diagram — if it tangles, the design is wrong.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Booster return",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Falcon 9 perform a 'suicide burn' landing instead of hovering down precisely?",
+      "choices": [
+        { "id": "a", "text": "Suicide sounds cool." },
+        { "id": "b", "text": "A single Merlin engine at minimum throttle produces more thrust than the empty booster weighs. The booster can't hover — if the engine is on, it accelerates upward; if off, it falls. There is no thrust setting that produces a hover. So the flight computer must time the engine ignition so the burn ends exactly when the booster reaches zero velocity at zero altitude. Light too late: hits the ground too fast. Light too early: stops mid-air, falls, crashes. The whole landing burn lasts ~30 seconds with real-time throttle adjustments. Hovering would actually require a smaller engine or a deeper throttle than Merlin has." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The minimum thrust of one Merlin exceeds the booster's empty weight. No hover possible. The 'hoverslam' is physics, not preference. Smaller engines or deeper throttle (like Raptor's 40% capability) enable different landing strategies.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why does Falcon 9 need an entry burn at high altitude when atmospheric drag would naturally slow the booster?",
+      "choices": [
+        { "id": "a", "text": "Engineer overconfidence." },
+        { "id": "b", "text": "Without an entry burn, the booster would re-enter dense atmosphere at ~7,000 km/h and experience destructive levels of dynamic pressure and aerodynamic heating. Engine bells in particular would face concentrated heating that could melt or warp critical components. The entry burn (3 engines for ~15-25 seconds at ~70 km altitude) reduces velocity to ~3,000-4,000 km/h before entering dense atmosphere, dramatically reducing peak dynamic pressure and heating to survivable levels. It costs propellant but is the difference between a recoverable booster and a structurally-failed re-entry. This is also why Starship's heat-shield design and stainless-steel construction matter — different vehicles solve the same heating problem differently." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random burn." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Entry burns are a thermal-mechanical protection measure, not a position-correction maneuver. They cost propellant but enable the booster to survive atmospheric re-entry at all. Without them, the booster would either burn up or arrive structurally damaged.",
+      "points": 1
+    }
+  ]
+}

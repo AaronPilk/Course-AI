@@ -6,9 +6,12 @@ import {
   FileText,
   Link2,
   ClipboardPaste,
+  ListPlus,
   Trash2,
   Loader2,
   ShieldAlert,
+  Check,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
@@ -28,7 +31,13 @@ export type SourceRow = {
   created_at: string;
 };
 
-type Tab = "pdf" | "url" | "text";
+type Tab = "pdf" | "url" | "bulk" | "text";
+
+type BulkProgress = {
+  url: string;
+  status: "pending" | "running" | "done" | "error";
+  error?: string;
+};
 
 export function SourceManager({
   projectId,
@@ -116,13 +125,71 @@ export function SourceManager({
     refresh();
   }
 
+  // ─── Bulk URL state + handler ───────────────────────────────────────
+  const [bulkProgress, setBulkProgress] = useState<BulkProgress[]>([]);
+
+  async function addBulkUrls(raw: string) {
+    setError(null);
+    const urls = Array.from(
+      new Set(
+        raw
+          .split(/\r?\n/)
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0)
+      )
+    );
+    if (urls.length === 0) return;
+
+    setBusy(true);
+    setBulkProgress(urls.map((url) => ({ url, status: "pending" })));
+
+    // Sequential: predictable, easier on rate limits, easier to read.
+    for (let i = 0; i < urls.length; i++) {
+      setBulkProgress((prev) =>
+        prev.map((p, j) => (j === i ? { ...p, status: "running" } : p))
+      );
+      try {
+        const res = await fetch(`/api/projects/${projectId}/sources/url`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: urls[i] }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error ?? `HTTP ${res.status}`);
+        }
+        setBulkProgress((prev) =>
+          prev.map((p, j) => (j === i ? { ...p, status: "done" } : p))
+        );
+      } catch (e) {
+        setBulkProgress((prev) =>
+          prev.map((p, j) =>
+            j === i
+              ? {
+                  ...p,
+                  status: "error",
+                  error: e instanceof Error ? e.message : "Failed",
+                }
+              : p
+          )
+        );
+      }
+      // Refresh the list after each one so the user sees progress.
+      await refresh();
+    }
+    setBusy(false);
+  }
+
   return (
     <div className="space-y-6">
       <Card>
         <CardContent className="pt-6 space-y-4">
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <TabBtn active={tab === "url"} onClick={() => setTab("url")}>
               <Link2 className="size-4" /> URL
+            </TabBtn>
+            <TabBtn active={tab === "bulk"} onClick={() => setTab("bulk")}>
+              <ListPlus className="size-4" /> Bulk URLs
             </TabBtn>
             <TabBtn active={tab === "pdf"} onClick={() => setTab("pdf")}>
               <FileText className="size-4" /> PDF
@@ -160,6 +227,78 @@ export function SourceManager({
                 {busy ? <Loader2 className="size-4 animate-spin" /> : null}
                 Scrape & ingest
               </Button>
+            </form>
+          )}
+
+          {tab === "bulk" && (
+            <form
+              className="space-y-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const raw = String(
+                  new FormData(e.currentTarget).get("urls") ?? ""
+                );
+                addBulkUrls(raw);
+              }}
+            >
+              <div className="space-y-1">
+                <Label htmlFor="bulk-urls">URLs (one per line)</Label>
+                <Textarea
+                  id="bulk-urls"
+                  name="urls"
+                  rows={8}
+                  required
+                  placeholder={
+                    "https://example.com/article-one\nhttps://example.com/article-two\nhttps://example.com/article-three"
+                  }
+                  disabled={busy}
+                />
+                <p className="text-xs text-mutedForeground">
+                  Pasted URLs are ingested one at a time so you can watch
+                  progress. Duplicates and blank lines are skipped
+                  automatically.
+                </p>
+              </div>
+              <Button type="submit" disabled={busy}>
+                {busy ? <Loader2 className="size-4 animate-spin" /> : null}
+                {busy ? "Ingesting…" : "Scrape & ingest all"}
+              </Button>
+
+              {bulkProgress.length > 0 && (
+                <ul className="text-sm space-y-1.5 pt-2">
+                  {bulkProgress.map((p, i) => (
+                    <li
+                      key={`${p.url}-${i}`}
+                      className="flex items-start gap-2"
+                    >
+                      <span className="mt-0.5">
+                        {p.status === "done" && (
+                          <Check className="size-4 text-emerald-500" />
+                        )}
+                        {p.status === "error" && (
+                          <X className="size-4 text-red-500" />
+                        )}
+                        {p.status === "running" && (
+                          <Loader2 className="size-4 animate-spin text-mutedForeground" />
+                        )}
+                        {p.status === "pending" && (
+                          <span className="block size-4 rounded-full border border-border" />
+                        )}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-xs text-mutedForeground">
+                          {p.url}
+                        </div>
+                        {p.error && (
+                          <div className="text-xs text-red-500">
+                            {p.error}
+                          </div>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </form>
           )}
 

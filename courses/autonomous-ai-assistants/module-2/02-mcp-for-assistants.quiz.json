@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: MCP",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is MCP especially valuable for assistant products vs. one-off agents?",
+      "choices": [
+        { "id": "a", "text": "It's faster than direct API calls." },
+        { "id": "b", "text": "Assistants typically need more tools, last longer, ship on multiple surfaces, and share integrations with other products in the same org. MCP turns those integrations from per-product code into shared infrastructure — build once, reuse across all assistants. The savings compound as the assistant lineup grows." },
+        { "id": "c", "text": "It's required by major LLM providers." },
+        { "id": "d", "text": "It encrypts traffic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP reduces integration cost on the second, third, and tenth assistant product. For one-off agents the upfront cost might match a custom integration; for assistant suites, MCP pays back fast through reuse.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're considering connecting your assistant to a community MCP filesystem server with broad scope. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Connect it — community servers are pre-vetted." },
+        { "id": "b", "text": "Sandbox first. Review the server's code; constrain its filesystem scope to a specific directory; restrict network access; pin the version. MCP standardizes the integration layer, not the safety controls — community servers can have security issues, and a successful prompt injection through one can have wide blast radius." },
+        { "id": "c", "text": "Just use Opus." },
+        { "id": "d", "text": "Don't use community servers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP doesn't replace the safety patterns from earlier modules — it standardizes integration but the assistant still needs sandboxing, approval gates, and audit logs. Treat community MCP servers like any other third-party dependency: review, sandbox, version-pin, monitor.",
+      "points": 1
+    }
+  ]
+}

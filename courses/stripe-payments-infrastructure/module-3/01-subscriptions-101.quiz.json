@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Subscriptions 101",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team creates a new Stripe Product every time they tweak pricing. They end up with hundreds of Products and messy reporting. Right structure?",
+      "choices": [
+        { "id": "a", "text": "Delete and recreate everything." },
+        { "id": "b", "text": "One Product per plan (Pro, Enterprise, etc.), multiple Prices per Product (monthly, yearly, currency variants, tier variants). Products are the abstract offering; Prices are the specific pricing. Subscriptions reference Prices. This shape lets you change pricing without losing product identity in reporting." },
+        { "id": "c", "text": "One Product per customer." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Products = abstract offerings. Prices = specific pricing for those offerings. One Product can host many Prices (monthly/yearly, currency variants, tiers). This keeps reporting clean and lets pricing evolve without polluting the catalog.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the right pattern for handling 3DS on subscription signup?",
+      "choices": [
+        { "id": "a", "text": "Hope 3DS isn't triggered." },
+        { "id": "b", "text": "Create subscription with `payment_behavior: 'default_incomplete'` and `expand: ['latest_invoice.payment_intent']`. Send the resulting `client_secret` to frontend; Stripe.js `confirmPayment` handles 3DS. Subscription stays `incomplete` until first payment succeeds, then becomes `active`. Clean pattern for handling auth challenges at signup." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Charge first; ask for auth later." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`default_incomplete` is the canonical pattern for subscription creation that handles 3DS gracefully. The frontend confirms the first payment via Stripe.js (which handles challenges); subscription becomes active after success. Without this, 3DS on signup leaves subscriptions stuck in `incomplete` forever.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "module": 2,
+  "title": "Module 2 quiz — Helpful, Reliable, People-First Content",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "A consultant tells you that 'improving your E-E-A-T score' will fix your rankings. What's the most accurate response?",
+      "choices": [
+        { "id": "a", "text": "Great, sign me up — E-E-A-T is the #1 ranking factor." },
+        { "id": "b", "text": "There's no E-E-A-T score in Google's algorithm. E-E-A-T is a framework quality raters use; the algorithm uses many separate signals (bylines, citations, authority, etc.) that correlate with it. Ask them which specific signals they'll improve." },
+        { "id": "c", "text": "E-E-A-T only matters for medical and financial sites — skip it." },
+        { "id": "d", "text": "Ask them for the AI-generated E-E-A-T audit report." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google explicitly says 'E-E-A-T itself isn't a specific ranking factor.' Any service offering should be able to name the *specific signals* they're improving. 'E-E-A-T optimization' as a vague service is vapor — concrete signal improvements (bylines, source citations, author pages, primary research) are real work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're auditing one of your blog posts using the Who/How/Why framework. The Why answer is: 'this exists primarily to capture search traffic for the keyword X.' What does Google's guidance suggest?",
+      "choices": [
+        { "id": "a", "text": "Good — that's the right Why for SEO." },
+        { "id": "b", "text": "Wrong Why. Google's systems are designed to discount content created primarily to attract search traffic rather than to help users. Either rewrite the page to serve a real reader, or kill it." },
+        { "id": "c", "text": "Add more keywords to the title to strengthen the Why." },
+        { "id": "d", "text": "Add a stronger CTA at the end to convert the traffic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google's helpful content guidance is explicit: 'If you're primarily making content to attract search engine visits, that's not aligned with what our systems seek to reward.' The Why has a built-in lie detector — if your content wouldn't exist without Google, Google increasingly won't rank it. Rewrite around a real audience or cull.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Which of these is the clearest example of non-commodity content?",
+      "choices": [
+        { "id": "a", "text": "'Complete beginner's guide to investing' — covers everything generally." },
+        { "id": "b", "text": "'I lost $40,000 in my first year of options trading. Here's the exact playbook I used, what went wrong, and the four rules I now follow' — first-hand experience with specific outcomes and a defensible take." },
+        { "id": "c", "text": "'10 tips to invest better' — generic listicle." },
+        { "id": "d", "text": "'What is a stock?' — beginner-level explainer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Non-commodity content has specifics (the dollar amount), first-hand experience (the year of trading), a defensible angle (what went wrong + the four rules), and information that wouldn't exist without this specific author. The other options are commodity — generic, widely available information that any decent AI could produce.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You publish one article about medication dosages on your otherwise non-medical site. It ranks well for a year, then suddenly drops out of results after a quality update. What's the most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Random algorithm fluctuation — it'll come back on its own." },
+        { "id": "b", "text": "The article is a YMYL page on a non-YMYL site. Likely missing: credentialed author/reviewer, primary medical citations, recent update date. YMYL pages need YMYL-grade treatment even when they live on non-YMYL sites." },
+        { "id": "c", "text": "Probably keyword stuffing." },
+        { "id": "d", "text": "Probably bad backlinks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Medication dosing is squarely YMYL — Google applies heightened E-E-A-T scrutiny. Even a single YMYL page on a non-YMYL site needs credentials, primary citations, and visible review. Add 'Reviewed by [credentialed person]', cite primary sources, keep it updated, or remove it.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Which AI-content pattern most clearly triggers Google's scaled content abuse policy?",
+      "choices": [
+        { "id": "a", "text": "Using AI to summarize source papers as part of human-led research." },
+        { "id": "b", "text": "Using AI to draft sections that a knowledgeable human then heavily revises and verifies." },
+        { "id": "c", "text": "Publishing hundreds of templated articles per month targeting keyword variations with minimal human input." },
+        { "id": "d", "text": "Disclosing that AI helped draft an article that a credentialed human reviewed." }
+      ],
+      "correct_answer": "c",
+      "explanation": "The policy targets *many pages × low value × intent to manipulate rankings*. AI alone isn't the trigger. Mass-produced, templated, minimally-reviewed content at volume is exactly what the policy was written for — and it's also the pattern most likely to cause a catastrophic core update loss.",
+      "points": 1
+    }
+  ]
+}

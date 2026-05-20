@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Vertical integration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the right heuristic for deciding when to vertically integrate?",
+      "choices": [
+        { "id": "a", "text": "Always vertical — control everything." },
+        { "id": "b", "text": "Own what controls product quality, cost, and cycle time; buy commodities and items where suppliers have insurmountable advantages. Vertical wins when iteration speed + supply risk + proprietary process matter more than per-unit cost optimization. Loses on commodities, slow-changing components, or when capital is constrained." },
+        { "id": "c", "text": "Always buy — capital efficiency." },
+        { "id": "d", "text": "Vertical only for software." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vertical integration is a deliberate choice per component, not a universal strategy. Match the choice to where you have strategic advantage and where the suppliers don't. Tesla's depth in batteries / motors / software is justified by cycle time and supply risk; their use of commodity tires and basic parts uses suppliers because no strategic gain exists.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A startup making electric scooters in 2026 considers vertically integrating their battery pack manufacturing 'like Tesla.' Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — Tesla proved it works." },
+        { "id": "b", "text": "Probably not. The 2026 EV battery supplier ecosystem is mature; commodity packs are available cheaply. Vertical integration would burn capital with no strategic gain — speed and cost are already optimized by the ecosystem. Tesla's vertical battery work in 2010 was forced (no suppliers existed); 2026 is different. Copy Tesla's reasoning ('own what matters strategically'), not the literal playbook." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Outsource everything and add Tesla logos." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vertical integration decisions are context-dependent. Tesla in 2010 had no choice on batteries. A 2026 startup has many choices. Burn capital on vertical integration only where you have a strategic advantage suppliers can't match.",
+      "points": 1
+    }
+  ]
+}

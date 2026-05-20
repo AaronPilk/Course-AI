@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Diagnosing traffic drops",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Organic traffic just dropped 50% overnight. What should you check FIRST?",
+      "choices": [
+        { "id": "a", "text": "Disavow recent backlinks." },
+        { "id": "b", "text": "Roll back all content changes from the last quarter." },
+        { "id": "c", "text": "Check for a technical regression: was there a recent deploy? Is robots.txt healthy? Are pages returning 200? Did a noindex tag accidentally roll out? Search Console's Page Indexing report is the fastest way to spot a site-wide indexing event." },
+        { "id": "d", "text": "Hire a recovery service immediately." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Always check technical regressions first. They're the fastest to find, the most often the cause of sudden drops, and the most damaging if left unfixed. A staging robots.txt deployed to production, an accidental noindex tag, a broken deploy — these are the most common causes of sudden 50% drops. Rule them out before assuming algorithm or content issues.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your traffic dropped on the same day as a Google core update. A consultant says: 'Roll back everything you did last month — that's what triggered it.' Is this good advice?",
+      "choices": [
+        { "id": "a", "text": "Yes, always roll back recent changes after an update." },
+        { "id": "b", "text": "Usually wrong. Core updates change how Google evaluates content — not how it evaluates *your specific recent changes*. Reverting good work won't help and may hurt. The right move is to audit affected pages for content quality (Module 2's E-E-A-T, Who/How/Why, commodity vs non-commodity) and substantively improve them. Recovery takes 3–6 months minimum." },
+        { "id": "c", "text": "True only for YMYL sites." },
+        { "id": "d", "text": "Only roll back changes made in the last 48 hours." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Core updates change Google's evaluation framework — they shift which content quality signals matter more or less. They don't punish your specific recent changes. Panic-reverting good work doesn't help. The fix is content quality investment, and recovery is typically a 3–6 month timeline. Sometimes you need to wait for the next core update for recovery to fully land.",
+      "points": 1
+    }
+  ]
+}

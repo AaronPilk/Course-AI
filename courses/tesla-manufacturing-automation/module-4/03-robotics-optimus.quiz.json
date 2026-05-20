@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Optimus & humanoid robotics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Tesla pursuing humanoid robots instead of specialized industrial robots for the tasks current automation can't handle?",
+      "choices": [
+        { "id": "a", "text": "Humanoid robots are cheaper." },
+        { "id": "b", "text": "Factories (and homes, warehouses, businesses) are already designed for humans. A humanoid robot adapts to those environments without redesigning them. Specialized robots require environment redesign per task. The bet: a single general humanoid replaces many specialized solutions AND addresses much larger markets beyond factories. Trade-off: humanoid form is harder to engineer (balance, manipulation, perception) but unlocks more potential use cases." },
+        { "id": "c", "text": "It's easier than industrial robotics." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Humanoid form lets robots work in environments designed for humans without redesigning those environments. Specialized robots win on narrow tasks; humanoids — IF they work — win on breadth. Tesla's bet is breadth. The technical challenge is real.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A manufacturing leader asks: 'Should we plan our 2028 factory assuming Optimus replaces line workers?' Right answer?",
+      "choices": [
+        { "id": "a", "text": "Yes — Tesla says so." },
+        { "id": "b", "text": "No. Optimus is in early factory deployment for limited tasks as of 2026. Realistic factory-scale deployment for non-trivial tasks is 2028-2032 range, with significant uncertainty. Build today's factories assuming current hybrid human-robot reality; fold in humanoid robots as they prove out at scale. Don't bet factory production on a technology that hasn't fully shipped yet." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just hire fewer workers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimus is real but early. Production-scale deployment is years out with uncertain timeline. Build for current reality; adapt as humanoid robots prove out. Don't risk factory operations on optimistic R&D timelines.",
+      "points": 1
+    }
+  ]
+}

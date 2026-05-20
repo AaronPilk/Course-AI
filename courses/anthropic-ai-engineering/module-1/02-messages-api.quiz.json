@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Messages API",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where does the system prompt go in a Claude API call?",
+      "choices": [
+        { "id": "a", "text": "As a `{role: 'system', content: ...}` entry in the messages array." },
+        { "id": "b", "text": "As a top-level `system` field on the request, separate from `messages`. The messages array only contains `user` and `assistant` turns." },
+        { "id": "c", "text": "Inside the first user message." },
+        { "id": "d", "text": "Anthropic doesn't support system prompts." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Claude's API has a dedicated top-level `system` field. The `messages` array only contains user/assistant turns, must alternate, and must start with `user`. Putting the system prompt as a role inside messages is one of the most common Claude API mistakes for people coming from OpenAI's chat completions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your agent is calling tools but Claude keeps repeating the same tool call. You're storing only `response.content[0].text` in conversation history. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Tool use doesn't work with Claude." },
+        { "id": "b", "text": "You're dropping non-text content blocks. `response.content` is an array — text, tool_use, and other typed blocks. Always append the full `response.content` array to history, not just the first block's text. Otherwise Claude loses track of what it already tried to do." },
+        { "id": "c", "text": "Use Opus instead." },
+        { "id": "d", "text": "Tool calls don't go in history." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Claude responses are arrays of typed blocks. A response can include both a `text` block and a `tool_use` block. Storing only the text loses the tool call data, so on the next turn Claude doesn't know it already attempted the tool. Fix: always store the entire `response.content` array.",
+      "points": 1
+    }
+  ]
+}

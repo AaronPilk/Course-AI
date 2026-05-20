@@ -1,0 +1,77 @@
+{
+  "module": 3,
+  "title": "Module 3 quiz — Technical SEO That Actually Matters",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Google keeps rewriting your <title> tag in the SERP. Which is the most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Random Google bug — file a support ticket." },
+        { "id": "b", "text": "Your title misrepresents the page (keyword stuffing, all-caps, clickbait, or significantly off-topic). Google rewrites when your title doesn't match the content. The fix is to write an accurate, useful title." },
+        { "id": "c", "text": "You have multiple <h1> tags on the page." },
+        { "id": "d", "text": "Your page is too long." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google's title rewrites are designed to surface accurate, helpful titles to users. Common triggers: keyword stuffing, all-caps, exaggerated/clickbait language, or significant mismatch between title and content. The fix is to write a genuine, descriptive title — not to fight the rewrite.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're migrating your site from example.com to newexample.com tomorrow. Which single thing matters most for protecting organic traffic?",
+      "choices": [
+        { "id": "a", "text": "Update your meta keywords on every page." },
+        { "id": "b", "text": "Set up 301 (permanent) redirects from every old URL to its corresponding new URL — and avoid redirect chains." },
+        { "id": "c", "text": "Submit a new sitemap." },
+        { "id": "d", "text": "Add the new domain to Google Search Console." }
+      ],
+      "correct_answer": "b",
+      "explanation": "301 redirects are the single most important step in any URL migration — they tell Google the move is permanent and pass ranking signal from old URLs to new ones. Without them, you lose almost all inherited authority. Submitting a sitemap and verifying in Search Console are helpful follow-ups but secondary.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "An SEO consultant claims you have a 'duplicate content penalty' because your URLs are reachable at both http:// and https://. What's the most accurate assessment?",
+      "choices": [
+        { "id": "a", "text": "They're right — that's a major penalty." },
+        { "id": "b", "text": "There is no duplicate content penalty. What you have is canonical ambiguity. Fix it by 301-redirecting http to https, then consolidating to one canonical (with or without www)." },
+        { "id": "c", "text": "Block one of the protocols in robots.txt." },
+        { "id": "d", "text": "Submit a reconsideration request." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google has stated for years: 'Having duplicate content on your site is not a violation of our spam policies.' What duplicates create is canonical confusion and wasted crawl budget. The fix for HTTP/HTTPS is 301 redirects to the secure version — not a penalty appeal, not a robots.txt block.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Which is the best alt text for a recipe photo of a finished sourdough loaf cross-sectioned to show the crumb?",
+      "choices": [
+        { "id": "a", "text": "alt=\"IMG_4729.jpg\"" },
+        { "id": "b", "text": "alt=\"Sourdough loaf cross-section showing open crumb with large irregular holes\"" },
+        { "id": "c", "text": "alt=\"image of sourdough bread sourdough loaf bread baking sourdough recipe best sourdough\"" },
+        { "id": "d", "text": "Empty alt: alt=\"\"" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Good alt text describes what the image actually shows, in context, concisely. (a) is the filename, useless. (c) is keyword-stuffed — doesn't help SEO, hurts accessibility. (d) is for purely decorative images, not recipe content where the image carries real information about what the dish should look like.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Which of these is a real, documented Google ranking signal?",
+      "choices": [
+        { "id": "a", "text": "Page <meta keywords> tag content." },
+        { "id": "b", "text": "Exact word count of articles." },
+        { "id": "c", "text": "Strict <h1>/<h2>/<h3> hierarchical order." },
+        { "id": "d", "text": "Page experience signals (Core Web Vitals: loading, interactivity, visual stability)." }
+      ],
+      "correct_answer": "d",
+      "explanation": "Core Web Vitals are part of Google's page experience signals and do affect rankings (especially as a tiebreaker between similar-quality pages). The other three are myths: meta keywords is ignored, there's no magical word count, and heading order matters for accessibility but not for SEO ranking.",
+      "points": 1
+    }
+  ]
+}

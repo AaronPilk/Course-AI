@@ -1,0 +1,71 @@
+{
+  "title": "Module 1 quiz: What an autonomous assistant actually is",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Roughly how many levels are on the autonomy spectrum?",
+      "choices": [
+        { "id": "a", "text": "Two — autonomous or not." },
+        { "id": "b", "text": "Five: chatbot, tool-using assistant, initiative assistant (propose + approve), scheduled assistant (runs on time/events), background coworker (acts within trust boundaries). Pick the level by matching user delegation willingness, mistake reversibility, and eval coverage." },
+        { "id": "c", "text": "Three — chat, agent, assistant." },
+        { "id": "d", "text": "Infinite." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Autonomy is a spectrum, not a binary. Most successful products live at level 3-4; level 5 is the future for narrow, well-evaluated domains."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How does an assistant differ from an agent?",
+      "choices": [
+        { "id": "a", "text": "Assistants have tools; agents don't." },
+        { "id": "b", "text": "Agents are task-oriented (run, complete, stop); assistants are relationship-oriented (long-term memory, schedule/event awareness, initiative across the user's day). An agent's value is per-task; an assistant's value compounds over time." },
+        { "id": "c", "text": "They're synonyms." },
+        { "id": "d", "text": "Agents are cheaper." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Naming matters. Most products called 'AI assistants' are actually agents — and users feel oversold when the assistant traits (memory, schedule, initiative) are missing."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "A team launches an assistant that auto-archives 'unimportant' emails with 95% accuracy. The 5% miss causes outsized angry feedback. Why?",
+      "choices": [
+        { "id": "a", "text": "Users don't appreciate AI." },
+        { "id": "b", "text": "Trust spending is asymmetric — surprises and destructive actions cost much more trust than success builds. 95% accuracy on a destructive auto-action can net negative trust. Switch to 'propose + approve' (level 3): same value, no trust burn." },
+        { "id": "c", "text": "Need to use Opus." },
+        { "id": "d", "text": "Need more training data." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trust budgets are asymmetric — wins build slowly, surprises burn fast. For destructive or hard-to-undo actions, even high accuracy can net trust-negative. Level 3 (propose + approve) avoids the burn."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your team scopes v1 to 'all knowledge workers' with 12 tool integrations. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Yes — broader is better." },
+        { "id": "b", "text": "No. Scope hard: one persona, one JTBD, 2–5 tools, level 3 autonomy. Specific personas drive specific decisions; broad v1s nearly always fail. Better to ship a great narrow assistant than a mediocre wide one; expand after v1 wins." },
+        { "id": "c", "text": "Just use Opus to compensate." },
+        { "id": "d", "text": "Add voice + mobile to differentiate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generalist v1s fail. Specific persona + specific JTBD + tight tool set + level 3 autonomy is the canonical scope for first-version assistants."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What builds user trust most reliably over time?",
+      "choices": [
+        { "id": "a", "text": "More features faster." },
+        { "id": "b", "text": "Transparency + asking before risky actions + consistency + quick undo + visible audit trail. Each successful, transparent interaction adds to the trust budget; surprises and hidden actions burn it. Earn level 5 through a long string of level 3 wins where the user always knew what was happening." },
+        { "id": "c", "text": "Marketing campaigns." },
+        { "id": "d", "text": "Higher autonomy defaults." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trust accrues from successful, transparent action. Hidden surprises and unrecoverable mistakes burn it fast. The path to high autonomy is paved with low-autonomy wins."
+    }
+  ]
+}

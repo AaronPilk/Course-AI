@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: What Cloudflare solves",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which is the canonical production pattern for using Cloudflare?",
+      "choices": [
+        { "id": "a", "text": "Run your entire app on Cloudflare; replace AWS/GCP." },
+        { "id": "b", "text": "Cloudflare in front of your real app on a cloud provider. Cloudflare handles edge concerns (DDoS, global latency, caching, security, some logic via Workers); origin handles application state, complex compute, primary databases. Best of both architectures." },
+        { "id": "c", "text": "Skip Cloudflare; direct origin." },
+        { "id": "d", "text": "Move only DNS to Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The canonical pattern is 'Cloudflare in front of origin.' Edge layer for performance + security; origin layer for application logic. Cloudflare-native (everything on Workers/Pages/D1/R2) works for specific workloads but isn't universal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team tried to run their primary Postgres-backed application entirely on Workers + D1. D1 couldn't handle their write throughput; complex queries didn't fit. What's the right move?",
+      "choices": [
+        { "id": "a", "text": "Use Opus." },
+        { "id": "b", "text": "Move primary DB to a real Postgres on a managed cloud (Supabase, RDS, Neon, etc.); keep Cloudflare in front for edge concerns and Workers for routing/edge logic. Hybrid is correct for most real workloads — D1 is excellent for read-heavy, low-write patterns but not a Postgres replacement at scale." },
+        { "id": "c", "text": "Switch to MongoDB on D1." },
+        { "id": "d", "text": "Drop the application." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare-native works for greenfield apps with simple needs. Complex data models, high write throughput, or relational workloads still want a real database. Hybrid is the pragmatic answer: Cloudflare edge + real cloud origin/DB.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Module 1 quiz: What an agent actually is",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the cleanest way to distinguish a workflow from an agent?",
+      "choices": [
+        { "id": "a", "text": "Number of tools." },
+        { "id": "b", "text": "Who decides the next step: in a workflow you (the developer) decide the sequence and the LLM fills in content; in an agent, the LLM picks the next step (which tool, which arguments, when to stop). The first is predictable and cheap; the second is flexible and expensive." },
+        { "id": "c", "text": "Whether it uses RAG." },
+        { "id": "d", "text": "Whether it streams output." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workflows = developer chooses steps. Agents = model chooses steps. Workflows are simpler, faster, cheaper, more reliable; agents are flexible for problems where the path genuinely depends on intermediate results. Default to workflow; promote only when needed."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the universal pattern every agent framework reduces to?",
+      "choices": [
+        { "id": "a", "text": "A DAG of LLM calls." },
+        { "id": "b", "text": "A loop: call model → execute requested tools → append results to conversation → repeat until model signals done or step cap fires. Every framework (OpenAI Agents SDK, LangGraph, AutoGen, Anthropic tool use) is a wrapper around this loop." },
+        { "id": "c", "text": "Fine-tuning + RAG." },
+        { "id": "d", "text": "Multi-model voting." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The agent loop is the ReAct pattern: reason, act, observe, repeat. Frameworks add ergonomics around it — the underlying mechanic is unchanged. You can implement an agent in 30 lines of code without any framework."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Your agent ran overnight in a fetch-retry-fetch loop, burning a 4-figure bill. What was missing?",
+      "choices": [
+        { "id": "a", "text": "Higher max_tokens." },
+        { "id": "b", "text": "A step cap (maxSteps). Without one, a buggy agent or adversarial input loops forever. The pattern: cap iterations, treat hitting the cap as an explicit error, escalate or return partial answer. Pair with per-tool timeouts and daily spend caps for layered safety." },
+        { "id": "c", "text": "Opus instead of Sonnet." },
+        { "id": "d", "text": "More tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Step caps are non-negotiable. They convert 'unbounded loop' into 'explicit error to handle.' Combine with timeouts, approvals on destructive tools, and daily cost caps for full safety."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Roughly how many tools should a single production agent have?",
+      "choices": [
+        { "id": "a", "text": "As many as possible." },
+        { "id": "b", "text": "5–15 is the sweet spot. Fewer than 5 means a workflow could do the job; more than 15 means token cost balloons and selection quality drops. Past ~20 tools, consider splitting into specialized agents or gating tools by route." },
+        { "id": "c", "text": "Exactly 50." },
+        { "id": "d", "text": "Just one." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool count drives both prompt size (every definition lives in input on every call) and selection complexity (more choices = worse selection). Split into specialized agents or use route-based tool gating once you exceed ~20 tools."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "You're routing customer messages with an agent that always calls `classify_intent` then `route_to_team`. Cost is 4× a workflow equivalent. Right move?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Replace with a single LLM call returning `{intent, team}` as structured output. The 'agent' is doing fixed work — the agent overhead buys nothing. Reserve agent loops for problems where the path genuinely varies based on intermediate results." },
+        { "id": "c", "text": "Add more tools." },
+        { "id": "d", "text": "Increase max steps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Most 'agents' in production are actually workflows wearing agent costumes. If the steps are predictable, drop to a workflow or single LLM call. Agents earn their cost only when the value is the system figuring out what to do — not when the path is the same every time."
+    }
+  ]
+}

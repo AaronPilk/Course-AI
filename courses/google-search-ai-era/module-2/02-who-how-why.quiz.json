@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Who, How, Why",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which question does Google call 'perhaps the most important' to answer about your content?",
+      "choices": [
+        { "id": "a", "text": "Who — who created the content." },
+        { "id": "b", "text": "How — how the content was created." },
+        { "id": "c", "text": "Why — why the content was created in the first place." },
+        { "id": "d", "text": "When — when the content was last updated." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Google's docs say 'Why is perhaps the most important question to answer about your content.' Content created primarily to help people is what Google's systems reward. Content created primarily to attract search traffic is what Google's systems try to discount.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You used AI to draft an article and reviewed it yourself before publishing. What's the right approach to disclosure?",
+      "choices": [
+        { "id": "a", "text": "Don't mention it — AI involvement always hurts." },
+        { "id": "b", "text": "Add a short factual line: 'Draft assisted by AI; verified by [author].' Don't apologize, just be transparent." },
+        { "id": "c", "text": "Add a long disclaimer warning the reader the content might be inaccurate." },
+        { "id": "d", "text": "Hide it by removing all author attribution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google's guidance is to disclose AI use when a reasonable reader would care, but not to make a big production of it. A short factual line builds trust. Long disclaimers read defensive. Hiding AI involvement is risky — readers and detection systems are getting good at noticing.",
+      "points": 1
+    }
+  ]
+}

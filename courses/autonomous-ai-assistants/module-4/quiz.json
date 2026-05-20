@@ -1,0 +1,71 @@
+{
+  "title": "Module 4 quiz: Memory, context, and continuity",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your assistant signs off 'enjoy your vacation!' months after the user mentioned a trip. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Need a smarter model." },
+        { "id": "b", "text": "Working memory has no expiration on temporal facts. Time-bound preferences (out-of-office, this-quarter goals, current project) need short TTLs (1-2 weeks default). Without aging, working memory drifts from reality." },
+        { "id": "c", "text": "Reset memory weekly." },
+        { "id": "d", "text": "Disable memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Temporal facts age. Durable identity preferences ride longer. The line is type — anything that smells time-bound defaults to short TTL."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the three-layer memory architecture for assistants?",
+      "choices": [
+        { "id": "a", "text": "Just one big memory pile." },
+        { "id": "b", "text": "Profile (structured, eager-loaded), episodic memory (RAG-style, lazy-retrieved), lessons learned (curated user-confirmed notes). Working memory bridges short-term and long-term. Each layer has different retrieval, expiration, and trust patterns." },
+        { "id": "c", "text": "Conversation history only." },
+        { "id": "d", "text": "Vector store for everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three layers serve different purposes. Profile is small and always-on. Episodic is RAG-shaped. Lessons learned are curated. Each gets richer with use; each has its own update and expiration policy."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Assistant retrieves from 8 sources for every query. Latency is 4-6s; cost high. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Add source routing — rule-based or small classifier picks 2-3 relevant sources per query. Latency drops to 1-2s; cost drops 50-70%. Calendar queries don't need Slack; Slack queries don't need user profile." },
+        { "id": "c", "text": "Cache everything." },
+        { "id": "d", "text": "Remove sources." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-source retrieval needs routing to scale. Pick relevant sources per query, retrieve top-K from each, rerank to 5-10 final chunks."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "User deleted 'VIP: Sarah' from memory; assistant re-inferred and re-added within days. User complains. Fix?",
+      "choices": [
+        { "id": "a", "text": "Tell user the assistant is right." },
+        { "id": "b", "text": "Add a block list for previously-deleted entries. Combined with inference dampening (re-add requires strong signal + user confirmation), deleted facts stay deleted unless the user changes their mind. Honor the deletion intent." },
+        { "id": "c", "text": "Disable inference." },
+        { "id": "d", "text": "Bigger model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Shadow-profile problems break user trust. Block lists + confirmation gates on re-adding deleted facts respect the user's intent."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why build deletion plumbing early in an assistant product?",
+      "choices": [
+        { "id": "a", "text": "It saves storage." },
+        { "id": "b", "text": "GDPR/CCPA require it; deletion must include derived data (embeddings, summaries); retrofitting under regulatory pressure is painful; incident response sometimes needs fast specific removal. Build as first-class capability from v1 with documented fast-track flow." },
+        { "id": "c", "text": "It's optional." },
+        { "id": "d", "text": "Speeds up retrieval." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real deletion is hard to retrofit. Privacy law, user requests, and incident response all need it. Build the plumbing — storage, derived data, indexes, audit logs — from v1 with a documented process and fast-track flow."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multi-step workflows",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team wants to add a 'deep research' button to their product that gives users a cited briefing on any topic. What latency and cost should they design around?",
+      "choices": [
+        { "id": "a", "text": "Sub-second latency and pennies per query — same as a regular chat call." },
+        { "id": "b", "text": "Minutes per query and dollars per query. Deep research uses reasoning tokens, many web searches, and synthesis. Plan UX around the wait (progress messages, streaming intermediate steps) and budget around the cost (cache reports, gate per-user usage, consider charging)." },
+        { "id": "c", "text": "Hours per query and tens of dollars per query." },
+        { "id": "d", "text": "No difference from regular API calls." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deep research is a fundamentally different latency/cost profile from a one-shot chat call. Designed correctly, it's worth it — citations and depth that no single call could produce. Designed naively (no progress UI, no caching, no per-user limits) it surprises users with waits and surprises you with bills.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why is the Realtime API the right tool for phone-style voice agents instead of stitching STT → LLM → TTS together?",
+      "choices": [
+        { "id": "a", "text": "It's cheaper per minute." },
+        { "id": "b", "text": "Latency. Sequential STT → LLM → TTS introduces 2–4 seconds per turn, which feels broken for interactive voice. The Realtime API streams audio in and out with sub-second latency including model processing, supports interruption, and handles conversation state automatically." },
+        { "id": "c", "text": "It's the only API that supports tool calling." },
+        { "id": "d", "text": "Sequential STT → LLM → TTS doesn't work at all." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sequential STT → LLM → TTS works fine for non-real-time voice (transcribe a voicemail, generate a TTS clip). For interactive voice — phone agents, voice assistants — the multi-second per-turn latency breaks the feel. The Realtime API exists specifically to solve this with bidirectional streaming, sub-second responses, and interrupt support.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Software-defined manufacturing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A batch of vehicles shows a specific paint defect. In a traditional plant: send inspectors, sample, escalate. In a software-defined plant: what's different?",
+      "choices": [
+        { "id": "a", "text": "Same process, just digitized." },
+        { "id": "b", "text": "Query the data: when did the defect first appear? Which paint booth produced affected units? What changed in firmware or station configuration that day? Defects roll up to specific stations / moments / tools. Root cause located in hours instead of weeks. Recall scope can be tighter because you know exactly which units are affected." },
+        { "id": "c", "text": "Wait for customer complaints." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Station-level data enables defect localization that sampling-based inspection can't match. You query when, where, and what-changed. Root cause is data analysis, not detective work. Recall scopes are smaller because affected units are precisely known.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the cultural prerequisite for software-defined manufacturing to work?",
+      "choices": [
+        { "id": "a", "text": "Newer machinery." },
+        { "id": "b", "text": "Engineers who write code (not just operate machines), operators who trust data over gut feel, management that rewards visibility instead of punishing the messenger when dashboards show problems, and real investment in data infrastructure as primary not afterthought. Without the culture, the technology stack delivers nothing — dashboards exist but nobody acts on them." },
+        { "id": "c", "text": "Outsource all engineering." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tooling is necessary but not sufficient. The cultural piece — engineers who code, operators who trust data, management that responds to visibility — is what converts instrumented stations into actual operational improvement. Most legacy plants have the tooling and lack the culture.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: DNS & SSL mistakes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You inherit a Cloudflare setup with SSL mode set to Flexible. The lock icon shows in browsers. What's wrong and what's the fix?",
+      "choices": [
+        { "id": "a", "text": "Nothing — the lock icon means it's safe." },
+        { "id": "b", "text": "Flexible mode encrypts user↔Cloudflare but leaves Cloudflare↔origin in plain HTTP. The lock icon misleads users. Switch to Full (strict) and install a Cloudflare Origin Cert at origin. This is one of the most common audit-failures inherited from older setups." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Flexible is the security anti-pattern: lock icon in browser; plaintext on the back leg. Always audit SSL mode on inherited domains; switch to Full (strict) immediately if Flexible. Cloudflare Origin Cert makes the fix trivial.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "An attacker bypassed your Cloudflare WAF by attacking your origin directly. How did they find the origin IP?",
+      "choices": [
+        { "id": "a", "text": "They guessed it randomly." },
+        { "id": "b", "text": "Most likely via leak: mail server on the same IP, old DNS history, certificate transparency logs, or subdomain pointing direct. Mitigation: split mail to a different IP, lock origin firewall to Cloudflare's IP ranges only, audit for leaks periodically. Without firewall lockdown, IP hiding is partial." },
+        { "id": "c", "text": "Cloudflare leaked it." },
+        { "id": "d", "text": "Through DNS-over-HTTPS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Origin IP leaks via mail records, CT logs, and old DNS data are the standard discovery vectors. Firewall lockdown to Cloudflare's IP ranges is the structural defense — even if the IP leaks, attackers can't connect.",
+      "points": 1
+    }
+  ]
+}

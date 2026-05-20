@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: 3DS / SCA",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A US team launches in EU. Half of EU payments fail. What's happening?",
+      "choices": [
+        { "id": "a", "text": "EU banks reject US merchants." },
+        { "id": "b", "text": "EU SCA regulation requires 3D Secure for most card payments; payments that don't handle the auth step fail at `requires_action`. The fix: use Stripe.js `confirmPayment` which handles 3DS challenges automatically. Don't try to bypass — it's regulatory. Within a day of fixing, EU conversion matches US." },
+        { "id": "c", "text": "Need Opus." },
+        { "id": "d", "text": "Currency conversion fails." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SCA / 3DS is mandatory in EU for most payments. Stripe.js confirmPayment handles the challenge UI automatically — popups, redirects to bank, biometric prompts. If your flow doesn't route through confirmPayment, half of EU traffic breaks. This is the most common 'why does my flow work in US but not EU' bug.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your subscription renewal off-session fails with `requires_action`. Right pattern?",
+      "choices": [
+        { "id": "a", "text": "Retry off-session repeatedly." },
+        { "id": "b", "text": "Catch the `invoice.payment_action_required` webhook; mark the user as 'needs payment action' in your DB; surface a banner + email asking them to authenticate. On their next visit, redirect to a page that confirms the saved PaymentIntent via Stripe.js (which handles 3DS). After auth, subscription resumes. Don't try to bypass — issuer requires user-present auth." },
+        { "id": "c", "text": "Cancel the subscription." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Off-session 3DS requires user presence; you can't complete it programmatically. The recovery flow: webhook → mark user → banner/email → user clicks → Stripe.js confirms saved PaymentIntent → 3DS → subscription resumes. Without this recovery, you lose customers whose banks demand authentication.",
+      "points": 1
+    }
+  ]
+}

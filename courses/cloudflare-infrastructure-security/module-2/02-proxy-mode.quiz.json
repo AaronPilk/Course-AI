@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Proxy mode",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Even with proxied DNS, an attacker might find your origin IP. What's the strongest mitigation?",
+      "choices": [
+        { "id": "a", "text": "Rotate your origin IP weekly." },
+        { "id": "b", "text": "Lock your origin firewall to allow only Cloudflare's IP range (publicly published at cloudflare.com/ips). Plus: split mail to a different IP/host, remove direct.* records, watch certificate transparency logs for leaks. Without firewall lockdown, hiding the IP is partial — attackers will find it eventually." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Origin firewall lockdown is the structural mitigation. Even if an attacker discovers the IP via CT logs, mail headers, or old DNS, they can't connect directly because the firewall blocks non-Cloudflare traffic. Combine with audit for leaks for defense in depth.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You orange-clouded your SSH bastion's A record. SSH stops working. Why?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare blocks SSH for security." },
+        { "id": "b", "text": "Cloudflare's standard proxy supports HTTP/HTTPS (and WebSocket) only. Port 22 (SSH) isn't proxied. Gray-cloud the SSH record so traffic goes direct, or use Spectrum (enterprise) for TCP/UDP proxying with DDoS protection. Same applies to FTP, raw TCP, and most non-HTTP protocols." },
+        { "id": "c", "text": "Need a paid plan." },
+        { "id": "d", "text": "DNS hasn't propagated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Standard Cloudflare proxy mode is HTTP/HTTPS-only. Non-HTTP services must be gray-cloud. Spectrum (enterprise) provides TCP/UDP proxying with DDoS protection if you need a proxied path for those protocols.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Short-term memory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent forgot the user's order ID from turn 3 by turn 20. The user had to repeat it. Best architectural fix?",
+      "choices": [
+        { "id": "a", "text": "Use Opus." },
+        { "id": "b", "text": "Add structured task state alongside the chat history. Critical facts (order ID, user email, decisions made) live in a small structured object that gets passed into the system prompt each turn. The chat history can be sliding-window-compacted; the structured state persists in full." },
+        { "id": "c", "text": "Keep all turns verbatim forever." },
+        { "id": "d", "text": "Reset every 5 turns." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured task state separates 'critical facts that must persist' from 'chat texture that can be summarized.' The agent sees the structured state on every turn; the chat history is bounded by compaction. Both can coexist — and should.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the production short-term memory pattern that scales to long conversations?",
+      "choices": [
+        { "id": "a", "text": "Keep all turns forever." },
+        { "id": "b", "text": "Sliding window of recent turns verbatim + rolling summary of older turns + structured task state for critical facts. Stack with prompt caching for further cost reduction. Per-turn input stays bounded; agent doesn't forget the key facts." },
+        { "id": "c", "text": "Reset memory each turn." },
+        { "id": "d", "text": "Just use a bigger model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The production pattern is three layers: verbatim recent (immediate continuity), summarized older (gist preserved), structured state (critical facts in full). Combined with caching, per-turn cost stays roughly constant even across 100+ turn conversations.",
+      "points": 1
+    }
+  ]
+}

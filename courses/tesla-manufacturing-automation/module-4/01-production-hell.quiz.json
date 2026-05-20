@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Production hell",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What was the core lesson of Tesla's 'production hell' during the Model 3 ramp?",
+      "choices": [
+        { "id": "a", "text": "Automation never works." },
+        { "id": "b", "text": "Don't automate tasks where humans have real advantages. Robots excel at high-force, precision, repetition, hazardous work. Humans excel at flexibility, variable tolerances, soft materials, complex 3D paths, and judgment. Tesla automated tasks in the second category (wire harness routing, foam placement, intricate sub-assembly) and the line broke. Match task to tool; hybrid lines beat all-automated or all-manual." },
+        { "id": "c", "text": "Run lines in tents." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The 2017-2018 hell was over-automation of tasks humans do better. The fix was retreating to humans for flexibility-demanding work while keeping robots where they win. Musk publicly admitted the mistake. The deeper lesson: match automation to task characteristics, not to ambition.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A startup is designing their first manufacturing line. Should they automate everything 'like Tesla originally tried' or run mostly manual?",
+      "choices": [
+        { "id": "a", "text": "Full automation from day one — modern factories must be." },
+        { "id": "b", "text": "Start with humans, automate from there. Humans build the V1 line and reveal which tasks are repetitive, high-precision, dangerous, or rigid — automate those over time. Tasks that remain variable, judgment-requiring, or soft-material-handling stay with humans. This is the TPS-style approach Tesla learned the hard way in 2018. Faster to launch; lower risk; better outcomes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Outsource everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Start manual; automate selectively. Humans on V1 lines reveal task characteristics and edge cases. Automate the parts where robots clearly win; leave humans where they outperform. Faster, cheaper, more reliable than trying to automate before you understand the process.",
+      "points": 1
+    }
+  ]
+}

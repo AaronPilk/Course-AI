@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Trials & proration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team's upgrades don't charge until the next invoice. Customer upgrades to Premium but doesn't see Premium features until next month. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Manually grant features and figure out billing later." },
+        { "id": "b", "text": "Use `proration_behavior: 'always_invoice'` when updating the subscription — Stripe creates and pays a proration invoice immediately. Customer is charged the difference now and gets features now. Match billing to feature access." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wait it out." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default `create_prorations` puts the proration on the next invoice. For instant-feature upgrades, switch to `always_invoice` so the prorated amount bills immediately. Aligns 'paid now' with 'gets features now.'",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why collect a card during free trial signup instead of at trial end?",
+      "choices": [
+        { "id": "a", "text": "It's required by Stripe." },
+        { "id": "b", "text": "Trial-to-paid conversion is dramatically higher when the card is already on file. Without it: every user must come back, find the page, enter card details — many never do. With card on file at start (via SetupIntent or initial subscription), conversion is automatic when trial ends." },
+        { "id": "c", "text": "It triggers 3DS once." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Card-at-trial-start vs. card-at-trial-end is one of the highest-leverage subscription decisions. Conversion typically 2-3× higher with card on file. The mild signup friction is offset by removing the much bigger trial-to-paid friction.",
+      "points": 1
+    }
+  ]
+}

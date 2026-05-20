@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: MCP & Connectors",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the main reason to use MCP (Model Context Protocol) for your tools?",
+      "choices": [
+        { "id": "a", "text": "It's faster than inline tools." },
+        { "id": "b", "text": "It standardizes tool definition across AI clients. Define a tool once on an MCP server; any MCP-capable AI (OpenAI, Claude, your IDE, etc.) can use it. Especially valuable when you have multiple AI products using the same tool set." },
+        { "id": "c", "text": "It's required by OpenAI's API." },
+        { "id": "d", "text": "It improves token cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP's value is reuse. One Slack MCP server feeds OpenAI agents, Claude, IDE assistants, internal tools — all without re-implementation. Performance is similar to inline tools; the win is in reduced maintenance and consistent behavior across products.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have a small product with one agent and ~6 custom tools. Should you set up an MCP server?",
+      "choices": [
+        { "id": "a", "text": "Yes — always use MCP for future flexibility." },
+        { "id": "b", "text": "Probably not yet. With one consumer, MCP is pure overhead. Inline tools (defined directly in agent code) are simpler to iterate on. Add an MCP server when you actually have multiple AIs reusing the same tools. The 'future flexibility' argument usually doesn't materialize." },
+        { "id": "c", "text": "Only if you have over 100 tools." },
+        { "id": "d", "text": "Only if you're using Claude." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP shines when there's reuse. Without it, the protocol overhead doesn't pay back. Inline tools in the Agents SDK are short and fast to iterate on. Adopt MCP when you have multiple clients consuming the same tool surface — not preemptively.",
+      "points": 1
+    }
+  ]
+}

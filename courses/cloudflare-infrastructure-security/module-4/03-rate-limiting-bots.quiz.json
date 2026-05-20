@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Rate limits & bots",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your per-IP rate limit blocked a major corporate customer behind a single egress IP. They're now angry. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Disable rate limiting entirely." },
+        { "id": "b", "text": "Add per-session rate limiting (cookie-based) so multiple users behind one IP each get their own budget. Raise the per-IP limit. Optionally allowlist known corporate egress IPs. Per-IP only is too blunt for shared-NAT scenarios — combine dimensions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Block all corporate networks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Per-IP only fails on shared-egress networks (corporate, mobile carriers, VPNs). Add per-session or per-user dimensions to distinguish individuals behind shared IPs. The combination catches abuse without burning legitimate users.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Layered defense for an auth endpoint should include what?",
+      "choices": [
+        { "id": "a", "text": "Just a rate limit." },
+        { "id": "b", "text": "Multiple layers stacked: ASN block on known-bad networks, bot score < 30 challenge, per-IP rate limit (e.g. 10 POSTs/min), Turnstile or CAPTCHA on the form itself, backend account-lock on repeated failures. Each layer catches what the previous missed; credential stuffing attempts blow up at one of them." },
+        { "id": "c", "text": "Just bot management." },
+        { "id": "d", "text": "Just Turnstile." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Defense in depth on auth. Credential stuffers use residential proxies (high IP diversity), botnets (low Bot Scores), and dictionary attacks (many attempts per account). Each layer addresses a specific vector. Single-layer defenses fail; stacked ones don't.",
+      "points": 1
+    }
+  ]
+}

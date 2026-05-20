@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Approval flows",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Users complain your assistant has 'too many prompts.' Audit shows 80% of approvals are on actions they always approve. Right move?",
+      "choices": [
+        { "id": "a", "text": "Disable all approvals." },
+        { "id": "b", "text": "Tiered approvals: drafts auto-allowed (reversible); sends always prompted (irreversible); financial actions always two-person. Plus user-opt-in rule-based auto-approvals for narrow patterns (e.g. 'auto-acknowledge family pings'). Friction drops; safety on the actions that matter holds." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Approve everything automatically." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Approval everywhere creates rubber-stamping. Tier by reversibility: reversible auto-allowed, irreversible always-prompted, destructive/financial gated harder. User-opted-in rules let common low-stakes patterns flow. Meaningful gates, not gates everywhere.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When an assistant's notification-approval prompt times out, what should happen?",
+      "choices": [
+        { "id": "a", "text": "Auto-execute after 24 hours." },
+        { "id": "b", "text": "Default to skip and notify the user it was skipped. Silence isn't consent. Auto-executing on timeout would mean any action the user didn't see would go through — exactly the wrong default for irreversible operations." },
+        { "id": "c", "text": "Auto-execute with a 'we waited' note." },
+        { "id": "d", "text": "Send the user a reminder forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Notifications can fail (the user never sees them, they were asleep, on vacation, etc.). Defaulting to action on silence assumes consent the user never gave. Default to skip + audit; user can re-trigger if they wanted it.",
+      "points": 1
+    }
+  ]
+}

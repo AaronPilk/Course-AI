@@ -1,0 +1,93 @@
+{
+  "slug": "cloudflare-infrastructure-security",
+  "title": "Cloudflare Infrastructure & Internet Security",
+  "subtitle": "How Cloudflare's edge network actually works — DNS, CDN, Workers, security, and the architecture under it",
+  "description": "A practical course on Cloudflare built from their developer docs and engineering blog. Covers what the edge network does (DNS, CDN, DDoS, WAF, Zero Trust), how Workers and Pages run code at the edge, what 'serverless' actually means in Cloudflare's model, and the deployment patterns for using Cloudflare in production — without the marketing fluff.",
+  "category": "Infrastructure",
+  "difficulty": "intermediate",
+  "audience": "Developers, ops engineers, and technical founders deploying real workloads on Cloudflare. Some understanding of HTTP, DNS, and basic web architecture helps; we cover the rest.",
+  "tags": ["cloudflare", "edge-network", "workers", "cdn", "ddos", "zero-trust", "infrastructure"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "Cloudflare",
+    "logo": "/brands/cloudflare-infrastructure-security.svg",
+    "gradient": ["#F38020", "#FAAE40"],
+    "tint": "#1A0F00"
+  },
+  "prerequisites": [
+    "Comfortable with the basics of HTTP, DNS, and how websites work",
+    "Familiarity with at least one programming language",
+    "A Cloudflare account (free tier is fine for following along)"
+  ],
+  "outcomes": [
+    "Explain what Cloudflare's edge network is and what it actually does",
+    "Configure DNS, SSL, and basic security on a real domain",
+    "Write and deploy Cloudflare Workers for edge logic",
+    "Set up Cloudflare Pages for a static or Jamstack site",
+    "Apply DDoS protection, WAF, and rate limiting",
+    "Use Zero Trust patterns for internal services",
+    "Pick the right Cloudflare product for the job and avoid common mistakes"
+  ],
+  "modules": [
+    {
+      "title": "What Cloudflare Actually Is",
+      "summary": "The mental model: a global edge network sitting between users and your origin servers, plus a growing platform for running code at the edge.",
+      "estimated_minutes": 50,
+      "key_concepts": ["edge network", "reverse proxy", "anycast", "origin"],
+      "lessons": [
+        { "title": "Cloudflare in one diagram — what's actually happening", "objective": "Draw the request path from user to Cloudflare to origin and explain each hop." },
+        { "title": "Anycast and the edge — why Cloudflare is fast", "objective": "Understand the anycast routing model and the global PoP architecture." },
+        { "title": "What problems Cloudflare actually solves", "objective": "Distinguish marketing claims from the real benefits in your architecture." },
+        { "title": "What Cloudflare doesn't do (and what to use instead)", "objective": "Recognize the limits of the platform — when you need other tools." }
+      ]
+    },
+    {
+      "title": "DNS, SSL, and Securing a Domain",
+      "summary": "The foundation — making your domain reachable, fast, and encrypted, with Cloudflare in front.",
+      "estimated_minutes": 55,
+      "key_concepts": ["dns", "ssl/tls", "proxy mode", "origin certificates"],
+      "lessons": [
+        { "title": "Cloudflare DNS — fast, free, and how it works", "objective": "Set up Cloudflare DNS for a domain and understand the record types." },
+        { "title": "Proxy mode vs. DNS-only — when traffic actually hits Cloudflare", "objective": "Decide which records to proxy and which to leave gray-cloud." },
+        { "title": "SSL/TLS — Universal SSL, modes, and origin certificates", "objective": "Configure SSL correctly end-to-end." },
+        { "title": "Common DNS and SSL mistakes — and how to avoid them", "objective": "Recognize and fix the patterns that break in production." }
+      ]
+    },
+    {
+      "title": "Workers, Pages, and Edge Compute",
+      "summary": "How Cloudflare's compute platform works — Workers, Pages, durable objects, and the runtime model.",
+      "estimated_minutes": 60,
+      "key_concepts": ["workers", "pages", "durable objects", "isolates"],
+      "lessons": [
+        { "title": "Workers — what they are and what they're for", "objective": "Write and deploy a basic Worker." },
+        { "title": "The Workers runtime — isolates, limits, and what's available", "objective": "Understand the constraints and capabilities of the Workers environment." },
+        { "title": "Cloudflare Pages — sites and the Jamstack model", "objective": "Deploy a static or Next.js site to Pages." },
+        { "title": "Durable Objects, KV, R2, D1 — Cloudflare's storage primitives", "objective": "Pick the right storage primitive for your use case." }
+      ]
+    },
+    {
+      "title": "Security at the Edge",
+      "summary": "DDoS protection, WAF, rate limiting, bot management, and the security features most teams under-use.",
+      "estimated_minutes": 50,
+      "key_concepts": ["ddos", "waf", "rate limiting", "bot management"],
+      "lessons": [
+        { "title": "DDoS protection — what's automatic and what you tune", "objective": "Understand the layers of DDoS protection and when to intervene." },
+        { "title": "WAF — Web Application Firewall in practice", "objective": "Configure WAF rules for real apps without breaking legitimate traffic." },
+        { "title": "Rate limiting and bot management", "objective": "Apply rate limits and bot defenses without false positives." },
+        { "title": "Common security mistakes on Cloudflare", "objective": "Avoid the misconfigurations that leave gaps in your defenses." }
+      ]
+    },
+    {
+      "title": "Zero Trust and Production Patterns",
+      "summary": "Zero Trust access for internal services, deployment patterns, and the architecture decisions that work at scale.",
+      "estimated_minutes": 45,
+      "key_concepts": ["zero trust", "access", "tunnel", "deployment patterns"],
+      "lessons": [
+        { "title": "Zero Trust — what it means and what Cloudflare provides", "objective": "Apply Zero Trust principles to internal apps." },
+        { "title": "Cloudflare Tunnel — internal services without public IPs", "objective": "Set up secure tunnels from on-prem or cloud to Cloudflare's edge." },
+        { "title": "Deployment patterns — what to put behind Cloudflare", "objective": "Decide which traffic should flow through Cloudflare vs. direct." },
+        { "title": "Observability, logs, and the cost model", "objective": "Monitor your Cloudflare setup and understand what you're paying for." }
+      ]
+    }
+  ]
+}

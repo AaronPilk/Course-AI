@@ -1,0 +1,71 @@
+{
+  "title": "Module 3 quiz: Tool use and agents",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "A tool definition has three required parts. What are they?",
+      "choices": [
+        { "id": "a", "text": "Name, version, signature." },
+        { "id": "b", "text": "Name (snake_case identifier), description (what the tool does — write like API docs), and input_schema (JSON Schema for arguments). Description quality drives selection quality; vague descriptions cause Claude to pick the wrong tool." },
+        { "id": "c", "text": "URL, method, headers." },
+        { "id": "d", "text": "ID, type, payload." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anthropic's tool format is name + description + input_schema. The description is the model's only signal for when to call the tool, so write it specifically and completely. Vague tool descriptions are the most common cause of wrong-tool selection."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An agent is shipped without `maxSteps`. A user asks an ambiguous question; the agent loops fetching the same tool repeatedly until the next morning. What's the production-ready fix?",
+      "choices": [
+        { "id": "a", "text": "Use Opus." },
+        { "id": "b", "text": "Cap iterations with `maxSteps` (10–20 default), alert on consecutive tool errors, add per-tool timeouts, and treat hitting the cap as an explicit error: escalate to human or return partial answer — never silently retry." },
+        { "id": "c", "text": "Trust the model not to loop." },
+        { "id": "d", "text": "Reduce max_tokens." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hard caps are non-negotiable in agent design. maxSteps prevents unbounded loops; timeouts prevent hung tools; alerts surface repeated errors before they become a bill. Plus approval gates on irreversible tools."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When Claude returns multiple tool_use blocks in one response, what should you do?",
+      "choices": [
+        { "id": "a", "text": "Execute them serially in the order returned." },
+        { "id": "b", "text": "Execute them in parallel with Promise.all — Claude only returns multiple tool_use blocks when calls are independent. Match each tool_result back by tool_use_id, not position. Often a 3–4× speedup on multi-tool steps." },
+        { "id": "c", "text": "Only execute the first one." },
+        { "id": "d", "text": "Send them back as errors." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Claude is smart about parallelization — multiple tool_use blocks in one response means the calls don't depend on each other. Execute in parallel; match results by tool_use_id. The serial-vs-parallel decision is in your runtime, not the model."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You need strict typed JSON output from Claude. What's the cleanest pattern?",
+      "choices": [
+        { "id": "a", "text": "Free-form JSON in text + regex." },
+        { "id": "b", "text": "Define a tool whose input_schema matches the output. Force it via `tool_choice: { type: 'tool', name: '...' }`. Use enums and required fields aggressively. Read typed arguments from the tool_use block — no parsing, no failures." },
+        { "id": "c", "text": "Always use prefilling." },
+        { "id": "d", "text": "Always use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool-call structured output is the canonical Claude pattern for typed data. Schema is enforced, optional/required fields are first-class, nested structures are reliable. Cleaner than prefilling for anything with real schema complexity."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What is MCP (Model Context Protocol)?",
+      "choices": [
+        { "id": "a", "text": "A new Claude model variant." },
+        { "id": "b", "text": "An open standard for exposing tools, resources, and prompts to LLMs uniformly. Build an integration once as an MCP server; any MCP-aware client uses it. Eliminates the 'every app reimplements every integration' pattern." },
+        { "id": "c", "text": "A way to encrypt API calls." },
+        { "id": "d", "text": "A pricing tier." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MCP is the deployment layer on top of tool calling. It standardizes integrations so they're reusable across Claude Desktop, IDE clients, and custom apps. Use inline tools for one-off needs; promote to MCP when the integration is reused or shared."
+    }
+  ]
+}

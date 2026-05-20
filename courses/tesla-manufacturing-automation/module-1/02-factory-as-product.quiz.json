@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Factory as product",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'factory as product' mean in Tesla's manufacturing approach?",
+      "choices": [
+        { "id": "a", "text": "Selling factories to other companies." },
+        { "id": "b", "text": "Engineering the factory with the same rigor as the vehicle: spec it with performance/cost/quality targets, version it with software-style iteration, instrument every station, replace tooling when newer designs justify the cost, staff manufacturing engineering as elite work. The factory itself becomes a product that improves quarter over quarter — even when the vehicle hasn't changed." },
+        { "id": "c", "text": "Building factories that make many products." },
+        { "id": "d", "text": "Outsourcing the factory to suppliers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Treating the factory as a product means it gets the same engineering investment, measurement, and iteration cycles as the vehicle. The Fremont line has improved throughput year over year on the same Model 3. That compounding gain is the dividend of the factory-as-product mental model.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Most car plants try to keep tooling for as long as it works. Tesla replaces tooling more aggressively. What's the reasoning?",
+      "choices": [
+        { "id": "a", "text": "Newer tooling looks better in tours." },
+        { "id": "b", "text": "When new tooling beats old on throughput or cost — even when the old is 'fine' — the throughput gain pays back the swap. The depreciation isn't fully written off; replacement is expensive; but the compounding effect over years puts your tooling years ahead of competitors who optimize the same equipment they had in 2014. It's a capex-for-throughput trade made deliberately." },
+        { "id": "c", "text": "Engineers get bored." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Aggressive tooling replacement is a deliberate bet that compounding throughput / cost gains outweigh the capital cost of churn. It requires both capital and conviction. The compounding effect over a decade is the moat.",
+      "points": 1
+    }
+  ]
+}

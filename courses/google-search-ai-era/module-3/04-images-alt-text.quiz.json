@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Images & alt text",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which is the best alt text for a product photo of a blue leather shoe on a shoe retail site?",
+      "choices": [
+        { "id": "a", "text": "alt=\"shoe\"" },
+        { "id": "b", "text": "alt=\"Blue leather oxford-style men's shoe, side view\"" },
+        { "id": "c", "text": "alt=\"image of blue shoe blue leather shoes best blue shoes 2026 buy shoes\"" },
+        { "id": "d", "text": "alt=\"\" (empty)" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Good alt text is descriptive, concise, and contextual. (a) is too vague to be useful. (c) is keyword-stuffed — doesn't help SEO, hurts accessibility. (d) is for purely decorative images, not product photos that carry real information. The right alt text describes what the image shows in context.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When should you use an empty alt attribute (alt=\"\")?",
+      "choices": [
+        { "id": "a", "text": "Never — always provide alt text." },
+        { "id": "b", "text": "For purely decorative images (icons, dividers, geometric patterns) that carry no meaning. Empty alt tells screen readers to skip them, which is the right behavior." },
+        { "id": "c", "text": "For all images, to avoid being penalized for over-optimization." },
+        { "id": "d", "text": "When you can't think of a good description." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Decorative images should use alt=\"\" so screen readers skip them rather than reading filler. Omitting the alt attribute entirely is worse — some screen readers will read the filename. Meaningful images always need real alt text.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Commodity vs non-commodity",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these is the clearest example of *non-commodity* content?",
+      "choices": [
+        { "id": "a", "text": "'7 Tips for First-Time Homebuyers' — generic advice any agent could write." },
+        { "id": "b", "text": "'Why We Waived the Inspection & Saved Money: A Look Inside the Sewer Line' — first-hand story with specific outcomes from one buyer's actual experience." },
+        { "id": "c", "text": "'What is a mortgage?' — beginner-level explainer." },
+        { "id": "d", "text": "'Complete guide to home buying' — comprehensive overview piece." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google literally uses these two examples in the AI Optimization Guide. The 'Why We Waived the Inspection' piece is non-commodity because it draws on first-hand experience with specific outcomes — information that wouldn't exist without that specific buyer's story. The other options are all commodity: information widely available, could have been written by anyone.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your B2B blog has 800 commodity-style posts (e.g., 'What is X', 'Best practices for Y'). Traffic is dropping after each core update. Which approach is most aligned with Google's people-first guidance?",
+      "choices": [
+        { "id": "a", "text": "Add more keyword variations to each post." },
+        { "id": "b", "text": "Audit each post; cull the ones with no defensible non-commodity angle; rewrite the rest with specific experience, numbers, and a contrarian or surprising perspective." },
+        { "id": "c", "text": "Publish 1,000 more posts to dilute the impact of the weak ones." },
+        { "id": "d", "text": "Add AI-generated 'expanded versions' to each post to make them longer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quality cuts and substantive rewrites are the durable fix. Producing more of the same problem doesn't solve the problem — Google's scaled content abuse policy explicitly targets that pattern. Adding length without substance doesn't help either. The rewrite pattern is: specific numbers, first-person framing, contrarian or surprising hook, promise of specific takeaways.",
+      "points": 1
+    }
+  ]
+}

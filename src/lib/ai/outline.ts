@@ -1,11 +1,19 @@
-// AI outline generator. Retrieves relevant source chunks via vector search,
-// asks Claude to produce a structured course outline, validates against a
-// Zod schema, and returns it.
-
+// AI outline generator. Retrieves relevant source chunks via in-memory
+// cosine similarity, asks Claude to produce a structured course outline,
+// validates against a Zod schema, and returns it.
+import { randomUUID } from "node:crypto";
+import { eq, count, sql } from "drizzle-orm";
 import { z } from "zod";
 import { getAnthropic, MODELS } from "./anthropic";
 import { embedText } from "./embed";
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { matchChunks } from "@/lib/db/vector";
+import {
+  getDb,
+  courseProjects,
+  sourceChunks,
+  modules,
+  lessons,
+} from "@/lib/db";
 
 const lessonSchema = z.object({
   title: z.string(),
@@ -35,10 +43,6 @@ export type Outline = z.infer<typeof outlineSchema>;
 
 const TOOL_NAME = "save_course_outline";
 
-/** Builds a query string that captures everything we know about a project's
- * intent, so we can semantically retrieve the right chunks to ground the
- * outline in.
- */
 function buildRetrievalQuery(opts: {
   name: string;
   category?: string | null;
@@ -56,47 +60,46 @@ function buildRetrievalQuery(opts: {
 }
 
 export async function generateOutline(projectId: string): Promise<Outline> {
-  const admin = createSupabaseAdminClient();
+  const db = getDb();
 
-  const { data: project, error: pErr } = await admin
-    .from("course_projects")
-    .select(
-      "id,name,category,difficulty,audience,learning_goals,estimated_minutes,tags"
-    )
-    .eq("id", projectId)
-    .maybeSingle();
-  if (pErr) throw new Error(pErr.message);
+  const project = await db
+    .select()
+    .from(courseProjects)
+    .where(eq(courseProjects.id, projectId))
+    .get();
   if (!project) throw new Error("project not found");
 
-  // Verify there are ready sources to ground on.
-  const { count } = await admin
-    .from("source_chunks")
-    .select("id", { count: "exact", head: true })
-    .eq("project_id", projectId);
-  if (!count || count === 0) {
-    throw new Error("Add and ingest at least one source before generating an outline.");
+  // Need at least one chunk to ground on.
+  const chunkCountRow = await db
+    .select({ c: count() })
+    .from(sourceChunks)
+    .where(eq(sourceChunks.projectId, projectId))
+    .get();
+  const chunkCount = chunkCountRow?.c ?? 0;
+  if (chunkCount === 0) {
+    throw new Error(
+      "Add and ingest at least one source before generating an outline."
+    );
   }
 
-  // Retrieve top-K chunks relevant to the project intent.
   const query = buildRetrievalQuery({
-    name: project.name as string,
-    category: project.category as string | null,
-    audience: project.audience as string | null,
-    goals: project.learning_goals as string | null,
-    difficulty: project.difficulty as string | null,
+    name: project.name,
+    category: project.category,
+    audience: project.audience,
+    goals: project.learningGoals,
+    difficulty: project.difficulty,
   });
   const queryVec = await embedText(query);
 
-  const { data: matches, error: mErr } = await admin.rpc("match_chunks", {
-    p_project_id: projectId,
-    p_query: queryVec as unknown as string,
-    p_match_count: 24,
+  const matches = await matchChunks({
+    projectId,
+    query: queryVec,
+    matchCount: 24,
   });
-  if (mErr) throw new Error(mErr.message);
 
-  const context = (matches ?? [])
+  const context = matches
     .map(
-      (m: { content: string; similarity: number }, i: number) =>
+      (m, i) =>
         `[chunk ${i + 1} · similarity ${m.similarity.toFixed(2)}]\n${m.content}`
     )
     .join("\n\n---\n\n");
@@ -127,8 +130,8 @@ outline payload.`;
 - category: ${project.category ?? "—"}
 - difficulty: ${project.difficulty ?? "—"}
 - audience: ${project.audience ?? "—"}
-- learning goals: ${project.learning_goals ?? "—"}
-- target duration (minutes): ${project.estimated_minutes ?? "—"}
+- learning goals: ${project.learningGoals ?? "—"}
+- target duration (minutes): ${project.estimatedMinutes ?? "—"}
 
 Retrieved source context (use to ground the outline, do NOT copy):
 
@@ -198,58 +201,56 @@ Now design the course outline.`;
   const parsed = outlineSchema.safeParse(block.input);
   if (!parsed.success) {
     throw new Error(
-      "Outline failed schema validation: " + JSON.stringify(parsed.error.format())
+      "Outline failed schema validation: " +
+        JSON.stringify(parsed.error.format())
     );
   }
   return parsed.data;
 }
 
-/** Persists an outline to course_projects.outline and creates module + lesson
- * stub rows (so the Batch 2 lesson generator has rows to fill in).
- */
+/** Persists an outline and creates module + lesson stub rows. */
 export async function persistOutline(projectId: string, outline: Outline) {
-  const admin = createSupabaseAdminClient();
+  const db = getDb();
 
-  // Replace any prior generated modules/lessons (stubs only — keep approved
-  // content protected once we add a status check in Batch 2).
-  await admin.from("modules").delete().eq("project_id", projectId);
+  // Replace any prior generated modules (and cascade lessons).
+  await db.delete(modules).where(eq(modules.projectId, projectId));
 
   for (let i = 0; i < outline.modules.length; i++) {
     const m = outline.modules[i];
-    const { data: mod, error: mErr } = await admin
-      .from("modules")
-      .insert({
-        project_id: projectId,
-        position: i,
-        title: m.title,
-        summary: m.summary ?? null,
-        estimated_minutes: m.estimated_minutes ?? null,
-        key_concepts: m.key_concepts ?? [],
-        status: "draft",
-      })
-      .select("id")
-      .single();
-    if (mErr || !mod) throw new Error(mErr?.message ?? "module insert failed");
-
+    const moduleId = randomUUID();
+    await db.insert(modules).values({
+      id: moduleId,
+      projectId,
+      position: i,
+      title: m.title,
+      summary: m.summary ?? null,
+      estimatedMinutes: m.estimated_minutes ?? null,
+      keyConcepts: JSON.stringify(m.key_concepts ?? []),
+      status: "draft",
+    });
     if (m.lessons.length > 0) {
-      const rows = m.lessons.map((l, j) => ({
-        project_id: projectId,
-        module_id: mod.id,
+      const lessonRows = m.lessons.map((l, j) => ({
+        id: randomUUID(),
+        moduleId,
+        projectId,
         position: j,
         title: l.title,
         objective: l.objective ?? null,
-        status: "draft",
+        status: "draft" as const,
       }));
-      const { error: lErr } = await admin.from("lessons").insert(rows);
-      if (lErr) throw new Error(lErr.message);
+      await db.insert(lessons).values(lessonRows);
     }
   }
 
-  await admin
-    .from("course_projects")
-    .update({
-      outline,
+  await db
+    .update(courseProjects)
+    .set({
+      outline: JSON.stringify(outline),
       status: "outline_ready",
+      updatedAt: Date.now(),
     })
-    .eq("id", projectId);
+    .where(eq(courseProjects.id, projectId));
+
+  // Silence unused-import warning when tree-shaking; sql import used elsewhere.
+  void sql;
 }

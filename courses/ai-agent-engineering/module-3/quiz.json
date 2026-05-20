@@ -1,0 +1,71 @@
+{
+  "title": "Module 3 quiz: Building a production agent",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the canonical production agent loop architecture?",
+      "choices": [
+        { "id": "a", "text": "Pure react, always." },
+        { "id": "b", "text": "Plan-then-react: plan the outline, react within each step. Surface the plan to the user for collaboration; re-plan only when observations contradict the plan. Combines macro structure with micro flexibility — best of both worlds for non-trivial agents." },
+        { "id": "c", "text": "Pure plan-then-act, always." },
+        { "id": "d", "text": "Re-plan every step." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plan-then-react is the production sweet spot for complex agents. Routine queries can drop to pure react; long-running deep tasks can adopt full plan-then-act. The decision is task-shape-aware, not framework-default."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the minimum observability bar for a production agent?",
+      "choices": [
+        { "id": "a", "text": "Sentry for errors." },
+        { "id": "b", "text": "Trace ID propagated through every model and tool call; per-call logs (input, output, latency, tokens, cost, errors); persistent storage; UI or query path to inspect traces; replay capability. Multi-step systems are unmaintainable without these." },
+        { "id": "c", "text": "Console.log." },
+        { "id": "d", "text": "Cost dashboard only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trace IDs are the spine. Per-step logs hold the diagnostic value. Replay is what makes debugging fast. Without the full stack, a 5-minute fix turns into a 5-hour fix."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "An agent ran overnight in a loop, burning a 4-figure bill. What was missing?",
+      "choices": [
+        { "id": "a", "text": "Higher max_tokens." },
+        { "id": "b", "text": "Layered safety: step cap, per-tool timeouts, wall-clock cap, circuit breakers, cost caps at user/feature/API-key levels. Each catches a different failure mode. Together they make unbounded loops impossible." },
+        { "id": "c", "text": "Opus instead of Sonnet." },
+        { "id": "d", "text": "More tools." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layered safety controls turn 'unbounded loop' into 'bounded, observable, recoverable.' The API-key spend cap is the airbag — app-level controls catch issues earlier, but the cap stops disasters."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your dependency API goes down. Without circuit breakers, what happens?",
+      "choices": [
+        { "id": "a", "text": "Agents fail fast and skip the dependency." },
+        { "id": "b", "text": "Every agent run hits the dead API, times out, retries — burning latency and tokens. Circuit breakers fail fast when a dep is sick, return degraded responses, probe periodically to detect recovery. Outages stop cascading." },
+        { "id": "c", "text": "Nothing — agents are resilient by default." },
+        { "id": "d", "text": "Costs go down." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Circuit breakers prevent cascading dependency failures. Apply them to external APIs, LLM providers (during outages), and to your agent feature itself when error rates spike."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What makes a 30-second agent feel responsive?",
+      "choices": [
+        { "id": "a", "text": "A spinner that animates faster." },
+        { "id": "b", "text": "Streaming: surface the plan upfront, stream each tool call ('Looking up...'  '✓ Got result'), stream the final answer as it generates, and show a cancel button. Combined with prompt caching and parallel tool calls, perceived latency drops dramatically." },
+        { "id": "c", "text": "Hide all progress." },
+        { "id": "d", "text": "Force users to refresh." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Perceived latency drives abandonment, not wall-clock latency. Surfacing intermediate work + streaming output + showing the plan turns a 30-second wait into 30 seconds of visible progress. The agent isn't faster; it feels faster."
+    }
+  ]
+}

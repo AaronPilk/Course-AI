@@ -22,3 +22,7 @@ build
 coverage
 *.tsbuildinfo
 next-env.d.ts
+.local-data/
+.local-data/
+.local-data/
+.local-data/

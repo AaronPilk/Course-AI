@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Production checklist",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "If you can only do five things before launching an AI feature, which set covers the highest-risk failures?",
+      "choices": [
+        { "id": "a", "text": "Choose GPT-5, write a great system prompt, add a logo, write marketing copy, set up analytics." },
+        { "id": "b", "text": "Eval suite (≥30 cases), per-request logging, daily spend cap, feature flag with one-click disable, approval gates on irreversible tool calls. These five catch ~90% of production AI disasters." },
+        { "id": "c", "text": "Fine-tune the model, switch to reasoning, run on Batch API, hire a head of AI, buy a vector DB." },
+        { "id": "d", "text": "Skip evals — ship and iterate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "These five address the most common ways AI launches fail: silent quality regressions (eval), unfixable bugs (logging), cost surprises (cap), unrollbackable mistakes (feature flag), and irreversible actions gone wrong (approval gates). Everything else on the production checklist is hardening — these are the floor.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You launch a feature and a misconfigured loop drives the bill to $11,000 overnight. What process control would have caught this within hours instead of overnight?",
+      "choices": [
+        { "id": "a", "text": "A bigger model would have refused to run the loop." },
+        { "id": "b", "text": "A daily spend cap on the API key plus cost alerts at threshold breaches. Both stop runaway costs in minutes-to-hours rather than the next morning. Combined with a feature flag, you can disable the offending feature instantly while you debug." },
+        { "id": "c", "text": "Hiring a finance person to watch the bill in real time." },
+        { "id": "d", "text": "Nothing — it's just the cost of doing AI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "API providers offer hard spend caps and rate alerts for exactly this. Set them before launch, not after a six-figure surprise. Combine with circuit breakers in code (if X requests fail or cost exceeds Y, stop calling) and feature flags for instant rollback. The pattern is: cap, alert, flag, disable.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tool inventory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your assistant's v1 design has 28 tools across 6 connectors. Pre-launch review trims it. What's the right trimming heuristic?",
+      "choices": [
+        { "id": "a", "text": "Keep them all — flexibility is good." },
+        { "id": "b", "text": "For each tool, ask: does the v1 JTBD genuinely need it? If not, cut. Default v1 to read-heavy / write-light / no-destructive. Each tool you ship has eval needs, failure modes, prompt cost, and approval-gate decisions; surface area is risk." },
+        { "id": "c", "text": "Use Opus on all of them." },
+        { "id": "d", "text": "Increase tool descriptions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "v1 surface area should be ruthlessly cut. Read-heavy gives users value with low risk; write tools come after trust; destructive tools wait for proven UX patterns. 'While we're at it' tools are how surface area balloons silently.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When inventorying assistant tools, what's often forgotten?",
+      "choices": [
+        { "id": "a", "text": "External connector tools." },
+        { "id": "b", "text": "Internal tools — memory writes (notes about the user), scheduled task management (create/pause/disable schedules), approval-queue management. These are first-class tools the assistant uses to manage itself; they need the same inventory treatment as Gmail or Calendar tools." },
+        { "id": "c", "text": "Read-only tools." },
+        { "id": "d", "text": "Tools with approval gates." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Internal management tools (memory, schedule, approvals) are often built ad-hoc and not inventoried like external tools. Treat them as first-class: name, description, schema, reversibility, trust level. They affect the assistant's behavior just as much.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Engine cycles",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the fundamental difference between gas generator and full-flow staged combustion cycles?",
+      "choices": [
+        { "id": "a", "text": "Nothing — same thing." },
+        { "id": "b", "text": "Gas generator dumps turbopump exhaust overboard after using it to spin the turbines, losing 1-5% of propellant to no thrust contribution (~5% Isp penalty). Full-flow staged combustion routes ALL propellant — both fuel-rich and oxidizer-rich pre-burner exhausts — back into the main combustion chamber, so everything contributes to thrust. FFSC gets higher Isp (typically 30-50s improvement), enables higher chamber pressure, and runs turbopumps at lower temperatures. The cost is dramatic complexity — two pre-burners, intricate plumbing, decades of engineering development, and serious ox-rich combustion risks. Raptor is the first FFSC engine to fly to space." },
+        { "id": "c", "text": "Color of the exhaust." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The cycle determines whether turbopump-driving propellant gets used twice (for pumps and for thrust) or just once. FFSC's 'use everything' approach is more efficient but vastly more complex.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why did SpaceX use gas generator for Merlin and full-flow staged combustion for Raptor — different cycles for two SpaceX engines?",
+      "choices": [
+        { "id": "a", "text": "Inconsistent engineering." },
+        { "id": "b", "text": "Different missions, different optimal cycles. Merlin was developed in the mid-2000s when SpaceX needed working engines fast and Falcon 9 needed competitive (not extraordinary) Isp for LEO and GTO work — gas generator was well-understood and quick to develop. Raptor was developed for Starship's full reusability, methane fuel for Mars-relevance, and high-energy missions where every second of Isp matters across the full-stack reuse cycle — FFSC's higher Isp, better restart, and higher chamber pressure all directly help Starship's economics. The 8+ years of Raptor development was an explicit bet that maximum performance was worth the complexity for Starship's design space." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "They couldn't decide." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cycle choice tracks vehicle requirements. Workhorse 2-stage rocket with reasonable Isp targets: gas generator. Maximum-performance, full-reusable, Mars-class vehicle: FFSC. The same company can make both choices coherently because the constraints differ.",
+      "points": 1
+    }
+  ]
+}

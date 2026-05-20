@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Schemas and validation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your tool accepts a `reason` field as a plain string. The model emits increasingly creative reasons ('customer was sad', 'item smelled weird'). Downstream reporting is a mess. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Tighten the system prompt." },
+        { "id": "b", "text": "Add an enum to the schema: `reason: { type: 'string', enum: ['damaged','not_as_described','changed_mind','wrong_item'] }`. The model can no longer invent values — it picks from the four. Schema-level constraints beat prompt-level instructions for reliability." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Strip free-form responses post-hoc." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enums are the canonical fix for invented values. The model can no longer emit anything outside the set. Combine with `additionalProperties: false` on the object schema to prevent stray fields. Constrain at the schema layer wherever the value set is fixed.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why include `additionalProperties: false` on your tool input_schema?",
+      "choices": [
+        { "id": "a", "text": "It saves tokens." },
+        { "id": "b", "text": "It prevents the model from adding extra fields you didn't define. Without it, models sometimes invent helpful-looking fields ('priority', 'urgency_score', 'notes'), which your tool handler doesn't expect — causing crashes or silent ignores. Combined with `required` and enums, it makes the input shape exact." },
+        { "id": "c", "text": "Required by the API." },
+        { "id": "d", "text": "Improves quality on Haiku." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`additionalProperties: false` locks the schema to the exact fields you declared. Without it, hallucinated fields slip through and either crash your handler or silently get ignored. Set this on every tool input schema; pair with required and enums for full constraint.",
+      "points": 1
+    }
+  ]
+}

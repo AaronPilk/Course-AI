@@ -2,20 +2,15 @@
 
 ## Local development
 
-See [README.md](./README.md) for the basic quickstart.
-
-### Recommended Node version
-
-Node 20.x (Cloudflare Pages targets 20). Anything 18.17+ should work
-locally, but `pdf-parse` and `tiktoken` have native bits that work best
-on 20.
+See [README.md](./README.md). Short version:
 
 ```bash
-nvm install 20
-nvm use 20
 npm install
 npm run dev
 ```
+
+That's it. SQLite + auto-migrations + local-data folder are wired
+automatically.
 
 ### Type check
 
@@ -23,78 +18,81 @@ npm run dev
 npm run typecheck
 ```
 
-### Production build
+### Lint
 
 ```bash
-npm run build
-npm run start
+npm run lint
 ```
 
 ---
 
-## Supabase notes
+## Backing up your work
 
-- **pgvector** is enabled by the migration (`create extension vector`).
-- **HNSW indexes** are created on `source_chunks.embedding` and
-  `concepts.embedding`. They're incremental — no maintenance required
-  for normal use.
-- **RLS** is on for every table. Admin role is granted manually via
-  `update public.profiles set role = 'admin' where ...`. Future versions
-  will surface this in the UI.
-- **Storage** — the `sources` bucket should be **private**. URLs are
-  served via signed upload/download from the service-role client.
+All your data lives in `./.local-data/`:
 
-If you change the schema, add a new migration file under
-`supabase/migrations/` rather than editing `0001_init.sql`.
+- `course-factory.db` — SQLite database (projects, sources, chunks,
+  embeddings, outlines, modules, lessons)
+- `sources/{projectId}/{sourceId}.pdf` — original uploaded PDFs
 
----
-
-## Cloudflare Pages deployment *(Batch 1+)*
-
-Course Factory is built to run on Cloudflare Pages with the Next.js
-adapter. We'll wire deploy after Batch 1 verifies end-to-end locally.
-
-Outline of the steps:
-
-1. Push the repo to GitHub.
-2. Connect the repo to Cloudflare Pages.
-3. Build command: `npx @cloudflare/next-on-pages@latest`.
-4. Output directory: `.vercel/output/static`.
-5. Add environment variables (same set as `.env.local`).
-6. Make sure the Node compatibility flag is set:
-   `nodejs_compat` enabled on the Pages project.
-
-**Heads up:** the PDF upload and URL scraping routes import `pdf-parse`,
-`jsdom`, and `tiktoken` — Node-native modules. We use
-`export const runtime = "nodejs"` on those routes so they run on the
-Node runtime in Pages. Cloudflare Workers (edge) won't execute them.
+To back up, copy the whole `.local-data/` folder. To start fresh, delete
+it.
 
 ---
 
 ## API keys & budgets
 
-- **OpenAI embeddings** — set a monthly hard cap in your OpenAI dashboard.
-  Embeddings are cheap (~$0.13 / 1M tokens for `text-embedding-3-large`)
-  but you can burn money fast on huge re-ingests. The content-hash
-  dedupe in `lib/ai/ingest.ts` helps.
-- **Anthropic** — the outline generator uses `claude-opus-4-6` by
-  default. You can downgrade via `ANTHROPIC_OUTLINE_MODEL=claude-sonnet-4-6`
-  in `.env.local` to cut cost ~5×.
+You've got two paid API providers wired in:
+
+- **OpenAI embeddings** — ~$0.13 per 1M tokens with
+  `text-embedding-3-large`. Cheap, but set a monthly hard cap in your
+  OpenAI dashboard. Content-hash dedupe in `lib/ai/ingest.ts` prevents
+  re-embedding the same source.
+- **Anthropic generation** — `claude-opus-4-6` for the outline, ~$0.05–
+  $0.30 per outline depending on source size. Downgrade to
+  `claude-sonnet-4-6` via the `ANTHROPIC_OUTLINE_MODEL` env var if cost
+  matters more than quality.
 
 ---
 
-## Adding admin users
+## Launch checklist (for later — not now)
 
-```sql
-update public.profiles set role = 'admin' where email = 'someone@example.com';
+When you're ready to sell access:
+
+1. **Database** — provision a Supabase project, run
+   `supabase/migrations/0001_init.sql`, and update the Drizzle client to
+   point at Postgres (`drizzle-orm/postgres-js`). The schemas are
+   intentionally parallel so this is a ~1 hour migration.
+2. **Auth** — replace `src/lib/auth.ts` with Supabase Auth (magic links).
+   Re-introduce the `profiles` table from the Postgres migration.
+3. **File storage** — replace `getSourcesDir()` writes with Supabase
+   Storage uploads.
+4. **Vectors** — switch `matchChunks` from in-memory cosine to the
+   `match_chunks` Postgres function (pgvector + HNSW). Already in the
+   migration.
+5. **Deploy** — Cloudflare Pages with the `@cloudflare/next-on-pages`
+   adapter. `nodejs_compat` flag on. Move the AI routes to the Node
+   runtime (already configured with `export const runtime = "nodejs"`).
+6. **Push to GitHub** — origin is already configured for
+   `github.com/AaronPilk/Course-AI.git`. Just `git push`.
+
+That whole list is "the launch batch." We do it once, all at once, when
+you say go.
+
+---
+
+## Troubleshooting
+
+**`Error: SESSION_SECRET must be set`**
+Make sure `.env.local` exists in the project root and has a non-empty
+`SESSION_SECRET`. Generate one with:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-Only admins can:
+**`ANTHROPIC_API_KEY is not set`**
+Same — check `.env.local`.
 
-- Create / edit course projects
-- Ingest sources
-- Trigger AI generation
-- Publish courses
-
-Regular users can browse and (Batch 4+) purchase and learn from
-published courses.
+**SQLite "database is locked" on a hot reload**
+Stop the dev server (Ctrl-C), wait a beat, restart. WAL mode usually
+prevents this, but Next's hot reload can occasionally hold open handles.

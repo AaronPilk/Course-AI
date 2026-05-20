@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dunning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your subscription product has 38% recovery rate on failed payments — email-only dunning. What changes the most?",
+      "choices": [
+        { "id": "a", "text": "Send more emails per day." },
+        { "id": "b", "text": "Multi-channel recovery UX: email + in-app banner + reason-specific messaging + one-click Customer Portal link. Enable Card Account Updater (free) for silent card changes. Specific 'your card expired' beats generic 'payment failed.' Recovery rates routinely jump to 60-70% with this stack." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel subscriptions faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Email-only is leaving recovery on the table. Most users miss the first email. Multi-channel + specific messaging + one-click fix + Stripe's free Card Account Updater can roughly double recovery rates. Recovery is your highest-ROI churn lever on already-paying customers.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the right pattern for subscription feature gating during `past_due`?",
+      "choices": [
+        { "id": "a", "text": "Cut features off immediately." },
+        { "id": "b", "text": "Keep features active during a grace period (typically 7-14 days). Pair with banner + email asking the user to fix billing. After Stripe's retries exhaust without resolution, then restrict features. Instant cutoff feels punitive; grace gives users time to fix what's usually a card issue, not intent to leave." },
+        { "id": "c", "text": "Cancel the subscription on first failure." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Most failed payments are operational (card expired, momentary funds issue), not intentional churn. Grace period + clear recovery UX usually fixes it. Instant feature cutoff turns operational failures into actual churn.",
+      "points": 1
+    }
+  ]
+}

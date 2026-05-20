@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Scale economics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's Wright's Law / experience curve, and why does it matter for Gigafactory scale?",
+      "choices": [
+        { "id": "a", "text": "Profits double with size." },
+        { "id": "b", "text": "Cumulative output predicts unit cost. For batteries specifically, ~25-30% cost reduction per doubling of cumulative output historically. The first 100K units are expensive; the millionth is much cheaper. Being early to scale means riding the curve down faster — a structural advantage that compounds for years and is hard for late entrants to catch." },
+        { "id": "c", "text": "Bigger machines are cheaper." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Experience curves compound. Doubling cumulative output drops unit cost by an industry-specific percentage. For high-learning-rate industries like batteries (25-30% per doubling), early scale matters disproportionately. Late entrants face a moving target — Tesla's costs drop while competitors are still catching up.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "When does the scale-concentration strategy break down?",
+      "choices": [
+        { "id": "a", "text": "Never — scale always wins." },
+        { "id": "b", "text": "When demand uncertainty makes large fixed costs risky, when geographic logistics dominate (heavy/perishable goods), when political risk concentrates (one country lockdown stops large share of output), or when market maturity arrives and underutilized capacity hurts more than raw scale helps. Tesla's Shanghai during COVID illustrated concentration risk; market maturity will eventually arrive too." },
+        { "id": "c", "text": "Only for software." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Scale wins during growth and high learning rates. As industries mature, demand uncertainty rises, and concentration risk materializes, balance shifts toward more flexibility and more geographic diversification. The Shanghai COVID lesson was a real example of concentration risk hitting.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "slug": "openai-api-engineering",
+  "sources": [
+    { "title": "OpenAI Platform Documentation", "url": "https://platform.openai.com/docs", "type": "url", "author": "OpenAI" },
+    { "title": "OpenAI Cookbook", "url": "https://cookbook.openai.com", "type": "url", "author": "OpenAI" },
+    { "title": "Prompt Engineering Guide", "url": "https://platform.openai.com/docs/guides/prompt-engineering", "type": "url", "author": "OpenAI" },
+    { "title": "Agents Guide", "url": "https://platform.openai.com/docs/guides/agents", "type": "url", "author": "OpenAI" },
+    { "title": "Models Documentation", "url": "https://platform.openai.com/docs/models", "type": "url", "author": "OpenAI" },
+    { "title": "OpenAI Research", "url": "https://openai.com/research", "type": "url", "author": "OpenAI" }
+  ]
+}

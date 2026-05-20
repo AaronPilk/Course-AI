@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Step caps and circuit breakers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the minimum layered safety set every production agent needs?",
+      "choices": [
+        { "id": "a", "text": "Just a step cap." },
+        { "id": "b", "text": "Step cap (max iterations) + per-tool timeouts (prevent hung tools) + per-run wall-clock cap (catches what step cap misses) + circuit breakers on external deps + cost caps at user/feature/API-key levels. Each catches a different failure mode; together they make 'agent ran overnight burning $X' impossible." },
+        { "id": "c", "text": "Just retries." },
+        { "id": "d", "text": "Just monitoring." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Single safety controls fail in unexpected ways. Layered defenses (step cap, timeouts, wall-clock, circuit breakers, cost caps) catch different failure modes and create a real safety net. The API-key cap is the airbag — application-level controls should catch issues earlier, but the cap is the last resort.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An external API your agent depends on goes down. Without circuit breakers, what happens?",
+      "choices": [
+        { "id": "a", "text": "Agent fails fast and recovers." },
+        { "id": "b", "text": "Every agent run hits the dead API, times out (e.g. 30s), retries, times out again — burning latency and tokens cascading across users. Circuit breakers stop calling the dead dependency for a cooldown period, return a clear 'feature degraded' result, and probe periodically to detect recovery." },
+        { "id": "c", "text": "Nothing — agents are resilient by default." },
+        { "id": "d", "text": "The model retries differently." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without circuit breakers, dependency outages cascade through every agent run. The breaker fails fast when the upstream is sick, freeing capacity and giving users a quick degraded response. When the dep recovers, the breaker probes and re-opens traffic automatically.",
+      "points": 1
+    }
+  ]
+}

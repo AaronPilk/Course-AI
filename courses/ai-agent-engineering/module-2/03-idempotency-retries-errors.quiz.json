@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Idempotency and errors",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "An agent's `issue_refund` call timed out. The agent retried. Two refunds went out. What's the right design fix?",
+      "choices": [
+        { "id": "a", "text": "Tell the agent not to retry." },
+        { "id": "b", "text": "Require an `idempotency_key` on side-effect tools. Generate the key once per task; pass it on every retry. Your handler stores `(key → result)` for a few days; repeat calls return the stored result instead of doing the work twice. Stripe-style idempotency, applied to agent tools." },
+        { "id": "c", "text": "Use a bigger model." },
+        { "id": "d", "text": "Disable retries entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotency keys are the standard fix for safe retries on side-effect operations. The agent generates a UUID once; your handler dedups based on it. Double-refunds, double-emails, double-charges all become impossible — even when the network drops mid-call.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What should a tool return on failure?",
+      "choices": [
+        { "id": "a", "text": "A raw exception or stack trace." },
+        { "id": "b", "text": "A structured error: `{ error: 'NOT_FOUND', message: 'Order O-... not found.', suggested_action: 'Try search_orders.' }`. With `is_error: true` set so the agent knows it's a failure. Standardized error codes across tools so the agent learns the patterns." },
+        { "id": "c", "text": "An empty string." },
+        { "id": "d", "text": "HTTP 500 status." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured, actionable errors let the agent recover. Stack traces are noise. Standardized error codes (NOT_FOUND, UNAUTHORIZED, RATE_LIMIT, VALIDATION, CONFLICT, UPSTREAM_ERROR, TIMEOUT) across tools form a vocabulary the agent learns — it knows what to retry, what to escalate, what to tell the user.",
+      "points": 1
+    }
+  ]
+}

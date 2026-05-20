@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Naming",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the cleanest distinction between an agent and an assistant?",
+      "choices": [
+        { "id": "a", "text": "Agents have tools; assistants don't." },
+        { "id": "b", "text": "Agents are task-oriented — they run, complete a bounded task, and stop. Assistants are relationship-oriented — they maintain long-term memory, run on schedules/events, take initiative, and operate across many tasks in the user's day. An assistant's value compounds over time; an agent's value is task-by-task." },
+        { "id": "c", "text": "Assistants run in chat; agents run in workflows." },
+        { "id": "d", "text": "They're synonyms." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Agents complete tasks; assistants maintain relationships. An agent that runs and ends, no matter how capable, isn't an assistant — even if you call it one. Assistants need long-term memory, schedule/event awareness, and a posture of initiative within trust boundaries.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team built a great support chatbot. Marketing wants to call it 'your AI assistant.' Should you?",
+      "choices": [
+        { "id": "a", "text": "Yes — assistants sound more advanced." },
+        { "id": "b", "text": "No. The product is a chatbot (reactive Q&A in chat); users will expect assistant traits — memory, scheduled work, cross-tool initiative — and feel oversold when none exist. Two options: rename to 'AI support agent' to match reality, or invest in adding real assistant capability (memory, schedule, initiative) before claiming the title." },
+        { "id": "c", "text": "Yes, marketing knows best." },
+        { "id": "d", "text": "Call it an AI co-pilot to be safe." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unmet expectations are the fastest path to churn. Don't sell a chatbot as an assistant — users discover the gap fast. Either ship what you named or rename to what you shipped. Words shape user expectations; respect that.",
+      "points": 1
+    }
+  ]
+}

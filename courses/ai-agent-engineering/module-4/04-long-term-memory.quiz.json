@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Long-term memory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent inferred 'user prefers Python' from one ambiguous message. Two months later every session opens with Python-flavored examples — but the user actually prefers Go. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Delete all memory and start over." },
+        { "id": "b", "text": "Tag every stored fact with confidence and source (user-stated, user-confirmed inference, agent inference, behavioral pattern). Auto-expire low-confidence inferences. Add a 'review my memory' UI so users can correct stored facts. The original problem was treating an inference as a canonical fact." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never use long-term memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory poisoning happens when low-confidence inferences become canonical facts. The fix is a trust hierarchy: explicit statements > user-confirmed inferences > agent inferences > behavioral patterns. Higher trust = longer retention; lower trust = expire and require re-confirmation.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What MUST you eval in a long-term memory system?",
+      "choices": [
+        { "id": "a", "text": "Only recall — did the agent remember the fact?" },
+        { "id": "b", "text": "Recall (remembered facts), boundedness (didn't pull irrelevant past context), update (used new value when fact changed), AND cross-user isolation (no leaks between users). Cross-user leaks are major privacy incidents — explicitly eval for them." },
+        { "id": "c", "text": "Only cost." },
+        { "id": "d", "text": "Only latency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory has multiple failure modes. Eval each one: recall (does it remember?), boundedness (does it avoid irrelevant noise?), update (does it use current values?), cross-user isolation (does it stay scoped?). Skip any and you're shipping a memory bug class blind.",
+      "points": 1
+    }
+  ]
+}

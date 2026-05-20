@@ -1,0 +1,77 @@
+{
+  "module": 1,
+  "title": "Module 1 quiz — The OpenAI Mental Model",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which mental model most accurately describes OpenAI's text models?",
+      "choices": [
+        { "id": "a", "text": "A database lookup system." },
+        { "id": "b", "text": "A next-token predictor that has no memory between requests, a fixed context window, and pays per-token in and per-token out." },
+        { "id": "c", "text": "A persistent AI agent that remembers everything." },
+        { "id": "d", "text": "A search engine for the web." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Every observable behavior of OpenAI's text models follows from: token-by-token next-token prediction, statelessness between requests, fixed context window, and per-token billing. Getting this mental model right is the foundation for every engineering decision in the course.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're starting a new OpenAI-powered product this week. Which API surface should you default to?",
+      "choices": [
+        { "id": "a", "text": "Chat Completions — it has the longest track record." },
+        { "id": "b", "text": "Responses API — OpenAI's current primary surface. New features ship to it first, agent loops and tool use are cleaner, and reasoning model support is first-class." },
+        { "id": "c", "text": "Assistants API — managed agents are easier." },
+        { "id": "d", "text": "The legacy Completions endpoint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "For new code, Responses is the default. Chat Completions is still fine and not deprecated, but Responses is where OpenAI is investing — cleaner state management, built-in tools, better reasoning support. Assistants is legacy with an official migration path; legacy Completions is deprecated.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "You need to categorize 50,000 customer support emails per day into 5 categories. Which model is the right starting point?",
+      "choices": [
+        { "id": "a", "text": "Full gpt-5 for maximum quality." },
+        { "id": "b", "text": "A reasoning model — careful classification." },
+        { "id": "c", "text": "gpt-5-nano. Simple high-volume classification is exactly what nano is optimized for. At this volume, model choice is a 50× cost difference. Test quality; move up only if measurably needed." },
+        { "id": "d", "text": "An embeddings model." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Nano models are optimized for high-volume simple tasks. Full GPT-5 would deliver effectively identical accuracy on this task at ~50× the cost. Always start with the smallest model that plausibly fits the task; move up based on data, not vibes.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "When does a reasoning model (gpt-5-thinking and similar) actually earn its higher cost and latency?",
+      "choices": [
+        { "id": "a", "text": "On simple text generation and summarization." },
+        { "id": "b", "text": "On reasoning-heavy tasks: math, complex code, multi-step planning, careful logic. NOT for latency-sensitive UIs or simple formatting tasks." },
+        { "id": "c", "text": "On every task — it's strictly better." },
+        { "id": "d", "text": "Only on image generation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reasoning models spend internal 'thinking' tokens before answering — measurably better on hard reasoning, but slower and 5–10× more expensive. They're worth the cost only when the task is genuinely reasoning-heavy and accuracy outweighs latency.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Your chat product's API bill grew 40× from launch to 50 turns per average user conversation. What's the primary cause and the highest-leverage fix?",
+      "choices": [
+        { "id": "a", "text": "OpenAI raised prices — wait for a discount." },
+        { "id": "b", "text": "Each turn re-sends the full conversation history. By turn 50, every call is paying for 50× the input tokens. Fix: implement conversation compaction (summarize old turns; keep recent turns verbatim) and prompt caching (stable content at the start of prompts). Combined: 70–90% cost reduction." },
+        { "id": "c", "text": "Hallucination — switch to a different model." },
+        { "id": "d", "text": "Bug in the SDK — file a ticket." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Long conversations + stateless API + per-token billing = linear cost growth per turn. This is the most common cost trap in chat products. Compaction caps the input size at a stable level; prompt caching cuts cost on stable prefixes. Both are standard, neither hurts quality much.",
+      "points": 1
+    }
+  ]
+}

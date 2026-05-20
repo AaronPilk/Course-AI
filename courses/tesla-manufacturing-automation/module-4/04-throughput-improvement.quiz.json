@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Throughput and continuous improvement",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "A line has stations with cycle times of 95s, 110s, 130s, 100s. An engineer proudly cuts the 95s station to 80s. What's the new throughput?",
+      "choices": [
+        { "id": "a", "text": "Better — every improvement helps." },
+        { "id": "b", "text": "Unchanged. The bottleneck is the 130s station. Throughput = 1 / max(cycle_time), so the line still produces one unit every 130s regardless of how fast non-bottleneck stations run. Improving a non-bottleneck is wasted effort — and in some cases adds inventory buildup in front of the real bottleneck. The engineer needs to attack the 130s station." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Worse — you've unbalanced the line." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Theory of Constraints in one image. The bottleneck (slowest station) sets the line's throughput. Speeding up anything else creates slack but doesn't move the number. Bottleneck identification then attack — that's the discipline.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Tesla optimizes vehicle line throughput aggressively for a year and hits a plateau. Internal cycle times are tight, defect rates are low, and adding more line capacity doesn't help. What's the most likely diagnosis?",
+      "choices": [
+        { "id": "a", "text": "The engineers stopped trying." },
+        { "id": "b", "text": "The bottleneck has moved external to the plant — most likely cell supply, occasionally specific supplier capacity. Internal optimization plateaus because the binding constraint is now upstream. The right move is to attack the external bottleneck (expand cell production, secure supplier capacity, redesign for available materials) rather than burning more engineering hours optimizing internal stations that already have slack." },
+        { "id": "c", "text": "Run two shifts instead of three." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "This is exactly the 2022-2023 pattern. Tesla's vehicle assembly capacity outran cell supply, so total output became cell-constrained. Internal throughput optimization gives diminishing returns when the real bottleneck is outside the plant. Diagnose then redirect effort to the binding constraint.",
+      "points": 1
+    }
+  ]
+}

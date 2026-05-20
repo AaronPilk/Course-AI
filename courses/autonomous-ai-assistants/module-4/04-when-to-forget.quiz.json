@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: When to forget",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "User deleted 'VIP contact: Sarah' from their assistant memory. Within days, the assistant re-inferred and re-added Sarah as important. User complains. Fix?",
+      "choices": [
+        { "id": "a", "text": "Tell the user the assistant is correct." },
+        { "id": "b", "text": "Add an explicit block list for previously-deleted entries — they stay deleted unless the user explicitly re-adds. Combine with inference dampening: facts the user removed get re-inferred only on strong signal AND with user confirmation. Otherwise the assistant feels stuck on facts the user didn't want." },
+        { "id": "c", "text": "Disable inference entirely." },
+        { "id": "d", "text": "Use a bigger model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Shadow-profile problems happen when deletion isn't sticky. Block lists + transparent recurrence (ask before re-adding) keep user intent honored. The assistant should respect 'I removed this' — not infer it back on the next interaction.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why build deletion plumbing early in an assistant product?",
+      "choices": [
+        { "id": "a", "text": "It's a nice-to-have feature." },
+        { "id": "b", "text": "Regulatory compliance (GDPR, CCPA) requires actual deletion within fixed timeframes — including derived data like embeddings and summaries. Retrofitting deletion under regulatory pressure is painful; building it as a first-class capability up front is much cheaper. Also: incident response sometimes needs fast removal of specific memory items." },
+        { "id": "c", "text": "It saves storage." },
+        { "id": "d", "text": "It speeds up retrieval." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real deletion — including derived data — is hard to retrofit. GDPR/CCPA require it; users will eventually request it; incident response sometimes needs urgent purges. Bake it into the storage layer from v1, document the process, and have a fast-track flow for urgent requests.",
+      "points": 1
+    }
+  ]
+}

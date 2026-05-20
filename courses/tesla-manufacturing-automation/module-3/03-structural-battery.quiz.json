@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Structural battery",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between cell-to-pack and structural battery?",
+      "choices": [
+        { "id": "a", "text": "They're synonyms." },
+        { "id": "b", "text": "Cell-to-pack (CTP) skips the module layer — cells go directly into the pack enclosure (BYD Blade, CATL CTP). Structural battery goes further — the pack IS the chassis floor, and cells contribute structural rigidity to the vehicle (Tesla 4680 + structural pack). Each step removes a layer of packaging, reduces weight, improves volumetric efficiency, and makes repair harder." },
+        { "id": "c", "text": "CTP is software; structural is hardware." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Two steps along the same integration journey. CTP eliminates modules; structural battery makes the pack part of the chassis. Each step trades repairability and manufacturing complexity for weight, volume, and structural efficiency.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Tesla announced 4680 cells in 2020 with ambitious volume targets. Actual ramp took years longer than projected. Why is cell innovation hard at scale?",
+      "choices": [
+        { "id": "a", "text": "Patents prevented competitors from copying." },
+        { "id": "b", "text": "New cell formats require new manufacturing equipment, new process control, new quality systems, new alloy/electrolyte chemistries optimized for the new geometry. Lab cells at 1000-per-day are different from factory cells at millions-per-month. Yield, defect rate, cost per cell all need to improve over years before the cell is competitive. Cell innovation is hard at scale — paper specs ≠ production reality." },
+        { "id": "c", "text": "Tesla outsourced too much." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cell manufacturing is one of the steepest learning curves in industry. New formats take years to ramp because every variable (electrode formulation, electrolyte, assembly tolerance, formation cycling) needs to be optimized at production scale. Vehicle programs dependent on new cell supply face real schedule risk.",
+      "points": 1
+    }
+  ]
+}

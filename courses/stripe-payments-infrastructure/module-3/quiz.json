@@ -1,0 +1,71 @@
+{
+  "title": "Module 3 quiz: Subscriptions and recurring billing",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team creates new Stripe Products every time pricing changes — ends up with hundreds of Products. Right structure?",
+      "choices": [
+        { "id": "a", "text": "Delete and recreate." },
+        { "id": "b", "text": "One Product per plan (Pro, Enterprise), multiple Prices per Product (monthly/yearly/currency variants). Products = abstract offerings; Prices = specific pricing. Lets pricing evolve without polluting the catalog." },
+        { "id": "c", "text": "One Product per customer." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Products are the abstract offering; Prices are specific pricing options. Many Prices per Product is the canonical shape."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A user upgrades to Premium but doesn't see Premium features until next month. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Grant manually." },
+        { "id": "b", "text": "`proration_behavior: 'always_invoice'` when updating the subscription. Stripe bills the prorated difference immediately; customer gets features instantly. Align 'paid now' with 'features now.'" },
+        { "id": "c", "text": "Wait." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default `create_prorations` puts proration on next invoice. `always_invoice` bills immediately, matching feature access to payment."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why collect a card at trial start vs. at trial end?",
+      "choices": [
+        { "id": "a", "text": "Required by Stripe." },
+        { "id": "b", "text": "Trial-to-paid conversion is dramatically higher (often 2-3×) with card on file. Without it, every user must come back, find the page, enter card details. With card on file (via SetupIntent or subscription with trial), conversion is automatic." },
+        { "id": "c", "text": "Triggers 3DS once." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Card-at-trial-start is one of the highest-leverage subscription decisions. Mild signup friction beats much bigger trial-to-paid friction."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your subscription product has 38% recovery rate on failed payments — email-only dunning. Right upgrade?",
+      "choices": [
+        { "id": "a", "text": "More emails per day." },
+        { "id": "b", "text": "Multi-channel: email + in-app banner + reason-specific messaging + one-click Customer Portal link. Enable Stripe's free Card Account Updater. Recovery rates routinely jump to 60-70%. Highest-ROI churn lever on already-paying users." },
+        { "id": "c", "text": "Cancel faster." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-channel dunning + specific messaging + one-click fix + Card Account Updater roughly doubles recovery on most products."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When is Stripe Customer Portal the right tool?",
+      "choices": [
+        { "id": "a", "text": "Always — for everything." },
+        { "id": "b", "text": "For self-service management of EXISTING subscriptions (update card, change plan, cancel, view invoices). 30-minute setup; saves weeks of dev. Use Checkout for new sales. Portal is hosted by Stripe; branded with logo + color; not pixel-perfect but sufficient for 90% of needs." },
+        { "id": "c", "text": "Never — always build custom." },
+        { "id": "d", "text": "Only for B2C." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Portal handles the common 'manage my subscription' UX. Use Checkout for new sales; Portal for managing existing. Both Stripe-hosted, both save weeks of dev."
+    }
+  ]
+}

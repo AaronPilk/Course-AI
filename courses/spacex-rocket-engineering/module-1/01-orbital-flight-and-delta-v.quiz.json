@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Orbital flight and delta-v",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is reaching low Earth orbit so much harder than reaching 100 km altitude?",
+      "choices": [
+        { "id": "a", "text": "It isn't — they're equivalent." },
+        { "id": "b", "text": "Orbit requires going about 7.8 km/s sideways at altitude, not just gaining altitude. A suborbital flight to 100 km needs roughly 1.4 km/s of delta-v; an orbital flight to the same altitude needs about 9.4 km/s including gravity, drag, and steering losses. That's roughly 10x more energy. Orbit is a controlled fall sideways fast enough that the ground curves away beneath you — altitude alone gets you to space briefly but you come straight back down without the velocity to stay there." },
+        { "id": "c", "text": "It's about going much higher." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "This is the single most important framing in rocketry. Suborbital flight (Blue Origin's New Shepard) and orbital flight are categorically different. The 10x energy gap is why orbital launch costs and complexity are so much higher.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A startup pitches launching from a high-altitude balloon to 'skip most of the atmosphere.' What's the right reaction?",
+      "choices": [
+        { "id": "a", "text": "Brilliant — that solves the rocket problem." },
+        { "id": "b", "text": "Modest help, not game-changing. Air launch and balloon launch save roughly 0.1-0.3 km/s of delta-v from drag and gravity losses, out of a ~9.4 km/s LEO budget. That's a 3-5% saving on the energy side, often offset by the complexity and cost of mating the rocket to a balloon or aircraft. The dominant cost is the 7.8 km/s of horizontal velocity, which the balloon doesn't help with at all. It's a real engineering optimization for small payloads but not the breakthrough the pitch implies." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Build it underground instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Air-launch and balloon-launch schemes are real but undersell their limits to investors. The horizontal velocity is the dominant cost; altitude savings are marginal. Several companies (Virgin Orbit, Stratolaunch) have tried this with mixed results.",
+      "points": 1
+    }
+  ]
+}

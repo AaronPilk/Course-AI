@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { Plus, FileStack, Zap, ShieldCheck } from "lucide-react";
+import { desc, eq, count } from "drizzle-orm";
 import { requireAdmin } from "@/lib/auth";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import {
+  getDb,
+  courseProjects,
+  sources,
+  processingJobs,
+} from "@/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,44 +15,37 @@ import { formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-type ProjectRow = {
-  id: string;
-  name: string;
-  category: string | null;
-  difficulty: string | null;
-  status: string;
-  tags: string[];
-  updated_at: string;
-};
-
-type JobRow = {
-  id: string;
-  type: string;
-  status: string;
-  progress: number;
-  created_at: string;
-};
-
 export default async function AdminDashboardPage() {
   await requireAdmin();
-  const supabase = createSupabaseServerClient();
+  const db = getDb();
 
-  const [{ data: projects }, { data: jobs }, { count: sourceCount }] =
-    await Promise.all([
-      supabase
-        .from("course_projects")
-        .select("id,name,category,difficulty,status,tags,updated_at")
-        .order("updated_at", { ascending: false })
-        .limit(8)
-        .returns<ProjectRow[]>(),
-      supabase
-        .from("processing_jobs")
-        .select("id,type,status,progress,created_at")
-        .order("created_at", { ascending: false })
-        .limit(6)
-        .returns<JobRow[]>(),
-      supabase.from("sources").select("id", { count: "exact", head: true }),
-    ]);
+  const [projects, jobs, sourceCountRow] = await Promise.all([
+    db
+      .select({
+        id: courseProjects.id,
+        name: courseProjects.name,
+        category: courseProjects.category,
+        difficulty: courseProjects.difficulty,
+        status: courseProjects.status,
+        tags: courseProjects.tags,
+        updatedAt: courseProjects.updatedAt,
+      })
+      .from(courseProjects)
+      .orderBy(desc(courseProjects.updatedAt))
+      .limit(8),
+    db
+      .select({
+        id: processingJobs.id,
+        type: processingJobs.type,
+        status: processingJobs.status,
+        progress: processingJobs.progress,
+        createdAt: processingJobs.createdAt,
+      })
+      .from(processingJobs)
+      .orderBy(desc(processingJobs.createdAt))
+      .limit(6),
+    db.select({ c: count() }).from(sources).get(),
+  ]);
 
   const stats = [
     {
@@ -56,12 +55,12 @@ export default async function AdminDashboardPage() {
     },
     {
       label: "Sources ingested",
-      value: sourceCount ?? 0,
+      value: sourceCountRow?.c ?? 0,
       icon: ShieldCheck,
     },
     {
       label: "Active jobs",
-      value: jobs?.filter((j) => j.status === "running").length ?? 0,
+      value: jobs.filter((j) => j.status === "running").length,
       icon: Zap,
     },
   ];
@@ -119,11 +118,11 @@ export default async function AdminDashboardPage() {
             View all →
           </Link>
         </div>
-        {(projects?.length ?? 0) === 0 ? (
+        {projects.length === 0 ? (
           <EmptyProjects />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {projects!.map((p) => (
+            {projects.map((p) => (
               <Link key={p.id} href={`/admin/projects/${p.id}`}>
                 <Card className="hover:shadow-float transition cursor-pointer">
                   <CardContent className="pt-6 space-y-3">
@@ -140,7 +139,7 @@ export default async function AdminDashboardPage() {
                         </>
                       )}
                       <span>·</span>
-                      <span>Updated {formatDate(p.updated_at)}</span>
+                      <span>Updated {formatDate(new Date(p.updatedAt))}</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -152,7 +151,7 @@ export default async function AdminDashboardPage() {
 
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">Processing queue</h2>
-        {(jobs?.length ?? 0) === 0 ? (
+        {jobs.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center text-sm text-mutedForeground">
               No background jobs yet. They&apos;ll appear here as you ingest
@@ -163,7 +162,7 @@ export default async function AdminDashboardPage() {
           <Card>
             <CardContent className="p-0">
               <ul className="divide-y divide-border">
-                {jobs!.map((j) => (
+                {jobs.map((j) => (
                   <li
                     key={j.id}
                     className="flex items-center justify-between gap-4 px-6 py-4"
@@ -171,7 +170,7 @@ export default async function AdminDashboardPage() {
                     <div>
                       <div className="text-sm font-medium">{j.type}</div>
                       <div className="text-xs text-mutedForeground">
-                        {formatDate(j.created_at)}
+                        {formatDate(new Date(j.createdAt))}
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -233,3 +232,6 @@ function StatusBadge({ status }: { status: string }) {
     </Badge>
   );
 }
+
+// Note: eq is unused at top-level but imported for future filters. Drop if linter complains.
+void eq;

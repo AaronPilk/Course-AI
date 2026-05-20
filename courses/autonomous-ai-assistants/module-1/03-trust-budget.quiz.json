@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Trust budget",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your assistant's 'smart inbox cleanup' auto-archives unimportant emails 95% accurately. The 5% miss causes outsized angry feedback. Best response?",
+      "choices": [
+        { "id": "a", "text": "Train a better classifier and keep auto-archiving." },
+        { "id": "b", "text": "Step the feature down to 'propose archives, user confirms' (level 3). 95% accuracy on a destructive action is below the trust bar — the misses generate disproportionate trust damage. Trust is asymmetric: a 5% miss rate spends much more trust than the 95% success rate builds. Level-3 keeps the value with no trust burn." },
+        { "id": "c", "text": "Ignore the feedback." },
+        { "id": "d", "text": "Use a bigger model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trust spending is asymmetric — surprises and mistakes cost more than wins earn. For destructive or hard-to-undo actions, even 95% accuracy can net negative trust. The right pattern: propose, user confirms. Same value, no surprises.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the most reliable way to build a user's trust in an assistant over time?",
+      "choices": [
+        { "id": "a", "text": "Add more features faster." },
+        { "id": "b", "text": "Transparency + asking before risky actions + consistency + quick undo + visible audit trail. Each successful, transparent interaction adds to the trust budget; surprises and hidden actions burn it. The pattern is durable: do small useful things well and visibly, then earn the right to do bigger things." },
+        { "id": "c", "text": "Increase feature autonomy automatically." },
+        { "id": "d", "text": "Marketing campaigns." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trust accrues from successful, transparent action — not from marketing or feature volume. Each interaction adds or subtracts; transparency multiplies. The best path to a level-5 autonomous future is a long string of level-3 wins where the user always knew what was happening.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Text generation & prompting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your one-line prompt ('Summarize this article') is producing mediocre output. What's the most reliable fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to a larger / more expensive model." },
+        { "id": "b", "text": "Rewrite the prompt with specifics: role, audience, tone, length, format, and 1–2 examples of what good output looks like. Specificity beats model upgrades far more often than people realize." },
+        { "id": "c", "text": "Add 'PLEASE BE THOROUGH!!!' to the prompt." },
+        { "id": "d", "text": "Switch to a reasoning model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The single most common reason for mediocre output is a vague prompt. Specificity (role, audience, tone, length, format) plus a couple of examples typically matches or exceeds the quality you'd get from a model upgrade — at a fraction of the cost.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which of these is genuinely supported by OpenAI's prompt engineering guidance?",
+      "choices": [
+        { "id": "a", "text": "Adding 'You are a world-class expert' to every prompt." },
+        { "id": "b", "text": "Using ALL CAPS for emphasis." },
+        { "id": "c", "text": "Providing 1–3 representative examples of the format and style you want — often called 'few-shot prompting.'" },
+        { "id": "d", "text": "Threatening the model with negative consequences." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Examples are one of the highest-leverage prompting patterns. One or two labeled examples of the expected output often outperforms several paragraphs of description. The other options are folklore — they don't measurably help on modern models.",
+      "points": 1
+    }
+  ]
+}

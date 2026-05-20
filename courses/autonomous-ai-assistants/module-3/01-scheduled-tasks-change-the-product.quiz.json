@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Scheduled tasks shift",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your daily digest runs every morning, but most days have nothing notable. Users start muting it after 2 weeks. Best response?",
+      "choices": [
+        { "id": "a", "text": "Add more content to make every day feel notable." },
+        { "id": "b", "text": "Add a threshold: skip the digest entirely on days with nothing notable. Silence is information — users learn to read the digest when it arrives because the assistant filtered. Also: per-task disable, per-day frequency controls, vacation pause. Trust the user to want signal, not noise." },
+        { "id": "c", "text": "Switch to weekly." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forcing daily output even when there's nothing notable trains users to ignore the schedule. Skipping when nothing's notable trains them to pay attention when it does run. Silence is information — embrace it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the single most important UX for scheduled assistant tasks?",
+      "choices": [
+        { "id": "a", "text": "Pretty formatting." },
+        { "id": "b", "text": "Transparency about what the assistant did: what triggered the run, what was scanned, what was filtered, what was done if any action was taken. Users aren't watching when the schedule runs — without transparency, the assistant becomes a mystery source they distrust." },
+        { "id": "c", "text": "Higher latency for thoroughness." },
+        { "id": "d", "text": "Daily frequency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Transparency is the trust currency for scheduled work. The user wakes up to output they didn't see produced. Showing the assistant's process (triggered, scanned, filtered, acted) makes the output legible and builds trust over time.",
+      "points": 1
+    }
+  ]
+}

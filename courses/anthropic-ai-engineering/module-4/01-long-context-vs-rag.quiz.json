@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Long context vs RAG",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your knowledge base is 12K tokens of stable product docs. You're about to build a vector index + retrieval pipeline. Better path?",
+      "choices": [
+        { "id": "a", "text": "Build RAG anyway — it's the modern way." },
+        { "id": "b", "text": "Stuff the docs into every prompt with `cache_control` for ~90% off on the cached portion. 12K tokens fits comfortably; caching keeps cost reasonable; and you skip a multi-week build of embeddings + vector index + retrieval logic. Promote to RAG only when corpus grows past ~30K tokens or queries get narrower." },
+        { "id": "c", "text": "Switch to a different model." },
+        { "id": "d", "text": "Train Claude on the docs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Simpler wins when it fits. A 12K-token corpus with caching is one-tenth the build cost of real RAG, and quality is often better (Claude sees everything, no retrieval failures). Build RAG when the corpus is too big to stuff or when you have access-control / multi-tenant needs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Where in a long prompt does Claude pay the least attention?",
+      "choices": [
+        { "id": "a", "text": "Right after the system prompt." },
+        { "id": "b", "text": "The middle of a 100K-token prompt. Claude attends well to the top (system prompt and early context) and the bottom (right before the user message). Practical: put critical instructions and user query at the bottom, most-relevant retrieved chunks at the top — don't bury must-use info in the middle." },
+        { "id": "c", "text": "The bottom, right before the question." },
+        { "id": "d", "text": "Everywhere equally." }
+      ],
+      "correct_answer": "b",
+      "explanation": "All long-context LLMs show some attention drift in the middle of huge prompts. Claude is among the strongest at long context, but for very long prompts, the placement rule still matters: top and bottom get the most attention. Order your prompt accordingly.",
+      "points": 1
+    }
+  ]
+}

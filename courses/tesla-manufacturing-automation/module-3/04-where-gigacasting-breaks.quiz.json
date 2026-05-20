@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Gigacasting limits",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "An automotive engineering team is evaluating gigacasting for a new program. What questions tell them whether to commit?",
+      "choices": [
+        { "id": "a", "text": "Does Tesla do it? If yes, copy them." },
+        { "id": "b", "text": "Volume per program (must be >200K/year)? Design stability (mid-cycle refreshes cost millions in new dies)? Capital availability (sustained capex)? Repair-cost externality acceptable (insurance, customer TCO)? Supply chain redundancy plan? Hybrid path viable for risk management? Below scale or with frequent design changes, stamping economics still win." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Marketing budget?" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting commitment requires confidence on scale, design stability, capital, and risk tolerance. The decision must be made deliberately per program, not as a blanket strategy. Hybrid approaches (cast structural sub-assemblies, stamp the rest) lower risk for those who can't commit to full gigacasting.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the structural risk gigacasting creates beyond per-vehicle economics?",
+      "choices": [
+        { "id": "a", "text": "Cast parts are weaker." },
+        { "id": "b", "text": "Supply chain concentration. Press suppliers (Idra dominant), alloy producers, die makers are all thin markets. A die delay = months of production delay. Alloy supply tightness slows everything. Press downtime = direct production loss with no easy redundancy. Stamping has mature, diversified supply chains; gigacasting doesn't. Combined with high fixed-cost capex, the risk profile is meaningfully different." },
+        { "id": "c", "text": "Aluminum allergies." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Beyond per-unit economics, gigacasting's structural risk is supply chain concentration. Mature stamping supply chains diversify risk; thin casting supply chains amplify it. One bad supplier event can shut down a Gigafactory's body output for months.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Module 5 quiz: Safety, approval, and shipping",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Users complain your assistant has 'too many prompts.' 80% of approvals are on actions they always approve. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable all approvals." },
+        { "id": "b", "text": "Tiered approvals: reversible drafts auto-allowed; sends always prompted; financial/destructive always two-person. Plus user-opt-in rules for narrow patterns (e.g. 'auto-acknowledge family pings'). Friction drops; safety holds on the actions that matter." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Approve everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Approval everywhere creates rubber-stamping. Tier by reversibility; user-opted rules let low-stakes flow; meaningful gates remain where they matter."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your assistant filtered an important email silently into low-priority. User found it weeks later and lost trust. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable filtering." },
+        { "id": "b", "text": "Make filtering transparent: every filtered item appears in the activity log with the rule that triggered it; user can override; weekly recap mentions filtered items. Hidden actions are the fastest path to trust crises." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mute the user." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Silent actions burn trust on the first mistake. Transparent filtering keeps the value (less noise for the user) while preserving the trust (visible work)."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the strongest pattern to prevent cross-user data leaks?",
+      "choices": [
+        { "id": "a", "text": "Application-level filtering everywhere." },
+        { "id": "b", "text": "Row-level security at the database (or equivalent at the storage layer). App-only filtering depends on every query being correct; RLS makes wrong queries physically impossible. Combine with eval cases that test for cross-user leaks." },
+        { "id": "c", "text": "Encrypt the query strings." },
+        { "id": "d", "text": "Use a different model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "RLS at the storage layer is the safety net for the bugs you didn't anticipate. App-level filtering is the floor; storage-level enforcement makes leaks structurally impossible."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "User submits GDPR deletion request. Your DB delete is soft-delete. What's still wrong?",
+      "choices": [
+        { "id": "a", "text": "Nothing — soft delete is fine." },
+        { "id": "b", "text": "Soft delete doesn't satisfy GDPR or user trust. Real deletion must propagate to derived data: embeddings, memory summaries, indexed chunks, possibly audit logs (with documented retention policies). Build hard-delete plumbing across every storage layer." },
+        { "id": "c", "text": "Wait for re-request." },
+        { "id": "d", "text": "Delete account row only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real deletion is the regulatory and trust bar. It includes derived data. Build the plumbing as architecture from v1; retrofitting is painful and risky."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the right launch sequence for an autonomous assistant?",
+      "choices": [
+        { "id": "a", "text": "Big launch with marketing on day 1." },
+        { "id": "b", "text": "Five phases: dogfood (4-6 weeks team-only) → closed alpha (10-30 hand-picked) → limited beta (100-300 niche) → open beta → GA. Each phase gates on real metrics, not just time. Trust builds with the user base before scale arrives." },
+        { "id": "c", "text": "Skip alpha; go straight to beta." },
+        { "id": "d", "text": "Launch internally only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Trust-building takes a runway. Each launch phase catches a class of issues before broader users see them. Skipping phases means catching those issues in public — much costlier."
+    }
+  ]
+}

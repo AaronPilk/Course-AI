@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Idempotency",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your checkout endpoint crashes after creating a Stripe PaymentIntent but before saving the ID locally. The user retries. Without protection, what happens?",
+      "choices": [
+        { "id": "a", "text": "Stripe automatically detects the duplicate." },
+        { "id": "b", "text": "A second PaymentIntent is created and the user is double-charged. The fix: pass an `idempotencyKey` on every Stripe create call — store the key in your DB before the API call; reuse it on retry. Stripe returns the existing PaymentIntent on the second call instead of creating a new one." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Email the user to retry manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Without idempotency keys, every retry creates a fresh operation. With keys: same key = same operation; Stripe returns the cached result. Generate key once per logical operation, store in DB, reuse on retries. 24-hour cache window.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Stripe delivers a webhook successfully, but your endpoint times out before responding. Stripe retries 5 times. Without protection, what happens?",
+      "choices": [
+        { "id": "a", "text": "Stripe gives up after one retry." },
+        { "id": "b", "text": "Your handler processes the same event 5 times — 5 duplicate DB inserts, 5 confirmation emails, etc. The fix: check `event.id` against your DB before processing; if seen, return 200 and skip. End-to-end idempotency is required: Stripe's idempotency keys cover your server-to-Stripe leg; webhook dedup covers Stripe-to-your-server." },
+        { "id": "c", "text": "It's harmless." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe retries webhooks on failures or timeouts. Without dedup, the same event processes multiple times — duplicate side effects everywhere. Track processed Event IDs in your DB; skip if seen. Pair with idempotency keys for full end-to-end protection.",
+      "points": 1
+    }
+  ]
+}

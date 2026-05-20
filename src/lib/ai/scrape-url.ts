@@ -17,8 +17,25 @@ export interface ScrapeResult {
 }
 
 export async function scrapeUrl(url: string): Promise<ScrapeResult> {
-  const res = await fetch(url, {
-    headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml" },
+  // Force English locale via both Accept-Language and ?hl=en. Google's
+  // developer docs (and many other large doc sites) serve localized
+  // versions based on Accept-Language or geolocation; this prevents
+  // multilingual content from polluting our embeddings.
+  const fetchUrl = (() => {
+    try {
+      const u = new URL(url);
+      if (!u.searchParams.has("hl")) u.searchParams.set("hl", "en");
+      return u.toString();
+    } catch {
+      return url;
+    }
+  })();
+  const res = await fetch(fetchUrl, {
+    headers: {
+      "User-Agent": UA,
+      Accept: "text/html,application/xhtml+xml",
+      "Accept-Language": "en-US,en;q=0.9",
+    },
     redirect: "follow",
   });
   if (!res.ok) throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);

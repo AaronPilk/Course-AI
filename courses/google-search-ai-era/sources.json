@@ -1,0 +1,61 @@
+{
+  "slug": "google-search-ai-era",
+  "sources": [
+    {
+      "title": "SEO Starter Guide: The Basics",
+      "url": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "In-depth guide to how Google Search works",
+      "url": "https://developers.google.com/search/docs/fundamentals/how-search-works",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "Creating helpful, reliable, people-first content",
+      "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "Optimizing your website for generative AI features on Google Search",
+      "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "Google Search's guidance on using generative AI content on your website",
+      "url": "https://developers.google.com/search/docs/fundamentals/using-gen-ai-content",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "Maintaining your site's SEO",
+      "url": "https://developers.google.com/search/docs/fundamentals/get-started",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "Developer's guide to Search",
+      "url": "https://developers.google.com/search/docs/fundamentals/get-started-developers",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    },
+    {
+      "title": "Do you need an SEO?",
+      "url": "https://developers.google.com/search/docs/fundamentals/do-i-need-seo",
+      "type": "url",
+      "license": "Creative Commons Attribution 4.0",
+      "author": "Google Search Central"
+    }
+  ]
+}

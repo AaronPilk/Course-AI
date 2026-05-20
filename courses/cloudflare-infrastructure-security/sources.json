@@ -1,0 +1,11 @@
+{
+  "slug": "cloudflare-infrastructure-security",
+  "sources": [
+    { "title": "Cloudflare developers", "url": "https://developers.cloudflare.com", "type": "documentation", "author": "Cloudflare" },
+    { "title": "Cloudflare Learning Center", "url": "https://www.cloudflare.com/learning/", "type": "documentation", "author": "Cloudflare" },
+    { "title": "Cloudflare blog", "url": "https://blog.cloudflare.com", "type": "engineering-blog", "author": "Cloudflare" },
+    { "title": "Cloudflare Workers docs", "url": "https://developers.cloudflare.com/workers/", "type": "documentation", "author": "Cloudflare" },
+    { "title": "Cloudflare Pages docs", "url": "https://developers.cloudflare.com/pages/", "type": "documentation", "author": "Cloudflare" },
+    { "title": "Cloudflare Zero Trust", "url": "https://developers.cloudflare.com/cloudflare-one/", "type": "documentation", "author": "Cloudflare" }
+  ]
+}

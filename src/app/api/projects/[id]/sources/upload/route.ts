@@ -1,78 +1,63 @@
 // POST /api/projects/:id/sources/upload  (multipart/form-data, field "file")
-// Accepts a PDF, extracts text, stores the original in the "sources" bucket,
+// Accepts a PDF, extracts text, stores the original under .local-data/sources/,
 // then runs the ingestion pipeline.
 import { NextResponse, type NextRequest } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { randomUUID } from "node:crypto";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { eq } from "drizzle-orm";
 import { getProfile } from "@/lib/auth";
+import { getDb, sources, getSourcesDir } from "@/lib/db";
 import { extractPdfText } from "@/lib/ai/extract-pdf";
 import { ingestSource, hashContent } from "@/lib/ai/ingest";
 
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 180;
 
-const MAX_BYTES = 25 * 1024 * 1024; // 25 MB
+const MAX_BYTES = 25 * 1024 * 1024;
 
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const profile = await getProfile();
-  if (!profile) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  if (profile.role !== "admin") {
-    return NextResponse.json({ error: "forbidden" }, { status: 403 });
-  }
+  if (!profile)
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const form = await request.formData().catch(() => null);
   const file = form?.get("file");
-  if (!(file instanceof File)) {
+  if (!(file instanceof File))
     return NextResponse.json({ error: "no file" }, { status: 400 });
-  }
-  if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: "file too large (max 25MB)" }, { status: 413 });
-  }
-  if (file.type && !file.type.includes("pdf")) {
-    return NextResponse.json({ error: "only PDF files supported" }, { status: 415 });
-  }
-
-  const supabase = createSupabaseServerClient();
-  const admin = createSupabaseAdminClient();
-
-  // Insert a placeholder source row.
-  const { data: created, error: insertErr } = await supabase
-    .from("sources")
-    .insert({
-      project_id: params.id,
-      type: "pdf",
-      title: file.name,
-      status: "extracting",
-    })
-    .select("id")
-    .single();
-
-  if (insertErr || !created) {
+  if (file.size > MAX_BYTES)
     return NextResponse.json(
-      { error: insertErr?.message ?? "insert failed" },
-      { status: 500 }
+      { error: "file too large (max 25MB)" },
+      { status: 413 }
     );
-  }
-  const sourceId = created.id;
+  if (file.type && !file.type.includes("pdf"))
+    return NextResponse.json(
+      { error: "only PDF files supported" },
+      { status: 415 }
+    );
+
+  const db = getDb();
+  const sourceId = randomUUID();
+
+  await db.insert(sources).values({
+    id: sourceId,
+    projectId: params.id,
+    type: "pdf",
+    title: file.name,
+    status: "extracting",
+  });
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Store original PDF under {project_id}/{source_id}.pdf
-    const storagePath = `${params.id}/${sourceId}.pdf`;
-    const { error: uploadErr } = await admin.storage
-      .from("sources")
-      .upload(storagePath, buffer, {
-        contentType: "application/pdf",
-        upsert: true,
-      });
-    if (uploadErr) {
-      // Non-fatal — we can still extract from memory. Log and continue.
-      console.warn("storage upload warning:", uploadErr.message);
-    }
+    // Persist the original to .local-data/sources/{projectId}/{sourceId}.pdf
+    const projectDir = path.join(getSourcesDir(), params.id);
+    await fs.mkdir(projectDir, { recursive: true });
+    const storagePath = path.join(projectDir, `${sourceId}.pdf`);
+    await fs.writeFile(storagePath, buffer);
 
     const text = await extractPdfText(buffer);
     if (text.trim().length < 100) {
@@ -80,16 +65,16 @@ export async function POST(
         "Couldn't extract text from this PDF. It may be scanned — OCR isn't enabled yet."
       );
     }
-    const content_hash = hashContent(text);
 
-    await supabase
-      .from("sources")
-      .update({
-        raw_text: text,
-        storage_path: storagePath,
-        content_hash,
+    await db
+      .update(sources)
+      .set({
+        rawText: text,
+        storagePath,
+        contentHash: hashContent(text),
+        updatedAt: Date.now(),
       })
-      .eq("id", sourceId);
+      .where(eq(sources.id, sourceId));
 
     const result = await ingestSource({
       sourceId,
@@ -98,16 +83,16 @@ export async function POST(
       sourceUrl: null,
       license: null,
     });
-    if (!result.ok) {
+    if (!result.ok)
       return NextResponse.json({ error: result.error }, { status: 500 });
-    }
+
     return NextResponse.json({ id: sourceId, ...result });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "PDF processing failed";
-    await supabase
-      .from("sources")
-      .update({ status: "error", error: msg })
-      .eq("id", sourceId);
+    await db
+      .update(sources)
+      .set({ status: "error", error: msg, updatedAt: Date.now() })
+      .where(eq(sources.id, sourceId));
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

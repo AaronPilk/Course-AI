@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Zero Trust",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the core idea of Zero Trust?",
+      "choices": [
+        { "id": "a", "text": "Distrust users completely." },
+        { "id": "b", "text": "No implicit trust based on network location. Every request is authenticated and authorized based on identity + context (device, location, time), not based on 'inside the corporate network = safe.' Replaces the network-as-moat model with identity-aware per-request access control." },
+        { "id": "c", "text": "Block all traffic." },
+        { "id": "d", "text": "Encrypt everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Zero Trust shifts trust from network location to identity. A compromised laptop on the corporate network has no more access than a laptop on a coffee shop wifi — every request is evaluated by identity, device posture, and policy.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team has 20 internal apps behind a slow, hard-to-manage VPN. What's the Cloudflare-native replacement?",
+      "choices": [
+        { "id": "a", "text": "Faster VPN." },
+        { "id": "b", "text": "Cloudflare Tunnel + Access. Cloudflared daemons on each origin dial out to Cloudflare (no public IPs needed); Access gates each app with SSO and policies. Apps reachable from anywhere via SSO; granular per-app policies; no public exposure; free tier covers 50 users. Replaces VPN for most use cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable internal apps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tunnel + Access is the canonical VPN replacement. Origin services connect outbound to Cloudflare (no inbound ports); Access provides identity-aware gating per app. Granular, fast, and free for small teams.",
+      "points": 1
+    }
+  ]
+}

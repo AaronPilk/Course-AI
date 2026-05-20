@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Engines and propellants",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What three factors determine an engine's exhaust velocity (and thus its Isp)?",
+      "choices": [
+        { "id": "a", "text": "Color, size, age." },
+        { "id": "b", "text": "Chamber temperature, exhaust molecular weight, and nozzle expansion ratio. Hotter combustion gives faster gas (limited by chamber materials and cooling). Lighter exhaust molecules accelerate to higher velocities at the same temperature (why hydrogen-oxygen wins: H2O is light). Bigger nozzle expansion ratio converts more thermal energy to kinetic energy (why vacuum nozzles are huge). These three explain why hydrogen-oxygen tops the chemical Isp chart (~450s), methane-oxygen is middle (~360-380s), and RP-1-oxygen is lower (~300-340s) — the chemistry sets the achievable temperature and molecular weight, the nozzle design captures as much energy as possible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "These three physical factors are the underlying drivers of Isp. Every other lever (cycle choice, chamber pressure, materials) ultimately works by pushing one or more of these three.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A pitch deck claims a new chemical engine cycle that produces both higher thrust AND higher Isp than any existing engine, with simpler manufacturing. What's your reaction?",
+      "choices": [
+        { "id": "a", "text": "Invest immediately." },
+        { "id": "b", "text": "Heavy skepticism. The engine-cycle landscape is well-understood after 70+ years of development. Higher Isp comes from more complex cycles (FFSC) at the cost of manufacturing complexity. Higher thrust comes from larger engines or higher chamber pressure, both of which stress materials and complicate manufacturing. Claiming simultaneous improvements on all three axes — thrust, Isp, AND simpler manufacturing — without a specific innovation that breaks an existing constraint is the pattern of either a fundamental misunderstanding or a scam. Ask which constraint they've actually broken, with evidence: new materials? new manufacturing process? new combustion approach? Real engine breakthroughs name the specific lever moved." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run the numbers blindly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Engine claims should be specific about which physical constraint they've moved. SpaceX Raptor 3 claims simpler manufacturing AND higher chamber pressure AND higher thrust — but each is grounded in years of iterative redesign with specific innovations. Generic 'breakthrough on all axes' claims without specifics are red flags.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is methane having a moment in the 2020s as the dominant propellant choice for new large engines (Raptor, BE-4, Vulcan)?",
+      "choices": [
+        { "id": "a", "text": "Cheap natural gas." },
+        { "id": "b", "text": "Methane sits at a sweet spot on multiple axes simultaneously. It has higher Isp than RP-1 (~30-50s improvement), much higher density than hydrogen (smaller tanks, better mass ratio), burns cleaner than RP-1 (less coking, better engine reuse), is manufacturable on Mars via the Sabatier reaction (CO2 + H2 -> CH4 + H2O), and is cheaper than hydrogen to source and store. None of these advantages individually justifies the switch from RP-1 or hydrogen, but together they make methane optimal for reusable, large, multi-mission boosters — exactly the class of vehicle that all the major engine developers are now building. The 2020s engine wave is fundamentally a methane wave." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Methane's rise isn't accident or fashion — it's the propellant that best matches reusable-large-launcher requirements. Raptor, BE-4 (powering ULA Vulcan and Blue Origin New Glenn), and Relativity's engines all chose methane independently.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You're designing a small upper stage for a high-energy trajectory (GEO insertion). What propellant should you probably use?",
+      "choices": [
+        { "id": "a", "text": "Solid rocket motor." },
+        { "id": "b", "text": "Hydrogen + LOX. Upper stages prioritize Isp because every second of Isp directly translates into more payload at the high-delta-v destination. Hydrogen's ~450s Isp vs. methane's ~370s or RP-1's ~340s is huge for GEO or planetary missions. The hydrogen tank-volume penalty matters less for an upper stage because the stage is small and tank dry mass is a smaller fraction of the total. This is why Centaur (hydrogen+LOX) has flown for 60+ years as the go-to high-energy upper stage. For first stages where tank dry mass dominates, dense propellants win; for upper stages where Isp dominates, hydrogen often wins. Pick the propellant to fit the stage's role." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "RP-1 only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The first-stage vs. upper-stage propellant logic is different. First stages favor density; upper stages favor Isp. Hydrogen's downsides (volume, leakage, embrittlement) matter less for short-burn upper stages doing high-energy missions. Density-impulse for first stages, raw Isp for upper stages.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does Merlin's reliability story over 200+ Falcon 9 flights teach about rocket engine development?",
+      "choices": [
+        { "id": "a", "text": "Reliability comes from initial design only." },
+        { "id": "b", "text": "Reliability is earned through operations, not just design. Merlin had multiple in-flight anomalies in early Falcon 1 and Falcon 9 launches. Each anomaly was investigated, root-caused, and fixed. By Falcon 9's hundredth-plus mission, Merlin's reliability had grown to genuinely competitive with or exceeding legacy engines. The pattern repeats with Raptor — early failures during Starship testing, each one informing fixes, gradual maturation toward operational reliability. This is unlike software where designs can be verified abstractly; rocket engines reveal their flaws under operational stress. The implication: judge engine programs not by initial flight success but by trajectory of improvement over a hundred-plus flights." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Failures are unfixable." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Operational reliability is an asymptote that programs approach over hundreds of flights. Merlin reached it; Raptor is on the same trajectory. Patient iterative engineering beats trying to design perfect engines on paper.",
+      "points": 1
+    }
+  ]
+}

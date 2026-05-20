@@ -1,0 +1,71 @@
+{
+  "title": "Module 1 quiz: Tesla's manufacturing philosophy",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the four operating principles of Tesla's manufacturing approach?",
+      "choices": [
+        { "id": "a", "text": "Lean, kaizen, supplier-led, JIT." },
+        { "id": "b", "text": "First principles (not industry convention), factory-as-product, vertical integration where it controls outcomes, software-defined operations. Apply all four together; that's what's distinctive — not any single piece." },
+        { "id": "c", "text": "Speed, scale, secrecy, surveillance." },
+        { "id": "d", "text": "Outsource everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The four principles work as a system; the combination is the moat. Individual pieces aren't unique — gigacasting existed in aerospace, cell-to-pack came from BYD, TPS predates Tesla — but committing to all simultaneously during product launch is."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What does 'factory as product' mean operationally?",
+      "choices": [
+        { "id": "a", "text": "Selling factories." },
+        { "id": "b", "text": "Engineering the factory with vehicle-level rigor: spec it with performance/cost/quality targets, version it software-style, instrument every station, replace tooling when newer designs justify it, staff manufacturing engineering as elite work. The factory itself becomes a product that improves quarter over quarter." },
+        { "id": "c", "text": "Building factories that produce factories." },
+        { "id": "d", "text": "Outsourcing the factory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Factory-as-product means treating it as a thing that gets engineered, iterated, and measured — not as a fixed asset to amortize."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When should you NOT vertically integrate?",
+      "choices": [
+        { "id": "a", "text": "Always integrate." },
+        { "id": "b", "text": "When the component is a commodity with strong supplier competition; when suppliers have learning curve advantages you can't catch; when capital is constrained and core product needs that capital; when demand is uncertain (fixed costs hurt downturns); when the component changes slowly. Don't burn capital on vertical integration without a strategic moat to justify it." },
+        { "id": "c", "text": "Only when Stripe charges fees." },
+        { "id": "d", "text": "When you have software." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vertical integration is expensive and context-dependent. Copy the reasoning ('own what's strategic, buy what's commodity') not the literal Tesla playbook."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A traditional plant relies on paper job sheets and operator intuition. A software-defined plant looks different how?",
+      "choices": [
+        { "id": "a", "text": "Same operations, more computers." },
+        { "id": "b", "text": "Every station emits telemetry; workflows are code deployed like software releases; dashboards expose live performance; engineers iterate with a deploy/measure/keep-or-revert loop; cross-plant best-practices propagate via shared software stack. Software is the operations layer, not a tool used by operations." },
+        { "id": "c", "text": "Operators stop coming in." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Software-defined manufacturing isn't 'plant with computers' — it's plant where software IS the operations layer. Workflow as code, telemetry everywhere, deploy/measure loops, cross-plant propagation."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "A startup making electric scooters in 2026 considers vertically integrating their battery packs 'like Tesla.' Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — copy Tesla." },
+        { "id": "b", "text": "Probably not. The 2026 EV battery supplier ecosystem is mature; commodity packs are available cheaply. Vertical integration would burn capital with no strategic gain. Tesla's vertical battery work in 2010 was forced (no suppliers existed); 2026 is a different context. Copy Tesla's REASONING ('own what's strategic'), not the literal playbook." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Outsource and badge as Tesla." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vertical integration decisions are context-dependent. The Tesla 2010 context (no suppliers) is different from the 2026 context (mature ecosystem). Apply the reasoning to your context; don't copy the surface playbook."
+    }
+  ]
+}

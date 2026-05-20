@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: PDFs and vision",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You have an OCR service + an LLM + custom JSON parsing for processing receipts. Costs are high and failures are common. What's the modern Claude pattern?",
+      "choices": [
+        { "id": "a", "text": "Add another LLM pass for verification." },
+        { "id": "b", "text": "Replace the whole stack with one Claude call: pass the receipt image + define a `save_receipt` tool with the desired schema + force tool_choice. Claude reads the image natively (OCR implicit) and returns typed schema-valid data. One service, one call, schema-enforced output." },
+        { "id": "c", "text": "Switch OCR providers." },
+        { "id": "d", "text": "Train a custom model." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Modern multimodal models like Claude collapse OCR + LLM + parser pipelines into a single call. Vision input + tool-call structured output is the canonical pattern for receipt scanning, invoice extraction, ID parsing, and many similar workflows.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why downscale large phone photos before sending to Claude?",
+      "choices": [
+        { "id": "a", "text": "Claude can't read images over 1MB." },
+        { "id": "b", "text": "Image tokens scale with resolution. A 4000×3000 photo costs many times more tokens than a 1280×960 version. For most reading tasks, the smaller version is just as accurate. Downscale before sending; pay 90% less for the same quality." },
+        { "id": "c", "text": "It improves accuracy." },
+        { "id": "d", "text": "Required by the API." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Token count is the cost driver and it tracks image resolution. Most reading tasks (receipts, screenshots, document scans) don't need full phone-camera resolution. Downscale to ~1000–1500px on the long edge before sending. Token cost drops, accuracy holds.",
+      "points": 1
+    }
+  ]
+}

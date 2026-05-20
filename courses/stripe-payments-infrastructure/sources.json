@@ -1,0 +1,12 @@
+{
+  "slug": "stripe-payments-infrastructure",
+  "sources": [
+    { "title": "Stripe API documentation", "url": "https://stripe.com/docs", "type": "documentation", "author": "Stripe" },
+    { "title": "Stripe API reference", "url": "https://docs.stripe.com/api", "type": "documentation", "author": "Stripe" },
+    { "title": "Stripe engineering blog", "url": "https://stripe.com/blog/engineering", "type": "engineering-blog", "author": "Stripe" },
+    { "title": "Stripe guides", "url": "https://stripe.com/guides", "type": "documentation", "author": "Stripe" },
+    { "title": "Stripe Billing docs", "url": "https://docs.stripe.com/billing", "type": "documentation", "author": "Stripe" },
+    { "title": "Stripe webhooks docs", "url": "https://docs.stripe.com/webhooks", "type": "documentation", "author": "Stripe" },
+    { "title": "Stripe Tax docs", "url": "https://docs.stripe.com/tax", "type": "documentation", "author": "Stripe" }
+  ]
+}

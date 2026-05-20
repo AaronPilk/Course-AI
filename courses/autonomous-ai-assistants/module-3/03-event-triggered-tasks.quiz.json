@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Event-triggered tasks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A provider's status change causes a webhook storm — dozens of unrelated events fire. Without protections, what happens?",
+      "choices": [
+        { "id": "a", "text": "Nothing — webhooks are resilient." },
+        { "id": "b", "text": "The assistant pushes a flood of notifications to every user. Without per-event circuit breakers, rate limits, and dedup, a single upstream incident creates a notification storm. The fix: circuit breaker (stop firing after N events/min for a single source), rate limit per user (max 3 push/hour), dedup, and alerting on storm patterns." },
+        { "id": "c", "text": "Webhooks queue forever." },
+        { "id": "d", "text": "Cost stays flat." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Event firehoses are real. Defend with circuit breakers, rate limits, and dedup. Surface storm alerts to engineering so you catch and pause before user trust evaporates.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When an event-triggered notification fires, what should you always show the user?",
+      "choices": [
+        { "id": "a", "text": "Nothing — keep it minimal." },
+        { "id": "b", "text": "What triggered it — 'Triggered by: new email from Sarah (VIP rule)' or 'Triggered by: calendar conflict at 2pm'. Users distrust unexplained interruptions; surfacing the trigger ties the notification to a rule they understand and can edit. Builds trust over time." },
+        { "id": "c", "text": "Just the content." },
+        { "id": "d", "text": "Internal trace IDs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Surfacing the trigger is part of the trust UX. Users learn 'when this notification arrives, here's why' — they can adjust the rule, ignore intentionally, or appreciate the catch. Hidden triggers feel arbitrary.",
+      "points": 1
+    }
+  ]
+}

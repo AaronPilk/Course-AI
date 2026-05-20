@@ -1,0 +1,80 @@
+{
+  "module": 1,
+  "title": "Module 1 quiz — How Google Search actually works",
+  "scoring": {
+    "passing_score": 4,
+    "total_questions": 5
+  },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Search Console says one of your pages is indexed, but it doesn't appear in search results for queries you'd expect it to match. Which stage of Google Search is the most likely point of failure?",
+      "choices": [
+        { "id": "a", "text": "Crawling — Googlebot can't reach the page." },
+        { "id": "b", "text": "Indexing — Google has decided not to store the page." },
+        { "id": "c", "text": "Serving — the page is in the index, but Google's ranking systems don't show it for these queries." },
+        { "id": "d", "text": "There's a robots.txt block." }
+      ],
+      "correct_answer": "c",
+      "explanation": "If Search Console confirms the URL is indexed, Stages 1 and 2 (crawl, index) have both succeeded. The page is stored. It's Stage 3 (serving) that's deciding not to show it — usually because the content isn't relevant enough, isn't high quality enough, or is losing out to other pages on those queries.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A developer accidentally pushes a staging-environment robots.txt to production. The file contains 'User-agent: *' followed by 'Disallow: /'. What happens, in order, over the next few days?",
+      "choices": [
+        { "id": "a", "text": "Pages get crawled but not indexed; the noindex pile grows." },
+        { "id": "b", "text": "Googlebot stops fetching new content from the site; over time, existing indexed pages may drop out of the index because Google can't reverify them." },
+        { "id": "c", "text": "Google immediately deindexes the entire site within hours." },
+        { "id": "d", "text": "Nothing — robots.txt only affects new pages, not pages already indexed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "'Disallow: /' tells crawlers to skip every URL on the site. Googlebot stops fetching. New content is never discovered. Existing indexed pages aren't deleted immediately — Google keeps them for a while — but without reverification, they gradually fall out of the index. This is one of the fastest ways to silently wreck a site's organic traffic, which is why robots.txt should be on every release checklist.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Your e-commerce site has three URLs that all return the same product page: '/products/blue-shoes', '/products/blue-shoes?ref=email', and '/products/blue-shoes?utm_source=fb'. You haven't set any canonical tags. What does Google most likely do?",
+      "choices": [
+        { "id": "a", "text": "Indexes all three URLs separately and shows whichever one matches the query best." },
+        { "id": "b", "text": "Penalizes the site for duplicate content." },
+        { "id": "c", "text": "Clusters them together, picks one (usually the cleanest URL with no parameters) as the canonical, and only shows that one in normal search results. The others are filed as alternates." },
+        { "id": "d", "text": "Indexes only the first one it crawled." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Google groups near-identical pages into clusters and picks one canonical per cluster. Without an explicit rel=canonical tag, Google uses signals like URL cleanliness, internal linking, sitemap inclusion, and HTTPS to pick. The duplicate content 'penalty' is a myth — having duplicates is inefficient (wastes crawl budget, can cause Google to pick the wrong canonical), not punitive. Setting an explicit canonical is still strongly recommended.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Your client says they're 'ranking #1' for their target keyword, but their organic traffic from that keyword keeps falling. What's the most likely explanation?",
+      "choices": [
+        { "id": "a", "text": "Their content quality has decreased silently — a hidden penalty." },
+        { "id": "b", "text": "SERP features (Featured Snippet, AI Overview, People Also Ask, Local Pack) have grown on the SERP, pushing the #1 organic result below the fold and lowering CTR." },
+        { "id": "c", "text": "Search Console is showing stale data." },
+        { "id": "d", "text": "Google is A/B testing their listing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Modern SERPs are increasingly dominated by SERP features that absorb clicks before users get to the organic listings. A site can hold its #1 organic position while the actual visible position drops because Featured Snippets, AI Overviews, video carousels, and ads now occupy the top of the page. This is a structural shift in how Search works — the right response is to design content that gets *quoted* in SERP features (especially AI Overviews) rather than just shown beneath them.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Search Console's Page Indexing report shows your URL as 'Crawled — currently not indexed.' Which of these is most likely the right next step?",
+      "choices": [
+        { "id": "a", "text": "Submit the URL through the URL Inspection Tool to force indexing." },
+        { "id": "b", "text": "Check robots.txt and fix any blocks." },
+        { "id": "c", "text": "Improve the content. The page was crawled successfully but Google decided not to store it — almost always because the indexing system judged it too thin, too duplicate, or too low-quality to warrant indexing." },
+        { "id": "d", "text": "Add a sitemap entry." }
+      ],
+      "correct_answer": "c",
+      "explanation": "'Crawled — currently not indexed' is a Stage 2 failure: Google fetched the page successfully but chose not to store it. This is almost always a content quality issue, not a technical one. Forcing recrawl through URL Inspection won't help — Google has already seen the page and decided to pass. The fix is to make the page substantively worth indexing: more original information, more depth, less duplication of existing content. Submitting it again won't change Google's mind.",
+      "points": 1
+    }
+  ]
+}

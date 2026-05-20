@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Gigacasting tradeoffs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A legacy OEM has 15 EV models, each at 30-80K units/year. They evaluate gigacasting for their underbody. Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — all OEMs should gigacast." },
+        { "id": "b", "text": "Probably not at current volumes. Gigacasting breakeven volume is roughly 300K+ units/year per program. Die capex is sunk per design — at 30-80K, the capex doesn't amortize. Right call: stay with stamping for now; revisit if they consolidate to fewer, higher-volume platforms." },
+        { "id": "c", "text": "Always — Tesla proved it works." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting is a high-fixed-cost, low-variable-cost play. It wins at scale; loses below scale. For a multi-model OEM with sub-100K volumes per program, stamping economics still win. Platform consolidation could change the math.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's a real downside of gigacasting beyond production economics?",
+      "choices": [
+        { "id": "a", "text": "Less reliable than stamping." },
+        { "id": "b", "text": "Design rigidity. Casting dies cost millions to tens of millions; changes require new dies. Mid-cycle refreshes are constrained. Country-specific variants are expensive. Stamping is much more forgiving for iteration. Plus: supply chain concentration (presses, alloys, dies from few suppliers) and repair-cost externality on owners." },
+        { "id": "c", "text": "Slower than welding." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gigacasting trades flexibility for cost. Once committed to a die, design changes are very expensive. Plus supply concentration and repair-cost externalities. The total cost picture isn't just production economics; it includes design agility and lifecycle costs.",
+      "points": 1
+    }
+  ]
+}

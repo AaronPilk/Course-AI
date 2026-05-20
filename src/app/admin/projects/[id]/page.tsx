@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
+import { eq, desc } from "drizzle-orm";
 import { requireAdmin } from "@/lib/auth";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getDb, courseProjects, sources } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { SourceManager, type SourceRow } from "@/components/admin/source-manager";
@@ -17,26 +18,55 @@ export default async function ProjectDetailPage({
   params: { id: string };
 }) {
   await requireAdmin();
-  const supabase = createSupabaseServerClient();
+  const db = getDb();
 
-  const { data: project } = await supabase
-    .from("course_projects")
-    .select("*")
-    .eq("id", params.id)
-    .maybeSingle();
+  const project = await db
+    .select()
+    .from(courseProjects)
+    .where(eq(courseProjects.id, params.id))
+    .get();
 
   if (!project) notFound();
 
-  const { data: sources } = await supabase
-    .from("sources")
-    .select(
-      "id,type,title,url,status,copyright_risk,token_count,error,created_at"
-    )
-    .eq("project_id", params.id)
-    .order("created_at", { ascending: false })
-    .returns<SourceRow[]>();
+  const sourceRows = await db
+    .select({
+      id: sources.id,
+      type: sources.type,
+      title: sources.title,
+      url: sources.url,
+      status: sources.status,
+      copyright_risk: sources.copyrightRisk,
+      token_count: sources.tokenCount,
+      error: sources.error,
+      created_at: sources.createdAt,
+    })
+    .from(sources)
+    .where(eq(sources.projectId, params.id))
+    .orderBy(desc(sources.createdAt));
 
-  const readySources = (sources ?? []).filter((s) => s.status === "ready").length;
+  // The SourceManager component expects ISO date strings + the existing shape.
+  const initialSources: SourceRow[] = sourceRows.map((s) => ({
+    id: s.id,
+    type: s.type as SourceRow["type"],
+    title: s.title,
+    url: s.url,
+    status: s.status,
+    copyright_risk: s.copyright_risk,
+    token_count: s.token_count,
+    error: s.error,
+    created_at: new Date(s.created_at).toISOString(),
+  }));
+
+  const readySources = initialSources.filter((s) => s.status === "ready").length;
+
+  const outline: Outline | null = (() => {
+    if (!project.outline) return null;
+    try {
+      return JSON.parse(project.outline) as Outline;
+    } catch {
+      return null;
+    }
+  })();
 
   return (
     <div className="px-8 py-10 max-w-6xl space-y-8">
@@ -66,12 +96,12 @@ export default async function ProjectDetailPage({
               </>
             )}
             <span>·</span>
-            <span>Updated {formatDate(project.updated_at)}</span>
+            <span>Updated {formatDate(new Date(project.updatedAt))}</span>
           </div>
         </div>
       </header>
 
-      {(project.audience || project.learning_goals) && (
+      {(project.audience || project.learningGoals) && (
         <Card>
           <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
             {project.audience && (
@@ -82,12 +112,12 @@ export default async function ProjectDetailPage({
                 <p>{project.audience}</p>
               </div>
             )}
-            {project.learning_goals && (
+            {project.learningGoals && (
               <div>
                 <div className="text-xs uppercase tracking-wider text-mutedForeground mb-2">
                   Learning goals
                 </div>
-                <p>{project.learning_goals}</p>
+                <p>{project.learningGoals}</p>
               </div>
             )}
           </CardContent>
@@ -98,12 +128,12 @@ export default async function ProjectDetailPage({
         <div className="flex items-baseline justify-between">
           <h2 className="text-lg font-semibold">Source library</h2>
           <p className="text-xs text-mutedForeground">
-            {readySources}/{sources?.length ?? 0} ready
+            {readySources}/{initialSources.length} ready
           </p>
         </div>
         <SourceManager
           projectId={project.id}
-          initialSources={sources ?? []}
+          initialSources={initialSources}
         />
       </section>
 
@@ -111,7 +141,7 @@ export default async function ProjectDetailPage({
         <h2 className="text-lg font-semibold">Course outline</h2>
         <OutlinePanel
           projectId={project.id}
-          outline={(project.outline as Outline | null) ?? null}
+          outline={outline}
           canGenerate={readySources > 0}
         />
       </section>

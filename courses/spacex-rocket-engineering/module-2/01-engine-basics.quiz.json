@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Engine basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do upper-stage engines typically have much bigger nozzles than first-stage engines?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic — they look more powerful." },
+        { "id": "b", "text": "Higher nozzle expansion ratio improves Isp in vacuum but causes flow separation in atmosphere. First-stage engines fly through dense atmosphere where over-expanded nozzles would see gas peel off the nozzle walls — so they use compact nozzles (Merlin 1D's expansion ratio is ~16:1). Upper-stage engines fly only in vacuum where there's no back-pressure, so they can use enormous expansion ratios (Merlin Vacuum's is ~165:1). The result is higher exhaust velocity, higher Isp (348s vs. 282s for the same Merlin engine family), and better delta-v efficiency for the upper stage." },
+        { "id": "c", "text": "Crew comfort." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Nozzle size is tuned to operating altitude. Sea-level engines: smaller bells. Vacuum engines: bigger bells. The aerospike concept tried to combine both in one engine; practical aerospikes proved harder than conventional bells for varying altitudes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A startup claims a chemical rocket engine with 1500 seconds of specific impulse. Plausible?",
+      "choices": [
+        { "id": "a", "text": "Yes — chemistry has surprises." },
+        { "id": "b", "text": "No — thermodynamically impossible for chemical propulsion. Chemical Isp is limited by the energy release per unit mass of propellant combined with exhaust molecular weight. The hottest, lightest combination practical with chemistry is hydrogen-fluorine at ~480 seconds (never flown commercially because fluorine is monstrously dangerous). Hydrogen-oxygen tops out around 460 seconds. To exceed ~500 seconds you need non-chemical propulsion: nuclear thermal (~900s theoretical), ion thrusters (1500-5000s), or hypothetical advanced systems. A '1500s chemical' claim is either misuse of terminology, confusion, or fraud." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Maybe with better fuel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Isp claims have physical ceilings determined by thermodynamics. Chemical engines max around 470-500 seconds. Anyone pitching dramatically higher chemical Isp is either selling something that doesn't work, or describing a non-chemical system using the wrong word.",
+      "points": 1
+    }
+  ]
+}

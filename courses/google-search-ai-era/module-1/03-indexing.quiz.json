@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Indexing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Your site has the exact same content at four URLs: http://example.com, http://www.example.com, https://example.com, and https://www.example.com. You haven't set canonicals or redirects. What does Google do?",
+      "choices": [
+        { "id": "a", "text": "Penalizes the site for duplicate content." },
+        { "id": "b", "text": "Picks one URL as the canonical (using signals like HTTPS preference and internal linking) and files the others as alternates. The 'duplicate content penalty' is a myth." },
+        { "id": "c", "text": "Refuses to index any of the four URLs." },
+        { "id": "d", "text": "Indexes all four and treats them as separate pages forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google clusters near-identical pages and picks one canonical per cluster. There is no penalty for duplicate content (Google says so explicitly) — duplicates are just inefficient, because Google might pick a canonical you didn't want. The fix is to pick one canonical and 301-redirect the other three to it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want to keep a page out of Google's search results. Which approach actually works?",
+      "choices": [
+        { "id": "a", "text": "Block the URL in robots.txt with Disallow." },
+        { "id": "b", "text": "Add a noindex meta tag and leave the page crawlable so Google can read the noindex." },
+        { "id": "c", "text": "Both A and B — they reinforce each other." },
+        { "id": "d", "text": "Delete the page from your CMS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "noindex is the directive that removes a page from search results, but Google has to crawl the page to see the noindex tag. If you block the URL in robots.txt, Googlebot never reads the noindex — and the URL can still appear in results as a bare link. Use noindex alone, not robots.txt.",
+      "points": 1
+    }
+  ]
+}

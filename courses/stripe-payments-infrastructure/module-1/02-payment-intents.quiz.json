@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: PaymentIntents",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use PaymentIntents instead of the older Charges API?",
+      "choices": [
+        { "id": "a", "text": "PaymentIntents are deprecated." },
+        { "id": "b", "text": "PaymentIntents are a state machine that natively handles modern flows: 3D Secure / SCA challenges, asynchronous payment methods (bank transfers, BNPL), off-session retries, and multi-step authorizations. Charges are single-shot and can't represent these cleanly. Stripe recommends PaymentIntents for all new integrations." },
+        { "id": "c", "text": "They're cheaper." },
+        { "id": "d", "text": "They don't require API keys." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Modern payments have multi-step lifecycles (3DS, async confirmations, retries). The Charge object was single-shot and couldn't model these cleanly. PaymentIntents are the modern primitive — use them for everything new.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A subscription auto-renewal off-session fails with `requires_action`. What's the right response?",
+      "choices": [
+        { "id": "a", "text": "Retry off-session repeatedly." },
+        { "id": "b", "text": "The card needs 3DS authentication; the user must be present to complete it. Surface a banner / email: 'Action required on your card; click to authenticate.' When the user clicks, complete the PaymentIntent on-session via Stripe.js with `confirmPayment`. After authentication, the subscription resumes. Don't try to bypass — issuer requires user-present authentication." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel the subscription." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Off-session payments that need 3DS can't be completed without the user. The pattern: surface a clear 'action required' UX, walk the user through authentication on their next visit, then resume the subscription. Repeated off-session retries don't fix it.",
+      "points": 1
+    }
+  ]
+}

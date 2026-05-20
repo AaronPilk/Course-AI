@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Models & capabilities",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "You need to build a feature that categorizes incoming customer support emails into 5 categories. Volume: 50,000 emails per day. What model should you default to?",
+      "choices": [
+        { "id": "a", "text": "Full gpt-5 for maximum accuracy." },
+        { "id": "b", "text": "A reasoning model — categorization needs careful thought." },
+        { "id": "c", "text": "Start with gpt-5-nano. It's optimized for high-volume simple classification — your cost will be ~$0.001 per email vs $0.05+ per email on full gpt-5. Test quality; move up only if nano measurably underperforms." },
+        { "id": "d", "text": "An embeddings model." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Simple classification is the textbook nano use case. At 50K emails/day, model choice is a 50× cost difference ($1.5K/month on nano vs $75K/month on GPT-5). Always start small for high-volume simple tasks. Reasoning models are overkill — categorization isn't reasoning-heavy.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When does a reasoning model (gpt-5-thinking, etc.) provide enough benefit to justify the higher cost and latency?",
+      "choices": [
+        { "id": "a", "text": "Always — they're strictly better." },
+        { "id": "b", "text": "When the task is reasoning-heavy: math, complex code correctness, multi-step planning, careful logic. NOT for simple text generation, summarization, formatting, or anywhere latency matters." },
+        { "id": "c", "text": "Only for embeddings." },
+        { "id": "d", "text": "Only for image generation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reasoning models spend 'thinking' tokens before answering — measurably better on hard reasoning problems, but slower and 5–10× more expensive. They're not strictly better; for simple text generation they're slower without quality benefit. Match to task: hard reasoning = reasoning model; simple text = regular model.",
+      "points": 1
+    }
+  ]
+}

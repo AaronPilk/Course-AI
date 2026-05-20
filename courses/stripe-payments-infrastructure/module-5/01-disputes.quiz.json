@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Disputes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A customer asks for a $30 refund in good faith. Your policy refuses; they dispute. You win the dispute with strong evidence but spent 4 weeks + $25 fee. What did you learn?",
+      "choices": [
+        { "id": "a", "text": "Stricter policy next time." },
+        { "id": "b", "text": "Refund first; the math almost always favors it. A $30 refund vs. $30 + $25 dispute fee + admin time + reputation hit on a 'won' dispute means the dispute cost you more than the refund would have, even when you win. Policy: in-good-faith refund requests get refunded promptly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip Stripe." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dispute economics favor refunds. The fee + time + reputation impact of even a won dispute usually exceeds the refund amount. Set support policy: refund in-good-faith requests; reserve disputes for clear fraud.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the highest-leverage thing to do FIRST in dispute prevention?",
+      "choices": [
+        { "id": "a", "text": "Hire more support staff." },
+        { "id": "b", "text": "Fix your billing descriptor to clearly match your brand name (and ideally include support URL). 'PAY*OURCORP-22Q' looks like a scam; 'Acme Inc · support.acme.com' is recognizable. A confused customer sees an unknown charge and disputes; a clear descriptor prevents that confusion entirely. Combine with email receipts that arrive immediately after purchase." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable cards." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Billing descriptors are often the highest-ROI dispute prevention. A cryptic descriptor causes 'fraudulent' disputes from confused customers who don't recognize the charge. Clear descriptor + receipt email = problem largely solved.",
+      "points": 1
+    }
+  ]
+}

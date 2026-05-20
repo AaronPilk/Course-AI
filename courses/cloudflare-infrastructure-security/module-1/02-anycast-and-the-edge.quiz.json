@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Anycast",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does anycast routing work?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare picks the nearest user based on geolocation." },
+        { "id": "b", "text": "Cloudflare announces the same IP from many PoPs simultaneously; BGP (the internet's routing protocol) automatically delivers packets to the topologically closest PoP. One IP, many physical locations, automatic shortest-path routing — no client or server configuration required." },
+        { "id": "c", "text": "DNS returns different IPs per region." },
+        { "id": "d", "text": "TCP rerouting happens at the kernel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anycast is a BGP-layer routing pattern. The internet's routing fabric resolves the nearest PoP automatically. Cloudflare doesn't pick the user's PoP; the ISP's routing tables do, and the routes update dynamically as the network shifts.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app has global users but origin in US-East. Cache hit rate is 30%. Latency on cache misses is bad for APAC users. Right move?",
+      "choices": [
+        { "id": "a", "text": "Switch CDN providers." },
+        { "id": "b", "text": "Improve cache hit rate (most leverage), or move origin to multi-region with reads near users (heavier change but solves the structural problem), or shift compute to Workers/edge so requests don't need to hit origin at all. Anycast gets users to a nearby PoP fast — origin location is your problem from there." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anycast doesn't fix slow origins. Three levers: more caching (so origin trips are rare), multi-region origin (so origin trips are short), or move logic to the edge (Workers) so origin isn't needed. Pick by problem shape and cost.",
+      "points": 1
+    }
+  ]
+}

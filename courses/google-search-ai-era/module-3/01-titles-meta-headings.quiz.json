@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Titles, headings, meta",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these is the strongest single signal of what your page is about?",
+      "choices": [
+        { "id": "a", "text": "The number of times your target keyword appears in the body." },
+        { "id": "b", "text": "The <title> element — it influences both your SERP title link and how AI features label your page." },
+        { "id": "c", "text": "The meta keywords tag." },
+        { "id": "d", "text": "The page's URL slug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The <title> is the highest-leverage piece of HTML on your page. It's the primary candidate for the clickable SERP title, a strong topical signal to Google's algorithm, and one of the first things AI summarizers read. Keyword density is largely ignored. The meta keywords tag has been ignored by Google for ~15 years. URL slug matters only weakly.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Google is rewriting your title in the SERP to something other than what you put in the <title> tag. What's the most likely cause and fix?",
+      "choices": [
+        { "id": "a", "text": "Google is punishing you — file a reconsideration request." },
+        { "id": "b", "text": "Your <title> probably misrepresents the page (clickbait, keyword stuffing, or wildly off-topic). The fix is to write an accurate, useful title — Google rewrites when your title doesn't reflect the content well." },
+        { "id": "c", "text": "It's random — try clearing your sitemap." },
+        { "id": "d", "text": "The page is over 300KB and Google can't read it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google rewrites titles mainly when they're not useful or accurate — keyword stuffing, all-caps, clickbait, or significant mismatch with content. The fix is to write a better title that matches the page. Fighting the rewrite is wasted effort.",
+      "points": 1
+    }
+  ]
+}

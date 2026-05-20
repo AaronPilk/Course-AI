@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tokens & cost",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these is the BIGGEST single optimization for reducing OpenAI API costs in a chat product?",
+      "choices": [
+        { "id": "a", "text": "Reducing the response length by 10%." },
+        { "id": "b", "text": "Implementing conversation compaction (summarize old turns) and prompt caching (stable content at the start of prompts so OpenAI's prefix cache kicks in). Often 70–90% cost reduction combined." },
+        { "id": "c", "text": "Switching from JSON to plain text output." },
+        { "id": "d", "text": "Adding more validation to user input." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Conversation history is the #1 cost growth pattern — without compaction, every turn re-sends the full history, so cost grows linearly with conversation length. Prompt caching gives ~50% off on stable prefixes that repeat across requests. Together they routinely cut chat product costs 70–90%.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're about to ship a feature that will make ~100,000 OpenAI calls per month. What's the right pre-launch move?",
+      "choices": [
+        { "id": "a", "text": "Just ship and monitor — fix cost issues if they emerge." },
+        { "id": "b", "text": "Estimate cost per request before launch: count expected input tokens (system prompt + context + user input + tools), expected output tokens, multiply by per-token rates for the chosen model, multiply by request volume. If the projection is uncomfortable, audit prompt size, drop to a smaller model, or apply optimizations BEFORE shipping." },
+        { "id": "c", "text": "Always switch to the cheapest model regardless of quality." },
+        { "id": "d", "text": "Default to gpt-5 'just in case' — quality first." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost estimation before launch is the most leverage you'll have. 100K calls/month at the wrong model or wrong prompt size can be a 50× difference in monthly bill. Use tiktoken locally to count tokens, plug in current per-token rates, multiply by volume. The 30 minutes saves real money.",
+      "points": 1
+    }
+  ]
+}

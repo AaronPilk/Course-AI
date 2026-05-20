@@ -1,0 +1,94 @@
+{
+  "slug": "ai-agent-engineering",
+  "title": "AI Agent Engineering Systems",
+  "subtitle": "Design, ship, and scale agents that actually work — from first tool call to production-grade autonomy",
+  "description": "An agent-specific course built from primary engineering sources: OpenAI's Agents SDK, Anthropic's tool-use guidance, the Model Context Protocol spec, and lessons published by teams shipping agents at scale. Covers the agent loop, tool design, multi-agent patterns, memory, evals, safety, and the launch checklist that separates demo agents from production ones.",
+  "category": "AI Engineering",
+  "difficulty": "advanced",
+  "audience": "Engineers building AI agents — chatbots that take actions, research agents, customer-service agents, internal automation agents. Comfortable with at least one model provider's API and basic distributed-systems concepts.",
+  "tags": ["agents", "tool-use", "mcp", "agent-loop", "multi-agent", "memory", "production"],
+  "estimated_minutes": 280,
+  "brand": {
+    "name": "Agents",
+    "logo": "/brands/ai-agent-engineering.svg",
+    "gradient": ["#7C3AED", "#9333EA"],
+    "tint": "#0F0820"
+  },
+  "prerequisites": [
+    "Comfortable reading code",
+    "Built at least one LLM-powered feature before (chat completion, RAG, etc.)",
+    "Understand basic HTTP / async patterns",
+    "Useful but not required: the OpenAI or Anthropic course in this catalog"
+  ],
+  "outcomes": [
+    "Explain what an agent is — and isn't — and when to reach for one",
+    "Design tools that agents can use reliably",
+    "Build the agent loop end-to-end with timeouts, approvals, and observability",
+    "Apply multi-agent patterns (routing, hand-off, supervisor) when single-agent isn't enough",
+    "Implement short and long-term memory without the common pitfalls",
+    "Run evals that catch agent regressions before users do",
+    "Ship agents through a production checklist with cost, safety, and reliability controls"
+  ],
+  "modules": [
+    {
+      "title": "What an Agent Actually Is",
+      "summary": "Define agent vs. workflow, the agent loop, and the patterns that show up across every framework.",
+      "estimated_minutes": 55,
+      "key_concepts": ["agent vs workflow", "agent loop", "act-observe", "react pattern"],
+      "lessons": [
+        { "title": "Agent vs. workflow — when each is the right tool", "objective": "Distinguish a pipeline from an agent and pick the right pattern for the task." },
+        { "title": "The universal agent loop", "objective": "Implement the act-observe loop that every agent framework reduces to." },
+        { "title": "Tools, environment, and the action space", "objective": "Define what an agent can do, see, and change." },
+        { "title": "When NOT to build an agent", "objective": "Recognize the cases where a simple workflow or single LLM call beats an agent." }
+      ]
+    },
+    {
+      "title": "Designing Tools Agents Can Actually Use",
+      "summary": "Good tool design is what makes an agent reliable. Naming, schemas, descriptions, error handling, and approvals.",
+      "estimated_minutes": 60,
+      "key_concepts": ["tool descriptions", "json schema", "idempotency", "approval gates"],
+      "lessons": [
+        { "title": "Writing tool descriptions models actually read", "objective": "Write tool descriptions that drive correct tool selection." },
+        { "title": "Schemas, validation, and structured arguments", "objective": "Constrain inputs with JSON schemas so agents can't misfire." },
+        { "title": "Idempotency, retries, and error returns", "objective": "Design tools that survive being called twice and fail gracefully." },
+        { "title": "Approval gates and human-in-the-loop", "objective": "Add review steps on irreversible tool calls without breaking the agent's flow." }
+      ]
+    },
+    {
+      "title": "Building a Production Agent",
+      "summary": "The end-to-end loop with planning, observability, cost control, and graceful failure.",
+      "estimated_minutes": 60,
+      "key_concepts": ["plan-then-act", "tracing", "step caps", "cost control"],
+      "lessons": [
+        { "title": "Plan-then-act vs. react — which loop fits your problem", "objective": "Pick a loop architecture and avoid the wrong-loop-for-the-task trap." },
+        { "title": "Observability — tracing, logging, debugging multi-step systems", "objective": "Make agent runs debuggable in production." },
+        { "title": "Step caps, timeouts, and circuit breakers", "objective": "Prevent runaway loops and runaway bills." },
+        { "title": "Streaming agents to the user — UX patterns", "objective": "Surface progress so a 30-second agent feels responsive." }
+      ]
+    },
+    {
+      "title": "Multi-Agent and Memory Patterns",
+      "summary": "When one agent isn't enough — routing, supervisor, hand-off — and how to give agents memory that doesn't sabotage them.",
+      "estimated_minutes": 55,
+      "key_concepts": ["multi-agent", "supervisor pattern", "short-term memory", "long-term memory"],
+      "lessons": [
+        { "title": "Single-agent vs. multi-agent — when complexity is justified", "objective": "Decide whether routing, supervisor, or hand-off patterns fit." },
+        { "title": "Routing, supervisor, and hand-off patterns", "objective": "Implement the three production multi-agent topologies." },
+        { "title": "Short-term memory — context, summaries, and compaction", "objective": "Manage what the agent remembers within a session." },
+        { "title": "Long-term memory — vectors, episodic stores, and the lessons learned", "objective": "Build memory that survives sessions without poisoning future runs." }
+      ]
+    },
+    {
+      "title": "Evals, Safety, and Shipping",
+      "summary": "What separates a demo agent from a production one — evals, safety, monitoring, the launch checklist.",
+      "estimated_minutes": 50,
+      "key_concepts": ["agent evals", "safety", "monitoring", "launch checklist"],
+      "lessons": [
+        { "title": "Agent evals — testing multi-step behavior", "objective": "Build an eval that catches multi-step regressions, not just single-shot output." },
+        { "title": "Safety patterns specific to agents", "objective": "Apply the safety controls that matter most for agents — beyond single-call safety." },
+        { "title": "Cost monitoring and the long tail of agent runs", "objective": "Catch agent cost regressions before they become incidents." },
+        { "title": "The agent launch checklist — from prototype to live system", "objective": "Walk the full pre-launch checklist for any agent." }
+      ]
+    }
+  ]
+}

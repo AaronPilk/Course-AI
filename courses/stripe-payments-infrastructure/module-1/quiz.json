@@ -1,0 +1,71 @@
+{
+  "title": "Module 1 quiz: The Stripe mental model",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the relationship between Products and Prices in Stripe?",
+      "choices": [
+        { "id": "a", "text": "They're the same object." },
+        { "id": "b", "text": "Product = abstract thing you sell; Price = specific pricing for it. One Product can have many Prices ($20/mo, $200/year, $0.10/unit). Subscriptions reference Prices." },
+        { "id": "c", "text": "Prices contain Products." },
+        { "id": "d", "text": "Products are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Products and Prices are separated so one Product can have multiple pricing options. Subscriptions reference Prices, not Products."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why use PaymentIntents instead of Charges for new code?",
+      "choices": [
+        { "id": "a", "text": "PaymentIntents are cheaper." },
+        { "id": "b", "text": "PaymentIntents are a state machine handling 3DS / SCA challenges, asynchronous payment methods, off-session retries, and multi-step authorizations natively. Charges are single-shot and don't model these flows cleanly." },
+        { "id": "c", "text": "Charges don't exist anymore." },
+        { "id": "d", "text": "PaymentIntents don't require API keys." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Modern payment flows require state machines (3DS, async, off-session). PaymentIntents handle them; Charges don't. Use PaymentIntents for new code."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "A subscription auto-renewal off-session fails with `requires_action`. Right response?",
+      "choices": [
+        { "id": "a", "text": "Retry off-session repeatedly." },
+        { "id": "b", "text": "Card needs 3DS auth; user must be present. Surface 'action required' banner / email; complete via Stripe.js on next visit. Don't bypass — issuer requires user-present authentication." },
+        { "id": "c", "text": "Cancel the subscription immediately." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Off-session 3DS requires the user. Banner + on-session re-confirmation is the pattern."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "A developer copies production env vars (live Stripe keys) into `.env.local`. What happens when they run tests?",
+      "choices": [
+        { "id": "a", "text": "Tests fail safely." },
+        { "id": "b", "text": "Tests create real customers and charge real cards. The fix is structural: live keys never in development; env vars only; pre-commit hooks scan for `sk_live_` patterns; clear team documentation." },
+        { "id": "c", "text": "Stripe blocks the request." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Live keys process real charges. Discipline: env-var-only, separate `.env.local` (gitignored), pre-commit scans, team training. Live keys only on production servers."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Your checkout endpoint crashes after creating a PaymentIntent but before saving the ID. User retries. Without protection?",
+      "choices": [
+        { "id": "a", "text": "Stripe auto-dedups." },
+        { "id": "b", "text": "Second PaymentIntent created; user double-charged. Fix: idempotency key per logical operation, stored in DB before the Stripe call, reused on retries. Stripe returns the original intent on the second call." },
+        { "id": "c", "text": "Email the user." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotency keys prevent duplicate operations on retries. Generate once, store in DB, reuse on retry. Pair with webhook Event ID dedup for end-to-end safety."
+    }
+  ]
+}

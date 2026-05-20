@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Stripe Elements",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A developer built a custom card input form on your team's site, sending card numbers to your backend before forwarding to Stripe. A compliance audit flags this. Why?",
+      "choices": [
+        { "id": "a", "text": "Their form lacks accessibility." },
+        { "id": "b", "text": "Sending card numbers through your server makes you in-scope for PCI-DSS — a heavy compliance burden. Stripe Elements solves this by keeping card data on the client and tokenizing it via Stripe.js before it ever touches your server. Migrate to Elements; use Appearance API to match the team's design while keeping PCI scope minimal." },
+        { "id": "c", "text": "It's not encrypted." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Receiving raw card data on your server triggers full PCI-DSS scope — expensive audits, ongoing compliance burden. Stripe Elements is the canonical solution: card data goes directly from browser to Stripe; your server never touches it. Combine with Appearance API for custom design.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What does the Express Checkout Element offer that the regular Payment Element doesn't?",
+      "choices": [
+        { "id": "a", "text": "More card networks." },
+        { "id": "b", "text": "Renders dedicated one-tap wallet buttons (Apple Pay, Google Pay, Link) at the top of your checkout. Users tap and pay without filling a form. Higher conversion on mobile especially. Works alongside the Payment Element (which handles cards entered manually)." },
+        { "id": "c", "text": "Cheaper transaction fees." },
+        { "id": "d", "text": "It's identical." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Express Checkout Element surfaces wallet/express options prominently; users skip typing card details. On mobile especially, conversion bumps can be substantial. Use both Express Checkout (top of form for wallets) + Payment Element (below for typed cards).",
+      "points": 1
+    }
+  ]
+}

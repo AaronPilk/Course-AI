@@ -1,0 +1,71 @@
+{
+  "title": "Module 1 quiz: What Cloudflare actually is",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "You enabled WAF rules but they don't seem to apply. Most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Cache issue." },
+        { "id": "b", "text": "Your DNS record is gray-cloud (DNS-only). Cloudflare features only apply when proxy mode is on (orange cloud). Without proxying, traffic resolves to your origin IP and skips Cloudflare entirely." },
+        { "id": "c", "text": "Need Opus." },
+        { "id": "d", "text": "Wrong region." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Proxy mode is the on-switch for Cloudflare features. Orange cloud = features active. Gray cloud = Cloudflare serves DNS only; traffic bypasses the edge."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How does anycast routing work?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare picks the user's nearest PoP from a geolocation database." },
+        { "id": "b", "text": "Cloudflare announces the same IP from many PoPs; BGP automatically delivers packets to the topologically closest PoP. One IP, many physical locations, no client or app config required." },
+        { "id": "c", "text": "DNS returns different IPs per region." },
+        { "id": "d", "text": "TCP rerouting at the kernel." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anycast is a BGP-layer pattern. The internet's routing tables resolve the nearest PoP automatically. Cloudflare doesn't pick; the network does."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Behind Cloudflare, your rate limiter reads `request.remoteAddress` and treats every request as if from a Cloudflare IP. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare is broken." },
+        { "id": "b", "text": "When proxied, the connection's remote IP is Cloudflare's edge — not the user. Read the real client IP from `cf-connecting-ip` (or `X-Forwarded-For`). Most frameworks have middleware to handle this once configured correctly." },
+        { "id": "c", "text": "Disable proxy mode." },
+        { "id": "d", "text": "Need a paid plan." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare passes the real client IP in headers. Your app must read those for rate limiting, logging, and analytics."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What's the canonical production pattern for using Cloudflare?",
+      "choices": [
+        { "id": "a", "text": "Replace AWS/GCP entirely with Cloudflare." },
+        { "id": "b", "text": "Cloudflare in front of your real app on a cloud provider. Cloudflare handles edge concerns (DDoS, latency, caching, some logic via Workers); origin handles application state, complex compute, primary databases." },
+        { "id": "c", "text": "Skip Cloudflare; direct origin." },
+        { "id": "d", "text": "Move only DNS to Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare in front of origin is the canonical pattern. Edge concerns at the edge; application concerns at origin. Cloudflare-native (everything on Workers/D1/R2) works for specific greenfield workloads but isn't universal."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "A team needs heavy ML inference per request (large models, GPU required). They're considering Workers AI. Right call?",
+      "choices": [
+        { "id": "a", "text": "Workers AI handles any model." },
+        { "id": "b", "text": "Workers AI handles specific models well, but for heavy or custom large-model inference, use dedicated inference platforms (Replicate, HuggingFace, AWS Bedrock, your own GPU). Keep Cloudflare at the edge for routing, caching, and security. Hybrid is the right shape." },
+        { "id": "c", "text": "Use D1 for ML." },
+        { "id": "d", "text": "Skip ML." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers AI is improving but the model lineup is smaller than dedicated inference platforms. For heavy or custom workloads, use specialized inference services. Cloudflare for edge; specialized for compute."
+    }
+  ]
+}

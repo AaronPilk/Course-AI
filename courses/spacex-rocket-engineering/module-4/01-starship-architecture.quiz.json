@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Starship architecture",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why did SpaceX choose stainless steel for Starship instead of carbon composites or aluminum-lithium?",
+      "choices": [
+        { "id": "a", "text": "It was cheap and available." },
+        { "id": "b", "text": "Stainless steel optimizes for several constraints that matter for full reusability at scale: (1) heat resistance — 301-stainless handles 1500C+ reentry temperatures without ablative shielding for much of the vehicle (composites char, aluminum melts well below this); (2) cryogenic strength — retains structural strength when filled with cryogenic propellants; (3) manufacturability — can be rolled, welded, and worked in shipyard-style facilities at scale (vs. composite layup which is slow and expensive); (4) raw material cost — dramatically cheaper than aerospace aluminum or composites. The cost: stainless steel is denser, so structural mass is higher than composites. SpaceX accepts this mass penalty for the dominant benefits of cost, manufacturability, and heat resistance. This is the classic SpaceX pattern: choose for the operational design space, not for single-flight performance optimization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random material choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The steel decision is a deliberate optimization for the full reusability mission. Composites and aluminum-lithium are better on raw mass-to-strength ratio; steel wins on heat resistance, manufacturability, and cost. For Starship's design space, the latter dominate.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "How does in-orbit refueling expand Starship's mission capability?",
+      "choices": [
+        { "id": "a", "text": "It doesn't help — extra complexity for nothing." },
+        { "id": "b", "text": "Dramatically. Without refueling, Starship can deliver ~100 tons to LEO but only a small fraction to higher destinations because most of the delta-v from LEO to (say) lunar transfer or Mars requires propellant that would have to be carried up from Earth's surface — eating into payload. With orbital refueling, a mission Starship launches with its payload, reaches LEO with partially-full tanks, then receives propellant from tanker Starships that follow it up. The refueled Starship leaves LEO with effectively a fresh full propellant load and can deliver substantial payload to the Moon, Mars, or other high-energy destinations. This requires multiple tanker launches per mission (estimated 6-15 depending on mission), which is why high launch cadence is strategically critical — you can't do refueling without it. This is the architectural unlock that makes Starship's lunar and Mars missions feasible." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only saves a few seconds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Refueling fundamentally changes the rocket equation for high-delta-v missions. It's the architectural innovation that lets a vehicle designed for LEO economics also do lunar/Mars missions. The high-cadence requirement is the operational corollary.",
+      "points": 1
+    }
+  ]
+}

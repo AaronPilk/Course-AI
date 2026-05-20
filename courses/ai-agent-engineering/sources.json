@@ -1,0 +1,13 @@
+{
+  "slug": "ai-agent-engineering",
+  "sources": [
+    { "title": "OpenAI Agents SDK", "url": "https://platform.openai.com/docs/guides/agents", "type": "documentation", "author": "OpenAI" },
+    { "title": "Anthropic — Building effective agents", "url": "https://docs.anthropic.com/en/docs/agents-and-tools/building-effective-agents", "type": "documentation", "author": "Anthropic" },
+    { "title": "Anthropic — Tool use overview", "url": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview", "type": "documentation", "author": "Anthropic" },
+    { "title": "Model Context Protocol", "url": "https://modelcontextprotocol.io", "type": "documentation", "author": "Anthropic" },
+    { "title": "OpenAI cookbook — agentic patterns", "url": "https://cookbook.openai.com", "type": "documentation", "author": "OpenAI" },
+    { "title": "Anthropic engineering blog", "url": "https://www.anthropic.com/engineering", "type": "engineering-blog", "author": "Anthropic" },
+    { "title": "LangGraph documentation", "url": "https://langchain-ai.github.io/langgraph/", "type": "documentation", "author": "LangChain" },
+    { "title": "ReAct paper", "url": "https://arxiv.org/abs/2210.03629", "type": "research-paper", "author": "Yao et al." }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Parallel tools and structured output",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent calls 4 independent search tools serially, taking 8 seconds per query. What's the right fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Execute the tool_use blocks in parallel with Promise.all. Claude already returned them in a single response because the calls are independent; run them concurrently and total tool-execution time drops to the slowest tool, not the sum. Often a 4× speedup on multi-tool steps." },
+        { "id": "c", "text": "Reduce to one tool." },
+        { "id": "d", "text": "Lower max_tokens." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Claude returns multiple tool_use blocks in one response when they're independent. The serial-vs-parallel decision is in YOUR runtime, not the model. Promise.all in your tool runner is the entire change — match results back by tool_use_id when constructing the next user message.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "You want strict structured output from Claude (typed fields, enums, nested arrays). What's the cleanest pattern?",
+      "choices": [
+        { "id": "a", "text": "Free-form JSON in a text response, plus regex post-processing." },
+        { "id": "b", "text": "Define a tool whose input_schema matches your desired output. Force it with `tool_choice: { type: 'tool', name: '...' }`. Claude generates schema-valid arguments; you read them as typed data, no parsing. Use enums and required fields aggressively." },
+        { "id": "c", "text": "Prefill the response with `{`." },
+        { "id": "d", "text": "Generate three candidates and vote." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool-call structured output is the cleanest Claude pattern for typed data. The schema is enforced, optional and required fields are first-class, and nested structures are reliable. Prefilling is great for short responses but tool calls beat it for anything with a real schema.",
+      "points": 1
+    }
+  ]
+}

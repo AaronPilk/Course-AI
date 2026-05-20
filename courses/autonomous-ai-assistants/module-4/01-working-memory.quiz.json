@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Working memory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your user said 'I'm out of office this week' once. Two months later the assistant still signs off 'enjoy your time off.' What's the underlying issue?",
+      "choices": [
+        { "id": "a", "text": "The user is forgetful." },
+        { "id": "b", "text": "Working memory has no expiration on temporal preferences. Time-bound facts (out of office, project deadlines, this-week-only contexts) need automatic expiration (1-2 weeks default) or explicit confirmation to persist. Without aging, working memory drifts from current reality." },
+        { "id": "c", "text": "Need Opus for better memory." },
+        { "id": "d", "text": "Delete all memory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Working memory ages. Temporal preferences (out of office, vacation, this-quarter goals) should expire quickly. Durable identity preferences (pronouns, communication style) can promote to long-term memory. The line is type, not just age — but anything that smells time-bound should default to short TTL.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the canonical 'welcome back' UX powered by working memory?",
+      "choices": [
+        { "id": "a", "text": "A generic greeting." },
+        { "id": "b", "text": "'Welcome back. Want to continue: [active task 1], [active task 2], or something new?' — surfacing in-flight work as continuation options. Loaded from working memory at session start. Users feel oriented immediately; reduces re-explaining what they were working on." },
+        { "id": "c", "text": "Show all memory at the start." },
+        { "id": "d", "text": "Ask the user what they want." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Continuation prompts powered by working memory are the highest-value pattern for session-to-session continuity. They make the assistant feel like a coworker who remembers what you were doing. Include user controls to hide/edit so they stay welcome and not invasive.",
+      "points": 1
+    }
+  ]
+}

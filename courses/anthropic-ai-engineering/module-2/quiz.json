@@ -1,0 +1,71 @@
+{
+  "title": "Module 2 quiz: Prompt engineering for Claude",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Anthropic specifically recommend XML tags?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic — they look organized." },
+        { "id": "b", "text": "Claude is trained on tagged prompts. Tags delimit sections cleanly, let instructions reference content by name, and harden against prompt injection because tagged content reads as data, not instructions." },
+        { "id": "c", "text": "Required by the API." },
+        { "id": "d", "text": "They reduce token counts." }
+      ],
+      "correct_answer": "b",
+      "explanation": "XML tags are a trained behavior on Claude — Anthropic uses them throughout its docs and training. The cleanliness, referenceability, and injection-resistance compound to make tags the single highest-ROI prompt change you can make."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your intent classifier is at 68% with a description-only prompt. Best next move?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Add 3–5 tagged few-shot examples covering the input distribution including edge cases. Show output exactly as you want it. Typical jump: 15–30 accuracy points with no model change." },
+        { "id": "c", "text": "Lower temperature only." },
+        { "id": "d", "text": "Add adjectives." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Few-shot is the canonical accuracy boost for classification on Claude. Cover the distribution, include edge cases, wrap each example in <example>/<input>/<output>. Cache the block once stable to control cost."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Your JSON parser breaks because Claude occasionally wraps responses in markdown fences. Canonical fix?",
+      "choices": [
+        { "id": "a", "text": "Add post-processing for every case." },
+        { "id": "b", "text": "Prefill the assistant message with `{` so Claude continues from there. Preamble disappears; markdown fences vanish; parse failures drop to zero. Combine with few-shot for full reliability." },
+        { "id": "c", "text": "Increase max_tokens." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Prefilling is Claude's built-in 'lock the response format' feature. Adding `{ role: 'assistant', content: '{' }` as the last message starts Claude's response mid-document, eliminating preamble and formatting drift."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You want to extract just a French translation, no commentary. What's the right pattern?",
+      "choices": [
+        { "id": "a", "text": "Prefill `<french>` and set `stop_sequences: ['</french>']`. Claude produces only the translation and stops cleanly. Bonus: latency drops because there's less to generate." },
+        { "id": "b", "text": "Increase max_tokens and trust the model to be terse." },
+        { "id": "c", "text": "Use temperature 1." },
+        { "id": "d", "text": "Translate it yourself." }
+      ],
+      "correct_answer": "a",
+      "explanation": "Prefilling + stop sequences is the standard pattern for extracting a single field cleanly. The opening tag locks where the response starts; the stop sequence prevents any post-content."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When does chain-of-thought (CoT) actually help?",
+      "choices": [
+        { "id": "a", "text": "On every task — always add 'think step by step.'" },
+        { "id": "b", "text": "On multi-step reasoning, math, logic, complex judgment, and agent planning. Skip CoT on lookups, classification, simple extraction — it just wastes tokens. Use structured CoT (`<thinking>`/`<answer>` tags) so the output stays parseable." },
+        { "id": "c", "text": "Only on Opus." },
+        { "id": "d", "text": "Never — it's a myth." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CoT pays off when the task is genuinely multi-step. Forced CoT on simple tasks adds latency and cost without value. The reliable pattern: structured CoT in tags, demonstrated via few-shot, prefilled to guarantee the format."
+    }
+  ]
+}

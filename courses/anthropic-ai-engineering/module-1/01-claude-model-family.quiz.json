@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Claude model family",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which Claude tier is the right default for most production traffic?",
+      "choices": [
+        { "id": "a", "text": "Opus on everything — quality first." },
+        { "id": "b", "text": "Sonnet. Strong general intelligence at a fraction of Opus cost. Move to Haiku for high-volume simple tasks, move to Opus for the hardest reasoning — but Sonnet is the right starting point." },
+        { "id": "c", "text": "Haiku — cheapest is always best." },
+        { "id": "d", "text": "Mix randomly across tiers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sonnet hits the sweet spot of intelligence vs. cost vs. speed for most production AI products. Always-Opus is wasteful; always-Haiku misses nuance. Start with Sonnet, then route easy traffic down and hard traffic up.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're building a chatbot with mixed traffic — most questions are simple, ~10% involve multi-step reasoning. What's the right pattern?",
+      "choices": [
+        { "id": "a", "text": "Send every question to Opus." },
+        { "id": "b", "text": "Add a small Haiku-powered router that classifies questions as easy/hard. Easy ones go to Haiku or Sonnet; hard ones go to Opus. Routing costs cents per thousand, savings are dollars per thousand." },
+        { "id": "c", "text": "Send everything to Haiku and hope." },
+        { "id": "d", "text": "Disable the hard questions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mixed-tier routing is the highest-leverage cost optimization in Claude production work. A tiny classifier upfront picks the right model for each turn. Cuts bills 60–80% vs. always-Opus with no measurable quality drop on the easy traffic.",
+      "points": 1
+    }
+  ]
+}

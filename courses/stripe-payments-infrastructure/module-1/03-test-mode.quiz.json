@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Test mode",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A developer copies production env vars (live Stripe keys) into their `.env.local` for 'easy testing'. They run the test suite. What happens?",
+      "choices": [
+        { "id": "a", "text": "Nothing — test cards are universal." },
+        { "id": "b", "text": "The test suite creates real customers in live mode and charges real cards. Refunds and apologies follow. The fix is structural: live keys NEVER in development; use env vars; pre-commit hooks scan for `sk_live_` in commits; clear documentation that test mode is the dev default. Test cards work safely only in test mode." },
+        { "id": "c", "text": "Stripe blocks development by default." },
+        { "id": "d", "text": "It's fine because the dev cards are special." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Live keys process real charges, period. The discipline is procedural: env-var-only, separate `.env.local` (not committed), pre-commit scan for live key patterns, training. Live keys belong only on production servers.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How do you test webhooks against your local dev server?",
+      "choices": [
+        { "id": "a", "text": "Deploy to staging every time." },
+        { "id": "b", "text": "Use Stripe CLI: `stripe listen --forward-to localhost:3000/api/stripe/webhook`. The CLI gives you a local webhook signing secret to use in `.env.local`. You can also `stripe trigger payment_intent.succeeded` to force specific event types for testing handlers without manually triggering each scenario through the UI." },
+        { "id": "c", "text": "Webhooks can't be tested locally." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe CLI is essential dev tooling. `stripe listen` forwards live test events to localhost; `stripe trigger` synthesizes specific event types. Without it, you're deploying to test every webhook change.",
+      "points": 1
+    }
+  ]
+}

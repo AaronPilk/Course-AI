@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Launching",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the right launch sequence for an autonomous assistant?",
+      "choices": [
+        { "id": "a", "text": "Big public launch with marketing on day 1." },
+        { "id": "b", "text": "Five phases: dogfood (team uses it 4-6 weeks) → closed alpha (10-30 hand-picked early adopters) → limited beta (100-300 in a niche) → open beta → GA. Each phase gates on real metrics, not just time. Trust builds with the user base before scale arrives." },
+        { "id": "c", "text": "Skip alpha; go straight to beta." },
+        { "id": "d", "text": "Launch internally only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Autonomous assistants need a trust-building runway. Each phase catches different classes of issues before they hit broader users. Skipping phases means catching those issues in public — much costlier in reputation and recovery.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're designing onboarding for an autonomous assistant. What's the most important moment to engineer for?",
+      "choices": [
+        { "id": "a", "text": "A clean settings page." },
+        { "id": "b", "text": "The first-value moment within 5-10 minutes of use — one unambiguous 'wow, it actually did that for me' experience. If it's later than that, churn is high. Optimize the onboarding flow around producing that moment fast." },
+        { "id": "c", "text": "Detailed feature walkthroughs." },
+        { "id": "d", "text": "A subscription paywall." }
+      ],
+      "correct_answer": "b",
+      "explanation": "First-value within minutes is the single most important onboarding metric for assistants. Users decide quickly whether the assistant is worth investing in. Engineer the path to that first 'wow' moment ruthlessly; everything else can come later.",
+      "points": 1
+    }
+  ]
+}

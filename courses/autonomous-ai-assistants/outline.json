@@ -1,0 +1,94 @@
+{
+  "slug": "autonomous-ai-assistants",
+  "title": "Building Autonomous AI Assistants",
+  "subtitle": "Personal AI that gets actual work done — for solo founders, knowledge workers, and small teams",
+  "description": "A practical course on building AI assistants that operate autonomously on your behalf — reading email, scheduling, drafting docs, taking actions across your tools. Not a chatbot. A coworker. Built from the patterns Anthropic, OpenAI, and the early autonomous-agent products are converging on: connectors, MCP, scheduled tasks, memory, approval flows, and the safety patterns that let an AI act in the real world.",
+  "category": "AI Engineering",
+  "difficulty": "advanced",
+  "audience": "Builders shipping AI assistants — solo founders extending themselves, teams automating internal workflows, product teams making AI a teammate rather than a tool. Comfortable with code; have shipped at least one LLM feature; understand agent loops.",
+  "tags": ["autonomous-agents", "assistants", "mcp", "scheduled-tasks", "memory", "connectors"],
+  "estimated_minutes": 280,
+  "brand": {
+    "name": "Autonomous Assistants",
+    "logo": "/brands/autonomous-ai-assistants.svg",
+    "gradient": ["#7C3AED", "#06B6D4"],
+    "tint": "#0A1530"
+  },
+  "prerequisites": [
+    "Comfortable reading code",
+    "Have shipped at least one AI feature (chat, RAG, or agent)",
+    "Familiarity with the agent loop (recommend the AI Agent Engineering course in this catalog first)",
+    "API keys for at least one major LLM provider (Anthropic or OpenAI)"
+  ],
+  "outcomes": [
+    "Define what 'autonomous' means in practical product terms and pick the right autonomy level",
+    "Connect an assistant to real tools (calendar, email, docs, code) safely",
+    "Implement scheduled and background tasks that run on the user's behalf",
+    "Build durable memory and context that survives sessions",
+    "Design approval and notification flows that keep users in control",
+    "Apply safety, privacy, and audit patterns specific to assistants that act on user accounts",
+    "Ship an autonomous assistant to real users without losing sleep"
+  ],
+  "modules": [
+    {
+      "title": "What an Autonomous Assistant Actually Is",
+      "summary": "Define autonomy along a spectrum, distinguish assistants from chatbots and agents, and pick the right level for your product.",
+      "estimated_minutes": 50,
+      "key_concepts": ["autonomy spectrum", "assistant vs chatbot vs agent", "trust model", "scope"],
+      "lessons": [
+        { "title": "The autonomy spectrum — from chatbot to coworker", "objective": "Place your product on the autonomy spectrum and pick the right level." },
+        { "title": "Assistant vs. agent vs. chatbot — naming things clearly", "objective": "Distinguish the three patterns and what users expect from each." },
+        { "title": "The trust budget — what users will let an assistant do", "objective": "Map the actions you propose against user trust levels." },
+        { "title": "Scoping the first version", "objective": "Cut the assistant's scope to something users will actually adopt." }
+      ]
+    },
+    {
+      "title": "Connecting the Assistant to the Real World",
+      "summary": "Connectors, MCP, OAuth, and the integration patterns that make an assistant useful beyond chat.",
+      "estimated_minutes": 60,
+      "key_concepts": ["connectors", "mcp", "oauth", "tool permissions"],
+      "lessons": [
+        { "title": "Connectors — how assistants plug into your tools", "objective": "Set up safe connections to calendar, email, docs, code, and chat." },
+        { "title": "MCP for assistants — your tool ecosystem", "objective": "Use Model Context Protocol to standardize tool access." },
+        { "title": "OAuth and permission scoping in practice", "objective": "Get the right permissions; ask for nothing more." },
+        { "title": "Tool inventory and surface area", "objective": "Decide what the assistant can and can't touch — and why." }
+      ]
+    },
+    {
+      "title": "Scheduled and Background Tasks",
+      "summary": "Assistants that work while you sleep — daily briefings, scheduled actions, background research.",
+      "estimated_minutes": 55,
+      "key_concepts": ["scheduled tasks", "background runs", "trigger patterns", "notifications"],
+      "lessons": [
+        { "title": "Why scheduled tasks change the product", "objective": "Recognize how time-shifted execution reshapes the assistant relationship." },
+        { "title": "Recurring tasks — patterns for daily briefings, weekly digests", "objective": "Build cron-like scheduling with sane defaults and user controls." },
+        { "title": "Event-triggered tasks — react to inbox, calendar, signals", "objective": "Wire assistants to real-world events without spamming users." },
+        { "title": "Notifications and digests — surfacing background work", "objective": "Tell users what happened without overwhelming them." }
+      ]
+    },
+    {
+      "title": "Memory, Context, and Continuity",
+      "summary": "Make the assistant feel like it knows you — and avoid the failure modes of memory done badly.",
+      "estimated_minutes": 55,
+      "key_concepts": ["working memory", "long-term memory", "personalization", "context retrieval"],
+      "lessons": [
+        { "title": "Working memory across sessions", "objective": "Carry context from one interaction to the next without re-asking." },
+        { "title": "Long-term memory and personalization", "objective": "Build a user profile + episodic memory that gets richer over time." },
+        { "title": "Context retrieval for assistants", "objective": "Pull the right context at the right moment without flooding the prompt." },
+        { "title": "When the assistant should forget", "objective": "Decide what to expire, what to confirm, what to delete." }
+      ]
+    },
+    {
+      "title": "Safety, Approval, and Shipping",
+      "summary": "The safety patterns that let an assistant act on real user accounts, plus the launch checklist for a first autonomous product.",
+      "estimated_minutes": 60,
+      "key_concepts": ["approval flows", "transparency", "privacy", "audit"],
+      "lessons": [
+        { "title": "Approval flows — how to ask, when to act unilaterally", "objective": "Design approval UX that respects user agency without becoming friction." },
+        { "title": "Transparency — making the assistant's work visible", "objective": "Surface what the assistant is doing so users keep trust." },
+        { "title": "Privacy, audit, and the user's right to know", "objective": "Apply the privacy and audit controls specific to assistant products." },
+        { "title": "Launching an autonomous assistant — the early-adopter playbook", "objective": "Roll out an autonomous product safely with the right user cohort." }
+      ]
+    }
+  ]
+}

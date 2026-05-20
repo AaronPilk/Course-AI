@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Site structure",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these URLs is best for a product page about blue shoes?",
+      "choices": [
+        { "id": "a", "text": "https://example.com/p/?id=4729&cat=8" },
+        { "id": "b", "text": "https://example.com/products/blue-shoes" },
+        { "id": "c", "text": "https://example.com/PRODUCTS/Blue_Shoes_2026_AMAZING_DEAL" },
+        { "id": "d", "text": "https://example.com/category/footwear/casual/men/shoes/blue/canvas/p4729" }
+      ],
+      "correct_answer": "b",
+      "explanation": "Descriptive, lowercase, hyphens between words, short and meaningful. The first is opaque. The third is mixed-case (duplicate risk) and screams keyword stuffing. The fourth nests too deep — hard to crawl, share, and prioritize.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your site is rebranding tomorrow. Every URL is changing. What's the single highest-priority thing you must do to protect organic traffic?",
+      "choices": [
+        { "id": "a", "text": "Update your meta keywords." },
+        { "id": "b", "text": "Set up 301 (permanent) redirects from every old URL to its corresponding new URL." },
+        { "id": "c", "text": "Submit a new sitemap and request reindexing." },
+        { "id": "d", "text": "Change your title tags to mention the rebrand." }
+      ],
+      "correct_answer": "b",
+      "explanation": "URL changes without 301 redirects destroy organic traffic — Google sees thousands of 404s, drops the old URLs, and the new URLs start with no inherited signal. 301s pass the ranking signal from old to new over time. This is the most critical step in any URL migration. Submitting a sitemap is helpful but secondary; redirects are non-negotiable.",
+      "points": 1
+    }
+  ]
+}

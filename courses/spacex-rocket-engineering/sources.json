@@ -1,0 +1,11 @@
+{
+  "sources": [
+    { "url": "https://www.spacex.com/vehicles/falcon-9/", "title": "Falcon 9 (SpaceX)" },
+    { "url": "https://www.spacex.com/vehicles/falcon-heavy/", "title": "Falcon Heavy (SpaceX)" },
+    { "url": "https://www.spacex.com/vehicles/starship/", "title": "Starship (SpaceX)" },
+    { "url": "https://www.spacex.com/updates/", "title": "SpaceX Updates" },
+    { "url": "https://api.spacexdata.com/v4/", "title": "SpaceX REST API" },
+    { "url": "https://ntrs.nasa.gov", "title": "NASA Technical Reports Server" },
+    { "url": "https://www.nasa.gov", "title": "NASA" }
+  ]
+}

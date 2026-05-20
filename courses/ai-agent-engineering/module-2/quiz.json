@@ -1,0 +1,71 @@
+{
+  "title": "Module 2 quiz: Designing tools agents can actually use",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent picks the wrong lookup tool 50% of the time. The model is current-generation Sonnet. First fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Rewrite tool descriptions. Most wrong-tool bugs are description bugs — vague descriptions, identical-sounding names, missing triggers and anti-triggers. Tighten before swapping models." },
+        { "id": "c", "text": "Add more tools." },
+        { "id": "d", "text": "Lower temperature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool descriptions are the model's API doc. Distinct names + clear trigger phrases + 'when NOT to use this' + parameter examples routinely lifts selection from 50% to 95%+. Fix descriptions before reaching for a bigger model."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why set `additionalProperties: false` on tool input schemas?",
+      "choices": [
+        { "id": "a", "text": "Saves tokens." },
+        { "id": "b", "text": "Stops the model from inventing fields you didn't define. Without it, models occasionally emit hallucinated fields that crash handlers or get silently ignored. With it + required + enums, the input shape is exact." },
+        { "id": "c", "text": "API requirement." },
+        { "id": "d", "text": "Improves Haiku quality." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lock the schema. Pair with `required` for must-have fields and `enum` for fixed-value sets. Validate again at the runtime to catch edge cases."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "An agent's `issue_refund` call timed out and the agent retried. Two refunds went out. Right design fix?",
+      "choices": [
+        { "id": "a", "text": "Tell the agent not to retry." },
+        { "id": "b", "text": "Require an `idempotency_key` on side-effect tools. Generate it once per task, pass it on every retry. Handler stores `(key → result)` for a few days; repeat calls return the stored result." },
+        { "id": "c", "text": "Use a bigger model." },
+        { "id": "d", "text": "Disable retries entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotency keys are the standard pattern for safe retry on side-effect operations. Handler dedups; repeat calls are no-ops with the same response."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Which tools should always be behind an approval gate?",
+      "choices": [
+        { "id": "a", "text": "Every tool, for safety." },
+        { "id": "b", "text": "Tools with irreversible side effects — sending messages, moving money, deleting data, changing external state irreversibly. Read-only tools and reversible internal actions don't need gates." },
+        { "id": "c", "text": "Only delete operations." },
+        { "id": "d", "text": "None — approval gates slow agents." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Approval gates earn their friction on irreversible side effects. Layer with narrow tool design (so the gate isn't carrying the whole safety load) and a rule engine to auto-approve low-risk cases."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What should a tool return on failure?",
+      "choices": [
+        { "id": "a", "text": "Raw exception or stack trace." },
+        { "id": "b", "text": "Structured error: `{ error: 'NOT_FOUND', message: '...', suggested_action: '...' }` with `is_error: true`. Standardize codes (NOT_FOUND, RATE_LIMIT, CONFLICT, VALIDATION, etc.) across tools so the agent learns to recover." },
+        { "id": "c", "text": "Empty string." },
+        { "id": "d", "text": "HTTP 500 only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Structured, actionable errors let agents recover. Standardized error codes across tools form a vocabulary the model picks up — it learns what to retry, what to escalate, and what to tell the user."
+    }
+  ]
+}

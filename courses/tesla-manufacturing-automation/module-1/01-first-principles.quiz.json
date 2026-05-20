@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: First-principles manufacturing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the four operating principles of Tesla's manufacturing approach?",
+      "choices": [
+        { "id": "a", "text": "Just-in-time, lean, kaizen, supplier-led." },
+        { "id": "b", "text": "First principles (not industry convention), factory-as-product, vertical integration where it controls outcomes, software-defined operations. Apply these and you end up with different cars and different factories — the gigacasting, structural battery, vertical campus model emerges from the combination." },
+        { "id": "c", "text": "Speed, scale, secrecy, surveillance." },
+        { "id": "d", "text": "Outsource everything to specialists." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tesla's approach is the combination of these four. Individual pieces aren't unique (cell-to-pack came from BYD; gigacasting existed in aerospace) — what's distinctive is committing to all four simultaneously while launching a new product line.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A founder reads about Tesla's gigacasting and wants to apply 'Tesla-style first-principles manufacturing' to a $50/unit consumer good. Right move?",
+      "choices": [
+        { "id": "a", "text": "Absolutely — disrupt everything." },
+        { "id": "b", "text": "Probably not. Tesla's approach fits capital-intensive, physics-bounded products with long cycle times and large unit prices. For a $50 consumer good, the capex of vertical integration + custom factories vs. existing supplier networks usually doesn't pencil out. Apply principles selectively (question conventions, instrument operations) rather than copying the full Tesla playbook." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy a Tesla factory." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tesla's full approach requires huge capital and a long horizon. The principles transfer; the literal playbook doesn't. Match the strategy to your product economics; selectively borrow what fits.",
+      "points": 1
+    }
+  ]
+}

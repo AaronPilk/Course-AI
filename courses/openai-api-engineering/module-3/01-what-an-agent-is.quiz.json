@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: What an agent is",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the defining property that separates an agent from a chatbot or pipeline?",
+      "choices": [
+        { "id": "a", "text": "Agents use tools; chatbots don't." },
+        { "id": "b", "text": "Agents decide their own next step based on intermediate results, within boundaries you set. Chatbots react to user messages one at a time; pipelines follow a fixed developer-defined sequence. The LLM choosing what to do next is the agent property." },
+        { "id": "c", "text": "Agents run on reasoning models." },
+        { "id": "d", "text": "Agents are always faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The agent property is autonomous next-step decision-making. Tools are common but not unique to agents (chatbots can have tools). The 'agent' word is overloaded — keep the definition tight: agent = the LLM picks the path. If the path is fixed, it's a pipeline, no matter what you call it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your customer support team wants to triage emails: classify intent, extract sender info, route to the right queue, log to CRM. Every email goes through these same 4 steps. Agent or pipeline?",
+      "choices": [
+        { "id": "a", "text": "Agent — anything with tools is an agent." },
+        { "id": "b", "text": "Pipeline. There's no decision-making — every email takes the same path. Pipelines are simpler, cheaper, more reliable, and faster than agents for fixed sequences. Use agents when the path itself depends on intermediate results." },
+        { "id": "c", "text": "Two agents working in parallel." },
+        { "id": "d", "text": "A chatbot." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fixed sequence with no branching = pipeline. The 'agent' framing buys nothing here — same code, more overhead. Save agents for cases where the LLM genuinely has to decide what to do next based on results from earlier steps.",
+      "points": 1
+    }
+  ]
+}

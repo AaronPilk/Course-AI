@@ -1,0 +1,71 @@
+{
+  "title": "Module 3 quiz: Workers, Pages, and edge compute",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What runtime do Cloudflare Workers use?",
+      "choices": [
+        { "id": "a", "text": "Node.js." },
+        { "id": "b", "text": "V8 isolates — sub-5ms cold starts, web-standard APIs (fetch, Request/Response, crypto, etc.), WASM support, no `fs` or native modules. Modern frameworks (Hono, Next.js Edge Runtime) target this environment. Node compatibility via the `nodejs_compat` flag covers a growing subset of npm packages." },
+        { "id": "c", "text": "Deno." },
+        { "id": "d", "text": "Bun." }
+      ],
+      "correct_answer": "b",
+      "explanation": "V8 isolates make Workers fast and cheap. Web-standard APIs by default; `nodejs_compat` adds polyfills for many Node-style packages."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your Worker logs analytics inline before returning the response. Latency is poor. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Disable analytics." },
+        { "id": "b", "text": "Use `ctx.waitUntil(logAnalytics(...))` — fire-and-forget. Response returns immediately; log continues in background. Canonical pattern for non-blocking side effects (analytics, cache updates, audit logs)." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Move to D1." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`ctx.waitUntil` is Workers' background-work pattern. Response returns; the promise continues. Use for any side effect that shouldn't block the user response."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's one major economic advantage Cloudflare Pages has vs Vercel/Netlify for bandwidth-heavy sites?",
+      "choices": [
+        { "id": "a", "text": "Faster CDN." },
+        { "id": "b", "text": "Free egress. Pages (and R2) don't bill bandwidth; Vercel/Netlify do (with allowances, then per-GB). For media/video/file-heavy sites this can mean thousands per month in savings." },
+        { "id": "c", "text": "More build minutes." },
+        { "id": "d", "text": "Stronger Next.js support." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Free egress is Cloudflare's structural cost advantage on bandwidth-heavy workloads. For light traffic the difference is marginal; for media-heavy sites it can dominate cost."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Your team stored user session data in KV. Sessions updated in one region aren't visible in another for ~60s. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Use Opus." },
+        { "id": "b", "text": "Move sessions to D1 (strong consistency on writes). KV is eventually consistent (~60s lag); great for read-only config, bad for anything where stale reads break UX. Pick the consistency model to match the workload." },
+        { "id": "c", "text": "Disable KV." },
+        { "id": "d", "text": "Use R2." }
+      ],
+      "correct_answer": "b",
+      "explanation": "KV's eventual consistency is a feature for some workloads (cheap, global) and a bug for others (sessions). D1 for strong-consistent reads after writes; external Postgres for high write throughput."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's Durable Objects' specific superpower?",
+      "choices": [
+        { "id": "a", "text": "Massive parallel scale." },
+        { "id": "b", "text": "Single-threaded, addressable-by-ID stateful actors. Each instance handles requests sequentially with no race conditions, holds persistent state, supports WebSockets. Designed for many small instances (one per room/document/match). Perfect for real-time coordination." },
+        { "id": "c", "text": "Cheaper KV." },
+        { "id": "d", "text": "Faster D1." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DOs are specialized stateful coordinators. Many small instances, each coordinating per-entity state. Not a general DB; a real-time primitive."
+    }
+  ]
+}

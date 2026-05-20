@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Global scaling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why did Tesla's Shanghai plant go from groundbreaking to first vehicle in roughly 12 months, while Berlin took years?",
+      "choices": [
+        { "id": "a", "text": "Tesla tried harder in China." },
+        { "id": "b", "text": "Three converging factors: Chinese construction labor and approval processes move faster than EU equivalents; Shanghai municipal government actively accelerated permits as part of the FDI deal; and Tesla's plant template was already proven, so engineering time was minimal. Berlin hit the opposite — EU environmental review, water rights negotiations, IG Metall labor consultations, and stricter construction standards all slowed timeline significantly. Same template, radically different regulatory speed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Berlin built a bigger plant." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plant timeline is dominated by local regulatory and labor environment more than by Tesla's own execution speed. Shanghai's 12-month build was a function of Chinese context; Berlin's multi-year build was EU context. Tesla itself was as motivated in both cases.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Tesla wants to double total vehicle output. They have plant capacity, software, supply chains for non-cell components, and demand. What's the most likely binding constraint?",
+      "choices": [
+        { "id": "a", "text": "Marketing budget." },
+        { "id": "b", "text": "Cell production capacity. Across Tesla's global plant network, cell supply is the binding constraint for total vehicle output. Vehicle assembly capacity can grow faster than cell capacity because cell plants require longer build times, more capital, more specialized equipment, and depend on upstream materials supply. Doubling output means either doubling cell partnerships (Panasonic, LG, CATL), aggressively scaling in-house 4680 cells, or both — and that's a multi-year process. This is why Tesla's investor communications emphasize cell capacity expansion." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Final assembly automation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cell capacity is the consistent bottleneck for EV scale. Vehicle assembly is high-throughput and replicable; cell production is capital-heavy and materials-constrained. Tesla's strategy reflects this — heavy investment in cells, multi-source strategy, upstream mining.",
+      "points": 1
+    }
+  ]
+}

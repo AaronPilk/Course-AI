@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: What a Gigafactory is",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the four defining properties of a Tesla Gigafactory (vs. just 'a big factory')?",
+      "choices": [
+        { "id": "a", "text": "Square footage, location, employee count, marketing." },
+        { "id": "b", "text": "GWh-scale annual capacity (energy throughput as the unit), integrated vertical stack (cells + packs + vehicles + energy products on one campus), co-located suppliers (physically on or near the site), single nervous system (shared software stack + culture across sites)." },
+        { "id": "c", "text": "Robots, lasers, AI, blockchain." },
+        { "id": "d", "text": "Just being owned by Tesla." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The 'giga' name references GWh-scale battery output, but the operational differentiator is the integration: vertical stack, supplier co-location, and shared software across sites. Without those, a large factory is just a large factory.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why does Tesla co-locate cell production (or cell suppliers) with vehicle assembly at the same Gigafactory?",
+      "choices": [
+        { "id": "a", "text": "It looks impressive in tours." },
+        { "id": "b", "text": "Cells are heavy and bulky relative to their value; shipping them far is expensive and slow. Co-location means cells reach pack assembly via short trips on-site, reducing inventory, logistics cost, and FX risk. Also: when engineers see a problem, they can talk to the cell supplier engineer five minutes away, not in another time zone. Iteration cycles compress." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Tesla's lease." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Co-location compresses logistics and iteration cycles. Cells are heavy + bulky → shipping cost dominates. Suppliers next door → engineering coordination is in-person, not over Zoom across time zones. Combined: significantly lower per-vehicle cost and faster improvement.",
+      "points": 1
+    }
+  ]
+}

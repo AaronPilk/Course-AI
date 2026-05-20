@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Where automation works",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What characterizes a task where robots win clearly?",
+      "choices": [
+        { "id": "a", "text": "Anything repetitive." },
+        { "id": "b", "text": "High force, high precision (sub-mm), high repetition (>1000/day), hostile environment (paint, heat, hazardous), stable inputs (parts with known tolerances), stable design (process won't change frequently). Welding, stamping, painting, gigacasting, heavy material handling fit. The clearer the task fits these characteristics, the more clearly robots dominate." },
+        { "id": "c", "text": "Anything an engineer can imagine." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Repetition alone isn't enough — repetition + variable inputs = production hell. The full criteria (force, precision, repetition, hostile, stable inputs, stable design) determines whether robots dominate. Match all criteria for clean automation wins.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Tesla's Optimus aspiration: humanoid robots eventually handle tasks currently requiring humans. What's the realistic perspective?",
+      "choices": [
+        { "id": "a", "text": "Optimus is shipping; problem solved." },
+        { "id": "b", "text": "Aspirational long-term direction, not current reality. Optimus is in early limited deployment for moving parts and other simple tasks. Full assembly via humanoid robots — replacing humans on wire harness routing, complex interior assembly, judgment tasks — is 2027-2030 at optimistic, 2030-2040 realistic. Current decisions can't depend on Optimus arriving on time. Build hybrid human-robot lines today; humanoid robots fold in over years as they prove out." },
+        { "id": "c", "text": "It'll never work." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimus is a real long-term R&D direction but production-scale humanoid robots in factories are years out. Don't build today's lines assuming they'll arrive on time. Design for current human-robot reality; fold in humanoids as they prove out at production scale.",
+      "points": 1
+    }
+  ]
+}

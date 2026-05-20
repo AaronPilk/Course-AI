@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Production checklist",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team launches without configuring the statement descriptor — Stripe's default placeholder appears on bank statements. Within a week, what happens?",
+      "choices": [
+        { "id": "a", "text": "Customers don't notice." },
+        { "id": "b", "text": "Disputes spike — customers see an unfamiliar 'PAYMENT*STRIPE-NETWORK' charge and call their bank to dispute as 'fraudulent.' Dispute rate climbs fast; can hit Visa/MC monitoring thresholds (0.9-1.0%); chargeback fees pile up; reputation hits. Statement descriptor is a 5-minute setup; fixing post-launch takes months of clean operation to recover dispute thresholds." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stripe auto-fixes it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Statement descriptor is one of the highest-leverage pre-launch items. A clear brand-matching descriptor prevents 'fraudulent' disputes from confused customers; a cryptic one triggers them. Configure before any real charges hit production cards.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the right launch pattern for a payment integration?",
+      "choices": [
+        { "id": "a", "text": "Full launch with marketing on day 1." },
+        { "id": "b", "text": "Soft launch first: friends / paying beta users only, small charges initially, personal customer support, watch metrics tightly. Catches the friction your test mode missed (3DS for specific regions, edge cases in payment methods, webhook timing). After a week or two of clean operation, expand to broader launch. Feature flag for rollback if anything goes wrong." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip beta." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Soft launch surfaces issues test mode can't simulate: real-world card behaviors, real 3DS triggers, real disputes, real network timing. A week of cohort-limited live operation catches problems before they affect every customer.",
+      "points": 1
+    }
+  ]
+}

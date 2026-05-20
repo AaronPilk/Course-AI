@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tool descriptions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent picks the wrong lookup tool ~50% of the time. The model is current-generation Sonnet. What's the right first move?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Rewrite tool descriptions. Most wrong-tool bugs are description bugs: vague descriptions, identical-sounding names, missing trigger conditions, missing 'when NOT to use this'. Tighten names and descriptions before reaching for a bigger model — it's faster, cheaper, and usually the actual fix." },
+        { "id": "c", "text": "Add more tools." },
+        { "id": "d", "text": "Lower temperature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool descriptions are how the model reasons about which tool to call. Distinct names + clear triggers + anti-triggers + examples in the description routinely lift selection accuracy from 50% to 95%+ without any model change. Always fix descriptions first; only escalate to bigger models when descriptions are tight and selection is still poor.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which is the strongest tool description?",
+      "choices": [
+        { "id": "a", "text": "`get_user: Returns a user.`" },
+        { "id": "b", "text": "`get_user_by_id: Look up a user record by internal user ID (format 'u_<alphanumeric>'). Returns name, email, plan, created_at, last_login. Use when you have a confirmed user ID; for email or name lookups, use search_users instead.`" },
+        { "id": "c", "text": "`get_user: User lookup tool, please use carefully.`" },
+        { "id": "d", "text": "`get_user: 🔍 user finder`" }
+      ],
+      "correct_answer": "b",
+      "explanation": "The strong description has: what (ID lookup), input format with example, return shape, when to use, AND when NOT to use (with a pointer to the alternative). That's the floor for production tool descriptions. Names should disambiguate where descriptions can't.",
+      "points": 1
+    }
+  ]
+}

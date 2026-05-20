@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Citations",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Anthropic's built-in Citations API give you that ad-hoc tagged citations don't?",
+      "choices": [
+        { "id": "a", "text": "Bigger context windows." },
+        { "id": "b", "text": "Span-level citations — Claude returns the exact text from the source that supports each claim, plus character offsets and document references. Ad-hoc tagged citations only do per-chunk attribution; built-in citations point at the exact lines." },
+        { "id": "c", "text": "Cheaper output tokens." },
+        { "id": "d", "text": "Reduced hallucinations entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Built-in citations are span-precise — users can see the exact source text supporting each claim. Tagged [src:N] works fine for many RAG flows but only attributes the claim to a whole chunk. For legal, medical, or policy-quoting use cases, span precision matters.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your bot answers policy questions correctly but support reps can't trust it because they have to manually verify every answer. What's the right move?",
+      "choices": [
+        { "id": "a", "text": "Switch to Opus." },
+        { "id": "b", "text": "Enable citations and surface them prominently in the UI — inline numbered references that expand to show the cited text from the source. The reps stop guessing whether the bot is right because they can audit each claim in one click." },
+        { "id": "c", "text": "Remove the bot." },
+        { "id": "d", "text": "Add more disclaimers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Citations are how AI features earn trust in accuracy-critical workflows. Built-in citations + a UI that surfaces the exact source text per claim turns the bot from 'a black box you have to verify' into 'a reading assistant you can audit instantly.'",
+      "points": 1
+    }
+  ]
+}

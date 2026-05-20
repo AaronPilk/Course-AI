@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Crawling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the rule 'Disallow: /admin/' in a robots.txt file actually do?",
+      "choices": [
+        { "id": "a", "text": "Tells search engines not to index pages under /admin/." },
+        { "id": "b", "text": "Tells search engines not to crawl pages under /admin/. They may still appear in search results as bare URLs if linked from elsewhere." },
+        { "id": "c", "text": "Hides the /admin/ section from users entirely." },
+        { "id": "d", "text": "Adds a password requirement to /admin/." }
+      ],
+      "correct_answer": "b",
+      "explanation": "robots.txt controls crawling only — not indexing, not user access. Blocked URLs can still show up in Google's results (with no snippet) if other sites link to them. To truly keep a page out of search results, use a noindex meta tag and leave the URL crawlable so Google can see the noindex.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your site starts returning HTTP 500 errors during a traffic surge. After the surge ends, you notice Googlebot is still crawling far less often than it used to. Why?",
+      "choices": [
+        { "id": "a", "text": "Google permanently lowered your crawl budget as a penalty." },
+        { "id": "b", "text": "Googlebot reads server errors as a 'slow down' signal and reduces crawl rate. It cautiously eases back up over days or weeks as the server proves it's healthy again." },
+        { "id": "c", "text": "You need to submit a manual reconsideration request." },
+        { "id": "d", "text": "The crawl rate is determined only by your sitemap, so HTTP errors don't matter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google explicitly says it slows crawling when it sees errors so it doesn't make your problem worse. Recovery is gradual — it isn't an instant snap-back when your site stabilizes. The fix is to keep your server healthy, not to manually 'reset' anything.",
+      "points": 1
+    }
+  ]
+}

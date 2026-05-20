@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Guardrails & approvals",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which tools should be behind an approval gate (human review before execution)?",
+      "choices": [
+        { "id": "a", "text": "All tools, including read-only ones." },
+        { "id": "b", "text": "Destructive or costly tools: send_email, delete_record, charge_card, post_to_public_channel, publish_content. Read-only and trivially reversible operations should NOT be gated — that just slows the agent without safety benefit. Be selective." },
+        { "id": "c", "text": "No tools — let the agent run freely." },
+        { "id": "d", "text": "Only tools that touch the database." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Approval gates create real friction. Gating everything makes the agent useless; gating nothing makes it dangerous. The right line is high-stakes irreversible actions: money, communication outside your system, deletions, content that goes public. Reads, drafts, sandboxed writes flow freely.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your input guardrail (a classifier that detects out-of-scope requests) sometimes errors out. What's the right default behavior on error?",
+      "choices": [
+        { "id": "a", "text": "Fail open — let the request through. The user shouldn't be inconvenienced." },
+        { "id": "b", "text": "Fail closed — block the request. Guardrails that fail open turn into 'use timing attacks to bypass the safety layer.' On any error, default to blocking and log the failure. Safety patterns must fail closed." },
+        { "id": "c", "text": "Retry indefinitely." },
+        { "id": "d", "text": "Bypass and log; users won't notice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Safety controls that fail open aren't safety controls. If the guardrail can't make a decision, the safe default is 'block' — log the failure for investigation. Failing open creates an attack surface: trigger the failure mode, get past the guardrail. Fail closed is non-negotiable.",
+      "points": 1
+    }
+  ]
+}

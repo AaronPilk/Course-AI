@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cost monitoring",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent averages $0.04/run. Total bill is 3× expected. Average looks fine. Where's the cost actually hiding?",
+      "choices": [
+        { "id": "a", "text": "In the average — you misread it." },
+        { "id": "b", "text": "In the tail — typically p99 runs are 10–100× the median. A 1% tail at $5/run can dominate a 99% body at $0.03/run. You need p50/p95/p99 metrics, not just average. Investigate every run above a threshold (e.g. $1+) until you understand what's driving the tail." },
+        { "id": "c", "text": "In Opus calls only." },
+        { "id": "d", "text": "There is no real issue." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Averages mislead on agent costs because the distribution is heavy-tailed. The 1% tail can be 50%+ of your bill. Track p50/p95/p99, alert on tail growth (not just averages), investigate expensive runs until patterns emerge. This is where production cost work actually lives.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which is the most common cause of silent agent cost regressions?",
+      "choices": [
+        { "id": "a", "text": "Users sending more queries." },
+        { "id": "b", "text": "A prompt change introducing variance into a previously stable prefix — killing the prompt cache. Per-call cost on the cached portion jumps from ~10% rate to 100% rate. The change looks innocent in a code review but daily cost can quadruple silently. Drift alerts on cache hit rate / per-call cost catch this in hours instead of weeks." },
+        { "id": "c", "text": "API price increases." },
+        { "id": "d", "text": "Network latency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache regressions are the most common silent cost regression. A timestamp, request ID, or user-specific data templated into 'stable' content invalidates the cache and per-call cost jumps. Drift alerts on cache hit rate and per-call cost catch the regression while the bill is still small.",
+      "points": 1
+    }
+  ]
+}

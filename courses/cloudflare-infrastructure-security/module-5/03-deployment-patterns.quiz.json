@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Deployment patterns",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the canonical production pattern for most SaaS apps?",
+      "choices": [
+        { "id": "a", "text": "Run everything on Cloudflare or everything on AWS." },
+        { "id": "b", "text": "Hybrid: Cloudflare for edge (DNS, security, caching, sometimes Workers + R2), cloud provider for compute and primary DB. Each ecosystem for what it's best at. Pages or Workers for the frontend / lightweight backends; AWS / GCP / Vercel / Fly for heavy backend; Postgres on a managed provider. Lower total cost than all-one-provider in most real workloads." },
+        { "id": "c", "text": "Multi-region everywhere." },
+        { "id": "d", "text": "Free tier only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hybrid is the right answer for most production SaaS. Cloudflare's edge strengths complement traditional cloud's compute/data strengths. All-in on one provider often costs more for less fit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're adding Cloudflare to an existing production setup. What's the safe migration approach?",
+      "choices": [
+        { "id": "a", "text": "Flip everything to orange-cloud at once with default settings." },
+        { "id": "b", "text": "Gradual: add Cloudflare DNS with records gray-cloud first, set SSL mode to Full (strict), install Cloudflare Origin Cert at origin, orange-cloud one record at a time with verification, enable WAF managed rules in Log mode, monitor for false positives, promote to Block over weeks. Lock origin firewall to Cloudflare IPs once stable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete current setup." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradual migration limits blast radius. Big-bang flips routinely cause outages — wrong SSL mode, mail breakage, WAF blocking real users. Record-by-record + Log-mode WAF gives you safe rollback at each step.",
+      "points": 1
+    }
+  ]
+}

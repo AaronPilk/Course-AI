@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Streaming and UX",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your 30-second multi-step agent has high abandonment. Users hit submit, see a spinner, close the tab. What's the highest-ROI UX fix?",
+      "choices": [
+        { "id": "a", "text": "Make the model faster." },
+        { "id": "b", "text": "Add a live progress UI: surface each tool call as it happens ('Looking up customer...' '✓ Got orders'), stream the final answer, optionally surface the plan upfront. The agent isn't faster but it feels faster — abandonment typically drops dramatically because users can see work happening." },
+        { "id": "c", "text": "Add more tools." },
+        { "id": "d", "text": "Make the spinner spinnier." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Perceived latency, not wall-clock latency, drives abandonment on long-running agents. Surfacing intermediate steps, streaming output, and showing the plan keeps users engaged. Stack with caching + parallel tool calls for the full 'feels fast' effect.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What should you NOT do when streaming agent progress to a user UI?",
+      "choices": [
+        { "id": "a", "text": "Stream the final answer." },
+        { "id": "b", "text": "Show raw tool result JSON. It's visual noise and confusing to non-engineers. Surface the meaningful summary ('✓ Got 47 orders') and hide raw payloads behind an optional disclosure for power users. Same goes for raw error stack traces — show meaning, not internals." },
+        { "id": "c", "text": "Surface the plan upfront." },
+        { "id": "d", "text": "Show a cancel button." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tool results can be huge JSON blobs. The UI should show meaning ('Got 47 orders', 'Sent email to X', 'Found 3 relevant policies') with optional disclosure for raw data. Same principle applies to errors — surface what the user needs to know, hide implementation details.",
+      "points": 1
+    }
+  ]
+}

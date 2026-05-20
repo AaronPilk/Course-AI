@@ -1,0 +1,71 @@
+{
+  "title": "Module 4 quiz: Multi-agent and memory",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A 4-agent prototype costs $0.40/run and 35s latency. A single agent matches quality at $0.10/run and 12s. Ship which?",
+      "choices": [
+        { "id": "a", "text": "Multi-agent — looks more advanced." },
+        { "id": "b", "text": "Single agent. Multi-agent was complexity without value. Reserve multi-agent for cases where roles cleanly differ (different tools/models/safety profiles), tool overload forces a split (15+), parallel workstreams, or different approval requirements." },
+        { "id": "c", "text": "Add a fifth agent." },
+        { "id": "d", "text": "Opus on all four agents." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default single-agent. Promote to multi-agent when single is genuinely cracking — same quality cheaper means the multi-agent design wasn't justified."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need an agent to plan, run several sub-research queries, and synthesize. Which topology fits?",
+      "choices": [
+        { "id": "a", "text": "Routing." },
+        { "id": "b", "text": "Supervisor — a manager agent orchestrates specialists as tools. The supervisor plans, calls sub-research specialists, composes the synthesis. Fits decompose-then-synthesize work where one brain coordinates multiple specialists." },
+        { "id": "c", "text": "Hand-off." },
+        { "id": "d", "text": "Single agent only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Supervisor for decompose + synthesize. Routing for clear category separation. Hand-off for conversational personas. Pick by task shape."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the production short-term memory pattern for long conversations?",
+      "choices": [
+        { "id": "a", "text": "Keep all turns verbatim forever." },
+        { "id": "b", "text": "Sliding window (last N verbatim) + rolling summary of older turns + structured task state for critical facts (order IDs, decisions, user preferences). Stack with prompt caching for major cost reduction." },
+        { "id": "c", "text": "Reset every turn." },
+        { "id": "d", "text": "Compact everything aggressively." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three layers: verbatim recent for continuity, summarized older for gist, structured state for critical facts that must persist verbatim. Cache the stable summary + system prompt for ~90% off the cached input portion."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "An agent infers 'user likes Python' from one ambiguous message. Two months later, every session is Python-flavored. User actually prefers Go. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable long-term memory." },
+        { "id": "b", "text": "Tag every stored fact with confidence + source. Auto-expire low-confidence inferences after a window. Add a user-facing 'review my memory' UI so users can correct stored facts. The original problem: treating an inference as canonical." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reset memory weekly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory poisoning is preventable with a trust hierarchy: explicit > confirmed > inferred > behavioral. Higher trust persists; lower trust expires. User review keeps memory honest."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What MUST you eval in a long-term memory system?",
+      "choices": [
+        { "id": "a", "text": "Only recall." },
+        { "id": "b", "text": "Recall + boundedness (no irrelevant past context) + update (current values used when facts change) + cross-user isolation (no leaks). The last is critical — cross-user memory leaks are major privacy incidents." },
+        { "id": "c", "text": "Only latency." },
+        { "id": "d", "text": "Only cost." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory has multiple failure modes. Eval each. Cross-user leaks are especially nasty — bake the test into your CI."
+    }
+  ]
+}

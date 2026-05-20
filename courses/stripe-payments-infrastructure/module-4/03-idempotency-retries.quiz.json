@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Idempotency & ordering",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your handler assumes events arrive in order: `customer.subscription.created → invoice.created → invoice.paid`. In one case, `invoice.paid` arrived first and the handler errored on a missing parent row. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Tell Stripe to deliver in order." },
+        { "id": "b", "text": "Refactor to upsert based on the authoritative state in each event payload, not a state machine your code imposes. Stripe doesn't guarantee strict ordering; events can arrive in any sequence. Use upsert + authoritative status from the event, or refetch the object from Stripe for canonical state." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable webhooks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe is at-least-once and not strictly ordered. Don't impose a state machine on top — upsert based on event payload state, or refetch from Stripe when canonical state matters. Order-independent handlers survive reality.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Your webhook handler fails for transient reasons (DB blip). Should it return 200 or 5xx?",
+      "choices": [
+        { "id": "a", "text": "200 — failures are okay." },
+        { "id": "b", "text": "5xx — so Stripe retries. Return 200 only when an event is permanently unprocessable (bad data, no recovery path) and log it for manual review. Returning 200 on retriable failures means Stripe drops the event after the first delivery; you lose data silently." },
+        { "id": "c", "text": "404." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Return 5xx for transient failures so Stripe retries. Return 200 only for permanently unprocessable events (and log them). Stripe retries up to 3 days; that's your safety net for transient infrastructure issues.",
+      "points": 1
+    }
+  ]
+}

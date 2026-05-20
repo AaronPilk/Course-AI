@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Course Factory",
   description:
-    "AI-powered course generation platform — turn technical sources into premium educational courses.",
+    "Premium courses built from primary sources — for the AI search era.",
 };
 
 export default function RootLayout({
@@ -13,16 +13,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className="min-h-screen font-sans antialiased">
         <script
-          // Pre-paint theme set so we don't flash light → dark.
+          // Honor the user's stored preference (admin's toggle writes
+          // 'light' or 'dark' to localStorage). Public side has no toggle,
+          // so on first load everyone sees dark.
           dangerouslySetInnerHTML={{
             __html: `
               try {
                 const t = localStorage.getItem('theme');
-                if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark');
+                const root = document.documentElement;
+                if (t === 'light') {
+                  root.classList.remove('dark');
+                  root.classList.add('light');
+                } else {
+                  root.classList.add('dark');
+                  root.classList.remove('light');
                 }
               } catch (_) {}
             `,

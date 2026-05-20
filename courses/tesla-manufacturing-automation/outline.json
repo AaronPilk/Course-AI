@@ -1,0 +1,93 @@
+{
+  "slug": "tesla-manufacturing-automation",
+  "title": "Tesla Manufacturing Systems & Automation",
+  "subtitle": "How Tesla actually builds cars — gigacasting, the factory-as-machine, and the manufacturing ideas reshaping industry",
+  "description": "A practical course on Tesla's manufacturing approach built from primary sources: Tesla's investor day materials, AI day presentations, public engineering content, and direct product documentation. Covers the gigafactory model, gigacasting, the cell-to-pack approach, the factory-as-product philosophy, automation tradeoffs, the production-hell lessons, and the manufacturing principles that explain why Tesla is different from legacy automakers. Not pro-Tesla cheerleading; not anti-Tesla either. Just how it works.",
+  "category": "Manufacturing",
+  "difficulty": "intermediate",
+  "audience": "Engineers, operators, founders, and curious learners who want a real mental model of modern manufacturing through Tesla's specific lens. No automotive background required.",
+  "tags": ["tesla", "manufacturing", "automation", "gigacasting", "factory-design", "operations"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "Tesla",
+    "logo": "/brands/tesla-manufacturing-automation.svg",
+    "gradient": ["#CC0000", "#E82127"],
+    "tint": "#1A0000"
+  },
+  "prerequisites": [
+    "Curiosity about how physical things are built",
+    "No engineering or manufacturing background required",
+    "Basic comfort with reading numbers and process diagrams"
+  ],
+  "outcomes": [
+    "Explain Tesla's manufacturing philosophy and how it differs from legacy automakers",
+    "Describe the gigafactory model and what it means for cost / scale",
+    "Understand gigacasting — what it is, why it matters, and where it breaks",
+    "Reason about automation tradeoffs (where it works vs. the production-hell lessons)",
+    "Map the cell-to-pack and battery manufacturing approach",
+    "Apply Tesla-style first-principles manufacturing thinking to other industries",
+    "Avoid the Tesla-style mistakes (over-automation, vertical integration risks)"
+  ],
+  "modules": [
+    {
+      "title": "Tesla's Manufacturing Philosophy",
+      "summary": "The first-principles approach: factory-as-product, vertical integration, software-first ops, and how it differs from legacy auto.",
+      "estimated_minutes": 50,
+      "key_concepts": ["first principles", "factory as product", "vertical integration", "software-defined manufacturing"],
+      "lessons": [
+        { "title": "Why Tesla manufactures differently — the first-principles approach", "objective": "Map Tesla's manufacturing philosophy against legacy automotive thinking." },
+        { "title": "Factory as product — the machine that builds the machine", "objective": "Understand the factory-design-as-engineering-discipline approach." },
+        { "title": "Vertical integration — what Tesla owns vs. supplies", "objective": "Track the make-vs-buy decisions across Tesla's stack." },
+        { "title": "Software-defined manufacturing", "objective": "See how software and data shape the production floor." }
+      ]
+    },
+    {
+      "title": "The Gigafactory Model",
+      "summary": "How a gigafactory works, what 'giga' actually means at this scale, and the economics that follow.",
+      "estimated_minutes": 55,
+      "key_concepts": ["gigafactory", "scale economics", "supply chain", "vertical campus"],
+      "lessons": [
+        { "title": "What a Gigafactory actually is", "objective": "Define the gigafactory model and walk through one end-to-end." },
+        { "title": "Scale economics — why bigger factories beat lots of small ones", "objective": "Understand the cost curves that justify gigafactory investments." },
+        { "title": "Supply chain on-site — co-locating suppliers", "objective": "Map Tesla's approach to bringing suppliers into the campus." },
+        { "title": "The energy + battery + vehicle stack at one site", "objective": "See how vertical stacking across products affects operations." }
+      ]
+    },
+    {
+      "title": "Gigacasting and Body Manufacturing",
+      "summary": "The gigacasting innovation: making body parts in one shot instead of welding hundreds. What works and what's hard.",
+      "estimated_minutes": 50,
+      "key_concepts": ["gigacasting", "stamping", "structural battery", "body engineering"],
+      "lessons": [
+        { "title": "Gigacasting — what it is and why it matters", "objective": "Understand the high-pressure die casting that replaces dozens of stamped parts." },
+        { "title": "The cost and complexity tradeoffs of gigacasting", "objective": "Compare the gigacasting vs. traditional stamping economics." },
+        { "title": "Structural batteries and the cell-to-pack approach", "objective": "Map the integration of battery into vehicle structure." },
+        { "title": "Where gigacasting breaks down", "objective": "Recognize the limits — repair, supply chain risk, design constraints." }
+      ]
+    },
+    {
+      "title": "Automation, Robotics, and Production Hell",
+      "summary": "Tesla's automation journey — the over-automation mistake of the Model 3 launch, what they fixed, and how to think about automation tradeoffs.",
+      "estimated_minutes": 55,
+      "key_concepts": ["automation", "production hell", "human-robot collaboration", "throughput"],
+      "lessons": [
+        { "title": "The 'production hell' lesson — over-automation backfires", "objective": "Walk through the Model 3 production crisis and what it taught Tesla." },
+        { "title": "Where automation works vs. where humans win", "objective": "Apply the right-tool-for-the-job framework to factory operations." },
+        { "title": "Robotics, Optimus, and the future labor model", "objective": "Map Tesla's bet on humanoid robotics in manufacturing." },
+        { "title": "Throughput and continuous improvement", "objective": "Understand the production-rate-as-religion operational discipline." }
+      ]
+    },
+    {
+      "title": "Lessons and the Future",
+      "summary": "Manufacturing lessons applicable beyond Tesla, the strategic risks of Tesla's approach, and what to expect next.",
+      "estimated_minutes": 50,
+      "key_concepts": ["first-principles applied", "supply chain risk", "scaling globally", "competitor response"],
+      "lessons": [
+        { "title": "Applying Tesla-style manufacturing to other industries", "objective": "Translate Tesla's principles to non-automotive contexts." },
+        { "title": "The risks — vertical integration, automation, supply concentration", "objective": "Map the strategic risks of Tesla's manufacturing bets." },
+        { "title": "Global scaling — Berlin, Shanghai, and beyond", "objective": "Understand how Tesla replicates its model internationally." },
+        { "title": "Competitor response and the future of auto manufacturing", "objective": "See how legacy and new entrants are responding to Tesla's playbook." }
+      ]
+    }
+  ]
+}

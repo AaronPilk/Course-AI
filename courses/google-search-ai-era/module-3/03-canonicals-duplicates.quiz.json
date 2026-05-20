@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Canonicals & duplicates",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which statement about Google's 'duplicate content penalty' is correct?",
+      "choices": [
+        { "id": "a", "text": "It's a major ranking penalty — having any duplicates can wipe out a site." },
+        { "id": "b", "text": "The duplicate content penalty doesn't exist. Google says explicitly that duplicates aren't a spam violation. The real cost is canonical confusion and wasted crawl budget." },
+        { "id": "c", "text": "It only applies to scraped content from other sites." },
+        { "id": "d", "text": "It's automatically applied to any site with HTTP and HTTPS versions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "From Google's own SEO Starter Guide: 'Having duplicate content on your site is not a violation of our spam policies, but it can be a bad user experience and search engines might waste crawling resources on URLs that you don't even care about.' No penalty. Just inefficiency. The fix is canonicalization, not panic.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your ecommerce product page is reachable at /products/blue-shoes, plus dozens of variants like /products/blue-shoes?utm_source=email, ?sess=xyz, etc. What's the right consolidation strategy?",
+      "choices": [
+        { "id": "a", "text": "Block all parameter variants in robots.txt." },
+        { "id": "b", "text": "Self-canonicalize: every variant has <link rel='canonical' href='https://example.com/products/blue-shoes'> pointing to the clean URL. Don't block them in robots.txt — Google needs to read the canonical hint." },
+        { "id": "c", "text": "Use 301 redirects from every variant to the clean URL." },
+        { "id": "d", "text": "Delete the clean URL and keep only one variant." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Self-canonicalization is the right tool for tracking parameters and session IDs. 301 redirects break tracking. Blocking in robots.txt prevents Google from reading the canonical tag — making the problem worse. The rel=canonical points all variants at the clean URL, which becomes the one shown in results.",
+      "points": 1
+    }
+  ]
+}

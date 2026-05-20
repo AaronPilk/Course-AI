@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Events to listen to",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "For a subscription SaaS, what's the minimal complete set of webhook events?",
+      "choices": [
+        { "id": "a", "text": "Subscribe to all events." },
+        { "id": "b", "text": "~13 events covering the lifecycle: checkout.session.completed, payment_intent.succeeded/failed, customer.subscription.created/updated/deleted, invoice.paid/payment_failed/payment_action_required, customer.subscription.trial_will_end, charge.refunded, charge.dispute.created. Subscribing to specific event types beats 'all events' — less noise, easier handler, lower cost." },
+        { "id": "c", "text": "Just payment_intent.succeeded." },
+        { "id": "d", "text": "Just customer.subscription.created." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Subscription lifecycle needs creation, updates (plan changes, trials, status transitions), invoices (paid/failed/auth-required), trial-end nudges, refunds, disputes. ~13 specific event types covers it; 'all events' is noise.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why pair webhook handlers with a daily reconciliation job?",
+      "choices": [
+        { "id": "a", "text": "Stripe requires it." },
+        { "id": "b", "text": "Webhooks can fail or be missed (handler bugs, downtime, edge cases). A daily reconciliation job compares local DB state to Stripe's current state and syncs discrepancies. Belt-and-suspenders: webhooks for immediate consistency; reconciliation for catching drift. Saves you from customer-support tickets when bugs slip through." },
+        { "id": "c", "text": "Backup data." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhooks + reconciliation = robust state sync. Webhooks are fast but fallible; reconciliation is slow but exhaustive. Together they catch issues neither alone would.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Observability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the minimum observability bar for a production agent?",
+      "choices": [
+        { "id": "a", "text": "Sentry for errors." },
+        { "id": "b", "text": "A trace ID propagated through every model and tool call; per-call logs (prompt, response, args, result, latency, error); a persistent store; a UI or query path to inspect traces. Without these, debugging a multi-step agent is re-running and praying." },
+        { "id": "c", "text": "Console.log statements." },
+        { "id": "d", "text": "Cost dashboard only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-step systems amplify the cost of poor observability. Trace IDs are the spine that holds it all together — every log line carries one, and querying by trace ID assembles the full run. Combine with replay capability for fast debugging.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A prompt change accidentally disabled prompt caching. Per-call cost doubled overnight. How should this have been caught?",
+      "choices": [
+        { "id": "a", "text": "More careful code review." },
+        { "id": "b", "text": "A cost dashboard with alerts on per-call cost / daily total / cache hit rate. The drift would have triggered an alert within hours, not weeks. Per-trace cost is a first-class metric on production agent systems — track it alongside latency and error rate." },
+        { "id": "c", "text": "Smaller batch sizes." },
+        { "id": "d", "text": "Switch to Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost is a first-class production metric. p95/p99 cost per trace, daily totals, cache hit rate — all need dashboards with thresholds. Most surprise AI bills are silent regressions caught weeks later because nobody was watching the right number.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Production hell and continuous improvement",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What was the core lesson of Tesla's 2017-2018 Model 3 'production hell'?",
+      "choices": [
+        { "id": "a", "text": "Never automate anything." },
+        { "id": "b", "text": "Humans are temporary slowdowns." },
+        { "id": "c", "text": "Automation aggression must be matched to process maturity. Tesla tried to over-automate operations they didn't yet understand mechanically (notably final assembly and flexible tasks), which collapsed throughput. Pulling automation out, restoring humans to flexible tasks, and re-automating the parts that were truly stable was the recovery path. Musk later named this publicly — 'excessive automation at Tesla was a mistake.'" },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "The episode established the principle that automation is a tool to deploy where the underlying process is mature and structurally repeatable. Tesla's recovery — including the famous 'tent' third assembly line — became a case study in pragmatic capacity adds when planned automation fails.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A startup auto company plans to fully automate final assembly from day one because 'Tesla showed it can be done.' What's wrong with this plan?",
+      "choices": [
+        { "id": "a", "text": "Nothing — copy Tesla exactly." },
+        { "id": "b", "text": "Tesla actually showed the opposite. Their attempt to fully automate Model 3 final assembly failed and they pulled robots out, replacing with humans for the flexible final-assembly tasks. The lesson is to automate the structurally repeatable parts (body shop, paint, structural welds, gigacasting) and use humans for variable, judgment-dependent final assembly. A startup automating final assembly day one is repeating Tesla's known mistake." },
+        { "id": "c", "text": "Run on diesel instead." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Copy the reasoning ('automate where the process is mature, leave humans where flexibility matters'), not the marketing version. Tesla itself learned this expensively.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Where does Tesla actively automate, and where do humans still own the work?",
+      "choices": [
+        { "id": "a", "text": "Everything automated, no humans." },
+        { "id": "b", "text": "Body shop (welding, stamping, gigacasting), paint shop, battery pack assembly, and structural operations are highly automated — these are repetitive, high-precision, structurally stable. Humans own final assembly (wiring, trim, interior, edge cases), quality inspection requiring judgment, and any task where the part variance or workflow exceeds what robots handle cheaply. Heavy lifting and ergonomically harsh work tend to be automated even when flexibility is needed, because human cost there is high." },
+        { "id": "c", "text": "Everything manual, no robots." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Knowing the boundary is the practical knowledge. Body shop and paint are the famously robotic parts; final assembly remains heavily human. The mistake is assuming the boundary is fixed everywhere — it shifts with process maturity and product design.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What's the relevance of Optimus (Tesla's humanoid robot) to Tesla's manufacturing strategy?",
+      "choices": [
+        { "id": "a", "text": "It's purely a consumer product, unrelated to factories." },
+        { "id": "b", "text": "It's a stealth marketing stunt." },
+        { "id": "c", "text": "Optimus is positioned partly as a flexible labor unit for tasks that currently require humans on the line — final assembly, awkward-fit operations, anywhere a fixed robot isn't economical. Whether it delivers is open, but the strategy is: if a humanoid form factor lets you replace flexible human work with programmable labor, the boundary between 'automate' and 'human' shifts dramatically. Even modest success on a subset of tasks meaningfully changes factory economics; failure is a contained learning bet." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Optimus is the explicit attempt to push the automation frontier where fixed-cell robots can't go. Take the strategic framing — flexible labor as a manufacturing resource — separately from any prediction about timelines.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Tesla's line has stations at 95s, 110s, 130s, 100s. Engineering proposes spending $5M to cut the 95s station to 80s. Should they approve?",
+      "choices": [
+        { "id": "a", "text": "Yes — every speedup helps." },
+        { "id": "b", "text": "No — total throughput is unchanged because the 130s station is still the bottleneck. Spend the $5M attacking the 130s station instead (faster cycle, parallel capacity, design change to eliminate it, or reduce its defects). When the 130s station drops to, say, 105s, the new bottleneck becomes the 110s station — chase that next. The discipline is to always invest at the binding constraint, then iterate as the bottleneck moves." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Approve and add a second 95s station for redundancy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Theory of Constraints applied to capex. Money spent on non-bottleneck improvements produces no throughput gain. The $5M should chase the actual constraint until it's no longer constraining, then move to the next one.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Agent vs workflow",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team built an agent for marketing emails — 6 tools, average 5 steps, 8s latency, $0.10/run. Audit shows 90% of runs follow the same path. What's the right move?",
+      "choices": [
+        { "id": "a", "text": "Add more tools." },
+        { "id": "b", "text": "Rewrite as a workflow: classify intent, fetch data, draft email, send. Deterministic steps, 2 LLM calls, ~2s latency, ~$0.025/run. Reserve agents for tasks that genuinely require autonomy — when steps depend on intermediate results in ways no fixed sequence can cover." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Add multi-agent coordination." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Agents are powerful for open-ended problems but expensive and slower for predictable ones. If 90% of runs take the same path, that's a workflow, not an agent. Promote to agent only when you genuinely need autonomy — and consider hybrid patterns (workflow with agent sub-steps) for the 10% of complex cases.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When is an agent the right pattern over a workflow?",
+      "choices": [
+        { "id": "a", "text": "Whenever there are multiple LLM calls." },
+        { "id": "b", "text": "When the steps depend on intermediate results in ways a fixed sequence can't cover; when the problem is genuinely open-ended (research, exploration, multi-tool synthesis); when a workflow would have too many branches to maintain. For narrow, predictable tasks, a workflow is faster, cheaper, and more reliable." },
+        { "id": "c", "text": "Whenever there are tools to call." },
+        { "id": "d", "text": "Whenever the user asks for an agent." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Agents earn their cost when the value is the system figuring out what to do — branching dynamically based on results. Workflows win whenever the steps are predictable. Default to workflow; reach for an agent only when the workflow runs out of expressiveness.",
+      "points": 1
+    }
+  ]
+}

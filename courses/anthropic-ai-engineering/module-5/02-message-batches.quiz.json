@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Message Batches",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the price difference for batched requests vs. real-time API on Claude?",
+      "choices": [
+        { "id": "a", "text": "Same price, different latency." },
+        { "id": "b", "text": "~50% off per-token rates (both input and output). Batches process up to 100,000 requests with a 24-hour SLA — typically completing in minutes-to-hours. Stacks with prompt caching for compounding savings on workloads with stable prefixes." },
+        { "id": "c", "text": "Free." },
+        { "id": "d", "text": "Twice as expensive." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Batches trade latency for cost — 50% off in exchange for async processing within 24 hours. Perfect for analytics, backfills, eval runs, content generation at scale. Combine with caching when prompts share a stable prefix for near-free repeat input.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team tries to use the Batches API for their user-facing chat. Users wait minutes for replies. What happened?",
+      "choices": [
+        { "id": "a", "text": "Bug in the SDK." },
+        { "id": "b", "text": "Batch is fundamentally async — minimum overhead is a few minutes, upper bound is 24 hours. It's the wrong tool for real-time UX. Revert to the standard Messages API for user-facing requests; reserve batches for analytics, backfills, evals, and other offline workloads." },
+        { "id": "c", "text": "Need to use Opus." },
+        { "id": "d", "text": "Increase batch size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Batch's value is offline processing at half price. The 24-hour SLA is the upper bound; minimum overhead is still minutes. For any flow where a user is watching, use the regular API. If your team is tempted to 'batch real-time' to save money, the right move is caching + Haiku-tier routing, not batching.",
+      "points": 1
+    }
+  ]
+}

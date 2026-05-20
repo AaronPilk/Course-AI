@@ -1,37 +1,35 @@
 // POST /api/projects/:id/generate-outline
 // Runs the AI outline generator against the project's source corpus.
 import { NextResponse, type NextRequest } from "next/server";
+import { eq } from "drizzle-orm";
 import { getProfile } from "@/lib/auth";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getDb, courseProjects } from "@/lib/db";
 import { generateOutline, persistOutline } from "@/lib/ai/outline";
 
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 180;
 
 export async function POST(
   _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const profile = await getProfile();
-  if (!profile) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  if (profile.role !== "admin") {
-    return NextResponse.json({ error: "forbidden" }, { status: 403 });
-  }
+  if (!profile)
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
-  // Authorization: confirm the user owns this project (RLS will also enforce).
-  const supabase = createSupabaseServerClient();
-  const { data: project } = await supabase
-    .from("course_projects")
-    .select("id, owner_id")
-    .eq("id", params.id)
-    .maybeSingle();
-  if (!project) return NextResponse.json({ error: "not found" }, { status: 404 });
+  const db = getDb();
+  const project = await db
+    .select({ id: courseProjects.id })
+    .from(courseProjects)
+    .where(eq(courseProjects.id, params.id))
+    .get();
+  if (!project)
+    return NextResponse.json({ error: "not found" }, { status: 404 });
 
-  // Mark project status while generating so the dashboard reflects it.
-  await supabase
-    .from("course_projects")
-    .update({ status: "generating" })
-    .eq("id", params.id);
+  await db
+    .update(courseProjects)
+    .set({ status: "generating", updatedAt: Date.now() })
+    .where(eq(courseProjects.id, params.id));
 
   try {
     const outline = await generateOutline(params.id);
@@ -39,10 +37,10 @@ export async function POST(
     return NextResponse.json({ ok: true, outline });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Outline generation failed";
-    await supabase
-      .from("course_projects")
-      .update({ status: "draft" })
-      .eq("id", params.id);
+    await db
+      .update(courseProjects)
+      .set({ status: "draft", updatedAt: Date.now() })
+      .where(eq(courseProjects.id, params.id));
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

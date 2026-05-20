@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Risks and failure modes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the biggest risk created by Tesla's vertical integration that legacy automakers don't share?",
+      "choices": [
+        { "id": "a", "text": "Higher per-unit cost." },
+        { "id": "b", "text": "Concentration creating single points of failure. When Tesla owns the gigacasting machine, paint shop, motor production, etc., a single equipment failure stops the line with no supplier redundancy to fall back on. Suppliers normally have multiple customers and redundant capacity, which legacy automakers benefit from by default. Mitigation requires expensive duplicate equipment, cross-plant capacity, and predictive maintenance — but these are capex without revenue, which is the price of vertical control." },
+        { "id": "c", "text": "Worse product quality." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vertical integration trades supplier redundancy for control. Tesla's specific concentration risks — one gigacasting machine, one paint line, one cell partner — are the cost of owning the stack. Mitigations exist but are capex-heavy.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An analyst lists 6 risks for Tesla: demand softening, cell cost rising, key engineer leaving, US-China tension, Berlin labor dispute, recession. Each looks individually manageable. What's the actual concern?",
+      "choices": [
+        { "id": "a", "text": "Nothing — each is small." },
+        { "id": "b", "text": "Correlated failures. Each risk in isolation is manageable; the systemic concern is when several materialize at once because they share root causes — a global recession correlates demand softening, cell investment slowdown, capital-market tightening, and political volatility. Tesla's high fixed costs and capex commitments amplify the impact of any one of these, and amplify dramatically when several hit simultaneously. System engineering for risk means thinking about correlations, not just isolated probabilities." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "This is the system-level risk lesson. Individual risks look manageable on a spreadsheet; correlated failures are what actually bankrupts companies. Tesla's 2018 near-miss was the example — production stress, capital intensity, and demand uncertainty all overlapping.",
+      "points": 1
+    }
+  ]
+}

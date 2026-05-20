@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Serving",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Your client ranks #1 for their target keyword in your office, but their actual organic traffic from that keyword is falling. What's the most likely explanation?",
+      "choices": [
+        { "id": "a", "text": "Google secretly demoted them." },
+        { "id": "b", "text": "Rank monitoring from one location and one device misses how the SERP varies — and SERP features (AI Overviews, Featured Snippets, video carousels, Local Packs) are increasingly pushing the #1 organic result below the fold, absorbing clicks." },
+        { "id": "c", "text": "Search Console is broken." },
+        { "id": "d", "text": "Their content quality went down." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rank is not a single number. It varies by location, device, language, and personalization. And the SERP layout itself is changing fast — even a real #1 organic position can get buried beneath SERP features that absorb most of the clicks. Always monitor rank from multiple realistic contexts and look at what the SERP actually looks like.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "A user in Hong Kong and a user in Paris both search 'bicycle repair shops' at the same time. Which is true?",
+      "choices": [
+        { "id": "a", "text": "They see the same results — Google is location-agnostic." },
+        { "id": "b", "text": "They see different results because location is a serving signal, and queries with local intent trigger Map results scoped to the user's area." },
+        { "id": "c", "text": "Only logged-in users get personalized results." },
+        { "id": "d", "text": "Hong Kong sees results in Chinese, Paris sees results in French — that's the only difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google explicitly uses this example in its documentation. Serving (Stage 3) factors in location, language, device, and many other signals — and for local-intent queries the SERP itself swaps in a Local Pack. The version of the SERP a user sees is genuinely different per user, not just translated.",
+      "points": 1
+    }
+  ]
+}

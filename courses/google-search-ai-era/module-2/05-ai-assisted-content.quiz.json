@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: AI-assisted content",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these patterns is most likely to trigger Google's scaled content abuse policy?",
+      "choices": [
+        { "id": "a", "text": "Using AI to summarize source papers as part of research." },
+        { "id": "b", "text": "Generating thousands of articles per month targeting keyword variations, with minimal human input, on a templated structure." },
+        { "id": "c", "text": "Publishing one article per week drafted with AI and heavily revised by the human author." },
+        { "id": "d", "text": "Disclosing on each article that AI was involved in the draft." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The scaled content abuse policy targets the pattern of many pages × low value × intent to manipulate rankings. AI alone isn't the trigger — the *combination* is. Single articles drafted with AI and substantially revised by a human are fine. Sustained automated publishing at scale is exactly what the policy was written for.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "You're publishing health content with AI assistance. What's the riskiest mistake?",
+      "choices": [
+        { "id": "a", "text": "Disclosing that AI was used to draft the article." },
+        { "id": "b", "text": "Letting AI generate the article body, meta description, image alt text, AND structured data without credentialed human review." },
+        { "id": "c", "text": "Citing primary medical sources." },
+        { "id": "d", "text": "Adding a 'Last updated' date." }
+      ],
+      "correct_answer": "b",
+      "explanation": "YMYL + unsupervised AI is the highest-risk combination. Even when the article body is reviewed, sites get hit because they let AI generate the surrounding elements (meta descriptions, alt text, schema) without review. Every text element on a YMYL page needs credentialed verification — errors anywhere on the page damage the site's medical reputation.",
+      "points": 1
+    }
+  ]
+}

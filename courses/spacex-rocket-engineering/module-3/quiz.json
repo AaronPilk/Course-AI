@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Falcon 9 and Falcon Heavy",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does it mean that Falcon 9 first-stage landings are 'suicide burns' or 'hoverslams'?",
+      "choices": [
+        { "id": "a", "text": "It's intentionally risky." },
+        { "id": "b", "text": "A single Merlin engine at minimum throttle produces more thrust than the empty booster weighs, so the booster cannot hover. The landing burn must be timed so the engine fires just long enough to bring the booster to exactly 0 m/s at exactly the landing surface. Light the engine too late: hit the ground too fast. Light it too early: stop mid-air, then fall. The flight computer continuously recalculates the burn timing from real-time altitude, velocity, and acceleration, sending throttle commands every few milliseconds. The whole landing burn lasts about 30 seconds. This is why Falcon 9 landings look so precise — the timing math is unforgiving." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Engineers' sense of humor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The 'suicide' label refers to no-margin precision, not actual risk-taking. The math forbids hovering with current engine thrust ranges, so the burn must end exactly at touchdown. This is why deeper engine throttling (like Raptor's 40%) enables different landing strategies including potential hover.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A small launcher startup wants to compete with Falcon 9 on price. They plan to copy reusability. What else do they need to consider?",
+      "choices": [
+        { "id": "a", "text": "Nothing else — reusability is the only factor." },
+        { "id": "b", "text": "Reusability alone won't match SpaceX's cost structure. SpaceX combines reusability with vertical integration (in-house engines, avionics, structures capturing supplier margins), manufacturing scale (high cadence drives unit costs down), workforce efficiency (fewer people per launch), and operational efficiency (streamlined ops, automation). A startup adding only reusability to legacy-style operations will still be more expensive than SpaceX. To genuinely compete, you need most or all of these capabilities — which requires capital, talent, and time. This is why reusability has been studied for years by many companies but few have produced Falcon 9 cost structure." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just copy SpaceX." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost advantage is multi-source. Reusability is necessary but not sufficient. The full SpaceX cost structure requires several capabilities developed simultaneously over years — capital-intensive and execution-intensive.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When is Falcon Heavy used instead of Falcon 9?",
+      "choices": [
+        { "id": "a", "text": "Random." },
+        { "id": "b", "text": "When mission requirements exceed Falcon 9's capacity. Most missions fit Falcon 9: LEO up to ~17,500 kg recoverable, GTO up to ~5,500 kg recoverable. Falcon Heavy adds ~3x more thrust and is used for: very heavy GEO satellites (>6-8 tons GTO), heavy classified DOD/NRO payloads, NASA high-energy missions (Psyche, Europa Clipper, lunar), and some interplanetary missions. The choice is per-mission and depends on payload mass and required orbit/trajectory. Falcon Heavy is significantly more expensive per launch (~$97-150M vs. ~$60-70M for Falcon 9) so it's used only when needed. Starship will eventually take over for the heaviest missions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Whenever weather is bad." }
+      ],
+      "correct_answer": "b",
+      "explanation": "FH is the heavy-lift option when Falcon 9 can't do the mission. Most launches don't need it. The cost premium is real but FH is still much cheaper than Atlas V or Delta IV for equivalent missions.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Why does Starlink drive so much of SpaceX's launch volume?",
+      "choices": [
+        { "id": "a", "text": "External demand from satellite operators." },
+        { "id": "b", "text": "Starlink is an internal SpaceX customer with steady, high-demand launches. As of 2025 there are 6,000+ Starlink satellites in orbit and SpaceX wants tens of thousands more. Each Starlink launch carries ~20-23 satellites. With dozens of Starlink launches per year, this internal demand sustains the high launch cadence that makes Falcon 9 economics work. Without Starlink, SpaceX would launch perhaps 20-30 times per year for external customers; with Starlink, they launch 90-100+ times per year. The high cadence amortizes booster costs across many flights, generates per-flight telemetry that improves reliability, and supports the operational scale that gives SpaceX its competitive moat. This is why Starlink matters strategically beyond just its consumer-internet revenue — it's the demand floor that makes the rest of SpaceX's economics work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "NASA contract." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Starlink is a strategic capability anchor, not just a revenue line. The combination of high internal demand + reusability + cadence reinforces SpaceX's cost advantage in a way that no competitor with only external demand can match.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What happens at MECO and stage separation on a typical Falcon 9 launch?",
+      "choices": [
+        { "id": "a", "text": "Engines stop, rocket coasts." },
+        { "id": "b", "text": "At ~155-160 seconds and ~70 km altitude, Main Engine Cutoff (MECO) commands all 9 Merlin engines to shut down. About 3 seconds later, pneumatic pushers separate stage 1 from stage 2. About 5 seconds after separation, the upper-stage Merlin Vacuum ignites and continues to orbit. Meanwhile, stage 1 uses cold gas thrusters to flip ~180 degrees (engines now pointing in direction of travel) for its return sequence. This whole handoff happens in about 10-15 seconds. Stage 1 then performs boost-back (RTLS), coast, entry burn, grid-fin descent, landing burn, touchdown — ending about 9 minutes after launch. Stage 2 continues to orbit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rocket explodes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The MECO-separation-MVac ignition sequence is the most critical handoff of the flight. Reliability has been very high; SpaceX has separated stages hundreds of times successfully. The whole sequence is computer-controlled — no human in the loop at the millisecond level.",
+      "points": 1
+    }
+  ]
+}

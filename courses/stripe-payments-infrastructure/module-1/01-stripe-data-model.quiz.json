@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Stripe data model",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the relationship between Products and Prices in Stripe?",
+      "choices": [
+        { "id": "a", "text": "They're the same object." },
+        { "id": "b", "text": "A Product is the abstract thing you sell ('Pro Plan'); a Price is a specific pricing for it ($20/mo, $200/year, $0.10/unit). One Product can have many Prices. This separation lets you offer multiple pricing options for the same offering and change pricing without losing the product identity." },
+        { "id": "c", "text": "Prices contain Products." },
+        { "id": "d", "text": "Products are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Products and Prices are separate by design. The Product is what you sell; Prices are how you sell it. One Pro Plan product can have a $20/mo Price, a $200/year Price, and a Price for enterprise. Subscriptions reference Prices, not Products directly.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A payment fails. You need to figure out which user to notify but you don't have a clean way to link Stripe back to your DB. Best practice you should have followed?",
+      "choices": [
+        { "id": "a", "text": "Use email as the join key." },
+        { "id": "b", "text": "Put internal IDs in the `metadata` field on every Stripe object — Customer, PaymentIntent, Subscription, Invoice. E.g. `metadata: { user_id: 'u_123', plan_tier: 'pro' }`. Then any webhook or API response includes your internal ID for fast lookup. Don't put secrets in metadata; it's visible in dashboard and logs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip Stripe and bill manually." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Metadata is Stripe's pressure-relief valve for app-specific data. Put your user IDs and any context you'll need later in every relevant Stripe object. Reconciling without metadata is painful; with it, it's a single lookup. Don't put secrets — visible in dashboard.",
+      "points": 1
+    }
+  ]
+}

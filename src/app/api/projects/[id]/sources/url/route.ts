@@ -1,25 +1,24 @@
 // POST /api/projects/:id/sources/url
 // Body: { url: string, title?: string }
-// Scrapes the URL, creates a source row, then ingests inline.
 import { NextResponse, type NextRequest } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { randomUUID } from "node:crypto";
+import { eq } from "drizzle-orm";
 import { getProfile } from "@/lib/auth";
+import { getDb, sources } from "@/lib/db";
 import { addUrlSourceSchema } from "@/lib/validators";
 import { scrapeUrl } from "@/lib/ai/scrape-url";
 import { ingestSource, hashContent } from "@/lib/ai/ingest";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const profile = await getProfile();
-  if (!profile) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  if (profile.role !== "admin") {
-    return NextResponse.json({ error: "forbidden" }, { status: 403 });
-  }
+  if (!profile)
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await request.json().catch(() => null);
   const parsed = addUrlSourceSchema.safeParse(body);
@@ -28,42 +27,31 @@ export async function POST(
   }
   const { url, title: titleOverride } = parsed.data;
 
-  const supabase = createSupabaseServerClient();
+  const db = getDb();
+  const sourceId = randomUUID();
 
-  // Insert pending row first so the UI reflects progress.
-  const { data: created, error: insertErr } = await supabase
-    .from("sources")
-    .insert({
-      project_id: params.id,
-      type: "url",
-      url,
-      title: titleOverride ?? url,
-      status: "extracting",
-    })
-    .select("id")
-    .single();
-
-  if (insertErr || !created) {
-    return NextResponse.json(
-      { error: insertErr?.message ?? "insert failed" },
-      { status: 500 }
-    );
-  }
-  const sourceId = created.id;
+  await db.insert(sources).values({
+    id: sourceId,
+    projectId: params.id,
+    type: "url",
+    url,
+    title: titleOverride ?? url,
+    status: "extracting",
+  });
 
   try {
     const { title, text, author } = await scrapeUrl(url);
 
-    const content_hash = hashContent(text);
-    await supabase
-      .from("sources")
-      .update({
+    await db
+      .update(sources)
+      .set({
         title: titleOverride ?? title,
         author: author ?? null,
-        raw_text: text,
-        content_hash,
+        rawText: text,
+        contentHash: hashContent(text),
+        updatedAt: Date.now(),
       })
-      .eq("id", sourceId);
+      .where(eq(sources.id, sourceId));
 
     const result = await ingestSource({
       sourceId,
@@ -72,10 +60,9 @@ export async function POST(
       sourceUrl: url,
       license: null,
     });
-
-    if (!result.ok) {
+    if (!result.ok)
       return NextResponse.json({ error: result.error }, { status: 500 });
-    }
+
     return NextResponse.json({
       id: sourceId,
       chunks: result.chunks,
@@ -83,10 +70,10 @@ export async function POST(
     });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Scrape failed";
-    await supabase
-      .from("sources")
-      .update({ status: "error", error: msg })
-      .eq("id", sourceId);
+    await db
+      .update(sources)
+      .set({ status: "error", error: msg, updatedAt: Date.now() })
+      .where(eq(sources.id, sourceId));
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

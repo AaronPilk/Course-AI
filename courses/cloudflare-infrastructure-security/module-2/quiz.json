@@ -1,0 +1,71 @@
+{
+  "title": "Module 2 quiz: DNS, SSL, and securing a domain",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your team orange-clouds the mail subdomain. Email stops working immediately. Why?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare DNS broke." },
+        { "id": "b", "text": "Cloudflare proxies HTTP/HTTPS only — not SMTP or other mail protocols. Mail records (MX, mail subdomain) must stay gray-cloud / DNS-only. Always." },
+        { "id": "c", "text": "Need DNSSEC." },
+        { "id": "d", "text": "Cache flush required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Standard Cloudflare proxy is HTTP/HTTPS-only. Mail and any non-HTTP service must stay gray-cloud."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Your origin is on Vercel (CNAME-only). You want `example.com` to point at it. What's the right move on Cloudflare?",
+      "choices": [
+        { "id": "a", "text": "Manually maintain A records pointing at Vercel's IPs." },
+        { "id": "b", "text": "Use CNAME on the apex with Cloudflare's CNAME flattening. Cloudflare resolves the CNAME at query time. Standard DNS prohibits apex CNAME; Cloudflare's flattening makes it work seamlessly." },
+        { "id": "c", "text": "Use a static IP." },
+        { "id": "d", "text": "Disable Cloudflare." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CNAME flattening solves the 'can't CNAME on apex' problem for hosted services with rotating IPs."
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the only correct Cloudflare SSL mode for production?",
+      "choices": [
+        { "id": "a", "text": "Flexible." },
+        { "id": "b", "text": "Full (strict): TLS on both legs with cert validation at origin. Other modes either skip encryption on Cloudflare↔origin (Flexible — insecure) or skip validation (Full — accepts self-signed)." },
+        { "id": "c", "text": "Off." },
+        { "id": "d", "text": "Full (without strict)." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Full (strict) + Cloudflare Origin Cert = end-to-end TLS with no renewal hassle. The canonical production setup."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "An attacker bypassed your Cloudflare WAF and DDoS'd your origin directly. How did they find the origin IP?",
+      "choices": [
+        { "id": "a", "text": "They guessed it." },
+        { "id": "b", "text": "Most likely via leak: mail server on same IP, old DNS history, CT logs, or subdomain pointing direct. Mitigation: split mail to different IP, lock origin firewall to Cloudflare IP ranges, audit for leaks periodically." },
+        { "id": "c", "text": "Cloudflare leaked it." },
+        { "id": "d", "text": "DNSSEC error." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Origin IP leaks are common via mail records, CT logs, old DNS. Firewall lockdown to Cloudflare IPs is the structural defense — even with leaks, attackers can't connect."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Behind Cloudflare, your rate limiter reads `request.remoteAddress` and treats all traffic as one user. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable proxy mode." },
+        { "id": "b", "text": "Read the real client IP from the `cf-connecting-ip` header (or properly parse `X-Forwarded-For`). Configure your framework's trust-proxy settings. The connection's remote IP behind Cloudflare is the Cloudflare edge, not the user." },
+        { "id": "c", "text": "Need a paid plan." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare passes the real client IP in headers. Your app must read those for rate limiting, logging, analytics. Default 'remote IP' reads see the edge IP and apply limits app-wide — exactly wrong."
+    }
+  ]
+}

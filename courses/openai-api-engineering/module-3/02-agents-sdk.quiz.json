@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Agents SDK",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the OpenAI Agents SDK primarily save you from writing?",
+      "choices": [
+        { "id": "a", "text": "The tool implementations themselves." },
+        { "id": "b", "text": "The agent loop boilerplate: detecting tool calls, executing them, feeding results back, tracking iterations, managing termination conditions, capturing observability traces. You still write the tools and instructions — the SDK runs the loop." },
+        { "id": "c", "text": "Database queries." },
+        { "id": "d", "text": "The OpenAI API key." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The repetitive part of agent code is the loop: parsing model output for tool calls, dispatching, handling results, managing state. Every team rebuilds it the same way. The SDK provides this so you focus on what's unique — the tools your agent has and what it's instructed to do.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're building an agent that does both research AND long-form writing. Quality is inconsistent — sometimes research is great but writing is flat, sometimes vice versa. What's the recommended fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to a single huge model for everything." },
+        { "id": "b", "text": "Split into a Researcher agent (mini, focused on retrieval) and a Writer agent (full GPT-5 or reasoning model, focused on prose), with an Orchestrator that hands off between them. Each agent stays focused, models match the work, and overall cost often drops because only the writer uses a big model." },
+        { "id": "c", "text": "Add more tools." },
+        { "id": "d", "text": "Give up on agents and use a chatbot." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Monolithic agents struggle when subtasks have very different demands. The orchestrator + specialized sub-agents pattern lets you match the right model to each subtask. The SDK's `handoffs` mechanism is built for exactly this. Often quality goes up AND cost goes down.",
+      "points": 1
+    }
+  ]
+}

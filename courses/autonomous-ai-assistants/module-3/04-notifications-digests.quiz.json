@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Notifications & digests",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the right notification-level default for a new assistant rule?",
+      "choices": [
+        { "id": "a", "text": "Push notification — maximum visibility." },
+        { "id": "b", "text": "'Soon' — in-app inbox or one-time email. Users opt-up specific rules to push/SMS only when they care. Push-by-default leads to fatigue and mute; conservative defaults preserve attention and let users tune up the things that matter most." },
+        { "id": "c", "text": "SMS — most urgent." },
+        { "id": "d", "text": "Daily digest only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Push is precious. Default to less-urgent surfaces (in-app, daily digest); reserve push for things the user explicitly told you matter. The user's attention budget is finite; respect it.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your daily morning brief has 25 bullets across many categories. Open rate dropped after week 1. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Send the brief twice a day." },
+        { "id": "b", "text": "Trim to 6-10 most important items with clear actions; light categorization (2-3 categories max); skip days with nothing notable; add a 'see more' link for the long tail. Bullet walls don't get read; scannable digests do. Quality of selection > volume of items." },
+        { "id": "c", "text": "Use Opus to write fancier prose." },
+        { "id": "d", "text": "Switch from email to push." }
+      ],
+      "correct_answer": "b",
+      "explanation": "A digest people actually read is 6-10 high-quality items, not 25 medium ones. The assistant's job is filtering, not summarizing-everything. Better selection compounds engagement; bullet walls compound fatigue.",
+      "points": 1
+    }
+  ]
+}

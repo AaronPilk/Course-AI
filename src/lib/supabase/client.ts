@@ -1,9 +1,6 @@
-// Browser-side Supabase client. Keep it lean — anon key only.
-import { createBrowserClient } from "@supabase/ssr";
-
-export function createSupabaseBrowserClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Stub. Local mode has no Supabase.
+export function createSupabaseBrowserClient(): never {
+  throw new Error(
+    "Supabase is not used in local mode. The admin uses password auth via /api/auth/login."
   );
 }

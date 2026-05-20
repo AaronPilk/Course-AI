@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Stripe Checkout",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your team fulfills orders by reading the Checkout Session on the success page. Users sometimes close the tab before redirect; those orders go unfulfilled. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Force users to wait for the redirect." },
+        { "id": "b", "text": "Fulfill via webhook (`checkout.session.completed`), not the success URL redirect. The webhook fires regardless of whether the user returned to your site. Even if they close the tab, fulfillment still runs. Treat webhooks as the source of truth; the success page is for UX only." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Email the user a fulfillment confirmation form." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhooks are the durable source of truth for payment events. Success URL redirects are a UX courtesy — they don't always fire. Build fulfillment on webhooks; success page just shows confirmation to the returning user.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When does Stripe Checkout fit vs. when should you use Elements?",
+      "choices": [
+        { "id": "a", "text": "Always use Elements for production." },
+        { "id": "b", "text": "Use Checkout when: standard UX works, you want minimum dev time, brand-match isn't critical, you need multiple payment methods quickly. Use Elements when: full custom UX is required, brand-perfect inline checkout matters, you can absorb the development cost. Most products start with Checkout; some graduate to Elements when the UX investment is worth it." },
+        { "id": "c", "text": "Always use Checkout." },
+        { "id": "d", "text": "They're identical." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Checkout is the fast path; Elements is the custom path. Pick by how much custom UX matters vs. how fast you need to ship. Many products live on Checkout permanently because it's good enough.",
+      "points": 1
+    }
+  ]
+}

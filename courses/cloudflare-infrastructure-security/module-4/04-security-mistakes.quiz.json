@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Security mistakes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team's origin was DDoS'd despite Cloudflare being in front. Investigation showed their mail subdomain pointed to the same IP as web. What was the cascade?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare leaked the IP." },
+        { "id": "b", "text": "Attackers `dig`ged the mail subdomain (gray-cloud, exposes real IP); got the origin IP; attacked it directly bypassing Cloudflare. Mitigations: split mail to a different IP, lock origin firewall to Cloudflare's IP ranges only (so even with leaks, attackers can't connect), audit for other leaks (CT logs, old DNS, etc.)." },
+        { "id": "c", "text": "Need Opus." },
+        { "id": "d", "text": "DNSSEC required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Same-IP-for-mail-and-web is one of the most common origin IP leaks. Combined with no firewall lockdown, attackers can reliably bypass Cloudflare. Both mitigations matter: split IPs AND lock the firewall.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Which Cloudflare API token policy is correct for CI/CD automation?",
+      "choices": [
+        { "id": "a", "text": "Account-wide admin access for convenience." },
+        { "id": "b", "text": "Least-privilege per use case: separate tokens scoped to specific zones, with only the permissions each job needs (e.g. 'DNS edit on example.com' for DNS automation; 'Workers deploy on my-worker' for deploys). Rotate periodically; audit usage. Account-wide tokens turn a leak into a full compromise." },
+        { "id": "c", "text": "Same token for every automation." },
+        { "id": "d", "text": "Hardcoded in source code." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare's API tokens support fine-grained permissions. Use them. Each automation gets a token with only what it needs. Rotate quarterly. Audit token usage to catch unused/leaked tokens.",
+      "points": 1
+    }
+  ]
+}

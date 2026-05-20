@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Evals",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "A healthy eval suite should score in roughly what range?",
+      "choices": [
+        { "id": "a", "text": "100% — perfect is the goal." },
+        { "id": "b", "text": "70–90%. High enough to track meaningful improvements, low enough to have room for real regressions to show up. 100% suites have stopped doing work — add harder cases or sample real production failures to keep the suite informative." },
+        { "id": "c", "text": "Below 30%." },
+        { "id": "d", "text": "Doesn't matter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Evals at 100% mean the model has out-grown the test set; you're not measuring anything anymore. Healthy evals live in the 70–90% range so regressions and improvements both have headroom to register. Rotate easy cases out and pull in real production failures as new cases.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team is using a small/fast model as the LLM-as-judge. Scores look great (avg 4.5/5). Human spot-checks rate the same outputs 3.2/5. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Humans are too harsh." },
+        { "id": "b", "text": "Small judge models tend to be lenient. Switch to Sonnet or Opus for judging and tighten the rubric. Before trusting any judge, calibrate against ~30 human-graded samples — if agreement is below 80%, fix the rubric. Once calibrated, the judge scales cheaply." },
+        { "id": "c", "text": "Use a different scoring scale." },
+        { "id": "d", "text": "Switch back to programmatic graders." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Judges need calibration like any measurement instrument. Use a capable model (Sonnet or Opus), write a clear rubric, and verify against human ratings on a sample. Without calibration, the score is decorative — you don't know whether higher is actually better.",
+      "points": 1
+    }
+  ]
+}

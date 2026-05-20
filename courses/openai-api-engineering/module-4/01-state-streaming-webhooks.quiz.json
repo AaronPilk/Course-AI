@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: State, streaming, webhooks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your chat product feels sluggish — there's a 3–5 second silent gap before every response appears. What's the simplest fix?",
+      "choices": [
+        { "id": "a", "text": "Switch to a smaller, faster model." },
+        { "id": "b", "text": "Enable streaming. The model produces tokens as it generates them — first token typically arrives in 200–600ms, even if the total response takes 5 seconds. Massive perceived-latency improvement with no other code changes." },
+        { "id": "c", "text": "Increase max_tokens." },
+        { "id": "d", "text": "Cache all responses." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Streaming is the standard fix for perceived latency. Same model, same answer, completely different UX — users see the response materializing within ~half a second. Always stream for user-facing responses.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your product has a 'deep research' operation that takes 4–6 minutes. Holding users on a loading screen, completion rate is 18% — most leave. What's the right architecture?",
+      "choices": [
+        { "id": "a", "text": "Keep the loading screen but make it more entertaining." },
+        { "id": "b", "text": "Switch to background mode + webhook. User submits request, gets immediate acknowledgement. API runs research in the background and POSTs results to your webhook when complete. Notify the user (email, push, in-app) when ready. Completion rate typically jumps to >90%." },
+        { "id": "c", "text": "Reduce the operation to under 30 seconds even if quality drops." },
+        { "id": "d", "text": "Make the user re-submit the request every 30 seconds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Long-running operations don't fit synchronous UX. Background mode + webhook is the standard pattern: acknowledge quickly, run async, notify on completion. The user can do something else while the research runs. Holding users on a loading screen past ~60 seconds destroys engagement.",
+      "points": 1
+    }
+  ]
+}

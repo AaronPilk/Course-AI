@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cloudflare limits",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your team needs to run a 10-second ML inference per request. You consider running it inside a Cloudflare Worker. Right call?",
+      "choices": [
+        { "id": "a", "text": "Yes — Workers can do anything." },
+        { "id": "b", "text": "Workers have CPU limits (~50ms free, up to 30s paid) and 128MB memory. A 10s ML inference would technically fit on paid but near the ceiling. For heavy or large-model inference, use dedicated inference platforms (Replicate, HuggingFace, AWS Bedrock, your own GPU) and keep Workers for routing + edge logic. Pick by fit, not by 'can we make this fit.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to D1." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Workers are excellent for short, lightweight tasks. Heavy inference belongs on infrastructure designed for it. The hybrid pattern — Cloudflare for routing/edge, traditional cloud or specialized service for compute — fits most production workloads.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "When is D1 (Cloudflare's edge SQLite) NOT a good fit?",
+      "choices": [
+        { "id": "a", "text": "Read-heavy applications." },
+        { "id": "b", "text": "High-write workloads, complex relational queries with deep joins, workloads needing >10GB, anything requiring primary-DB ACID at scale. D1 is excellent for read-heavy app data with global low-latency reads; it's not a Postgres replacement. For those workloads, use Postgres on Supabase/Neon/RDS and access from Workers via Hyperdrive." },
+        { "id": "c", "text": "Small schemas." },
+        { "id": "d", "text": "Static config storage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "D1 is read-heavy SQLite. Great fit for product config, edge cache of common data, small-to-medium app data. Bad fit for high-write transactional workloads, deep relational queries, or large datasets. Use the right tool for the workload — D1 + Postgres is a fine combination.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Payment methods",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A B2B SaaS charges $5K-$50K per invoice. Card fees are ~$150 per charge. What's the cost-saving move?",
+      "choices": [
+        { "id": "a", "text": "Switch to a different card processor." },
+        { "id": "b", "text": "Add ACH / bank debits for large invoices. ACH fees cap at ~$5 vs. percentage-based card fees that scale with amount. Settlement is slower (3-5 days) and chargeback windows are ~60 days, but for B2B annual contracts those tradeoffs are usually acceptable. Often saves tens of thousands per year." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cards only, raise prices to offset fees." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ACH (or SEPA in EU) is dramatically cheaper than cards for large amounts because the fee is capped rather than percentage-based. The settlement delay and slightly different chargeback rules are acceptable for B2B annual contracts. Major leverage on cost.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the simplest way to enable the right payment methods per customer?",
+      "choices": [
+        { "id": "a", "text": "Manually pick payment methods per request." },
+        { "id": "b", "text": "Use `automatic_payment_methods: { enabled: true }` in PaymentIntent / Checkout creation. Enable the methods you support in the Stripe Dashboard; Stripe picks the right subset per customer based on geo, currency, and amount. One configuration; correct behavior automatically." },
+        { "id": "c", "text": "Build a custom router." },
+        { "id": "d", "text": "Always show all methods." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automatic payment methods is the canonical pattern. Configure once; Stripe optimizes per transaction. Manual selection is for cases where you need to force a specific subset; otherwise let Stripe handle.",
+      "points": 1
+    }
+  ]
+}

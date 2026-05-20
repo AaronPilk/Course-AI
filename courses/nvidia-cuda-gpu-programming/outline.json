@@ -1,0 +1,93 @@
+{
+  "slug": "nvidia-cuda-gpu-programming",
+  "title": "NVIDIA CUDA & GPU Programming Simplified",
+  "subtitle": "How GPUs actually work and how to write code that uses them — CUDA, memory hierarchy, kernels, and the AI workloads driving the GPU era",
+  "description": "A practical course on GPU programming through NVIDIA's CUDA platform. Covers the hardware mental model (what a GPU actually is and how it differs from a CPU), CUDA programming basics (kernels, threads, blocks, grids), the memory hierarchy that determines performance, optimization patterns, the CUDA ecosystem (cuBLAS, cuDNN, etc.), and the AI/ML workloads that drive the modern GPU economy. Built from NVIDIA's published documentation, developer blogs, and standard GPU programming references. Practical, code-aware, and grounded in what actually makes GPU programs fast.",
+  "category": "Engineering",
+  "difficulty": "intermediate",
+  "audience": "Developers, engineers, ML practitioners, and curious technical learners who want to actually understand GPUs. Some C/C++ familiarity helps but isn't required for the conceptual lessons.",
+  "tags": ["nvidia", "cuda", "gpu", "parallel-computing", "ai", "performance"],
+  "estimated_minutes": 270,
+  "brand": {
+    "name": "NVIDIA",
+    "logo": "/brands/nvidia-cuda-gpu-programming.svg",
+    "gradient": ["#76B900", "#1A1A1A"],
+    "tint": "#0A1A00"
+  },
+  "prerequisites": [
+    "Comfort with basic programming concepts",
+    "Some C/C++ exposure helps but is not strictly required",
+    "No prior GPU experience required"
+  ],
+  "outcomes": [
+    "Explain what a GPU is and how it differs from a CPU at the hardware level",
+    "Write a basic CUDA kernel and understand the threading model",
+    "Map the CUDA memory hierarchy and choose the right memory for each access pattern",
+    "Diagnose and improve GPU performance bottlenecks",
+    "Use the CUDA ecosystem (cuBLAS, cuDNN, Thrust, etc.) effectively",
+    "Understand why AI/ML workloads dominate modern GPU usage",
+    "Evaluate when GPU acceleration is the right tool"
+  ],
+  "modules": [
+    {
+      "title": "Why GPUs — the hardware mental model",
+      "summary": "What a GPU actually is, why it's different from a CPU, and the kinds of problems it solves well.",
+      "estimated_minutes": 55,
+      "key_concepts": ["CPU vs GPU", "SIMT", "parallelism", "throughput vs latency"],
+      "lessons": [
+        { "title": "GPUs vs CPUs — what's actually different", "objective": "Build the right mental model for GPU hardware." },
+        { "title": "Throughput vs latency — picking the right tool", "objective": "Understand which workloads suit GPUs." },
+        { "title": "SIMT and the GPU execution model", "objective": "See how thousands of threads run at once." },
+        { "title": "A brief history — from graphics to AI", "objective": "Track why GPUs became the engine of AI." }
+      ]
+    },
+    {
+      "title": "CUDA programming basics",
+      "summary": "Kernels, threads, blocks, grids, and the CUDA programming model.",
+      "estimated_minutes": 55,
+      "key_concepts": ["kernel", "threads", "blocks", "grid", "warps"],
+      "lessons": [
+        { "title": "Your first CUDA kernel", "objective": "Write and launch code that runs on the GPU." },
+        { "title": "Threads, blocks, and grids", "objective": "Understand the hierarchy that organizes GPU work." },
+        { "title": "Warps — what they are and why they matter", "objective": "See how the GPU schedules work in groups of 32." },
+        { "title": "Host and device — moving data between CPU and GPU", "objective": "Track where data lives and what it costs to move." }
+      ]
+    },
+    {
+      "title": "Memory hierarchy and performance",
+      "summary": "Where data lives on a GPU determines speed. Master the hierarchy and you master GPU performance.",
+      "estimated_minutes": 55,
+      "key_concepts": ["global memory", "shared memory", "registers", "coalescing", "bandwidth"],
+      "lessons": [
+        { "title": "The CUDA memory hierarchy", "objective": "Map global, shared, register, and constant memory." },
+        { "title": "Coalescing and access patterns", "objective": "Understand the access patterns that make memory fast." },
+        { "title": "Shared memory and tiling", "objective": "Use the GPU's on-chip memory for major speedups." },
+        { "title": "Occupancy, latency hiding, and bottlenecks", "objective": "Diagnose what's actually slow in a GPU program." }
+      ]
+    },
+    {
+      "title": "The CUDA ecosystem",
+      "summary": "You usually don't write CUDA from scratch — you use the libraries built on top. Here's what's available.",
+      "estimated_minutes": 50,
+      "key_concepts": ["cuBLAS", "cuDNN", "Thrust", "CUDA streams", "Nsight"],
+      "lessons": [
+        { "title": "cuBLAS, cuDNN, and the math libraries", "objective": "Use NVIDIA's optimized primitives." },
+        { "title": "Thrust and high-level abstractions", "objective": "Write GPU code without writing kernels." },
+        { "title": "CUDA streams and concurrency", "objective": "Overlap compute and data transfer." },
+        { "title": "Profiling with Nsight and the optimization workflow", "objective": "Use NVIDIA's tools to find and fix bottlenecks." }
+      ]
+    },
+    {
+      "title": "AI workloads and the GPU era",
+      "summary": "How modern AI uses GPUs, what makes Hopper and Blackwell special, and where GPU computing is going.",
+      "estimated_minutes": 55,
+      "key_concepts": ["tensor cores", "transformer", "FP16/BF16", "H100/B100", "scaling"],
+      "lessons": [
+        { "title": "Tensor cores and AI math", "objective": "Understand the hardware that powers modern deep learning." },
+        { "title": "Training and inference workloads", "objective": "See how LLM training and inference actually run on GPUs." },
+        { "title": "Scaling — multi-GPU, multi-node, NVLink, InfiniBand", "objective": "Track how GPU clusters get built." },
+        { "title": "The future — Hopper, Blackwell, and beyond", "objective": "See where the hardware is heading." }
+      ]
+    }
+  ]
+}

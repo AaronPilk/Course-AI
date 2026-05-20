@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Recurring tasks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your scheduler retries on a transient failure. Users sometimes receive the same morning brief twice. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable retries." },
+        { "id": "b", "text": "Add idempotency keys keyed by `{user_id}:{task}:{date}`. Before running, check if the key has been processed; if yes, skip. Storage of processed keys can be ephemeral (TTL after a day). Same key twice = skip. Standard pattern for any work that can be retried." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Switch to OpenAI." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Schedulers fire twice — system restarts, retries on transient failures, race conditions. Idempotency keys per occurrence make double-runs no-ops. The same pattern applies to any work-on-behalf-of-user system.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's non-negotiable in the recurring-task UX?",
+      "choices": [
+        { "id": "a", "text": "Beautiful HTML emails." },
+        { "id": "b", "text": "Pause and disable controls — per-task pause, vacation mode (pause all), quiet hours, day-of-week overrides. Users need to be able to halt scheduled work instantly when life happens. Without it, retention drops every time someone goes on vacation or hits a busy week." },
+        { "id": "c", "text": "More frequent deliveries." },
+        { "id": "d", "text": "Cron syntax editing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pause controls are some of the most-used assistant features once they exist. Treat them as first-class, not a v2 maybe. Per-task, vacation, quiet-hours, day-of-week — each catches a different real user need.",
+      "points": 1
+    }
+  ]
+}

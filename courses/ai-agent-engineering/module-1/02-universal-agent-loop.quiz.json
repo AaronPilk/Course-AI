@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Agent loop",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the universal pattern every agent framework reduces to?",
+      "choices": [
+        { "id": "a", "text": "Multiple specialized models in parallel." },
+        { "id": "b", "text": "A loop: call model → execute the tools it requested → append results to the conversation → repeat until the model says it's done (or a step cap fires). Every major framework — OpenAI Agents SDK, LangGraph, AutoGen, Anthropic tool use — is a wrapper around this loop." },
+        { "id": "c", "text": "A directed acyclic graph of LLM calls." },
+        { "id": "d", "text": "Fine-tuning + RAG." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Agents are stateless loops that put the model in charge of step selection. Frameworks add ergonomics (handlers, graphs, multi-agent primitives) on top, but the core is always: model picks a tool, you run it, you feed the result back, loop. Knowing the loop means you understand every framework.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A production agent runs overnight in a fetch-retry-fetch loop, burning a 4-figure bill. What was missing?",
+      "choices": [
+        { "id": "a", "text": "Higher max_tokens." },
+        { "id": "b", "text": "A step cap (maxSteps). Without one, a buggy agent or adversarial input can loop forever — and you pay per step. The right pattern: cap iterations (10-15 standard, 50 for deep research), treat hitting the cap as an explicit error, escalate or return partial. Pair with per-tool timeouts and daily spend caps." },
+        { "id": "c", "text": "More tools." },
+        { "id": "d", "text": "Opus instead of Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Step caps are non-negotiable in agent design. They convert 'unbounded loop' into 'explicit error you can handle.' Combined with timeouts and spend caps, they're the safety net that turns demo-grade agents into production-grade ones.",
+      "points": 1
+    }
+  ]
+}

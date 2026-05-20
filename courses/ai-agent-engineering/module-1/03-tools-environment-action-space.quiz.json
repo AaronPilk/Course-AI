@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Action space",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your agent has 50 tools — every internal API got exposed. Prompts are 8K tokens of tool definitions before any real input, and selection quality is poor. What's the right fix?",
+      "choices": [
+        { "id": "a", "text": "Add more capable models." },
+        { "id": "b", "text": "Split into multiple specialized agents (support, ops, research), each with 8–15 focused tools. Cuts per-call token cost dramatically and improves tool selection because the model has fewer choices to weigh. Where one agent really needs broader scope, gate tools by route so only relevant ones are sent per call." },
+        { "id": "c", "text": "Increase max_tokens." },
+        { "id": "d", "text": "Use Opus on everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Too many tools is a design problem, not a model problem. 5–15 tools is the sweet spot per agent. Split into specialized agents (Module 4), gate tools by route, or compress wide tools into narrow composable ones. Always cheaper and more accurate than 'just add a smarter model.'",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the right design for tools by reversibility?",
+      "choices": [
+        { "id": "a", "text": "Treat all tools the same." },
+        { "id": "b", "text": "Tier them: read-only tools need no special handling; idempotent writes use idempotency keys; non-idempotent writes (send email, charge card) need keys + safe retries + approval gates on user-impacting ones; destructive (delete, cancel) require approval + audit log + soft-delete patterns where possible." },
+        { "id": "c", "text": "Wrap everything in approvals." },
+        { "id": "d", "text": "Avoid writes entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Different reversibility tiers need different safety patterns. Over-gating (approve every action) makes agents useless. Under-gating (no approval on destructive tools) causes incidents. The right design matches the gate strength to the worst-case impact of a wrong call.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Webhook verification",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your webhook handler started returning signature verification failures after a framework upgrade. What's the most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Stripe rotated your secret without telling you." },
+        { "id": "b", "text": "Middleware is parsing JSON before your handler, modifying the raw bytes. Stripe's signature is HMAC over the raw body — any reformatting (parse + restringify, whitespace changes) breaks verification. Fix: preserve raw body on the webhook route. In Express: `express.raw({ type: 'application/json' })`. In Next.js App Router: `request.text()`." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Need a new API key." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Raw-body bug is the #1 cause of mysterious signature failures. Frameworks often auto-parse JSON — that breaks signing. Preserve raw bytes on the webhook route specifically (not site-wide; other routes still want parsed JSON).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why is `stripe.webhooks.constructEvent` the right way to verify webhooks?",
+      "choices": [
+        { "id": "a", "text": "It's the only API that exists." },
+        { "id": "b", "text": "It does HMAC signature verification with constant-time comparison (resistant to timing attacks), validates the timestamp (replay protection — rejects events older than 5 min by default), and throws on any failure. Rolling your own verification is error-prone; use the SDK helper on every webhook handler." },
+        { "id": "c", "text": "Cheaper than manual verification." },
+        { "id": "d", "text": "Faster." }
+      ],
+      "correct_answer": "b",
+      "explanation": "`constructEvent` handles HMAC + constant-time compare + replay protection in one call. Rolling your own often has subtle bugs (string-vs-buffer comparison, missing replay check, timing leaks). Use the SDK.",
+      "points": 1
+    }
+  ]
+}

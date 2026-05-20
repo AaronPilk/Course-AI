@@ -1,0 +1,93 @@
+{
+  "slug": "spacex-rocket-engineering",
+  "title": "SpaceX Rocket Engineering Fundamentals",
+  "subtitle": "How orbital rockets actually work — propellants, engines, reusability, and the SpaceX approach that changed launch economics",
+  "description": "A practical course on rocket engineering through the SpaceX lens. Covers the basic physics of getting to orbit, why rockets stage, how engines actually work, the propellants and their tradeoffs, Falcon 9 and Heavy reusability, Starship's full-stack reusability bet, and the manufacturing and operational disciplines that took launch cost from $20K/kg to under $1K/kg. Built from public SpaceX materials, NASA technical reports, and standard rocket-engineering texts. Not pro-SpaceX cheerleading; not anti-SpaceX either. Just how it works.",
+  "category": "Aerospace",
+  "difficulty": "intermediate",
+  "audience": "Engineers, founders, and curious learners who want a real mental model of orbital rockets through SpaceX's specific lens. No aerospace background required.",
+  "tags": ["spacex", "rockets", "falcon-9", "starship", "reusability", "engineering"],
+  "estimated_minutes": 260,
+  "brand": {
+    "name": "SpaceX",
+    "logo": "/brands/spacex-rocket-engineering.svg",
+    "gradient": ["#005288", "#A7A9AC"],
+    "tint": "#000814"
+  },
+  "prerequisites": [
+    "Curiosity about how rockets work",
+    "Comfort with basic physics concepts (gravity, force, energy)",
+    "No aerospace background required — we'll build the concepts from scratch"
+  ],
+  "outcomes": [
+    "Explain the basic physics of orbital flight and why rockets stage",
+    "Understand the Tsiolkovsky equation and what it forces on rocket design",
+    "Map the major rocket engine cycles and tradeoffs",
+    "Reason about propellant choices (RP-1 vs. methane vs. hydrogen)",
+    "Understand Falcon 9 reusability — how booster return actually works",
+    "Track Starship's full-stack reusability and its scaling implications",
+    "Apply rocket-engineering first principles to evaluate aerospace claims and ventures"
+  ],
+  "modules": [
+    {
+      "title": "How Rockets Actually Work",
+      "summary": "The physics, math, and design decisions that constrain every orbital rocket — Tsiolkovsky equation, staging, gravity losses, and trajectory.",
+      "estimated_minutes": 55,
+      "key_concepts": ["orbital velocity", "delta-v", "Tsiolkovsky equation", "staging", "gravity losses"],
+      "lessons": [
+        { "title": "Orbital flight and delta-v", "objective": "Understand what reaching orbit actually requires." },
+        { "title": "The Tsiolkovsky rocket equation", "objective": "See the math that constrains every rocket design." },
+        { "title": "Why rockets stage — and how", "objective": "Map the tradeoffs that force multi-stage design." },
+        { "title": "Trajectory, gravity losses, and ascent profile", "objective": "Track how a rocket actually gets to orbit." }
+      ]
+    },
+    {
+      "title": "Engines and Propellants",
+      "summary": "Rocket engines turn fuel into thrust. The cycle choice, propellant choice, and combustion design dominate everything else.",
+      "estimated_minutes": 55,
+      "key_concepts": ["engine cycles", "RP-1", "methane", "hydrogen", "specific impulse", "Raptor", "Merlin"],
+      "lessons": [
+        { "title": "Engine basics — chambers, nozzles, and specific impulse", "objective": "Understand what a rocket engine actually does." },
+        { "title": "Engine cycles — gas generator, staged combustion, full-flow", "objective": "Map the major cycle families and their tradeoffs." },
+        { "title": "Propellants — RP-1, methane, hydrogen, and the choice", "objective": "Understand why SpaceX uses what it uses." },
+        { "title": "Merlin and Raptor — SpaceX's engine families", "objective": "Walk through the two engines that define modern reusable launch." }
+      ]
+    },
+    {
+      "title": "Falcon 9 and Falcon Heavy",
+      "summary": "The first reusable orbital rocket. How booster return works, what reusability actually saves, and the operational rhythm.",
+      "estimated_minutes": 55,
+      "key_concepts": ["Falcon 9", "booster return", "grid fins", "drone ship", "reusability economics"],
+      "lessons": [
+        { "title": "Falcon 9 architecture and mission profile", "objective": "Map the rocket end-to-end from launch to payload separation." },
+        { "title": "Booster return — how landing actually works", "objective": "Understand the maneuvers, hardware, and software that make recovery possible." },
+        { "title": "Reusability economics — what's actually saved", "objective": "Track where reusability changes launch cost and where it doesn't." },
+        { "title": "Falcon Heavy and operational cadence", "objective": "See the variant strategy and SpaceX's launch rhythm." }
+      ]
+    },
+    {
+      "title": "Starship — The Full-Stack Reusable",
+      "summary": "Starship is the next leap: full reusability of both stages, methane-fueled Raptors, stainless steel, and a payload class that changes the economics of space.",
+      "estimated_minutes": 55,
+      "key_concepts": ["Starship", "Super Heavy", "stainless steel", "Raptor 2/3", "tower catch", "in-space refueling"],
+      "lessons": [
+        { "title": "Starship architecture and design choices", "objective": "Walk through the vehicle and the why behind major decisions." },
+        { "title": "Full reusability — both stages back", "objective": "Understand the booster catch and ship landing." },
+        { "title": "Stainless steel, raptors, and manufacturing approach", "objective": "See the materials and production discipline." },
+        { "title": "Starship missions — Starlink, lunar, Mars, refueling", "objective": "Map what Starship is actually for." }
+      ]
+    },
+    {
+      "title": "Operations, Risks, and the Future",
+      "summary": "How SpaceX actually runs missions, the risks of the model, and where launch is going.",
+      "estimated_minutes": 50,
+      "key_concepts": ["launch operations", "iterative engineering", "competition", "future of launch"],
+      "lessons": [
+        { "title": "Launch operations — pads, tanks, range, and crew", "objective": "Track how a launch actually happens." },
+        { "title": "Iterative engineering — testing in the open", "objective": "Understand SpaceX's development culture and tradeoffs." },
+        { "title": "Risks — technical, regulatory, geopolitical", "objective": "Map where things could go wrong." },
+        { "title": "The future of launch — competitors and what's next", "objective": "See the landscape SpaceX operates in and where it heads next." }
+      ]
+    }
+  ]
+}

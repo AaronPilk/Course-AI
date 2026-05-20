@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Future of launch",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What sustains the launch industry's demand across multiple providers (SpaceX, Blue Origin, Chinese rockets, ULA, Rocket Lab)?",
+      "choices": [
+        { "id": "a", "text": "Tourism." },
+        { "id": "b", "text": "Mega-constellations. Starlink (6,000+ satellites in orbit, tens of thousands planned), Amazon Kuiper (~3,200 planned), China's Guowang (13,000+ planned), and many smaller commercial and government constellations together require hundreds of launches per year for years. This sustained demand floor lets multiple launch providers reach economic scale simultaneously. Without mega-constellations, launch demand would be much lower and the industry would consolidate to a couple of major players. The dependency cuts both ways: constellation operators need cheap, reliable launch (which SpaceX's reusability provides) to make their satellite economics work. Launch providers need constellation demand to maintain cadence. Both depend on each other to sustain the current trajectory." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Government missions only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mega-constellations are the demand engine. SpaceX's Starlink is the largest example but Amazon Kuiper, Chinese Guowang, OneWeb, and dozens of smaller constellations together create launch demand that justifies multiple providers. Without this demand, the launch industry returns to a niche, government-dominated business.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "What's the most important decision factor for whether the 2025-2030 launch landscape transforms or evolves incrementally?",
+      "choices": [
+        { "id": "a", "text": "Marketing spend." },
+        { "id": "b", "text": "Whether Starship delivers on its operational and economic targets. If Starship achieves full reusability with rapid turnaround and hits cost targets near $10M per launch, $/kg to orbit drops 10-50x vs. Falcon 9. This transforms launch economics, satellite design, lunar and Mars exploration, and the broader space economy. If Starship delivers only partially (works but at higher cost than targeted), the impact is significant but evolutionary rather than revolutionary. If Starship hits major setbacks (refueling fails, heat shield doesn't scale, repeated tests lost), the timeline pushes out years and Falcon 9 remains the workhorse. Other variables (Blue Origin success, Chinese capability, Mars activities) compose around Starship's outcome. The decade ahead is fundamentally about whether SpaceX's $10M/launch claim is real." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random factor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Starship is the decade's biggest variable. If it works as designed, everything transforms. If not, the industry evolves more conservatively. Other factors matter but are secondary to whether SpaceX can deliver its stated economic targets at scale.",
+      "points": 1
+    }
+  ]
+}

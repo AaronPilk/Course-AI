@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Hiring SEOs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "An SEO consultant cold-emails you, guarantees a #1 ranking in 30 days, and claims a 'special relationship' with Google. What's the right response?",
+      "choices": [
+        { "id": "a", "text": "Reply asking for the contract." },
+        { "id": "b", "text": "Walk away — every signal here is a textbook SEO scam pattern. No one can guarantee rankings, no one has a special relationship with Google, and unsolicited cold pitches are almost never legitimate." },
+        { "id": "c", "text": "Negotiate them down to $500/month." },
+        { "id": "d", "text": "Ask if they can also guarantee AI Overview placement." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Each red flag alone is a deal-breaker; together they're certain fraud. From Google's own doc: 'No one can guarantee a #1 ranking on Google. Beware of SEOs that claim to guarantee rankings, allege a special relationship with Google, or advertise a priority submit to Google.' Walk away.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An SEO firm proposes registering 30 'supporting' domains 'on your behalf' that will redirect to your site to boost authority. Should you proceed?",
+      "choices": [
+        { "id": "a", "text": "Yes — more domains means more authority." },
+        { "id": "b", "text": "No. Shadow-domain schemes are listed by Google as a classic scam. The SEO retains ownership; if you part ways, they redirect those domains to a competitor (or worse). Also a likely spam-policy violation. Walk away — and always own your own domains." },
+        { "id": "c", "text": "Only if they're cheaper than $20 each." },
+        { "id": "d", "text": "Only if the domains have keywords in them." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google explicitly lists this as a known scam: 'One common scam is the creation of \"shadow\" domains... These shadow domains are often owned by the SEO who claims to be working on a client's behalf.' Beyond the spam-policy risk, the leverage dynamic is bad — they can rug-pull you. Never let an SEO register domains 'for you.'",
+      "points": 1
+    }
+  ]
+}

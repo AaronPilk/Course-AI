@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Classic SEO + AI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the minimum bar a page has to clear to be eligible for AI Overviews?",
+      "choices": [
+        { "id": "a", "text": "Have an llms.txt file and FAQ schema." },
+        { "id": "b", "text": "Be indexed in Google and eligible to appear as a normal Search snippet (i.e., no noindex, no nosnippet, no robots blocks)." },
+        { "id": "c", "text": "Pay for a premium AI search placement." },
+        { "id": "d", "text": "Be on a top-level domain like .com." }
+      ],
+      "correct_answer": "b",
+      "explanation": "From Google's AI Optimization Guide: 'To be eligible to be shown in generative AI features on Google Search, a page must be indexed and eligible to be shown in Google Search with a snippet, fulfilling the Search technical requirements.' Classic SEO eligibility is the price of admission for AI search. No special tactics required.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A vendor pitches you 'AI SEO services' that ignore your classic SEO issues (slow page speed, canonical confusion, thin content). They claim these don't matter — only AI-specific tactics do. What's the most accurate response?",
+      "choices": [
+        { "id": "a", "text": "Sounds great — pay them." },
+        { "id": "b", "text": "Wrong. AI features are built on top of classic Search ranking. If your pages can't be served as normal Search results because of slow speed, canonical issues, or thin content, AI features can't cite you either. Fix the foundation first." },
+        { "id": "c", "text": "Only true for ecommerce sites." },
+        { "id": "d", "text": "Sounds true for AI Mode but not for AI Overviews." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google's documentation is explicit that AI features 'are rooted in our core Search ranking and quality systems.' The same eligibility, the same signals, the same quality bar. Cutting classic SEO to chase 'AI SEO services' is cutting the foundation to invest in cargo cult tactics.",
+      "points": 1
+    }
+  ]
+}

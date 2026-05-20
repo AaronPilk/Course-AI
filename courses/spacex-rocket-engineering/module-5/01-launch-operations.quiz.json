@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Launch operations",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is launch operations infrastructure (pads, propellant farms, range systems) a competitive advantage beyond just the rocket itself?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Operations infrastructure is capital-heavy and slow to build. SpaceX has invested years and billions in Cape Canaveral and Vandenberg pads (SLC-40, LC-39A, SLC-4E), drone ships, recovery vessels, transport vehicles, integration facilities, and range automation work. A new launch company can build a rocket faster than they can build comparable operational infrastructure. The operational tempo SpaceX achieves (100+ launches per year) requires every piece of this infrastructure plus mature workforce and procedures. This is why entrant competitors with good rockets still can't match SpaceX's cadence or per-launch cost — the operational moat takes years to replicate even if you have the engineering capability." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just paperwork." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Operations is its own competitive layer. Multiple companies (Blue Origin, Rocket Lab, Relativity) have good rockets but lack the operational infrastructure to match SpaceX's cadence and unit economics. Closing the gap requires years of capital and operational maturity.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why does SpaceX scrub a Falcon 9 launch at T-0 minus 1 minute due to an engine telemetry anomaly rather than launching and hoping?",
+      "choices": [
+        { "id": "a", "text": "Excessive caution." },
+        { "id": "b", "text": "Risk asymmetry. Launching with a known anomaly creates significant probability of mission failure (vehicle loss, payload loss, possibly third-party damage) — costing $60-70M+ plus customer payload plus reputation. Scrubbing costs hours of operational time, propellant cycling, and a slipped launch date — recoverable. The expected-value calculation always favors scrubbing on a real anomaly, even if the anomaly might have been minor. SpaceX's automated abort criteria and conservative operations team reflect this calculation. The rapid-recycle capability (re-attempt within 48 hours typically) reduces the cost of scrubs further. This operations discipline is part of what makes Falcon 9's mission success rate so high — they don't fly through anomalies." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random caution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Scrubbing is cheap; failing is expensive. Operations teams that internalize this asymmetry produce high mission success rates. The opposite culture (launch through anomalies to hit schedule) historically produced major failures.",
+      "points": 1
+    }
+  ]
+}

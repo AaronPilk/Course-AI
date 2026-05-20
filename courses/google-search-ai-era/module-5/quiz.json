@@ -1,0 +1,77 @@
+{
+  "module": 5,
+  "title": "Module 5 quiz — Strategy, Hiring, and Ongoing SEO",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A founder asks you whether to invest in SEO. Their business is pure outbound B2B sales — every deal comes from cold outreach or referrals. Their customers don't search Google to find solutions like theirs. What's the right answer?",
+      "choices": [
+        { "id": "a", "text": "Always invest in SEO — every business needs it." },
+        { "id": "b", "text": "SEO is at best a low priority for them. The first decision question is whether customers actually use Google to find businesses like yours. If not, paid acquisition / outbound / referrals are where to invest. Revisit SEO if the GTM motion changes." },
+        { "id": "c", "text": "Invest $10K/month minimum — they have to compete." },
+        { "id": "d", "text": "Only invest if they're in a tech niche." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Channel fit comes first. SEO is high-leverage when customers search Google for what you offer. For pure outbound B2B sales-led companies, that's often not how deals happen. SEO won't fix a channel-fit problem. Invest where the customers actually are.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "In Search Console, which report should you use to find queries where you have lots of impressions but very low CTR?",
+      "choices": [
+        { "id": "a", "text": "Page Indexing report." },
+        { "id": "b", "text": "Core Web Vitals report." },
+        { "id": "c", "text": "Performance report — filter by query and look at the impressions/CTR columns. Low-CTR queries with high impressions usually mean your title and meta description aren't compelling for those queries." },
+        { "id": "d", "text": "Manual actions report." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Performance is the right report. High impressions + low CTR is the classic signal that your title link and meta description aren't doing their job for those queries. Rewriting them is one of the highest-leverage quick wins available.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "An SEO firm proposes a contract that includes 'creating supporting sites that will redirect to yours.' They will register the domains 'on your behalf.' Should you proceed?",
+      "choices": [
+        { "id": "a", "text": "Yes — more domains, more authority." },
+        { "id": "b", "text": "No. This is a classic 'shadow domain' scam Google explicitly warns about. The firm retains domain ownership; if you part ways, they redirect the domains to a competitor. It's also a likely spam-policy violation. Walk away. If you must allow it, you (not the firm) register and own every domain." },
+        { "id": "c", "text": "Only if they're under $50 per domain." },
+        { "id": "d", "text": "Only if the domains have keywords in them." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google's 'Do you need an SEO?' doc explicitly lists shadow domains as a classic scam. The leverage dynamic is bad, the spam risk is real, and the redirect-funnel tactic itself violates spam policies. Walk away — and never let an SEO register domains that should belong to you.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Traffic dropped 50% on a Tuesday with no visible Google update announced. What's the smart first move?",
+      "choices": [
+        { "id": "a", "text": "Disavow all your backlinks just in case." },
+        { "id": "b", "text": "First, define the drop precisely: what metric, what date, what pages and queries are affected. Then check for a technical regression — was there a deploy? Is robots.txt healthy? Did pages start returning errors? Did a noindex tag accidentally ship? Page Indexing in Search Console is the fastest sitewide check." },
+        { "id": "c", "text": "Roll back all changes from the last 3 months." },
+        { "id": "d", "text": "Hire a recovery agency immediately." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The diagnostic order matters. Define the drop precisely first. Then rule out technical regressions before assuming algorithm updates or content quality issues — they're the fastest to find and the most common cause of sudden drops. Reflexively disavowing links or rolling back content usually hurts more than helps.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "How long does Google say it typically takes to see SEO results from changes you make to your site?",
+      "choices": [
+        { "id": "a", "text": "A few hours." },
+        { "id": "b", "text": "1–2 weeks." },
+        { "id": "c", "text": "4 months to a year." },
+        { "id": "d", "text": "Less than 30 days." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Direct from Google: 'It will take time for you to see results: typically from four months to a year from the time you begin making changes until you start to see the benefits.' This is why SEO and paid acquisition aren't substitutes — SEO is a compounding investment with a long lead time, not a way to fix a revenue gap this quarter.",
+      "points": 1
+    }
+  ]
+}

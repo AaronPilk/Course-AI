@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Storage primitives",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A team stored user session data in KV. Sessions updated in one region weren't visible in another for ~60s, breaking user experience. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Use Opus." },
+        { "id": "b", "text": "Move sessions to D1 (strong consistency on writes). Keep KV for read-only config (where ~60s eventual consistency is fine). KV is great for global eventually-consistent data; for anything where stale reads cause bugs, pick a strongly-consistent primitive." },
+        { "id": "c", "text": "Disable KV." },
+        { "id": "d", "text": "Use R2 for sessions." }
+      ],
+      "correct_answer": "b",
+      "explanation": "KV's eventual consistency (~60s) is a feature for some workloads (cheap global reads) and a bug for others (sessions, anything where stale reads break UX). Match the consistency model to the workload. D1 for strong consistency; KV for tolerable lag; external Postgres for high-write transactional.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's Durable Objects' specific superpower?",
+      "choices": [
+        { "id": "a", "text": "Massive parallel scale." },
+        { "id": "b", "text": "Single-threaded, addressable-by-ID stateful actors. Each instance handles requests sequentially with no race conditions, holds persistent state (`state.storage`), supports WebSockets. Designed for many small instances (one per room/document/user). Perfect for real-time coordination of per-entity state." },
+        { "id": "c", "text": "Cheaper than KV." },
+        { "id": "d", "text": "Faster than D1." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DOs are stateful, single-threaded, addressable. The right fit is many small instances each coordinating real-time state (collaboration room, game match, per-user counter). Not a general DB replacement; a specialized primitive for coordination.",
+      "points": 1
+    }
+  ]
+}

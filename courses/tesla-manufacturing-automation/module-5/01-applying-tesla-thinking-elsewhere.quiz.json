@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Applying Tesla thinking elsewhere",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these Tesla manufacturing principles transfers most cleanly to a software company?",
+      "choices": [
+        { "id": "a", "text": "Gigacasting." },
+        { "id": "b", "text": "The Supercharger network model." },
+        { "id": "c", "text": "Software-defined operations as the discipline of instrumentation, dashboards, and version-controlled deploys. In a software company this becomes CI/CD, observability stacks, DORA metrics, and SRE practice. Different domain, same underlying loop: observe → hypothesize → change → deploy → measure → keep or revert. Other Tesla tactics (gigacasting, vertical battery integration) are physical-product specific and don't translate." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "The operational discipline transfers; the physical tactics don't. SRE and DevOps are essentially manufacturing reliability and continuous improvement applied to services. The Tesla loop is recognizable inside every well-run engineering org.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A modular-housing startup wants to copy Tesla's vertical integration play and bring lumber milling, panel assembly, plumbing pre-fab, and on-site installation all in-house from launch. Smart?",
+      "choices": [
+        { "id": "a", "text": "Yes — Tesla proved it." },
+        { "id": "b", "text": "Likely a Katerra repeat. Vertical integration is capital-intensive and only viable when you have product-market fit, deep funding access, and a clear strategic reason per integration. A new modular-housing startup should validate demand and prove operations on one or two integrations at a time, buy commodities, and partner where suppliers are already efficient. Copying the entire Tesla playbook from day one without Tesla's capital base or product-market fit is the failure pattern, not the success pattern." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Outsource everything forever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Katerra burned roughly $2B applying vertical-integration ambition to construction without sustainable funding or product-market fit. Copy Tesla's reasoning ('own what controls quality, cost, cycle time') one integration at a time, not the entire playbook at once.",
+      "points": 1
+    }
+  ]
+}

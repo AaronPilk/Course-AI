@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Operations, risks, and the future",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is launch operations infrastructure (pads, propellant farms, range systems, recovery vessels) itself a competitive moat?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Operations infrastructure is capital-heavy, regulatory-heavy, and slow to build. SpaceX invested years and billions in Cape Canaveral pads (SLC-40, LC-39A), Vandenberg (SLC-4E), drone ships, recovery vessels, transport infrastructure, integration facilities, and range automation. New competitors can build a rocket faster than they can build comparable operational infrastructure to match SpaceX's cadence. Multiple capable launchers (Blue Origin New Glenn, Rocket Lab Neutron, Relativity Terran R) lack the operational maturity to match SpaceX's per-launch costs or schedule reliability — and closing the gap takes years even with comparable rockets. The operations moat is part of why SpaceX's dominance has been so durable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "It's free." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Operations is its own competitive capability. The infrastructure SpaceX has built over a decade can't be quickly replicated. Companies with good rockets but immature operations can't match SpaceX's cadence and cost.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Under what conditions does SpaceX's iterative test-and-iterate approach work, and when should a different approach be used?",
+      "choices": [
+        { "id": "a", "text": "It always works." },
+        { "id": "b", "text": "Iteration works when: (1) hardware is cheap enough to lose, (2) failure modes are observable via telemetry, (3) iteration cycle time is fast (months not years), (4) culture rewards learning from failure, (5) capital structure tolerates visible setbacks. SpaceX uses iteration for Starship development where all five hold. They use conservative traditional engineering for Crew Dragon abort systems, crew life support, and other systems where lives are at stake and iteration through failure is morally and politically impossible. The discipline is knowing which approach fits the risk profile — iteration where hardware can be lost, traditional engineering where stakes are too high. Companies that try to iterate everywhere fail; companies that traditionalize everywhere miss the speed advantage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never iterate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Iteration is a tool, not an ideology. SpaceX picks where to iterate and where to be conservative based on risk profile. The discipline of knowing which is which is what makes the overall approach work.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the most important upcoming Starship milestone for the lunar and Mars mission architectures?",
+      "choices": [
+        { "id": "a", "text": "Paint color." },
+        { "id": "b", "text": "Inter-vehicle propellant transfer in orbit. The lunar and Mars mission architectures require multiple tanker Starships fueling a mission Starship in LEO before it departs for higher-energy destinations. SpaceX has demonstrated intra-vehicle propellant transfer (between tanks in a single Starship); the next critical demonstration is moving propellant from one Starship to another in microgravity. This involves propellant slosh management, docking and sealing for fluid transfer, thermal management of cryogenic propellants, and cadence (multiple tanker missions per main mission). If refueling works at scale, Starship unlocks lunar HLS missions and eventually Mars cargo and crew. If it doesn't, Starship is a heavy LEO launcher with much-reduced beyond-LEO capability — still useful but a smaller architectural step. NASA Artemis 3 depends critically on this milestone being achieved." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Logo update." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Refueling is the architectural keystone for all of Starship's beyond-LEO ambitions. Heat shield and engine reuse are critical but more incremental challenges; refueling either works as designed or forces a major rearchitecture of the mission models. SpaceX's testing program prioritizes this milestone accordingly.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "What sustains the launch industry's demand across multiple providers through 2030?",
+      "choices": [
+        { "id": "a", "text": "Government missions only." },
+        { "id": "b", "text": "Mega-constellations. Starlink (currently 6,000+ satellites, tens of thousands planned), Amazon Kuiper (~3,200 planned), China's Guowang (13,000+ planned), OneWeb, and dozens of smaller constellations together require hundreds of launches per year for years. This sustained demand floor lets SpaceX, Blue Origin, Chinese rockets, ULA, Rocket Lab, and emerging providers all reach economic scale simultaneously. Constellation operators depend on cheap reliable launch; launch providers depend on constellation demand to maintain cadence. Without mega-constellations, the launch industry would consolidate to a couple of major government-focused players and operate at much lower volume." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tourism." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mega-constellations are the demand engine of the modern launch industry. SpaceX, Blue Origin, and Chinese providers all depend on constellation demand to justify high cadence and cost reductions. Government and one-off commercial launches alone wouldn't sustain the current trajectory.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the biggest single variable that will determine whether the 2025-2030 launch landscape transforms or evolves incrementally?",
+      "choices": [
+        { "id": "a", "text": "Government policy." },
+        { "id": "b", "text": "Whether Starship delivers on its operational and economic targets. If Starship achieves full reusability with rapid turnaround and hits cost targets near $10M per launch, dollar-per-kg to orbit drops 10-50x vs. Falcon 9. This would transform launch economics, satellite design, lunar and Mars exploration, and the broader space economy. If Starship delivers only partially (works but at higher cost than targeted), the impact is significant but evolutionary. If Starship hits major setbacks (refueling fails, heat shield doesn't scale), the timeline pushes out years and Falcon 9 remains the workhorse. Other factors — Blue Origin success, Chinese capability scaling, Mars activities, mega-constellation demand — compose around Starship's outcome. The next 5 years are decisive." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Solar weather." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Starship is the decade's biggest variable. If it works as designed, everything transforms. If not, the industry evolves more conservatively. Other factors matter but are secondary to whether SpaceX can deliver its stated economic targets at scale. The next 5 years are decisive for the broader space economy.",
+      "points": 1
+    }
+  ]
+}

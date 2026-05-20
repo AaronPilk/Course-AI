@@ -1,0 +1,71 @@
+{
+  "title": "Module 5 quiz: Production Stripe",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "A customer asks for a $30 refund in good faith. Your policy refuses; they dispute. You win the dispute. What did you learn?",
+      "choices": [
+        { "id": "a", "text": "Strict policy works." },
+        { "id": "b", "text": "Refund first. The math: $30 refund vs. $30 + $25 dispute fee + admin time + reputation hit on a 'won' dispute. The dispute cost more than the refund. Set policy: refund in-good-faith requests promptly; reserve disputes for clear fraud." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip Stripe." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dispute economics favor refunds. The fee + time + reputation impact exceeds the refund amount, even on wins."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's a high-leverage dispute prevention measure?",
+      "choices": [
+        { "id": "a", "text": "Hire more support staff." },
+        { "id": "b", "text": "Clear billing descriptor that matches your brand. Cryptic descriptors cause 'fraudulent' disputes from confused customers. Combine with prompt receipt emails so customers recognize charges. Often the highest-ROI prevention." },
+        { "id": "c", "text": "Disable cards." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Descriptor + receipts prevent 'I don't recognize this charge' disputes — usually the largest category."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "A churning subscriber asks for a refund. You want to retain them. What's a better alternative?",
+      "choices": [
+        { "id": "a", "text": "Refuse and ban." },
+        { "id": "b", "text": "Apply credit to their customer balance ('3 months 50% off' equivalent). Reduces future invoices without actual money out. They get value; you keep them. Pair with outreach asking what's wrong." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel without refund." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Customer balance credits are a retention tool. No real money out; future invoices auto-reduce. Use for retention; use refunds for genuine service recovery."
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "What does Stripe Tax NOT do?",
+      "choices": [
+        { "id": "a", "text": "Calculate tax." },
+        { "id": "b", "text": "File your taxes, register you in jurisdictions, or determine where you have nexus. Those are your responsibility (and your accountant's). Stripe Tax handles calculation per jurisdiction + product code; you handle registration and filing. Don't confuse tool with full compliance solution." },
+        { "id": "c", "text": "Track liability." },
+        { "id": "d", "text": "Apply VAT IDs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe Tax automates calculation. Registration and filing are still on you. Pair with an accountant."
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "A team launches without configuring the statement descriptor. What happens in the first week?",
+      "choices": [
+        { "id": "a", "text": "Nothing noticeable." },
+        { "id": "b", "text": "Disputes spike. Customers see unfamiliar default descriptor on bank statements; dispute as 'fraudulent.' Dispute rate can quickly cross Visa/MC monitoring thresholds (0.9-1.0%). Fees pile up. Reputation hit. Fixing post-launch takes months to recover thresholds." },
+        { "id": "c", "text": "Stripe auto-fixes it." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Statement descriptor is a 5-minute pre-launch task. Cryptic descriptors cause 'fraudulent' disputes from confused customers. Clear brand-matching descriptor prevents a major dispute category."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Module 2 quiz: The Gigafactory model",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Four defining properties of a Tesla Gigafactory?",
+      "choices": [
+        { "id": "a", "text": "Big, expensive, popular, automated." },
+        { "id": "b", "text": "GWh-scale annual capacity, integrated vertical stack (cells + packs + vehicles + energy products), co-located suppliers, single nervous system (shared software + culture across sites). Without these the 'giga' name is just marketing; with them the operational structure differs from traditional plants." },
+        { "id": "c", "text": "Solar-powered, water-recycled, robot-staffed, government-funded." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The four properties are what make a Gigafactory operationally distinct, not just large. Scale + vertical integration + co-location + shared software."
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why does early scale matter so disproportionately in battery manufacturing?",
+      "choices": [
+        { "id": "a", "text": "Government incentives." },
+        { "id": "b", "text": "Wright's Law / experience curves: ~25-30% cost reduction per doubling of cumulative output historically. Being early to scale means riding the curve down faster — a structural advantage that compounds for years. Late entrants face a moving target as Tesla's costs keep dropping." },
+        { "id": "c", "text": "Network effects." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "High-learning-rate industries reward being first to scale disproportionately. Batteries have steep learning curves; Tesla's lead compounds while competitors catch up."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Should commodity fasteners be co-located with the Gigafactory?",
+      "choices": [
+        { "id": "a", "text": "Yes — co-locate everything." },
+        { "id": "b", "text": "No. Co-location's benefits (logistics, iteration speed, supply continuity) don't justify its costs (reduced competition, real estate commitments, lock-in) on commodities. Reserve co-location for high-volume parts, items needing engineering iteration, and strategic suppliers. Keep commodities competitive: many suppliers, lowest bid, ship from wherever." },
+        { "id": "c", "text": "Only at night." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Co-location is selectively valuable. Commodity items don't gain enough to justify the costs of physical co-location and lock-in."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "When does the scale-concentration strategy break down?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When demand uncertainty makes large fixed costs risky; when concentration creates political/geographic risk (one country lockdown = large share of output offline); when market maturity arrives and underutilized capacity hurts more than scale helps. Shanghai during COVID was a concrete example of concentration risk hitting." },
+        { "id": "c", "text": "When using Opus." },
+        { "id": "d", "text": "Only with bad management." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Scale wins during growth + learning. As markets mature and risks concentrate, balance shifts toward more geographic diversification and flexibility."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why does Tesla make stationary storage (Powerwall, Megapack) at the same Gigafactories as vehicles?",
+      "choices": [
+        { "id": "a", "text": "Lack of land for separate factories." },
+        { "id": "b", "text": "Cells are the common platform feeding both. Shared engineering investments benefit both. Capex amortizes across more revenue. Demand cycles differ — storage and vehicle demand don't always move together — smoothing plant utilization. Strategic optionality: allocate cells to whichever product has best margin or demand." },
+        { "id": "c", "text": "Marketing dilution." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cell-as-common-platform with multiple end products is the integration dividend. Shared everything; smoothed demand cycles; strategic re-allocation. Specialized competitors miss these benefits."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: YMYL",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these queries is most clearly YMYL?",
+      "choices": [
+        { "id": "a", "text": "'Best Italian restaurants near me'" },
+        { "id": "b", "text": "'What is the recommended dosage of [common medication]'" },
+        { "id": "c", "text": "'Best gaming mouse 2026'" },
+        { "id": "d", "text": "'How to grill salmon'" }
+      ],
+      "correct_answer": "b",
+      "explanation": "YMYL queries are ones where bad information could meaningfully harm someone's health, finances, safety, or welfare. Medication dosage clearly qualifies — wrong information could cause real harm. The others are low-stakes consumer decisions where bad info costs you a meal, a mouse, or a slightly worse fish dinner.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your general recipe site publishes one article titled 'Foods to avoid during pregnancy' and it suddenly drops out of search results after a core update. What's most likely wrong, and what's the right fix?",
+      "choices": [
+        { "id": "a", "text": "Probably keyword stuffing — strip out some keywords and resubmit." },
+        { "id": "b", "text": "This is a YMYL page on a non-YMYL site. Likely missing: medical reviewer, credentials, primary citations, recent update date. Add all of those (or remove the article entirely)." },
+        { "id": "c", "text": "Probably a robots.txt issue — check your crawl status." },
+        { "id": "d", "text": "Probably bad backlinks — disavow them." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pregnancy / health is squarely YMYL. The algorithm applies heightened E-E-A-T scrutiny to that query category — author credentials, primary citations, and review by qualified professionals all matter much more than they would for a standard recipe. A single YMYL page on a non-YMYL site needs YMYL-grade treatment to survive.",
+      "points": 1
+    }
+  ]
+}

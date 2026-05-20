@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: API surface",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "You're starting a new OpenAI-powered project in 2026. Which API should you default to?",
+      "choices": [
+        { "id": "a", "text": "Chat Completions — it's been around longer." },
+        { "id": "b", "text": "The Responses API — OpenAI's current primary interface. New features ship to it first, and it handles tool use, conversation state, and reasoning models more cleanly." },
+        { "id": "c", "text": "Assistants API — managed agents make everything easier." },
+        { "id": "d", "text": "Realtime API — works for everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Default to Responses for new code. Chat Completions is still fine and not deprecated, but Responses is where OpenAI is investing — built-in tools, conversation persistence, agent loops, reasoning support are all cleaner. Assistants is legacy. Realtime is voice-specific.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You have working Chat Completions code in production. Should you migrate to Responses?",
+      "choices": [
+        { "id": "a", "text": "Yes, immediately — Chat Completions is deprecated." },
+        { "id": "b", "text": "Probably not just yet. Chat Completions is fully maintained and not deprecated. Migrate when you actually need a Responses-specific feature (multi-step tool use, reasoning models, conversation persistence, built-in tools). Don't migrate just to migrate." },
+        { "id": "c", "text": "Yes, but only the simple endpoints." },
+        { "id": "d", "text": "No, migration is impossible." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Chat Completions isn't deprecated — it's still production-supported. The cost of migration is real (testing, behavioral diffs, regression risk). The benefit is zero unless you need a Responses-only feature. Migrate when you have a concrete reason, not on principle.",
+      "points": 1
+    }
+  ]
+}

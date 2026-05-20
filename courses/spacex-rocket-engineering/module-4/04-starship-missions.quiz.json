@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Starship missions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What is the near-term driver of Starship demand and economics?",
+      "choices": [
+        { "id": "a", "text": "Mars settlement." },
+        { "id": "b", "text": "Starlink v2. Starlink v2 satellites are roughly 5x heavier than v1 and won't fit on Falcon 9 — they need Starship. SpaceX wants tens of thousands of v2 satellites in orbit, which requires dozens of Starship launches per year. This internal demand from a SpaceX-owned customer (Starlink) sustains the launch cadence that makes the rest of Starship economics work. Lunar Artemis HLS missions arrive next (multi-billion-dollar NASA contracts). Mars settlement is multi-decade long-term. Earth-to-Earth is speculative. The near-term economics are Starlink-driven; everything else builds on that base of demonstrated operational reliability and high cadence." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Earth-to-Earth flights." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Starlink v2 is the near-term economic engine. It justifies Starship's existence in revenue terms while the longer-term missions develop. Without Starlink-scale internal demand, Starship's launch cadence and unit economics would be much harder to achieve.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why is in-orbit propellant transfer the critical technology unlock for Starship's lunar and Mars missions?",
+      "choices": [
+        { "id": "a", "text": "It saves time." },
+        { "id": "b", "text": "Without refueling, Starship can deliver ~100 tons to LEO but progressively less to higher destinations because most of the delta-v from LEO to (say) lunar transfer must come from propellant carried up from Earth — eating into payload. With orbital refueling, a mission Starship reaches LEO with its payload, receives propellant from 6-15 tanker Starships in LEO, then departs for the destination with a full propellant load. This effectively converts LEO launch capacity into deep-space delivery capacity. Without it: Starship is a heavy LEO launcher with marginal beyond-LEO capability. With it: Starship can do lunar and Mars missions at scale. This is why SpaceX is testing intra-vehicle propellant transfer now and inter-vehicle transfer next, and why high launch cadence isn't optional — refueling requires multiple tanker launches per mission." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random tech goal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Refueling is the architectural keystone. Lunar and Mars missions don't work without it; with it, they become technically feasible. The cadence requirement that follows (multiple tanker launches per mission) is why Starship's manufacturing scale and launch rate matter so much.",
+      "points": 1
+    }
+  ]
+}

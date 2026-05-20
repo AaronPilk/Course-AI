@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Propellants",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why did SpaceX choose methane for Raptor and Starship rather than the higher-Isp hydrogen?",
+      "choices": [
+        { "id": "a", "text": "Methane was on sale." },
+        { "id": "b", "text": "Multiple converging reasons: methane is manufacturable on Mars via the Sabatier reaction (CO2 + H2 -> CH4 + H2O) using Martian atmosphere and water ice, critical for Starship's stated Mars architecture; methane is denser than hydrogen (smaller tanks, better mass ratio); methane burns more cleanly than RP-1 (less coking, better for reuse); and methane is cheaper than hydrogen to source and store. Hydrogen has higher Isp but its tank-mass penalty (very low density) and operational complexity (extreme cryogenics, embrittlement, leakage) made it the wrong fit for SpaceX's reusability-and-Mars design space. Methane is the deliberate compromise that optimizes for the whole system, not raw Isp." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Propellant choice is multi-criteria. Methane wins on the combined scorecard for Starship's mission: Mars manufacturability, reusability, density, cost. Hydrogen wins on raw Isp but loses on most other axes for this vehicle.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A small launcher startup is deciding between solid rocket motors and liquid engines for their first stage. Solids are simpler and cheaper to develop. Right choice?",
+      "choices": [
+        { "id": "a", "text": "Yes — always go simple first." },
+        { "id": "b", "text": "Depends on long-term strategy. Solids get to market faster (simpler design, no plumbing, no turbopumps), have lower upfront capex, and work well for single-use small launchers. But solids cannot throttle, cannot restart, and have lower Isp — which means no booster recovery and no reusability path. If the long-term plan is reusable launches and competitive economics at scale (Rocket Lab's strategy, for example), liquids are required despite the higher development cost. Choose solids if the business is launching satellites with no reuse and you need to ship fast; choose liquids if you're playing the long-term reusability game." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Run both fuels at once." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Propellant choice locks in operational characteristics for the life of the program. Solids preclude reusability. The decision tracks business strategy more than engineering preference.",
+      "points": 1
+    }
+  ]
+}

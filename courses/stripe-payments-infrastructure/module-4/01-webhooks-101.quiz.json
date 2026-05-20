@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Webhooks 101",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your webhook handler runs heavy DB writes inline. P99 latency is 45s. Stripe times out half your webhooks; retries pile up. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Disable webhooks." },
+        { "id": "b", "text": "Acknowledge fast, process async. Verify the signature, enqueue the event to a background queue/worker, return 200 immediately. The heavy work happens in the background; webhook handler stays under a second. Stripe times out at ~30s; quick ack keeps the queue from filling with duplicates." },
+        { "id": "c", "text": "Switch processor." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe webhooks have a ~30s timeout. Slow handlers cause timeouts → retries → flood. The canonical fix: verify + enqueue + ack fast. Heavy work runs in background; handler is sub-second.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Why store processed event IDs in your DB?",
+      "choices": [
+        { "id": "a", "text": "For analytics only." },
+        { "id": "b", "text": "Idempotency. Stripe retries webhooks on failures, network blips, timeouts. Without dedup, the same event processes multiple times — duplicate access grants, duplicate emails, duplicate metric inserts. Track event IDs; skip if seen. End-to-end idempotency requires this on every webhook handler." },
+        { "id": "c", "text": "Required by Stripe." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stripe delivers at-least-once; your handler must be idempotent. Store event.id on processing; check before processing. Without this, duplicate processing is a real risk and a real bug.",
+      "points": 1
+    }
+  ]
+}

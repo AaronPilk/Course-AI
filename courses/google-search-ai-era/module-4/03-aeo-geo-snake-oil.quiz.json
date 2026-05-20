@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: AEO/GEO snake oil",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "A vendor claims adding an llms.txt file to your site is critical for AI Overview visibility. What's Google's actual position?",
+      "choices": [
+        { "id": "a", "text": "Yes, llms.txt is required for AI search." },
+        { "id": "b", "text": "Google explicitly says llms.txt files and other 'special' markup are NOT needed. Their AI features use the same Search index as everything else, built from your normal HTML pages." },
+        { "id": "c", "text": "Required only for ecommerce sites." },
+        { "id": "d", "text": "Required only for sites with over 1,000 pages." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google directly debunks this in the AI Optimization Guide: 'LLMS.txt files and other 'special' markup: You don't need to create new machine readable files, AI text files, markup, or Markdown to appear in generative AI search.' If a vendor is selling llms.txt as required for Google AI visibility, they're selling something Google has publicly said doesn't matter.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A consultant pitches you on 'GEO certification' — a separate optimization discipline for AI search, distinct from classic SEO. What's the most accurate response?",
+      "choices": [
+        { "id": "a", "text": "Sign up immediately — GEO is the future." },
+        { "id": "b", "text": "Decline. Google says explicitly: 'From Google Search's perspective, optimizing for generative AI search is optimizing for the search experience, and thus still SEO.' There is no separate GEO discipline — it's classic SEO with attention to a few new properties." },
+        { "id": "c", "text": "Only useful for B2B sites." },
+        { "id": "d", "text": "Only useful for sites in highly competitive niches." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google has been direct on this: AI search optimization isn't a separate field. The same classic SEO fundamentals — quality content, technical hygiene, authority — drive AI visibility. Consultants positioning AEO/GEO as a distinct discipline are typically selling repackaged classic SEO at a markup, or worse, selling tactics Google has explicitly debunked.",
+      "points": 1
+    }
+  ]
+}

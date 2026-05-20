@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://docs.nvidia.com/cuda/", "title": "CUDA Documentation (NVIDIA)" },
+    { "url": "https://developer.nvidia.com/cuda-zone", "title": "CUDA Zone (NVIDIA Developer)" },
+    { "url": "https://developer.nvidia.com/blog", "title": "NVIDIA Developer Blog" },
+    { "url": "https://resources.nvidia.com/en-us-tensor-core", "title": "NVIDIA Tensor Core Resources" },
+    { "url": "https://developer.nvidia.com/deep-learning", "title": "NVIDIA Deep Learning Developer" }
+  ]
+}

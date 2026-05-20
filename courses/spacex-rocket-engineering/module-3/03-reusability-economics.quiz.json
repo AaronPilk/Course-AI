@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Reusability economics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is SpaceX's Falcon 9 much cheaper than ULA's Atlas V or Delta IV?",
+      "choices": [
+        { "id": "a", "text": "Pure reusability." },
+        { "id": "b", "text": "Reusability matters, but it's one of several factors. SpaceX combines: (1) first-stage reuse (amortizes hardware cost across ~10 flights per booster), (2) vertical integration (builds engines, avionics, structures in-house, capturing supplier margins), (3) manufacturing scale (high cadence drives down unit costs of upper stages, fairings, components), (4) workforce efficiency (fewer people per launch than legacy), and (5) operational efficiency (streamlined ops, less paperwork). Removing any one factor still leaves SpaceX cheaper; combining all five produces the dramatic cost gap. ULA and others trying to match SpaceX must build all five capabilities, not just reusability." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Government subsidy." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cost advantage is multi-source. Reusability gets all the press but vertical integration and manufacturing scale are equally important. This is why competitors can't simply 'add reusability' to legacy operations and expect Falcon 9 prices.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A customer plans a maximum-payload LEO mission and asks whether to launch on Falcon 9 expendable or Falcon 9 recoverable. What's the right answer?",
+      "choices": [
+        { "id": "a", "text": "Always recoverable — it's cheaper." },
+        { "id": "b", "text": "Compare actual payload need to recoverable capacity (~17,500 kg LEO) vs. expendable (~22,800 kg LEO). If the payload fits in recoverable mode, that's almost always the right choice — lower customer price, no penalty. If the payload exceeds recoverable capacity but fits expendable, you pay a premium for expendable mode. If the payload exceeds even expendable capacity, you need Falcon Heavy. Customers should specify their actual mass and have SpaceX scope the right configuration. SpaceX often still recovers the booster on expendable-priced missions if the launch profile allows it (extra propellant margin), but charges for expendable capability." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always expendable." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mission configuration tracks payload requirements. Most LEO missions fit recoverable capacity easily. Expendable is reserved for heavy payloads where the ~30% recovery penalty would force a more expensive launch (Falcon Heavy). Customer + SpaceX work this out per mission.",
+      "points": 1
+    }
+  ]
+}

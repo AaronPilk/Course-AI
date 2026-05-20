@@ -1,0 +1,10 @@
+{
+  "slug": "tesla-manufacturing-automation",
+  "sources": [
+    { "title": "Tesla AI", "url": "https://www.tesla.com/AI", "type": "official-page", "author": "Tesla" },
+    { "title": "Tesla Investor Relations", "url": "https://ir.tesla.com", "type": "investor-relations", "author": "Tesla" },
+    { "title": "Tesla blog", "url": "https://www.tesla.com/blog", "type": "engineering-blog", "author": "Tesla" },
+    { "title": "Tesla Master Plan Part 3", "url": "https://www.tesla.com/blog/master-plan-part-3", "type": "strategy-document", "author": "Tesla" },
+    { "title": "Tesla Impact Reports", "url": "https://www.tesla.com/impact-report", "type": "annual-report", "author": "Tesla" }
+  ]
+}

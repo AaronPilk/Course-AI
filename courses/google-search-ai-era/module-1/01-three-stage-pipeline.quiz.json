@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: The 3-stage pipeline",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which of these statements is most accurate?",
+      "choices": [
+        { "id": "a", "text": "If a page is indexed, it will eventually rank." },
+        { "id": "b", "text": "Crawl, index, and serve are three independent decisions — a page has to clear all three to show up in results." },
+        { "id": "c", "text": "Submitting a sitemap guarantees indexing." },
+        { "id": "d", "text": "The Google Search algorithm is one big system that makes one decision per page." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Google Search runs in three sequential stages — crawling, indexing, and serving — and each is a separate yes/no decision. None of them is guaranteed, even if the others succeed. This is the core mental model the rest of the course builds on.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A page on your site is listed as 'Crawled — currently not indexed' in Search Console. Which stage failed?",
+      "choices": [
+        { "id": "a", "text": "Stage 1: Crawling — Googlebot never reached the page." },
+        { "id": "b", "text": "Stage 2: Indexing — Googlebot fetched it but Google chose not to store it." },
+        { "id": "c", "text": "Stage 3: Serving — the page is indexed but isn't winning queries." },
+        { "id": "d", "text": "There's no failure — this is normal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "The status name tells you exactly which stage you're stuck at. 'Crawled — currently not indexed' means Stage 1 (crawl) succeeded but Stage 2 (index) decided not to store the page — almost always a content quality signal, not a technical bug.",
+      "points": 1
+    }
+  ]
+}

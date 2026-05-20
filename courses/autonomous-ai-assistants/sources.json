@@ -1,0 +1,13 @@
+{
+  "slug": "autonomous-ai-assistants",
+  "sources": [
+    { "title": "Anthropic — Building effective agents", "url": "https://docs.anthropic.com/en/docs/agents-and-tools/building-effective-agents", "type": "documentation", "author": "Anthropic" },
+    { "title": "Model Context Protocol", "url": "https://modelcontextprotocol.io", "type": "documentation", "author": "Anthropic" },
+    { "title": "OpenAI — Agents SDK", "url": "https://platform.openai.com/docs/guides/agents", "type": "documentation", "author": "OpenAI" },
+    { "title": "OpenAI — Memory in ChatGPT", "url": "https://help.openai.com/en/articles/8590148-memory-faq", "type": "documentation", "author": "OpenAI" },
+    { "title": "Anthropic — Tool use overview", "url": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview", "type": "documentation", "author": "Anthropic" },
+    { "title": "Anthropic — Computer use", "url": "https://docs.anthropic.com/en/docs/build-with-claude/computer-use", "type": "documentation", "author": "Anthropic" },
+    { "title": "OAuth 2.0 — the simplified guide", "url": "https://aaronparecki.com/oauth-2-simplified/", "type": "reference", "author": "Aaron Parecki" },
+    { "title": "Generative agents (research)", "url": "https://arxiv.org/abs/2304.03442", "type": "research-paper", "author": "Park et al." }
+  ]
+}

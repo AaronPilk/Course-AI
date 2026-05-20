@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Agent loop",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What stop condition reliably keeps a Claude agent from running away?",
+      "choices": [
+        { "id": "a", "text": "Trust the model." },
+        { "id": "b", "text": "Always cap iterations with `maxSteps` (typical default 10–20). Pair with logging and alerts on consecutive tool errors. Hitting the cap should raise an error and either escalate to a human or return a partial answer — never silently retry." },
+        { "id": "c", "text": "Set max_tokens to 1." },
+        { "id": "d", "text": "Use Haiku." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bugs, ambiguous goals, or adversarial inputs can put any agent into a loop — and you pay per step. maxSteps is a hard ceiling. Combine with per-tool timeouts and approval gates on destructive tools for full safety.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your agent has an `email_customer` tool. In testing, it called the tool freely. What's the production-ready pattern?",
+      "choices": [
+        { "id": "a", "text": "Remove the tool entirely." },
+        { "id": "b", "text": "Add an approval gate in your tool runner: any call to an irreversible tool (email, charge, delete) requires explicit human confirmation before executing. The agent can still propose the action; the user clicks 'approve' before it runs." },
+        { "id": "c", "text": "Trust the model not to misuse it." },
+        { "id": "d", "text": "Only use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Approval gates on irreversible tools are a non-negotiable production pattern. Sending emails, charging cards, deleting data — any of these should require human OK. The agent loop calls the tool runner; the tool runner checks for an approval before executing.",
+      "points": 1
+    }
+  ]
+}

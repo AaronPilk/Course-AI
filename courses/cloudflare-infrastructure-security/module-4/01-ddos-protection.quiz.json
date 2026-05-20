@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: DDoS",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's automatic in Cloudflare DDoS protection vs. what you tune?",
+      "choices": [
+        { "id": "a", "text": "Everything is automatic." },
+        { "id": "b", "text": "L3/L4 (network volumetric) protection is automatic, always on, free, with hundreds of Tbps absorbed capacity across PoPs. L7 (HTTP) protection has automatic signature detection but app-specific patterns need WAF rules + rate limiting + bot management. The most expensive attack class (volumetric) is handled for you; the targeted ones you wire up." },
+        { "id": "c", "text": "Everything requires Enterprise." },
+        { "id": "d", "text": "Nothing is automatic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Volumetric DDoS is structurally absorbed by Cloudflare's network — anycast distribution + huge capacity means most volumetric attacks never reach origin. Targeted L7 attacks specific to your app need explicit WAF + rate limit + bot tuning.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your password-reset endpoint is being abused for account enumeration — steady probing across many IPs, low per-IP rate. Right mitigation?",
+      "choices": [
+        { "id": "a", "text": "Trust Cloudflare's automatic DDoS to handle it." },
+        { "id": "b", "text": "Rate limit on the specific endpoint (e.g. 5 requests per IP per minute on /password-reset), add bot management challenges, possibly add CAPTCHA. This is app-specific abuse — not volumetric — so automatic DDoS detection won't catch it. WAF rules + rate limits + bot management are the right layer." },
+        { "id": "c", "text": "Switch to Opus." },
+        { "id": "d", "text": "Disable the endpoint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Application-logic abuse needs application-aware defenses. Rate limiting on the specific endpoint, bot management for automated traffic, and CAPTCHA for high-risk paths. Cloudflare's WAF + rate limit + bot tools wire to this case.",
+      "points": 1
+    }
+  ]
+}

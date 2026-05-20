@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Long-term memory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "User mentioned 'exploring Python' once. Months later every code example is in Python — but the user moved to Go. What's the architecture fix?",
+      "choices": [
+        { "id": "a", "text": "Use a smarter model." },
+        { "id": "b", "text": "Tag every long-term fact with confidence + source (user-stated, user-confirmed inference, agent inference, behavioral pattern). Expire low-confidence inferences (30-90 days). Re-confirm before treating an inference as a durable fact. Add a 'what I remember' UI so users can correct." },
+        { "id": "c", "text": "Reset memory weekly." },
+        { "id": "d", "text": "Disable memory entirely." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Confidence tagging + expiration + user review prevents memory poisoning. The original problem was treating a casual inference as a canonical fact. The fix is structural: trust hierarchy in storage, expiration on low-confidence, user controls to correct.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "How should episodic memory be retrieved at session start?",
+      "choices": [
+        { "id": "a", "text": "Eager-load all of it every session." },
+        { "id": "b", "text": "Lazy retrieval by embedding similarity to current context (or by topic/time when the user mentions something specific). Eager-load only the small structured layers (profile, lessons learned). Episodic memory can be large; loading all of it costs tokens and pollutes context with irrelevant past content." },
+        { "id": "c", "text": "Skip it entirely." },
+        { "id": "d", "text": "Load alphabetically." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Episodic memory is RAG-shaped: embed past summaries, retrieve top-K relevant to current context. Eager retrieval doesn't scale and pollutes the prompt. Lazy retrieval keeps the prompt focused and the cost bounded.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Do you need SEO?",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Google says SEO results typically take how long to show up?",
+      "choices": [
+        { "id": "a", "text": "A few hours" },
+        { "id": "b", "text": "1–2 weeks" },
+        { "id": "c", "text": "4 months to a year" },
+        { "id": "d", "text": "2+ years minimum" }
+      ],
+      "correct_answer": "c",
+      "explanation": "Direct from Google's 'Do you need an SEO?' doc: 'It will take time for you to see results: typically from four months to a year from the time you begin making changes until you start to see the benefits.' This is the most under-appreciated reality of SEO. Businesses needing revenue in 30 days shouldn't make SEO their primary lever.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A B2B SaaS startup with sales-led GTM (closed deals come from outbound + referrals, not inbound) hires an SEO agency. After 18 months they have lots of blog traffic but almost zero pipeline. What was the strategic miss?",
+      "choices": [
+        { "id": "a", "text": "The agency was bad — find a better one." },
+        { "id": "b", "text": "The business model doesn't depend on inbound search. SEO is high-leverage when customers actually find you via Google. For pure sales-led GTM, SEO is at best a low-priority supplement; primary investment should match how customers actually discover the business." },
+        { "id": "c", "text": "They needed more content." },
+        { "id": "d", "text": "They needed paid ads on top of the SEO." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Question 1 of the decision framework: do customers actually use Google to find businesses like yours? For pure outbound B2B sales-led companies, the answer is often no — deals come from cold outreach, referrals, and warm intros. SEO doesn't fix a channel-fit problem.",
+      "points": 1
+    }
+  ]
+}

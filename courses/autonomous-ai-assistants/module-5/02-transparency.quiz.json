@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Transparency",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Your assistant filtered an important email into the low-priority bucket silently. User found it weeks later and lost trust. Fix?",
+      "choices": [
+        { "id": "a", "text": "Disable filtering." },
+        { "id": "b", "text": "Make filtering transparent: every filtered item appears in the activity log with the rule that triggered it; user can override per item or per rule; periodic recap mentions filtered items. Hidden actions are the fastest path to trust crises — surface them as standard, not exceptions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Mute the user." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Silent actions seem efficient but burn trust on the first mistake. Transparent filtering shows what was filtered, why, and lets the user override. The action stays useful; the trust stays intact.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What three transparency surfaces should an autonomous assistant offer?",
+      "choices": [
+        { "id": "a", "text": "A single error log." },
+        { "id": "b", "text": "In-the-moment narration (what's happening now), persistent activity log with the 'why' for each action, and a periodic recap (weekly summary of work done). Each serves a different purpose; together they make a black-box assistant glass-box." },
+        { "id": "c", "text": "Just the recap." },
+        { "id": "d", "text": "Engineering trace dumps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three surfaces: live narration during interactive sessions, persistent log for retrospective review, periodic recap for orientation. Each addresses a different user moment — and together they build durable trust.",
+      "points": 1
+    }
+  ]
+}

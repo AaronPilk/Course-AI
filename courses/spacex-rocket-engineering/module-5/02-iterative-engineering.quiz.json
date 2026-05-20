@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Iterative engineering",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What conditions must be true for SpaceX's iterative test-and-iterate approach to actually work?",
+      "choices": [
+        { "id": "a", "text": "Just culture." },
+        { "id": "b", "text": "Five interlinked conditions: (1) hardware cost low enough per unit that losing one is recoverable; (2) failure modes observable via telemetry, video, and post-mortem analysis to extract learning; (3) iteration cycle fast (months not years) so learning compounds before lessons are forgotten; (4) culture that rewards learning from failure rather than punishing it; (5) capital structure that tolerates visible setbacks without forcing premature changes. SpaceX has built all five over years. Companies missing one or two can't replicate the approach. This is why legacy aerospace can't iterate the same way — their hardware costs and slow cycles break conditions 1 and 3 simultaneously." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Just budget." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Iterative engineering is a systems-level capability, not just a methodology. SpaceX invested in each enabler over years. Copying the methodology without building the supporting capabilities produces frustration, not faster development.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Why did SpaceX use conservative, traditional engineering for Crew Dragon's abort system rather than iterating?",
+      "choices": [
+        { "id": "a", "text": "Lost interest." },
+        { "id": "b", "text": "Risk asymmetry. Crew Dragon carries astronauts; failure in the abort system could kill them. Iterative testing of a crewed abort system is morally and politically impossible. So SpaceX used extensive analysis, ground testing, and a flight demonstration of the abort system at high altitude — conservative engineering, not iteration through failures. This is the correct application of iteration: use it where hardware can be lost and lessons extracted from failures (Starship test articles, early Falcon 9 landings); avoid it where lives are at stake (crew abort, crew life support). SpaceX picks where to iterate and where to be conservative. The pattern is iteration plus rigor where appropriate, not iteration everywhere." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random choice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Iteration is a tool, not an ideology. SpaceX uses traditional engineering where iteration would be irresponsible (crew systems, mission-critical software) and iteration where it's appropriate. The discipline is knowing which is which.",
+      "points": 1
+    }
+  ]
+}

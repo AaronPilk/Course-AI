@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Risks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the biggest unsolved technical risk for Starship's economic case?",
+      "choices": [
+        { "id": "a", "text": "Color of the paint." },
+        { "id": "b", "text": "In-orbit propellant transfer between Starships. The lunar and Mars mission architectures require multiple tanker Starships fueling a mission Starship in LEO before it departs for higher-energy destinations. SpaceX has demonstrated intra-vehicle propellant transfer (between tanks within a single Starship); inter-vehicle transfer is upcoming. The technical challenges include: managing propellant slosh in microgravity, docking and sealing for fluid transfer, thermal management (cryogenic propellants warm up during transfer), and cadence (multiple tanker launches per mission). If refueling works, Starship reaches its full mission set including lunar HLS and Mars. If it doesn't work as planned, Starship becomes a heavy LEO launcher with limited beyond-LEO capability — still useful but a much smaller architectural unlock." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rocket aesthetics." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Refueling is the architectural keystone. Heat shields and engine reuse are critical but more incremental challenges; refueling either works as designed or forces a rearchitecture of the lunar and Mars mission models. SpaceX's testing on this is the most important upcoming Starship milestone.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "An analyst lists 6 risks for SpaceX: Starship technical setback, FAA license restrictions, Starlink margin pressure, key engineer departure, Boca Chica hurricane damage, leadership transition. Each looks individually manageable. What's the systemic concern?",
+      "choices": [
+        { "id": "a", "text": "Nothing — small risks." },
+        { "id": "b", "text": "Correlated failures. Each risk in isolation is manageable; the systemic concern is when multiple materialize together because they often share root causes — a major launch accident could simultaneously trigger FAA restrictions, customer concern, regulatory ratchets, and capital-market valuation hits. A recession could simultaneously pressure Starlink margins, customer demand, and capital access. A geopolitical shock could simultaneously disrupt operations and customer relationships. SpaceX's high fixed costs and capex commitments amplify the impact of any single shock and amplify dramatically when several hit simultaneously. System engineering for risk means thinking about correlations, not just isolated probabilities. SpaceX's 2008 near-bankruptcy was a similar correlated-failure moment (Falcon 1 failures + cash burn + capital market timing)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Sell stock." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Correlated failures are the system-level risk lesson. Individual risks look manageable on a list; the danger is when several materialize at once. SpaceX's 2008 near-miss is the template — multiple risks simultaneously realized created existential stress.",
+      "points": 1
+    }
+  ]
+}

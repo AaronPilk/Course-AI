@@ -1,0 +1,71 @@
+{
+  "title": "Module 4 quiz: Security at the edge",
+  "scoring": { "passing_score": 4, "total_questions": 5, "points_per_question": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's automatic vs. tunable in Cloudflare DDoS protection?",
+      "choices": [
+        { "id": "a", "text": "Everything is automatic." },
+        { "id": "b", "text": "L3/L4 (network volumetric) protection is automatic, always on, unmetered. L7 (HTTP) protection has automatic signatures plus app-specific tuning needed via WAF rules, rate limits, and bot management. Volumetric absorbed for you; targeted attacks you wire up." },
+        { "id": "c", "text": "Everything requires Enterprise." },
+        { "id": "d", "text": "Nothing is automatic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Volumetric DDoS is structurally absorbed. Targeted L7 / app-specific attacks need explicit WAF + rate limits + bot management."
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Deploying a new WAF rule that blocks empty User-Agents. Right approach?",
+      "choices": [
+        { "id": "a", "text": "Ship to Block immediately." },
+        { "id": "b", "text": "Log mode first; monitor Firewall Events for false positives (legitimate UA-less traffic — internal monitoring, mobile apps, etc.); refine; promote to Block only when confident. Ship-and-pray block rules regularly cause customer outages." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable WAF." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Log → monitor → refine → Block is the canonical WAF rollout. Without monitoring, false positives are invisible until customers complain."
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "Your auth endpoint is being credential-stuffed across thousands of residential proxy IPs. Per-IP rate limit isn't catching it. Right fix?",
+      "choices": [
+        { "id": "a", "text": "Lower the per-IP limit." },
+        { "id": "b", "text": "Layered defense: bot score < 30 challenges, rate limit by username (in addition to IP), Turnstile on the login form, backend account-lock on N failed attempts. Per-IP only fails when attackers spread across many IPs; per-account and bot-aware layers catch what IP-based can't." },
+        { "id": "c", "text": "Disable login." },
+        { "id": "d", "text": "Block all residential IPs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Credential stuffing across many IPs needs account-aware and bot-aware defenses. Stack: bot score, per-account rate limit, CAPTCHA, backend lock. Each catches what the others miss."
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "An attacker DDoS'd your origin directly despite Cloudflare being in front. Most common cause?",
+      "choices": [
+        { "id": "a", "text": "Cloudflare failed." },
+        { "id": "b", "text": "Origin IP leak (mail server on same IP, CT logs, old DNS history) combined with no origin firewall lockdown. Mitigations: split mail to different IP, audit for leaks (CT logs are public), lock origin firewall to Cloudflare IP ranges. Even with leaks, firewall lockdown makes the IP useless to attackers." },
+        { "id": "c", "text": "Need a bigger plan." },
+        { "id": "d", "text": "DNSSEC needed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Origin IP leaks are common. Firewall lockdown to Cloudflare IP ranges is the structural defense — even if IP leaks, attackers can't connect."
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the correct policy for Cloudflare API tokens in CI/CD?",
+      "choices": [
+        { "id": "a", "text": "One account-wide admin token for convenience." },
+        { "id": "b", "text": "Least-privilege per use case: separate tokens scoped to specific zones with minimum permissions per job. Rotate periodically; audit usage. Account-wide tokens turn a single leak into full compromise." },
+        { "id": "c", "text": "Hardcoded in source." },
+        { "id": "d", "text": "Same token everywhere." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloudflare API tokens support fine-grained permissions. Each automation gets only what it needs. Limits blast radius of leaks; supports audit and rotation."
+    }
+  ]
+}

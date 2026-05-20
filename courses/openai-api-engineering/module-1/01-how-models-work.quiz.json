@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: How the models work",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most accurate behavioral model of how OpenAI's text models generate output?",
+      "choices": [
+        { "id": "a", "text": "They search a database for the best matching answer." },
+        { "id": "b", "text": "They predict the next token in the sequence, one token at a time, based on the input so far." },
+        { "id": "c", "text": "They run logic rules to generate each sentence." },
+        { "id": "d", "text": "They have persistent memory of all previous conversations and use it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Every behavior you observe — output length affecting cost, hallucination, variability between runs, the lost-in-the-middle problem — follows from this token-by-token prediction loop. Models don't search databases, follow rules, or have memory between calls.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your chat product sends the full conversation history with each API call. By turn 50, costs per call are 40x what they were at turn 1. Why, and what's the right fix?",
+      "choices": [
+        { "id": "a", "text": "Bug in the API — file a support ticket." },
+        { "id": "b", "text": "You're paying for input tokens on every call, and the input is growing with each turn (the full history is now huge). Fix: implement conversation compaction — summarize old turns into a short summary, keep recent turns verbatim. Often 70–90% cost reduction." },
+        { "id": "c", "text": "OpenAI silently raised prices." },
+        { "id": "d", "text": "Add `temperature: 0` to fix it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Models are stateless — they only know what's in the current request's context. To preserve conversation continuity you have to re-send history, but that history grows linearly. Without compaction, costs scale linearly with conversation length. Compaction is the standard fix.",
+      "points": 1
+    }
+  ]
+}

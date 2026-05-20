@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: How rockets actually work",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most accurate framing of what it takes to reach low Earth orbit?",
+      "choices": [
+        { "id": "a", "text": "Going high enough." },
+        { "id": "b", "text": "Going fast enough sideways. LEO requires ~7.8 km/s of horizontal velocity at altitude, plus enough delta-v to overcome gravity and drag losses during ascent (~9.4 km/s total). Altitude alone (suborbital) requires only ~1.4 km/s — about 10x less. The dominant engineering challenge is horizontal velocity, not vertical altitude. This is why the Karman line at 100 km isn't the same as orbit; a New Shepard suborbital flight crosses the Karman line and comes right back down because it lacks the sideways velocity to stay there." },
+        { "id": "c", "text": "Going perfectly vertical." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Orbit is sideways. This single reframe organizes everything in rocketry. Suborbital and orbital are categorically different in energy and engineering.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "A team claims a propulsion breakthrough that increases their engine Isp from 300 s to 600 s. What does that buy them, holding mass ratio constant at 10?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Doubles their delta-v capability per stage. Tsiolkovsky says Δv = Isp × g × ln(mass ratio). Holding mass ratio at 10 (ln = 2.30) and doubling Isp from 300 s to 600 s doubles delta-v from ~6.8 km/s to ~13.5 km/s. That's a massive improvement — enough to make single-stage-to-orbit potentially feasible if you can also achieve 90% propellant fraction. Real propulsion breakthroughs at this scale (chemical to nuclear thermal, for example) genuinely change what's possible. Skepticism is warranted because most claimed 'breakthroughs' don't deliver at scale, but the math says a true 2x Isp improvement is transformative." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower payload." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Isp scales delta-v linearly. A true 2x Isp improvement is genuinely transformative — which is why people chase nuclear thermal, advanced electric propulsion, etc. The catch is that high-Isp engines often have low thrust or other tradeoffs that limit where they're useful.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why don't rockets use 4+ stages even though more stages should give more delta-v?",
+      "choices": [
+        { "id": "a", "text": "FAA regulation." },
+        { "id": "b", "text": "Diminishing returns and exponential complexity. Each additional stage adds an interstage structure (dry mass), a separation event (failure mode), an extra engine system to develop and qualify, and operational complexity. The delta-v gain shrinks at each stage because the structural mass of the additional interstage and engines eats into the benefit. Around 2-3 stages, the cost-benefit flips. Saturn V (3 stages) was the practical max for chemical engines pursuing lunar-class missions; LEO/GTO launchers use 2 because that's where the curve flattens. Reusability further favors fewer stages because every separation event is something that can fail." },
+        { "id": "c", "text": "There's no upper limit — modern rockets have many stages." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stage count is a sweet-spot optimization. Two stages for most missions, three for the highest-energy missions, more than three almost never. The complexity penalty grows faster than the delta-v gain.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "An engineer wants to optimize Falcon 9's ascent. Where's the biggest leverage — engine Isp, mass ratio, ascent profile, or atmospheric drag?",
+      "choices": [
+        { "id": "a", "text": "Drag." },
+        { "id": "b", "text": "Engine Isp and mass ratio (linked via dry mass reduction) are by far the highest leverage. Tsiolkovsky says delta-v scales linearly with Isp and logarithmically with mass ratio. Modest Isp improvements (5-10%) translate directly into more payload or higher orbits. Structural mass reduction (better mass ratio) gives roughly 1:1 payload trade. Ascent profile optimization saves maybe 100-200 m/s out of 9,400 m/s budget — meaningful but small. Drag savings are even smaller (~100 m/s range). Real rocket engineering devotes most of its effort to the propulsion-mass-ratio side, with profile and drag optimized once the rocket exists." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "All equal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Engine and structure dominate. SpaceX's biggest improvements over Falcon 9's life came from Merlin thrust upgrades, slight Isp improvements, and structural mass reductions — not from trajectory tweaks. The Tsiolkovsky equation tells you where to spend engineering effort.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Which mission delivers the highest payload mass to LEO, all else equal?",
+      "choices": [
+        { "id": "a", "text": "Polar orbit from Vandenberg." },
+        { "id": "b", "text": "Direct GEO insertion from Cape Canaveral." },
+        { "id": "c", "text": "Eastward equatorial launch into low-inclination LEO. Earth's rotation provides ~0.46 km/s of free velocity when launching eastward from the equator, which is essentially additional delta-v capability. The closer to the equator and the more eastward your trajectory, the more help you get. A low-inclination LEO is also the lowest-energy orbit you can target (no inclination change cost, lowest orbital velocity threshold). Polar orbits get no rotation help; GEO missions require massive additional delta-v beyond LEO; both reduce payload significantly relative to equatorial LEO." },
+        { "id": "d", "text": "Use Opus." }
+      ],
+      "correct_answer": "c",
+      "explanation": "Equatorial LEO is the easiest target. Every other inclination or altitude costs payload. This is also why Kourou (5° N) is the best site on Earth for commercial GEO launches and why SpaceX uses Cape Canaveral when possible.",
+      "points": 1
+    }
+  ]
+}
