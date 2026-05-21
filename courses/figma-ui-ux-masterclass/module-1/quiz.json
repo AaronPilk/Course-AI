@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Figma foundation",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Frames vs groups in Figma — which to prefer?",
+      "choices": [
+        { "id": "a", "text": "Groups." },
+        { "id": "b", "text": "Frames. They're containers with real capabilities — padding, fill, stroke, constraints, Auto Layout, clipping, layout grids; define a coordinate space children position within. Groups are pure layer aggregation — bundle layers for selection / movement, no styling, no Auto Layout, no constraints. Modern Figma workflows depend on Auto Layout (Module 2), which only works on frames. Constraints (controlling how children resize when parent resizes) only work on frames. Layout grids only work on frames. Standard advice in 2026 Figma: use frames; reserve groups for occasional ad-hoc bundling. Even Figma's templates use frames throughout. If you find yourself adding groups regularly, you'd benefit from frame-and-Auto-Layout instead. Press F to draw a frame; the F-key default is the right one. The 'when would I use a group' answer in 2026: rarely; for legacy / quick-bundle / temporary." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Either." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Frames support padding, Auto Layout, constraints, layout grids. Groups don't. Modern Figma depends on frames.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Most-leveraged Figma selection shortcut?",
+      "choices": [
+        { "id": "a", "text": "Cmd+A." },
+        { "id": "b", "text": "Cmd/Ctrl+click — selects layers regardless of nesting depth. Default click selects the OUTERMOST clickable layer; reaching inner elements normally requires multiple double-clicks or expanding the layer panel. Cmd/Ctrl+click bypasses hierarchy: click any visible element, it selects directly regardless of how many nesting layers wrap it. Essential when working with complex components (button inside card inside section inside frame); skipping drill-down saves clicks constantly. Pair with Cmd/Ctrl+drag to select multiple deeply-nested items. Combined with: Shift+1 (zoom to fit), Shift+0 (100%), Spacebar+drag (pan), Cmd+D (duplicate with same offset), Shift+A (wrap in Auto Layout) — these 5 shortcuts cover most canvas interaction. Memorize this set first; rest comes with use. Quick action menu (Cmd+/) discovers other shortcuts as you encounter unfamiliar actions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cmd+Z." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cmd/Ctrl+click bypasses nesting; selects any depth directly. Eliminates drill-down clicks.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Verifying consistent spacing between elements quickly?",
+      "choices": [
+        { "id": "a", "text": "Eyeball." },
+        { "id": "b", "text": "Alt/Option + hover — Figma displays the distance between selected element and hovered element in real-time: 16px between top edges, 24px between rights, etc. Move cursor around to inspect different relationships. Compared to: computing positions manually from x/y values (slow + error-prone), using rulers/guides (overkill for ad-hoc), exporting to measurement tool (absurd). Alt-hover is among Figma's most useful affordances; designers fluent with it produce visually-consistent work faster than those unaware. Combine with Auto Layout (guarantees consistent spacing via layout settings, no per-element checks); for hand-positioned elements, Alt-hover is the verification tool. Show this to junior designers; they often don't know it; their work becomes notably tighter after learning. Standard Figma technique that pays back every design session." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Calculator." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alt/Option + hover shows distances in real-time. Select one element; hover others; instant measurement.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designing a button that hugs its text content. Use constraints or Auto Layout?",
+      "choices": [
+        { "id": "a", "text": "Constraints." },
+        { "id": "b", "text": "Auto Layout. Constraints define how a CHILD behaves when PARENT resizes; they don't change parent size based on children. For a button hugging text content, you need the OPPOSITE — parent (button background) sizes based on child (text). Auto Layout: configure the button frame as Auto Layout with padding (16px horizontal, 8px vertical); frame's width = text width + 32px automatically. Change text from 'Save' to 'Save and Continue,' button grows. Constraints can't express 'parent depends on child' relationships. Module 2 covers Auto Layout in depth. Common pattern: button is Auto Layout (hugs text); container of button might use constraints if it has fixed-position decoration; Auto Layout handles dynamic content; constraints handle fixed-position overlays. Modern Figma designs use Auto Layout for most dynamic sizing; constraints for static positioning within Auto Layout frames." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Manual sizing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto Layout — parent sizes based on children. Constraints govern child-in-resizing-parent, not the reverse.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Single accessibility plugin worth installing in Figma?",
+      "choices": [
+        { "id": "a", "text": "Random one." },
+        { "id": "b", "text": "Stark — comprehensive accessibility checker with WCAG AA/AAA contrast ratios, color-blindness simulators (deuteranopia, protanopia, tritanopia, achromatopsia), focus order checks, missing alt-text detection, font-size analysis. Run on every screen before handoff; catches contrast failures, color-only state communication, missing labels — issues that would otherwise reach production. Free tier covers contrast + simulation; paid adds more. Mandatory if your team cares about shipping accessible work. Competitors (Able, A11y - Color Contrast Checker) are simpler but Stark is comprehensive; if installing one, install Stark. Pair with manually running designs through accessibility settings on real devices (VoiceOver, Dynamic Type A5) before considering work complete. Plugin catches design-time issues; device testing catches use-time issues." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Don't install any." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stark — contrast + CB simulation + accessibility audit. Mandatory before shipping designs.",
+      "points": 1
+    }
+  ]
+}

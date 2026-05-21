@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Workflow, integration, export",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use Dynamic Link from Premiere to After Effects?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When iterating on complex motion graphics or VFX that exceed Premiere's Essential Graphics. Dynamic Link = live connection between Premiere + After Effects. 'Replace with After Effects Composition' sends Premiere clips to AE as a new comp; edits in AE save → Premiere updates live. No export step. Use for: heavy motion graphics (custom intros, complex transitions, sophisticated lower thirds), VFX (sky / sign / screen replacement, beauty work, wire removal), compositing (mattes, blending, multi-layer effects), 3D camera moves, tracking (Mocha planar, 3D camera tracker), animations beyond Essential Graphics. Don't use for: simple lower thirds + titles (Essential Graphics handles), basic graphics that don't need motion (just static text), graphics where MOGRTs work (drag-drop pre-built). The performance cost: dynamic-linked comps are live AE renders — Premiere asks AE for each frame on demand; heavy comps cause playback stutters. Solutions: 1) Render previews around dynamic-linked sections. 2) Pre-render finalized comps to ProRes; replace dynamic links with the rendered files (lose live link but gain performance). 3) Lower playback resolution. The 'pre-render finals; keep dynamic-link on iterating' pattern is the standard for sequences with many AE comps. For solo creators doing occasional motion graphics, dynamic link is the modern productive workflow; the alternative (export AE → import to Premiere → discover need-to-change → re-export → re-import) is hours per iteration." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "For every clip." }
+      ],
+      "correct_answer": "b",
+      "explanation": "When iterating on complex motion graphics or VFX. Live AE → Premiere link saves the export-reimport loop. Pre-render finalized comps for performance.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Export to YouTube — what target settings for 1080p 30fps content?",
+      "choices": [
+        { "id": "a", "text": "Whatever." },
+        { "id": "b", "text": "H.264 codec, 1920×1080, 30 fps, 8-12 Mbps VBR 2-pass, AAC 320 kbps audio, -14 LUFS loudness, Rec. 709 color space. YouTube's recommended settings for 1080p 30: ~8 Mbps for standard content, ~12 Mbps for high-motion content. The 8 Mbps figure is YouTube's published recommendation; going higher delivers diminishing returns since YouTube re-encodes uploads anyway. Going much lower (4-6 Mbps) produces visible compression artifacts on motion. Codec: H.264 is universal and what YouTube optimizes for; H.265 (HEVC) works too and saves upload bandwidth. 2-pass VBR delivers best quality-per-bitrate (first pass analyzes complexity; second pass encodes with optimal bitrate allocation). Hardware encoding (GPU acceleration) on modern Macs / Nvidia / AMD GPUs cuts encode time dramatically. Audio: AAC 320 kbps stereo is high quality; YouTube accepts up to 384 kbps. Loudness: -14 LUFS integrated matches YouTube's playback normalization; deliver above and YouTube turns you down; deliver below and YouTube turns you up. Color: Rec. 709 (standard HD); for HDR content use Rec. 2020 PQ or HLG. Premiere preset: 'YouTube 1080p Full HD' covers these defaults; verify in Export panel. The combination matches YouTube's expectations + delivers maximum quality the platform will preserve through re-encoding. Some creators upload at higher bitrates (15-25 Mbps) hoping for better post-encode quality — marginal benefit; YouTube's re-encoding mostly normalizes regardless." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "H.264, 1920×1080, 30fps, 8-12 Mbps VBR 2-pass, AAC 320 kbps, -14 LUFS, Rec. 709. YouTube's recommended; balanced quality + upload bandwidth.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Team Project shows 'media offline' for everyone except one editor. Why?",
+      "choices": [
+        { "id": "a", "text": "Network." },
+        { "id": "b", "text": "Editor imported media from a local-only path others can't access. Team Projects manages project metadata + sequences in the cloud, but media files must live on shared storage at consistent paths across all editors' machines (NAS, SAN, or cloud storage with sync clients on every machine pointed at the same root). When Editor A imports media from `/Users/EditorA/Desktop/footage.mp4`, the project records that path; Editor B's machine has no such path; Premiere shows 'media offline.' Fix: 1) Move the offending media to shared storage that all editors mount at the same path. 2) In Premiere, right-click the offline clip → Link Media → point to the new shared location. 3) Save / share changes; other editors get the relinked path. Prevention: 1) All editors mount shared storage at the same path (Mac: /Volumes/shared; Windows: \\\\server\\shared; documented as team convention). 2) Sync clients for cloud storage configured identically on every machine. 3) Ingest workflow: ONLY through Media Browser → shared storage path; never File → Import from local. 4) Process enforcement: 'no local media' as team rule. The 'media offline for all but one editor' diagnostic is the single most common Team Projects failure; once you've seen it, you train every team member to import from shared only. Productions (the file-based alternative) has the same constraint — all media on shared storage, no local-only files." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Software bug." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Editor imported from local-only path others can't reach. Fix: move to shared storage; relink. Prevent: 'no local media' team rule; shared storage mounted at consistent path everywhere.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "You're 4 days into a documentary edit; been working 12-hour days; getting frustrated; cuts feel wrong. What to do?",
+      "choices": [
+        { "id": "a", "text": "More coffee." },
+        { "id": "b", "text": "Stop editing. Take a day off. Creative judgment degrades past 6-8 hours of intense work daily; compounded across 4 days of 12-hour shifts you're operating on broken pattern-recognition — the cuts feel wrong because your tired brain can no longer reliably assess them. Options: 1) End the day immediately; sleep; return tomorrow. If reviewing tomorrow reveals the work is actually fine, your tired brain was lying to you about quality. 2) If reviewing tomorrow reveals the work has problems, you'll see them clearly with fresh eyes — fix in normal-day-length sessions, not by powering through. 3) Show the current cut to someone outside the work (PM, producer, fellow editor) — fresh eyes catch what tired eyes miss. 4) Take a 1-2 hour break (walk, eat, completely different activity); return for 1 focused session. The 'I'm halfway through; can't stop now' mindset is the trap. Editing IS continuous creative judgment; tired judgment ships problems. Studios pace editors at 6-8 hours/day for sustained quality; deadline crunches reduce quality and require redoing work tomorrow anyway. The 'work twice as hard for half the time' arithmetic doesn't pencil — 4 days × 12 hours of frustrated work produces less usable output than 6 days × 8 hours of clear-headed work, and you're not exhausted at the end. Career-wise: editors who pace themselves stay in the industry; editors who power-through burn out. Health-wise: 12-hour sessions wreck eyes, back, sleep cycle. Project-wise: every 'just finish this section while tired' decision is one that wake-up-you will redo. Stop. Rest. Resume."},
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip sleep." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stop. Take a day off. Past 6-8 hours, judgment degrades. Tired editing produces decisions you redo tomorrow. Pace = career longevity + project quality.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Most underrated factor in pro editing?",
+      "choices": [
+        { "id": "a", "text": "Faster computer." },
+        { "id": "b", "text": "Story craft + audio quality. Tools matter; story matters more. The same software produces both Oscar-winning documentaries and unwatchable home video — the difference is the editor's understanding of story (beginning / middle / end; character arc; emotional beats; pacing; build / release; cut on motion / action / emotion). Master storytelling principles transcend any specific software. The second underrated factor: audio. Audiences forgive mediocre picture; they don't forgive bad audio. A great cut with poor audio (clipped peaks, unbalanced levels, muddy dialogue) feels amateur. A mediocre cut with great audio (clean dialogue, ducked music, proper LUFS) feels professional. Pro editors invest 50%+ of polish time on audio; novices invest <10%. The third underrated factor: pacing variation. Same-rhythm cuts throughout = monotonous; varied rhythm (slower setup, faster build, slow climax, breath) = engaging. The fourth: cut-on-motion. Cuts at static moments are visible; cuts on movement are invisible. The fifth: distance + revision. Show work to others; revise based on their reactions; never ship without sleeping on it. Computers, monitors, plugins are means to ends. The end is a story told well, presented cleanly, paced to engage, audio-clean, color-considered. New editors fixate on hardware + software; experienced editors fixate on craft. The difference compounds over a career." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More plugins." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Story craft + audio quality. Tools matter; story matters more. Audiences forgive mediocre picture; not bad audio. Storytelling, pacing, motion cuts, distance + revision compound over career.",
+      "points": 1
+    }
+  ]
+}

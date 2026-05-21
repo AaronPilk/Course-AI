@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Model families",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best open-source diffusion model for highest quality in 2026?",
+      "choices": [
+        { "id": "a", "text": "Stable Diffusion 1.5." },
+        { "id": "b", "text": "Flux.1 (Black Forest Labs). SOTA open-source quality in 2026; rivals Midjourney for many tasks; excellent text in images (where SDXL fails); better hands than SD 1.5/SDXL; photoreal + artistic excellence. Three variants: Pro (closed; via API; commercial-friendly); Dev (open weights; non-commercial license without paid commercial license); Schnell (open weights; Apache 2.0; fastest; free commercial use). For most pros in 2026: Flux Dev for best quality non-commercial work; Flux Schnell for free commercial; Flux Pro via API for top quality commercial. Trade-offs: Flux requires 12 GB+ VRAM (24 GB for full Dev; quantized variants ~12 GB); smaller ecosystem than SDXL (fewer LoRAs / ControlNets but growing rapidly). SDXL still relevant: deeper ecosystem (massive LoRA / fine-tune library on Civitai); good quality; lower VRAM (~8 GB). SD 1.5: legacy; only for ecosystem depth (massive style library) or low-VRAM situations. SD3 / 3.5: niche; mixed reception. Pick: highest quality + can afford VRAM = Flux Dev. Strong quality + ecosystem depth = SDXL fine-tunes. Legacy + tiny VRAM = SD 1.5. Most pros maintain Flux + SDXL; use Flux for hero work + SDXL where specific LoRAs needed.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Flux.1 (Black Forest Labs). SOTA open-source 2026. Three variants: Pro (API, commercial), Dev (best quality, non-commercial), Schnell (fast, Apache 2.0 commercial). Rivals Midjourney.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to ship commercial product images using local generation; free + best quality.",
+      "choices": [
+        { "id": "a", "text": "Flux Dev (any license)." },
+        { "id": "b", "text": "Flux Schnell (Apache 2.0 license — free commercial use). Among Flux variants, only Schnell is commercial-free: 4-step generation (much faster than Dev), Apache 2.0 license (full commercial rights, no royalties, no attribution required), runs on similar hardware as Dev. Quality slightly below Dev but still excellent; faster generation balances. Flux Dev requires a commercial license from Black Forest Labs for commercial use (license fee per company / project); without it, commercial use violates license terms — legal risk. Flux Pro is closed-weights via API only ($0.02-$0.10 per image depending on quality tier); commercial-OK via API license. Alternatives for free commercial: SDXL (OpenRAIL-M license, commercial OK), SDXL fine-tunes (verify each creator's license; most CC-BY or similar). For workflows where Flux Schnell quality is insufficient: SDXL fine-tunes (Juggernaut XL, RealVisXL) — strong photorealism + commercial-friendly licenses. For absolute best quality commercial: Flux Pro via API ($0.05/image typical). For mid-tier free commercial: Flux Schnell or SDXL fine-tunes. Always verify licenses before commercial use; license text is in model card or repository README. Pro habit: check license + document for each model in your pipeline; some commercial workflows track per-model usage.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Flux Schnell (Apache 2.0 license). Free commercial use; fast 4-step generation; excellent quality. Flux Dev requires paid commercial license; SDXL also commercial-OK.",
+      "points": 1
+    }
+  ]
+}

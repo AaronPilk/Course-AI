@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Scene management",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where to save large save game data (player progress, inventory)?",
+      "choices": [
+        { "id": "a", "text": "PlayerPrefs." },
+        { "id": "b", "text": "JSON file to Application.persistentDataPath. JSON serializes complex data structures (player progress with nested inventory, quest log, settings, world state) to a string; write to file at Application.persistentDataPath (per-user save location that survives app updates + uninstalls). Pattern: `[System.Serializable] public class SaveData { public int level; public int score; public Inventory inventory; ... } string json = JsonUtility.ToJson(saveData, prettyPrint: true); File.WriteAllText(Application.persistentDataPath + '/save.json', json);`. To load: `string loaded = File.ReadAllText(path); SaveData data = JsonUtility.FromJson<SaveData>(loaded);`. PlayerPrefs is wrong choice for large data: 1) Stored as registry entries (Windows) or plist (Mac) — not designed for big data; 2) Size limits + slow for complex serialization; 3) Designed for settings (high scores, preferences, simple keys). For player saves: JSON file is the standard. Alternatives for binary: BinaryFormatter (deprecated by Unity), Protobuf (third-party), custom binary writer. JSON pros: human-readable for debugging, easy versioning via serialization options, native Unity support (JsonUtility). Application.persistentDataPath = per-user save location that survives app updates + uninstalls (vs. Application.dataPath which is read-only within the build); cross-platform compatible (Unity manages the OS-specific paths). Combined with: multiple save slots (Slot1.json, Slot2.json, AutoSave.json); save versioning (include version int; on load, migrate older versions); cloud backup (Steam Cloud auto-syncs persistentDataPath on PC). Pro Unity save system: JSON + persistentDataPath + multiple slots + versioning + optional cloud sync.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JSON to Application.persistentDataPath. JsonUtility serializes complex structures. PlayerPrefs only for small settings. Multiple slots + versioning + persistentDataPath for cross-platform save system.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Loading 'Level2' scene freezes game for 4 seconds. Cause + fix?",
+      "choices": [
+        { "id": "a", "text": "Buy faster computer." },
+        { "id": "b", "text": "Synchronous LoadScene blocks main thread; use LoadSceneAsync with coroutine + progress bar instead. SceneManager.LoadScene synchronously loads the entire scene on the main thread; freezes everything until done. SceneManager.LoadSceneAsync returns AsyncOperation; loading happens in background; main thread continues running (UI responsive; progress shown). Pattern: `IEnumerator LoadLevel(string name) { AsyncOperation op = SceneManager.LoadSceneAsync(name); while (!op.isDone) { progressBar.value = Mathf.Clamp01(op.progress / 0.9f); yield return null; } } void StartLoad() { StartCoroutine(LoadLevel('Level2')); }`. Show loading screen during; hide when done. Optional: op.allowSceneActivation = false to delay activation until ready (wait for player input, finish animations, hold on loading screen); set to true when ready. For very large scenes, additionally: 1) Async-load shared assets ahead of transition. 2) Pre-warm shaders during load. 3) Use loading screen for tips/hints/cinematics. 4) Addressables for on-demand asset loading. Modern Unity: LoadSceneAsync standard for non-trivial scenes; synchronous LoadScene only for tiny menus / loading screens themselves. Game freezes during load = amateur UX; smooth loading with progress = pro.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "LoadSceneAsync in coroutine + progress bar. Non-blocking; main thread continues. Show loading UI during. Modern Unity standard for non-trivial scene transitions.",
+      "points": 1
+    }
+  ]
+}

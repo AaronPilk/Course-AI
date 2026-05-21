@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Levels, actors, components",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between actor and component?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Actor = the placeable thing in the world (lights, meshes, cameras, blueprints — anything you can drop in a level). Component = building block attached to an actor that gives it functionality. An actor is a container; components do the actual work. Example: a Wall actor contains a StaticMeshComponent (the visible mesh) + a BoxComponent (collision shape) — the actor is the named entity in the level; the components handle rendering + collision. A Character actor (the player) contains: CapsuleComponent (collision), SkeletalMeshComponent (visible character mesh), CameraComponent (the camera), MovementComponent (handles input + movement physics). Each component has its own properties; together they make the character work. Component hierarchy: Root component at top + children attached below; transforms are relative to parent. Adding components: Details panel → +Add Component → pick type. Removing components: select component in hierarchy → Delete. Components can be enabled / disabled per actor instance. Why this matters: 1) Reusability — same component reusable across many actor types (every actor that needs collision uses a CapsuleComponent or BoxComponent). 2) Composition — actors built by combining components rather than inheriting from massive base classes (more flexible than deep class hierarchies). 3) Performance — only add components you need; lean actors render fast. Unity uses identical GameObject + Component model; same paradigm across modern game engines. Master 'add components to actors' as the building pattern; replaces 'inherit from megaclass.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Components are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Actor = placeable container in world; Component = building block attached to actor. Actors composed of components. Adding components = adding functionality.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Level has 100 wall actors set to Movable but they never actually move during gameplay. Performance impact?",
+      "choices": [
+        { "id": "a", "text": "None." },
+        { "id": "b", "text": "Significant. Movable actors are expensive: 1) Movable actors require real-time shadow calculation (Lumen / shadow maps recomputed per frame as actors might move); Static actors can use baked shadows (computed once at build; nearly free per-frame). 2) Movable actors prevent Nanite from culling them as easily; rendering pipeline treats them as 'might change' state. 3) Movable actors don't benefit from precomputed lighting + lighting cached in lightmaps. For 100 walls that never move, marking them Static recovers all this performance. Fix: select all 100 walls → Details → Mobility → Static. Re-build lighting (Build menu → Build Lighting) if using baked lighting; for full-Lumen scenes the rebuild is automatic. Result: faster rendering, lower GPU load, smoother frame rate. The Mobility settings: 1) Static — never moves; cheapest. 2) Stationary — may not move position but lighting can change (good for swappable color lights on a fixed lamp). 3) Movable — can move; most expensive. Pick the LOWEST mobility your gameplay needs. Walls / floors / fixed lights / static props = Static. Doors that open / triggers / interactable objects = Movable. Lights that flicker or change color but don't move = Stationary. Pro level optimization workflow: build the level fully Movable for iteration; before shipping, audit and downgrade everything possible to Static. Often 80%+ of actors can be Static; significant performance gain. Combined with Nanite + Lumen, properly-mobility-set scenes target 60 FPS on target hardware; mismatched mobility settings = performance issues even with high-end GPUs." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller textures." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Movable = real-time shadows + no baked lighting + harder culling. Static walls don't need this. Set 100 walls to Static; significant performance gain. Pro habit.",
+      "points": 1
+    }
+  ]
+}

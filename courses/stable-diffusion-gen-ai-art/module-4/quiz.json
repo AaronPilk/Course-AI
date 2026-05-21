@@ -1,0 +1,81 @@
+{
+  "title": "Module 4 quiz: Fine-tuning and customization",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "LoRA vs. Dreambooth — when use LoRA?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "For most custom training. Smaller files (10-200 MB vs. 7 GB), faster training (30 min - 4 hours vs. 8-24 hours), stackable (multiple LoRAs in one prompt), reusable across base models. 95% of fine-tuning is LoRA. Dreambooth reserved for: base models for ongoing series, max likeness, stylistic foundations, model merging.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "LoRA for most fine-tuning. Smaller, faster, stackable. Dreambooth for special cases (foundation models, max likeness).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Trained character LoRA; output exactly matches training photos; can't pose in new scenes. Cause?",
+      "choices": [
+        { "id": "a", "text": "Need more steps." },
+        { "id": "b", "text": "Overfitting — LoRA memorized training images. Fix: fewer training steps, lower learning rate, more varied dataset, regularization images, lower Network Rank, earlier checkpoint. Iterate to dial settings. First training rarely perfect; expect 2-3 iterations.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Overfitting. Fewer steps, lower learning rate, more varied dataset, regularization. Iterate.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Counterintuitive captioning principle for character LoRA?",
+      "choices": [
+        { "id": "a", "text": "Caption everything." },
+        { "id": "b", "text": "What you DON'T caption gets baked in. If character always has blue hair: DON'T caption 'blue hair'; let it become part of trigger word's identity. Caption variable features (pose, clothing, background, lighting, expression); don't caption fixed signature features. Foundational principle; counterintuitive but essential.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "What you DON'T caption gets baked in. Caption variable; don't caption fixed signature features.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Stacking 3 LoRAs at 1.0 each = burned output. Fix?",
+      "choices": [
+        { "id": "a", "text": "More LoRAs." },
+        { "id": "b", "text": "Reduce weights. 3x 1.0 = 3x amplification. Try 0.6-0.8 each when stacking 2-3 LoRAs; 0.4-0.6 each for 4-5. Total combined influence should be 1-2. Test pairs systematically; some combinations incompatible regardless of weights.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reduce individual weights. 0.6-0.8 each for 2-3 stack. Some pairs incompatible.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Maximum control over character + pose + composition?",
+      "choices": [
+        { "id": "a", "text": "Just prompt." },
+        { "id": "b", "text": "ControlNet + LoRA + IP-Adapter combined + text prompt. ControlNet for structure (pose / composition); LoRA for identity (trained character); IP-Adapter for style; text for scene. Pro-grade control stack; each layer addresses different axis. Standard for production / commercial / hero work.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ControlNet + LoRA + IP-Adapter + text. Pro stack; each layer different axis of control.",
+      "points": 1
+    }
+  ]
+}

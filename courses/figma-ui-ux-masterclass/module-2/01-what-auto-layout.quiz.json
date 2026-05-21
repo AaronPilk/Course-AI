@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Auto Layout",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What problem does Auto Layout solve that constraints don't?",
+      "choices": [
+        { "id": "a", "text": "Faster files." },
+        { "id": "b", "text": "Auto Layout makes the PARENT respond to children — frame sizes based on content; spacing distributes automatically; reflow on add/remove. Constraints make CHILDREN respond to parent — when parent resizes, children resize per their constraints. Two different directions of dependency. For a button hugging its text: parent depends on child = Auto Layout. For a header sticking to top of screen as screen rotates: child depends on parent = constraints. For a list of cards where adding a card pushes others down: Auto Layout. For dynamic input field width as text grows: Auto Layout. For full-width content area that stretches with window: either works (constraints with Left+Right, or Auto Layout with Fill). Most modern Figma work is Auto Layout because production interfaces are content-driven (sizes follow text / data); constraints fill the gaps for fixed-position decoration. Auto Layout = Figma's Flexbox equivalent; constraints are Figma's absolute-positioning equivalent. Production designs use mostly Auto Layout with occasional constraints." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compression." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto Layout: parent sizes based on children + automatic reflow. Constraints: children respond to parent resize. Different directions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Header has back button (fixed) + title (fill remaining) + action button (fixed). Auto Layout setup?",
+      "choices": [
+        { "id": "a", "text": "Vertical." },
+        { "id": "b", "text": "Horizontal Auto Layout, spacing 8-12px between items, padding 16px both sides. Sizing per child: back button = hug × hug (sizes to icon); title = fill × hug (takes remaining width; height fits text); action button = hug × hug (sizes to icon/text). Frame width = fill (stretches across screen); height = hug (fits content). Title with 'fill' is the key — it takes whatever horizontal space remains after the two buttons, automatically squeezing or expanding as parent width changes. If you resize the frame wider, title gets wider; narrower, title compresses; the buttons stay their natural size. This is exactly how production navigation headers work: fixed-size affordances flanking flexible content. Common pattern across iOS / Android / web. Test by changing title text from 'Home' to 'Detailed Analytics Dashboard' — title stays in available space, doesn't push buttons off screen. The 'fill' sizing on the title is what makes this work; without it, you'd have to manually resize on each title change." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrap layout." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Horizontal AL; back button = hug, title = fill, action = hug; frame = fill width × hug height. Title fills available space.",
+      "points": 1
+    }
+  ]
+}

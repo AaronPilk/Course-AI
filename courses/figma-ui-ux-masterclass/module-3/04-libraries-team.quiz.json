@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Libraries and team consumption",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What happens when you update a published library component?",
+      "choices": [
+        { "id": "a", "text": "All consumer files update silently." },
+        { "id": "b", "text": "Consumer files show 'Updates available' badge; designers click to review changes (see diffs per component) and accept Update All or selective per-component. The update flow is opt-in by design — surprise breaking changes would damage production designs. After accepting, instances in the consumer file refresh to the new component version while preserving overrides (text, color, swap selections). For non-breaking updates (e.g., slight padding tweak), accept and move on. For breaking updates (e.g., Button color refactor that changes brand-color slot), team coordination first — Slack ping, version notes, migration timeline. Mature design systems treat library updates like semver: patch updates auto-accept comfortably; major updates need announcement + deprecation period. Bonus: branch the library file for experimental changes — work in the branch without publishing → review → merge to main → publishes to consumers. The 'review changes' option per-component lets cautious teams accept incrementally rather than all-at-once." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Nothing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Updates available badge in consumer files. Opt-in review + accept; overrides preserved; coordinate breaking changes.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need to delete an old Button/Old component that's still used in 30 product files. Safest approach?",
+      "choices": [
+        { "id": "a", "text": "Delete immediately." },
+        { "id": "b", "text": "Deprecate first — never delete a component with live instances. Process: 1) Rename `Button/Old` to `[DEPRECATED] Button/Old`; 2) Add description in main component: 'Use Button/New instead. Will be removed [date].'; 3) Optionally hide from suggestions so designers don't reach for it in asset panel. 4) Announce in team channels: deprecation notice + migration timeline + which Button/New variant replaces what. 5) Monitor usage across files (Figma's library analytics if enabled, or manual sweep). 6) Help teams migrate — pair with consumers to update 30 files' instances over 2-4 weeks. 7) Once usage drops to zero, safe to delete. Why this matters: deleting a live component detaches every instance — they become regular frames, losing all future updates. The visual stays but the connection breaks; 30 files now have unmaintained copies. Deprecation is the established pattern in mature design systems (Material, Carbon, Polaris all use it). Even non-breaking renames go through a deprecation window because consumers' design dependencies need time to adapt." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Rename it secretly." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deprecate first: rename [DEPRECATED], add description, announce, monitor usage, delete only when usage = 0.",
+      "points": 1
+    }
+  ]
+}

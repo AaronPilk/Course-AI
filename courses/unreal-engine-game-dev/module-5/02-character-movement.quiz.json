@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Character movement",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How do you set up sprint behavior in Character Blueprint?",
+      "choices": [
+        { "id": "a", "text": "Animate faster only." },
+        { "id": "b", "text": "Enhanced Input Action (IA_Sprint, Digital value) + modify Character Movement Component's Max Walk Speed. Setup: 1) Create IA_Sprint Input Action; bind to Shift key (or Left Trigger on gamepad) via Input Mapping Context. 2) In Character Blueprint Event Graph: Enhanced Input Action event for IA_Sprint, Triggered phase → Set Max Walk Speed (Character Movement Component) to 900 (sprint speed). 3) IA_Sprint Completed/Canceled phase → Set Max Walk Speed back to 600 (default). 4) Optional: Set IsSprinting boolean variable for Animation Blueprint to play sprint animations. 5) Optional: Drain stamina while sprinting (Tick or Timer reduces stamina variable; sprint canceled if stamina reaches 0). 6) Optional: Reduce camera FOV while sprinting (for visual speed feel). Result: holding Shift makes character sprint; releasing returns to normal. The Character Movement Component is the workhorse — handles physics, replication, prediction, networking. Modifying Max Walk Speed is the standard way to vary movement; same approach for walk (300) vs. jog (600) vs. sprint (900) vs. crouched (200). Other movement variables to tune: Max Acceleration (how fast character reaches max speed; lower = heavier feel), Braking Deceleration (how fast they stop; lower = momentum/sliding), Jump Z Velocity (jump height; ~500-1000), Air Control (movement while airborne; 0 = no air control; 1 = full; typically 0.2-0.5 for realistic), Gravity Scale (gravity multiplier; 1 = normal; <1 = low gravity moon levels; >1 = heavier). Tune all together for character feel. Mario feels different from Half-Life feels different from Witcher 3 — all use similar systems with different parameters." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IA_Sprint Input Action + modify Character Movement Component's Max Walk Speed (600 → 900). Set IsSprinting bool for animations. Standard pattern.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game has driving + walking gameplay. Different controls needed per mode. How to architect input?",
+      "choices": [
+        { "id": "a", "text": "One control set for both." },
+        { "id": "b", "text": "Multiple Input Mapping Contexts; swap active context based on gameplay mode. Setup: 1) IMC_Walking — Input Mapping Context for on-foot controls (IA_Move = WASD; IA_Look = mouse; IA_Jump = Space; IA_Interact = E). 2) IMC_Vehicle — for driving (IA_Steer = A/D; IA_Accelerate = W; IA_Brake = S; IA_Handbrake = Space; IA_ExitVehicle = E). 3) IMC_Menu — for UI (IA_Confirm = Enter; IA_Cancel = Esc; IA_Navigate = Arrows). 4) In Player Controller: function to swap Input Mapping Context. When player enters vehicle: Remove IMC_Walking; Add IMC_Vehicle. When player exits: Remove IMC_Vehicle; Add IMC_Walking. When menu opens: Add IMC_Menu (perhaps with higher Priority so it overrides other contexts). Multiple contexts can be active simultaneously with priority (e.g., menu context overrides gameplay when paused). The Input Mapping Context system decouples input physical bindings from gameplay actions, enabling: 1) Context-aware input (same key, different action per mode). 2) Player rebinding (change which key triggers an action; gameplay logic untouched). 3) Cross-platform (one Input Mapping Context for keyboard, another for gamepad, switch automatically based on detected input device). 4) Accessibility (alternate Input Mapping Contexts for users with different abilities). 5) Tutorial flow (limited Input Mapping Context for first level; expanded as player learns). The Add Mapping Context / Remove Mapping Context Blueprint nodes manage active contexts at runtime. Pro UE5 input design: define Input Actions per gameplay verb (Move, Jump, Interact); group into Input Mapping Contexts per gameplay state (Walking, Vehicle, Menu, Cutscene); swap contexts as state changes. The legacy axis mappings + action mappings (single global key map) approach is deprecated; Enhanced Input + Input Mapping Contexts is the modern UE5 standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two separate games." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multiple Input Mapping Contexts (IMC_Walking, IMC_Vehicle, IMC_Menu); swap active context as gameplay mode changes via Add/Remove Mapping Context. Modern UE5 input design.",
+      "points": 1
+    }
+  ]
+}

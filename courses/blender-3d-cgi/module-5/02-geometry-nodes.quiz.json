@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Geometry Nodes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use Geometry Nodes?",
+      "choices": [
+        { "id": "a", "text": "Single static models." },
+        { "id": "b", "text": "For scattering / instancing / repeating / parametric geometry — anytime you'd otherwise manually duplicate or pattern objects. Scattering trees on terrain: Distribute Points on Faces + Instance on Points + collection of tree variants → forest generator that scales to thousands of trees with per-instance variation (rotation, scale, type) at no extra modeling cost. Brick wall: Mesh Line + Instance on Points + slight per-brick randomization → procedural brick wall adjustable via density / row count sliders. Particle-like effects: animated point distribution + instance of particle shape → controllable particle system in geometry. Procedural staircase: Curve Line + Instance Steps Along Curve + step count parameter → spiral staircase adjustable by changing one number. The pattern: anything repetitive or parametric → Geometry Nodes saves hours vs. manual modeling + provides flexibility (adjust slider → geometry regenerates). For single unique objects (one statue, one specific landmark), manual modeling is fine — no benefit from procedural. For 1000 trees on a hillside, manual = impossible; procedural = trivial. The 2026 trend: Geometry Nodes increasingly replaces the legacy Particle System for hair / scattering / effects (more flexible + faster). Pro Blender artists build a library of Geometry Nodes node groups (Asset Library) for common procedural patterns (forests, walls, scatters, building generators); reuse across projects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "For scattering, instancing, repeating, parametric geometry. Anytime you'd manually duplicate or pattern. Saves hours; provides flexibility via parameters.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to scatter 5000 trees of 3 different species randomly on a 1km terrain. Manual or Geometry Nodes?",
+      "choices": [
+        { "id": "a", "text": "Manually place each tree." },
+        { "id": "b", "text": "Geometry Nodes — manually placing 5000 trees is impractical (a tree per minute = 80+ hours; varied positions / rotations / scales = many more hours; tedious + error-prone). Geometry Nodes workflow: 1) Create a Collection containing 3 tree variants (Pine, Oak, Spruce). 2) On terrain mesh, add Geometry Nodes modifier. 3) Distribute Points on Faces node: density 5000 / terrain area = appropriate; Distance Min to prevent clustering. 4) Instance on Points node: pick from the tree Collection; Pick Instance enabled for collection sampling. 5) Random Value nodes feeding Rotate Instances (random Z rotation per tree) and Scale Instances (random 0.8-1.2 scale per tree). 6) Apply modifier when satisfied with placement (or keep as procedural for ongoing tweaks). Result: 5000 trees in 30 minutes of setup; parametric (adjust density slider; tweak randomization; result regenerates). Variation per tree (Pine vs Oak vs Spruce; random rotation; random scale) makes the forest feel natural rather than tiled. Add Density attribute driven by an image texture for terrain-specific density (dense in valley, sparse on mountaintops) — controlled by painting on terrain. Performance: instancing is memory-efficient; the 5000 'trees' share tree mesh data per type; render time scales much better than 5000 actual mesh copies. The legacy Particle System (with hair-like emission) could also do this; Geometry Nodes is more flexible + faster + future-direction. Open Movies (Blender Studio) use this exact pattern for environment work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduce to 50 trees." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Geometry Nodes scatter: Distribute Points on Faces + Instance on Points from tree Collection + random rotation/scale. 5000 trees in 30 min; parametric; performant.",
+      "points": 1
+    }
+  ]
+}

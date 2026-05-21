@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Style libraries",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best practice for invoking specific artistic styles?",
+      "choices": [
+        { "id": "a", "text": "By Artist Name." },
+        { "id": "b", "text": "Use descriptive style modifiers rather than artist names. Reasons: 1) Ethical — many artists object to their names being used; legal landscape evolving. 2) Practical — models increasingly filter artist names; future-proof prompts. 3) Effective — well-described styles work as well or better. Replace 'by Greg Rutkowski' with 'epic fantasy concept art, dramatic lighting, oil painting style, detailed textures, atmospheric.' Replace 'in the style of Van Gogh' with 'post-impressionist painting, swirling brushstrokes, vibrant colors, expressive thick paint application.' Build descriptive vocabulary by analyzing what makes styles distinct: 1) Brushwork (smooth, textured, painterly, hard-edged). 2) Color palette (vibrant, muted, monochromatic, complementary). 3) Light treatment (chiaroscuro, soft, dramatic, atmospheric). 4) Subject treatment (idealized, realistic, stylized). 5) Era / movement (Art Deco, Cubism, Renaissance, Modernist). 6) Medium (oil, watercolor, digital, pencil). 7) Mood (melancholic, joyful, mysterious, energetic). Combined: 'post-impressionist landscape, swirling vibrant brushstrokes, golden hour, warm palette, expressive paint texture' invokes Van Gogh-ish without naming him; portable across models. Pro habit: build a personal vocabulary library; learn to describe styles in their constituent parts; transfers across models + survives model updates. Civitai prompts often use this approach; learn from community examples but rewrite in your own descriptive terms.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Descriptive style modifiers — brushwork, color palette, light, mood. Ethical + practical + effective. Models increasingly filter artist names. Build vocabulary library.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need consistent visual style across 50 product images. Approach?",
+      "choices": [
+        { "id": "a", "text": "Hope they match." },
+        { "id": "b", "text": "Build a master prompt template + use reference images via IP-Adapter or train a style LoRA. Approach 1 — Master prompt template: develop a 'style prefix' that works for your aesthetic ('cinematic product photography, soft studio lighting, white background, shallow depth of field, 50mm lens, photorealistic, commercial photography style'). Use this as constant prefix for all 50 product prompts; vary only the product description. Result: shared visual language; products feel like a coordinated set. Approach 2 — IP-Adapter with style reference: pick 1-3 reference images with your target style; use IP-Adapter (Module 3) to extract style from references; apply to each generation. Decouples 'what to render' (prompt) from 'what style to render in' (reference image); ideal for matching existing brand photography style. Approach 3 — Train a style LoRA (Module 4): on a curated dataset of 20-50 images matching your target style; train LoRA; apply to each generation. Stronger style adherence than IP-Adapter; one-time training cost; reuse forever. Approach 4 — Same seed + same sampler + same scheduler across batches: maintains some visual consistency from RNG perspective; works best combined with above techniques. Pro workflow for product photography series: master prompt template (Approach 1) + style LoRA (Approach 3) + locked sampler/scheduler/CFG = highly consistent series. 50 products generate with shared visual DNA; client / e-commerce site looks intentional vs. random. The 'one-off prompt per image' approach produces inconsistent series; commercial work requires consistency systems.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Master prompt template + IP-Adapter style reference + style LoRA + locked sampler / CFG. Combines for highly consistent series. Commercial work requires consistency systems.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "title": "Premiere Pro User Guide",
+      "url": "https://helpx.adobe.com/premiere-pro/user-guide.html",
+      "type": "documentation"
+    },
+    {
+      "title": "Premiere Pro tutorials",
+      "url": "https://helpx.adobe.com/premiere-pro/tutorials.html",
+      "type": "tutorials"
+    },
+    {
+      "title": "Premiere Pro features and what's new",
+      "url": "https://www.adobe.com/products/premiere/features.html",
+      "type": "documentation"
+    },
+    {
+      "title": "Adobe Video & Audio learn",
+      "url": "https://helpx.adobe.com/video-audio-learn.html",
+      "type": "tutorials"
+    },
+    {
+      "title": "Dynamic Link",
+      "url": "https://helpx.adobe.com/premiere-pro/using/dynamic-link.html",
+      "type": "documentation"
+    },
+    {
+      "title": "Team Projects",
+      "url": "https://helpx.adobe.com/premiere-pro/using/team-projects.html",
+      "type": "documentation"
+    }
+  ]
+}

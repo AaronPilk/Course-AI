@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: MonoBehaviour lifecycle",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use FixedUpdate for physics instead of Update?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "FixedUpdate runs at consistent fixed intervals (default 50 times/sec); Update fires irregularly based on frame rate (60-120+ FPS variable). Physics calculations need consistent timing — Rigidbody forces, velocities, collisions all assume regular time steps for stable simulation. Using Update for physics: at 60 FPS, force applied 60x/sec; at 120 FPS, applied 120x/sec — 2x stronger acceleration; gameplay behaves differently per device. At low FPS (30), force applied 30x/sec — half effect; physics objects act weird. Using FixedUpdate: regardless of visual frame rate (60 / 120 / 30), physics fires 50x/sec consistently; same force applied same number of times per second; consistent behavior across hardware. Implementation: `void FixedUpdate() { rigidbody.AddForce(force); }`. Configure interval: Project Settings → Time → Fixed Timestep (default 0.02 = 50Hz). Higher = smoother physics but more CPU; lower = jankier but cheaper. For most games: default 0.02 works. Update is for visual frame updates: input reading, UI updates, non-physics movement, camera tracking. LateUpdate runs after all Update + FixedUpdate; for camera following the freshly-moved player. The Update / FixedUpdate / LateUpdate distinction is Unity-specific (same in Unreal as Tick vs. Physics Tick); essential to internalize. The 'physics in Update' anti-pattern is the #1 source of 'physics feels different on different machines' bugs. Pro Unity script habit: physics → FixedUpdate; everything else → Update; camera + post-physics adjustments → LateUpdate." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "FixedUpdate runs at consistent fixed intervals (default 50Hz); Update is frame-rate dependent. Physics needs consistent timing. Update for visual; FixedUpdate for physics; LateUpdate for post-physics camera.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Movement code: `transform.position += Vector3.forward * 5;`. Behaves differently at 60 FPS vs. 120 FPS. Fix?",
+      "choices": [
+        { "id": "a", "text": "Cap frame rate." },
+        { "id": "b", "text": "Multiply by Time.deltaTime: `transform.position += Vector3.forward * 5 * Time.deltaTime;`. Without Time.deltaTime: movement applies once per frame; 5 units per frame; at 60 FPS = 300 units/sec; at 120 FPS = 600 units/sec; double speed on faster hardware. With Time.deltaTime: 5 * deltaTime per frame; deltaTime ≈ 0.0167 at 60 FPS (5 * 0.0167 ≈ 0.083 units/frame * 60 = 5 units/sec); deltaTime ≈ 0.0083 at 120 FPS (5 * 0.0083 ≈ 0.041 units/frame * 120 = 5 units/sec). Same 5 units/sec regardless of frame rate; consistent behavior. Time.deltaTime = time since last frame (in seconds); multiplying by it converts 'per frame' rate to 'per second' rate; frame-rate independent. Use Time.deltaTime for: any per-frame movement, rotation, scaling, counters, timers, value interpolation. Don't use Time.deltaTime in FixedUpdate (use Time.fixedDeltaTime which equals the fixed interval — though often you don't need it since Rigidbody.AddForce / velocity changes are already framerate-independent at the physics layer). Common mistake: forgetting Time.deltaTime in Update animation/movement code = frame-rate-dependent behavior; speedrunners lock 144 FPS and break the game; testers report 'feels different' between machines. The fix is universal: anytime you have per-frame application of a per-second rate, multiply by Time.deltaTime. Same principle in Unreal (Delta Seconds); universal across engines. Pro Unity habit: every per-frame movement / rotation / value change includes Time.deltaTime multiplication. Compile-time checking via custom analyzer tools can catch missing Time.deltaTime; manual code review is the standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multiply by Time.deltaTime: `* 5 * Time.deltaTime`. Converts per-frame rate to per-second rate. Frame-rate independent. Universal Unity pattern; every per-frame movement.",
+      "points": 1
+    }
+  ]
+}

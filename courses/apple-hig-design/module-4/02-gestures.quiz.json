@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Gestures",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why hide critical actions ONLY behind a custom gesture?",
+      "choices": [
+        { "id": "a", "text": "Best practice." },
+        { "id": "b", "text": "Don't — discoverability disaster. Gestures are powerful but INVISIBLE; users can't see what they don't know exists. Critical actions hidden behind only-gesture access mean users who don't discover the gesture can never reach the feature; they don't even know it exists to look up. Apple itself has this problem (some hidden Safari / Photos gestures are notoriously undiscoverable). Pattern: critical actions should have a tap-accessible path (a visible button, menu item, or context menu) AS WELL AS the gesture shortcut for power users. Example: deleting a list item — visible 'Edit' button reveals delete buttons + swipe gesture deletes faster for those who know. Both paths exist; gesture is shortcut, not gate. Plus accessibility — users with Voice Control / Switch Control can't perform gestures; need button equivalent. The rule: gestures ENHANCE the experience; they shouldn't be the ONLY way to access anything important. Test by removing gesture awareness mentally — can users still accomplish core tasks? If not, the design is broken." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster UX." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gestures are invisible; users can't discover what they don't know exists. Always provide tap alternative.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer made tap targets 24×24pt to look cleaner. Production users report mistaps. Fix?",
+      "choices": [
+        { "id": "a", "text": "Tap harder." },
+        { "id": "b", "text": "Expand tap area via `.contentShape` while keeping 24pt visual. SwiftUI: `Image('icon').frame(width: 24, height: 24).contentShape(Rectangle().size(width: 44, height: 44)).onTapGesture { ... }` — visible 24pt icon, 44pt invisible tap area, both designer aesthetic AND HIG ergonomics. UIKit equivalent: hitTest extends beyond visible bounds; or use a UIButton with image inside (button has full hit area, image is sized smaller). The cleanest visual + meeting the human floor for fingertip ergonomics (~10-14mm contact patch needs ~44pt target). 44pt is non-negotiable for touch; cleaner-looking 24pt tap areas cause real-world mistaps, frustrated users, 1-star reviews. The trade-off doesn't exist: you can have both via the technique. Apple does this routinely — many of their visible icons are smaller than the actual hit area. Designers who insist 'small targets look better' need to be shown the technique; usually 'oh, that works' resolves the disagreement." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Larger icons." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Expand hit area via .contentShape; keep 24pt visual. 24 visible / 44 tappable = best of both.",
+      "points": 1
+    }
+  ]
+}

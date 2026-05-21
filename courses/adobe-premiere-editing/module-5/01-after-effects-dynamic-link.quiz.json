@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dynamic Link",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'Replace with After Effects Composition' do?",
+      "choices": [
+        { "id": "a", "text": "Deletes the clip." },
+        { "id": "b", "text": "Sends Premiere clip(s) to After Effects as a new comp with matching settings (resolution, frame rate, duration); replaces the clip in Premiere's timeline with a dynamically-linked reference to that AE comp. Workflow: 1) Select clip(s) in Premiere timeline. 2) Right-click → Replace with After Effects Composition. 3) After Effects launches; creates a new comp containing those clips. 4) Edit in AE — add motion, masks, effects, compositing. 5) Save AE project. 6) Premiere's timeline updates live with the AE comp's current state — no export, no re-import. The dynamic link is bidirectional: as you make changes in AE and save, Premiere's render reflects them. Use cases: heavy motion graphics, VFX (sky replacement, sign replacement), compositing (layering elements with mattes), 3D camera moves, complex transitions, beauty work. The alternative (old workflow) was: export AE comp to MP4 / ProRes; import to Premiere; if AE comp needs change, re-export, re-import. Dynamic Link cuts this loop to: edit AE, save, see in Premiere. For active iteration, Dynamic Link saves hours. Performance cost: dynamic-linked comps are live renders — Premiere asks AE for each frame on demand; heavy comps cause playback stutters. Solution: render previews around dynamic-linked sections, or pre-render finalized comps to ProRes and replace in Premiere." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Crops the clip." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sends clip(s) to AE as new comp; replaces in Premiere with live dynamically-linked reference. Edit in AE → save → Premiere updates. No export loop.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Sequence has 30 After Effects comps dynamic-linked. Premiere playback stutters during edit; can't get rhythm. Solution?",
+      "choices": [
+        { "id": "a", "text": "Live with it." },
+        { "id": "b", "text": "Pre-render finalized comps to ProRes; replace dynamic links with the rendered files. Dynamic Link is live rendering — each frame requires AE to compute on demand; 30 comps in one sequence is too many for real-time playback even on fast hardware. Workflow: 1) Identify which AE comps are finalized (no more iteration expected). 2) For each: in AE, render to ProRes via Render Queue or send to Adobe Media Encoder. 3) In Premiere, replace the dynamic-linked AE clip with the rendered ProRes file (right-click clip → Replace Footage → select rendered file; or manually delete + re-import + drag). 4) The rendered ProRes plays back smoothly — no AE compute required. 5) Keep dynamic link only on comps still being iterated. This 'pre-render finals, dynamic-link works-in-progress' pattern is the standard for sequences with many AE comps. For finalized comps, you lose the easy iteration (changes require re-rendering) but gain massive playback performance. Other techniques: 1) Render previews around dynamic-linked sections (Sequence → Render In to Out) — temporary pre-render of just the AE sections. 2) Reduce playback resolution to 1/2 or 1/4. 3) Simplify AE comps that are heavy (remove unnecessary layers / effects). 4) Increase RAM allocation to AE so its cache is bigger. Combination: pre-render finals + render previews on in-progress + 1/2 playback resolution = smooth editing on most hardware." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete AE comps." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pre-render finalized comps to ProRes; replace dynamic links with files. Live AE renders too expensive at scale. Keep dynamic link on iterating comps only.",
+      "points": 1
+    }
+  ]
+}

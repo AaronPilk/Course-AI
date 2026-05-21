@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Multicam editing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the most-used multicam sync method in 2026?",
+      "choices": [
+        { "id": "a", "text": "Manual frame alignment." },
+        { "id": "b", "text": "Audio waveform sync. Premiere analyzes the audio waveforms of all camera angles' onboard audio and finds the alignment that maximizes correlation — assuming the cameras captured at least some shared audio (slate clap, ambient noise, room tone, music being played). Setup: select all camera clips → right-click → Create Multi-Camera Source Sequence → sync method: Audio → Premiere processes for 10-60 seconds → outputs synced multicam clip. Works when: cameras have any onboard audio of the shared scene. Doesn't work when: a camera has no audio at all, or audio is in a different acoustic environment (e.g., cam isolated in soundproof booth). Backup methods if audio sync fails: 1) Timecode — best when cameras were genlock'd / sync'd at shoot (timecode locked across cameras); Premiere reads matched timecode and aligns. 2) Markers — manual; place a marker on each clip at a visible event (clapboard close, flash, hand wave); Premiere aligns markers. 3) In/Out Points — match specific frames manually. Audio waveform is the workhorse because it works for most prosumer setups where timecode sync wasn't established but cameras captured shared audio. The accuracy is typically within 1-2 frames; refine with manual nudge if needed." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Synced batteries." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Audio waveform sync. Premiere correlates audio tracks across cameras; finds alignment. Works for any setup with shared audio.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Editing 6-camera 4K wedding footage. Premiere stutters; live multicam edit pass is impossible. Solution?",
+      "choices": [
+        { "id": "a", "text": "Cut to one camera." },
+        { "id": "b", "text": "Generate proxies for all 6 angles first. Multicam at 4K with 6 streams requires decoding 6 × 4K simultaneously — hardware can't handle it on most machines. Proxies reduce each stream's decode cost to about 1/16th (1/4 resolution = 1/16 pixel count) — 6 proxy streams play smoothly where 6 native 4K streams stuttered. Workflow: 1) In Project panel, select all 6 camera clips. 2) Right-click → Proxy → Create Proxies → ProRes Proxy 1/4 → Adobe Media Encoder generates in background (~10-30 min for hours of footage on modern hardware). 3) Once done, toggle Proxies on in Program monitor (wrench icon). 4) NOW create the Multi-Camera Source Sequence — Premiere uses proxies for multicam playback. 5) Live-cut by pressing 1-6 during playback to switch angles. 6) Refine with Slip / Rolling / angle changes. 7) On export, Premiere automatically uses the 4K originals. Without proxies, 6-cam 4K is unworkable on most editing machines. Pro multicam editors generate proxies as part of ingest, before doing anything else — proxy-first workflow. Combine with lower playback resolution (1/2 in Program monitor) for additional smoothness. For 10+ camera multicam (large weddings, concerts): proxies + powerful machine + sometimes dedicated multicam editing software (Avid, DaVinci Resolve)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller monitor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generate proxies for all 6 angles first. 1/4 res reduces decode load 16x. Proxy-first workflow for multicam. Export uses originals.",
+      "points": 1
+    }
+  ]
+}

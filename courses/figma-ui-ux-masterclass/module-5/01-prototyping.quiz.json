@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Prototyping",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What makes Smart animate work?",
+      "choices": [
+        { "id": "a", "text": "Magic." },
+        { "id": "b", "text": "Matching layer names across the source and destination frames. Smart animate interpolates between layers that share names — same name = Figma assumes they're the same element and animates the property changes (position, size, fill, opacity) smoothly between the two states. Different names = layers are treated as separate; the source's version fades out, destination's fades in (basically dissolve). The trick is consistent naming: a card layer called 'Card/Featured' in Frame 1 must be called 'Card/Featured' in Frame 2 for the smart animation to recognize them as the same. Common pattern: design a flow with multiple states (collapsed → expanded card; closed → open menu; default → hover button); duplicate the frame; modify position/size/visibility for the new state; KEEP layer names identical; connect with Smart animate. Result: smooth, app-quality transitions without writing animation code. Beyond layer names, you can also tune the animation: easing (ease-in, ease-out, custom curves), duration (300ms typical), and delay. Smart animate is Figma's flagship interaction feature and turns static mockups into polished prototypes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Animation tab." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Matching layer names. Same name across frames → Figma interpolates position/size/color. Get names right; animations come free.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're testing a checkout flow with users. The prototype works on desktop but feels off when users test on phones. Why?",
+      "choices": [
+        { "id": "a", "text": "Phones are bad." },
+        { "id": "b", "text": "Prototyping decisions optimized for desktop (hover triggers, mouse movement assumptions, desktop-sized tap targets) don't translate to mobile. Fix: configure the prototype for mobile from the start. Set the device frame to the actual user device (iPhone 15 Pro, Pixel, etc.); test triggers that are mobile-native (On click = tap, not hover); ensure tap targets ≥ 44pt; use swipe gestures (On drag) where they'd be natural; verify scroll behavior matches mobile expectations. Then share the prototype via mobile (Figma Mirror app, or open the prototype URL in a phone browser) — users tap and swipe as they would in a real app. Most prototype testing failures on mobile trace to: untested device (designed on 1440px monitor, tested on 390px phone) or untested interaction model (mouse-first design used on touch-first device). The fix is to prototype-on-device early; build for the device before testing on it. Maze, UserTesting, and other platforms integrate Figma prototypes for unmoderated mobile testing. Don't design on desktop and assume mobile works — it never does without explicit attention." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip mobile." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Build the prototype for the actual device. Set device frame; use mobile triggers (tap/swipe); test on real phones via Figma Mirror.",
+      "points": 1
+    }
+  ]
+}

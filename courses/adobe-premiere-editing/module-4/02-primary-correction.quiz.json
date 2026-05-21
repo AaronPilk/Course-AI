@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Primary correction",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Order of operations in primary correction?",
+      "choices": [
+        { "id": "a", "text": "Saturation first." },
+        { "id": "b", "text": "Input LUT (if log/RAW) → White Balance → Exposure / Whites / Blacks → Contrast / Highlights / Shadows → Saturation / Vibrance. Each step builds on the previous: 1) Input LUT converts log/RAW footage to standard color space (Rec. 709 for HD) — necessary baseline before anything else; flat log footage looks fundamentally wrong, sliders applied directly produce odd results. 2) White Balance neutralizes color cast — sets the gray baseline; subsequent steps work on neutral footage. 3) Exposure sets overall brightness; Whites + Blacks set the dynamic range extremes. 4) Contrast + Highlights + Shadows shape the midtones; recover detail. 5) Saturation / Vibrance comes last because it amplifies whatever color is there — applying before white balance correction would also amplify the cast. Following this order means each adjustment operates on a cleaner signal than the previous; reversing produces compounding artifacts (saturated before correcting cast = wildly off colors; contrast before exposure = wrong baseline). Lumetri Color's Basic Correction panel lays this out top-to-bottom for a reason — work the panel in order. After primary correction is solid (verified with Lumetri Scopes: balanced Parade, skin tones on I-line, no clipping in waveform), then move to creative grading. The 'fix first, style second' principle is universal in pro color work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Input LUT → White Balance → Exposure / Whites / Blacks → Contrast / Highlights / Shadows → Saturation / Vibrance. Each step on cleaner signal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Interview shot indoors under tungsten lights; footage has heavy orange cast. Subject's white shirt looks yellow. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add more orange." },
+        { "id": "b", "text": "White Balance eye-dropper on the white shirt. Lumetri Color → Basic Correction → click the eye-dropper icon next to White Balance → click on the white shirt in the program monitor. Premiere automatically shifts Temperature (cooler) and Tint (slight green) so the shirt reads as truly neutral white. The single click typically fixes 80-90% of the cast; the rest of the image's colors restore to their actual values. Verify with the Parade scope: white shirt area should show R, G, B at roughly equal levels (true white = equal channels). If the click doesn't perfectly fix it, manually nudge Temperature cooler + Tint adjustment. The whole correction takes 30 seconds. Why tungsten causes this: tungsten bulbs emit warm light (~3200K color temperature); camera shooting in 'daylight' (~5600K) white balance preset sees that warm light and faithfully records it as warm — but the visual reading should be neutral if the lighting was 'correct' (white shirt should look white). Setting Premiere's white balance to match the actual lighting condition neutralizes the recorded cast. Alternative: set camera white balance correctly at shoot time (tungsten preset on camera = footage looks neutral straight out of camera). When that's missed, fix in post via eye-dropper. The neutral-area technique works for any cast (blue from shade, green from fluorescent, etc.) — find anything that should be white/gray; eye-dropper; done." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Boost saturation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "White Balance eye-dropper on white shirt. Single click shifts Temp + Tint so it reads neutral; cast fixed; verify with Parade scope.",
+      "points": 1
+    }
+  ]
+}

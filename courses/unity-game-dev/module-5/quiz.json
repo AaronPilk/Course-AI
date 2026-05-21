@@ -1,0 +1,81 @@
+{
+  "title": "Module 5 quiz: Building and shipping",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Scripting backend required for iOS?",
+      "choices": [
+        { "id": "a", "text": "Mono." },
+        { "id": "b", "text": "IL2CPP. Apple requires AOT compilation; Mono uses JIT (disallowed on iOS for security). IL2CPP compiles C# → C++ at build time → Xcode compiles to native. Recommended for all production builds (faster runtime + smaller stripped code). Android requires for 64-bit (Play Store requirement). Trade-off: longer build times; faster runtime.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IL2CPP. Apple requires AOT. Recommended for all production builds. Android 64-bit requires it. Mono only for dev on platforms that allow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Scene with 500 trees causes performance drop due to 5000+ draw calls. Fix?",
+      "choices": [
+        { "id": "a", "text": "Fewer trees." },
+        { "id": "b", "text": "GPU Instancing + Static Batching + LOD Groups. GPU Instancing on materials renders many copies as one draw call. Static Batching combines static meshes. LOD Groups render distant trees as low-poly. Combined: 5000 → ~10-50 draw calls. Foliage tool for grass / dense vegetation. Profile via Frame Debugger.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GPU Instancing + Static Batching + LOD Groups. Combined: 5000 → 10-50 draw calls. Plus occlusion / frustum culling. Foliage tool for grass.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Save large structured player data where?",
+      "choices": [
+        { "id": "a", "text": "PlayerPrefs." },
+        { "id": "b", "text": "JSON file in Application.persistentDataPath. JsonUtility serializes complex structures; File.WriteAllText to per-user save location. PlayerPrefs only for small settings (high scores, audio volumes). For full save games: JSON + persistentDataPath + multiple save slots + versioning. Cross-platform (Unity manages OS-specific paths). Steam Cloud auto-syncs persistentDataPath on PC.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "JSON to Application.persistentDataPath. JsonUtility for serialization. Multiple slots + versioning. PlayerPrefs only for small settings.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Game ships; players report random crashes. Identify root causes?",
+      "choices": [
+        { "id": "a", "text": "Wait for reports." },
+        { "id": "b", "text": "Set up crash reporting (Unity Cloud Diagnostics, Firebase Crashlytics, or Sentry). SDK auto-captures stack traces + device info + breadcrumbs; uploads to web dashboard; aggregated crash groups; fix by priority. Non-negotiable for shipped games. Setup: 30-60 min; lifetime value: enormous. Combined with analytics for player behavior insight.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Crash reporting (Unity Cloud Diagnostics / Firebase Crashlytics / Sentry). Auto-captures crashes; dashboard shows aggregated groups + stack traces; fix systematically. Non-negotiable for shipped games.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Lowest-barrier platform for indie distribution?",
+      "choices": [
+        { "id": "a", "text": "Console." },
+        { "id": "b", "text": "itch.io. No fees, no review, instant. WebGL or PC build → upload → live within minutes. Limited audience reach but ideal for first projects + iteration + portfolio. Higher-audience platforms (Steam, Google Play) have more barriers but bigger reach. Console = highest prestige + barrier (dev program, certification, devkits).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "itch.io. No fees, no review, instant distribution. Ideal for first projects. Steam for broader audience after quality. Console = highest barrier.",
+      "points": 1
+    }
+  ]
+}

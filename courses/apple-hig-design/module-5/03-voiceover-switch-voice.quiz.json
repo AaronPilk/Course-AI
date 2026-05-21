@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Assistive tech",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why provide accessibility labels even for buttons with visible text?",
+      "choices": [
+        { "id": "a", "text": "VoiceOver reads text anyway." },
+        { "id": "b", "text": "Mostly correct for plain Buttons with Text labels — SwiftUI's `Button('Save') { }` automatically uses the visible text as the accessibility label. BUT for icon-only buttons, custom views, composite controls, and anywhere visible text is decorative rather than functional, explicit `.accessibilityLabel()` is required. Image-only button: `Image(systemName: 'trash')` without label = VoiceOver says 'trash icon, button' (meaningless) or just 'button'; with `.accessibilityLabel('Delete')` = says 'Delete, button.' Same for status icons, emoji-only buttons, custom-drawn controls. Plus context sometimes matters — a button labeled '×' visually could be 'Close,' 'Delete,' or 'Cancel' depending on context; explicit accessibility label disambiguates. Trait additions (`.accessibilityAddTraits(.isButton)`) help when custom views aren't recognized as interactive. Rule: every interactive element should have an unambiguous, voice-friendly label whether visible text exists or not. Test with VoiceOver navigation — every element should announce itself clearly without sighted context." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Icon-only buttons / custom views need explicit labels. Plain `Button('Save')` is auto-labeled; everything else needs explicit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app has a swipe-to-delete gesture but no visible delete button. VoiceOver user reaction?",
+      "choices": [
+        { "id": "a", "text": "Try harder." },
+        { "id": "b", "text": "They can't delete. VoiceOver users navigate by swipe — but VoiceOver's swipes are CAPTURED by VoiceOver to move focus, not passed to the app. So any app gesture (swipe-to-delete, pinch-to-zoom, swipe-to-archive) is unreachable to VoiceOver users without a non-gesture alternative. Fix: expose actions via `.accessibilityActions { ... }` — VoiceOver users access via Rotor (rotate two fingers; pick action); they can perform actions without using the gesture. Apple's first-party apps do this routinely; List rows with swipe-to-delete also expose 'Delete' as an accessibility action. Without accessibility actions, the gesture-based feature is effectively missing for VoiceOver users. Same logic for Switch Control (can't perform gestures), Voice Control (can perform via 'tap Delete' if the action is labeled). Universal pattern: every gesture-based action should ALSO be accessible via a non-gesture path. Test with VoiceOver on; if you can't accomplish what sighted users can via gestures, you have an accessibility gap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tap differently." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VoiceOver captures swipes for focus. Expose swipe actions via `.accessibilityActions` so VoiceOver users can perform via Rotor.",
+      "points": 1
+    }
+  ]
+}

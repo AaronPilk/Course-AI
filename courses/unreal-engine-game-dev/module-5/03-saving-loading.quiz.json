@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Saving and loading",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use multiple save slots?",
+      "choices": [
+        { "id": "a", "text": "Marketing." },
+        { "id": "b", "text": "Protect players from corrupt / accidental save loss. Single-slot saves are vulnerable: crash during save = corrupt save = total progress loss; player accidentally saves at a bad moment = stuck; no way to recover. Multiple slots provide safety: 1) AutoSave slot — game saves automatically every X minutes / at checkpoints; latest auto-save survives even if player's manual save corrupts. 2) Manual save slots (3-5 typically) — player explicitly saves; can rotate between (Save1, Save2, Save3). If one corrupts, others survive. 3) QuickSave / QuickLoad slot — F5/F9 single-button save+load; fast iteration during play. 4) Checkpoint saves — story-driven games auto-save at major beats. 5) Cloud backup — separate from local; if local files corrupt, cloud has copies. The 'lose all progress to one corrupt save' nightmare is real for solo players; multiple slots prevent it. Pro game design: AutoSave + 3-5 manual slots + cloud backup = comprehensive coverage. Implementation in UE5: each Save Game to Slot call uses a different slot name parameter ('AutoSave', 'ManualSlot_1', 'QuickSave', etc.). Load Game from Slot reads by slot name. List existing saves: Does Save Game Exist + iterate slot names. UI for save management: list slots with timestamps + screenshots; player picks which to load. Cloud integration: Steam Cloud / Epic auto-sync the Saved/SaveGames/ folder; players' saves move between devices. The multi-slot save approach + cloud sync + versioning (handle saves from older game versions) = robust save system that players trust." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More content." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Protect from corrupt / accidental save loss. AutoSave + multiple manual slots + QuickSave + cloud backup. Single slot = vulnerable; multiple slots = robust.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Updated game adds new player stat (Mana). Old saves don't have it; game crashes on load. Fix?",
+      "choices": [
+        { "id": "a", "text": "Force re-save." },
+        { "id": "b", "text": "Versioning + migration. Add version number to SaveGame class: variable `SaveVersion` (Integer, default 1). When the game adds new fields (Mana), increment the version (now 2). On Load: check loaded SaveGame's version; if < current: migrate (add default Mana = 100; set version to 2; save back). If = current: use directly. Implementation: 1) SaveGame Blueprint has SaveVersion variable initialized to current version constant. 2) Load Game logic: Load Game from Slot → Cast to SaveGame → check SaveVersion variable. 3) If version mismatch: function MigrateSave() handles each version transition (v1→v2 adds Mana=100; v2→v3 splits Inventory into Equipment + Consumables; v3→v4 changes XP scale). 4) After migration: save back to disk with new version + new fields populated. 5) Existing player loads old save → game seamlessly migrates → resumes with new features. Without versioning: 1) Old saves crash (new code reads Mana field; field doesn't exist; null pointer / crash). 2) Players forced to delete + restart. 3) Bad reviews from lost progress. With versioning: 1) Old saves load fine. 2) Players keep progress. 3) Smooth game updates. Pro shipped games version saves religiously; every game update considers save migration. Some games maintain compatibility for 10+ versions of save format (Skyrim, Minecraft). The cost: think about save format when designing features; add migration logic per version transition. The benefit: never break players' saves. UE5 SaveGame system supports versioning natively (you define + check SaveVersion); manual migration logic per game. For complex games: SaveGame inheritance + composition makes migrations more manageable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip the feature." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Versioning + migration. Add SaveVersion to SaveGame; on Load check version; if older, run migration function (add defaults for new fields, transform old fields); save back with new version.",
+      "points": 1
+    }
+  ]
+}

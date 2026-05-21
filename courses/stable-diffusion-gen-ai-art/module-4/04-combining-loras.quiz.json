@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Combining LoRAs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Stacking 3 LoRAs at 1.0 each; output looks burned + chaotic. Fix?",
+      "choices": [
+        { "id": "a", "text": "Add a 4th LoRA." },
+        { "id": "b", "text": "Reduce individual weights. When stacking LoRAs, their combined influence over-amplifies; 3 LoRAs at 1.0 each = 3x normal strength = burned/chaotic output. Solution: reduce each weight; total influence should be roughly 1-2 combined. Try 0.6-0.8 per LoRA when stacking 2-3. For 4-5 LoRAs: 0.4-0.6 each. Approach: 1) Start with primary LoRA at intended weight (e.g., character LoRA 0.8). 2) Add secondary at lower weight (style LoRA 0.5-0.6). 3) Add tertiary at even lower (concept LoRA 0.3-0.5). 4) Test; adjust by 0.1 increments. Per-LoRA tuning needed; 'reduce all to 0.5' is rough heuristic; pairs may need different weights. Some LoRAs have tested compatible weights documented on Civitai (creator's notes; community feedback). Test combinations systematically: 1) Generate with each LoRA individually at intended weight (verify each works alone). 2) Combine pairs; test. 3) Combine all; tune weights. Some combinations don't work regardless of weights (conflicting styles cancel out, conflicting identities merge into weird hybrid). Skip incompatible pairs. Pro habit: maintain notes on which LoRAs combine well + at what weights; build personal compatibility matrix.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reduce individual weights when stacking. 3 LoRAs at 1.0 = 3x amplification = chaos. Try 0.6-0.8 each; tune per pair. Some combinations incompatible regardless.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need maximum control: character identity + specific pose + specific scene composition. Approach?",
+      "choices": [
+        { "id": "a", "text": "Just text prompt." },
+        { "id": "b", "text": "ControlNet + LoRA + IP-Adapter combined. ControlNet for structural control (pose via OpenPose, scene via Depth or Canny). LoRA for character identity (trained character LoRA at 0.7-0.8). IP-Adapter for refinement (style reference image or face reference). Plus detailed text prompt. Workflow: 1) Reference: pose photo for OpenPose ControlNet; composition reference for Depth/Canny ControlNet. 2) Character LoRA loaded at appropriate weight. 3) IP-Adapter with style reference (optional). 4) Text prompt: describe scene, lighting, mood. 5) Generate. Result: character (LoRA) in exact pose (OpenPose ControlNet) within specific composition (Depth/Canny ControlNet) with style influence (IP-Adapter) + prompted scene details. This is the pro-grade control stack for SD/SDXL — combines all major guidance methods for surgical generation. Same approach in ComfyUI: chain nodes for each (Load LoRA → Apply ControlNet → IP-Adapter Apply → KSampler). Each layer addresses a different control axis: pose (ControlNet OpenPose), composition (ControlNet Depth/Canny), identity (LoRA), style (IP-Adapter), scene details (text prompt). Without combining, each method has gaps: text alone = unpredictable pose; ControlNet alone = generic character; LoRA alone = inconsistent pose; IP-Adapter alone = unclear scene. Together = production-grade output. Pro AI artists use this stacked approach for commercial work, character series, brand consistency, hero shots. Complexity manageable in ComfyUI's node graph; A1111 + Forge with appropriate extensions handle it too.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ControlNet (structure) + LoRA (identity) + IP-Adapter (style) + text prompt (scene). Pro-grade control stack. Each layer addresses different control axis.",
+      "points": 1
+    }
+  ]
+}

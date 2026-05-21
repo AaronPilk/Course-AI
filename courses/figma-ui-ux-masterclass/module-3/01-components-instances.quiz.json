@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Components and instances",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the relationship between a main component and its instances?",
+      "choices": [
+        { "id": "a", "text": "They're identical copies." },
+        { "id": "b", "text": "Main is the source of truth; instances are usages that inherit from main but can override specific properties (text, fill, image, visibility, limited layout). Edit the main → all instances update automatically; no rebuild step. Conceptually: main is the class, instances are objects. The override system is what makes components practical: a Button/Primary main defines the shape, padding, color, type; each instance can have its own label text (Save, Cancel, Delete) without breaking the connection. When you update the main's corner radius or color, every Save / Cancel / Delete button updates instantly — overrides survive the propagation because Figma tracks them as deltas. Detaching breaks the link (right-click → Detach instance / Cmd+Alt+B); use rarely since it defeats the system benefit. Naming via /-separated paths (Button/Primary/Large) groups instances in the asset panel. The pattern scales: small teams skip components and copy-paste; mid teams build atoms; large teams have shared libraries with hundreds of components consumed across files." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Instances are read-only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Main = source of truth; instances inherit + can override. Edit main → instances update; overrides survive.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You see the same card layout repeated 12 times across 4 screens. What's the right move?",
+      "choices": [
+        { "id": "a", "text": "Leave as is." },
+        { "id": "b", "text": "Make it a component. Twelve repetitions is well past the 'third occurrence' componentization threshold — any future styling change (corner radius, padding, shadow, type) currently requires 12 manual edits in 4 places, with high risk of inconsistency (one card ends up 16px radius, others 12px). Refactor: select the cleanest instance → Cmd+Alt+K → name it Card or Card/Default with /-path for organization → replace the other 11 with instances of this component (Shift+I to drag from assets, or detach-equivalent swap). If the cards have meaningful variations (with avatar, without avatar; small, medium, large), use variants (next lesson) rather than 12 separate components. After componentizing: a single edit to the main propagates to all 12 instances; new screens that need cards drag from assets; the design system has one more atomic piece. Time invested: 10-20 minutes. Time saved on future styling changes: hours, plus the consistency guarantee. This is the core componentization mindset: when you see repetition, ask 'should this be a component?' — usually yes if 3+ occurrences." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Make 12 components." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Componentize. 12 reps × 4 screens = high inconsistency risk + manual edits. Make Card component; replace duplicates with instances.",
+      "points": 1
+    }
+  ]
+}

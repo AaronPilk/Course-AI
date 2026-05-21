@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Physics simulations",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why bake simulations before final render?",
+      "choices": [
+        { "id": "a", "text": "Faster compute." },
+        { "id": "b", "text": "Consistency + speed. Without baking, simulations recompute every viewport playback or render — produces different results each time due to floating point variations, frame-skipping during interactive play, or settings changes. Critical issue: an animation render might show different cloth folds in frame 50 vs. when you previewed it; final video has unintended flicker / inconsistency. Baking stores the computed simulation in cache files (per-frame data); subsequent playback and rendering use the baked data deterministically — same result every time. Also: baked playback is much faster than re-simulating live (saves render time when complex sims would otherwise re-compute each frame). Setup: Properties → Cache → Bake (or Bake All Dynamics for multi-simulation scenes). Bake to Disk (Disk Cache option) so the simulation data persists across Blender sessions. Pro habit: bake all simulations before final render. Workflow: 1) Set up cloth / rigid body / fluid sim. 2) Iterate on parameters (no bake; live preview). 3) Once happy with the look, bake to disk. 4) Render the animation. 5) If sim needs changes: clear bake, modify, re-bake, re-render. For complex scenes with multiple simulations (cloth + rigid body + fluid): bake each independently, ideally in order of dependence (collision objects baked first, dependent sims after). Cache files can be large (GB for fluid sims) — manage disk space; clean cache when done with project. Don't render unbaked sims; expect flicker." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Not needed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Consistency + speed. Unbaked sims recompute each playback differently (flicker in final). Baked sims are deterministic. Always bake before final render.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "T-shirt cloth simulation: shirt falls off the body completely instead of draping. Why?",
+      "choices": [
+        { "id": "a", "text": "Wrong cloth preset." },
+        { "id": "b", "text": "Missing collision object (body) OR no pinning on shoulders. Cloth simulation needs collision targets to interact with — without them, cloth falls through everything as if in empty space. Fix: select the body mesh → Properties → Physics → Collision → enable. Now cloth sees the body and drapes over it. Second issue: even with collision, an unanchored t-shirt slides off the body during simulation (gravity pulls it down; no friction holds it on shoulders). Fix: pinning. Workflow: 1) On the t-shirt mesh, create a Vertex Group named 'Pin' or 'Shoulders'. 2) Assign vertices at the shoulder seams + collar to this group (these vertices will follow the body's movement; not simulated). 3) Cloth Physics → Shape → Pin Group → select 'Pin'. 4) Re-run simulation. Now the shirt stays on shoulders; the rest drapes naturally. For shirts that need fitted look around chest: pin some chest vertices too. For loose flowing garments: pin only the absolute necessary points (waistband for skirt; shoulder seam for shirt). Pinning is the difference between 'cloth on body' and 'cloth falls off body.' Combined with: 1) Self-collision (folds collide with themselves; thicker cloth feel). 2) Cloth preset (Cotton for t-shirts, Silk for capes, Leather for jackets — different stiffness + mass). 3) Pinning influence (vertex group weight; partial pin for soft attachment). 4) Body underneath has slight inflation (modeled slightly larger than mesh) to prevent clipping. Real character cloth setup takes 30 min - 2 hours per garment; the principles are simple but tuning is iterative." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong material." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Collision object missing OR no pinning. Body needs Collision Physics; shirt needs Pin Vertex Group on shoulder vertices. Both required.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Color and visual polish",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Color workflow order — correction vs. grading?",
+      "choices": [
+        { "id": "a", "text": "Grade first." },
+        { "id": "b", "text": "Correction first, then grading. Correction = fixing footage to a neutral, accurate baseline (white balance, exposure, contrast, basic saturation) so every shot looks 'real' and shots from different cameras/lighting match. Grading = applying a stylized look (teal & orange, vintage, bleach bypass) for creative effect. Why this order: corrections operate on raw signal; grades operate on the corrected signal as a clean starting point. Reversing — applying a LUT or look first then trying to correct — stacks problems: the LUT amplifies whatever cast was in the original, requiring fighting against the LUT to neutralize, producing muddy results. Correction-first approach: every shot reaches a known-good baseline; grade can then be applied uniformly and produce predictable results across all shots. Steps within correction: Input LUT (if log/RAW) → White Balance → Exposure / Whites / Blacks → Contrast / Highlights / Shadows → Saturation / Vibrance. Steps within grading: Creative LUT or Color Wheels for overall look → HSL Secondary for targeted color work (skin tones, sky, brand colors) → vignettes / film looks for atmosphere. The 'fix first, style second' principle is universal in pro color work; Lumetri Color's Basic Correction → Creative panel order mirrors this. Skipping correction → grading on broken footage → output looks off regardless of how good the LUT is." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No difference." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Correction first (neutral baseline), then grading (stylized look). Reverse order stacks problems. Universal pro principle.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Footage from two cameras (Sony FX3 + Canon R5) intercut in the same scene; they look noticeably different even though shot same location/time. How to match?",
+      "choices": [
+        { "id": "a", "text": "Use one camera only." },
+        { "id": "b", "text": "Color Match + manual refinement. Workflow: 1) Pick one as 'hero' reference (typically the better-exposed shot). 2) Lumetri → Color Wheels & Match → Comparison View on (split monitor). 3) Show hero on left, target shot on right. 4) Click Apply Match → Premiere AI-analyzes both shots and adjusts the target to match the hero (white balance, exposure, contrast, saturation). 5) Verify with Lumetri Scopes — Parade should show similar channel balance; Vectorscope should show similar saturation patterns; Waveform should show similar dynamic range. 6) Manual refinement: AI gets 70-90% there; tune the remaining gap with primary correction sliders. Often need to: shift one camera's white balance slightly (Sony tends warmer than Canon by default); adjust contrast since they handle highlights differently; tweak saturation since they map color differently. 7) For sequence consistency: save the matched correction as a preset; apply to all clips from that camera. The two-camera match problem is solved with this workflow in 2-5 minutes per shot pair; without Color Match, manual eye-balling shot-by-shot takes 20-30 minutes per pair and produces inconsistent results. Pro multi-camera editors run Color Match on every camera A vs. camera B pair before cutting — establishes a consistent visual baseline for the whole sequence." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random LUT on both." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Color Match (AI auto-matches one to reference) + manual refinement via scopes + save preset per camera. 70-90% AI; finish manually.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why do scopes matter for color work?",
+      "choices": [
+        { "id": "a", "text": "They don't." },
+        { "id": "b", "text": "Objective measurement beats subjective perception. Eyes deceive: monitor calibration drift, room ambient lighting, fatigue, chromatic adaptation (eyes adjust to color casts over time so a blue-tinted image starts looking 'normal' after viewing it for a while). Scopes are mathematical readouts of the actual signal — same numbers regardless of viewing conditions. Vectorscope shows color distribution + saturation; Parade (RGB) shows per-channel levels; Waveform shows brightness; Histogram shows brightness distribution. Pro workflow: scopes first (verify what's technically there), eyes second (evaluate what feels right). Common scope-based verifications: 1) Skin tones cluster on the I-line of the Vectorscope (diagonal from center toward 10-11 o'clock) = skin tones are correct hue. 2) Parade channels balance at the gray-point = no color cast. 3) Waveform spans 0-100 without bunching at extremes = exposure spans dynamic range without clipping. 4) Histogram has data across the range with no clipping spikes at 0 or 255 = no lost detail in shadows or highlights. Without scopes, color decisions are based on whatever your specific monitor shows in your specific lighting at your specific moment — inconsistent across sessions, editors, and viewing conditions. With scopes, calls are based on absolute numbers — consistent and verifiable. The scope+eye combo is the standard: scopes ensure technical correctness; eyes ensure creative intent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Eyes are better." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Objective measurement vs. subjective eyes. Monitor calibration, ambient light, fatigue, chromatic adaptation all distort perception. Scopes first; eyes second.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Want to make subject's skin tones warmer without affecting the background. Best tool?",
+      "choices": [
+        { "id": "a", "text": "Global temperature." },
+        { "id": "b", "text": "HSL Secondary targeting skin tones. Workflow: 1) Lumetri Color → HSL Secondary → click eye-dropper next to Key → click on subject's face. 2) Premiere creates a mask of pixels matching that hue/sat/luma range. 3) Refine mask with H/S/L sliders + Refine controls — verify with B/W mask preview that ONLY skin is selected (not similar-hue background elements). 4) In Refine section: increase Smoothing slightly to soften mask edges; verify edge transitions look natural. 5) In Output section: increase Temperature slightly (warmer), nudge Tint toward yellow if needed, slight Saturation boost. 6) Toggle B/W preview off; view in color: skin glows warm; background unchanged. The global Temperature approach would warm everything — skin, background, props — making the whole image feel orange. HSL Secondary isolates skin tones for surgical warming. For multi-person shots where each has different skin tones (mixed ethnicities): may need multiple HSL Secondary layers, each targeting a different skin tone range. Combine with mask tracking if subject moves through frame (rare for stationary interviews; common for narrative). Pro skin tone work uses HSL Secondary routinely; global adjustments are too blunt for portrait-driven content. The Vectorscope's I-line is the verification — skin tones should sit along this line after HSL Secondary work; falling off the line means the warm-up went too far or in the wrong direction." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add a vignette." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HSL Secondary targeting skin tones. Eye-dropper → mask → refine → warm only skin tones. Global temperature would warm everything; HSL is surgical.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the safe zone rule for text in video?",
+      "choices": [
+        { "id": "a", "text": "100% of frame." },
+        { "id": "b", "text": "Title-safe inner 80%; action-safe inner 90%. TVs (especially older / scaling / overscanning displays) sometimes crop the outer 5-10% of the frame for calibration, broadcast standards, or display margins. Important text must sit within the inner 80% (title-safe zone) so it's guaranteed visible across all viewing environments. Important visual elements (logos, key action) should sit within the inner 90% (action-safe). The outer 10% is no-man's-land — can be cropped without warning by the viewer's display. Premiere's safe-zone overlay: right-click in program monitor → Safe Margins → toggles visible rectangles. Keep text inside the inner rectangle. For broadcast delivery (Netflix, BBC, FCC-regulated TV), title-safe compliance is mandatory; content can be rejected for text outside the zone. For web (YouTube, Vimeo), the rules are looser but pro editors still respect them — viewers on smart TVs, projectors, or older devices may still see cropping. The 80/90 rule is universal across the industry. Beyond cropping concerns, edge-aligned text feels visually unbalanced; pulling inward typically improves composition. MOGRTs from Adobe Stock / Envato respect safe zones by default; custom-built graphics need explicit verification. Modern flat-panel TVs mostly don't overscan, but the safety margin is cheap insurance for the 5-10% of viewers on devices that do." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No rules." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Title-safe 80%; action-safe 90%. TVs may crop outer 5-10%. Keep important text + visuals inside the safe zones. Mandatory for broadcast; pro practice for web.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Three-point editing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What are the 'three points' in three-point editing?",
+      "choices": [
+        { "id": "a", "text": "Three buttons." },
+        { "id": "b", "text": "Three of these four edit points: Source In, Source Out, Timeline In, Timeline Out. Premiere computes the fourth automatically. Common pattern A: set Source In + Source Out (defines the segment from your source clip) + Timeline In (where it lands) → Premiere derives Timeline Out from the source segment's duration. Common pattern B: set Source In + Timeline In + Timeline Out (defines the slot you want filled) → Premiere derives Source Out from the slot's duration. The workflow: open clip in Source monitor; J/K/L to navigate; press I at desired in, O at desired out; move to timeline; press I/O on timeline; press comma (Insert — shifts existing clips right) or period (Overwrite — replaces what's there) → segment lands precisely. Three-point editing is the foundation of pro editing speed — surgical placement of exact source segments at exact timeline positions, without drag-and-drop guesswork. Combined with JKL transport mastery (J reverse, K pause, L forward; multi-tap = faster) and track targeting (yellow headers determine where clips land), three-point editing makes Premiere feel like a precision instrument rather than a video toy. The drag-and-drop alternative is fine for rough layout but slow and imprecise for tight cuts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Beginner, intermediate, advanced." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three of (Source In, Source Out, Timeline In, Timeline Out); Premiere derives the fourth. Surgical clip placement; foundation of pro speed.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Editor needs to remove a 3-second gaffe in the middle of an interview without breaking sync with the music track underneath. Best move?",
+      "choices": [
+        { "id": "a", "text": "Manually move every clip." },
+        { "id": "b", "text": "Set In/Out around the gaffe, then Extract (apostrophe key) on targeted video + dialogue tracks while excluding the music track from targeting. Or use Lift (semicolon) to leave the gap and adjust separately. Extract removes content + closes the gap (ripple delete on a range); Lift removes content + leaves the gap (good when you want a beat of silence). For sync preservation: 1) Target only the video + dialogue tracks (untarget music). 2) Set in/out points around the gaffe (I at start, O at end). 3) Press apostrophe → Extract — those tracks ripple closed, but music untouched. 4) Verify sync visually + by playback. Alternative: use the Razor tool (C) on dialogue + video to mark the cut points, then select the segment between cuts, Shift+Delete (ripple delete). Either way, the key is tracking-aware editing: which tracks should ripple, which should stay locked. Sync locks (icon on track header) reinforce this — engaged sync locks ensure related tracks ripple together; disengaged sync lock means that track doesn't ripple. For this case: dialogue + video sync-lock together; music sync-lock off (so music doesn't shift when dialogue + video ripple). The 'manually move every clip' approach loses sync the moment you forget a clip — three-point editing + targeting + sync locks is surgical." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Re-edit from scratch." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Set in/out around gaffe, Extract on targeted tracks (video + dialogue, not music). Sync locks ensure correct tracks ripple together.",
+      "points": 1
+    }
+  ]
+}

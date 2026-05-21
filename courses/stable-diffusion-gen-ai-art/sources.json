@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "title": "Stable Diffusion documentation",
+      "url": "https://stability.ai/research",
+      "type": "documentation"
+    },
+    {
+      "title": "ComfyUI documentation",
+      "url": "https://docs.comfy.org/",
+      "type": "documentation"
+    },
+    {
+      "title": "Hugging Face Diffusers library",
+      "url": "https://huggingface.co/docs/diffusers",
+      "type": "documentation"
+    },
+    {
+      "title": "Civitai (model + LoRA library)",
+      "url": "https://civitai.com",
+      "type": "resource"
+    },
+    {
+      "title": "ControlNet paper + repo",
+      "url": "https://github.com/lllyasviel/ControlNet",
+      "type": "research"
+    },
+    {
+      "title": "Black Forest Labs (Flux)",
+      "url": "https://blackforestlabs.ai",
+      "type": "documentation"
+    }
+  ]
+}

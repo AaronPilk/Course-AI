@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Gameplay framework + shipping",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What persists across level transitions?",
+      "choices": [
+        { "id": "a", "text": "Pawn." },
+        { "id": "b", "text": "GameInstance — only framework class living the entire game session from boot to quit. Pawn is destroyed when level changes (body doesn't persist). GameMode + GameState + PlayerState are per-level (destroyed on level change). PlayerController may or may not persist depending on setup. GameInstance is the persistence layer: 1) Player progression (XP, level, achievements). 2) Save slot references / SaveGame data. 3) Settings (audio, graphics, controls). 4) Cross-level state (lobby → battle transitions carry player loadout). 5) Player profile data (username, avatar). 6) Multiplayer connection info. Setup: 1) Create custom GameInstance subclass (BP_MyGameInstance). 2) Project Settings → Maps & Modes → Game Instance Class → set custom GameInstance. 3) Add persistent variables (PlayerProgress, UnlockedLevels, SaveSlot, GlobalSettings). 4) Access via Get Game Instance → Cast To BP_MyGameInstance. The framework hierarchy of persistence: GameInstance (entire session) > PlayerController (often persistent during respawn) > GameMode / GameState (per-level) > Pawn / PlayerState (per-character or per-player within a level). Getting persistence scopes right is foundational; mixing them produces fragile code that breaks on level transitions or multiplayer. For data that must survive level changes: GameInstance. For data that resets per level: GameMode / GameState. For data per player: PlayerState. For data per character body: Pawn. This separation is one of UE5's architectural strengths; same pattern in Unity (GameObject DontDestroyOnLoad equivalent) and other engines." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GameInstance — entire game session. Pawn/GameMode/GameState reset per level. PlayerController may persist. Persistence hierarchy: GameInstance > PlayerController > Mode/State > Pawn.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game has driving + walking. Different controls needed for each. Architecture?",
+      "choices": [
+        { "id": "a", "text": "One control set forever." },
+        { "id": "b", "text": "Multiple Input Mapping Contexts (IMCs) swapped per gameplay mode. IMC_Walking handles on-foot controls (Move = WASD, Look = mouse, Jump = Space, Interact = E). IMC_Vehicle handles driving (Steer = A/D, Accelerate = W, Brake = S, Handbrake = Space, Exit = E). IMC_Menu handles UI (Confirm = Enter, Cancel = Esc, Navigate = arrows). Swap via Blueprint: when player enters vehicle → Remove IMC_Walking, Add IMC_Vehicle. When exits → reverse. When menu opens → Add IMC_Menu (high priority). Multiple contexts active simultaneously work via priority (menu overrides gameplay when paused). Benefits: 1) Context-aware input (same key, different action per mode). 2) Player rebinding (change physical keys; gameplay logic untouched). 3) Cross-platform (separate IMCs for keyboard, gamepad, switch automatically by detected device). 4) Accessibility (alternate IMCs for users with different abilities). 5) Tutorial progression (limited IMC for first level; expanded as player learns). The Add Mapping Context / Remove Mapping Context Blueprint nodes manage active contexts at runtime. Pro UE5 input design: define Input Actions per gameplay verb (Move, Jump, Interact); group into IMCs per gameplay state (Walking, Vehicle, Menu, Cutscene); swap contexts as state changes. The legacy axis mappings + action mappings (single global key map) approach is deprecated; Enhanced Input + Input Mapping Contexts is modern UE5 standard. Used in Fortnite, Hellblade II, Black Myth: Wukong, and every UE5 shipped game." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two separate games." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multiple Input Mapping Contexts (IMC_Walking, IMC_Vehicle, IMC_Menu) swapped per gameplay mode. Modern Enhanced Input pattern; context-aware input + rebindable + cross-platform.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Best practice for save system protection?",
+      "choices": [
+        { "id": "a", "text": "Single save file." },
+        { "id": "b", "text": "Multiple save slots + versioning + cloud backup. Multiple slots protect from corruption: AutoSave (game saves automatically every X minutes); manual save slots (3-5 player slots, e.g., Save1/Save2/Save3); QuickSave (F5/F9 single-button); checkpoint saves (auto at story beats); cloud backup (Steam Cloud / Epic auto-sync). If one slot corrupts, others survive. Versioning protects from game updates: add SaveVersion variable to SaveGame class; on load, check version; if older, run migration function (add defaults for new fields, transform old fields); save back with new version. Without versioning, game updates that add fields break old saves; players lose progress. Cloud backup protects from local disk failure or device change. Implementation in UE5: Save Game to Slot with different slot names (AutoSave, ManualSlot_1, ManualSlot_2, QuickSave); Load Game from Slot reads by name; Does Save Game Exist for listing existing saves. Save management UI: list slots with timestamps + thumbnails + summary text; player picks which to load. Steam Cloud / Epic auto-sync the Saved/SaveGames/ folder on platforms that support it. Pro shipped games version saves religiously; every game update considers save migration; some games maintain compatibility for 10+ save format versions (Skyrim, Minecraft, Stardew Valley). The combined approach (multi-slot + versioning + cloud) = robust save system that players trust. The 'lose all progress to one corrupt save' nightmare is real for single-slot games; modern games avoid via these patterns." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multiple save slots + versioning + cloud backup. AutoSave + manual slots + checkpoints + versioned saves + cloud sync. Robust system; players trust it.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Game ships; players report crashes on certain level loads; never crashed in PIE. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Bug in Unreal." },
+        { "id": "b", "text": "PIE doesn't always reflect packaged build behavior. PIE uses Development build with editor; packaged builds use Shipping configuration with cooking + optimizations. Common 'works in PIE; broken in package' issues: 1) Asset references — PIE auto-loads referenced assets; cooked build only includes assets explicitly cooked. Missing reference = crash on level load. 2) Soft references not cooked — referenced via soft path; needs to be in Additional Assets to Cook. 3) Streaming-level cross-references missed by cook. 4) Plugin behavior differences (debug code stripped in Shipping). 5) Race conditions — packaged builds faster than PIE; timing-sensitive Blueprint logic breaks. 6) Memory limits — Shipping builds have platform-specific memory budgets. Diagnosis: 1) Reproduce in Development packaged build (intermediate between PIE and Shipping; sometimes catches without full Shipping rebuild). 2) Add logging via Print String / UE_LOG; build with logging; collect output. 3) Check Saved/Logs/ for crash logs + callstacks. 4) Common fixes: add missing assets to Project Settings → Packaging → Additional Assets to Cook; verify soft references' targets are cooked; plugin configuration check. 5) Always retest fix in Shipping build before re-shipping. Pro studios maintain crash reporting (Sentry / Crashlytics / Unreal's CrashReportClient) on shipped builds — automatic crash dumps with callstacks emailed to dev team. Post-launch crashes become visible + actionable. Without crash reporting, blind to player issues; with it, see patterns + fix systematically. Lesson: always test Shipping packaged build before release; PIE is necessary but insufficient. Configure crash reporting before shipping; setup analytics for non-crash behavior insights (which levels players abandon, which features they use)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Players' fault." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PIE doesn't reflect packaged build. Asset cooking, soft references, plugin behavior, race conditions differ. Test Shipping builds before release; setup crash reporting.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Modern UE5 input system?",
+      "choices": [
+        { "id": "a", "text": "Legacy axis mappings." },
+        { "id": "b", "text": "Enhanced Input System — UE5's modern input framework decoupling input mapping from gameplay logic. Components: 1) Input Actions (data assets representing 'what you can do' — Move, Jump, Look, Interact, with value types like Axis 1D / Axis 2D / Digital). 2) Input Mapping Context (data asset listing which physical keys / buttons / gamepad axes trigger which Input Actions). 3) In Player Controller / Character: Add Input Mapping Context on BeginPlay; bind Input Action events to gameplay logic. Benefits: 1) Decoupled mapping — change which key triggers Jump without touching gameplay code. 2) Cross-platform — same gameplay logic for keyboard, gamepad, touch; swap Input Mapping Context per device. 3) Rebinding — players customize keys via UI; just modify the active IMC. 4) Multiple contexts — different controls per situation (walking vs. driving vs. menu); swap at runtime via Add/Remove Mapping Context nodes. 5) Built-in modifiers — Hold, Tap, Double-Tap, Swizzle, etc. The legacy axis mappings + action mappings approach (single global key map in Project Settings) is deprecated for UE5; Enhanced Input is the path forward. All UE5 projects use Enhanced Input; tutorials covering legacy approach are outdated. The 'Tick + check key state' anti-pattern (polling input every frame) is also wrong; event-driven Input Actions are the correct UE5 approach. Pro UE5 projects use Enhanced Input throughout; don't fight the framework. Reference: 'Enhanced Input' documentation at docs.unrealengine.com." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enhanced Input System — Input Actions + Input Mapping Contexts. Decoupled, cross-platform, rebindable, multi-context. Modern UE5 standard; legacy axis mappings deprecated.",
+      "points": 1
+    }
+  ]
+}

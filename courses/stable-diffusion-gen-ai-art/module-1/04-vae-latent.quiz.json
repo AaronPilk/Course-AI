@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: VAE and latent space",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does Stable Diffusion use latent space instead of pixel space?",
+      "choices": [
+        { "id": "a", "text": "Higher quality." },
+        { "id": "b", "text": "Speed + lower VRAM. VAE compresses 512x512x3 pixel image into 64x64x4 latent representation — 48x fewer dimensions for diffusion to work with. Diffusion in pixel space would be 48x slower and require 48x more VRAM; latent diffusion makes Stable Diffusion practical on consumer GPUs. The VAE encoder compresses image → latent; diffusion model operates entirely in latent space (denoising over many steps); VAE decoder converts final latent → pixel image. This 'latent diffusion' is the key efficiency innovation by Stability AI / CompVis (the SD paper). Same principle in Flux + SD3 + all modern open-source diffusion models. Trade-off: VAE introduces some compression artifacts (slight color shifts, fine detail loss); for most workflows the speed win dominates. For highest quality: choose appropriate VAE for your checkpoint; sometimes swap to community-trained VAEs (sharper details). VAE files are typically 100-300 MB; the diffusion model is the bulk (2-7 GB for SD/SDXL, 12-24 GB for Flux). Tiled VAE decoding for very high resolution (2048+); auto-handled by most UIs. The latent space is also why some techniques work (img2img, ControlNet, inpainting all operate via latent manipulation). Understanding latent vs. pixel is foundational for advanced workflows.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Speed + lower VRAM. VAE compresses 512x512x3 → 64x64x4; 48x fewer dimensions; diffusion practical on consumer GPUs. Key efficiency innovation of Stable Diffusion.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Generated images have a slight green tint / color shift. Cause?",
+      "choices": [
+        { "id": "a", "text": "Wrong samplers." },
+        { "id": "b", "text": "Wrong VAE for the checkpoint. VAE compresses + decompresses through learned representations; different VAEs decode with slight color biases. Using a VAE that doesn't match the checkpoint produces tinted output (green, magenta, yellow tints commonly). Fix: 1) Identify the correct VAE for your checkpoint — usually the model's documentation specifies (e.g., 'sdxl_vae.safetensors' for SDXL, custom VAEs for some fine-tunes like 'kl-f8-anime2' for anime models). 2) Download the matching VAE. 3) In your UI: A1111 → Settings → SD VAE → select correct; ComfyUI → use VAE Loader node → select matching .safetensors. 4) Regenerate; tint should disappear. Some checkpoints have VAE baked in (called 'vae-embedded' or 'all-in-one'); these don't need separate VAE; UI shows 'baked VAE' indicator. Mismatched VAE also produces: 1) Loss of fine detail (eyelashes, hair strands). 2) Bleeding edges. 3) Saturated / desaturated colors. 4) Banding artifacts in gradients. Pro habit: maintain library of VAEs for each model family; always pair correctly. Community VAEs exist for specific improvements (sharper, less color shift, better for anime, etc.) — try alternatives if stock VAE has issues. The 'mysterious tint' bug is universally VAE-related; checking VAE first solves 90% of color issues.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wrong VAE for checkpoint. VAE decodes with bias; mismatched VAE produces tints. Identify correct VAE for your checkpoint; load via UI. Foundational color fix.",
+      "points": 1
+    }
+  ]
+}

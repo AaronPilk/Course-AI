@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Material Instances and parameters",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's a Dynamic Material Instance for?",
+      "choices": [
+        { "id": "a", "text": "Animation only." },
+        { "id": "b", "text": "Runtime parameter changes. Standard Material Instances are static (parameters set at edit time). Dynamic Material Instances allow Blueprint or C++ to change parameters AT RUNTIME — per-instance, per-actor, per-frame. Setup in Blueprint: 1) Get reference to the static Material Instance applied to a mesh. 2) Call Create Dynamic Material Instance node → returns Dynamic Material Instance reference. 3) Call Set Scalar Parameter Value / Set Vector Parameter Value / Set Texture Parameter Value with parameter name + value. 4) Each instance now has its own parameter values; doesn't affect other instances using the same source Material. Use cases: 1) Team colors — characters of same mesh get different team colors per player. 2) Damage states — apply progressive damage texture / color as character takes damage. 3) Highlighting selected objects — set emission color when selected. 4) Animated material properties — flicker, pulse, fade. 5) Status effects — burn glow, poison tint, frost overlay. 6) Player-customizable colors — character creator sliders feeding Dynamic Material Instance parameters. The Dynamic Material Instance is created PER-instance (one mesh = one Dynamic Material Instance); doesn't affect other meshes using the same source Material. For: cross-mesh variations (every player different color), per-character state (health-based glow), interactive feedback (hover effects, selection highlights), animated game effects. Standard Material Instances handle design-time variation; Dynamic Material Instances handle runtime variation. Both extend a Master Material. Performance: Dynamic Material Instances cost slightly more than static instances (per-instance parameter storage); use judiciously. Pro Blueprint pattern: cache Dynamic Material Instance reference in BeginPlay (don't recreate every Tick); update parameters as state changes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Performance optimization." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Runtime parameter changes per-instance via Blueprint. Create Dynamic Material Instance → Set Parameter Value. For team colors, damage states, interactive feedback, animated effects.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want road graffiti / blood splatter / footprints in scene without modifying base textures. Approach?",
+      "choices": [
+        { "id": "a", "text": "Paint on textures." },
+        { "id": "b", "text": "Decals. Material Domain → Deferred Decal projects a material onto surfaces from a Decal Actor. Setup: 1) Create Material with Material Domain set to Deferred Decal. 2) Build the decal's look (texture + opacity + normal map). 3) Place Decal Actor in level (Place Actors → Volumes → Decal Actor; or drag the decal material from Content Browser into viewport). 4) Position + scale the Decal Actor; the decal projects onto whatever surface it overlaps. 5) The decal appears on the underlying surface without modifying that surface's mesh or texture. Use cases: 1) Graffiti on walls. 2) Blood splatters on floors / walls (combat games). 3) Road markings, lane lines, road damage. 4) Footprints from a character walking through snow / mud. 5) Posters, signs, signage. 6) Weathering (rust streaks, water stains, scorch marks). 7) Bullet holes from gunfire. Performance: decals add per-pixel overhead in their footprint; lots of overlapping decals = expensive; keep counts reasonable. Decals respect lighting + work with Lumen (receive shadows + indirect light). Compared to alternatives: 1) Mesh swap (replace wall mesh with graffitied version) — requires unique meshes; doesn't scale. 2) Texture swap (re-bake wall texture with graffiti) — destroys reusability; one wall has one graffiti. Decals: 1) Reusable (one graffiti decal applied to many walls). 2) Movable (position + rotate + scale). 3) Stackable (multiple decals on same surface). 4) Runtime-spawnable (blood appears at hit location via Blueprint). For dynamic gameplay decals (blood at hit point, bullet holes): Spawn Decal at Location node in Blueprint; place runtime. The decal system is one of UE5's underused features; pro level designers use heavily for environmental storytelling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip the detail." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Decals (Material Domain = Deferred Decal). Project material onto surfaces from Decal Actor. Reusable, movable, stackable, runtime-spawnable. Pro environmental storytelling tool.",
+      "points": 1
+    }
+  ]
+}

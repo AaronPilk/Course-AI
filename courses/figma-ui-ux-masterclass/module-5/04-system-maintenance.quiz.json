@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: System maintenance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does it mean to treat a design system as a product?",
+      "choices": [
+        { "id": "a", "text": "Sell it." },
+        { "id": "b", "text": "Apply product rigor — ownership (dedicated team or embedded leads), roadmap (next quarter's components, refactors, theming work), releases (semver versioning, release notes, library publishing), documentation (Figma descriptions + Storybook + internal docs site), support (Slack channel, office hours, component requests backlog), and metrics (adoption rate, hardcoded value rate, deprecated usage). The design system has internal users (designers + engineers) whose productivity depends on it; treating those users like product customers — gathering feedback, prioritizing roadmap, shipping consistently — is the difference between a system that compounds value over years vs. one that decays. Mature design systems (Material, Carbon, Polaris, Lightning) operate this way: dedicated teams, public roadmaps, semver releases, deprecation policies, contributor guidelines. Smaller teams scale down: one designer + one engineer rotation, monthly releases instead of weekly. The principle holds at any scale — design systems without product rigor become orphan files nobody maintains, eventually replaced by 'the new design system' (round 2, 3, 4). Companies that get this right ship faster + more consistently for years; companies that don't repeat the rebuild cycle." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Charge for it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ownership + roadmap + releases + docs + support + metrics. Internal users are customers; product rigor compounds value.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Adoption metrics show only 40% of consumer file content uses library components after 18 months. What's the playbook?",
+      "choices": [
+        { "id": "a", "text": "Ignore it." },
+        { "id": "b", "text": "Diagnose then act. Investigation: 1) Survey product designers — what's blocking them? Often: components don't fit their use case (gaps in coverage); too rigid (no variants for needed states); discovery is hard (asset panel disorganized); documentation thin (don't know when to use what). 2) Audit recent consumer files — what are they building outside the library? Patterns = missing components. 3) Check the system itself — are components actually high-quality? Sometimes 40% adoption means 60% of consumers find the system worse than rolling their own. Action plan: a) Close coverage gaps based on audit (build the missing components designers needed). b) Improve discovery (better asset panel organization, search-friendly names, examples page). c) Onboarding boost (walk-throughs for new designers; office hours; Slack channel). d) Migration assistance — pair with teams on adoption; remove friction. e) Make adoption easy (preset templates, copy-paste examples, integration with prototype workflow). Set quarterly adoption goal (40% → 60% → 80%). Track + report. If after another 6 months it's still stuck, the system has fundamental fit issues — bigger refactor or rethink of approach. Adoption is the only meaningful metric; perfect components nobody uses = no value." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete the library." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Diagnose: survey users, audit gaps, check quality. Act: close coverage, improve discovery, onboard, migrate. Adoption = only meaningful metric.",
+      "points": 1
+    }
+  ]
+}

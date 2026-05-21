@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Blender interface and modeling",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between Object Mode and Edit Mode?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Object Mode manipulates whole objects (move/rotate/scale an entire object as a unit; parent, link, organize); Edit Mode modifies the geometry INSIDE the object (vertices, edges, faces). Toggle with Tab. Most modeling happens in Edit Mode (shaping the mesh); Object Mode handles scene-level work (positioning, collections, materials). Within Edit Mode, three selection modes: 1=vertex, 2=edge, 3=face — switch based on what level of detail the operation needs. The dual-mode model is Blender's foundational mental model; every operation belongs to one mode. Object Mode operators (parent, link object data) don't exist in Edit Mode; Edit Mode operators (extrude, bevel, loop cut) don't exist in Object Mode. The bottom-left status bar and the header dropdown both display the current mode. Common workflow: enter Edit Mode → make geometric changes → Tab back to Object Mode → adjust position/scale in scene → repeat per object. Many new users get stuck because they're in the wrong mode for what they want to do; checking the mode is the first debug step. Some workflows also use Sculpt Mode (S in sculpting workspace), Weight Paint Mode, Texture Paint Mode, etc. — each tuned for a specific phase of work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Object Mode is for viewing only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Object Mode = whole objects; Edit Mode = geometry inside. Toggle with Tab. Most modeling in Edit Mode; Object Mode for scene-level work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Symmetric character; built half; need to model the other half identically. Best approach?",
+      "choices": [
+        { "id": "a", "text": "Manually duplicate everything." },
+        { "id": "b", "text": "Mirror Modifier on X-axis. Workflow: build the right half of the character; add Mirror Modifier; set axis to X (or whichever axis is the symmetry plane); enable Clipping (prevents accidental gaps at the center seam) and Merge (joins vertices that cross the mirror plane); modify the right half in Edit Mode → the left half updates as a live mirror. Keep modifier non-destructive while iterating; apply at end when symmetry is final. Standard for character modeling, vehicle modeling, anything with bilateral symmetry. Combined with Subdivision Surface modifier in the stack (Mirror first, then Subsurf), the workflow is: edit one half low-poly; see smooth mirrored result; iterate. Why Mirror Modifier vs. manual duplicate-and-flip: 1) Live updates as you edit, no manual re-mirroring after changes. 2) Clipping prevents the center seam from gaps. 3) Merge ensures clean joining where left meets right. 4) Non-destructive — can disable / adjust / remove at any time. 5) Same workflow scales to characters, vehicles, weapons, anything symmetric. For asymmetric details (scar on one side; uneven battle damage): apply Mirror first, then edit one side independently. Pro habit: 90% of character work in mirror mode; apply for asymmetric details only at end of modeling phase. The Mirror Modifier is one of Blender's most-used modifiers; every symmetric model uses it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mirror Modifier on symmetry axis with Clipping + Merge enabled. Live mirror; non-destructive; apply at end. Standard for all symmetric modeling.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why aim for all quads in modeling?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "Quads subdivide cleanly (Subdivision Surface produces predictable smoothing), deform predictably for animation (joints bend along quad-grid axes), enable edge loops (continuous loops require consistent topology that quads provide), and support good texturing (UV unwrapping is cleaner). Triangles in deformation zones produce uneven folding; N-gons (5+ sided faces) break Subsurf and animation entirely. Real-world targets: ~95% quads, occasional triangles on flat surfaces or transition areas, zero N-gons in the modeling phase. Game export converts to triangles automatically (most game engines require triangulated meshes for GPU rendering), but the source mesh should be quad-dominant for ease of modeling, iteration, and future-proofing. Hard-surface mechanical modeling can tolerate more triangles on flat panels where deformation isn't a concern; organic character modeling absolutely requires quads in deformation areas (face, joints, neck, hands). The quad-dominant principle isn't dogma — it's about working with software that's optimized for quads (Subsurf, weight painting, edge loops, retopo tools) rather than fighting it. After meshing: tools like Select by N-gons + Select by Triangles let you audit topology; fix problems with Knife cuts or Bridge Edge Loops to convert offending faces to quads." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quads = clean Subsurf, predictable deformation, enable edge loops, easier UV. ~95% quads + zero N-gons is the modeling target. Game export triangulates anyway.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Subsurf modifier applied to a hard-surface model (mechanical part); sharp edges become pillowy / soft. Best fix?",
+      "choices": [
+        { "id": "a", "text": "Remove Subsurf." },
+        { "id": "b", "text": "Add support loops near sharp edges OR use edge creases. Two main techniques: 1) Support loops: in Edit Mode, Ctrl+R near a sharp edge to add a loop very close to it; the close loop prevents Subsurf from over-smoothing the edge — sharper transition preserved. Stack support loops on both sides of edges that should stay sharp. 2) Edge creases: select the edges that should stay sharp → Ctrl+E → Edge Crease → set value to 1.0 (full sharp) or partial (0.3-0.7 for partial sharpness). Subsurf respects creases. Both methods work; support loops are more topology-explicit (good for game models where you want predictable geometry); creases are non-destructive (good for iterating). For hard-surface mechanical models, the standard approach: model with sharp corners; add support loops at every edge that should remain sharp; apply Subsurf; smooth surfaces curve while sharp edges stay sharp. Sample workflow: model a robot arm joint; add 2 support loops within ~5% of corner edge spacing on every sharp corner; subsurf produces the look of mechanical hard-surface with smooth fillets only where intended. Alternative: Bevel modifier before Subsurf (Bevel adds geometry defining sharp edges; Subsurf then can't over-smooth). Most hard-surface artists combine support loops + Bevel + Subsurf in a deliberate stack." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apply Subsurf." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add support loops (Ctrl+R near sharp edges) OR edge creases (Ctrl+E). Subsurf respects creases + tight loops; sharp edges preserved. Standard hard-surface workflow.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What's the most-used modifier in character modeling?",
+      "choices": [
+        { "id": "a", "text": "Solidify." },
+        { "id": "b", "text": "Subdivision Surface (Subsurf). The cornerstone of organic / character modeling. Subdivides geometry and applies Catmull-Clark smoothing — converts low-polygon meshes into high-detail smooth surfaces without manually adding all that geometry. Workflow: model in low-poly (a character body might have 5,000-15,000 polys before Subsurf); add Subsurf with Viewport 2 + Render 3; the Subsurf modifier produces the smooth high-detail look at render time while keeping the editable mesh low-poly. Each Subsurf level multiplies polygon count by 4x — level 2 = 16x, level 3 = 64x, level 4 = 256x. Viewport stays responsive at level 2; render uses level 3 for smoother final. Subsurf is non-destructive — adjust levels anytime; remove if not wanted; doesn't commit polygon count to the actual mesh. Universal in character work because: 1) Low-poly editing is faster and more intuitive than high-poly. 2) Subdivision produces the smooth organic surfaces characters need. 3) Edge loops + creases give surgical control over where sharpness is preserved. 4) Render-quality detail without polygon-count overhead. Combined with Mirror modifier (for symmetric characters), Subsurf is THE foundational modifier stack: Mirror → Subsurf. Pixar and DreamWorks built decades of films on subdivision surfaces in proprietary software; Blender's Subsurf is the same technology made open-source. For hard-surface mechanical work, Subsurf + support loops + creases produces the precise edge control needed; for organic work, Subsurf alone usually suffices." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Boolean." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Subdivision Surface (Subsurf). Smooths low-poly into high-detail. Foundation of character + organic modeling. Viewport 2 + Render 3 typical; Mirror + Subsurf stack is standard.",
+      "points": 1
+    }
+  ]
+}

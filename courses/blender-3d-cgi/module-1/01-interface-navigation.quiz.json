@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Interface and navigation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between Object Mode and Edit Mode?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Object Mode manipulates whole objects (move/rotate/scale an entire cube as a unit; parent objects; link materials); Edit Mode modifies the geometry INSIDE an object (move individual vertices/edges/faces of the cube; extrude faces; bevel edges; cut new geometry). Toggle: Tab key. Most modeling happens in Edit Mode (shaping the mesh); Object Mode handles scene-level work (positioning objects, organizing collections, applying materials). In Edit Mode, three selection modes (1=vertex, 2=edge, 3=face) let you pick what level of detail to work at — vertex for precise point work, edge for loop cuts and bevels, face for extrusions and inset. Common workflow: Tab into Edit Mode → make geometric changes → Tab back to Object Mode → position/scale the object in scene → repeat per object. Without this dual-mode distinction, every transform would affect either too much (entire object when you wanted just a vertex) or too little (individual vertex when you wanted the whole object). The Object/Edit Mode toggle is one of Blender's foundational mental models; new users often forget which mode they're in and try operations that don't apply (Edit Mode operators don't appear in Object Mode and vice versa). The bottom-left status bar shows current mode; the header dropdown also indicates and lets you switch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Object Mode is read-only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Object Mode = whole objects (move, parent, scene-level). Edit Mode = geometry inside (vertices, edges, faces). Toggle with Tab.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Working on a MacBook trackpad; can't middle-click; viewport navigation is broken. What to do?",
+      "choices": [
+        { "id": "a", "text": "Buy a mouse." },
+        { "id": "b", "text": "Enable 'Emulate 3-button Mouse' in Preferences → Input → Mouse. With this option enabled, Blender treats Option+left-click (Mac) / Alt+left-click (Win) as middle-mouse-button — orbit works with Option+drag; pan with Shift+Option+drag; zoom with scroll (trackpads' pinch zoom also works). Additionally, enable 'Emulate Numpad' in same preferences if laptop lacks a numpad — uses number row keys 1-9 for view shortcuts (front, side, top, perspective). Trackpad-only Blender workflow: 1) Two-finger drag = orbit. 2) Pinch = zoom. 3) Three-finger drag = pan. 4) Option+click for middle-mouse operations. 5) Number row 1/3/7 for orthographic views; 0 for camera view. Save preferences (auto-saves). After setup, Blender is fully usable on laptop without external mouse — though a 3-button mouse is genuinely faster for serious work. Many Blender artists use Wacom tablets (pen + buttons) for sculpting + general work; the tablet stylus replaces mouse with more precise input. For tablet workflows: configure tablet buttons to common shortcuts (G/R/S transform; 1/2/3 select mode). The 'Emulate 3-button Mouse' + 'Emulate Numpad' combo is the standard laptop-Blender configuration; without it, the interface is hostile to trackpad use." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use different software." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable Emulate 3-button Mouse + Emulate Numpad in Preferences → Input. Trackpad workflow works; Option+drag = middle-mouse. Standard laptop config.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "title": "Unity documentation",
+      "url": "https://docs.unity3d.com/Manual/index.html",
+      "type": "documentation"
+    },
+    {
+      "title": "Unity Learn",
+      "url": "https://learn.unity.com",
+      "type": "tutorials"
+    },
+    {
+      "title": "Unity scripting API",
+      "url": "https://docs.unity3d.com/ScriptReference/",
+      "type": "documentation"
+    },
+    {
+      "title": "Unity Input System",
+      "url": "https://docs.unity3d.com/Packages/com.unity.inputsystem@latest",
+      "type": "documentation"
+    },
+    {
+      "title": "Unity blog",
+      "url": "https://blog.unity.com",
+      "type": "articles"
+    }
+  ]
+}

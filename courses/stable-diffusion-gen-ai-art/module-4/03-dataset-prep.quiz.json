@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Dataset prep",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why NOT caption an always-present feature (like 'blue hair' for a character that always has blue hair)?",
+      "choices": [
+        { "id": "a", "text": "Saves space." },
+        { "id": "b", "text": "Counterintuitive but critical: what you DON'T caption gets BAKED IN to the trigger word. If you caption 'blue hair' on every training image of your character, the model learns that 'mychar' + 'blue hair' = the character; prompting 'mychar with red hair' might generate blue hair anyway because model thinks blue hair is variable. If you DON'T caption blue hair, the model learns that 'mychar' INHERENTLY has blue hair — blue hair becomes part of the trigger's identity. Prompting 'mychar' produces blue hair automatically. The principle: caption what you want to be VARIABLE; don't caption what you want to be FIXED. For character LoRA: caption pose, clothing, background, lighting, expression — these vary across uses. Don't caption: signature features that ARE the character (specific hair color, signature outfit, distinctive markings, ethnicity). For style LoRA: similar — describe the subjects in images (varying); style itself is what the trigger captures (don't caption 'oil painting style' if the trigger should mean oil painting style). This counterintuitive captioning strategy is one of the most-misunderstood aspects of LoRA training. Pro habit: 1) Identify which features are FIXED to your concept (don't caption). 2) Identify which features are VARIABLE (caption). 3) Trigger word always present in caption. 4) Verify by generating with trigger only — does it produce the fixed features automatically? If yes, captioning correct. If features missing, captioning over-specified.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "What you DON'T caption gets baked in. Caption variable features; don't caption fixed signature features. Counterintuitive but foundational LoRA training principle.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Trained LoRA produces character only in standing-facing-camera pose. Why?",
+      "choices": [
+        { "id": "a", "text": "LoRA bug." },
+        { "id": "b", "text": "Dataset lacked pose variety — likely all/most training images were the character standing facing camera. Model learned 'mychar = standing facing camera' because that's all it saw. Fix: rebuild dataset with pose variety. Aim for: 1) Standing facing camera. 2) Standing side / profile. 3) Sitting. 4) Walking / action poses. 5) Different angles (3/4, low, high). 6) Different shots (full body, mid, close-up portrait). 15-30 images covering this variety. Re-train. Result: LoRA generates character in any prompted pose. Same principle for: angles, lighting, expressions, contexts. If training data shows character only smiling, LoRA can only render smiling character. The 'training data determines what model can generate' principle is universal in machine learning. Dataset variety = generation variety. Pro LoRA trainers spend more time on dataset curation than on training itself; dataset is the primary lever for output quality + flexibility. Tools: BIRME (web) for resize / crop; Photoshop / GIMP for cleanup; manual curation for selection. Quality of curation > size of dataset; 20 carefully-chosen varied images > 100 same-looking images. Iteration is normal: first training reveals dataset gaps; add/swap images; retrain. Expect 2-3 dataset iterations per LoRA. Test outputs systematically: generate with varied prompts (different pose, lighting, scene); if model can't adapt, dataset needs more variety in those dimensions.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dataset lacked pose variety. Model learns from data; if all images standing facing camera, model can only produce that. Rebuild with varied poses, angles, lighting, expressions. Iterate.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Unreal Engine foundations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best UE5 viewport navigation for level design?",
+      "choices": [
+        { "id": "a", "text": "Click-and-drag everywhere." },
+        { "id": "b", "text": "Right-click + WASD (Fly mode) — hold right-click to engage; W/A/S/D for forward/left/back/right; Q/E for down/up; right-mouse-drag to look around; Shift for faster movement; scroll wheel to change movement speed. FPS-style navigation that lets you walk through your level at human scale — essential for evaluating sightlines, scale, framing, gameplay flow. Alternative: Orbit (Alt+left-click drag) for inspecting individual assets. Pro level designers switch between Fly (level design) and Orbit (asset inspection) fluidly. Other essential viewport shortcuts: F = focus on selected; G = game view (hide editor UI); End = drop selected to floor; Ctrl+P = pilot actor (camera follows); Ctrl+D = duplicate; Alt+drag = duplicate-move. The right-click WASD pattern is shared across Unreal + Unity + Godot — game engine standard. Master once; transfers across tools." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Right-click + WASD = Fly mode (game-style FPS navigation). Standard across UE/Unity/Godot. Pair with Alt+drag Orbit for asset inspection.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building a forest scene; need rocks, trees, foliage. Don't have time to model from scratch.",
+      "choices": [
+        { "id": "a", "text": "Skip the forest." },
+        { "id": "b", "text": "Quixel Megascans via Quixel Bridge (built into UE5). Free for Unreal projects. 15,000+ scanned PBR assets — rocks, trees, foliage, props — with full PBR texture sets at up to 8K resolution. Workflow: Window → Quixel Bridge → sign in with Epic account → browse / search → 'Add' to project → imports into Content Browser with auto-assigned materials. Combined with Unreal's Foliage tool (paint vegetation on terrain) and Landscape (sculpt terrain), a complete forest scene takes hours instead of months. The Quixel + UE5 combination is why indie + solo developers can ship AAA-looking games in 2026; the asset tools democratized photoreal environments. Other sources: Epic Marketplace (free + paid asset packs), Polyhaven (free CC0 assets), Sketchfab (verify licensing). For unique brand-specific or unusual assets: model in Blender / Maya. For generic environment / commonly-needed assets: Megascans first. Process: scope out scene needs → search Megascans → import → place / paint → tune lighting (Lumen) → polish materials." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Model from scratch." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quixel Megascans via Quixel Bridge (free for Unreal). 15,000+ scanned assets; saves weeks of modeling. Combined with Foliage tool + Landscape = AAA forest in hours.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Static vs. Movable actor mobility — when to use Static?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When the actor never moves during gameplay — walls, floors, fixed lights, permanent props. Static mobility unlocks: 1) Baked lighting (precomputed lightmaps; near-zero per-frame cost) — though UE5's Lumen reduces this benefit; still: simpler shadow paths. 2) Easier culling / occlusion (engine knows the actor won't change position). 3) Lower CPU overhead (no per-frame transform updates). 4) Better Nanite performance (static Nanite meshes are highly optimized). Movable mobility requires: real-time shadow calculation, prevents lighting caches, harder culling, higher per-frame cost. For 100 walls that never move: Static saves significant render time vs. Movable. Stationary is a middle ground: position fixed but properties (color, intensity for lights) can change at runtime. Workflow: build levels Movable for iteration; audit and downgrade to Static before shipping where appropriate. Often 80%+ of actors can be Static (architectural geometry, fixed props, static lights, environmental objects); Movable for interactive doors / characters / dynamic lights / triggers. Set in Details panel → Transform → Mobility dropdown. The Static/Movable distinction is one of the foundational performance choices in Unreal; getting it right scales gameplay quality." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Static for actors that never move (walls, floors, fixed lights, permanent props). Baked lighting, easier culling, lower CPU. Audit + downgrade Movable→Static before shipping.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Need photorealistic human character for cinematic. Build from scratch or use a tool?",
+      "choices": [
+        { "id": "a", "text": "Build from scratch." },
+        { "id": "b", "text": "MetaHuman Creator (free, Epic) — photoreal human character generator via web app or in-Unreal Quixel Bridge. Customize face / body / hair / clothing via sliders; export to Unreal; fully rigged + animated + cinematic-ready. 30-60 minutes per unique character vs. 200-1000+ hours building from scratch in Blender / Maya (modeling head + body, sculpting detail, skin shaders with subsurface scattering, grooming hair, rigging body + face, animating). MetaHumans match AAA quality — used in The Mandalorian, House of the Dragon, and many AAA games. Workflow: 1) Open MetaHuman Creator (epicgames.com/metahuman or Quixel Bridge → MetaHumans). 2) Start from preset or scratch; customize via sliders (face shape, skin tone, age, ethnicity, hair). 3) Export to project via Quixel Bridge — appears in Content Browser. 4) Use in Sequencer for cinematics OR set as gameplay Pawn via standard character framework. Limitations: 1) Photoreal only (not stylized / cartoon characters). 2) Customization within MetaHuman framework. 3) Heavy on system resources at full quality (LODs available for game performance). 4) Faces are uncannily realistic — sometimes 'too perfect'; mix with Blender / ZBrush modifications for unique looks. For 95% of photoreal human needs in 2026: MetaHuman is the answer. Combined with Megascans environment + Lumen lighting + Sequencer cinematics, solo developers ship cinematic-quality work without large teams. Stylized characters: build in Blender / ZBrush; not MetaHuman territory." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy from marketplace." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MetaHuman Creator (free, Epic). Photoreal humans via web creator; export to Unreal; rigged + ready. 30-60 min vs. 200-1000+ hours from scratch.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Default Unreal unit?",
+      "choices": [
+        { "id": "a", "text": "Meters." },
+        { "id": "b", "text": "Centimeters (1 unit = 1 cm). Standard for years; mostly invisible to artists but critical for asset importing. Blender defaults to meters (1 unit = 1 m); Maya defaults to centimeters. The mismatch with Blender is the #1 source of 'asset is wrong scale' problems on import. Fix: 1) In Blender, Scene Properties → Units → Metric, Unit Scale 0.01 (so 1 Blender unit becomes 1 cm matching Unreal). OR 2) Set Scale 100 in Blender's FBX exporter (scale up on export). OR 3) On Unreal import, set Import Uniform Scale 100 (scale on import). Cleanest: configure Blender once to centimeters; everything exports correctly. Verify scale by placing imported asset next to default UE5 Mannequin (~180 cm tall) — visual sanity check. Why centimeters: precision in player movement, collision, distance calculations (1cm increments feel right for human-scale movement); deeper than meters' granularity. Unity uses meters by default; switching between engines requires mental adjustment. For VR / AR projects: scale matters even more (player sense of size is calibrated by physics + UI sizes); Unreal's cm + careful import = consistent VR scale." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pixels." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Centimeters (1 unit = 1 cm). Standard for Unreal. Mismatch with Blender (meters) causes scale issues on import. Configure Blender to cm OR scale 100 on export.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "title": "Module 2 quiz: Prompting",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Good prompt structure?",
+      "choices": [
+        { "id": "a", "text": "Just keywords." },
+        { "id": "b", "text": "Subject + context + style + modifiers + technical. Layered specificity. Subject first for SD/SDXL (CLIP token weighting); natural sentences for Flux (T5). Build vocabulary; iterate.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Subject + context + style + modifiers + technical layered. Specific over generic. Adapt per model.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Flux output looks worse with SDXL-style negative prompt. Fix?",
+      "choices": [
+        { "id": "a", "text": "More negative." },
+        { "id": "b", "text": "Empty or minimal negative for Flux. Flux's guidance mechanism differs from SDXL CFG; heavy negatives interfere. Use 0-10 token negative; rely on positive prompt + low CFG (1-3.5). Different architectures need different prompting strategies; don't carry SDXL prompts to Flux.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Empty or minimal negative for Flux. Different architecture; don't carry heavy SDXL negatives.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Token weighting syntax in SD UIs?",
+      "choices": [
+        { "id": "a", "text": "No weighting." },
+        { "id": "b", "text": "(token) = 1.1x; (token:1.4) = 1.4x precise; [token] = 0.91x; nested compounds. Sweet spot 1.1-1.4. Higher distorts. Used for selective emphasis. Flux uses natural language instead.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "(token), (token:1.4), [token]. Sweet spot 1.1-1.4. Standard across SD UIs.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "'Red apple on green table' produces 'green apple on red table'. Fix?",
+      "choices": [
+        { "id": "a", "text": "Wrong colors." },
+        { "id": "b", "text": "Concept bleeding — CLIP doesn't reliably bind colors to objects in SDXL. Fixes: BREAK keyword (A1111) separates attention groups; token weighting; regional prompting (assign by region); ControlNet for object placement; switch to Flux (T5 better at binding).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Concept bleeding. BREAK keyword, weighting, regional prompting, or switch to Flux (better binding).",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best invocation of artistic style?",
+      "choices": [
+        { "id": "a", "text": "By Artist Name." },
+        { "id": "b", "text": "Descriptive style modifiers — brushwork, color palette, light, medium, mood, era. Ethical + practical (models increasingly filter artist names) + effective. Build descriptive vocabulary; survives model updates; transfers across models.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Descriptive style modifiers over artist names. Ethical, practical, effective. Build vocabulary library.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Output settings",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "For animation, render to PNG sequence or direct video?",
+      "choices": [
+        { "id": "a", "text": "Doesn't matter." },
+        { "id": "b", "text": "PNG sequence; then assemble to video afterward. Crash-resilience is the primary reason — Blender / GPU / OS can crash during 10-hour renders; with PNG sequence, completed frames are saved to disk one by one; resume from where it stopped (or skip the crashed frame and continue). With direct video output, the encoding writes to one file; crash = file corruption or partial file; restart from frame 1. For a 720-frame animation taking 6 hours, losing progress mid-render = 6-hour penalty per crash. PNG sequence approach: 1) Set output path to a folder with #### in filename (e.g., `//renders/frame_####.png`). 2) Render Animation (Ctrl+F12). 3) Each frame saves as separate PNG file. 4) Open the sequence in Blender's Video Sequencer or import to Premiere / Resolve / FFmpeg to assemble as MP4 / MOV / whatever. 5) Encoding to final video format takes additional minutes but is fast and re-runnable. Other PNG sequence benefits: 1) Per-frame access — re-render specific problematic frames without redoing entire animation. 2) Color depth — PNG preserves 8-bit or 16-bit (vs. lossy video codec compression). 3) Audio handled separately — easier to sync in post. 4) Standard pro workflow — pro studios universally render to image sequence (PNG, EXR, TIFF) and assemble in post. Direct video output is fine only for one-shot quick previews / drafts where re-render cost is trivial. Pro Blender / Maya / Houdini all default to image sequence for animation; direct video is an option but not the standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Direct video only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PNG sequence. Crash-resilient (resume per-frame); per-frame access for fixes; standard pro workflow. Assemble to video in post.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Hero still render: client wants maximum quality. Strategy beyond raw samples + denoise?",
+      "choices": [
+        { "id": "a", "text": "Same as preview." },
+        { "id": "b", "text": "Render at higher resolution; downscale to delivery resolution in post. Example: delivery target is 4K (3840x2160); render at 8K (7680x4320); resize down to 4K via image editor or Compositor. The downscale step effectively supersamples — averages 4 source pixels per output pixel — produces visibly sharper, cleaner result than rendering directly at 4K. Trade-off: 4x render time (8K has 4x pixel count). For hero stills where the client demand is maximum quality and render time is acceptable, this is the technique. Additional quality boosts: 1) Higher samples (1024-4096 for the hero render). 2) Filmic + Medium Contrast Look. 3) Render passes (multipass) for compositing flexibility — adjust diffuse / specular / volume separately. 4) AgX color management (newer 2024+, broader color range). 5) Subtle film grain in Compositor (breaks 'CG' tell). 6) Lens distortion at edges (subtle, mimics real lenses). 7) Chromatic aberration (slight, in Compositing). 8) Output to 16-bit PNG or EXR (preserve color depth for color grading). For client work: combine these. Pro tip: render once at high quality; output also to JPEG for quick client preview, EXR for color grading flexibility. The 'render at higher res and downscale' technique works in any DCC; it's universal for hero shots. The combined approach (8K render + denoise + multipass + Filmic + post grain) elevates renders from 'good' to 'professional' in client-facing work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower quality." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Render at higher resolution; downscale in post. Effective supersampling = sharper, cleaner. Combine with high samples, denoise, multipass passes, Filmic color management.",
+      "points": 1
+    }
+  ]
+}

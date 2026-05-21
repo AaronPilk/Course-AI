@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Motion",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why honor the Reduce Motion accessibility setting?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Real medical need — users with vestibular disorders (inner ear / balance system conditions) experience nausea, dizziness, and headaches from screen motion, especially parallax + dramatic zoom transitions. About 35% of adults have some level of vestibular sensitivity; not edge case. Honoring Reduce Motion: replace dramatic transitions with cross-fades, eliminate parallax, skip zoom-from-thumbnail animations. Functional animations (loading spinner, progress bar) can remain in minimal form. Implementation: `@Environment(\\\\.accessibilityReduceMotion) var reduceMotion` then `withAnimation(reduceMotion ? .none : .spring) { ... }` or conditionally swap transitions. Apple bakes this into many standard components (NavigationStack respects it; Sheet respects it); custom animations need explicit code. Beyond medical necessity: respecting Reduce Motion shows attention to detail; users who enable it see your app degrade gracefully; trust. App Store review increasingly checks. Cheap to implement (one environment check per animation block); meaningful for affected users; standard practice for accessibility-conscious apps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "App Store mandate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vestibular disorders cause real nausea from motion. ~35% of adults sensitive. Honor via reduceMotion environment check.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer wants 2-second transitions for hero photo zoom 'so it feels luxurious.' Issue?",
+      "choices": [
+        { "id": "a", "text": "Sounds luxurious." },
+        { "id": "b", "text": "Too slow — feels sluggish, not luxurious. Apple's animation durations are typically 100-500ms; 2 seconds is 4-20x longer than the standard. Users wait, attention drifts, perception shifts from 'polished' to 'unresponsive.' Test on device: at 2s a transition feels like the app froze. Apple's hero animations (Photos zooming from thumbnail) typically 350-450ms with carefully tuned spring physics — short enough to feel responsive, with spring overshoot that signals 'physics-real' and registers in the visual cortex as satisfying. Slower animations don't feel more luxurious; they feel SLOWER. Real luxury comes from: smooth 60-120fps rendering, well-tuned spring physics, matched-geometry continuity (element stays as it moves), appropriate easing for the action type. Test the same hero animation at 200/350/600/1000/2000ms; users near-universally prefer 350. The 'longer feels more important' instinct is wrong; correct duration feels right; longer feels broken. Save dramatic 2s+ animations for genuinely cinematic moments (first-launch hero, occasional reward animations) — never for routine transitions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add easing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "2s feels sluggish, not luxurious. Apple norms: 100-500ms. Luxury comes from spring physics + smoothness, not duration.",
+      "points": 1
+    }
+  ]
+}

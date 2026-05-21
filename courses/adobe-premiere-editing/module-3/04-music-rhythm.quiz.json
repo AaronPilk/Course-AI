@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Music and sync",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why avoid music with lyrics under dialogue?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "Two competing voices — lyrics + speaker — overload the listener's language processing. The brain attempts to parse both; comprehension of dialogue drops; perception of music quality drops; viewers report 'distracting' or 'hard to follow' without articulating why. Instrumental music sits underneath dialogue cleanly because it engages emotional / pace processing rather than language processing — viewers feel the music without 'hearing' it consciously. Lyrics demand cognitive bandwidth that dialogue also needs. For YouTube / podcast / interview content with dialogue: instrumental beds only. For music videos or pure-music montages: lyrics are the entire point; no dialogue competing. For mixed content: lyrics during dialogue-free sections (intro, outro, transition montages); strictly instrumental during dialogue. Some libraries categorize tracks as 'with vocals' vs. 'instrumental versions' — many tracks ship in both forms; use the instrumental for under-dialogue. Exception: very low-energy / hummed / spoken-word lyrics behind documentary-style narration sometimes work when carefully mixed (vocals at -30 dB+ below dialogue); rare and risky. Safe rule: under dialogue = no lyrics. The Auto-Duck feature lowers all music when dialogue plays, but it can't make lyrics palatable underneath voice — the duck level (-15 to -18 dB) is enough to obscure the music but might still leave lyrics partially audible and competing. Pick instrumental from the start; lyrics are a non-negotiable for under-dialogue work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lyrics are illegal." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Two competing voices = listener overload, comprehension drops, distracting. Instrumental beds for dialogue content; lyrics for dialogue-free sections.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Documentary cut feels lifeless; dialogue is clear but nothing emotional lands. Music's there but generic. Diagnosis?",
+      "choices": [
+        { "id": "a", "text": "Add more music." },
+        { "id": "b", "text": "Music choice is wrong for the content's emotional beats — generic 'corporate uplift' or 'neutral background' music can't elevate specific emotional moments. Documentary craft requires intentional music: 1) Identify the emotional beats — interview reveals personal trauma; subject achieves breakthrough; tragic photo lingers; hopeful resolution arrives. Each is a distinct emotional moment. 2) Source music FOR each beat — somber strings under loss, building energy under triumph, quiet piano under contemplation. Multiple pieces, not one continuous bed. 3) Time music transitions to emotional pivots: when subject pauses before sharing hard truth → drop music to silence → silence holds the weight → as subject finishes → new music type enters underneath next section. 4) Strip music entirely during the most critical moments. Silence calls attention; viewers lean in. The 'always playing music' approach numbs the audience — every moment has the same emotional weight, which is no emotional weight. 5) Match music character to subject: indie rock for entrepreneur stories; orchestral for grand narratives; lo-fi for intimate ones. Generic music fits no story; specific music fits one story perfectly. Documentary editors spend 20-40% of total time on music — research, placement, refinement. The investment is what separates compelling docs from forgettable ones. Subscription libraries (Artlist, Musicbed) have 'moods' categorization — search 'somber strings', 'hopeful piano', 'tense build' to find candidates fast." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Louder music." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wrong music for the emotional beats. Source specific music per emotional moment; strip music for critical pauses; vary music character. 20-40% of doc time on music.",
+      "points": 1
+    }
+  ]
+}

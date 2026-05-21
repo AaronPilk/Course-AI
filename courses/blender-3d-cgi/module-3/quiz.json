@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Rendering",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Cycles vs. Eevee — primary trade-off?",
+      "choices": [
+        { "id": "a", "text": "Brand preference." },
+        { "id": "b", "text": "Realism vs. speed. Cycles is a physical path tracer that simulates light bouncing through the scene; produces photorealistic results with accurate reflections, soft shadows, global illumination, subsurface scattering, refraction — but slow (minutes to hours per frame). Eevee is a rasterization engine (game-engine style) that approximates lighting; fast (real-time to seconds per frame) but less accurate (reflections are screen-space only, soft shadows baked/approximated, indirect lighting limited). Pick by deliverable: 1) Hero still / portfolio piece / film final = Cycles (realism wins; render time acceptable for single frames). 2) Animation (per-frame cost dominates) = Eevee or Eevee Next. 3) Motion graphics = Eevee (real-time iteration). 4) Architectural visualization = Cycles (accurate daylight + glass). 5) Product viz = Cycles (photoreal reflections + materials). 6) Game cinematics where engine renders the final = Eevee (matches engine look). 7) Quick previews of any project = Eevee. Hybrid workflow: develop in Eevee (fast iteration), final-render hero shots in Cycles (photoreal output). Both engines share most materials (Principled BSDF, image textures, modifiers); switching is a setting change in Render Properties. Eevee Next (Blender 4.x+) narrows the gap further — includes real-time ray tracing on supported GPUs and improved indirect lighting; for many projects it's close enough to Cycles to win on speed. The choice isn't binary forever; iterate Eevee → finalize Cycles is a common compound workflow." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Realism vs. speed. Cycles = photoreal but slow; Eevee = fast but approximated. Pick by deliverable: hero still = Cycles; animation = Eevee. Eevee Next narrowing the gap.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cycles render takes 60 min per frame at 4096 samples. Need 720 frames for animation = 30 days. Reduce per-frame time without losing visible quality?",
+      "choices": [
+        { "id": "a", "text": "Lower resolution." },
+        { "id": "b", "text": "Lower samples + enable denoising + Adaptive Sampling. 4096 samples without denoising = clean but slow; 256 samples + OIDN (or OptiX) denoising = similar visual quality + 16x faster. Setup: Render Properties → Sampling → reduce to 256 (or 512 for tougher scenes); enable Adaptive Sampling (noise threshold 0.01, min samples 32) — stops sampling pixels that have converged; further saves time on smooth areas; enable Denoising (OIDN or OptiX); enable Light Path Clamping (Indirect Light 5; Direct Light 10) to prevent fireflies. New per-frame time: ~5-10 minutes; 720 frames = 60-120 hours = 3-5 days. Manageable. Additional optimizations: 1) Enable Persistent Data (Render Properties → Performance) — caches scene data across frames; 5-30% speedup for animation. 2) Render Region (only render specific areas; useful for re-rendering single problematic areas). 3) Lower resolution + post-render upscale via AI tools (Topaz Video AI, etc.) — controversial but works. 4) Render on cloud farm (RebusFarm, GarageFarm, AWS Thinkbox) at $0.10-1 per frame = $70-720 total; renders in hours. 5) Switch to Eevee or Eevee Next if realism gap is acceptable. The 'high samples = high quality' assumption is wrong in 2026 — denoising + Adaptive Sampling + Persistent Data + smart settings = production-grade output at fraction of raw-sample render times. Pro Cycles animation work universally uses these optimizations; raw 4096 samples is rare." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip denoising." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lower samples (256) + Denoising (OIDN/OptiX) + Adaptive Sampling + Clamping + Persistent Data. 16x faster; visually similar. Standard Cycles animation optimization.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Animation output: render to PNG sequence or direct MP4?",
+      "choices": [
+        { "id": "a", "text": "Direct MP4." },
+        { "id": "b", "text": "PNG sequence; assemble to video afterward. Crash resilience is the deciding factor — Blender / GPU / OS can crash during 10-hour renders; with PNG sequence, completed frames are saved one by one to disk; resume from where it stopped or skip the crashed frame and continue. Direct MP4 writes encoded video to one file; crash = partial / corrupted file; restart from frame 1; potentially losing days of compute. PNG sequence workflow: 1) Set output path with frame numbering (`//renders/frame_####.png`). 2) Render Animation (Ctrl+F12). 3) Each frame saves as PNG. 4) Open the PNG sequence in Premiere / DaVinci Resolve / Blender's Video Sequencer to assemble as MP4 / MOV with audio. 5) The encoding step is fast (minutes for an hour-long animation). Additional benefits: 1) Per-frame access — if frame 437 has an artifact, re-render only that frame; don't redo the whole animation. 2) Color depth preservation — PNG = 8-bit or 16-bit lossless; lossy video encoding can compress out subtle color detail. 3) Audio handled separately and synced in post — cleaner workflow. 4) Standard pro pipeline — pro studios universally render to image sequences (PNG, EXR, TIFF) and assemble in post. EXR is the choice for high-end production (lossless HDR + multipass data); PNG is the standard for non-HDR work. Direct MP4 is only acceptable for one-shot quick previews where re-render cost is trivial. The 'always render image sequence; assemble in post' habit is non-negotiable for any non-trivial animation work." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "TIFF only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PNG sequence. Crash-resilient (resume per-frame); per-frame access; color depth preserved; standard pro workflow. Assemble in post.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Render is technically clean but doesn't feel cinematic — like raw footage instead of finished film. Quick fix?",
+      "choices": [
+        { "id": "a", "text": "Re-render." },
+        { "id": "b", "text": "Add compositing post — bloom/glare on highlights, color grading (warm shadows + cool highlights), subtle lens distortion + chromatic aberration, slight film grain. In Compositor: Render Layers → Glare (Fog Glow, strength 0.3) → Color Balance (lift warm orange, gain slight cool — 'teal & orange' grade) → Lens Distortion (Distortion 0.05, Dispersion 0.01) → Noise/Grain mixed at low strength → Composite. 2-5 minutes of compositing transforms 'raw render' to 'cinematic image.' These are the same effects film colorists add to live-action footage in DaVinci Resolve / Premiere — same principles apply to 3D renders. Pro work universally uses this post step; renders shipped without it look unfinished even if technically excellent. Other quick boosts: 1) Vignette (subtle dark edges, focus to center). 2) Sharpening (slight detail enhancement). 3) Saturation boost (+5-10%). 4) Slight black-crush (darker shadows = more contrast). 5) Filmic color management (Render Properties → Color Management → Filmic; default in modern Blender; produces natural-looking output vs. Standard's flatter look). Save the compositor setup as a node group (Ctrl+G) for reuse across projects — same look applied to every render in a series. The CGI-to-cinematic transformation happens in compositing, not in the render. Garbage in / garbage out applies, but a great render becomes a great image only with compositing polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brighter materials." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compositing post: glare/bloom + color grading + lens distortion + grain. 2-5 min transforms render to cinematic. Save as node group for reuse.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why use multipass rendering (Diffuse + Specular + Z + Normal passes)?",
+      "choices": [
+        { "id": "a", "text": "More files = better." },
+        { "id": "b", "text": "Flexible compositing — adjust each lighting component separately after render without re-rendering. Multipass output stores not just the final color image but separate channels: Diffuse pass (direct + indirect diffuse light contribution), Specular pass (specular reflections), Volume pass (atmospheric / volumetric contribution), Z Depth pass (per-pixel distance from camera), Normal pass (surface normal vectors), Object Index pass (per-object IDs for masking), Material Index pass (per-material IDs). In Compositor: bring in these passes; adjust each independently — boost diffuse 20% without affecting specular; reduce specular highlights without affecting diffuse; add DoF via Z Depth + Defocus node without re-rendering; relight specific areas using Normal + custom lighting nodes. Without multipass, you can only adjust the combined RGB image — coarser control; less flexibility. Setup: View Layer Properties → Passes → enable desired passes. Render output: EXR format preserves all passes in one file (or multipass EXR with named layers); PNG output requires separate file per pass. Pro film + animation workflows use multipass universally — allows per-shot color matching, relighting in post (for matching live-action shots), DoF adjustments after composition has been decided, accent lighting changes without re-rendering. For hero stills + key shots: multipass + composite is standard. For quick / draft renders: skip; single Combined pass is faster. The trade-off: bigger files (5-10x size) and longer render time per frame, but vastly more flexibility in post." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller files." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Flexible compositing: adjust each lighting component separately (diffuse, specular, volume) + add DoF via Z Depth + relight via Normal. Pro standard for hero shots.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Audio for video",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Target loudness for YouTube delivery?",
+      "choices": [
+        { "id": "a", "text": "Loud as possible." },
+        { "id": "b", "text": "-14 LUFS integrated. YouTube normalizes uploaded audio to approximately -14 LUFS (Loudness Units Full Scale, integrated over the whole video) for playback. Delivering above this target means YouTube turns your audio down on playback (you've wasted level + headroom); delivering below means YouTube turns it up (potentially amplifying noise floor and any encoding artifacts). The -14 LUFS target produces consistent loudness alongside other YouTube videos — viewers don't need to adjust volume between videos. Premiere's Essential Sound panel has Loudness Auto-Match: set to streaming target (-14 LUFS for YouTube/Spotify); applies to dialogue clips automatically. Other platforms: Spotify also -14 LUFS; Apple Podcasts -16 LUFS; broadcast TV -23 LUFS (US ATSC A/85) or -23 LUFS (EU EBU R128); cinema -27 LUFS (more dynamic range). True peak should sit -1 to -3 dBTP (true peak) below 0 — leaves headroom for codec lossy compression which can push peaks above original level. Verify final master with Window → Audio Track Mixer → Loudness Radar or similar metering. The era of 'loudness wars' (master as hot as possible) ended with streaming platforms' normalization; now the smart move is delivering AT target, not above. Pro audio workflows in 2026 are LUFS-driven; peak-based metering is legacy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "0 dB peak." }
+      ],
+      "correct_answer": "b",
+      "explanation": "-14 LUFS integrated for YouTube/Spotify. Delivering above = YouTube turns you down; below = turns you up. Loudness-target era; not peak-based.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Recording has 60 Hz hum from a ground loop. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Live with it." },
+        { "id": "b", "text": "Essential Sound's DeHum (toggle on, set 60 Hz for US power) or a Notch EQ at 60 Hz + harmonics (120, 180, 240 Hz). The hum is narrow-band electrical interference at the power line frequency (60 Hz in US / Canada / Mexico / Japan; 50 Hz in Europe / Asia / Australia / Africa). Plus harmonics at integer multiples. Surgical narrow-band notches at those exact frequencies remove the hum while leaving the voice (which spans 80-8000 Hz roughly) intact. Premiere: Essential Sound → Dialogue → Repair → DeHum → enable; configure 60 or 50 Hz. Audition: Effects → Noise Reduction → Notch Filter at 60 / 120 / 180 / 240 Hz with very narrow Q. iZotope RX has dedicated De-hum that's industry standard for serious work. The hum spans about 0-300 Hz energy; voice fundamentals start around 80-200 Hz (male/female). Notch filters at hum frequencies don't degrade voice. Listen after applying: if voice sounds 'thinner', the notch is too wide; tighten Q. Prevention is better than cure: ground all equipment to the same outlet, use balanced (XLR) cables, distance mics from power transformers / dimmer switches / fluorescent ballasts. But once recorded, DeHum tools handle it cleanly. Don't try to use broadband Noise Reduction for hum — it's the wrong tool (NR is for broadband hiss). Hum requires frequency-specific surgical removal." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduce all bass." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DeHum (Essential Sound) or Notch EQ at 60 Hz + harmonics (120/180/240). Surgical narrow-band removes hum; voice untouched. Not broadband NR.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the killer feature of Essential Sound's Music type?",
+      "choices": [
+        { "id": "a", "text": "Music generation." },
+        { "id": "b", "text": "Auto-Duck — automatically lowers music volume when dialogue plays. Premiere analyzes the dialogue track, generates volume keyframes on the music track that drop it -12 to -18 dB whenever dialogue is speaking; music returns to full level in dialogue gaps. Setup: assign dialogue clips type 'Dialogue'; assign music clips type 'Music'; in Music panel toggle Duck → enable; configure Sensitivity (detection aggressiveness), Reduce By (typical -15 dB), Fade Time (typical 300 ms — fast enough not to feel pumping, slow enough to feel natural). Click Generate Keyframes; Premiere writes them onto the music track. Refine specific moments manually if needed (drag keyframes to adjust at musical swells you want preserved). For interview / podcast / YouTube content with music underneath dialogue, Auto-Duck saves hours of manual keyframing — the alternative is clicking volume keyframes at the start of every spoken word and back up at every pause, hundreds of clicks per video. The killer feature; transformative for the editor-as-audio-engineer workflow. Combined with Loudness target on dialogue and Enhance Speech AI, Music's Auto-Duck is part of the 5-minute pro audio pipeline. Without ducking, music either competes with dialogue (annoying) or sits so quietly it barely registers (wasteful). With ducking, music breathes and supports." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Music search." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-Duck: auto-lowers music under dialogue via generated keyframes. Saves hours; essential for dialogue + music workflows.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Dialogue clips have wildly inconsistent volume — some clips peak -3 dB, others -25 dB. Best workflow?",
+      "choices": [
+        { "id": "a", "text": "Live with it." },
+        { "id": "b", "text": "Normalize, then compress, then loudness-target. Workflow: 1) Select all dialogue clips in timeline → right-click → Audio Gain → Normalize Max Peak → -3 dB. This brings every clip's peak to -3 dB (or your chosen target), making the loudest moment of each clip consistent. 2) Apply compression (Essential Sound → Dialogue → Clarity → Dynamics, around 4-6) — narrows the within-clip dynamic range; quiet sections of each clip come up; loud sections come down. After this, the clips sound consistent both between (peak-normalized) and within (compressed). 3) Loudness target — Essential Sound → Loudness → Auto-Match → YouTube (-14 LUFS) or your platform target. This sets the overall perceived loudness regardless of within-clip dynamics. 4) Listen on multiple devices (headphones, phone speaker, laptop) — if dialogue feels equally present across the entire piece, the workflow worked. Pro consistency requires all three steps: peak normalization handles clip-to-clip variance; compression handles within-clip variance; loudness target handles overall delivery. Skipping any leaves a hole — peak normalize only = clips still vary internally; compress only = quiet clips never come up to match loud ones. The combo is standard for any dialogue-heavy edit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Re-record everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Normalize Max Peak (clip-to-clip consistency) + Compression (within-clip consistency) + Loudness Target (-14 LUFS overall). Three steps; standard workflow.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why use audio fades on every cut?",
+      "choices": [
+        { "id": "a", "text": "Looks pretty." },
+        { "id": "b", "text": "Eliminates clicks/pops at edit points. When two audio clips are cut together without fades, the waveform's instantaneous value at the edit jumps abruptly (e.g., from +0.4 to -0.6) — this DC discontinuity creates a click/pop at the cut moment. Audible especially on small speakers, headphones, and during quiet sections. Audio fades (even 1-frame crossfades) smooth the transition: clip 1 fades to silence in 1 frame; clip 2 fades from silence in 1 frame; the discontinuity is smoothed; no click. Application: Cmd+Shift+D adds default audio transition (constant power crossfade) at selected edit points; or right-click → Apply Default Transitions. For sequence-wide application: select all → Cmd+Shift+D. The default is constant power crossfade which preserves perceived loudness across the transition. For music transitions (one song to another), use longer crossfades (1-3 seconds) for smooth handoff. Pop-elimination crossfades should be minimal (1-3 frames) — short enough to feel like a hard cut, long enough to eliminate the click. Pro habit: every cut has at least a 1-frame audio fade. Some editors set Premiere's preferences to auto-apply audio transitions on cut. The novice tell-tale: pops at every cut + occasional 'tick' sounds in quiet moments. Fix with universal short fades; sound becomes professional." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Eliminates clicks/pops at edit points. DC discontinuity at cuts creates clicks; even 1-frame fade smooths transition. Pro habit; universal application.",
+      "points": 1
+    }
+  ]
+}

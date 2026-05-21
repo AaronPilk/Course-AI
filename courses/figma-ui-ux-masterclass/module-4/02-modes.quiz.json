@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Modes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How do you set up multi-brand theming with variables?",
+      "choices": [
+        { "id": "a", "text": "Duplicate the design file." },
+        { "id": "b", "text": "Add modes to your variable collection — Brand A, Brand B (and more if needed). Each color variable gets a per-brand value: `color/brand/primary = #FF5722` (Brand A), `#2196F3` (Brand B). Components reference `color/brand/primary` once; the frame's mode selection determines which brand's color renders. Setup: variables panel → collection settings → Add mode → name Brand A / Brand B → fill brand-specific values per variable (typically primary, secondary, accent colors; sometimes typography for brand-specific fonts). Multi-axis theming combines collections: a Theme collection (Light/Dark) + a Brand collection (A/B/C) — set a frame to Theme=Dark, Brand=A and all dark+brand-A variables resolve simultaneously. This matches engineering's approach (CSS variables flipping on `data-theme` and `data-brand` attributes), giving design + dev parity. The pattern scales: parent companies with subsidiary brands; white-label products; A/B testing of brand identity. Avoid duplicating files per brand — maintenance nightmare. Avoid hardcoding brand colors — defeats the purpose. The mode-driven approach is the modern standard for theming in Figma." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardcode per brand." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add Brand A/B/C modes to the variable collection. One reference, brand-specific values. No file duplication.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your dark mode looks wrong — drop shadows aren't visible on dark surfaces. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Remove all shadows." },
+        { "id": "b", "text": "Make effects mode-aware. The drop shadows were designed for light mode (e.g., `0 1px 2px rgba(0,0,0,0.1)`) and become invisible on dark backgrounds because dark-on-dark has no contrast. Fix: create variables for shadows per mode. `effect/shadow/sm` Light: `0 1px 2px rgba(0,0,0,0.1)`; Dark: `0 1px 2px rgba(0,0,0,0.8)` (much darker shadow for contrast against the lighter elevated surface). Apply this variable to your card / button effects instead of hardcoded shadow values. Alternative dark-mode approach: replace shadows entirely with subtle borders (`color/border/default`) for elevation — many design systems do this in dark mode since shadows are inherently a light-mode visual idiom. Either way, the principle is: every visual decision that differs between modes (colors, shadows, blurs, opacity values) needs to be a variable, not hardcoded. Audit the design: any hardcoded color, effect, or numeric value that should differ per mode is a hole. Mode-aware design = every mode-sensitive value tokenized. Tools: Figma's variable picker shows which fields use variables (purple indicator); fields without are candidates for tokenization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use light mode only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Make effects mode-aware. Shadow values differ per mode (darker shadow in dark mode), or replace with borders for elevation.",
+      "points": 1
+    }
+  ]
+}

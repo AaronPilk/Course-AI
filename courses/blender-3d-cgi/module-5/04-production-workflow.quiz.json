@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Production workflow",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best file format for moving a rigged + animated character from Blender to Unreal Engine?",
+      "choices": [
+        { "id": "a", "text": "PNG sequence." },
+        { "id": "b", "text": "FBX (Filmbox) — industry standard for 3D asset exchange; preserves mesh + materials + armature/skeleton + animation + UV / texture references. Unreal Engine has first-class FBX import. Workflow: Blender → File → Export → FBX. Configure: 1) Selected Objects (export only what's needed); 2) Apply Transform (yes if you want clean transforms); 3) Armatures: Add Leaf Bones off, Apply Scale options carefully; 4) Animation: enable; pick action(s) to export. Unreal: Import FBX in Content Browser → choose skeleton → import settings. Verifies in Unreal's Persona viewer. Limitations: FBX is binary + proprietary (Autodesk-owned); some features don't translate perfectly (custom Blender shaders → Unreal materials need recreation). Modern alternative: glTF (open standard; web-friendly; smaller files; growing game engine support) — Unreal added native glTF import in 5.x. For real-time / web: glTF preferred. For traditional game engine work + maximum compatibility: FBX still dominant. USD (Universal Scene Description, Pixar's standard): emerging across film + games for complex scene exchange. Per asset type: characters + animation = FBX or USD; environments = FBX or glTF; quick props = glTF. Avoid OBJ for animation (no skeleton); good for static meshes only. The 'export-test in target engine; iterate on settings' loop is part of every game pipeline; perfect first-export is rare. Pro game artists test export early in modeling phase to catch issues before huge investment." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "OBJ." }
+      ],
+      "correct_answer": "b",
+      "explanation": "FBX — industry standard; preserves mesh + skeleton + animation + materials. Unreal has first-class import. Modern alternative: glTF for web/real-time. USD for complex film pipelines.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Junior 3D artist applying for entry-level role; has 25 generic Blender renders. Why is the portfolio not landing interviews?",
+      "choices": [
+        { "id": "a", "text": "Wrong software." },
+        { "id": "b", "text": "Lack of specialization + process documentation + recent / current work. Pro hiring is looking for specific roles (Character Artist, Environment Artist, Motion Designer, VFX Artist) — a generalist portfolio of 25 'one of everything' renders doesn't signal expertise in any direction. Fix: 1) Specialize — pick ONE specialization based on your strongest work + interest (character / environment / motion / archviz / product). Build 5-10 polished pieces showcasing that specialty. Cut weaker pieces; quality > quantity. 2) Show process — for each piece include wireframes, breakdowns, BTS shots, time-lapse if applicable. Recruiters see HOW you work, not just the result. A model with wireframe + topology shots tells them you understand pipelines; a render alone doesn't. 3) Recent work — last 12-18 months. Older pieces feel stale; show current skill level. 4) Quality > quantity — 5-10 strong pieces beat 25 mediocre. Curate ruthlessly. 5) Match portfolio to target role — applying for character artist? Show characters. Applying for environment artist? Show environments. Generic portfolios suggest 'will take any job' which often signals lack of direction. 6) Platforms: ArtStation (industry standard for 3D portfolio), personal website, Instagram for motion clips. Network on Discord communities + LinkedIn. The 25-generic-renders pattern is the most common junior portfolio mistake; recruiters skim, see no clear specialty, move on. 5 focused pieces with process documentation in your target specialization = portfolio that lands interviews." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More renders." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Specialize (5-10 polished pieces in ONE area) + show process (wireframes, breakdowns) + recent work (12-18 months) + match portfolio to target role. Quality > quantity.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Packaging and shipping",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Build configuration for shipping to players?",
+      "choices": [
+        { "id": "a", "text": "DebugGame." },
+        { "id": "b", "text": "Shipping. Three main build configurations: 1) DebugGame — full debugging symbols included; assertions enabled; significantly slower performance; for development debugging sessions. 2) Development — editor-like; reasonable speed; profiling tools available; for general development. 3) Shipping — optimized for release; debugging stripped (smaller binary); fastest performance; what players actually receive. For player releases: Shipping. Configure via File → Package Project → Build Configurations → Shipping. Project Settings → Packaging → Build Configuration → Shipping. Why Shipping matters: 1) Performance — 2-3x faster than Development; critical for hitting frame rate targets. 2) Smaller executable — no debug symbols; faster downloads. 3) Security — debugging features stripped; harder for hackers to inspect. 4) Asset cooking — all assets fully optimized + compressed. The Development build is fine for testing internal builds; players never see Development. The DebugGame build is for developer debugging only; way too slow for player experience. Always: test in Shipping configuration before submitting to stores; PIE (Play In Editor) shows Development-like behavior, NOT Shipping-like. Some bugs only appear in Shipping builds (compile-time optimizations, asset cooking edge cases, missing debug fallbacks). Critical pre-launch checklist: test the actual Shipping build; play through full game; verify no crashes / missing assets / performance issues. The 'works in editor but breaks in shipped build' bug is endemic; only catches with explicit Shipping testing. Pro studios always do a Shipping QA pass before release; never ship a build that hasn't been tested in Shipping config." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Development." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Shipping. Optimized for release; debugging stripped; smaller binary; fastest performance. Test Shipping builds before release; PIE doesn't catch all Shipping-specific bugs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game ships; players report it crashes every time on level 3 load — but you never crashed in PIE testing. Cause?",
+      "choices": [
+        { "id": "a", "text": "Bug in Unreal." },
+        { "id": "b", "text": "PIE (Play In Editor) doesn't always reflect packaged build behavior. PIE uses a Development build with editor still loaded; packaged builds use Shipping configuration with cooking + optimizations. Common 'works in PIE; broken in package' bugs: 1) Asset references — PIE auto-loads referenced assets; cooked build only includes assets explicitly cooked. Missing asset reference in cooked content = crash on load. 2) Soft references not loaded — referenced via soft path; works in editor where everything's available; cooked build may not include the target if not explicitly cooked. 3) Streaming-level dependencies broken — World Partition cells reference each other across cell boundaries; missing references after cook. 4) Plugin issues — some plugins behave differently in shipping (debug code paths stripped; debug assertions hide bugs in dev). 5) Race conditions — packaged builds run faster; timing-sensitive Blueprint logic that 'works because slow' breaks in Shipping speed. 6) Memory limits — shipped builds run with constrained memory budget per platform; loading-heavy levels may exceed budget. Diagnosis workflow: 1) Reproduce in Development packaged build first (intermediate between PIE and Shipping; sometimes catches issues without full Shipping recompile). 2) If reproduces: enable logging; add Print String / Logging in suspect code paths; build with logging; collect log file. 3) Check Saved/Logs/ for crash logs + callstacks. 4) Common fix locations: assets in Project Settings → Packaging → Additional Assets to Cook (force-include critical assets); soft references; plugin configuration. 5) Test fix in Shipping build before re-shipping. Pro studios maintain crash reporting (Sentry, Crashlytics, Unreal's CrashReportClient) on shipped builds — automatic crash dumps with callstacks emailed to dev team. Without crash reporting, post-launch bugs are blind; with it, you see what's actually crashing for players. Lesson: always test Shipping packaged builds before release; PIE is necessary but not sufficient." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong assets." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PIE doesn't reflect packaged build. Common causes: missing cooked assets, soft references, streaming issues, plugin differences, race conditions. Always test Shipping builds before release; setup crash reporting.",
+      "points": 1
+    }
+  ]
+}

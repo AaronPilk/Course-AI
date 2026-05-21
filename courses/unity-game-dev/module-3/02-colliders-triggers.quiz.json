@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Colliders and triggers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between collider and trigger?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Solid collider physically blocks objects (objects can't pass through; collision pushes back); Trigger has Is Trigger = true and detects overlap WITHOUT blocking (objects pass through; events fire). Solid colliders fire OnCollisionEnter/Stay/Exit; triggers fire OnTriggerEnter/Stay/Exit. Both require at least one of the two GameObjects in the collision/overlap to have a Rigidbody (or a Kinematic Rigidbody). Use cases for solid colliders: walls (block player), ground (player stands on), boxes (push around), enemies (player bumps into and stops). Use cases for triggers: pickup items (player walks over; collect; don't block movement), ability ranges (detect what's within attack range), kill zones (instant death areas like out-of-bounds), checkpoints (auto-save when reached), level boundaries (load next level on enter), interaction zones (display 'Press E to interact' prompt). To convert a collider to trigger: select the Collider component → Is Trigger checkbox = true. Visual: solid colliders show as green wireframe in Scene view; triggers also green wireframe but objects pass through them. Common combined usage: a pickup item has BOTH a visual mesh (with no collider) + a trigger sphere collider for detection. Or a complex object has a solid Box for body collision + multiple trigger spheres for hit zones (head shot, body shot, legs). The collider/trigger distinction is foundational; mastering it enables clean physics + gameplay logic separation.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Solid blocks movement physically; Trigger has Is Trigger checkbox + detects overlap without blocking. Solid fires OnCollisionEnter; Trigger fires OnTriggerEnter. Different events.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game has many bullet objects; bullets should hit enemies + walls but NOT pickups or other bullets. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Check tags in every collision." },
+        { "id": "b", "text": "Layer-based collision filtering. Set up Layers (Project Settings → Tags and Layers): Layer 8 = 'Bullets', Layer 9 = 'Enemies', Layer 10 = 'Walls', Layer 11 = 'Pickups'. Configure Collision Matrix (Project Settings → Physics → Layer Collision Matrix): only check boxes for collision pairs that should interact. Bullets vs Enemies = check; Bullets vs Walls = check; Bullets vs Pickups = uncheck; Bullets vs Bullets = uncheck. Result: bullet-bullet collisions don't even attempt physics calculations; bullet-enemy / bullet-wall fire normally. Performance: orders of magnitude faster than checking tags per collision; Unity's physics engine filters at the system level before any callbacks fire. Apply layer: select GameObject → Inspector top → Layer dropdown. Set Bullets prefab to 'Bullets' layer; enemies to 'Enemies'; walls to 'Walls' (or 'Default'); pickups to 'Pickups'. Done. For raycasting / spherecasting: pass LayerMask parameter to filter checks against specific layers. `Physics.Raycast(start, direction, out hit, distance, LayerMask.GetMask('Enemies', 'Walls'));` — only checks against those layers. The layer-based approach is the Unity physics optimization standard; checking tags in collision callbacks works but is slower + checks happen after physics engine already considered collision. Pro Unity habit: set up Layers + Collision Matrix early in project; configure once; benefit throughout development. Same pattern in Unreal Engine (Collision Channels); universal physics engine optimization.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layer-based Collision Matrix. Set Bullets/Enemies/Walls/Pickups layers; Project Settings → Physics → Layer Collision Matrix → toggle interactions. Physics engine filters; faster than tag checks.",
+      "points": 1
+    }
+  ]
+}

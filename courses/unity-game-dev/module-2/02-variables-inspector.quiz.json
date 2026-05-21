@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Variables and Inspector",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best way to expose a private variable in Inspector?",
+      "choices": [
+        { "id": "a", "text": "Make it public." },
+        { "id": "b", "text": "[SerializeField] private. Variable stays private (not accessible from other scripts; respects encapsulation) but Unity Inspector shows it for designer tweaking. Pattern: `[SerializeField] private float moveSpeed = 5f;`. Other scripts can't access moveSpeed; only this script's internal logic uses it; Inspector exposes it for tuning. The 'public' alternative makes the variable accessible to all other scripts — breaks encapsulation; other scripts could modify it arbitrarily; harder to track sources of value changes. Use public only when other scripts genuinely need access (e.g., publicly-readable Health value); use [SerializeField] private for everything else that needs Inspector visibility. Additional Inspector polish attributes: 1) [Range(0, 100)] for slider clamped values. 2) [Header('Movement Settings')] for visual grouping with title. 3) [Tooltip('How fast the character moves')] for hover documentation. 4) [Space] for vertical spacing. 5) [HideInInspector] for public variables you DON'T want shown. 6) [SerializeReference] for polymorphic references. Pro Unity scripting: use [SerializeField] private for all tunable values; public only for explicit API exposure; combine with [Range] + [Header] + [Tooltip] for polished Inspector UI. Designer-friendly + encapsulation-respecting. The 'public for Inspector' anti-pattern is common in beginner code; [SerializeField] is the cleaner solution provided by Unity for exactly this case." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "[SerializeField] private. Inspector visible + encapsulation preserved. public only for actual API exposure. Combine with [Range], [Header], [Tooltip] for polished Inspector.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Player script repeatedly calls GameObject.Find('Camera') in Update. Performance issue?",
+      "choices": [
+        { "id": "a", "text": "No issue." },
+        { "id": "b", "text": "Yes — significant performance problem. GameObject.Find scans the entire scene hierarchy looking for a GameObject by name; expensive operation. Called every frame = thousands of times per second in scene-wide search. At 60 FPS in scene with 1000 GameObjects, Find runs through all 1000 each call = 60,000 hierarchy lookups per second per script. Compounds with multiple scripts doing same. Fix: cache the reference once in Awake or Start; use the cached reference in Update. Pattern: `private Camera mainCamera; void Awake() { mainCamera = GameObject.Find('Camera').GetComponent<Camera>(); }` (or better, use serialized reference). In Update: use mainCamera directly; no Find call; instant access. Even better — use Camera.main if you need the main camera (cached by Unity); or use [SerializeField] private Camera mainCamera; and drag in Inspector. Other slow methods to avoid in Update: GameObject.Find, FindGameObjectWithTag, FindObjectOfType, FindObjectsOfType — all scan scene. Cache once; use many times. Same principle: GetComponent in Update is slow (component lookup per frame); cache in Awake/Start. Pro Unity scripting pattern: 1) [SerializeField] private references where possible (drag in Inspector). 2) Cache via GetComponent in Awake/Start. 3) Use cached references in Update / FixedUpdate. 4) Profile via Unity Profiler — Find calls show up as expensive. Performance scales: 10 scripts each calling Find in Update = 600K hierarchy lookups/sec; cached references = ~0 cost. The optimization is one of the foundational performance wins in Unity; pro projects audit all Find / GetComponent calls and cache appropriately." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Major performance issue. GameObject.Find scans entire scene; called per frame = thousands of lookups/sec. Cache reference once in Awake/Start; use cached in Update. Universal Unity optimization.",
+      "points": 1
+    }
+  ]
+}

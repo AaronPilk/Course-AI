@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Components, variants, libraries",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why componentize designs that repeat 3+ times?",
+      "choices": [
+        { "id": "a", "text": "Saves memory." },
+        { "id": "b", "text": "Future changes happen in one place — edit the main, all instances update. The duplicate-and-edit alternative means N manual edits with high inconsistency risk: one card ends up 16px radius, others 12px; one button has different padding than its siblings. Componentization gives you a system: design tokens flow through the main; instances inherit; overrides for content (text, image) survive propagation; the main is the source of truth. The 3+ threshold is pragmatic — once is unique, twice might be temporary, three times signals a pattern worth codifying. Premature componentization (componentizing single-use elements) adds friction without benefit — the structure overhead exceeds the reuse savings. Mature designers learn the rhythm: build → notice repetition → refactor into component → keep building. Variant + property setup makes the component flexible without bloat. Atomic design framework (atoms → molecules → organisms) organizes mental model. After componentization, design velocity increases: new screens drag from assets rather than re-build patterns from scratch." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "One source of truth; edit propagates; consistency guaranteed. 3+ reps signals pattern worth codifying.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your Button has Style (3) × Size (3) × State (4) = 36 variants. Designers want an icon-position option. Should you add icon-position as a 4th variant?",
+      "choices": [
+        { "id": "a", "text": "Yes — 4 × 36 = 144 variants." },
+        { "id": "b", "text": "No — make it a property instead. Variants multiply the matrix (36 → 144 if you add a 4th 4-value variant), bloating the picker and slowing performance. Icon-position (Left, Right, None, Only) is configurable per instance — perfect for a property. Setup: IconPosition as text/enum property with default 'None'; combined with HasIcon boolean and Icon instance-swap; the right panel lets designers configure without entering a 144-variant dropdown. After: 36 variants for true structural variation (Style + Size + State); 3 properties (Label, IconPosition, Icon) for configuration. Same flexibility, 75% fewer variants, cleaner dropdown. The rule of thumb for what's a variant vs. property: structural difference (different visual identity per combination) → variant. Configurable difference (same identity, varying content/element) → property. Style is structural (Primary looks different from Secondary). IconPosition isn't structural (button is still a button regardless of icon side) → property. This decision compounds: every variant axis added quadruples or more; every property added is linear. Lean toward properties when in doubt." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Make icon-position a PROPERTY not variant. Variants multiply (36 → 144); properties stay linear. Configurable = property.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the right way to deprecate a component used in many files?",
+      "choices": [
+        { "id": "a", "text": "Delete and rebuild." },
+        { "id": "b", "text": "Rename to `[DEPRECATED] Component/Old`; add description with replacement guidance and removal date; optionally hide from suggestions; announce in team channels with migration timeline; monitor usage across files; help teams migrate; delete only when usage = 0. Why: deleting a component with live instances detaches every instance (Cmd+Alt+B equivalent across all files) — instances become orphan frames, losing future updates. 30 files now have unmaintained copies of the old design; consistency dies. The deprecation pattern matches what code engineers do with deprecated APIs — keep working, signal removal, give consumers time, eventually delete. Mature design systems publish 'what's new' notes and 'what's deprecated' notes alongside library updates. Use Figma's component description field (visible in instance picker) for inline guidance. For very-long-lived components, a deprecation period of 1-3 months is reasonable; for newer components with few uses, 2-4 weeks. The 'safe to delete' threshold is zero remaining instances; check before pulling the trigger. Some teams add a Library Activity dashboard to track usage decline over time." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hide it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deprecate: rename [DEPRECATED], add description, announce, monitor, migrate, then delete when usage = 0. Never delete live components.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designer wants to override an icon inside a button instance. What's the cleanest mechanism?",
+      "choices": [
+        { "id": "a", "text": "Detach the button." },
+        { "id": "b", "text": "Instance swap property with curated preferred values. Setup in the Button main component: select the nested Icon instance → right panel → 'Apply property' → instance swap → name (Icon) → set Preferred Values to your icon library (e.g., Icon/User, Icon/Settings, Icon/Search — the 20-30 icons your product uses). Now every Button instance shows an 'Icon' dropdown in the right panel with only those curated options — fast picker, no overwhelming list of every component in file. Designer clicks dropdown → picks icon → button updates without entering the component, without detaching, without breaking the connection to the Button main. This is THE pattern for swappable nested instances in design systems. The alternative (detaching the button to manually replace the icon) breaks the entire button's connection to its main — future Button updates don't reach this instance; consistency drift; a permanent scar. Instance swap maintains the system; detaching defeats it. Curated preferred values are key — without them, the picker shows all components in the file, often 100s, slow + confusing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hide the icon." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Instance swap property with curated preferred values. Maintains button connection; right panel dropdown; no detaching.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "When should you publish a Figma file as a library?",
+      "choices": [
+        { "id": "a", "text": "Always." },
+        { "id": "b", "text": "When 3+ files would reference the same components — the reuse threshold where library overhead (publishing, updating, documenting) pays off. Below that (single product file, one-off project), components in a 'Components' page within the file suffice. Above that, library publishing unlocks: shared components across product files, central updates that flow to all consumers, version control via branches, deprecation policy, library analytics (in paid tiers). For small teams (1-2 designers, single product), skip publishing — overhead exceeds benefit. For medium teams (5-10), single 'Design System' library with foundations + atoms + molecules + organisms. For large orgs (20+), split libraries by domain: Core (used everywhere), Marketing (site-only), Product (app-only) — files enable only relevant libraries, reducing noise. Publishing is reversible — start without; promote a Components page to library once reuse pattern emerges. Don't publish prematurely: a half-formed library with bad naming + missing docs is worse than no library, since consumers come to depend on a foundation that's still shifting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "3+ files reusing same components = library worth it. Below that, components in a page suffice. Publishing has overhead; don't publish prematurely.",
+      "points": 1
+    }
+  ]
+}

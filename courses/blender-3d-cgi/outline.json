@@ -1,0 +1,71 @@
+{
+  "slug": "blender-3d-cgi",
+  "name": "Blender",
+  "title": "Blender 3D & CGI Fundamentals",
+  "subtitle": "From cube to render — the open-source 3D pipeline used by indies and studios.",
+  "category": "Creative",
+  "level": "Beginner to Intermediate",
+  "estimated_hours": 7,
+  "summary": "Blender is the open-source 3D powerhouse — used for indie films, AAA game cinematics, Pixar-quality renders, motion graphics, product visualization, and architecture. This course covers the entire 3D pipeline: modeling (polygon + sculpting), materials and shaders, lighting and cameras, rendering (Cycles + Eevee), animation and rigging, and modern tools like Geometry Nodes. Practical workflow from concept to final image.",
+  "brand": {
+    "logo": "/brands/blender-3d-cgi.svg",
+    "gradient": ["#F5792A", "#EA7600"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "Blender interface and modeling foundations",
+      "objective": "Navigate Blender; build clean polygon models.",
+      "lessons": [
+        { "position": 1, "title": "Interface and navigation" },
+        { "position": 2, "title": "Polygon modeling fundamentals" },
+        { "position": 3, "title": "Modifiers — non-destructive modeling" },
+        { "position": 4, "title": "Topology and edge flow" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Materials, lighting, and cameras",
+      "objective": "Make objects look real or stylized.",
+      "lessons": [
+        { "position": 1, "title": "Materials and the Shader Editor" },
+        { "position": 2, "title": "Textures and UV unwrapping" },
+        { "position": 3, "title": "Lighting design — three-point and beyond" },
+        { "position": 4, "title": "Cameras and composition" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Rendering — Cycles and Eevee",
+      "objective": "Convert your 3D scene to a final image with the right engine.",
+      "lessons": [
+        { "position": 1, "title": "Cycles vs. Eevee — when to use which" },
+        { "position": 2, "title": "Sampling, noise, and denoising" },
+        { "position": 3, "title": "Output settings and image quality" },
+        { "position": 4, "title": "Compositing and post in Blender" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Animation, rigging, and simulation",
+      "objective": "Bring scenes to life with motion.",
+      "lessons": [
+        { "position": 1, "title": "Keyframe animation and the Graph Editor" },
+        { "position": 2, "title": "Rigging — armatures and weight painting" },
+        { "position": 3, "title": "Physics simulations (cloth, rigid body, fluid)" },
+        { "position": 4, "title": "Camera animation and rendering motion" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Geometry Nodes, sculpting, and the modern Blender pipeline",
+      "objective": "Use Blender's procedural and high-detail workflows.",
+      "lessons": [
+        { "position": 1, "title": "Sculpting — high-detail organic forms" },
+        { "position": 2, "title": "Geometry Nodes — procedural modeling" },
+        { "position": 3, "title": "Asset management and the asset library" },
+        { "position": 4, "title": "Blender in production — workflow and pipeline" }
+      ]
+    }
+  ]
+}

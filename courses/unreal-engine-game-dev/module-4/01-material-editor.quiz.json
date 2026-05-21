@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Material Editor",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use Material Instances over editing Materials directly?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "Material Instances are lightweight variants of a master Material; tweak parameters without recompiling the shader. When you edit a Material (the full shader graph), Unreal recompiles the shader code — slow process (seconds to minutes for complex materials) that affects every object using the material. Material Instances inherit from a master Material but expose parameters (scalar values, vector colors, texture references) that can be tweaked without recompiling. Workflow: 1) Build master Material once (e.g., M_StandardSurface with parameters for BaseColor, Roughness, Metallic, NormalTexture). 2) Create Material Instances for variants — MI_WoodOak (parameters set for oak texture, low roughness); MI_ConcreteWall (concrete texture, high roughness); MI_RustyMetal (rust texture, partial metallic). 3) Apply Material Instances to meshes. 4) Tweak per-instance parameters via Material Instance editor — sliders + texture pickers; instant preview; no shader recompile. Benefits: 1) Speed — instance edits are instant; master edits are slow recompiles. 2) Reusability — one master Material; dozens or hundreds of instances. 3) Designer-friendly — non-shader-experts tweak instances without breaking master. 4) Performance — instances share compiled shader; lower memory + faster rendering. 5) Per-instance customization at runtime — Blueprint can Set Material Parameter Value on individual mesh instances (team colors, damage states, dynamic effects). Pro UE5 workflow: build master Materials with rich parameter sets; create instances for variants; apply instances to meshes; rarely edit masters in production. The 'edit Material directly for each variant' anti-pattern creates dozens of nearly-identical full Materials; each is independently expensive. Material Instances are the architecture pattern; same idea as CSS variables in web (one definition; many uses)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by UE5." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Material Instances = lightweight variants. Tweak parameters without recompiling shader. Master Material + many instances. Faster, reusable, designer-friendly. Runtime parameter changes via Blueprint.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want characters of different teams (red, blue, green) using same character mesh + animations. Approach?",
+      "choices": [
+        { "id": "a", "text": "Duplicate everything 3x." },
+        { "id": "b", "text": "Material Instances with team color parameter + Blueprint sets parameter at runtime. Setup: 1) Build master Material M_TeamCharacter with vector parameter 'TeamColor' (default white) feeding into Base Color (often multiplied by texture). 2) Create Material Instances: MI_TeamRed (TeamColor = red), MI_TeamBlue (TeamColor = blue), MI_TeamGreen (TeamColor = green). 3) Assign Material Instances to character mesh's material slots — base appearance per team. OR, more flexibly: 4) Apply a single Dynamic Material Instance at runtime in Blueprint — `Create Dynamic Material Instance` node → `Set Vector Parameter Value` with team color from Player's TeamID. Now: same character mesh + same animations + dynamic color per team; same memory footprint; cleaner architecture. For more team customization (logos, decals, accessory swaps): expose more parameters in the master Material (LogoTexture, AccessoryColor) and tweak per-instance OR at runtime. Per-player customization (player picks their color): runtime parameter changes via Blueprint. Pro pattern: one master Material with rich parameter set; instances or runtime parameter changes handle variants; no asset duplication. The 'duplicate everything 3x' anti-pattern: 3 versions of character mesh + 3 versions of animations + 3 versions of materials = 3x asset cost + maintenance nightmare. Material Instances solve this cleanly. Same pattern for: different weather conditions on the same building (snowy / sunny / rainy via parameter); different damage states (clean / damaged / destroyed); customizable cars in racing games. Pro UE5 game design uses Material Instances + runtime parameter changes for all variant content." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip team colors." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Material Instances + Blueprint runtime parameter setting. One master Material with TeamColor parameter; instances or dynamic instance change at runtime. No asset duplication.",
+      "points": 1
+    }
+  ]
+}

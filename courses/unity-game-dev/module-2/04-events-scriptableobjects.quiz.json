@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Events and ScriptableObjects",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's ScriptableObject best for?",
+      "choices": [
+        { "id": "a", "text": "Replacement for GameObjects." },
+        { "id": "b", "text": "Shared data assets that exist outside scenes. ScriptableObject is a class derived from UnityEngine.ScriptableObject; you create instances as ASSETS (files in Project) vs. MonoBehaviour which attaches to GameObjects in scenes. Use cases: 1) Game balance / data tables — EnemyData ScriptableObject with name/health/damage/loot/icon/sound; create instances per enemy type (GoblinData, OrcData, DragonData); reference from Enemy MonoBehaviour. Tweak balance via asset; affects all instances. 2) Configuration — GameSettings ScriptableObject with global tuning values; reference from systems. 3) Shared state between scenes — PlayerProgressionData ScriptableObject holds player level/XP/achievements; survives scene transitions; modified at runtime persists during session (and saves to disk for next session via separate save system). 4) Event channels — GameEvent ScriptableObjects for decoupled cross-system events (PlayerDied, LevelComplete, ItemPickedUp). 5) Asset references — LevelData ScriptableObjects with level metadata + spawn points + music. Benefits over MonoBehaviour for data: 1) Don't need scene GameObject. 2) Shared reference (one asset; many GameObjects reference it). 3) Designer-friendly (Inspector editing of assets). 4) Memory-efficient (single shared data vs. per-GameObject copy). 5) Easy to swap (assign different ScriptableObject; same logic). Create: [CreateAssetMenu] attribute on class; Right-click Project view → Create → menu path → asset created. Access via [SerializeField] private reference; drag asset in Inspector. Pro Unity patterns leverage ScriptableObjects heavily for data-driven design + asset-based events; modern Unity development standard. Frameworks like ScriptableObjects Architecture (popular open-source) extend the concept." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Shared data assets outside scenes. For game balance, configuration, shared state, event channels, level data. Designer-friendly + memory-efficient + asset-based. Modern Unity pattern.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "HUD needs to update score, achievements need to check thresholds, sound plays — all when score changes. Decoupled approach?",
+      "choices": [
+        { "id": "a", "text": "Score code calls each." },
+        { "id": "b", "text": "C# event (or ScriptableObject event channel). Pattern 1: C# event. `public class GameManager : MonoBehaviour { public static event Action<int> OnScoreChanged; public void AddScore(int amount) { score += amount; OnScoreChanged?.Invoke(score); } }`. Subscribers register: `void Start() { GameManager.OnScoreChanged += UpdateScoreUI; } void OnDestroy() { GameManager.OnScoreChanged -= UpdateScoreUI; }`. HUD updates score text; AchievementSystem checks thresholds; SoundManager plays score sound — all subscribed; all react when event fires; GameManager doesn't know about them. Loose coupling. Pattern 2: ScriptableObject event channel (more decoupled). Create ScoreChangedEvent ScriptableObject; GameManager raises (event.Raise(newScore)); subscribers reference the SO + listen via GameEventListener script. Even less code coupling — GameManager doesn't even have a reference to the event listeners; the SO mediates. Both patterns enable: 1) Add new subscriber (e.g., AnalyticsTracker) without modifying GameManager. 2) Remove subscriber without breaking GameManager. 3) Modify subscriber independently. 4) Test each in isolation. The 'direct calls' alternative: GameManager has references to HUD + Achievements + Sound + every subscriber; tight coupling; signature changes break GameManager; new subscribers require GameManager modification. Event-driven scales to N subscribers; direct doesn't. Critical: in C# event pattern, always unsubscribe in OnDestroy / OnDisable — otherwise events accumulate references to destroyed GameObjects; memory leaks; null reference exceptions. ScriptableObject event pattern handles this via Register / Unregister on Enable / Disable. Pro Unity architecture: events everywhere for state changes; direct calls only for 1:1 tight relationships. Same observer pattern as software engineering generally." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tick polling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "C# event (or ScriptableObject event channel). GameManager raises; subscribers (HUD, achievements, sound) subscribe + react. Loose coupling; scales to N. Always unsubscribe in OnDestroy.",
+      "points": 1
+    }
+  ]
+}

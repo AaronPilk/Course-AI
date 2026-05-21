@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: World Partition",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use World Partition for open worlds?",
+      "choices": [
+        { "id": "a", "text": "Required by Unreal." },
+        { "id": "b", "text": "Automatic spatial streaming — divides the world into a grid of cells; loads only cells near the player; unloads distant ones. Without streaming, a 10km × 10km open world tries to load gigabytes of assets simultaneously: out-of-memory crashes, unusable frame rate, editor can't open the level for editing, source control conflicts when multiple people work on the same .umap. World Partition solves all four: 1) Memory — only loaded cells consume RAM. 2) Performance — rendering scales with loaded actors, not total world content. 3) Editor — load only the cell you're editing; the rest stays on disk. 4) Source control — each cell is a separate file; multiple developers can edit different cells simultaneously without conflicts. Create via File → New Level → Empty Open World. The level uses World Partition automatically. Cell sizes default to 25m or 50m; configurable per project. Loading range default ~256m around the player. HLOD generates simplified versions of distant content (low-poly + simplified materials) that's visible before full streaming kicks in — no pop-in. Data layers enable runtime variations (day/night, tutorial/main, quest state) without separate levels. World Partition is UE5's open-world technology; underpins games like Hellblade II, Black Myth: Wukong, Star Wars Outlaws. For 10km+ open world games in 2026: World Partition is the default; legacy single-level or World Composition approaches are deprecated. Tutorial: enable World Partition in project settings; create Empty Open World; place actors; they auto-partition." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller files." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automatic spatial streaming — loads cells near player; unloads distant. Solves memory, performance, editor, source control problems for open worlds. UE5 standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Open world has obvious 'pop-in' as the player moves — distant areas suddenly appear in detail. Fix?",
+      "choices": [
+        { "id": "a", "text": "Faster loading." },
+        { "id": "b", "text": "Set up HLOD (Hierarchical Levels of Detail). HLOD pre-generates simplified versions of distant actors — low-poly meshes + simplified materials — that render when the original cells haven't streamed in yet. Result: distant areas always visible (no pop-in); transitions to full detail are smooth as cells stream. Setup: 1) World Partition window → HLOD setup → configure HLOD layers (different distance thresholds and simplification ratios). 2) Build HLOD (Build menu → Build HLOD). Unreal generates simplified proxy meshes for groups of distant actors. 3) Save + test in PIE. The HLOD is what player sees from far away; original assets stream in as the player approaches. Multiple HLOD layers: e.g., HLOD 0 (very simplified, visible from 5km+); HLOD 1 (less simplified, visible from 1-5km); HLOD 2 (closer to original, visible from 100m-1km); original assets (full detail, < 100m). Unreal blends between LODs smoothly. Tuning: 1) HLOD generation distance thresholds (per layer). 2) Simplification ratio per layer (lower = simpler proxy, faster to render but less accurate). 3) Material override (HLOD layers often use a simplified single material vs. complex per-actor materials). 4) HLOD asset count target (group N actors into 1 HLOD proxy). Without HLOD: 1) Pop-in (distant cells suddenly appear). 2) Empty horizon (nothing visible at distance until streamed). 3) Player can see the streaming boundary. With HLOD: 1) Distant content always visible (silhouettes, simplified geometry). 2) Smooth transition to full detail. 3) Streaming invisible to player. HLOD is mandatory for open worlds in 2026; without it, the immersion breaks. UE5 makes HLOD setup approachable; older engines required manual proxy mesh generation. The combination of World Partition + HLOD + Nanite + Lumen = AAA open world tech stack." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller world." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HLOD (Hierarchical Levels of Detail). Pre-generates simplified proxies for distant content; always visible; smooth transition to full detail. Mandatory for open worlds.",
+      "points": 1
+    }
+  ]
+}

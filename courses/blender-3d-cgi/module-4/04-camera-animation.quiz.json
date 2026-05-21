@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Camera animation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How do you make a camera follow a moving character automatically?",
+      "choices": [
+        { "id": "a", "text": "Animate camera frame by frame." },
+        { "id": "b", "text": "Track To constraint. Select camera → Properties → Object Constraints → add Track To → set Target (the character or character's head bone) → configure axes (Track Axis usually -Y for cameras to point at target on Z up). Now the camera automatically rotates to face the target wherever it moves. Position camera independently; camera continues looking at target. Use cases: 1) Follow character through scene — camera position keyframed for path; constraint keeps camera pointed at character. 2) Orbit shot around subject — animate camera around in a circle; Track To keeps lens on subject. 3) Aerial shots of moving vehicle — camera path animated; vehicle tracked. 4) Cinematic reveals where camera moves while subject talks — natural-feeling follow. Variations: instead of Track To, use Damped Track for smoother rotation (no flip when target moves behind); Locked Track for spin-with-axis-locked. For walking character: Track To on character's chest bone (eye-level shot) or hip bone (mid-body shot) — picks the framing height. Combined with camera position animation (keyframed Location through scene), Track To produces complex shots without manually keyframing the camera rotation at each frame. The manual alternative (keyframing rotation per frame) is tedious + error-prone; constraints are surgical. For multi-character scenes: animate the Track To target switching between characters via Drivers or constraint blending — camera 'looks' at whoever is talking. Pro animators use Track To routinely; static camera + keyframed rotation is for fixed shots only." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different software." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Track To constraint. Camera rotates to face target automatically. Position camera independently; constraint keeps lens on subject. Standard follow-shot pattern.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Animation has a dramatic moment where camera pushes in fast on subject's face. The push feels jarring. How to add cinematic polish?",
+      "choices": [
+        { "id": "a", "text": "Faster push." },
+        { "id": "b", "text": "Add anticipation + ease + motion blur. Workflow: 1) Anticipation: before the fast push, pause camera for 8-12 frames (1/3 to 1/2 second). Maybe add a tiny backward 'wind-up' move (camera retreats slightly before lunging forward) — sets up the push for impact. 2) Ease: in Graph Editor, adjust Bezier handles on the camera's Location keyframes. Steeper handles at the start = slow acceleration; steep at end = sudden snap stop OR smooth deceleration. For dramatic push: slow start (1-2 frames of subtle initial motion) → fast middle (5-6 frames of major travel) → snap stop OR brief overshoot then settle. The ease curve shapes the feel. 3) Motion blur: enable in Render Properties → Motion Blur. Shutter Speed 0.5-1.0. The push-in frames render with directional motion blur (everything streaks toward camera), reinforcing the speed sensation. 4) Sound design: add a low rumble or whoosh sync'd to the push (in Premiere / Resolve later). 5) Optional: subtle camera shake at the snap stop (1-2 frames of small position jitter). The combined effect: anticipation hold → wind-up → push (with motion blur) → snap stop (with shake settle) → emphasized moment. This is film grammar; same techniques used by Spielberg, Nolan, Villeneuve for dramatic moments. Without anticipation + ease + motion blur, even a well-timed push lacks emotional impact; with them, the same push lands as cinematic. Reference: study fast camera pushes in films (Russo brothers' Marvel work, action films); replicate the timing rhythms." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip the push." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anticipation hold + ease (Bezier handles) + motion blur + optional shake. Film grammar for dramatic camera moves. Adds emotional impact.",
+      "points": 1
+    }
+  ]
+}

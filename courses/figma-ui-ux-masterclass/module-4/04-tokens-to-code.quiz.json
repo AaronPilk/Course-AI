@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Tokens to code",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Style Dictionary do?",
+      "choices": [
+        { "id": "a", "text": "Designs dictionaries." },
+        { "id": "b", "text": "Amazon's open-source build system that reads design-tokens.json and transforms it into platform-specific output formats — CSS variables for web, SCSS / LESS, Tailwind config, Swift constants for iOS, Kotlin / XML for Android, React Native theme objects, and more. Single source of truth (design-tokens.json) → multiple platform outputs via Style Dictionary's transform pipeline. Typical setup: design-tokens.json in a `design-tokens` repo; CI runs Style Dictionary on commit; outputs CSS / Swift / Kotlin / etc.; consumer apps import the generated files. Designers update tokens (via Tokens Studio plugin pushing to repo, or manual JSON edit); engineers pull the latest. The pipeline collapses what used to be a hand-copy workflow into automated propagation in minutes. Works alongside Figma's Tokens Studio plugin: Figma variables → JSON via plugin → repo → Style Dictionary → all platforms. The Design Tokens Community Group standardized the format so tools like Style Dictionary, Specify, Supernova, and Tokens Studio interop. For cross-platform products (web + iOS + Android), Style Dictionary saves enormous time vs. maintaining tokens separately per platform." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Generates token names." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Build system: reads design-tokens.json, outputs CSS / Tailwind / Swift / Kotlin / etc. One source → all platforms.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designers update brand colors weekly; engineers complain they're always behind. What's the systemic fix?",
+      "choices": [
+        { "id": "a", "text": "Tell designers to slow down." },
+        { "id": "b", "text": "Build an automated token pipeline. The drift is symptomatic of manual handoff. Setup: 1) Designers maintain brand colors as Figma variables (single source of truth in design land). 2) Install Tokens Studio plugin; configure to push to a `design-tokens` GitHub repo on save. 3) Repo CI runs Style Dictionary → outputs CSS variables file + Tailwind config + iOS / Android resource files. 4) Consumer apps (web, mobile) depend on the generated files; pull latest as a versioned package. 5) When designer updates Figma variable → plugin commits to repo → CI builds → engineers see PR with diff → review + merge. Lag time: 5-30 minutes instead of days/weeks. Token versioning (semver) gives engineers stability — they can pin to v2.3.0 while v3.0.0 is being adopted. The pipeline also catches errors: if a designer accidentally changes a primitive name, CI surfaces it. The investment is 1-2 weeks of setup; the payoff is ongoing — multiple updates per week without coordination friction. Even smaller teams benefit; even with one designer + two engineers, the automated pipeline replaces error-prone copy-paste. The Design Tokens Spec and tools like Tokens Studio / Style Dictionary make this approachable; it's no longer bleeding edge." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hardcode values." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automated token pipeline: Tokens Studio + Style Dictionary + GitHub + CI. Figma → JSON → CSS / Tailwind / Swift in minutes.",
+      "points": 1
+    }
+  ]
+}

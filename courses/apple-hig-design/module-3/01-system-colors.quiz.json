@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: System colors",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why prefer `UIColor.label` over `UIColor.black` for text?",
+      "choices": [
+        { "id": "a", "text": "Shorter name." },
+        { "id": "b", "text": "Semantic colors adapt automatically across modes and accessibility settings. `UIColor.label` = black in light mode + near-white in dark mode + adjusts for Increase Contrast / Differentiate Without Color settings — same code, four different actual colors depending on user context. Hardcoded `UIColor.black` = black always; on dark mode background = invisible; on Increase Contrast = doesn't get the boost; ignores user preferences. Apple defines semantic colors specifically so apps inherit dark mode + accessibility for free. Same pattern: `UIColor.systemBackground` over `UIColor.white`; `UIColor.secondaryLabel` over a specific gray. The discipline: think in terms of MEANING (primary text, background, secondary label) not absolute color values. Asset Catalog colors with light/dark variants achieve similar for brand colors. The rule: if a color has meaning beyond 'this specific RGB value,' use a semantic color or a mode-adapting custom color. Hardcoded RGB is for very specific decoration cases (a brand-color stripe that's always the same RGB regardless of mode), and even those benefit from being defined once and named." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster runtime." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Semantic colors adapt automatically: dark mode + accessibility + Increase Contrast. Hardcoded RGB doesn't.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer applies your brand accent color to text, backgrounds, borders, and accents — everywhere. Result?",
+      "choices": [
+        { "id": "a", "text": "Brand is strong." },
+        { "id": "b", "text": "Brand loses meaning + design feels cluttered. iOS's convention: accent color signals INTERACTIVITY — appears on interactive elements (buttons, links, switch on-state, selected items) so users learn 'colored = tappable.' Spreading accent to backgrounds, decoration, body text dilutes the signal; user can no longer distinguish 'this is a tappable button' from 'this is just colored decoration.' Plus: heavy color fatigues the eye; chrome should be calm so content can stand out (deference principle from Module 1). Better pattern: one accent color, applied only to interactive elements, leaving 90%+ of the UI in grayscale + system colors. Apple's own apps demonstrate: Notes is mostly white/gray; Reminders is mostly white/gray; the accent appears in checkmarks, tab bar selected items, links, action buttons. The brand expression isn't in volume of color — it's in consistent, intentional application of accent for a single meaning. Apps that try to brand harder (color everywhere) usually feel less polished, not more. Restraint is the discipline." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Customers love color." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Loses 'accent = interactive' signal; cluttered. Accent ONLY on interactive elements; rest grayscale + system colors.",
+      "points": 1
+    }
+  ]
+}

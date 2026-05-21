@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Nested Auto Layout",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best approach to building a complex nested Auto Layout screen?",
+      "choices": [
+        { "id": "a", "text": "Top-down." },
+        { "id": "b", "text": "Bottom-up. Build the smallest reusable components first (a row, a button, an avatar), verify each resizes correctly in isolation, then compose them into sections, then sections into screens. Top-down (start with screen frame, fill in details) typically leads to inner pieces needing rework when you realize the section layout doesn't accommodate them. Bottom-up means each layer is solid before the next builds on it; when you assemble a section from already-working components, the section composes correctly. When you assemble a screen from already-working sections, the screen works. Common pattern for production designs: build atomic components first (often into a Components page or library), then arrange them in screen layouts. This is also how engineering builds — small components composed up — so designs match implementation intent. Bonus: bottom-up components become library candidates; less rework as design system emerges. Top-down tends to produce ad-hoc layouts that don't reuse well." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Middle-out." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bottom-up: smallest reusable components first → sections → screens. Top-down leads to rework when inner pieces don't fit.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Card design needs a 'NEW' badge in the top-right corner overlapping content. Best Auto Layout approach?",
+      "choices": [
+        { "id": "a", "text": "Add badge to Auto Layout flow." },
+        { "id": "b", "text": "Position the badge as 'absolute' within the card. In Figma: hold Alt while moving the badge OUT of Auto Layout flow → Figma marks it as 'absolutely positioned' relative to parent; it still belongs to the parent (moves when parent moves) but doesn't participate in the layout flow (siblings ignore it for spacing/positioning). Set the badge's position via x/y or constraints (top-right pinning). Now: badge floats over the card; card content flows normally; resizing the card moves the badge with it; badge doesn't push other elements. Adding the badge to Auto Layout flow would push other elements down/right, breaking the card's intended layout. The 'absolute within Auto Layout' is the Figma pattern for overlay decorations: badges, floating action buttons, status dots, etc. Use sparingly — most elements should flow with Auto Layout; absolute-position when the element is genuinely overlapping rather than flowing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Separate frame." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alt+drag out of flow = 'absolute position' within parent. Badge floats over content; doesn't push siblings.",
+      "points": 1
+    }
+  ]
+}

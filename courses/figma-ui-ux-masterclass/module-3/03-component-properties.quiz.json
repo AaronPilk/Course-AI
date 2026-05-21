@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Component properties",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does instance swap property do?",
+      "choices": [
+        { "id": "a", "text": "Swaps the main component." },
+        { "id": "b", "text": "Allows the instance user to swap a NESTED instance (e.g., the icon inside a button) from a curated list of allowed components, configured in the right panel without entering the component. Setup: select the nested instance → 'Apply property' → instance swap → name (Icon) → set 'Preferred values' to your icon library components. Instance users see a dropdown of only the curated icons — not every component in the file. Why curate: without preferred values, the swap picker shows every component in the file, often 100s, slow and confusing; with curation, designers see 20-30 relevant choices. This pattern is how design systems achieve flexibility — the Button component supports any icon from the Icon library without the designer needing to know Figma's component structure, just pick from the dropdown. Real-world: Cards with swappable avatars, Buttons with swappable icons, ListItems with swappable thumbnails. Combined with variant + text + boolean properties, instance swap completes the four-property toolkit for production-grade design systems." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Detaches the instance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Swap nested instance from a curated list. Configure preferred values to scope the picker; right panel becomes a dropdown.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your Card component has 25 properties; the right panel is a wall of toggles. Designers complain it's overwhelming. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Add more properties." },
+        { "id": "b", "text": "Split the Card into smaller components. 25 properties means the Card is doing too much — likely it bundles avatar, action area, tag system, expansion behavior, and density into one mega-component. Split into focused components: CardBase (just title + body + variant for layout), CardWithAvatar (extends with avatar slot), CardWithActions (extends with action buttons), CardExpandable (extends with expand state). Each has 5-8 properties — manageable. Designers compose by nesting (Card with Avatar slot containing Avatar instance) rather than configuring 25 toggles. Decision rule: ~10 properties is workable; 15-20 is borderline; 25+ is a smell. The composition approach also makes the system more flexible — new card patterns assemble from base pieces rather than waiting for the mega-Card to grow another property. Alternative anti-pattern: hiding properties behind 'mode' variants (Mode=Simple shows 5 props; Mode=Advanced shows 25); this just shifts the complexity rather than reducing it. Real fix is decomposition." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove all properties." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Split into focused components. 25 props means too much in one component. Composition > configuration overload.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Textures and UV unwrapping",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why do you need to mark seams before unwrapping?",
+      "choices": [
+        { "id": "a", "text": "Decoration." },
+        { "id": "b", "text": "Seams tell the unwrap algorithm where to 'cut' the 3D surface to lay it flat as 2D — like cutting along edges of a paper model before unfolding. Without strategic seams, Blender's unwrap algorithm makes arbitrary cuts (often producing distorted, hard-to-texture UV layouts) or fails to unwrap a closed surface entirely. Strategic seam placement: 1) Hide seams in non-visible areas — back of character, inside ear, under arm, behind hairline. 2) Follow natural lines — clothing edges, hairline, hand creases. 3) Where two materials meet — boundary between metal and rubber on a tool, between hair and skin on a head. 4) Symmetric model: seam down the center back, so mirror-painted texture aligns. Place seams in Edit Mode: select edges → Edge menu → Mark Seam. After: Unwrap (U key) → Blender uses seams to determine cut points; produces clean flat layout. Bad seams = visible texture discontinuity on final model (a noticeable line where the texture doesn't quite match across the seam). Good seams = invisible to viewer. For a character head, typical seams: 1) Down the back (or down the back of the neck for a closed-back hairline). 2) Around the ears. 3) Inside the mouth (if mouth opens). For a cylinder: one seam straight down the side. For a cube: 7 seams (one per edge of an unfolded cube net). Smart UV Project skips manual seams but produces less optimal layouts — fine for objects you'll paint procedurally; bad for objects needing carefully-aligned image textures." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Blender." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Seams tell the unwrap algorithm where to cut the 3D surface to lay flat. Strategic seams = clean UV layout + invisible seams on final model.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Character has 8K texture detail needed on the face but 1K is enough for the back of head + body. Best workflow?",
+      "choices": [
+        { "id": "a", "text": "8K everywhere." },
+        { "id": "b", "text": "UDIMs — split the UV across multiple 0-1 tiles, each with its own texture file at appropriate resolution. UDIM 1001: face (8K texture); UDIM 1002: rest of head (2K texture); UDIM 1003: body (4K texture); UDIM 1004: hands (4K). Each UDIM tile gets its own image file at its own resolution. Total effective texture resolution: 8K on face, 2K on back of head, 4K on body — more efficient memory usage than 8K everywhere. The alternative — single UV with 8K texture covering everything — wastes most of the 8K resolution on non-detailed areas (back of head, body). 8K = 64 megapixels; if face uses 25% of UV, face gets 16 megapixels effective (still high res); but the 75% non-detailed area also uses 48 megapixels — wasted. UDIMs let you allocate resolution proportional to detail need. Setup in Blender: Edit Mode → select faces → translate UVs to specific UDIM tile (1001 is default 0-1; 1002 is 1-2 in U; 1003 is 2-3 in U; 1011 is 0-1 in U + 1-2 in V; etc.). Image Texture node references a UDIM-aware file (filename like 'character.1001.png', 'character.1002.png') with UDIM checkbox enabled. Blender + Cycles + EEVEE all support UDIMs. Industry standard for hero characters in film + AAA games. For YouTube / hobbyist work, single UV with 4K texture often suffices; UDIMs are for production scale. Texture density discipline: budget effective texture resolution per area based on viewer attention (face > clothes > back). UDIMs are the formal mechanism; even single-UV workflows benefit from texture density awareness." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Two characters." }
+      ],
+      "correct_answer": "b",
+      "explanation": "UDIMs split UV across multiple 0-1 tiles with per-tile texture files. Face=8K, body=4K, etc. Efficient memory + maximum effective resolution. Production standard.",
+      "points": 1
+    }
+  ]
+}

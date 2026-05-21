@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: A1111 and Forge",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Forge vs. A1111?",
+      "choices": [
+        { "id": "a", "text": "Same software." },
+        { "id": "b", "text": "Forge = optimized fork of A1111; same UI but significantly faster (sometimes 2-3x speedup); better VRAM management; better Flux support; cleaner LoRA loading. Drop-in replacement for A1111 in most workflows. Same extensions compatible (some require Forge-specific versions). For A1111 users in 2026: switch to Forge for speed + same workflow. Both share the WebUI heritage; both alternative to ComfyUI's node graph approach. A1111: classic, mature, massive extension ecosystem, slower performance. Forge: actively developed, faster, refined, growing extension support. SD.Next: another A1111 fork; modernized UI; less popular than Forge in 2026. For: 1) Beginners → A1111 (more tutorials reference it). 2) A1111 users wanting speed → Forge. 3) Pros with complex workflows → ComfyUI. Pick based on speed needs + extension compatibility + tutorial availability. The 'WebUI lineage' (A1111 + Forge + SD.Next) shares mental model; switching between them is easy once you know one. Switching to ComfyUI requires learning node-graph paradigm — different mental model but more powerful for complex pipelines.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Forge = optimized A1111 fork. Same UI; 2-3x faster; better VRAM + Flux support. Drop-in replacement. Switch to Forge from A1111 for speed.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Beginner wanting easiest SDXL generation without learning curve. Tool?",
+      "choices": [
+        { "id": "a", "text": "ComfyUI." },
+        { "id": "b", "text": "Fooocus. Simplified UI for SDXL; few sliders; auto-tuned defaults; quality-focused output without parameter overwhelm. Designed for 'just generate good images' — type prompt, click generate, get quality output without learning samplers / CFG / steps / etc. Less powerful than A1111 / Forge / ComfyUI but lowest learning curve. For beginners getting started; explore AI generation without deep technical learning. After understanding outputs, can migrate to more advanced tools (A1111 → Forge → ComfyUI as skill grows). Alternatives for easy start: 1) Web services (Replicate UI, Civitai online generator) — no install, pay per generation; even easier than Fooocus. 2) DiffusionBee (Mac) — native app, one-click install. 3) Draw Things (Mac/iOS) — mobile-friendly. 4) Stability Matrix — manager for multiple tools; good for trying several. Progression: 1) Fooocus / web service for first generations (understand the basics). 2) A1111 / Forge for control + extensions. 3) ComfyUI for production pipelines. 4) Custom Python (Diffusers library) for full programmatic control. Not everyone needs to progress past Fooocus; for casual / hobby use it's sufficient. For commercial / production work: progress to ComfyUI eventually. Pro AI artists in 2026 typically use ComfyUI primary + something simpler (A1111 / Fooocus / web service) for quick exploration.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fooocus. Simplified SDXL UI; auto-tuned defaults; minimal sliders. Lowest learning curve. Alternatives: web services, DiffusionBee (Mac), Draw Things (mobile).",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Platforms",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "iPhone app ported directly to iPad — why often fails?",
+      "choices": [
+        { "id": "a", "text": "Looks fine." },
+        { "id": "b", "text": "Wastes the screen + ignores iPad conventions. iPad users expect denser layouts that use the larger screen — sidebars, multi-column views (master + detail or master + middle + detail), grids of content rather than single-column lists, multitasking support (Split View / Slide Over / Stage Manager where your app runs at 320pt-1366pt widths), pointer / trackpad support with hover effects, keyboard shortcuts for power users, Apple Pencil where relevant. A direct iPhone port shows a single column of content scaled to fit, gestures designed for one thumb on a phone, no sidebar, no keyboard support — feels like a phone app accidentally running on iPad. Users on iPad expect MORE, not the same. Solution: NavigationSplitView for adaptive sidebar+detail; conditional layouts based on `horizontalSizeClass`; iPad-specific affordances (Pencil, hover, drag-drop between apps). Apple's first-party apps (Mail, Notes, Files) showcase iPad-native patterns. The 'iPad is just a big iPhone' assumption was true in iOS 7; iPadOS is meaningfully its own thing now." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Higher resolution." }
+      ],
+      "correct_answer": "b",
+      "explanation": "iPad expects sidebars + multi-column + multitasking + pointer + keyboard + Pencil. Not just scaled-up iPhone UI.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mac app shipped with no keyboard shortcuts. Power user reaction?",
+      "choices": [
+        { "id": "a", "text": "Fine." },
+        { "id": "b", "text": "Bad. Mac power users live by keyboard shortcuts; lack of them signals 'this isn't a real Mac app' / 'iPad port masquerading as Mac.' Standard expectations: Cmd-W close window, Cmd-Q quit, Cmd-N new document, Cmd-S save, Cmd-Z undo, Cmd-, preferences, plus app-specific shortcuts for common actions. SwiftUI: `.keyboardShortcut(.return, modifiers: .command)` adds shortcuts; can also be added via menu bar items which automatically expose the shortcut. UIKit / AppKit: `keyEquivalent` on menu items. Plus standard text editing shortcuts (Cmd-A select all, Cmd-C copy, Cmd-V paste) come free if using standard controls. Mac users will: switch to competing apps that have shortcuts; complain in reviews; not recommend. The investment is modest — add 10-20 shortcuts for common actions — but the impact on Mac credibility is significant. Apple's HIG: 'Provide keyboard shortcuts for common tasks.' Skipping = forfeiting power-user satisfaction; on Mac that's most of your engaged users." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "They love it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mac power users live by shortcuts; lack = not-a-real-Mac-app signal. Add standard + app-specific shortcuts.",
+      "points": 1
+    }
+  ]
+}

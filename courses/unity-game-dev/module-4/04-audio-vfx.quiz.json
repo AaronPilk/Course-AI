@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Audio + VFX",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use Audio Mixer?",
+      "choices": [
+        { "id": "a", "text": "Required by Unity." },
+        { "id": "b", "text": "Organized audio mixing + per-category volume control + effects per group. Audio Mixer organizes all audio into groups (Music, SFX, Voice, Ambient, UI) — each group has volume + effects (reverb, EQ, compression) — control entire categories with one slider; apply effects to whole category at once. Setup: Window → Audio → Audio Mixer → Create. Add Groups (right-click → Add Group): Master → Music, SFX, Voice, Ambient. Audio Sources route to Groups (AudioSource → Output → drag Mixer Group). Volume sliders per Group; player adjusts in settings UI; routes through Master Group's Volume. Effects per Group: SnapShots for runtime state changes (e.g., 'underwater' snapshot lowers all SFX 6dB + adds low-pass filter). Use cases: 1) Settings menu sliders for Music / SFX / Voice / Master — each controls separate Group. 2) Ducking — Music auto-lowers when Voice plays (dialogue cutscene). 3) Effects per environment (church reverb on Voice when player in church). 4) Mute groups during pause (everything to -80dB). 5) Different audio profiles per platform (less Bass on mobile). Without Mixer: every sound on independent AudioSource; no central control; settings UI has to iterate every AudioSource individually (tedious + error-prone); no easy effects. With Mixer: clean architecture; designer-friendly via UI; runtime control via SnapShots. Pro Unity audio: always use Mixer; route all AudioSources through Groups; player Settings UI manipulates Group volumes via mixer.SetFloat('MusicVolume', dB). Same as professional audio production (DAW with track grouping); industry standard pattern.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Organized mixing + per-category volume + effects per group. Groups (Music, SFX, Voice, Ambient) with per-group volume + effects. SnapShots for runtime changes. Pro Unity audio standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game uses thousands of particles per frame (sandstorm + magic spells). CPU particle system performance crashes. Solution?",
+      "choices": [
+        { "id": "a", "text": "Fewer particles." },
+        { "id": "b", "text": "VFX Graph (Visual Effect Graph) — Unity's modern GPU-based particle system. Built on compute shaders; runs on GPU; handles 100,000s to millions of particles vs. Shuriken (CPU-based) which caps at low thousands before frame rate suffers. Setup: install VFX Graph via Package Manager (Window → Package Manager → Visual Effect Graph). Create VFX Graph asset; node-based editor (similar to Shader Graph + Material Editor); design particle behavior visually. Capabilities: 1) GPU-driven emission (massive particle counts). 2) Compute shader simulation (per-particle physics, custom math). 3) Mesh particles (high-detail visuals per particle). 4) Texture-driven attributes (sample textures for particle properties). 5) Output to multiple particle systems (chains of effects). 6) Custom behaviors via custom HLSL nodes. Trade-off: GPU-based = doesn't tie up CPU; same VFX runs on weaker CPUs as on strong; scales with GPU power. Shuriken (CPU) remains better for: simple effects (1-100 particles), 2D games, particles needing precise per-particle logic in C# scripts, effects that need to interact with physics. VFX Graph wins for: massive counts, complex visuals, GPU-friendly setups, high-end visual effects. Pro Unity 2026 VFX: VFX Graph for hero effects (boss explosions, magic spells, environmental sandstorms, weather); Shuriken for incidental SFX (small impacts, simple sparkles). Combined with: Light Probes for VFX lighting; URP / HDRP compatibility (VFX Graph works in both); shader integration via custom HLSL. Standard for AAA-feeling effects in modern Unity.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VFX Graph (Visual Effect Graph). GPU-based; handles 100,000s+ particles. Node-based editor. Install via Package Manager. Standard for hero VFX in 2026 Unity; Shuriken (CPU) for simple effects.",
+      "points": 1
+    }
+  ]
+}

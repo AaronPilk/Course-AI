@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Coroutines",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best Unity pattern for 'do X every 2 seconds while game runs'?",
+      "choices": [
+        { "id": "a", "text": "Counter in Update." },
+        { "id": "b", "text": "Coroutine with WaitForSeconds(2). Pattern: `IEnumerator RepeatEvery2Sec() { while (true) { /* action */ yield return new WaitForSeconds(2f); } } void Start() { StartCoroutine(RepeatEvery2Sec()); }`. The coroutine yields control until 2 seconds pass, then resumes, runs the action, yields again. Clean + readable. Alternative — InvokeRepeating: `InvokeRepeating('MyMethod', 0f, 2f);` — calls MyMethod every 2 seconds starting immediately. Simpler for basic case; less flexible than coroutine. Counter-in-Update alternative is clunky: `private float timer; void Update() { timer += Time.deltaTime; if (timer >= 2f) { timer = 0; /* action */ } }` — works but verbose; the coroutine version is shorter + clearer intent. Coroutines stop automatically when GameObject is disabled (OnDisable). They don't pause when Time.timeScale = 0 unless using WaitForSecondsRealtime. Stop with StopCoroutine(coroutineRef) or StopAllCoroutines(). Common coroutine patterns: 1) Delayed action (WaitForSeconds(2f) then run). 2) Repeating timer (while true + WaitForSeconds). 3) Smooth movement (while not arrived; lerp position + yield null per frame). 4) Conditional wait (WaitUntil(condition)). 5) Asynchronous setup (multiple yields between setup steps). For multi-frame async logic: coroutines are Unity-native + clean. For complex async (multi-threaded, web requests, file I/O): modern C# async/await with Task is often preferred. For Unity-specific timed gameplay logic: coroutines are the standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Coroutine with WaitForSeconds(2). Clean repeating pattern; auto-stops on disable. Or InvokeRepeating for simple case. Counter-in-Update is verbose alternative.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Camera follows player by setting position in Update; camera jitters/lags behind. Cause?",
+      "choices": [
+        { "id": "a", "text": "Camera bug." },
+        { "id": "b", "text": "Order of Update calls — player's Update runs sometime in frame; camera's Update may run BEFORE player moves; camera reads stale player position; renders frame; player has already moved on; visible lag/jitter. Fix: put camera follow logic in LateUpdate instead of Update. LateUpdate runs AFTER all Update + FixedUpdate calls; by the time camera's LateUpdate runs, player has moved (in their Update); camera reads fresh position; no lag. Pattern: `void LateUpdate() { transform.position = player.position + offset; }`. Result: smooth camera follow with no visible delay. Same principle applies to any 'react to result of physics or input' logic: cleanup positions of objects parented dynamically, UI elements following 3D world objects, end-of-frame state updates. Update / FixedUpdate / LateUpdate phase order: 1) FixedUpdate (physics; can run 0+ times per frame). 2) Update (visual logic). 3) Internal animation update. 4) LateUpdate (post-update reactions). 5) Render. Knowing the phase order helps you place logic correctly. The 'camera lag' bug is classic Unity beginner issue; LateUpdate fix is one of the foundational tricks. Cinemachine (Unity's modern camera system) handles this automatically — uses LateUpdate internally — making manual camera follow rare in modern Unity (Cinemachine is the standard for camera systems in 2026). For learning: implement manual camera with LateUpdate; for production: use Cinemachine for sophisticated cameras (orbit, follow, look-at, dolly track, virtual cameras, blending)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Camera follow should be in LateUpdate (runs after all Updates). Update order causes stale position read in camera Update. LateUpdate sees fresh post-Update positions. Cinemachine handles this automatically.",
+      "points": 1
+    }
+  ]
+}

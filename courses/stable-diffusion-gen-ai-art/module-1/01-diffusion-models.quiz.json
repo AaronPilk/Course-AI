@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Diffusion models",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the diffusion model actually learn to do?",
+      "choices": [
+        { "id": "a", "text": "Draw images from scratch." },
+        { "id": "b", "text": "Predict + remove noise from images. Training: take a clean image; add increasing amounts of random noise across many steps; the model learns to predict, at each noise level, what noise was added. At inference: start with pure noise; iteratively apply the model to predict + subtract noise; after 20-50 steps, a clean image emerges. The model essentially learns 'what real images look like at every noise level' from training on millions of images. Text prompts condition the prediction — the model predicts noise such that removing it produces an image matching the prompt. The seemingly magical 'generate image from text' is actually 'iteratively remove noise to reveal whatever the model thinks the prompt describes hidden in the noise.' Different prompts steer different image emergence. Latent diffusion (Stable Diffusion) does this in compressed latent space (8x smaller than pixel space) for efficiency. The VAE encoder/decoder converts between pixel images and latent representations. CFG (Classifier-Free Guidance) amplifies prompt influence by combining 'with prompt' and 'without prompt' predictions. Understanding this enables informed prompt engineering, sampler choice, step count, CFG tuning — vs. treating SD as black box.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Predict + remove noise. Trained on noised images to predict noise; inference reverses noise iteratively from pure random; image emerges. Text prompts condition the prediction.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "SDXL output looks burned / oversaturated / too contrasty. Fix?",
+      "choices": [
+        { "id": "a", "text": "Lower resolution." },
+        { "id": "b", "text": "Lower CFG (Classifier-Free Guidance scale). CFG amplifies prompt influence; too high (12-20+) over-saturates colors, burns highlights, produces unrealistic contrast. Sweet spot for SDXL: 5-8 typical; some workflows use 3-5. SD 1.5: 7-9. Flux: 1-3.5 (much lower than SD — different architecture). Experiment per model. CFG works by computing two noise predictions per step — one with your prompt, one without (empty/negative) — then amplifying their difference. Higher CFG = more amplification = stronger prompt adherence but oversaturation. Lower CFG = subtler influence = more naturalistic + creative output. The 'burned' look is the #1 sign of CFG too high; fix by reducing 2-3 points. Other parameters affecting saturation: 1) Sampler choice (some are more vivid; DPM++ 2M Karras balanced). 2) Steps (very high steps can saturate). 3) Negative prompt (over-aggressive negative prompts amplify). 4) VAE selection (different VAEs render colors differently). For commercial work where natural look matters: keep CFG conservative; rely on prompt specificity rather than CFG amplification. For abstract / stylized: higher CFG sometimes desired.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lower CFG (Classifier-Free Guidance). Too high amplifies + burns. SDXL sweet spot 5-8; SD 1.5 7-9; Flux 1-3.5. Sign of over-amplified prompt influence.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Timeline",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Modern Unity camera system for cinematics?",
+      "choices": [
+        { "id": "a", "text": "Manual camera animation." },
+        { "id": "b", "text": "Cinemachine — Unity's free camera framework. Components: CinemachineBrain (on main camera, routes commands); Cinemachine Virtual Cameras (vCams, each with target / aim / follow settings and priority); the highest-priority active vCam controls the main camera through the Brain. Switch vCams during gameplay → Brain blends between them smoothly. Features: 1) Auto-follow + auto-aim (Composer/Framing Transposer behaviors). 2) Smooth blending between vCams. 3) Cinemachine Confiner (restrict camera to bounds). 4) Noise (handheld camera shake). 5) Free Look (orbit around target). 6) Dolly tracks (camera follows a curve). 7) State-driven (different vCam per gameplay state). 8) Timeline integration (Cinemachine Track + vCam clips on Timeline). For cinematics: combine Timeline (sequence control) + Cinemachine (camera work) = smooth cinematic shot changes; orchestrate via Cinemachine Track on Timeline + Virtual Camera clips at specific frames. Result: professional-quality camera work without manual camera animation. Free; install via Package Manager. Pro Unity habit: Cinemachine for all camera work in 2026 — gameplay cameras + cinematic cameras + transition between them. Same approach as Unreal's Sequencer + virtual cameras.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cinemachine — Brain on main camera + Virtual Cameras with priorities; auto-follow / auto-aim / smooth blending / Timeline integration. Modern Unity camera framework; free.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cinematic cutscene needs to trigger 'enable boss AI' at a specific moment. How?",
+      "choices": [
+        { "id": "a", "text": "Hardcode timer." },
+        { "id": "b", "text": "Signal Track on Timeline + SignalReceiver. Workflow: 1) Create Signal Asset (Project view → Create → Signal). Name 'EnableBossAI'. 2) Add SignalReceiver component to the GameObject that should respond (the Boss). 3) On the Receiver, add reaction: Signal = EnableBossAI Signal Asset; Reaction = UnityEvent calling boss.EnableAI(). 4) Open Timeline; right-click track area → Add Signal Track. 5) Drag the Boss GameObject onto the track. 6) Right-click on the track at the exact frame when AI should enable → Add Signal Emitter → assign EnableBossAI Signal Asset. 7) Run Timeline; when playhead reaches that frame, signal fires; Receiver calls boss.EnableAI(); boss starts AI behavior. The Signal asset is reusable — emit it from multiple Timelines or scripts; many receivers can listen. Decouples Timeline from specific game logic; designer controls timing in Timeline; programmer implements EnableAI() in script. Use cases for Signals: 1) Trigger game events at cinematic moments (enable AI, spawn enemies, unlock door, complete quest). 2) Audio cues synced to cinematic (play music sting, voiceover, ambient change). 3) UI events (show subtitles, display objective). 4) Camera switches (combined with Cinemachine Track for full cinematic). Pro Unity cinematic workflow: Timeline + Cinemachine + Signals = orchestrated cinematic sequences with gameplay integration. Same pattern in Unreal's Sequencer.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Signal Track + SignalReceiver. Signal asset + Timeline emitter at specific frame + Receiver on GameObject calls UnityEvent. Designer controls timing; programmer implements actions. Decoupled.",
+      "points": 1
+    }
+  ]
+}

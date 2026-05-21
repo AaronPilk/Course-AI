@@ -383,49 +383,63 @@
       "slug": "apple-hig-design",
       "title": "Apple Human Interface Design Systems",
       "category": "Design",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://developer.apple.com/design/human-interface-guidelines/"]
     },
     {
       "slug": "figma-ui-ux-masterclass",
       "title": "Figma UI/UX Design Masterclass",
       "category": "Design",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://help.figma.com"]
     },
     {
       "slug": "adobe-premiere-editing",
       "title": "Adobe Premiere & Content Editing Systems",
       "category": "Creative",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://helpx.adobe.com/premiere-pro/user-guide.html"]
     },
     {
       "slug": "blender-3d-cgi",
       "title": "Blender 3D & CGI Fundamentals",
       "category": "Creative",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://docs.blender.org"]
     },
     {
       "slug": "unreal-engine-game-dev",
       "title": "Unreal Engine Game Development",
       "category": "Game Dev",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://dev.epicgames.com/documentation/en-us/unreal-engine"]
     },
     {
       "slug": "unity-game-dev",
       "title": "Unity Game Development Systems",
       "category": "Game Dev",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://learn.unity.com"]
     },
     {
       "slug": "stable-diffusion-gen-ai-art",
       "title": "Stable Diffusion & Generative AI Art",
       "category": "AI Art",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://huggingface.co/docs/diffusers/index"]
     },
     {

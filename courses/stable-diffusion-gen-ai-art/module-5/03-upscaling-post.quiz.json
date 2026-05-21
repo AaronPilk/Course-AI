@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Upscaling and post-processing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best approach to fix bad faces on every generated image?",
+      "choices": [
+        { "id": "a", "text": "Manual inpaint each." },
+        { "id": "b", "text": "ADetailer extension (A1111 / Forge) or FaceDetailer node (ComfyUI). Auto-detects faces via YOLOv8 or similar; inpaints each detected face with face-focused prompt + (optionally) face LoRA + ControlNet. One-click polish per image; consistent quality. Workflow: 1) Install ADetailer extension. 2) Configure: enable; choose face detection model (face_yolov8n.pt or face_yolov8s.pt for SDXL); set inpaint denoising 0.4-0.5; optionally enable hand-detection model for hand fixes. 3) Set face-focused prompt for inpaint phase (or use base prompt). 4) Generate; ADetailer auto-runs face inpaint on result. 5) Output: same generation + clean faces. Compared to manual inpaint per image: 1) Manual = 5-10 min per image identifying + masking + prompting + verifying. 2) ADetailer = 0 additional clicks. For batch generation of 50+ images, ADetailer is essential — manually inpainting all faces = impractical. Combined with: 1) Face-specific LoRA (better than generic prompts). 2) ControlNet face / facial landmarks for exact pose. 3) Hand-detection ADetailer model (similar but for hands). 4) Multiple ADetailer passes (face → hand → person). The 'production polish' pattern relies heavily on ADetailer + similar auto-fix extensions; manual fixes don't scale. Pro AI artists: ADetailer enabled by default for face-containing generations. CodeFormer + GFPGAN are alternative face restoration models; ADetailer is the modern wrapper using these or inpaint-based fixes. Equivalent in ComfyUI: FaceDetailer + Impact Pack nodes.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ADetailer (A1111/Forge) or FaceDetailer (ComfyUI). Auto-detects + inpaints faces with focused prompt + face LoRA. One-click polish; scales to batch. Production essential.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to upscale 1024x1024 SDXL output to 4K for print. Best approach?",
+      "choices": [
+        { "id": "a", "text": "Simple resize." },
+        { "id": "b", "text": "Diffusion-aided upscaling — hires.fix (A1111) at generation OR Ultimate SD Upscale (post-generation tiled diffusion). Simple AI upscaler (4x-UltraSharp, Real-ESRGAN) increases resolution but doesn't add new detail — output sharper but no more information. Diffusion-aided adds plausible detail at higher resolution by running diffusion in the upscaled latent space — eyes get more eyelash detail; fabric gets more weave texture; landscapes get more rock detail. Workflow options: 1) Hires.fix at generation time (A1111): generate latent at 1024 → scale latent to 2048 → continue diffusion at higher resolution; settings: 2x scale, denoising 0.4-0.6, hires sampler. Result: 2048x2048 with additional detail vs. 1024 base. 2) Ultimate SD Upscale (post-generation): take 1024 output → split into overlapping tiles → upscale each tile + apply diffusion → blend tiles. Handles 4K, 8K without VRAM crash. Works on any generated image. 3) Two-pass: hires.fix to 2K at generation; Ultimate SD Upscale to 4K post. 4) SUPIR or Magnific (paid, premium): even better quality; expensive. For print at 4K: Ultimate SD Upscale typical. For absolute quality / commercial hero shots: Magnific. The 'sharper resize vs. detail enhancement' distinction is fundamental — Real-ESRGAN does sharper resize; diffusion-aided does detail enhancement. Both have place: sharper resize cheap + fast; diffusion-aided slower + more impressive. Pro workflows often chain: 4x-UltraSharp (sharpen) → Ultimate SD Upscale (detail enhance) → final crop. Combined with ADetailer face fix + color grade in Photoshop = production-quality print output.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Diffusion-aided upscaling: hires.fix or Ultimate SD Upscale. Adds plausible detail at higher resolution via diffusion in upscaled latent. Simple upscalers (ESRGAN) only sharpen; don't add detail.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Sculpting, Geometry Nodes, production",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why retopologize a sculpt before animation?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "Sculpts have millions of polygons with non-uniform topology — impossible to animate (too dense for real-time deformation; topology doesn't flow around joints; UV unwrapping unfeasible). Retopology creates a clean low-poly mesh (~10k-30k polys for character) with proper edge flow + loops at joints. The low-poly is animation-ready (deforms cleanly during posing); the original sculpt's detail is preserved by baking it as Normal Map / Displacement Map onto the low-poly's material. The low-poly mesh APPEARS as detailed as the sculpt (5M polys' worth of normal info encoded in textures) while being animation-friendly (30k polys deforming smoothly). Bridge tools: Shrinkwrap modifier (auto-wraps new mesh to sculpt surface), manual modeling with snap-to-face, QuadRemesher addon (automated retopology), RetopoFlow addon (interactive retopology tools). After retopology: Smart UV unwrap → bake Normal Map (Cycles → Bake → Normal type → low-poly as target; sculpt as source) → apply Normal Map to low-poly material via Principled BSDF's Normal input. Result: animation-ready character that visually matches the sculpt. This high-poly-sculpt → low-poly-retopo → bake-detail-to-maps pipeline is universal in film + AAA games; ZBrush + Maya use same pattern. Blender does it all natively. Pro character artists spend significant time on retopology — it's where animatable models are born. Skipping retopology = sculpt that can't be animated; the most common 'I have an amazing sculpt but can't use it' problem." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Sculpts have millions of polys + non-uniform topology — unanimatable. Retopo = clean low-poly with edge loops at joints. Bake sculpt detail to Normal Map. Standard pipeline.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to scatter 10,000 grass blades on a 50m hill terrain. Approach?",
+      "choices": [
+        { "id": "a", "text": "Place each manually." },
+        { "id": "b", "text": "Geometry Nodes. Setup: 1) Model 3-5 grass blade variants (or download from Polyhaven). 2) Place them in a Collection ('Grass'). 3) On terrain mesh: add Geometry Nodes modifier. 4) Build the graph: Geometry Input (terrain) → Distribute Points on Faces (density 200 per sq meter; 50m terrain × 200 = 10000 points; Distance Min 0.1 to prevent clustering). 5) Instance on Points (Pick Instance from 'Grass' collection; randomize selection per point). 6) Random Value → Rotate Instances (random Z rotation per blade). 7) Random Value → Scale Instances (random 0.8-1.2 scale for variation). 8) Geometry Output → Composite. Result: 10,000 grass blades scattered with rotation + scale + type variation; renders efficiently via instancing (shared mesh data per blade type). Parameters in modifier panel: density slider, randomization controls — adjust without rebuilding the graph. Performance: instancing keeps memory low; render time scales reasonably even at high counts. Add density attribute driven by texture for paint-control of where grass grows (denser in valleys, sparse on slopes). Apply modifier when satisfied to commit geometry, OR leave as modifier for ongoing parametric control. The manual placement alternative (10,000 manual grass blades = 100+ hours of work; impossible to vary realistically) is impractical at any scale. Geometry Nodes is THE solution for scatter / instance / parametric work in modern Blender; same approach for trees, rocks, snowflakes, particle-like effects, brick walls, fences, repetitive elements." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip grass." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Geometry Nodes: Distribute Points on Faces + Instance on Points from grass Collection + random rotation/scale. 10,000 blades; performant via instancing. Parametric.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Best source for free high-quality Blender assets (HDRIs, textures, models)?",
+      "choices": [
+        { "id": "a", "text": "Random Google searches." },
+        { "id": "b", "text": "Polyhaven (polyhaven.com) + Polyhaven Asset Browser addon. Free open-source library of HDRIs (1500+), PBR textures (1000+ with full Albedo/Roughness/Normal/Metallic/AO map sets), and 3D models. All CC0 licensed — public domain; commercial-use unlimited; no attribution required. Quality is studio-grade; assets used in professional films + games. The Polyhaven addon integrates with Blender's Asset Browser — pulls live assets without manually downloading + organizing. Use cases: 1) HDRI for instant photoreal lighting (studio, outdoor sky, indoor interior). 2) PBR textures (concrete, wood, brick, fabric, leather) with complete map sets. 3) Scanned models (rocks, plants, props, furniture). Other free sources: AmbientCG (similar; textures + models), Quixel Megascans (now free for Unreal users; convertible to Blender), Polycam (some free + paid scans). Paid commercial: BlenderKit (subscription with thousands in-Blender), Substance Source (Adobe), Kitbash3D (high-quality city + sci-fi). For learning + most needs: Polyhaven covers HDRIs + textures + basic models; supplement with custom work + occasional paid asset purchases for specific needs. Random web search yields lower quality + uncertain licensing (some 'free' assets have restrictive terms). Polyhaven + curated alternatives are pro-recommended; consistent quality + clear licensing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pirate sites." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Polyhaven + Polyhaven Asset Browser addon. Free CC0 (commercial-use, no attribution). Studio-grade HDRIs, textures, models. Integrated with Asset Browser.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Cycles animation render: 720 frames × 30 min/frame = 360 hours = 15 days. Tighter deadline. Solutions?",
+      "choices": [
+        { "id": "a", "text": "Lower resolution." },
+        { "id": "b", "text": "Render farm — distribute frames across cloud machines. Services like RebusFarm, GarageFarm, RenderStreet, AWS Thinkbox process Blender Cycles renders in parallel; many machines render different frames simultaneously; total render time drops to hours instead of weeks. Cost: $0.10-$1 per frame typical; 720 frames = $70-720 total — usually cheaper than hardware upgrade + faster than waiting. Setup: 1) Upload .blend file to the service (with all packed textures via File → External Data → Pack All Into Blend). 2) Specify frame range + samples. 3) Service distributes frames across their machines; renders in parallel. 4) Download finished PNG sequence. Other mitigations: 1) Reduce samples + denoise more aggressively (256 + OIDN instead of 1024 + light denoise → 4x faster per frame). 2) Switch to Eevee for non-hero shots where realism gap is acceptable; reserve Cycles for hero close-ups + key beauty shots. 3) Lower resolution (1080p instead of 4K = 4x faster). 4) Render passes only critical scenes in Cycles; rest in Eevee. 5) Optimize the scene (fewer lights, simpler materials, baked AO instead of computed). 6) Persistent Data enabled (Render Properties → Performance) for animation caching. 7) GPU rendering with modern RTX cards (RTX 4090: 2-4x faster than older GPUs). For tight deadlines + Cycles requirement: render farm is the standard professional answer. Indie + small studios use cloud farms routinely; expense built into project budget; speed enables meeting client deadlines. The 'wait 15 days' option is rarely viable for production." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cancel project." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Render farm (RebusFarm, GarageFarm, AWS Thinkbox). Distributes frames across cloud machines; parallel rendering. $70-720 total; hours instead of weeks. Pro standard.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Career advice for building a 3D portfolio?",
+      "choices": [
+        { "id": "a", "text": "Lots of generic renders." },
+        { "id": "b", "text": "Specialize. Pick ONE area (Character Artist, Environment Artist, Motion Designer, Architectural Visualization, Product Visualization, VFX Artist) and build a portfolio of 5-10 polished pieces in that specialty. Pro hiring looks for specific roles; generalists struggle to stand out. Quality > quantity (5 great > 25 mediocre). Show process: for each piece include wireframes, topology shots, breakdowns, time-lapse where possible — recruiters see HOW you work, not just final results. Match portfolio to target roles: applying for character artist? Show characters with breakdowns. Environment artist? Show environments + props. Recent + current work (last 12-18 months); older feels stale. Curate ruthlessly — cut anything below your current best. Platforms: ArtStation (industry standard for 3D), personal website, Instagram (motion clips), LinkedIn (networking). Network in communities (r/blender, Discord servers, Twitter / X — '#b3d' tag). Share work-in-progress publicly; feedback accelerates growth. Practice consistently (1-2 hours daily compounds rapidly over months). Study finished pro work (Open Movies, ArtStation top creators); note techniques + apply. Tools matter less than craft — Blender alone is plenty for a portfolio; recruiters care about the work, not the toolchain. Specialization vs. generalist is a recurring debate; for ENTRY-LEVEL hiring, specialists land roles faster; once established, you can broaden. The 'I'll do everything' portfolio is the most common junior mistake; recruiters can't categorize you; bypass. Focused 5-10 pieces = hireable signal." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More variety." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Specialize (5-10 polished pieces in ONE area). Quality > quantity. Show process (wireframes, breakdowns). Match portfolio to target role. Recent work. Curate ruthlessly.",
+      "points": 1
+    }
+  ]
+}

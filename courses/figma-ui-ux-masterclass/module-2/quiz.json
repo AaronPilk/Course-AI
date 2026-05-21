@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Auto Layout",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Auto Layout solve that constraints don't?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "Parent responds to children — frame sizes based on content; spacing distributes automatically; reflow on add/remove. Constraints make CHILDREN respond to parent — when parent resizes, children resize per their constraints. Two different directions of dependency. For a button hugging its text: parent depends on child = Auto Layout. For a header sticking to top of screen: child depends on parent = constraints. For a list where adding items pushes others down: Auto Layout. For a sticky footer pinned to bottom: constraints. Modern Figma work is mostly Auto Layout (production interfaces are content-driven); constraints fill gaps for fixed-position decoration. Auto Layout = Figma's Flexbox equivalent; constraints = Figma's absolute-positioning. Most production designs use both: Auto Layout for structured content + constraints for floating overlays / decorative elements within Auto Layout frames." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Compression." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Parent responds to children + reflows automatically. Constraints make children respond to parent.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Nav: logo left, user menu right, expanding gap between. Auto Layout setup?",
+      "choices": [
+        { "id": "a", "text": "Manual spacing." },
+        { "id": "b", "text": "Horizontal Auto Layout with 'Space between' distribution. Set AL spacing to 'auto' (click the space-between icon) — Figma distributes children to fill parent width with logo at start, user menu at end, gap absorbing middle. As parent resizes, gap expands/contracts; logo and menu stay anchored to edges. Alternative: insert a spacer child (empty AL frame, fill width) between logo and menu — same effect manually. 'Space between' is cleaner; spacer is more explicit. For three-region layouts (left + center + right), two spacers around center, or just rely on 'space between' if you only have two regions of content. Most nav bars are two-region; space-between is the right pattern. Resize the nav by changing parent width to verify; logo and menu stay anchored while center expands. Standard pattern across UI tools (CSS flexbox justify-content: space-between equivalent)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrap layout." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Horizontal AL with 'Space between' distribution. Middle gap absorbs space; ends anchored.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Button width in Auto Layout: best setting?",
+      "choices": [
+        { "id": "a", "text": "Fixed 120pt." },
+        { "id": "b", "text": "Hug. Button width should follow text content — short label = narrow; long label = wide — with consistent padding (typically 16px horizontal). 'Hug' sets frame width = sum of children widths + padding; change text, button auto-resizes. Counterpart: height also typically 'hug.' 'Fixed' would specify a width that doesn't adapt — short labels get whitespace, long labels overflow/truncate, both look broken. 'Fill' would stretch to parent width — appropriate for FULL-WIDTH CTAs (button at bottom of mobile screen) but wrong for inline buttons. Standard button: hug × hug. Full-width CTA: fill × hug. Icon-only button: fixed × fixed (e.g., 44×44 for touch target). Variants: hug with min-width (button stays at least 88pt even for 'OK') using Auto Layout's min constraint." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Fill." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hug — button width tracks text length + padding. Fill is for full-width CTAs; fixed loses adaptability.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Layer set to 'fill' inside Auto Layout but doesn't expand. Most likely cause?",
+      "choices": [
+        { "id": "a", "text": "Figma bug." },
+        { "id": "b", "text": "Parent frame is set to 'hug.' Fill only works when parent has DEFINED size — when parent is fixed or fill itself (so there's a known container size to fill). When parent is 'hug,' parent depends on children's content size; a child set to 'fill' inside a hugging parent has nothing to fill (parent is sized by content, and child's content drives that size). The mutual dependency resolves by ignoring fill; layer takes content size as if 'hug.' Fix: change parent to fill (if parent's parent has space) or fixed (specify explicit size); now child can fill it. Common debugging step: walk up parent chain checking sizing modes; first 'hug' ancestor breaks fill below. The mental model: 'fill needs a container with known size to fill.' For full-width content areas: ensure the chain from screen frame down has fill or fixed at each level so fill propagates. Most common Auto Layout confusion; recognizing it solves most layout debugging." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Layer locked." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Parent set to 'hug.' Fill needs fixed/fill parent. Walk up; first hug ancestor breaks fill below.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best approach to building complex nested Auto Layout screens?",
+      "choices": [
+        { "id": "a", "text": "Top-down." },
+        { "id": "b", "text": "Bottom-up. Build smallest reusable components first (row, button, avatar), verify each resizes correctly in isolation, then compose into sections, then sections into screens. Top-down (start with screen frame, fill in details) typically requires rework when you realize the section layout doesn't accommodate inner pieces; bottom-up means each layer is solid before the next builds on it. When you assemble a section from already-working components, the section composes correctly. Common pattern for production designs: build atomic components first (often into a Components page or library), then arrange them in screen layouts. This matches engineering — small components composed up. Bonus: bottom-up components become library candidates; less rework as design system emerges. Top-down produces ad-hoc layouts that don't reuse well." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Side-to-side." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bottom-up — smallest reusable components first → sections → screens. Matches engineering composition.",
+      "points": 1
+    }
+  ]
+}

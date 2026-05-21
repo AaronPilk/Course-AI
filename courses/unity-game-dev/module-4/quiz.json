@@ -1,0 +1,81 @@
+{
+  "title": "Module 4 quiz: UI, animation, polish",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Modern Unity UI text component?",
+      "choices": [
+        { "id": "a", "text": "Legacy Text." },
+        { "id": "b", "text": "TextMeshPro (TMP). SDF-based rendering = crisp at any size; rich text support; better performance; standard for all modern Unity UI. Import via Window → TextMeshPro → Import TMP Essentials. Replaces legacy Text component in all new projects. Migration via right-click → Convert to TextMeshPro for existing legacy Text.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "TextMeshPro. SDF rendering, rich text, better performance. Standard for modern Unity UI; legacy Text deprecated.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Walking animation needs to transition smoothly between idle, walk, run based on speed. Setup?",
+      "choices": [
+        { "id": "a", "text": "Separate states for each." },
+        { "id": "b", "text": "1D Blend Tree on a Locomotion state. Single state in Animator containing a Blend Tree with three Motion Fields (Idle clip at threshold 0, Walk clip at threshold 3, Run clip at threshold 6). Blend Parameter = Speed. As Speed changes (driven by script: `animator.SetFloat('Speed', currentSpeed)`), Animator smoothly interpolates between adjacent clips. Result: clean locomotion in single state; transitions to other states (Jump, Attack) still discrete. Versus separate states per speed (Idle ↔ Walk ↔ Run with transitions): messy state machine + abrupt transitions. Blend Tree solves both.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "1D Blend Tree with Speed parameter. Single Locomotion state; Motion Fields at Idle/Walk/Run thresholds. Smooth interpolation; clean state machine.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Modern Unity camera framework?",
+      "choices": [
+        { "id": "a", "text": "Manual animation." },
+        { "id": "b", "text": "Cinemachine. Free Unity package; Brain on main camera + Virtual Cameras with priorities; highest priority controls Brain. Features: auto-follow / auto-aim, smooth blending between vCams, Cinemachine Confiner, noise (handheld shake), Free Look (orbit), dolly tracks, state-driven cameras, Timeline integration. For all camera work in 2026 Unity — gameplay + cinematic + transitions.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cinemachine. Brain + Virtual Cameras + smooth blending + auto-follow / aim. Free; modern Unity camera standard.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Sandstorm needs 100,000+ particles. Shuriken (CPU particles) drops frame rate. Solution?",
+      "choices": [
+        { "id": "a", "text": "Fewer particles." },
+        { "id": "b", "text": "VFX Graph (GPU-based). Install via Package Manager. Node-based editor; runs on GPU; handles 100,000s to millions of particles. Shuriken is CPU-based; caps at low thousands. VFX Graph for hero effects (sandstorms, weather, magic spells, boss explosions); Shuriken for simple incidental effects (small impacts, sparkles). Modern Unity 2026 VFX standard.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VFX Graph (GPU particles). Install via Package Manager; node-based; handles 100K+ particles. Shuriken (CPU) for simple effects; VFX Graph for hero.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "How to play SFX without overwriting current audio on AudioSource?",
+      "choices": [
+        { "id": "a", "text": "audioSource.Play()." },
+        { "id": "b", "text": "audioSource.PlayOneShot(audioClip). Plays the clip without stopping current audio on the AudioSource; multiple PlayOneShot calls can layer (e.g., footsteps + impact + voice all simultaneously on one AudioSource). audioSource.Play() replaces current audio with whatever clip is assigned to audioSource.clip; only one sound at a time. PlayOneShot ideal for: footsteps, hit sounds, button clicks, brief one-shot effects. Play() for music / ambient that should loop and not overlap. Multiple PlayOneShot calls scale; audio engine handles mixing.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PlayOneShot — doesn't overwrite current audio; can layer multiple SFX. Play() replaces current audio. PlayOneShot for one-shot effects; Play for looping music.",
+      "points": 1
+    }
+  ]
+}

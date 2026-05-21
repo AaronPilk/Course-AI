@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Materials and Shader Editor",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the Metallic input on Principled BSDF actually control?",
+      "choices": [
+        { "id": "a", "text": "Shininess." },
+        { "id": "b", "text": "Whether the material behaves as an insulator (Metallic=0) or a conductor (Metallic=1). In Physically-Based Rendering (PBR), this is the fundamental distinction between two material categories with completely different light-interaction properties. Insulators (Metallic=0): plastics, wood, paint, skin, fabric, ceramic, glass. Light reflects partly off surface (specular) + partly enters and scatters (diffuse / subsurface); the base color affects diffuse, specular reflections are white-ish (slight color tint from surface). Conductors (Metallic=1): steel, copper, gold, aluminum, brass. Light reflects entirely off surface; no diffuse component; specular reflections take the metal's color (gold reflections are golden; copper reflections are copper-colored). Metallic should always be set as 0 or 1, not in between — physically, materials are either conductors or insulators, not partially. The exception: 'metallic flakes' in car paint, where actual metal flakes are embedded in non-metal paint — modeled as a layered shader, not a Metallic=0.5 value. Common mistake: setting Metallic=0.5 thinking 'half-metal' or 'shiny non-metal' — produces unphysical results that look fake. For glossy plastics: Metallic=0 + low Roughness. For dull metals: Metallic=1 + high Roughness. The roughness controls 'how mirror-like'; the metallic controls 'what category.' Master this distinction and 90% of material problems disappear. PBR works the same way in Unity, Unreal, Maya, Substance Painter — it's an industry standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Color saturation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Insulator (0) vs. conductor (1) — fundamental PBR distinction. Always set to 0 OR 1, not in between. Plastics/wood/skin = 0; metals = 1.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Downloaded a PBR material pack with Albedo, Roughness, Metallic, Normal, AO textures. How to set up in Blender?",
+      "choices": [
+        { "id": "a", "text": "Use only Albedo." },
+        { "id": "b", "text": "Enable Node Wrangler addon; select the Principled BSDF node in Shader Editor; press Shift+Ctrl+T → Auto-import the PBR set. Node Wrangler analyzes the folder, identifies each map by filename (Albedo/Diffuse/Color, Roughness, Metallic, Normal, AO/Occlusion, Displacement), and auto-creates Image Texture nodes + connects each to the correct Principled BSDF input + sets correct color spaces (Albedo=sRGB; data maps=Non-Color); plugs a Normal Map node between the Normal texture and Principled BSDF's Normal input. The entire setup is 1 keystroke vs. 10-15 manual steps. Without Node Wrangler: 1) Add Image Texture per map (5 nodes). 2) Set color space (sRGB for Albedo; Non-Color for Roughness / Metallic / Normal / AO). 3) Connect Albedo → Base Color; Roughness → Roughness; Metallic → Metallic. 4) For Normal: add Normal Map node between Image Texture and Principled BSDF's Normal input. 5) For AO: multiply with Base Color via Multiply node. 6) Add Mapping + Texture Coordinate to control tiling/scale. Manual setup is 10-15 minutes per material; Node Wrangler is 1 minute. After import, refinements: adjust Mapping node to scale textures (default 1:1; bricks often need 0.5 or 2.0); adjust Normal Map strength (default 1.0; reduce for subtle normals); tune Roughness via ColorRamp if too rough/smooth. Node Wrangler is mandatory for serious shader work; Preferences → Add-ons → search 'Node Wrangler' → check. Once installed, every Image Texture you ever add benefits from Ctrl+T (adds Mapping + Texture Coordinate); every Principled BSDF setup benefits from Shift+Ctrl+T." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use only one map." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Node Wrangler addon: Shift+Ctrl+T on Principled BSDF auto-imports + connects all PBR maps with correct color spaces. Mandatory addon for shader work.",
+      "points": 1
+    }
+  ]
+}

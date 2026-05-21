@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Collaboration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use branching in Figma?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "For experimental or risky changes to a file that consumers depend on — refactoring a major component, trying a new design direction, multi-designer collaboration on a single feature without stepping on each other. Branches are parallel copies of the main file; edits in the branch don't affect main; review + merge when ready. Use cases: 1) Refactoring Button component across all variants — don't want product designers seeing the half-done refactor while you iterate; branch, work in isolation, merge when stable. 2) Multiple designers on a feature redesign — each works in a branch, then merge. 3) Speculative design (exploring 'what if we redesigned the dashboard?') — branch, iterate, present in branch, discard if not pursued. Without branching, big changes on the main file disrupt active product work + library consumers. With branching, main stays stable; branches contain the chaos; merging brings completed work back. Process mirrors Git: feature branches, review before merge, archive when done. Don't branch for trivial work — overhead exceeds benefit. Threshold: a change that takes > a day or affects > 10 instances/components is branch-worthy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "For experimental / risky changes to files consumers depend on. Refactoring, multi-designer collab, speculative design. Branch, isolate, merge.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Five designers and 20 engineers all have Edit access to the design system file. Designs keep mysteriously changing. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Add more designers." },
+        { "id": "b", "text": "Restructure permissions. The design system library should have Edit access for the design system team only (1-3 designers who own the system); everyone else gets View or Comment access. Engineers get View — they inspect, copy specs, can't accidentally drag a component. Other designers get Comment — they suggest changes via threaded comments without editing. The design system team triages comments, batches changes, ships updates through the publishing flow. This pattern: 1) Stops accidental edits (the most common cause of mysterious changes). 2) Channels feedback through a review process (comments → PR-style → merge to library). 3) Maintains library integrity (consumer files reference predictable, reviewed components). For product files: looser permissions (more editors), since product designs aren't a shared dependency. For the design system: tight permissions, treated like a code library would be (`master` branch is protected; PRs reviewed; commits go through the team). The 5-designer + 20-engineer Edit access scenario is a recipe for chaos — every accidental click could trigger a library update propagating across 50+ consumer files. Restricting Edit access to the actual owners is the foundation of design system hygiene." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Forget about it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Restrict Edit access on the design system to the system team only. Others get Comment / View. Feedback flows through reviewed updates.",
+      "points": 1
+    }
+  ]
+}

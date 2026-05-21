@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: UI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use TextMeshPro over legacy Text?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "Better rendering quality, rich text support, and better performance. TextMeshPro uses Signed Distance Field (SDF) font rendering — text stays crisp at any size; legacy Text uses bitmap rendering which becomes blurry when scaled. TMP supports rich text formatting (color tags, sprites inline with text, custom fonts, gradients) — legacy Text limited to basic styles. TMP renders more efficiently (single draw call for many text elements; better GPU performance). Setup: Window → TextMeshPro → Import TMP Essentials (downloads ~5MB of TMP support files). Then use TextMeshPro - UI for UI text, TextMeshPro for 3D world-space text. Same controls as Text (text content, font, size, alignment, color) + much more (gradient colors, outline, shadow, underlay effects, font assets, character spacing, line spacing). All modern Unity tutorials + project templates use TMP; legacy Text is legacy. Migration: existing legacy Text components can be converted via right-click → Convert to TextMeshPro. For new projects: always TMP from the start; legacy Text is just there for backward compatibility. Pro Unity 2026 UI work: TextMeshPro for all text rendering.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "TextMeshPro: SDF rendering = crisp at any size + rich text + better performance. Legacy Text bitmap rendering blurry when scaled. All modern Unity UI uses TMP.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "UI looks fine on 1920x1080 but breaks on phone (1080x2400). Cause?",
+      "choices": [
+        { "id": "a", "text": "Wrong colors." },
+        { "id": "b", "text": "Anchors + Canvas Scaler not configured for responsive UI. Canvas should use UI Scale Mode = 'Scale With Screen Size' (not 'Constant Pixel Size'). Configure: Canvas → CanvasScaler component → UI Scale Mode → Scale With Screen Size; Reference Resolution = 1920x1080 (your design resolution); Screen Match Mode = Match Width Or Height + 0.5 (balanced). Then individual UI elements (RectTransform) need correct Anchors. Anchors define how a UI element's position scales with parent. Set anchors to match where the element should be relative to screen edges: 1) Top button → top-center anchor + offset down a bit. 2) Bottom button → bottom-center anchor + offset up. 3) Centered modal → middle-center anchor. 4) Full-screen background → stretch-both anchor + 0 padding (fills entire screen at any aspect ratio). With proper anchors + Canvas Scaler: UI adapts to different resolutions + aspect ratios. Without: elements clump in corners or stretch oddly. Test in different aspect ratios: Game view dropdown → set custom resolutions (1080x2400 mobile portrait, 1080x1920 mobile landscape, 1920x1080 desktop, etc.); verify UI looks right. Pro Unity UI design: every element has intentional anchors; Canvas Scaler configured; test multiple resolutions before shipping; consider safe zones on mobile (notches + rounded corners). The 'looks fine on dev resolution; breaks elsewhere' bug is universal in UI work; anchors + Canvas Scaler is the universal fix.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anchors + Canvas Scaler not configured. UI Scale Mode = 'Scale With Screen Size' + Reference Resolution; each UI element has intentional anchors. Test multiple aspect ratios.",
+      "points": 1
+    }
+  ]
+}

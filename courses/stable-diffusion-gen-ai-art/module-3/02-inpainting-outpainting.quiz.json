@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Inpainting and outpainting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Fix bad hands on a generated image without regenerating entirely?",
+      "choices": [
+        { "id": "a", "text": "Live with bad hands." },
+        { "id": "b", "text": "Inpaint with masked hands area. Workflow: 1) Load the generated image into inpaint mode (A1111: img2img → Inpaint tab; ComfyUI: Inpaint workflow). 2) Paint mask over the bad hands area. 3) Prompt focused on hands: 'perfect hands, detailed fingers, anatomically correct, natural pose'. 4) Set denoising 0.6-0.8 (moderate change preserving body context). 5) Add mask blur 4-8 (soft edges blend with surrounding skin). 6) Optional: Inpaint area = Only masked (faster, better context for small area). 7) Generate; new hands replace old; rest of image untouched. The model uses surrounding image context (arm position, skin tone, lighting) + your prompt to generate fitting hands. For higher quality: 1) Use inpaint-specific model (better than base for inpaint). 2) Add hand-focused LoRA. 3) Use ControlNet hand depth or OpenPose hand for exact finger structure. 4) Inpaint multiple times if first attempt isn't perfect; cherry-pick best. 5) Combine with face inpaint, body inpaint for other fixes. The 'inpaint iteratively' workflow is how pros produce polished images — first generation is rough draft; inpaint fixes the inevitable hand / face / detail issues. Same approach for: face fixes, removing unwanted objects (mask + describe context), changing clothing (mask outfit + describe new), adding elements (mask area + describe what should be there). Inpaint is the surgical tool for AI image polish; without it, you accept first-generation flaws. Pro AI artists' work is mostly inpaint-iterated, not first-generation.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Inpaint with mask on hands area + hand-focused prompt + denoising 0.6-0.8 + mask blur. Optional: inpaint model, hand LoRA, ControlNet hand depth. Pro polish workflow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Square (1:1) image needs to become widescreen (16:9) for video thumbnail. Approach?",
+      "choices": [
+        { "id": "a", "text": "Stretch the image." },
+        { "id": "b", "text": "Outpaint — extend canvas to left + right by ~50% of original width each, then crop / resize to 16:9. Workflow: 1) Load square image into outpaint workflow (A1111: img2img with outpaint scripts; ComfyUI: outpaint nodes; Photoshop Generative Fill is alternative). 2) Add canvas space on left + right (typically 50% original width each side; total new width = 2x original; height unchanged). 3) Mask the new (empty) regions. 4) Prompt: same as original generation, or describe what should fill the sides ('continued landscape, same lighting and atmosphere'). 5) Denoising high on new areas; model fills with continuity. 6) Generate; sides filled matching original style + content. 7) Crop / resize to exact 16:9 aspect ratio. Result: cinematic widescreen with consistent style; reveals scene context that was cropped in original square. Alternative for simpler cases: 1) Generate at widescreen aspect ratio from start (1920x1080) if you knew target ratio. 2) Use ControlNet to maintain composition while regenerating at new aspect. 3) Adobe Generative Fill in Photoshop (uses Firefly; commercial-safe; one-click). Outpaint better than: 1) Stretching (distorts subject). 2) Adding solid color bars (amateur). 3) Mirroring edges (looks weird). 4) Pure crop (loses subject space). Common use cases: 1) Square Instagram → 16:9 YouTube thumbnail. 2) Portrait → landscape variant for different platforms. 3) Cropped photo → reveal cinematic context. 4) Generate at standard ratio → outpaint to unusual final ratio. Pro AI workflows include outpaint routinely for multi-format delivery.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Outpaint — extend canvas left + right; model fills with continuity; crop to 16:9. Or use Adobe Generative Fill. Stretching distorts; outpaint preserves quality + adds context.",
+      "points": 1
+    }
+  ]
+}

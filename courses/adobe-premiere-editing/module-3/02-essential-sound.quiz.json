@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Essential Sound panel",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Auto-Duck in Essential Sound do?",
+      "choices": [
+        { "id": "a", "text": "Removes ducks from audio." },
+        { "id": "b", "text": "Automatically lowers music volume when dialogue plays — Premiere analyzes the dialogue track, generates keyframes on the music track that drop its level by a chosen amount (typically -12 to -18 dB) whenever the dialogue is speaking. Setup: assign dialogue clips type 'Dialogue'; assign music clips type 'Music'; in Music panel toggle Duck → enable; configure Sensitivity (how aggressive detection is), Reduce By (-12 to -18 dB typical), Fade Time (200-500 ms typical so transitions don't pop). Premiere generates the volume keyframes; music sits at full level during music-only beats, ducks down under voice. Without auto-duck, you'd manually keyframe music volume down at the start of every spoken section and back up at every pause — for a 20-minute interview, hundreds of keyframes; hours of work. Auto-duck does this in seconds. The killer feature of Essential Sound for any podcast / interview / YouTube workflow with music underneath dialogue. Refinements possible after auto-generation: drag specific keyframes to manually adjust at musical moments where you want music to swell (key beat, instrumental break). For most workflows, the default auto-duck settings work first time; fine-tuning is exceptional. Combined with Loudness target matching, Enhance Speech, and Reduce Noise on dialogue, Auto-Duck is part of the 5-minute audio polish that takes amateur content to professional." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Adds quack sounds." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-lowers music volume when dialogue plays. Generates keyframes automatically. Saves hours; essential for interview/podcast/YouTube content.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Interview audio recorded in a noisy cafe — background chatter, espresso machine, traffic. Heavy cleanup needed. Workflow?",
+      "choices": [
+        { "id": "a", "text": "Give up; re-record." },
+        { "id": "b", "text": "Essential Sound's Dialogue panel: enable Enhance Speech (AI), Reduce Noise (5-7), Reduce Rumble (5), Reduce Reverb (4-5). The AI-powered Enhance Speech feature is the game-changer for noisy environments — it analyzes the dialogue and intelligently extracts the voice from background sound, making the speaker sound studio-recorded. Sometimes too aggressive (voice sounds artificial); back off if so. Combined with Reduce Noise (broadband hiss / chatter), Reduce Rumble (traffic, low-frequency engine sounds), and Reduce Reverb (open-air cafe acoustic), most cafe interviews can be transformed to broadcast-acceptable in one pass. For really problematic audio (someone yelling next to the mic, glass smashing): send to Adobe Audition (Edit Clip in Audition) for spectral editing — surgical removal of specific frequency-time regions. Audition's noise reduction tools are more powerful (frequency-specific learning vs. Essential Sound's broadband approach). The order: Essential Sound first (90% of cleanup in 2 minutes); Audition for the 10% that needs surgical work. Listen on multiple speakers (headphones, phone, laptop) — if it sounds clean everywhere, you're done. The 2026 Premiere Essential Sound + Enhance Speech AI has changed what's possible with on-location recordings; what required a full audio engineer 5 years ago is now sliders for a generalist editor." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apply random effects." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Essential Sound Dialogue: Enhance Speech (AI) + Reduce Noise + Reduce Rumble + Reduce Reverb. Audition for surgical cases. 90% of noisy audio salvageable.",
+      "points": 1
+    }
+  ]
+}

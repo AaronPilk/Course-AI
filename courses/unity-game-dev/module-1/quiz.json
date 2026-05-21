@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Unity foundations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Unity render pipeline for cross-platform 2026 projects?",
+      "choices": [
+        { "id": "a", "text": "Built-in." },
+        { "id": "b", "text": "URP (Universal Render Pipeline). Modern + cross-platform (mobile, PC, console, VR/AR); replaces older Built-in pipeline. Features: post-processing, lighting, modern shader workflows (Shader Graph, VFX Graph), performance-optimized for varied hardware, Scriptable Render Pipeline architecture for extensibility. HDRP (High Definition Render Pipeline) is the alternative for AAA PC/console-only projects requiring path tracing + extreme volumetrics + ray tracing — too heavy for mobile. Pick by target: mobile + cross-platform indie + most games → URP; AAA PC/console exclusive with extreme visuals → HDRP; legacy migration → Built-in (but plan URP transition). For new 2026 projects: URP unless specific HDRP need. Project setup: pick URP template when creating; or migrate Built-in project via Render Pipeline Wizard. Switching pipelines mid-project requires recreating shaders + materials; pick correctly at start. For learning Unity in 2026: URP. For commercial shipped work: pipeline matches target platform + audience expectations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "URP (Universal Render Pipeline). Modern + cross-platform. Mobile + PC + console + VR. Pick at project creation; HDRP for AAA PC/console; Built-in legacy.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Player GameObject needs Rigidbody + Collider + custom script. How to ensure they always exist?",
+      "choices": [
+        { "id": "a", "text": "Add manually." },
+        { "id": "b", "text": "[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))] on the script. Unity auto-adds missing components when the script is attached + prevents removal of required dependencies. Eliminates 'null reference because component missing' bugs at runtime. Setup: `[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))] public class PlayerController : MonoBehaviour { ... }`. Multiple components in single attribute. When you drag the script onto a GameObject (or create new GameObject with the script): Unity automatically adds Rigidbody + CapsuleCollider if missing. Trying to remove them from a GameObject with this script: Unity prevents (with explanation) — protects the dependency. The attribute is compile-time enforcement + runtime guarantee. Use cases: 1) PlayerController requires Rigidbody (movement physics). 2) EnemyAI requires NavMeshAgent (pathfinding). 3) Health requires Collider (receives damage from hits). 4) AudioPlayer requires AudioSource. 5) MeshRenderer requires MeshFilter. Combined with cached GetComponent references in Start/Awake: `private Rigidbody rb; void Start() { rb = GetComponent<Rigidbody>(); }`. Pro Unity scripts use [RequireComponent] for all required dependencies; cache references in Start/Awake; avoid runtime null reference exceptions. The pattern produces robust + maintainable code; same approach across Unity codebases of all sizes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]. Unity auto-adds dependencies + prevents removal. Robust pattern; cache references in Start.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "How to keep GameManager alive across scene transitions?",
+      "choices": [
+        { "id": "a", "text": "Recreate in every scene." },
+        { "id": "b", "text": "DontDestroyOnLoad(gameObject) in Awake() + singleton pattern. Pattern: 1) Create empty GameObject named 'GameManager' in initial scene (e.g., main menu). 2) Attach GameManager script. 3) Awake() implements: `public static GameManager Instance; void Awake() { if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); } else { Destroy(gameObject); } }`. 4) The singleton check (line 'if Instance == null') prevents duplicate GameManagers if scene is reloaded. 5) Any script in any scene accesses: `GameManager.Instance.PlayerScore` etc. The DontDestroyOnLoad marks the GameObject to survive scene loads + unloads; persists until explicitly Destroy()'d. Common use cases: 1) GameManager — game state, score, progression. 2) AudioManager — music persists between scenes; SFX system global. 3) SaveSystem — save / load game data. 4) AnalyticsManager — track player throughout session. 5) NetworkManager — multiplayer connection persists. Best practice: ONE persistent GameObject containing multiple manager components (vs. many separate DontDestroyOnLoad objects). Caution: don't apply DontDestroyOnLoad to many objects — memory bloat over time. Use one Manager GameObject grouping concerns. The Singleton + DontDestroyOnLoad pattern is universal in Unity games; foundational for cross-scene architecture. Variant: ScriptableObject for cross-scene data (alternative to singleton — also works; different mental model)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DontDestroyOnLoad(gameObject) + Singleton pattern in Awake. Persistent across scenes; static Instance access. One persistent GameObject for all managers.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Game has frequent bullet spawning; performance drops from Instantiate / Destroy. Fix?",
+      "choices": [
+        { "id": "a", "text": "Fewer bullets." },
+        { "id": "b", "text": "Object pooling. Pre-instantiate N bullets at game start; deactivate when 'destroyed'; reactivate when 'spawned'. Avoids Instantiate / Destroy cycle which causes GC (garbage collection) pressure + frame drops. Implementation: 1) On Awake: instantiate pool of bullets (e.g., 100); SetActive(false); store in List<Bullet>. 2) On fire: find inactive bullet; SetActive(true); set position/rotation; apply force/velocity. 3) Bullet ends (hit, timeout, off-screen): SetActive(false); return to pool. 4) Reused for next shot. Unity provides ObjectPool<T> in UnityEngine.Pool namespace (newer Unity versions): `ObjectPool<Bullet> pool = new ObjectPool<Bullet>(CreateBullet, OnGet, OnRelease, OnDestroy, false, 100, 1000);`. Or custom implementation with List. Pool sizing: small enough to limit memory; large enough not to exhaust. Pool can grow dynamically if exhausted (compromise). Common pooling targets: bullets, particles, enemies (wave-based), UI popups, audio sources. Result: zero allocation per shot after initial pool setup; GC pressure eliminated; smooth even at thousands of shots/sec. Universal optimization across game engines (same in Unreal, Godot). Pro Unity performance: identify high-frequency spawn targets; implement pools; profile via Unity Profiler (GC.Alloc reduction confirms working)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Object pooling. Pre-instantiate + deactivate / reactivate. Avoids GC. Unity ObjectPool<T> or custom List. Standard optimization for frequent spawning.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Unity's architecture pattern?",
+      "choices": [
+        { "id": "a", "text": "Deep inheritance hierarchies." },
+        { "id": "b", "text": "Composition over inheritance — GameObject = container; Components = behavior; combine for actors. Player GameObject = Transform + Rigidbody + Collider + MeshRenderer + Animator + AudioSource + PlayerController script + Health component + Inventory component. Each component independent + reusable. Same Health component on player + enemy + destructible objects; same Inventory on player + chest + vendor. Composition lets you assemble behavior from parts vs. inheriting massive base classes. Benefits: 1) Reusability — small focused components used across many GameObject types. 2) Flexibility — mix + match components per object. 3) Testability — components tested in isolation. 4) Maintainability — change one component; affects only GameObjects using it. 5) Designer-friendly — non-coders combine components via Inspector. The 'mega base class with everything' alternative is older + fragile + hard to maintain; composition scales cleanly. Same pattern: Unreal Engine (Actor + Components), Godot (Node + composition), Unity (GameObject + Components). Modern game engines universally use composition. Pro Unity design: small focused components; assemble for complex behavior; reuse across GameObject types. Use [RequireComponent] to enforce dependencies. Use AddComponent<T>() at runtime to add behavior dynamically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Composition over inheritance. GameObject = container; Components = behavior; combine + reuse across object types. Modern game engine standard.",
+      "points": 1
+    }
+  ]
+}

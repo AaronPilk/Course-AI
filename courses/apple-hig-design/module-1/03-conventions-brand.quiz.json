@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Conventions vs brand",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Highest-leverage brand decision in an iOS app respecting conventions?",
+      "choices": [
+        { "id": "a", "text": "Custom font everywhere." },
+        { "id": "b", "text": "Accent color (`tintColor`). iOS automatically applies your accent to: button text/icons, links, switch on-state, selected tab bar items, slider tracks, refresh control, segmented control, navigation back button — every interactive UI element in one consistent color. Suddenly the whole app has your brand thumbprint while everything else remains conventionally native. Single line of code (`.tint(.brandColor)` in SwiftUI), applies system-wide. Compared to custom fonts (cost: licensing, performance, dynamic type complexity, accessibility risk) or custom controls (cost: rebuilding accessibility, dark mode, haptics, RTL): accent color is free, instant, and risk-free. Pick wisely: sufficient contrast in both modes; distinctive (avoid generic system blue); tested for color-blindness. One color choice + SF Pro + SF Symbols + your app icon = native iOS app with clear brand identity. Apps that try to brand harder (custom everything) usually feel worse, not more on-brand." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Splash screen." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Accent color via tintColor — applies system-wide automatically. Free, distinctive, conventional. Highest leverage.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer wants to replace UISwitch with a custom-styled toggle for brand consistency. Trade-offs?",
+      "choices": [
+        { "id": "a", "text": "Worth it for brand." },
+        { "id": "b", "text": "Probably not worth it. Replacing UISwitch loses: VoiceOver support (custom toggle needs accessibility identifiers + traits manually); haptic feedback (UISwitch auto-haptics on toggle); dark mode adaptation (system colors adjust automatically); Dynamic Type sizing (system controls scale); RTL layout (automatic for system); Reduce Motion respect (built in); built-in animations (smooth on iOS, hard to match); future iOS visual updates (UISwitch evolves with iOS releases; custom is stuck). Cost: re-implement all of the above (weeks of careful work + ongoing maintenance) for the brand-consistency upside of a slightly different toggle look. Better: tint your UISwitch with brand accent color (`.tint(.brand)` or `onTintColor`); now it has your brand's color while keeping all platform features. The HIG explicitly recommends using system controls; custom controls should solve genuine product needs, not aesthetic preferences. The 90% rule: system control + accent color is the answer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Build it ourselves." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Loses VoiceOver, haptics, dark mode, Dynamic Type, RTL, animations. Tint the UISwitch instead.",
+      "points": 1
+    }
+  ]
+}

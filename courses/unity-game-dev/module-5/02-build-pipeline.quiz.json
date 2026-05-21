@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Build pipeline",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Scripting backend for iOS?",
+      "choices": [
+        { "id": "a", "text": "Mono." },
+        { "id": "b", "text": "IL2CPP required. Apple requires AOT (Ahead-of-Time) compilation; Mono uses JIT (Just-in-Time) which iOS disallows for security. IL2CPP compiles C# to C++ at build time; output then compiles natively in Xcode. Set in Project Settings → Player → iOS → Other Settings → Scripting Backend → IL2CPP. Side benefits of IL2CPP across platforms: faster runtime performance vs. Mono; smaller code size after stripping; native debugging. Recommended for all platforms in 2026 (some still allow Mono — Standalone PC, Editor — but IL2CPP is the production standard). Android: IL2CPP required for 64-bit (Google Play Store requirement). Windows / Mac / Linux: IL2CPP recommended; Mono works for development builds + smaller projects. Trade-off: longer build times with IL2CPP (compile to C++; then compile C++); faster runtime. Pro Unity habit: IL2CPP for all production builds; Mono only for fast iteration during development on platforms that allow it.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IL2CPP required for iOS (Apple requires AOT). Recommended for Android (64-bit) + all production builds. Mono only for development on platforms that allow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game works in Editor but crashes on Android device. Debug approach?",
+      "choices": [
+        { "id": "a", "text": "Ignore." },
+        { "id": "b", "text": "Build Development Build + connect Unity Profiler + read Android logs (adb logcat). Setup: 1) Build Settings → check Development Build + Autoconnect Profiler. 2) Build + install on device. 3) Connect device via USB. 4) Open Window → Analysis → Profiler in Unity. 5) Set Profiler target to your device. 6) Run game; Profiler shows live FPS / memory / draw calls / etc. on actual device. 7) Reproduce crash; check Console for errors. 8) For deeper Android logs: terminal → `adb logcat -s Unity` filters Unity-specific logs (errors, stack traces). 9) Identify crash cause from stack trace + error message. Common Android-specific crashes: 1) OutOfMemory — textures too big; reduce resolution + use ASTC compression. 2) Native library missing — IL2CPP backend required for 64-bit; check Project Settings. 3) Permissions denied — manifest missing required permissions. 4) Min API level mismatch — device older than build's minSdkVersion. 5) ProGuard / R8 stripping IL2CPP symbols — disable code stripping for debugging or add keep rules. 6) Asset bundle / Addressables corruption — clear cache + reload. Editor → device discrepancies are the universal Unity bug class; only catches via testing on real device + reading logs. Pro Unity Android workflow: test on multiple devices early; emulator OK but real devices needed for ship-quality testing; setup logging + crash reporting (Firebase Crashlytics, Unity Cloud Diagnostics) for post-launch insight.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Development Build + connect Unity Profiler + adb logcat for Android logs. Read stack traces for crash causes. Test on real device; setup crash reporting for shipped games.",
+      "points": 1
+    }
+  ]
+}

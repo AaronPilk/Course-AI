@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: IP-Adapter",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does IP-Adapter let you do?",
+      "choices": [
+        { "id": "a", "text": "Faster generation." },
+        { "id": "b", "text": "Use an image as part of the prompt — encode reference image's features (style, content, identity, mood) as conditioning alongside text prompt. The model treats it like additional prompt input, generating outputs that incorporate the reference's qualities. Use cases: 1) Style transfer — reference image of art style + text prompt for subject = subject rendered in that style. 2) Character/face consistency — reference photo of face + text prompt for scene = same character in different scenes (Face IP-Adapter or FaceID variant). 3) Composition reference — reference image's layout used as guide. 4) Mood/atmosphere transfer — reference image's lighting / palette influences output. Stronger than img2img for style influence; works without changing the image (img2img modifies an existing image; IP-Adapter conditions a new generation). Strength tunable: 0.3-0.5 subtle, 0.7-0.9 strong, 1.0 max. Different weight types: linear (even), style-only (just style layers), style+composition. Combine with text prompt: text drives subject + scene; IP-Adapter drives style/identity. Combine with ControlNet (structure) + LoRA (specific concepts trained) = production-grade control. For face consistency: Face IP-Adapter or InstantID; ethical use only (consent, not real people without permission). IP-Adapter is one of the most useful additions to SD ecosystem post-2023 — enables image-conditioned workflows that pure text + ControlNet couldn't do as cleanly.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Image-as-prompt — encodes reference image features (style, content, identity, mood) as conditioning. For style transfer, character consistency, composition reference. Standard + Face variants.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Match style of an art reference + place a different subject in that style. Approach?",
+      "choices": [
+        { "id": "a", "text": "Just text prompt." },
+        { "id": "b", "text": "IP-Adapter for the style reference + text prompt for the new subject. Workflow: 1) Load reference art image (the style you want to match) into IP-Adapter (standard, not Face — this is for style not identity). 2) Set IP-Adapter to style-weight type (focuses on style layers, leaves composition / subject open for text prompt to drive). 3) Set strength 0.6-0.8 (strong style influence; not overwhelming). 4) Write text prompt for the new subject + scene: 'majestic mountain landscape at sunset, dramatic clouds, snow-capped peaks'. 5) Generate; output has the reference's style applied to your new subject. The IP-Adapter handles 'style' (color palette, brushwork, mood, light treatment); text prompt handles 'what to render' (subject + scene). Decoupled. For better text control: lower IP-Adapter strength (0.5); for stronger style match: higher (0.8). Iterate. Alternatives: 1) Text-only with style descriptors (less precise than visual reference). 2) Train a style LoRA from the reference (more setup; stronger lock; reusable). 3) Img2img on a generated layout (loses text control). IP-Adapter is the fastest path to 'this subject in that style'; useful for: commercial work matching client brand aesthetic; series consistency; style exploration without training LoRAs; quick style experiments. Pro AI artists use IP-Adapter extensively for style work. Combined with ControlNet (composition from one reference, style from another) = highly specific generation control. The 'just describe the style in text' approach often fails to capture nuances (specific brushwork, exact color palette); visual reference via IP-Adapter captures these reliably.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "IP-Adapter for style reference + text prompt for new subject. Style-weight type focuses on style. Decouples 'style' (image) from 'subject' (text). Fastest path for style transfer.",
+      "points": 1
+    }
+  ]
+}

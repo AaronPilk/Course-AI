@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Project and assets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why should you ALWAYS rename / move assets via Content Browser, not OS file browser?",
+      "choices": [
+        { "id": "a", "text": "Doesn't matter." },
+        { "id": "b", "text": "Unreal tracks asset references via internal paths; renaming / moving outside Unreal breaks every reference to that asset. Materials reference textures; Blueprints reference meshes + materials; Levels reference Blueprints + actors. Moving an asset in OS file browser (Finder, Explorer) changes its file path but doesn't update the references stored inside the .uasset files of other assets — those other assets still reference the OLD path; now they can't find the asset; show as 'missing reference' errors. Content Browser's rename / move (right-click asset → Rename / drag to new folder) updates all internal references automatically — every Material that uses the renamed Texture now correctly references the new path. Result: clean rename / move with no broken links. The 'OS-level file management' instinct from regular file work doesn't apply to game engine assets; engines treat assets as a relational database with strong referential integrity. Same principle in Unity, Godot, Maya, Blender — always rename / move within the application. If you accidentally moved an asset in OS file browser: the engine usually detects + offers a fix (Force Reference Update) but it's risky; prevention is the only safe approach. Force File Operation: occasionally needed for batch operations via scripts; rare. Default mode: Content Browser only. For folder structure organization: do it in Content Browser; the engine updates everything." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Epic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unreal tracks asset references internally; OS-level rename/move breaks references. Content Browser updates references automatically. Same principle across game engines.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need a photorealistic human character for a game cinematic. Build from scratch or...?",
+      "choices": [
+        { "id": "a", "text": "Build from scratch." },
+        { "id": "b", "text": "Use MetaHuman Creator (free, Epic-provided). MetaHumans are photoreal human characters generated via a web-based creator (epicgames.com/metahuman) — customize face, body, hair, clothing; export to Unreal Engine; fully rigged + animated + ready for cinematics or gameplay. Free for any Unreal project (commercial use allowed under Unreal's EULA). Workflow: 1) Open MetaHuman Creator (Quixel Bridge inside UE5 or web app). 2) Start from a base mesh and customize (sliders for facial features, body proportions, skin, eyes, hair, age, ethnicity, etc.). 3) Export to project via Quixel Bridge. 4) Character appears in Content Browser with full rig, materials, sample animations. 5) Use in cinematic via Sequencer or gameplay via standard character framework. Building photoreal humans from scratch in Blender / Maya: 200-1000+ hours per character — modeling head + body, sculpting detail, texturing skin (including subsurface scattering), creating hair via grooming systems, rigging (body + facial), creating animations. MetaHumans are the modern alternative: 30-60 minutes to create a unique character with quality matching AAA productions. Limitations: 1) Stylized characters not supported (MetaHuman is photoreal only). 2) Customization within MetaHuman framework (can't radically alter underlying topology). 3) Heavy on system resources (LODs included; full-quality MetaHuman is GPU-intensive). For most game / cinematic / archviz needs: MetaHuman is the answer. The 'film virtual production' workflow (The Mandalorian, House of the Dragon) uses MetaHumans + traditional Blender / Maya work for non-MetaHuman assets. Solo developers can ship games with MetaHuman characters that look AAA — leveling the playing field." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy from marketplace." }
+      ],
+      "correct_answer": "b",
+      "explanation": "MetaHuman Creator (free, Epic). Photoreal human characters via web creator; export to Unreal; rigged + ready. 30-60 min vs. 200-1000+ hours from scratch.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: J-cuts and L-cuts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between a J-cut and an L-cut?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "J-cut: audio FROM the next clip starts BEFORE the picture cuts to it (audio edit point is left of video edit point in the timeline — looks like a 'J'). Used to introduce a speaker / sound source before showing it; layers scenes; reveals 'who is speaking' as the cut happens. L-cut: audio FROM the current clip continues AFTER the picture cuts to the next (audio edit point is right of video edit point in the timeline — looks like an 'L'). Used for reaction shots — Speaker A talks, we cut to Speaker B's reaction face, A's audio continues; lets viewers read the listener's emotion without breaking the dialogue. Both add naturalism to dialogue editing — real conversations overlap, voices precede or extend beyond on-screen presence. The dialogue editing standard pattern: A speaks (show A) → cut to B reacting while A's audio continues (L-cut) → A finishes; B starts; audio of B begins under A's last word (J-cut into B's audio); picture cuts to B after. This pattern creates flow vs. mechanical 'A talks, cut, B talks, cut'. Setup in Premiere: unlink video + audio (Cmd+L on linked clip), trim the video edge and audio edge independently with Ripple — video cuts at one point, audio cuts at another. Or: Cmd+K with V-only or A-only targeted to add edits at separate points." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "J is bigger." }
+      ],
+      "correct_answer": "b",
+      "explanation": "J-cut: audio of next clip leads (audio edit left of video). L-cut: audio of current clip trails (audio edit right of video). Reaction shots + speaker intros.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "30-minute interview edit feels boring — the speaker is on camera the entire time. Viewer drop-off at 4 minutes. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Shorter interview." },
+        { "id": "b", "text": "Cover the talking head with B-roll and reaction shots; use L-cuts so the speaker's audio continues; vary visual rhythm every 6-8 seconds. Talking heads get visually monotonous fast — viewers tune out around 30-60 seconds of static face. Fix workflow: 1) Listen to interview; identify natural beats (every 6-8 seconds when speaker pauses, transitions topics, or makes a key point). 2) At those beats, cut to B-roll relevant to what they're saying (factory floor, product close-up, location wide shot, archival photos). 3) Audio of speaker continues underneath B-roll (L-cut); video shows the visual; viewer's eyes stay engaged. 4) For 30-min content: 4-5 different B-roll types intercut throughout. 5) Cut back to speaker at moments of high emotional weight or pivotal statements (their face is the right shot then). 6) Add reaction shots if multiple people on camera. The principle: viewer's eyes need variety; viewer's ears need continuity. L-cuts deliver both. YouTubers do this religiously — even single-host vlogs have constant visual variation (cuts to props, B-roll, text overlays, graphics) over continuous speaking audio. Without it, retention craters. 30-minute content with continuous talking head = 80%+ drop-off by 5 minutes. Same content with smart B-roll + L-cuts = 50%+ retention through 20 minutes. The investment in B-roll is huge ROI on attention." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster speaker." }
+      ],
+      "correct_answer": "b",
+      "explanation": "B-roll + L-cuts. Cover talking head visually every 6-8 sec; speaker's audio continues underneath. Visual variety + audio continuity = retention.",
+      "points": 1
+    }
+  ]
+}

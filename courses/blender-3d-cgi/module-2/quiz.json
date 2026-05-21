@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Materials, lighting, cameras",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "PBR Metallic should always be...",
+      "choices": [
+        { "id": "a", "text": "Random." },
+        { "id": "b", "text": "Set to 0 OR 1, not in between. PBR distinguishes two material categories: insulators (Metallic=0) and conductors (Metallic=1). Insulators are plastics, wood, paint, skin, fabric, ceramic, glass — light interacts via both surface reflection (specular) AND subsurface scattering (diffuse); base color affects diffuse; specular is white-ish. Conductors are metals (steel, copper, gold, aluminum) — light interacts only via surface reflection; no diffuse component; specular reflections take the metal's color. Materials are physically one or the other, not in between. Setting Metallic=0.5 to make 'half-metal' produces unphysical results that look fake — the rendering math interpolates between PBR's two categories in an awkward way. Common materials that LOOK like 'half-metal' (e.g., car paint with metallic flakes, golden-tinted plastic) are modeled as layered shaders (multiple BSDFs mixed) rather than Metallic=0.5. For glossy plastic: Metallic=0 + low Roughness. For dull aluminum: Metallic=1 + high Roughness (0.5-0.8). For polished gold: Metallic=1 + low Roughness (0.05-0.15) + gold-colored base color. The 0-or-1 rule is universal across PBR engines (Unity, Unreal, Maya, Substance Painter, Blender). Master it and 90% of material problems disappear; ignore it and produce constantly-not-quite-right materials." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Metallic always 0 (insulators: plastics, wood, skin) or 1 (conductors: metals). Never in between. Physical materials are one category or other.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Texture pack has Albedo, Roughness, Normal, AO, Metallic maps. Setting up by hand takes 15 minutes. Faster way?",
+      "choices": [
+        { "id": "a", "text": "Skip textures." },
+        { "id": "b", "text": "Enable Node Wrangler addon → select Principled BSDF → press Shift+Ctrl+T → auto-import the PBR set. Node Wrangler analyzes the folder, identifies each map by filename pattern (Albedo/Diffuse/Color → Base Color; Roughness → Roughness; Metallic → Metallic; Normal → Normal Map; AO/Occlusion → multiplied with Base Color), creates Image Texture nodes, connects them to correct Principled BSDF inputs, sets correct color spaces (sRGB for Albedo; Non-Color for data maps), and adds Mapping + Texture Coordinate nodes for tiling control. Total time: 30 seconds vs. 15 minutes manual. Without Node Wrangler, manual setup requires: 1) Add Image Texture per map (5 nodes). 2) Per node: set color space correctly (sRGB / Non-Color). 3) Add Normal Map node between Normal texture and Principled BSDF. 4) For AO: add Multiply node, plug Albedo and AO into it, output to Base Color. 5) Add Mapping + Texture Coordinate for tiling. 6) Connect Color outputs to respective Principled BSDF inputs. Easy to mess up (wrong color space breaks Roughness; missing Normal Map node makes Normal look weird). Node Wrangler is mandatory for serious shader work. Install: Preferences → Add-ons → search 'Node Wrangler' → check. After install: Shift+Ctrl+T (PBR import on Principled BSDF), Ctrl+T (add Mapping + Texture Coord to any Image Texture), Ctrl+Shift+click (connect node to Material Output for preview). Productivity gains compound across every material you build." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire someone." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Node Wrangler addon: Shift+Ctrl+T on Principled BSDF auto-imports + wires + sets color spaces. 30 sec vs. 15 min. Mandatory addon.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What do good seams produce in UV unwrapping?",
+      "choices": [
+        { "id": "a", "text": "Visible lines." },
+        { "id": "b", "text": "Strategic seams (placed in hidden areas) produce clean UV layouts where the texture seams are invisible to viewers. Good seam placement principles: 1) Hide on non-visible sides (back of character, inside ear, under arm, behind hairline). 2) Follow natural lines (hairline, belt, clothing edges, hand creases). 3) Where two materials meet (boundary between metal and rubber). 4) Symmetric model: down the center back (so mirror-painted texture aligns). Bad seam placement produces visible discontinuities where the texture doesn't quite align across the cut (subtly different brightness or color where the seam falls). Process: Edit Mode → select edges → Edge menu → Mark Seam (orange highlight indicates seam) → Unwrap (U) → check UV layout in UV Editor. If layout has heavy distortion: more seams needed or move them. If texture has visible seams on final model: relocate them to hidden areas. For a character head, typical seams: down the back of neck + scalp, around the ears, optionally inside mouth for open-mouth animation. For a cube: 7 seams forming an unfolded cube net. For a cylinder: 1 seam straight down the side. Smart UV Project skips manual seams but produces less optimal layouts — fine for procedural materials; bad for image textures requiring alignment. Pro UV work: 80% of time on strategic seam placement; 20% on unwrap + cleanup. The unwrap itself is fast once seams are correct." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stylized look." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Strategic seams in hidden areas = clean UV layout + invisible texture discontinuity. Place on back, under arms, hairline, where materials meet. Pro UV work: 80% time on seam placement.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Character render: single point light, harsh shadows, subject looks flat against the background. Improve?",
+      "choices": [
+        { "id": "a", "text": "Stronger point light." },
+        { "id": "b", "text": "Add three-point lighting: Key + Fill + Rim/Back light. The single-light setup is the amateur signature — produces harsh shadows on one side and complete darkness on the other, with no separation from the background. Three-point fix: 1) Move existing point light to act as Key — area light is better (softer shadows); position front-side at 30-45° from camera. 2) Add Fill light opposite side at 1/4 to 1/2 the Key's power — softens the shadow side; doesn't have to be perfectly even. 3) Add Rim/Back light behind subject pointing toward camera — creates edge highlight separating subject from background. 4) For environmental fill: HDRI in world background; provides ambient color + soft fill. With these 3-4 lights, subject pops from background, shadows reveal form without overwhelming, viewer's eye is guided to the subject. Color temperature variation adds mood: warm Key (3500K) + cool Fill (5500K) = cinematic 'magic hour' feel. Same-temperature lights = neutral / documentary feel. Light SIZE controls shadow softness: small lights = hard shadows; large area lights = soft shadows; for portraits, larger lights are flattering. The three-point setup is the lighting foundation taught in film school and product photography for 100+ years; it works because it solves the three fundamental visual problems (define form, soften harshness, separate from background) simultaneously. Variations exist (Rembrandt, butterfly, split lighting) but all start from three-point principles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different camera." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Three-point lighting (Key + Fill + Rim). Solves form definition + shadow softness + subject-background separation. Foundation of all subject lighting.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Single biggest factor that makes a render look 'photographed' vs. 'rendered'?",
+      "choices": [
+        { "id": "a", "text": "Higher resolution." },
+        { "id": "b", "text": "Depth of Field (DoF) — selective focus mimicking real camera optics. Flat-focus renders where everything is equally sharp scream 'CGI'; renders with realistic DoF (sharp subject; out-of-focus background; possibly out-of-focus foreground) look 'photographed.' Setup: Camera tab → Depth of Field → enable; Focus Distance (pick a focus target or distance); Aperture in f-stops (f/2.8 = very shallow; f/4-f/8 = moderate; f/11+ = deep). For portraits: f/2.8-f/4 (shallow, blurry background). For product: f/4-f/8 (subject sharp, background hint of blur). For landscape: f/11-f/22 (everything sharp). Combined with: 1) Subtle camera roll (1-2° off-horizontal — perfectly level cameras look CGI). 2) Slight lens distortion (Compositing → Lens Distortion node). 3) Bloom on bright areas. 4) Film grain (Compositing → Add → Film Grain). 5) Chromatic aberration (subtle, in Compositing). 6) Off-center composition (rule of thirds). 7) Lighting with shadows from definite direction (not perfectly even). Together these break CGI tells and produce 'photographed' results. DoF alone is transformative; the rest are refinements. Most novice renders skip DoF (out-of-the-box camera has it off); flat focus is the CGI tell. Pro renders use DoF on virtually every still; the perceived realism doubles vs. flat-focused identical scenes. The render math is the same; the perceived quality vastly different." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More polygons." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Depth of Field. Selective focus mimics real cameras; flat-focus = CGI tell. Single biggest factor; transformative. Combine with subtle distortion, grain, off-center composition.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "title": "Module 3 quiz: ControlNet and guided generation",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "ControlNet type for replicating exact human pose?",
+      "choices": [
+        { "id": "a", "text": "Canny." },
+        { "id": "b", "text": "OpenPose. Detects skeleton + joints from reference; ControlNet uses skeleton to constrain generated pose. Reference photo → OpenPose preprocessor → skeleton image → ControlNet + prompt = new character in exact pose. Essential for character consistency, action poses, reference matching. Stack with Canny for outline + pose; Depth for 3D layout + pose.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OpenPose. Skeleton detection; pose preservation across generations. Multi-ControlNet stacking for combined control.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Fix bad hands on generated image without regenerating whole thing?",
+      "choices": [
+        { "id": "a", "text": "Live with it." },
+        { "id": "b", "text": "Inpaint with mask on hands + hand-focused prompt + denoising 0.6-0.8 + mask blur. Optional: inpaint-specific model, hand LoRA, ControlNet hand depth or OpenPose hand. Pro workflow iterates: base generation → inpaint problem areas → final composite. Standard polish technique.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Inpaint masked hands area + prompt + 0.6-0.8 denoising + mask blur. Standard polish pattern.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Denoising strength for img2img style transfer?",
+      "choices": [
+        { "id": "a", "text": "0.1" },
+        { "id": "b", "text": "0.5-0.7 typical. Preserves composition + applies new style. Lower (0.1-0.3) too subtle; higher (0.9+) loses original. For style transfer (photo → painting, sketch → render): 0.5-0.7. For minor changes: 0.1-0.3. For major reinterpretation: 0.7-0.85. Tune per goal.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "0.5-0.7 for style transfer. Preserves composition + applies new style. Lower = subtle; higher = lose original.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Same character (same face) across 20 illustrations. Approach?",
+      "choices": [
+        { "id": "a", "text": "Hope." },
+        { "id": "b", "text": "Face IP-Adapter (or train character LoRA for ongoing series). IP-Adapter Face encodes reference face features into each generation; strength tunable. Combined with character LoRA for stronger lock. For one-off: IP-Adapter sufficient; for ongoing series: LoRA + IP-Adapter combined.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Face IP-Adapter for one-off; train character LoRA for ongoing series. Pro pattern: combine both for strongest consistency.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "IP-Adapter does what?",
+      "choices": [
+        { "id": "a", "text": "Faster generation." },
+        { "id": "b", "text": "Use an image as part of the prompt — encode reference image's features (style, content, identity, mood) as conditioning alongside text. Variants: standard (style/content), Face (identity), FaceID. Strength tunable; weight types (linear, style-only). For style transfer + character consistency + composition reference + mood matching.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Image-as-prompt. Reference image's features encoded as conditioning. Style + Face variants. Production-grade reference workflows.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "title": "Unreal Engine documentation",
+      "url": "https://docs.unrealengine.com/5.4/en-US/",
+      "type": "documentation"
+    },
+    {
+      "title": "Unreal Engine learning",
+      "url": "https://www.unrealengine.com/en-US/onlinelearning-courses",
+      "type": "tutorials"
+    },
+    {
+      "title": "Epic Developer Community",
+      "url": "https://dev.epicgames.com/community/",
+      "type": "community"
+    },
+    {
+      "title": "Unreal Engine 5 features",
+      "url": "https://www.unrealengine.com/en-US/unreal-engine-5",
+      "type": "documentation"
+    },
+    {
+      "title": "Nanite documentation",
+      "url": "https://docs.unrealengine.com/5.4/en-US/nanite-virtualized-geometry-in-unreal-engine/",
+      "type": "documentation"
+    },
+    {
+      "title": "Lumen documentation",
+      "url": "https://docs.unrealengine.com/5.4/en-US/lumen-global-illumination-and-reflections-in-unreal-engine/",
+      "type": "documentation"
+    }
+  ]
+}

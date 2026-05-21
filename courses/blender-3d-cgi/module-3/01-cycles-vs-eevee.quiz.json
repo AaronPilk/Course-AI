@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cycles vs. Eevee",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you use Cycles instead of Eevee?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When photorealism matters more than render speed — hero still images, portfolio pieces, architectural visualization with daylight + glass + bouncing light, character renders with skin subsurface scattering, product renders with realistic reflections + refractions, any single image where quality > speed. Cycles is a physical path tracer: sends rays from camera, tracks bounces off surfaces, produces physically-correct images with accurate reflections, soft shadows, global illumination (light bouncing between surfaces), subsurface scattering (light penetrating + scattering inside skin/wax/milk), refraction (glass bending light correctly). Cost: minutes to hours per frame. Eevee, by contrast, is rasterization-based (game engine style) — fast (real-time to seconds per frame) but approximates physical light interaction. Eevee reflections are screen-space (only what's on screen reflects); Cycles reflections are ray-traced (everything reflects). Eevee soft shadows are baked / approximated; Cycles soft shadows are physically simulated. For animation (hundreds to thousands of frames), Cycles is impractical without a render farm — minutes-per-frame × 1000 frames = days of render time. Eevee renders that animation in minutes. Choose by deliverable: 1 hero still = Cycles. 60-second animation = Eevee (or Eevee Next). Photorealistic product viz for clients = Cycles. Stylized motion graphics = Eevee. Many pros work hybrid: develop in Eevee (fast iteration), final-render hero shots in Cycles (photoreal output)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "When photorealism matters more than speed — hero stills, archviz, characters with skin, glass, product renders. Cycles = path tracing; physically-correct; slow. Eevee for animation/motion graphics.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cycles render takes 6 hours per frame for a 30-second animation at 24fps = 720 frames = 4,320 hours = ~6 months. What to do?",
+      "choices": [
+        { "id": "a", "text": "Wait 6 months." },
+        { "id": "b", "text": "Switch to Eevee (or Eevee Next) for the animation. Animation pipelines fundamentally don't tolerate Cycles' per-frame cost; the 6-month render is not a viable production schedule for a 30-second animation. Eevee will render the same animation in minutes-to-hours total — orders of magnitude faster. The trade-off: Eevee is approximated rendering; less photoreal than Cycles. But for animation, the temporal dimension hides much of the realism gap — viewers see frames flash by at 24fps; subtle realism differences invisible at speed. Pick Eevee for animation; accept the slight realism cost. Other mitigations if Cycles is required (e.g., photoreal animation for hero shots): 1) Render farm — distribute frames across many machines / cloud services (AWS Thinkbox, RebusFarm, GarageFarm). Cost: $0.10-$1 per frame; 720 frames = $70-700; renders in a day. 2) Lower Cycles samples + denoise aggressively (cuts time per frame; some quality loss). 3) Lower resolution (1080p instead of 4K; renders 4x faster). 4) Smaller image size for non-hero shots. 5) Hybrid: Cycles for hero close-ups (face shots, key beauty shots); Eevee for action sequences (motion blurs detail anyway). Pro animation studios use render farms; indie animators use Eevee. The choice depends on production budget + quality requirement. Eevee Next (Blender 4.x+) closes the realism gap further — for many animation projects, it's close enough to Cycles that the speed advantage wins." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster computer." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Switch to Eevee. Cycles' per-frame cost incompatible with animation. Eevee approximates but speed dominates. Or render farm for hero shots; Eevee for action.",
+      "points": 1
+    }
+  ]
+}

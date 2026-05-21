@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Figma hierarchy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why prefer frames over groups in Figma?",
+      "choices": [
+        { "id": "a", "text": "Cosmetic." },
+        { "id": "b", "text": "Frames are containers with real capabilities — they can have padding, fill, stroke, constraints, Auto Layout, clipping, layout grids; they define a coordinate space children position within. Groups are pure layer aggregation — just bundle layers together for selection / movement, no styling, no Auto Layout, no constraints. Modern Figma workflows depend on Auto Layout (covered in Module 2), which only works on frames. Constraints (which control how children resize when parent resizes) only work on frames. Layout grids only work on frames. The standard advice in 2026 Figma: use frames; reserve groups for occasional ad-hoc bundling. Even Figma's templates and Apple/Google design kits use frames throughout. If you find yourself adding groups regularly, you'd benefit from frame-and-Auto-Layout instead. Press F to draw a frame; Cmd/Ctrl+G makes a group; the F-key default is the right one." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster file." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Frames support padding, Auto Layout, constraints, layout grids — groups don't. Modern Figma workflows depend on frames.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your file has 200+ frames on one page. Navigation slow. Fix?",
+      "choices": [
+        { "id": "a", "text": "Get faster computer." },
+        { "id": "b", "text": "Restructure into pages and possibly split files. Pages within a file are essentially free — they don't load until you switch to them; switching is fast. Move frames into pages by purpose: 'Onboarding,' 'Dashboard,' 'Settings,' 'Components,' 'Explorations.' Each page has 10-30 frames; still navigable; you only see relevant content per page. If the file is genuinely huge (1000+ frames across pages, complex components, embedded images), split into multiple files — one file per major feature; reference shared components via a published library. Massive files slow Figma noticeably (zoom, drag, type lag); smaller files perform well. Side benefit: targeted file URLs to share with collaborators ('here's the onboarding file' vs 'here's the whole product file, scroll past 200 frames'). Most teams' files grow until they hit performance issues, then split. Catch early; structural cleanup is cheaper before deep nesting." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete frames." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Split into pages by purpose; split into separate files for very large projects; reference shared library for components.",
+      "points": 1
+    }
+  ]
+}

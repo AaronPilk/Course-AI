@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Cameras and composition",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why pick focal length carefully?",
+      "choices": [
+        { "id": "a", "text": "Only affects framing." },
+        { "id": "b", "text": "Focal length affects both framing AND perspective. Wide lenses (18-35mm) exaggerate depth — foreground appears larger relative to background; perspective distortion at edges; great for landscapes, architecture, dramatic environments. Long lenses (85mm+) compress depth — foreground and background appear closer together; flattering for portraits (no distortion of facial features); great for isolating subjects. Same scene, same framing, different focal lengths produce dramatically different feels: 24mm portrait from 1 meter = exaggerated nose, distorted face; 85mm portrait from 4 meters = natural flattering face. The framing might be similar (head + shoulders fill frame) but the perspective differs. Standard guidance: 85-135mm for portraits, 35-50mm for general / natural look, 24-35mm for landscape, 18-24mm for wide establishing, 200mm+ for telephoto compression. Pick based on intent (mood, perspective character) not just 'what fits the frame.' For 3D renders, the same principles apply — Blender's virtual cameras simulate real lens behavior. A character portrait at 24mm looks wrong even though framing is identical to 85mm portrait; the perspective gives it away. Pros pick focal length first (intent), then position camera to get framing. Novices often adjust focal length to fit framing — produces wrong-feeling images." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Same as zoom." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Focal length affects framing AND perspective. Wide = exaggerated depth; long = compressed. Portraits 85-135mm; landscape 24-35mm. Pick by intent.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Product render looks technically clean but flat / 'rendered' rather than photographed. What's missing?",
+      "choices": [
+        { "id": "a", "text": "Bigger render." },
+        { "id": "b", "text": "Depth of Field (DoF) — selective focus that mimics real camera optics. Flat renders with everything in focus look like CGI; renders with DoF look photographed. Setup: Camera tab → Depth of Field → enable; set Focus Distance (or pick a focus target object — usually the product); set Aperture (f-stop) — f/2.8-f/5.6 for shallow DoF (blurry background, sharp product); f/11+ for deep DoF (everything sharp). For product: typical f/4-f/8 — product sharp; background out of focus; foreground may or may not be in focus depending on aperture. Beyond DoF, other 'photographic' factors that elevate renders: 1) Subtle camera roll (a degree or two off horizontal — perfectly level cameras look CGI). 2) Slight lens distortion via Compositing (real lenses aren't perfect). 3) Bloom on bright areas (Eevee or Cycles + Compositing). 4) Subtle film grain (Compositing → Add → Film Grain). 5) Chromatic aberration (Lens Distortion node in Compositing, slight). 6) Off-center composition (rule of thirds, not centered). 7) Lighting with shadows from a definite direction (not perfectly even). Together these break the 'computer-rendered' tell and produce photographic results. DoF is the single biggest contribution; even adding ONLY DoF transforms a flat render. Pro Blender artists add DoF to most stills; tutorials often skip it; results look immediately less professional. The render math is the same whether DoF is on or off; the perceived realism doubles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brighter lighting." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Depth of Field. Selective focus mimics real cameras. f/4-f/8 typical for product. Single biggest contribution to photographic feel; flat focus = 'rendered' look.",
+      "points": 1
+    }
+  ]
+}

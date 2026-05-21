@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Haptics & audio",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why not haptic-feedback every button tap?",
+      "choices": [
+        { "id": "a", "text": "Apple bans it." },
+        { "id": "b", "text": "Annoyance + battery + erosion of meaning. Haptics that fire constantly become background buzz that users tune out — losing the signal. The Taptic Engine consumes real power; firing it on every tap drains battery faster than necessary; possibly accelerates wear. And users start associating the constant buzz with the app's chatter rather than meaningful confirmation; future important haptics get lost in the noise. Apple's HIG: haptics for 'the system / app meaningfully responded to me' — toggle switch flips, message sent, error occurred, critical action confirmed. NOT for routine button taps (the visual press is sufficient feedback). The discipline is restraint: 2-5 haptic interactions per typical session, not 50. Apple's own apps (Mail, Messages, Notes) use haptics sparingly — you barely notice them individually but each is meaningful. Apps that haptic everything feel cheap. Same logic for sound: silent by default; sound where it earns its place." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Slower app." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Annoyance + battery + loss of meaning. Haptics confirm meaningful actions; not every button tap.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your app plays sound effects. User has phone on mute. Right behavior?",
+      "choices": [
+        { "id": "a", "text": "Play anyway." },
+        { "id": "b", "text": "Respect mute — don't play. Set audio session category to `.ambient` or `.soloAmbient` (both respect the silence switch); avoid `.playback` (which intentionally plays through mute, appropriate for music/podcast apps but not for UI sound effects). Apps that play sound through mute = bad reviews + user trust violation. iOS users use mute extensively (libraries, meetings, sleeping); honoring it is mandatory. The one exception: media apps where playback IS the product (Music, Podcasts, video players) use `.playback` because the user explicitly tapped play — they want the sound; muting the phone shouldn't override their explicit action. UI sound effects (button confirmations, message-sent chimes) should respect mute always. Implementation: declare your audio session category appropriately in app launch; system handles the rest. Combine with smart defaults — many apps default sound off entirely; user opts in to UI sounds if they want them. Apple's HIG: silent by default; sound earns its place." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Vibrate instead." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Use .ambient/.soloAmbient session category — respects mute. .playback only for media apps where playback IS the product.",
+      "points": 1
+    }
+  ]
+}

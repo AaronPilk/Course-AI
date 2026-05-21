@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Typography & layout",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use named text styles like `.body` instead of `.system(size: 17)`?",
+      "choices": [
+        { "id": "a", "text": "Cleaner code." },
+        { "id": "b", "text": "Dynamic Type support. Named styles automatically scale when users change system text size; hardcoded sizes don't, excluding vision-impaired users. Named styles also encode Apple's optical sizing (SF Pro Text vs Display variants based on size), proper leading per size, tracking adjustments — getting all this right manually is hard. The discipline 'always use named styles' produces accessible-by-default text. For custom sizes that should still scale: wrap with UIFontMetrics or use `.dynamicTypeSize(...)` modifier. 1 in 4 adults over 50 has reduced vision; this isn't an edge case. Apple's HIG strongly recommends named styles; SwiftUI defaults to scaling. The 'I want pixel-precise control' instinct loses to 'my app should be readable by everyone' — these aren't actually in conflict since named styles work well visually at default size." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by Xcode." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dynamic Type — named styles scale with user preference; hardcoded sizes exclude vision-impaired users.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Test your app at largest accessibility text size (A5). Layouts break — overflow off-screen. Fix?",
+      "choices": [
+        { "id": "a", "text": "Cap text scaling." },
+        { "id": "b", "text": "Adapt layout to vertical stacks at accessibility sizes. Use `@Environment(\\\\.dynamicTypeSize)` to detect when user is at accessibility sizes (A1-A5); switch horizontal arrangements to vertical: `if typeSize.isAccessibilitySize { VStack { Icon(); Text(label) } } else { HStack { Icon(); Text(label) } }`. Pattern: 'icon + label + arrow' in one row becomes stacked vertically when text is huge. Other adaptations: ScrollView around content that may overflow; reduce non-essential UI (decorations); ensure tap targets remain ≥44pt scaled. Capping Dynamic Type (`.dynamicTypeSize(...DynamicTypeSize.accessibility3)`) is acceptable for non-essential text (decoration, status labels) but NOT for primary content — users at A5 need primary content readable. The right design adapts to text size rather than fighting it. Apple's Mail, Notes, Messages all work at A5; reverse-engineer how — they stack, scroll, and reduce density at extreme sizes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip A5." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stack horizontal layouts vertically at accessibility sizes. Detect via dynamicTypeSize.isAccessibilitySize.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use multiples of 8 for spacing throughout an app?",
+      "choices": [
+        { "id": "a", "text": "Apple mandate." },
+        { "id": "b", "text": "Pixel alignment + visual rhythm + decision shortcut. 8 divides cleanly into screen scales (@1x, @2x, @3x): 8pt = 16/24px depending on device; round pixel boundaries everywhere; sub-pixel rendering issues disappear. Visual rhythm: when every gap is 8/16/24/32, eye sees consistency; arbitrary values (13, 19, 27) create subliminal noise. Decision shortcut: pick from {4, 8, 12, 16, 20, 24, 32} instead of agonizing over individual values. Industry-wide pattern; not unique to Apple. Combined with consistent token names (xs/sm/md/lg/xl), engineering and design align: both reference 'spacing-md' = 16pt. 4pt sub-grid for fine internal adjustments inside compact components; 8pt minimum between distinct elements. Once you adopt this discipline, layouts feel intentional rather than random; new designers absorb the system quickly. Apple's HIG embeds this into SwiftUI defaults and recommendations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller bundles." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pixel alignment + visual rhythm + decision shortcut. 8pt grid is industry standard, Apple defaults included.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Face ID iPhone, sticky CTA button at bottom. Placement?",
+      "choices": [
+        { "id": "a", "text": "Edge of screen." },
+        { "id": "b", "text": "Above the safe area inset, not at device edge. Face ID iPhones have a home indicator zone at bottom (~34pt) reserved for system gestures; placing tap targets there means users hit the home gesture instead. Use `.safeAreaInset(.bottom)` in SwiftUI (or safeAreaLayoutGuide in UIKit) — system handles the offset automatically across devices. Backgrounds (color fills, images) CAN extend edge-to-edge under the home indicator for aesthetic continuity; INTERACTIVE elements stay within safe area. Pattern: backgrounds extend; controls respect. Same applies at top — content respects status bar/notch/Dynamic Island for tap targets; backgrounds extend underneath. SwiftUI's `.safeAreaInset()` and UIKit's `safeAreaInsets` automate this. Skipping safe areas = users tap button, system intercepts as home gesture; frustration. One of the universal new-iOS-dev mistakes; framework provides the fix; you have to use it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Center vertical." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Above safe area inset (~34pt on Face ID). `.safeAreaInset(.bottom)`. Backgrounds extend; controls respect.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Minimum iPad app width to handle for multitasking?",
+      "choices": [
+        { "id": "a", "text": "1024pt." },
+        { "id": "b", "text": "~320pt. iPad Split View and Slide Over can present apps at narrow widths: Slide Over is ~320pt (essentially iPhone width); Split View 33/66 puts apps at ~340pt. Layouts assuming 'iPad = wide' break — sidebars overflow, multi-column views become unusable, text wraps awkwardly. Solution: respect size classes (compact width = single column like phone; regular width = sidebar+detail); adapt via `horizontalSizeClass` checks. NavigationSplitView handles this automatically — collapses to NavigationStack on compact width, expands to sidebar+detail on regular. Custom layouts need explicit size-class adaptation. Test in Xcode simulator with Split View enabled + real iPad with multitasking. The 'iPad is always 1024pt' assumption was true in iOS 8; iPadOS made apps run at any width from 320 to 1366. Designing only for full-screen iPad means broken UX whenever the user splits with another app — common usage pattern on iPad." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "768pt." }
+      ],
+      "correct_answer": "b",
+      "explanation": "~320pt (Slide Over). iPad multitasking renders any width from 320 to 1366. Respect size classes.",
+      "points": 1
+    }
+  ]
+}

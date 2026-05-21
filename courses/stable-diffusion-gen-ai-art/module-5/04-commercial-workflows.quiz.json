@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Commercial workflows",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Most important consideration for commercial AI art work?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "License verification of every tool in the workflow. Each component — base model, LoRAs, ControlNets, IP-Adapter weights, even VAEs — has its own license. Commercial use requires ALL components be commercial-licensed. Verify: 1) Base model: SDXL (OpenRAIL-M, commercial OK), Flux Schnell (Apache 2.0, commercial OK), Flux Dev (paid commercial license required from Black Forest Labs), Flux Pro (commercial via API), DALL-E 3 / Midjourney (commercial via their respective subscriptions). 2) LoRAs: per-creator license; Civitai metadata shows; some Apache 2.0 / CC-BY (commercial OK), some restrict commercial. 3) Reference images: copyrighted images used in img2img / IP-Adapter could pose legal risk; use your own + stock-licensed only. 4) Training data of base models: ongoing legal questions; varies by jurisdiction; check current law if high-stakes. Documentation: maintain per-project log of models + LoRAs + extensions used; license status; protect against future legal questions. For high-stakes commercial: 1) Use models with clear commercial licenses (Flux Schnell, SDXL + open LoRAs). 2) Or use commercial-safe services (Adobe Firefly trained on licensed content; provides legal indemnification). 3) Avoid uncertain/restricted-license content. 4) Get legal review for major campaigns. Failing license verification = potential legal liability + reputational damage. Pro AI artists treat licensing as non-negotiable verification step; not afterthought. The 'just generate and ship' approach risks lawsuit for commercial work; verification is cheap insurance.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "License verification of every tool. Base model + LoRAs + extensions + reference images. Commercial requires ALL components commercial-licensed. Document per project. Adobe Firefly for commercial-safe.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building product photography for e-commerce. Product must look EXACTLY like real product. Approach?",
+      "choices": [
+        { "id": "a", "text": "Pure prompt-only generation." },
+        { "id": "b", "text": "Composite real product photo with AI-generated background — don't generate the product itself. Workflow: 1) Photograph real product on plain background (white / green screen / black). 2) Background remove (Photoshop, remove.bg, AI tools). 3) Generate ideal background scene via SD/SDXL/Flux with descriptive prompt (lifestyle setting, lighting, mood). 4) Composite product onto generated background in Photoshop / Photopea. 5) Adjust lighting / shadows on product to match scene (gradients, highlights, color shifts). 6) Final polish: subtle shadow under product; reflection if appropriate; color match. Result: real product (accurate, can't be misrepresented) + AI-generated context (varied, expensive-looking backgrounds without expensive shoots). Why not generate product entirely: 1) Accuracy critical for e-commerce — customers expect product to match. 2) AI 'hallucinates' product details (different colors, missing buttons, wrong logo); marketing/legal issues. 3) Brand consistency requires identical product across all images. 4) Trademark / IP concerns if product is branded. The 'real product + AI background' pattern is standard for AI-assisted e-commerce; mature workflow used by Amazon sellers, Shopify stores, brands. Alternative for control: ControlNet Canny on product silhouette + IP-Adapter on product image → AI generates product-shape with reference styling — still risky for accuracy. Pure AI product generation only viable when: 1) Product not yet manufactured (concept renders). 2) Brand intentionally goes AI-aesthetic. 3) Internal use only (not customer-facing). For customer-facing e-commerce: real product photo + AI background composite is the safe + scalable path.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Composite real product photo with AI-generated background. Don't generate product itself — AI hallucinates details. Real product accuracy + varied AI scenes. Mature e-commerce workflow.",
+      "points": 1
+    }
+  ]
+}

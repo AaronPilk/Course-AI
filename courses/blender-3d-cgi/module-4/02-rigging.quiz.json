@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Rigging",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between IK and FK?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "FK (Forward Kinematics): rotate shoulder → upper arm rotates → rotate elbow → forearm rotates → rotate wrist → hand rotates. Hand position is DERIVED from the chain of rotations. IK (Inverse Kinematics): move the IK target (a control object near the hand) → Blender computes the rotations of shoulder + elbow + wrist needed for the hand to reach that target. Hand position DRIVES the chain. When to use IK: posing limbs in specific positions (hand on table, foot on ground while body moves, gripping objects, walking — feet stay planted while hips move). When to use FK: arc-driven motion (swinging a bat, throwing a ball, gestures where the arc shape matters more than the end position). Pro character rigs include both: IK/FK switching via a property control; animator picks per-shot. Setup IK: in Pose Mode, select the bone that should reach (typically the hand or foot), add Bone Constraint → Inverse Kinematics, set Chain Length (3 for arm: hand + forearm + upper arm; or 2 + leg setup), set Target (the IK controller). Blender computes the rotations. Limitations: IK can sometimes pop or flip when the target reaches the limit of the chain's reach; needs constraints. For walking animation: IK on legs (feet plant on ground; hips move independently); FK on arms (natural swing arcs). Rigify auto-generates IK/FK switching for the whole character; pro rigs always have this." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "IK is for cameras." }
+      ],
+      "correct_answer": "b",
+      "explanation": "FK = chain of rotations; hand position derived. IK = move target; chain computes rotations. IK for ground contact/grabbing; FK for arc motion. Pro rigs have both with switching.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Automatic weights were applied; character's arm bends okay but the chest distorts when arm rotates. Fix?",
+      "choices": [
+        { "id": "a", "text": "Remove rig." },
+        { "id": "b", "text": "Weight painting — manually correct the weights. Workflow: 1) Select character mesh → enter Weight Paint mode. 2) In right panel, select the arm bone whose rotation is misbehaving (the bone causing chest distortion is being assigned too much chest weight). 3) Paint Blue (0 weight) over the chest area for that bone — removes its influence on chest vertices. 4) Verify by re-entering Pose Mode + rotating the bone; chest should stay still while arm moves. 5) Switch to nearby bones (chest bone) and paint them red (1.0 weight) over the same chest area, ensuring chest is properly attributed. 6) Mirror weight painting to opposite arm (X-Mirror toggle in Weight Paint mode). Automatic weights are a starting point — algorithms guess at vertex-to-bone assignment based on proximity, but they miss subtle cases (overlap zones near joints, complex muscle areas). Manual weight painting refines. Tools: brush (paint weight by hand), Smooth brush (soften weight transitions, removes sharp boundaries), Gradient (apply weight along a line), Add/Subtract/Multiply modes. For complex characters: 4-12 hours of weight painting per character. Pro rigs spend significant time here; it's where character animation quality lives or dies. Combine with Vertex Groups for surgical control (named groups of vertices with specific bone weights). For a polished result: every joint area painted manually after automatic weights, especially shoulders (chest interaction), hips (torso interaction), and neck (head connection). Test by posing through full range of motion." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stronger automatic weights." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Manual weight painting. Paint blue (0) on chest for the arm bone; paint red (1) on chest for chest bone. Refines auto-weights. 4-12 hours per character for polish.",
+      "points": 1
+    }
+  ]
+}

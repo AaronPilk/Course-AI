@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Materials",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "User has Reduce Transparency enabled. Your app uses materials. What happens?",
+      "choices": [
+        { "id": "a", "text": "App breaks." },
+        { "id": "b", "text": "Standard SwiftUI / UIKit materials respect the setting automatically — they render with reduced or no transparency, falling back to a solid background appropriate for the mode. Users with Reduce Transparency enabled (vision impaired, motion-sensitive, attention-focused) see solid surfaces instead of blurred ones; readability improves; the visual hierarchy still works because system uses appropriate solid tones for each material level. If you use RAW blur effects (UIVisualEffectView with custom config), you must check `UIAccessibility.isReduceTransparencyEnabled` and provide a solid fallback. In SwiftUI: `@Environment(\\\\.accessibilityReduceTransparency)` lets you adapt. The setting exists because translucent surfaces can be hard to read (especially for low-vision users) and visually distracting (for users sensitive to motion / busy backgrounds). Honoring it is mandatory for accessibility-conscious apps; Apple's App Store review increasingly checks. Free if you use system materials; one check if you customize." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Nothing changes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "System materials auto-adapt; custom blur needs `isReduceTransparencyEnabled` check + solid fallback.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "List view has translucent material backgrounds on every cell. Scrolling stutters on older devices. Cause?",
+      "choices": [
+        { "id": "a", "text": "Memory pressure." },
+        { "id": "b", "text": "GPU cost of compositing many materials simultaneously. Each translucent surface requires the GPU to sample what's behind, blur it, blend with the material's tint — cheap for one toolbar, expensive when 50 list cells each have material backgrounds rendering at 60fps. Fix: reserve materials for floating chrome (toolbars, sheets, the occasional card on rich content); use solid backgrounds for cells in lists / grids. Profile on the oldest device you support (older A11/A12 chips hit material cost hardest); Instruments → Core Animation shows offscreen rendering. The visual difference is real but the performance cost on lists outweighs the aesthetic gain. Alternative: tinted solid backgrounds (`secondarySystemGroupedBackground`) achieve hierarchy without the GPU cost. Apple's own Mail / Messages / Notes use solid backgrounds for list cells; materials reserved for the navigation/toolbar layers. Materials are a tool, not a default — use deliberately." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Network latency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GPU compositing cost of many materials. Reserve materials for chrome; use solid backgrounds for list cells.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "slug": "unreal-engine-game-dev",
+  "name": "Unreal Engine",
+  "title": "Unreal Engine Game Development",
+  "subtitle": "Epic's industry-leading engine for games, film, and real-time experiences.",
+  "category": "Game Development",
+  "level": "Intermediate",
+  "estimated_hours": 7,
+  "summary": "Unreal Engine 5 (UE5) is the most powerful game engine of 2026 — used for AAA games, Hollywood virtual production (The Mandalorian), architectural walkthroughs, and real-time experiences. This course covers Unreal's full stack: project setup + interface, Blueprints visual scripting, level design with Nanite + Lumen, materials and rendering, gameplay framework (Pawns + Controllers + GameMode), and shipping a game. Practical workflows from indie to studio scale.",
+  "brand": {
+    "logo": "/brands/unreal-engine-game-dev.svg",
+    "gradient": ["#0E1128", "#080A18"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "Unreal Engine foundations",
+      "objective": "Navigate UE5; understand projects + assets + the editor.",
+      "lessons": [
+        { "position": 1, "title": "Editor interface and viewport navigation" },
+        { "position": 2, "title": "Project creation and asset organization" },
+        { "position": 3, "title": "Levels, actors, and components" },
+        { "position": 4, "title": "Importing assets from Blender, Maya, and elsewhere" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Blueprints — visual scripting",
+      "objective": "Build gameplay logic without writing C++.",
+      "lessons": [
+        { "position": 1, "title": "Blueprint basics — nodes and execution flow" },
+        { "position": 2, "title": "Variables, functions, and events" },
+        { "position": 3, "title": "Communication between Blueprints" },
+        { "position": 4, "title": "Common gameplay patterns" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Level design and Nanite + Lumen",
+      "objective": "Build worlds that look like 2026's best games.",
+      "lessons": [
+        { "position": 1, "title": "World Partition and large worlds" },
+        { "position": 2, "title": "Nanite — virtualized geometry" },
+        { "position": 3, "title": "Lumen — dynamic global illumination" },
+        { "position": 4, "title": "Performance — keeping a smooth frame rate" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Materials, post-processing, and visual polish",
+      "objective": "Make your game look intentional.",
+      "lessons": [
+        { "position": 1, "title": "Material editor — PBR shaders" },
+        { "position": 2, "title": "Material instances and parameters" },
+        { "position": 3, "title": "Post-process volumes" },
+        { "position": 4, "title": "Lighting and atmosphere" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Gameplay framework and shipping",
+      "objective": "Structure your game; ship to platforms.",
+      "lessons": [
+        { "position": 1, "title": "Pawns, Controllers, GameMode, GameState" },
+        { "position": 2, "title": "Character movement and input" },
+        { "position": 3, "title": "Saving, loading, and persistence" },
+        { "position": 4, "title": "Packaging and shipping to platforms" }
+      ]
+    }
+  ]
+}

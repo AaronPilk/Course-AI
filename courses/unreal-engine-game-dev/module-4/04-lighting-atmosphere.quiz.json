@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Lighting and atmosphere",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best modern setup for an outdoor scene in UE5?",
+      "choices": [
+        { "id": "a", "text": "Single directional light." },
+        { "id": "b", "text": "Directional Light (sun) + Sky Light (ambient) + Sky Atmosphere (physically-based sky) + Exponential Height Fog (atmosphere/depth) + optional Volumetric Cloud. All set to Movable for full Lumen support. Setup: 1) Directional Light — sun rotation (angle controls time of day); intensity 75,000-110,000 lux for full daylight; color warmer (sunset) or cooler (midday). 2) Sky Light — captures from Sky Atmosphere; provides ambient + reflections; updates dynamically as sun changes. 3) Sky Atmosphere — physically-based sky model; produces accurate atmospheric scattering (blue sky, sunset oranges, twilight blues); reacts to sun rotation; place once. 4) Exponential Height Fog — fog density varying by altitude; enables sun shafts (godrays) through trees / windows; adds atmospheric depth. 5) Volumetric Cloud (optional) — procedural 3D clouds with sun lighting; for cinematic sky. With Lumen enabled (default in UE5), this stack produces real-world atmospheric lighting in real-time. Time of day: animate Directional Light's rotation over time; sky reacts; Lumen updates indirect lighting; entire scene lighting shifts naturally. For: open-world games with continuous time; cinematic shots at golden hour / sunset / sunrise; flexible day-night cycles. Add Post Process Volume for color grading on top (Module 4 Lesson 3). Result: AAA-quality outdoor lighting with minimal effort vs. previous-generation manual lightmap baking + handcrafted skyboxes. UE5's atmosphere stack democratizes high-quality outdoor lighting; indie / solo developers achieve looks that required dedicated lighting artists in older engine generations. Combined with Megascans environment assets + Nanite + Lumen + this lighting stack = AAA outdoor scenes in hours instead of months." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lots of point lights." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Directional + Sky Light + Sky Atmosphere + Height Fog + optional Volumetric Cloud. All Movable for Lumen. Physical sky + dynamic time of day + real-time GI = AAA outdoor lighting.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Interior room: window shows brightly-lit outdoor; inside the room is unnaturally dark (no light bouncing in). Fix?",
+      "choices": [
+        { "id": "a", "text": "Add more lights." },
+        { "id": "b", "text": "Verify Lumen is enabled + working correctly; check for thin walls causing light leak prevention; ensure sky / sun lighting reaches through the window. Setup checks: 1) Project Settings → Rendering → Global Illumination → Lumen (default enabled in UE5). 2) Verify lights have appropriate mobility — Directional Light + Sky Light should be Movable for full Lumen GI support. 3) Window mesh: ensure the glass is set up as masked or transparent material (not opaque blocking light), OR open frame (window is just a hole in the wall). 4) Wall thickness: thick walls (5cm+) prevent unwanted light leaks but should still allow Lumen to compute indirect bounce through windows. 5) Lumen Quality settings: Engine Scalability → Lumen → High (better indirect bounce). 6) If light still doesn't bounce in: increase Lumen Indirect Lighting Intensity in the Directional Light's settings; or add a small fill light at the window position. 7) Sky Light intensity: tune to provide adequate ambient lighting through windows even without direct sun. The 'interior is too dark' issue happens because: 1) Lumen disabled or low-quality — indirect bounce not computed properly. 2) Indirect Lighting Intensity too low. 3) Light Mobility incorrect (Static or Stationary limit Lumen). 4) Window blocking light (wrong material). For polished interior scenes: model windows with translucent glass or open frames; let Directional + Sky Light cast through; Lumen computes how the light bounces around interior surfaces; result: warm light pool near window + indirect ambient filling room. Test in Lumen Scene visualization (View → Lumen Scene) — shows what Lumen 'sees' and can render. If interior is dark in Lumen Scene view, the issue is upstream of post-processing. Pro UE5 interior lighting: thick walls (prevent leaks) + open windows + Lumen + Sky Light = realistic interior lighting matching outdoor sun." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Increase exposure." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Verify Lumen enabled + lights Movable + window allows light through + sky/sun reach window. Lumen handles indirect bounce; thin walls or wrong settings break it. Check Lumen Scene visualization.",
+      "points": 1
+    }
+  ]
+}

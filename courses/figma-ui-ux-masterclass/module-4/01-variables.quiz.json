@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Variables",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use variables instead of hardcoded values?",
+      "choices": [
+        { "id": "a", "text": "Faster to type." },
+        { "id": "b", "text": "Single source of truth — change the variable's value once and every reference updates. With hardcoded values, 200 buttons each carry their own `#3B82F6` literal; a brand color change means manually finding and updating 200 instances (and missing some — drift creeps in). With variables, those 200 buttons reference `color/brand/primary`; one edit in the variables panel propagates to all. This is the design-token concept made native to Figma: name your values semantically, reference by name everywhere, change centrally. The pattern extends to spacing (`space/4 = 16` for medium padding), radius (`radius/md = 8`), and type sizing. Combined with modes (light/dark, multi-brand), variables enable mode-switching previews: same variable resolves to different values per mode, components automatically reflect the theme. The two-tier approach — primitive variables (raw values like `blue-500`) + semantic aliases (`color/brand/primary = blue-500`) — adds rebranding flexibility: change semantic mappings without touching primitives, or vice versa." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Single source of truth. Change once → propagates everywhere. Hardcoded values mean manual updates + drift.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team wants both light and dark modes for the app. How do you set up variables for this?",
+      "choices": [
+        { "id": "a", "text": "Two separate component libraries." },
+        { "id": "b", "text": "One variable collection with two modes (Light + Dark). Each color variable has a value per mode: `color/bg/surface = #FFFFFF` (Light), `#0A0A0A` (Dark); `color/text/primary = #0A0A0A` (Light), `#FAFAFA` (Dark). Components reference the variable by name (`color/bg/surface`) — they automatically resolve to the right value based on the frame's selected mode. Set a frame to Light mode → descendants show light colors; switch to Dark → instantly previews dark. No duplicate components, no parallel files, no copy-paste-and-modify. The mode-switching pattern is Figma's first-class support for theming and is the modern alternative to maintaining two Figma files (light-mode.fig + dark-mode.fig). For multi-brand products, add more modes (Brand A, Brand B) on the same collection — same approach. Library publishing carries the variable + modes to consumer files; product designers select Light/Dark per frame. The pattern matches how engineering implements theming (CSS variables flipping per `data-theme` attribute) — same mental model, end-to-end token alignment." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip dark mode." }
+      ],
+      "correct_answer": "b",
+      "explanation": "One collection, two modes. Light + Dark values per variable; components resolve based on frame's mode. No duplicate libraries.",
+      "points": 1
+    }
+  ]
+}

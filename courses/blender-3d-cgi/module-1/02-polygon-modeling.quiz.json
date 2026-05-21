@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Polygon modeling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why prefer quads over triangles for modeling?",
+      "choices": [
+        { "id": "a", "text": "Triangles are deprecated." },
+        { "id": "b", "text": "Quads subdivide more cleanly, deform better for animation, and produce more predictable topology flow. When you subdivide a quad (4 vertices), it cleanly splits into 4 smaller quads — topology stays orderly. Subdividing a triangle splits into 4 triangles or 3 quads, creating messy mixed topology. For animation: quads deform along their natural axes (warp/stretch along a 2-axis grid pattern); triangles produce uneven deformation, especially around joints (faces fold along arbitrary diagonals). For Subdivision Surface Modifier (next lesson): quads round smoothly; triangles produce pinching artifacts. For edge loops: quads allow continuous loops that wrap around the model (essential for adding detail to specific areas like eyes, lips, knuckles); triangles break loop flow because there's no consistent 'next edge' to follow. Real-world modeling: aim for all-quad models during the modeling phase; convert to triangles only for game engine export (most game engines require triangulated meshes for rendering, but they'll triangulate automatically on export — your modeling can stay quad). Mixed quad+tri models are okay; pure-tri is bad for ongoing modeling. The exception: hard-surface modeling (mechanical objects) sometimes uses tris on flat-non-deforming surfaces with no penalty. Organic modeling (characters, creatures) absolutely needs quads. The shortcut Tris2Quads (Alt+J) attempts to convert tris back to quads where possible — useful for fixing accidental tris." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Quads are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quads subdivide cleanly, deform predictably, allow edge loops, work with Subsurf without pinching. Tris fine for export but messy for ongoing modeling.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Modeling a character; the knee bends weirdly during animation tests — geometry folds incorrectly. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Wrong material." },
+        { "id": "b", "text": "Insufficient edge loops at the knee bend. Joints in characters need extra edge loops perpendicular to the bend direction to provide deformation control — the loops give the mesh enough topology to compress on the inside of the bend and stretch on the outside without producing folded / pinched geometry. Standard practice for character joints: 3-5 edge loops around the joint (knee, elbow, shoulder, wrist, ankle, neck). At the actual bend point: a loop right where the bone pivot will be. Above and below: support loops a few units away. Total: 3-5 loops in the joint region. Add loops with Ctrl+R (Loop Cut), hover over an edge in the joint area, click to add, scroll to add multiple at once, drag to position. Verify by entering Weight Paint mode and viewing the rigged deformation — if folding still appears, add another loop. For complex deformations (face: smile, lip purse, eye blink) the loop density is even higher: 5-10 loops around each major feature. Edge loop placement is one of the foundational skills of character modeling; insufficient loops produce 'paper-folding' artifacts; excessive loops bog down the viewport and overcomplicate weight painting. The 3-5-loop rule for joints is the practical minimum; observe pro character models in tutorials or asset libraries to internalize the pattern. Same principle applies for facial animation, cloth simulation, soft-body physics — all need topology where the deformation happens." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong color." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Insufficient edge loops at the knee. Add 3-5 loops perpendicular to bend direction with Ctrl+R. Joint topology requires explicit loop density.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Blueprint basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Difference between white wires and colored wires in Blueprints?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "White wires (execution wires) define the SEQUENCE of actions — what happens in what order; only one execution wire fires at a time, flowing left to right. Colored wires (data wires) carry VALUES between nodes — variables, return values, computed results — multiple can connect to one input. Example: 'Event BeginPlay (execution out) → Print String (execution in)' — the white wire from BeginPlay to Print String determines that Print String runs when BeginPlay fires. Separately: 'String variable Get (data out) → Print String In String input (data in)' — the colored wire (blue for string) carries the actual text content into Print String's input. Two completely separate flows: execution determines WHEN things happen; data determines WHAT values they use. The right-click context menu in Blueprint Editor shows only context-relevant nodes: dragging from an execution pin shows nodes with execution inputs; dragging from a data pin shows nodes with matching-type inputs. This is one of the foundational mental models for visual scripting. Confusion source: novices try to connect data pins to execution pins (incompatible) or wonder why a function doesn't execute without an execution wire connected. Once the execution-vs-data distinction clicks, Blueprints become readable. Same principle in Unity Visual Scripting, Godot's visual nodes, Blender's Geometry Nodes — all separate execution flow from data flow." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "White is for testing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "White wires = execution sequence (when things happen). Colored wires = data values (what values used). Two separate flows; never connect across them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Blueprint logic has 200 nodes in Event Graph; impossible to read. Refactor?",
+      "choices": [
+        { "id": "a", "text": "Live with it." },
+        { "id": "b", "text": "Break into Functions + Macros + comment blocks. 1) Functions: group logical chunks (e.g., 'TakeDamage' function takes damage amount input, computes new health, plays hurt sound, checks for death). Move related nodes into a function via My Blueprint panel → +Function → cut nodes from Event Graph → paste into function. Now Event Graph calls TakeDamage(50); the 30 nodes of damage logic are in the function. Functions accept inputs / return outputs; encapsulate behavior. 2) Macros: like functions but lower-level (no separate frame, execute in caller context); for tight reusable operations. 3) Comment blocks: select related nodes → C key → adds a comment box that groups them visually with a label ('Damage System', 'AI Pathing', 'UI Updates'). Color-code for category. 4) Collapse to function (right-click selected nodes → Collapse to Function) — same result as building function manually. 5) Move events to separate sub-graphs (Sub-Graph in Macros) if related. After refactoring, the Event Graph reads as a series of high-level events calling functions: 'BeginPlay → InitializeGame → SpawnEnemies → StartTimer'; the implementation details of each function are visible by opening that function. Pro Blueprint work: keep Event Graph as a high-level orchestration; push details into named functions. Like clean code: small functions doing one thing well. 200 raw nodes in Event Graph = unreadable; 30 nodes in Event Graph calling functions = navigable. Spaghetti graphs are the amateur signature; refactoring into functions is the pro polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add more nodes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Refactor into Functions + Macros + comment blocks. Event Graph stays high-level; details in functions. 200 raw nodes → 30 nodes calling functions. Pro pattern.",
+      "points": 1
+    }
+  ]
+}

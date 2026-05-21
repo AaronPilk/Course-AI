@@ -1,0 +1,87 @@
+{
+  "slug": "figma-ui-ux-masterclass",
+  "title": "Figma UI/UX Masterclass",
+  "subtitle": "From rectangles to design systems — the modern designer's primary tool",
+  "description": "A practical course on Figma as it's actually used in design teams in 2026: file structure, auto layout, components and variants, variables and tokens, prototyping, dev handoff, and the collaboration workflows that make Figma a team tool, not just a canvas. For designers shipping work and engineers reading designs.",
+  "category": "Design",
+  "difficulty": "beginner",
+  "audience": "Designers (any level), product engineers reading Figma daily, anyone learning visual design with the dominant tool.",
+  "tags": ["figma", "ui-design", "ux-design", "design-systems", "prototyping"],
+  "estimated_minutes": 280,
+  "brand": {
+    "name": "Figma",
+    "logo": "/brands/figma-ui-ux-masterclass.svg",
+    "gradient": ["#F24E1E", "#A259FF"],
+    "tint": "#1A0814"
+  },
+  "prerequisites": [
+    "Comfortable with computers",
+    "Visual taste (no formal design training needed)",
+    "Figma account (free tier works)"
+  ],
+  "outcomes": [
+    "Navigate Figma fluently — layers, frames, files, libraries",
+    "Build with auto layout and components",
+    "Define variables and design tokens",
+    "Prototype interactions and flows",
+    "Collaborate with engineers via dev mode",
+    "Maintain a design system that scales"
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "The Figma foundation",
+      "objective": "How Figma is structured and how to move through it.",
+      "lessons": [
+        { "position": 1, "title": "Files, pages, frames, layers" },
+        { "position": 2, "title": "Keyboard shortcuts that matter" },
+        { "position": 3, "title": "Constraints and resizing" },
+        { "position": 4, "title": "Plugins worth your time" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Auto Layout",
+      "objective": "Make designs flex like real interfaces.",
+      "lessons": [
+        { "position": 1, "title": "What Auto Layout actually does" },
+        { "position": 2, "title": "Padding, spacing, alignment" },
+        { "position": 3, "title": "Hugging vs filling vs fixed" },
+        { "position": 4, "title": "Nested Auto Layout patterns" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Components, variants, properties",
+      "objective": "Build a reusable design system.",
+      "lessons": [
+        { "position": 1, "title": "Components and instances" },
+        { "position": 2, "title": "Variants and properties" },
+        { "position": 3, "title": "Component properties (text, boolean, instance swap)" },
+        { "position": 4, "title": "Libraries and team consumption" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Variables and design tokens",
+      "objective": "Centralize color, typography, spacing, radius.",
+      "lessons": [
+        { "position": 1, "title": "Variables — what and why" },
+        { "position": 2, "title": "Modes (light/dark, themes)" },
+        { "position": 3, "title": "Token taxonomy and naming" },
+        { "position": 4, "title": "Tokens to code: handoff strategies" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Prototyping, handoff, and collaboration",
+      "objective": "Take designs from canvas to shipped product.",
+      "lessons": [
+        { "position": 1, "title": "Prototyping flows and interactions" },
+        { "position": 2, "title": "Dev Mode and the engineer's view" },
+        { "position": 3, "title": "Comments, branching, version history" },
+        { "position": 4, "title": "Maintaining a design system over time" }
+      ]
+    }
+  ]
+}

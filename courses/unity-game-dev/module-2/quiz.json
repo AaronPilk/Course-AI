@@ -1,0 +1,80 @@
+{
+  "title": "Module 2 quiz: C# scripting in Unity",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where do physics calculations belong?",
+      "choices": [
+        { "id": "a", "text": "Update." },
+        { "id": "b", "text": "FixedUpdate. Runs at consistent fixed intervals (default 50/sec); physics needs consistent timing for stable simulation. Update fires irregularly based on visual frame rate; physics in Update produces different behavior across frame rates (60 FPS = 1x force; 120 FPS = 2x force). FixedUpdate guarantees same physics behavior regardless of visual FPS. Implementation: `void FixedUpdate() { rigidbody.AddForce(force * mass); }`. Configure interval: Project Settings → Time → Fixed Timestep (default 0.02 = 50Hz). Higher = smoother but more CPU; lower = jankier but cheaper. Update is for visual / input / non-physics logic; LateUpdate runs after all Updates + FixedUpdate (good for camera following). Pro Unity script habit: physics → FixedUpdate; everything else → Update; post-physics camera/UI → LateUpdate. Same pattern in Unreal Engine (Tick vs. Physics Tick); universal across engines.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "FixedUpdate. Consistent fixed intervals (50Hz default); stable physics simulation. Update irregularly fires; physics in Update = framerate-dependent behavior.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Movement code makes character move twice as fast at 120 FPS as at 60 FPS. Fix?",
+      "choices": [
+        { "id": "a", "text": "Cap FPS." },
+        { "id": "b", "text": "Multiply by Time.deltaTime. Without it: per-frame movement applies once per frame; at 60 FPS = 60 applications/sec; at 120 FPS = 120 applications/sec; double speed. With Time.deltaTime: movement scales with frame time; consistent units/sec regardless of frame rate. Pattern: `transform.position += direction * speed * Time.deltaTime;`. Time.deltaTime = seconds elapsed since last frame; multiplying converts 'per frame' to 'per second' rate. Universal pattern across game engines (Unreal: Delta Seconds; Godot: delta parameter). Use Time.deltaTime for: per-frame movement, rotation, scaling, counters, timers, value interpolation in Update. Don't use in FixedUpdate (use Time.fixedDeltaTime if needed, though often unnecessary). Common missed Time.deltaTime spots: rotation (transform.Rotate), animation lerps, color fades, value smoothing. Audit script code; every per-frame change should multiply by Time.deltaTime. Pro Unity habit ingrained from day one." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multiply by Time.deltaTime. Converts per-frame rate to per-second rate. Frame-rate independent. Universal Unity pattern for every per-frame movement.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Best practice for Inspector-tweakable but encapsulated variables?",
+      "choices": [
+        { "id": "a", "text": "public." },
+        { "id": "b", "text": "[SerializeField] private. Variable is private (encapsulated; not accessible from other scripts) but visible in Inspector for designer tweaking. Pattern: `[SerializeField] private float moveSpeed = 5f;`. Other scripts can't access moveSpeed externally; only this script's logic uses it; Inspector exposes for tuning. Public alternative makes it externally accessible — breaks encapsulation; other scripts can modify arbitrarily; harder to track value changes. Combine with [Range(0, 100)] for slider; [Header('Movement')] for visual grouping; [Tooltip('How fast character moves')] for hover documentation. Pro Unity scripting: [SerializeField] private for all tunable values; public only for explicit API (e.g., public readonly Health that other scripts read but don't modify directly). The 'public for Inspector' anti-pattern is common beginner mistake; [SerializeField] is the cleaner Unity-provided solution.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "[SerializeField] private. Inspector-visible + encapsulation preserved. Combine with [Range], [Header], [Tooltip] for polished Inspector UI.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Script calls GameObject.Find('Camera') in Update every frame. Performance impact?",
+      "choices": [
+        { "id": "a", "text": "Negligible." },
+        { "id": "b", "text": "Significant — GameObject.Find scans entire scene hierarchy looking for the named GameObject; called per frame = thousands of scene-wide lookups per second. At 60 FPS in 1000-GameObject scene = 60,000 hierarchy traversals/sec; compounds with other Find calls. Fix: cache reference once in Awake or Start; use cached reference in Update. Pattern: `private Camera mainCamera; void Awake() { mainCamera = Camera.main; }`. In Update: use mainCamera directly; no Find call; instant access. Better: [SerializeField] private Camera mainCamera + drag in Inspector — no string-based lookup at all. Same anti-pattern: GetComponent in Update (lookup per frame is slow); cache via GetComponent in Awake / Start; use cached reference in Update. Other slow per-frame methods to avoid: FindGameObjectWithTag, FindObjectOfType, FindObjectsOfType. All scan scene; cache results. Pro Unity script habit: 1) [SerializeField] private references for Inspector-assigned. 2) Cache via GetComponent in Awake/Start for same-GameObject components. 3) Use cached references in Update / FixedUpdate. 4) Profile via Unity Profiler — Find calls show as expensive operations. The optimization scales: 10 scripts × Find in Update = 600K lookups/sec; cached refs = ~0 cost; smooth performance. Universal Unity optimization rule.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Significant. GameObject.Find scans scene; per-frame = thousands of lookups/sec. Cache reference in Awake/Start; use cached in Update. Same for GetComponent. Universal Unity optimization.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Decoupled cross-script communication in Unity?",
+      "choices": [
+        { "id": "a", "text": "Direct references everywhere." },
+        { "id": "b", "text": "C# events / UnityEvents / ScriptableObject event channels. C# events (delegate-based): `public static event Action<int> OnScoreChanged;` — script raises (OnScoreChanged?.Invoke(score)); subscribers register (+= handler) and unregister (-= handler) on Enable/Disable. Cross-script communication without direct references. UnityEvents (serializable): `public UnityEvent<int> OnHealthChanged;` — Inspector-wired callbacks; designer-friendly. ScriptableObject event channels (advanced): GameEvent ScriptableObject assets; raised from systems; listeners reference the SO + register. Decoupled at asset level. Use cases: 1) HUD updates score on score-change event. 2) Achievements check thresholds on score-change event. 3) Sound plays on score-change event. 4) Death event triggers loot drop + animation + UI fade. 5) Level complete event saves progress + loads next scene + shows results. Pattern enables: 1) Add new subscriber without modifying source. 2) Remove subscriber without breaking source. 3) Test in isolation. 4) Scale to N subscribers. Critical: always unsubscribe in OnDestroy / OnDisable — otherwise events hold references to destroyed objects; memory leaks; null references when fired. UnityEvents and SO event channels handle this automatically; manual C# events need explicit cleanup. Pro Unity architecture: events for state-change communication; direct references for tight 1:1 relationships; ScriptableObject events for highly decoupled cross-system signals.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "C# events / UnityEvents / ScriptableObject event channels. Decoupled pub-sub pattern. Scales to N subscribers; always unsubscribe in OnDestroy. Pro Unity architecture.",
+      "points": 1
+    }
+  ]
+}

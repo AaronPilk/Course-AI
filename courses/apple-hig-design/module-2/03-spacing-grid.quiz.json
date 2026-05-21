@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Spacing & grid",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use multiples of 8 for spacing?",
+      "choices": [
+        { "id": "a", "text": "Apple requires it." },
+        { "id": "b", "text": "Pixel alignment + visual rhythm + decision shortcut. 8 divides cleanly into screen scales (@1x, @2x, @3x): 8pt = 16/24px depending on device; round numbers everywhere. Half-pixel rendering issues (anti-aliasing fuzz) disappear when values align to the device grid. Visual rhythm: when every gap is 8/16/24/32, the eye sees consistency; arbitrary values (13, 19, 27) create subliminal noise. Decision shortcut: pick from {4, 8, 12, 16, 20, 24, 32} instead of agonizing over 'is 14 or 15 better.' Industry-wide; not unique to Apple. Combined with consistent tokens (xs/sm/md/lg/xl naming), engineering and design align — both reference 'spacing-md' and get 16pt. 4pt sub-grid for fine internal adjustments (icon-text gaps inside compact rows); 8pt minimum between elements. Once you adopt this discipline, layouts feel intentional rather than random; new designers absorb the system quickly because the values are memorable. Apple's HIG bakes this into SwiftUI defaults and recommendations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduces file size." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Pixel alignment across @1x/@2x/@3x + visual rhythm + decision shortcut. 8pt grid is industry standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designing for iPhone, your screen has a Face ID home indicator at the bottom. Sticky CTA button placement?",
+      "choices": [
+        { "id": "a", "text": "At the very bottom edge." },
+        { "id": "b", "text": "Above the safe area inset, not at the device edge. Face ID devices have a home indicator zone at the bottom (~34pt high) that's reserved for system gestures; placing a tap target there means users hit the home gesture instead of your button. Place the CTA with `.safeAreaInset(.bottom)` in SwiftUI (or `safeAreaLayoutGuide` in UIKit) — system handles the offset automatically across devices (Face ID adds it; Touch ID doesn't need it). Backgrounds (color fills, images) can extend edge-to-edge under the home indicator for aesthetic continuity; INTERACTIVE elements stay within safe area. The pattern: backgrounds extend; controls respect. Same on top — content respects status bar / notch / Dynamic Island for tap targets; backgrounds extend. UIKit `safeAreaInsets` and SwiftUI `.safeAreaInset()` make this automatic. Skipping safe areas = users tap your button, system intercepts as home gesture; frustration. This is one of the universal mistakes new iOS developers make; the framework provides the fix but you have to use it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "16pt from edge." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Above safe area inset (~34pt on Face ID devices). Use `.safeAreaInset(.bottom)`; backgrounds can extend, controls respect.",
+      "points": 1
+    }
+  ]
+}

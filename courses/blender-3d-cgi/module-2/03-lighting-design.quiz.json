@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Lighting design",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the three-point lighting setup?",
+      "choices": [
+        { "id": "a", "text": "Three rim lights." },
+        { "id": "b", "text": "Key + Fill + Rim/Back. Standard studio + film lighting foundation. Key light: main illumination; typically front-side at 30-45° from camera angle; brightest; defines the subject's primary look (shadow falling on opposite side reveals form). Fill light: opposite side from key; weaker (typically 1/2 to 1/4 of key's strength); softens the shadow side so subject isn't half-dark; HDRI environment lighting often serves as natural fill. Rim/back light: behind subject pointing toward camera; creates edge highlight on the subject's silhouette; separates subject from background (without it, subject merges into background, especially with dark backgrounds). Setup for character render in Blender: 1) Area light front-right at 30° (Key, 100W). 2) Area light front-left at 60° (Fill, 30W). 3) Area light back-up behind subject (Rim, 80W). 4) HDRI environment for ambient fill. Variations: portrait photographers use 'butterfly' (key from directly above front), 'Rembrandt' (45° creating triangle of light on shadow-side cheek), 'split' (key from side, half face in shadow). All are variants of three-point. Why three-point works: defines form (key), softens shadow (fill), separates from background (rim). With just one light: flat or harsh. With two: missing edge separation. Four+ adds practical lights (lamps in scene), accents (cosmetic highlights), atmosphere. Three-point is the foundation; everything builds on it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Three suns." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Key (main) + Fill (softens shadows) + Rim/Back (edge separation). Foundation of studio + film lighting. Builds 90% of subject renders.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Product render scene; client wants 'soft natural light, like a magazine photoshoot.' Setup?",
+      "choices": [
+        { "id": "a", "text": "Single point light." },
+        { "id": "b", "text": "HDRI environment + large soft Area lights. Workflow: 1) World Properties → load a studio HDRI (PolyHaven 'Studio Small 09' or similar 'studio diffuse' HDRIs are common for product) → provides ambient fill + subtle bounce light. 2) Add large Area light front-side at 30-45° (the Key), set Size to large (2-4 meters) — large size = soft shadows = flattering for product surfaces. 3) Add smaller Area light fill-side at lower power (or rely on HDRI as fill). 4) Add Rim light behind product for edge definition. 5) Set lights to neutral or slightly warm color temperature (~5000K). 6) Background: solid color sweep (paper backdrop simulation) or out-of-focus environment for depth. 7) Camera: f/8-f/11 aperture for sharp product; ~50-85mm focal length for natural perspective. 8) Render in Cycles for accurate reflections + soft shadows. The 'magazine product photo' look = soft + clean + slight directional shadow defining form. Hard lights produce 'catalog' look (harsh shadows, defined edges); soft lights produce 'magazine' look (subtle shadows, flattering surfaces). Key choices for soft: Area light size 2m+ (vs. 0.1m which is hard); HDRI fill providing ambient; lights not too directly above (avoid harsh top shadows). Reference: photograph high-end product magazines (Vogue, GQ, Architectural Digest) → study how their products are lit → replicate in Blender. Most professional product renders use this three-light-plus-HDRI formula with tuning per product geometry / material." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Single bright light." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HDRI environment + large soft Area lights (key + fill + rim). Large size = soft shadows = flattering. Magazine look = soft + clean + subtle shadows.",
+      "points": 1
+    }
+  ]
+}

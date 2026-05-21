@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Editor's mindset",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Pro editor's workflow stages?",
+      "choices": [
+        { "id": "a", "text": "Polish everything immediately." },
+        { "id": "b", "text": "Rough cut → refine cut → lock picture → audio + color polish → final review → ship. Each stage has a specific goal; resist completing later stages too early. 1) Rough cut: all content in approximate order; don't fuss with cut timing, audio levels, or graphics; goal is capturing material. Often 2-4x final length. 2) Refine cut: tighten timing, trim excess, add B-roll, first audio cleanup pass; structure crystallizes. 3) Lock picture: structural decisions final; no more reordering or major trims. Lock is a commitment moment — past lock, only audio and color change. 4) Audio + color polish: with picture locked, the audio engineer / colorist can do their work knowing the cut is final. Mix dialogue, music, sound effects to broadcast standards; apply primary correction + grade. 5) Final review: watch end-to-end multiple times; catch problems; verify deliverables. 6) Ship. The reason this order matters: polishing audio for a clip that later gets cut wastes the audio work; grading a shot that gets replaced wastes color time. Polish-as-you-go is the amateur signature; experienced editors keep polishing in distinct passes. Some teams have specialist roles for audio mix + color grade — the picture-lock stage is the handoff. Solo editors do all passes themselves but maintain stage discipline: don't audio-polish during rough cut; don't color during refine. The stage gates protect time and produce higher-quality results. Same principle applies in software engineering (architect → implement → test → ship) and writing (draft → revise → edit → publish)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random order." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rough cut → refine → lock picture → audio + color polish → final review → ship. Resist polishing in early stages; each stage has distinct goal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "12-hour edit session; you're hitting diminishing returns; can't tell if your decisions are good anymore. What to do?",
+      "choices": [
+        { "id": "a", "text": "Power through with coffee." },
+        { "id": "b", "text": "Stop editing for now. The brain's pattern-recognition for creative judgment degrades past 4-6 hours of intense work; past 8-10 hours, you're often making decisions that look reasonable in the moment but are clearly wrong on review the next day. Pro editors recognize this and stop. Options: 1) End for the day. Sleep. Return fresh. 2) Take a 1-2 hour break (walk, eat, exercise, completely unrelated activity); return for one more focused session if deadline requires. 3) Switch tasks: do export setup, organize project, ingest more footage — necessary work that doesn't require creative judgment. 4) Show the current cut to someone else; their fresh eyes catch what your tired eyes miss. The 'I've been editing 12 hours; it should be done by now' mindset is the trap. Editing involves continuous creative judgment; tired judgment is bad judgment. Locking a cut while exhausted = shipping problems that wake-up-you would have caught. Studios and professional editors structure schedules around this: 6-8 hour editing days max for sustained quality; reviews next morning catch problems from previous day; weeks of work compound when each day produces good decisions vs. compounding when each day produces decisions that need redoing tomorrow. Health-wise: 12-hour sessions wreck eyes, back, sleep cycle. Career-wise: the editors still working at 60 are the ones who paced themselves. Career-wise: the editors who burn out at 30 are the ones who power-through. Take the break." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Energy drinks." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stop. Creative judgment degrades past 6-8 hours. Sleep; return fresh. 'Powering through' produces decisions you'll redo tomorrow. Pace = career longevity.",
+      "points": 1
+    }
+  ]
+}

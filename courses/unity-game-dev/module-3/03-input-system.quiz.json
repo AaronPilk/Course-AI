@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Input System",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use new Input System vs. legacy Input class?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Cross-platform + rebindable + action-based. Legacy Input class: hardcoded device queries (Input.GetKeyDown(KeyCode.W)); no built-in rebinding; per-platform code branches (keyboard vs. gamepad); deprecated for new projects in 2026. New Input System: 1) Action-based — define abstract actions (Move, Jump, Interact); map physical inputs in Input Actions asset. Gameplay code reads actions; doesn't know which physical inputs trigger them. 2) Cross-platform — same actions; different bindings per device; system auto-detects active device. 3) Rebinding — runtime rebinding API; players customize keys via settings UI. 4) Multiple devices simultaneously — local multiplayer with multiple gamepads + keyboard. 5) Composite bindings — WASD as 2D Vector; gamepad stick as 2D Vector; same input. 6) Built-in modifiers — Tap, Hold, Double-Tap, Swipe. 7) Touch + VR support. 8) Event-driven — subscribe to action.performed; no polling per frame. Install: Package Manager → Input System. Setup: Create Input Actions asset; define Action Maps (Player, UI, Vehicle); define Actions per map; bind physical inputs. Reference asset in script (or use PlayerInput component for easier integration). Pro Unity 2026 input design: New Input System for all new projects; migration path for legacy projects. Same approach as Unreal's Enhanced Input System; modern game engine standard. The legacy Input class still works but lacks all the above features; using it in new projects is technical debt.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cross-platform + rebindable + action-based. New Input System for all 2026 Unity projects. Legacy Input class deprecated; lacks rebinding, composites, multiple devices, touch support.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Player controls work on keyboard but fail on gamepad. Fix?",
+      "choices": [
+        { "id": "a", "text": "Buy keyboard." },
+        { "id": "b", "text": "Add gamepad bindings to Input Actions. In your Input Actions asset, each Action (Move, Jump, etc.) needs bindings for each input device — not just keyboard. For Move action: add 2D Vector composite with WASD (keyboard) + LeftStick (gamepad); both produce Vector2 output. For Jump: add Space (keyboard) + Gamepad/buttonSouth (typically X on PlayStation, A on Xbox). For Look: add Mouse Delta (keyboard+mouse) + RightStick (gamepad). Same Action; multiple bindings; whichever device player uses, action fires. Setup workflow: 1) Open Input Actions asset. 2) For each Action, click + → Add Binding (single input) or Add 2D Vector Composite (for movement axes). 3) Click Path field → device + control picker. 4) Add for each target device. 5) Save asset. Process: ensure each Action has bindings for keyboard+mouse AND gamepad; many Actions need both. Some Actions are device-specific (e.g., mouse scroll for zoom — bind only to Mouse/scroll; gamepad equivalent might be Right Bumper/Left Bumper). For touch: add Touchscreen bindings + use On-Screen Stick/Button UI components for virtual controls. The Input System auto-detects active device + applies the right binding. PlayerInput component's 'Default Control Scheme' lets you specify default device; can switch at runtime. Pro Unity 2026 input setup: every Action has keyboard+mouse + gamepad bindings minimum; touch + VR added if targeting those platforms. Same approach as Unreal Enhanced Input.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add gamepad bindings to Input Actions. Each Action needs bindings for each target device (keyboard + gamepad + optional touch/VR). Composite 2D Vectors for WASD + LeftStick. Same action; multiple bindings.",
+      "points": 1
+    }
+  ]
+}

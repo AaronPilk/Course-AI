@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Padding & spacing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Padding vs spacing in Figma Auto Layout?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Padding is INSIDE the frame (between frame edge and children); spacing is BETWEEN children (the gap separating siblings). Different controls in the Auto Layout panel; different defaults. Example: a button with padding 16/8 (horizontal/vertical) and spacing 8 between icon and text means: 16px between left frame edge and icon + 8px between icon and text + 16px between text and right frame edge; vertically 8px above/below content. Together they define the inner geometry. Common pattern: padding for the OUTER breathing room (how the frame relates to its content boundary); spacing for INTER-CHILD gaps. Most components have both. Visual rhythm comes from consistent values across components — 16px padding everywhere, 8px spacing everywhere is more cohesive than random values. Stick to the 8-point grid for both. Tokenize via Figma variables (covered next module) for system-wide consistency." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cosmetic." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Padding = inside frame (edge to children); Spacing = between children. Different controls; both matter.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Nav bar: logo on left, user menu on right, gap fills in between. Best Auto Layout approach?",
+      "choices": [
+        { "id": "a", "text": "Fixed positions." },
+        { "id": "b", "text": "Horizontal Auto Layout with 'Space between' distribution. Set the AL spacing to 'auto' (or click the space-between icon) — Figma distributes children to fill the parent width, with logo at the start, user menu at the end, gap absorbing the middle. As parent resizes, the gap expands/contracts; logo and user menu stay anchored. Alternative: add a spacer child (empty AL frame, fill width) between logo and menu — achieves same effect manually. 'Space between' is cleaner; spacer is more explicit. For three-region layouts (logo left, title center, menu right), use two spacers around the title — or set 'space between' and center the title via z-index / overlap (more complex). Most nav bars are two-region (left items + right items); space-between is the right pattern. Resize the nav bar by changing the screen width to verify; logo and menu stay anchored to edges while center expands. Standard pattern across UI design tools (CSS flexbox does this with justify-content: space-between)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrap layout." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Horizontal AL with 'Space between' distribution — middle gap absorbs space; ends stay anchored.",
+      "points": 1
+    }
+  ]
+}

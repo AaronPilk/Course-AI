@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: LoRA training",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use LoRA over full fine-tune (Dreambooth)?",
+      "choices": [
+        { "id": "a", "text": "LoRA is always better." },
+        { "id": "b", "text": "Smaller files + faster training + stackable. LoRA: 10-200 MB file added on top of base model; trains in 30 min-4 hours; can stack multiple LoRAs (character + style) in one prompt; reusable across base models (with some adaptation). Full fine-tune (Dreambooth): produces 7 GB+ checkpoint replacing base model; trains longer (8-24 hours); one fine-tune per checkpoint (no stacking); harder to share + iterate. For most use cases — characters, styles, concepts — LoRA is preferred: 1) Disk space efficient (vs. 7 GB per fine-tune × N variants). 2) Faster iteration (try training settings; iterate quickly). 3) Stackable (character LoRA + style LoRA = both effects). 4) Easier sharing (small files; Civitai distribution). 5) Switchable (apply LoRA when needed; remove when not). 6) Compatible with base model improvements (new base = use existing LoRA, sometimes with adjustment). Full fine-tunes reserved for: foundation work (training new base model from scratch on huge datasets); maximum quality lock (where every parameter trained for a specific aesthetic); merge / blend with other fine-tunes. Practical: 95% of users train LoRAs; full fine-tunes done by base model creators (Stability AI, model release teams) + a few dedicated community fine-tuners. Tools: Kohya SS (most popular for SDXL), OneTrainer (user-friendly), AI Toolkit (modern Flux), cloud services (Civitai, fal.ai, Replicate). Production AI artists maintain personal LoRA library; reuse across projects.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Smaller files (10-200 MB vs. 7 GB) + faster training + stackable (multiple LoRAs in one prompt). For characters, styles, concepts. Full fine-tunes reserved for foundation work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Trained character LoRA; generated images look exactly like training photos; can't pose character in new scenes. Cause?",
+      "choices": [
+        { "id": "a", "text": "Need more steps." },
+        { "id": "b", "text": "Overfitting — LoRA memorized training images instead of learning generalized character features. Symptoms: generated images closely resemble specific training photos (same poses, backgrounds, expressions); model resists rendering character in new poses / scenes; prompting variations doesn't change much. Fixes: 1) Fewer training steps — overfitting typically from too many steps; reduce by 30-50% and retrain (e.g., 3000 → 1500-2000 steps). 2) Lower learning rate — 1e-4 → 5e-5; learns slower; less aggressive memorization. 3) More varied dataset — your 15 training images probably show character in similar poses; add 10-15 images with varied poses, angles, lighting, expressions, backgrounds; teaches generalized character vs. memorized specific photos. 4) Regularization images — generic 'class' images (e.g., 'photo of a man' if character is male) included in training; prevents collapse onto training-specific features; teaches model that character is a specific instance of broader class. 5) Lower Network Rank (Dim) — 64 → 32 or 16; less capacity to memorize; more compression forces generalization. 6) Earlier checkpoint — Kohya saves checkpoints during training; load an earlier (less-trained) checkpoint; may be less overfit. Verify retrain: generate test image with character in completely new scene + pose; if it looks like new scene with character features → success; if it looks like training photo with new scene awkwardly applied → still overfit. Iterating LoRA training is normal; first attempts often need adjustment. Pro LoRA trainers iterate 2-5 times per character to dial settings. Pre-built LoRAs on Civitai have gone through similar iteration; learning from successful ones helps.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Overfitting. Fewer steps, lower learning rate, more varied dataset, regularization images, lower Network Rank, earlier checkpoint. Iterate to dial settings.",
+      "points": 1
+    }
+  ]
+}

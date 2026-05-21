@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Publishing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Lowest-barrier platform for indie game distribution?",
+      "choices": [
+        { "id": "a", "text": "Console." },
+        { "id": "b", "text": "itch.io (web + downloadable PC builds) — no submission fee, no review process, instant distribution, set your own price (including free, pay-what-you-want, or fixed). Build Unity project → WebGL or PC platform → upload to itch.io → live within minutes. Other low-barrier options: Steam ($100 one-time per game; review process; ~30-day wait; huge audience but more competition), Google Play Store ($25 one-time; faster review than App Store; large audience), Newgrounds (free; web games). High-barrier platforms: Apple App Store ($99/year; strict review; can reject), Console (PS5/Xbox/Switch — apply to dev program; get approved; physical devkits; pass certification = months). For first projects + portfolio: itch.io is ideal — ship something; iterate; build community; get feedback. For broader audience after demonstrating quality: Steam. For premium positioning: console (high prestige but slow + competitive). For mobile: Google Play first (faster + cheaper than App Store) then iOS. The 'lowest barrier' isn't always best — itch.io has limited audience reach; Steam has audience but competition; consoles have prestige but gatekeeping. Pick by goal: validate idea → itch.io; build audience → Steam; reach mobile masses → Google Play / App Store; prestige + premium → console. Pro indie path: itch.io demos → Steam release → optional console port; multi-platform expansion based on initial success.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "itch.io. No fees, no review, instant distribution. For first projects + iteration. Steam for broader audience after quality demonstrated. Console has highest barrier.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Shipped game; players report random crashes. How to identify causes post-launch?",
+      "choices": [
+        { "id": "a", "text": "Wait for emails." },
+        { "id": "b", "text": "Set up crash reporting service: Unity Cloud Diagnostics (built-in; free for basic tier), Firebase Crashlytics (free; cross-platform; widely used), or Sentry (paid; generic; comprehensive). Integration: add the SDK to project; configure with API key; deploy update. Once installed, the SDK automatically captures crashes + uploads stack traces + device info + breadcrumbs (recent log messages leading to crash) to a web dashboard. Pattern: 1) Player's game crashes. 2) SDK captures + uploads on next launch (or background). 3) Dashboard shows aggregated crash data — same crash from many players grouped together. 4) Stack trace shows where in code the crash happened. 5) Device info shows platform + OS version + memory + GPU; can correlate crashes to specific devices. 6) Breadcrumbs show what player was doing pre-crash. 7) Fix the bug; ship update; monitor that crash group reduces / disappears. Without crash reporting: blind to post-launch issues; players complain on Steam reviews / Twitter but no actionable data; can't fix unknown bugs. With crash reporting: prioritize bugs by impact (top 10 most common crashes affect 90% of crashing players); fix systematically; quality improves over patches. Pro shipped games always have crash reporting + analytics setup before launch — non-negotiable for serious projects. Setup time: 30-60 minutes; lifetime value: enormous.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Crash reporting service: Unity Cloud Diagnostics, Firebase Crashlytics, or Sentry. Auto-captures + uploads stack traces + device info; aggregated dashboard. Non-negotiable for shipped games.",
+      "points": 1
+    }
+  ]
+}

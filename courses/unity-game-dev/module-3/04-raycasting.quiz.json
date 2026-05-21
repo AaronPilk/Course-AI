@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Raycasting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Use case for OverlapSphere?",
+      "choices": [
+        { "id": "a", "text": "Linear ray." },
+        { "id": "b", "text": "Area-of-effect detection — get all colliders within a radius. Returns Collider[] array of everything overlapping the sphere. Use cases: 1) Explosion damage — `var hits = Physics.OverlapSphere(explosionCenter, blastRadius, enemyLayer); foreach (var h in hits) { h.GetComponent<Health>().TakeDamage(damage); }`. 2) Proximity-based AI — find all enemies within hearing/sight range. 3) Healing aura — heal all allies within radius every X seconds. 4) Pickup magnet — items near player auto-attracted (find pickups via OverlapSphere; move toward player). 5) Spell effects (Magic Missile, Chain Lightning, Fireball). Differs from Raycast (single point + direction; first hit) — OverlapSphere is a 3D sphere; returns ALL overlapping colliders simultaneously. Combined with LayerMask to filter: only check against specific layers (e.g., 'Enemies' for damage). Cost: depends on radius + collider density; bigger radius + more colliders = more cost. For frequent calls (per frame): cache results between frames if appropriate; or use trigger zone with OnTriggerEnter (passive event-driven detection). For one-shot calls (explosion event): OverlapSphere is perfect. Variants: OverlapBox, OverlapCapsule for non-spherical regions. Non-allocating versions (OverlapSphereNonAlloc) take a pre-allocated array; avoid GC pressure for frequent calls. Pro Unity habit: OverlapSphere for AoE; trigger zones for sustained proximity detection; Raycast for line-based queries.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Area-of-effect detection — get all colliders within radius. For explosions, proximity AI, healing auras, pickup magnets, spell effects. Combine with LayerMask + NonAlloc variants for performance.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "First-person game; need 'press E to interact' on object player looks at. Implementation?",
+      "choices": [
+        { "id": "a", "text": "Click everywhere." },
+        { "id": "b", "text": "Raycast from camera forward with LayerMask filtering for interactable objects. Pattern: `void Update() { Ray ray = new Ray(playerCamera.position, playerCamera.forward); if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactableLayer)) { ShowInteractPrompt(hit.collider.gameObject); if (interactAction.WasPressedThisFrame()) { hit.collider.GetComponent<IInteractable>()?.Interact(); } } else { HideInteractPrompt(); } }`. Workflow: 1) Cast ray from camera position in camera.forward direction (camera's looking direction). 2) Limit distance (interactDistance, typically 2-5 meters). 3) Filter by LayerMask 'Interactable' — only objects on that layer can be interacted with. 4) If hit: get the GameObject; check if it implements IInteractable interface; show 'Press E to interact' UI prompt with object's name. 5) If player presses Interact action (new Input System): call Interact() via interface; object handles its own behavior (door opens, NPC talks, item picks up, switch toggles). 6) If no hit: hide prompt. The IInteractable interface enables polymorphism — Door, Chest, NPC, LightSwitch, Lever all implement IInteractable.Interact(); player code doesn't care about specific class; calls interface; each object handles uniquely. Pattern: `public interface IInteractable { void Interact(); }`. Setup objects: assign Interactable layer; implement IInteractable interface in their script; the layer + interface combo makes player Raycast clean. Common variations: 1) Add gaze-based reticle (UI dot that highlights when looking at interactable). 2) Tooltip with object name + action ('Press E to Open Door'). 3) Hold-to-interact for long actions (charging crank handles). 4) Distance fade (prompt visible when in range; fades when farther). 5) Sound feedback on prompt appear/disappear. The Raycast + Interface pattern is universal for first-person interaction; same in Unreal (Line Trace + IInteractable interface), Godot.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Raycast from camera forward; LayerMask filters interactables; show prompt if hit; call IInteractable.Interact() on input. Interface enables polymorphism (doors, chests, NPCs all implement IInteractable).",
+      "points": 1
+    }
+  ]
+}

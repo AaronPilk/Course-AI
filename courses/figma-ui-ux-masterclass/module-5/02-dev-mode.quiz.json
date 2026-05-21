@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dev Mode",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the value of variables showing up in Dev Mode code snippets?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Engineers see the semantic token name (`color/brand/primary`) instead of just the resolved hex (`#3B82F6`), enabling them to align Figma tokens to their CSS variables / Tailwind config / design-tokens.json. The snippet becomes `background: var(--color-brand-primary)` rather than `background: #3B82F6` — engineers can copy-paste tokens directly into code that uses the same variable. This is the per-component endpoint of the design-token pipeline: Figma variables → component snippets reference them → engineers consume them as CSS variables. Without this, engineers see hex values and either hand-copy (risking drift, missing the token system entirely) or do a reverse-lookup (slow, error-prone). The named-token approach also future-proofs: when the design system rebrands and `color/brand/primary` shifts from blue-500 to purple-500, the engineer's CSS variable update propagates automatically — they don't need to recheck every hex against the design. Dev Mode also marks components 'Ready for dev' so engineers know what's stable; Code Connect (paid tier) goes further by linking Figma components to specific React/SwiftUI/Compose components." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Snippets are required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Snippets reference variable names — engineers see semantic tokens, align to their CSS variables. Token pipeline end-to-end.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Engineers keep implementing wrong hover/error/loading states. Designer's response: 'They're in the prototype.' What's the real issue?",
+      "choices": [
+        { "id": "a", "text": "Engineers are slow." },
+        { "id": "b", "text": "States aren't explicitly designed as frames — they're only in the prototype's behavior, easy to miss. Fix: design every interactive state as a visible frame on the components page. For a Button: frames for Default, Hover, Pressed, Focused, Disabled, Loading. For a form input: Default, Focused, Filled, Error (with error message position), Disabled. For data displays: Default (with data), Empty (no data), Loading (skeleton or spinner), Error (failure message). All on the same page side-by-side. Mark the component variants with State property; engineers see the full matrix in Dev Mode. Add annotations: 'Hover state: 200ms transition; bg shifts to brand-700.' 'Empty state: friendly icon + 'No items yet' + Create button.' Now the handoff is visual + explicit, not implied. Prototype = behavioral spec; component variants = state spec; both required. The 'prototype shows it' defense is a sign of design debt — engineers can't right-click an animation to extract its specs reliably. Document states upfront; future engineers (and future designers) thank you." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Hire better engineers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Design every state explicitly as visible frames + variants. Prototype is behavior; component variants are state spec. Both required.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "sources": [
+    { "url": "https://help.figma.com", "title": "Figma Help Center", "publisher": "Figma" },
+    { "url": "https://www.figma.com/best-practices/", "title": "Figma Best Practices", "publisher": "Figma" },
+    { "url": "https://www.figma.com/community", "title": "Figma Community", "publisher": "Figma" },
+    { "url": "https://config.figma.com", "title": "Figma Config (annual conference)", "publisher": "Figma" }
+  ]
+}

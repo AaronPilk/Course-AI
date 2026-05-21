@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Samplers and steps",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Default sampler for SDXL workflows?",
+      "choices": [
+        { "id": "a", "text": "DDIM." },
+        { "id": "b", "text": "DPM++ 2M Karras. Modern, sharp, detailed; widely considered the best balance of quality + speed + consistency for SDXL. Pairs with Karras scheduler for smooth noise distribution. Generates clean, well-detailed images at 20-30 steps. Alternatives: 1) DPM++ 2M SDE Karras (variant; sometimes sharper). 2) DPM++ 3M SDE Karras (top quality; needs 30+ steps). 3) Euler (older, faster, softer look). 4) Euler a (creative, less consistent). 5) UniPC (fast convergence at low steps). 6) LCM (only for LCM-LoRA models, 4-8 steps). Pick based on use case: most workflows → DPM++ 2M Karras default; hero shots → 3M SDE Karras with more steps; speed → Euler or UniPC; LCM workflows → LCM sampler. Same sampler-scheduler pair (DPM++ 2M + Karras scheduler) is the modern standard across SDXL pipelines in ComfyUI, A1111, Forge, etc. Test 3-4 samplers on a reference prompt; settle on a default; deviate only when needed. The 'sampler doesn't matter' attitude is wrong — different samplers produce visibly different aesthetics from same prompt+seed. The 'always use random new sampler' attitude is also wrong — pick a default; iterate consistency.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DPM++ 2M Karras. Modern, sharp, balanced. Standard for SDXL. Karras scheduler pair. 20-30 steps typical. Test alternatives but use this as default.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Generating 100 product variations; each takes 25 steps + 8 seconds; total = 13 minutes. Speed up?",
+      "choices": [
+        { "id": "a", "text": "Cheaper computer." },
+        { "id": "b", "text": "Use a fast model + low-step sampler: Flux Schnell (4 steps), SDXL Lightning (4-8 steps), SDXL Turbo (1-4 steps), or LCM-LoRA + LCM sampler (4-8 steps). Trade-off: slightly lower quality vs. base model at full steps; faster generation. For 100 product variations where you'll select the best 10-20: speed > per-image perfection. Workflow: 1) Generate 100 candidates with Flux Schnell or SDXL Lightning at 4-8 steps each (~1-3 sec/image vs. 8 sec); total time 2-3 min vs. 13 min. 2) Select top 10-20 candidates. 3) Re-generate selected at full quality (SDXL 25 steps or Flux Dev) for shipping. The 'speed for exploration; quality for finalization' pattern is standard pro workflow. Other speed optimizations: 1) Lower resolution for previews (512x512 SDXL → upscale chosen ones). 2) Half precision (FP16 vs FP32; usually default). 3) Compile model (torch.compile / TensorRT for ~30% speedup). 4) Reduce batch overhead (batch size 1 if VRAM-limited). 5) Disable unused features (no VAE tiling needed for small images). The total time for 100 variations dropping from 13 min to 3 min compounds for iteration; instead of waiting 13 min × 5 rounds of tweaks = 65 min, you wait 3 min × 5 = 15 min. Pro habit: separate exploration speed from final quality; use Schnell / Lightning / LCM for exploration; full models for finalization.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fast model + low-step sampler: Flux Schnell (4 steps), SDXL Lightning, SDXL Turbo, or LCM-LoRA. 3-4 sec → 13 min becomes 2-3 min. Exploration at speed; finalize selected with full quality.",
+      "points": 1
+    }
+  ]
+}

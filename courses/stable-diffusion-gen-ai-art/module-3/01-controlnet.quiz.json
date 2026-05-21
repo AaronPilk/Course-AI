@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: ControlNet",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "ControlNet type for replicating exact human pose?",
+      "choices": [
+        { "id": "a", "text": "Canny." },
+        { "id": "b", "text": "OpenPose. Detects skeleton + joints from reference person; outputs simplified skeleton image (stick figure with joints); ControlNet uses this to constrain generated human's pose. Workflow: reference photo of person → OpenPose preprocessor extracts skeleton → feed to ControlNet with prompt for new character/style → generated image has new person in exact same pose. Useful for: 1) Consistent character poses across illustrations (same hero striking same pose with different outfits). 2) Action poses (martial arts, dance, athletic). 3) Reference matching (recreate a famous photograph's pose). 4) Multi-character compositions with specific arrangement. Other ControlNets: Canny (edge detection — preserves outline / composition, not specifically pose); Depth (3D structure); Lineart (drawing outlines); Scribble (loose sketch); Normal Map (surface direction); MLSD (architectural straight lines); Seg (semantic regions); Inpaint (masked-area changes); Tile (upscaling). Pick by what aspect you need to control: pose → OpenPose; composition → Canny or Depth; specific shape → Lineart or Scribble; building/architecture → MLSD. Multi-ControlNet stacks combine: OpenPose + Canny preserves both pose + outline; OpenPose + Depth preserves pose + 3D layout. For production character work: OpenPose is invaluable; without it, getting exact poses requires generating many candidates + picking. With it, specify pose precisely; first generation matches. Pro habit: combine OpenPose + appropriate face/style LoRA + descriptive prompt = highly controlled character generation.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OpenPose. Detects skeleton from reference; constrains generated pose. Essential for character consistency, action poses, reference matching. Multi-ControlNet combines with Canny/Depth.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need same building from different angles with consistent style + lighting. Approach?",
+      "choices": [
+        { "id": "a", "text": "Generate 50 and pick." },
+        { "id": "b", "text": "Multi-ControlNet (Depth + Canny) + locked prompt + locked seed (or batch generation). Workflow: 1) Render or photograph building from desired angles (3D model in Blender / SketchUp, or 3 reference shots). 2) For each angle, generate depth map + Canny edge map (via ControlNet preprocessors). 3) Use same prompt for all angles (descriptive: 'modern glass office building, golden hour lighting, photorealistic architecture, ultra-detailed'). 4) Same sampler, steps, CFG, seed for batch consistency. 5) Apply both Depth ControlNet (preserves 3D structure per angle) + Canny ControlNet (preserves edges per angle); strength 0.7-1.0. 6) Generate each angle; results have consistent style + lighting + materials + atmosphere with different 3D perspectives. The Depth + Canny combo locks down structure; the locked prompt + sampler / CFG lock down style; result is a coherent set of angle variations. Without ControlNet, getting consistent style across angles requires many cherry-picked generations + obvious style drift. With ControlNet: surgical control. Production architectural viz uses this pattern: 3D model in Blender → render multiple angles → ControlNet each → consistent set of marketing images. Same approach for product photography (CAD render → ControlNet → consistent product photos from multiple angles); character turnarounds (3D rig → multiple angle renders → ControlNet → consistent character art); environment design (block out 3D → multiple angles → ControlNet → atmospheric concept art).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-ControlNet (Depth + Canny) + locked prompt + locked seed. 3D render or reference per angle → ControlNet preserves structure; locked params preserve style. Consistent set output. Pro architectural / product viz pattern.",
+      "points": 1
+    }
+  ]
+}

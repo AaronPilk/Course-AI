@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Adaptive design",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `NavigationSplitView` over manually conditional sidebar code?",
+      "choices": [
+        { "id": "a", "text": "Less typing." },
+        { "id": "b", "text": "Framework handles adaptation automatically. NavigationSplitView presents as: NavigationStack with single-column push navigation on iPhone (compact width); two-column sidebar + detail on iPad regular width; full Mac sidebar with resizable columns; transitions between modes during rotation / multitasking / Stage Manager / window resize. Manually conditional code would need: hSizeClass checks at every layout decision; rotation handling; multitasking transition coordination; Mac-specific window management; per-platform sidebar appearance / resizing. NavigationSplitView encapsulates all of this; you provide content for each role (sidebar / content / detail); framework picks the right presentation. Plus inherits any future iOS improvements automatically. Custom logic is more code, more bugs, doesn't inherit improvements. Use NavigationSplitView for any multi-column app; fall back to custom only when you genuinely need a layout it can't express. Apple's first-party apps (Files, Mail, Notes) use this pattern; the cross-platform adaptation is essentially free." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Memory savings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Framework handles iPhone/iPad/Mac adaptation + rotation + multitasking + future iOS improvements automatically.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Hardcoded `width: 600` for a content area. iPad Slide Over breaks it. Why?",
+      "choices": [
+        { "id": "a", "text": "Bug in iPadOS." },
+        { "id": "b", "text": "iPad multitasking renders your app at variable widths — Slide Over ~320pt, Split View 50/50 ~512pt, Split View 33/66 ~341pt or ~683pt. A hardcoded 600pt width overflows the smaller widths; content gets clipped or scrollable horizontally; UI feels broken. Fix: relative sizing (`frame(maxWidth: .infinity)` with appropriate padding, or `min/max/ideal` width hints), respect size classes (`horizontalSizeClass == .compact` triggers simpler layout), use GeometryReader to react to available width, or use `ViewThatFits` for layout fallbacks. The 'iPad = 1024pt wide always' assumption broke in iOS 9 when Slide Over arrived; in 2026 multitasking is heavy usage. Test in Xcode simulator with Slide Over / Split View enabled; on real iPad with Stage Manager. Modern iPad apps are responsive across the full width range. Hardcoded widths anywhere in iPad code is a smell; replace with relative or constrained sizing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use larger value." }
+      ],
+      "correct_answer": "b",
+      "explanation": "iPad multitasking renders at variable widths (320-1366pt). Use relative sizing, size classes, GeometryReader.",
+      "points": 1
+    }
+  ]
+}

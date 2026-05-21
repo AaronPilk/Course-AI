@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Img2img",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Denoising strength for typical style transfer (photo → painting)?",
+      "choices": [
+        { "id": "a", "text": "0.1" },
+        { "id": "b", "text": "0.5-0.7 typical for style transfer. Preserves enough original structure (composition, subject placement, key shapes) while allowing prompt-driven style transformation. Too low (0.1-0.3) = subtle changes only; barely converts style; original photo feel dominates. Too high (0.8-1.0) = essentially text-to-image; loses original structure; you're just generating new image. Sweet spot 0.5-0.7: original composition + new style. For different goals: 1) Subtle color grade / minor changes → 0.1-0.3. 2) Style transfer (photo → painting, sketch → render, photo → anime) → 0.5-0.7. 3) Major reinterpretation while keeping rough layout → 0.7-0.85. 4) Essentially regenerate using input as faint inspiration → 0.9+. Experimentation per source + target style. For sketch-to-render: 0.7-0.85 + Canny ControlNet (preserves outline structure precisely while allowing high denoising for detail). For variation generation (same image, slightly different): 0.4-0.5. Combined with ControlNet adds structural control; combined with IP-Adapter adds style reference. Production AI artists fluently dial denoising per goal — not one-size-fits-all. The 'just set 0.5 always' approach works for most cases; refine when output isn't what you want.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "0.5-0.7 for style transfer. Preserves composition + applies new style. Lower = subtle; higher = lose original. Tune per goal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to maintain consistent character (same face) across 20 generated illustrations. Approach?",
+      "choices": [
+        { "id": "a", "text": "Hope for consistency." },
+        { "id": "b", "text": "Face IP-Adapter (or train character LoRA — Module 4). IP-Adapter approach: 1) Provide 1-3 reference photos of the character's face. 2) Enable Face IP-Adapter in generation pipeline (IP-Adapter Face Plus model). 3) IP-Adapter encodes face features as conditioning alongside text prompt. 4) Generate 20 illustrations; each includes the same face features. 5) Strength tunable: low = subtle face influence; high = strict face match. For perfectly consistent face: 1.0; for 'similar but stylized': 0.5-0.8. Trade-off: IP-Adapter constrains face but other features (body, clothing, expression) still flexible via prompt. Combined with character LoRA: even stronger character lock. Use cases for IP-Adapter: 1) Character consistency in comic / illustration series. 2) Brand character across marketing assets. 3) Replicate likeness from reference photo (with consent). 4) Style transfer based on style of reference. Caution: ethical/legal concerns about using real people's faces without consent; ensure rights. Alternative for ultra-strict consistency: train a character LoRA (Module 4) — captures character more comprehensively than IP-Adapter; one-time training cost; reuse forever. Best approach for production: character LoRA + Face IP-Adapter for hero shots = very consistent character across 100s of generations. Pro AI artists use both. For one-off character (single illustration), face IP-Adapter sufficient; for ongoing character series (web comic, brand mascot), LoRA worth the training investment.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Face IP-Adapter (or train character LoRA). Reference photo → face features encoded into generations. Strength tunable. For ongoing series, train LoRA for stronger consistency. Pro pattern: LoRA + IP-Adapter combined.",
+      "points": 1
+    }
+  ]
+}

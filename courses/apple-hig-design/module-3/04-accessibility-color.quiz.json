@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Color accessibility",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is 'red error, green success' insufficient?",
+      "choices": [
+        { "id": "a", "text": "Too simple." },
+        { "id": "b", "text": "About 8% of men have red-green color blindness — they can't reliably distinguish red from green. If color is the ONLY signal for state, those users can't tell error from success. Solution: combine color with another signal — error gets red + ⚠ warning icon + clear text 'Error: ...'; success gets green + ✓ checkmark + 'Saved' text. Color reinforces but doesn't carry the only meaning. Apple's HIG: 'Differentiate Without Color' principle. iOS has a system setting that forces apps to test without color reliance; honoring it shows your app degrades gracefully. Beyond color blindness: contrast issues in bright sun, screen reader users hearing text instead of seeing color, monochrome eInk displays — all benefit from non-color-only signals. The discipline of pairing color with shape/icon/text is universally good UX and inclusive design. Color-blindness simulators (Sim Daltonism, Color Oracle, Chrome DevTools CB filters) let you test designs through CB vision; major UI screens should be readable through them." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Patent issues." }
+      ],
+      "correct_answer": "b",
+      "explanation": "8% of men are red-green color blind. Pair color with icon + text + position. Test with CB simulator.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer uses light gray text on white background — looks elegant in Figma. Issue?",
+      "choices": [
+        { "id": "a", "text": "Looks great." },
+        { "id": "b", "text": "Likely fails WCAG AA contrast (4.5:1 for body text; common 'elegant' light gray scoring around 2.5-3.5:1). Vision-impaired users can't read it; outdoor sun viewing makes it invisible; older eyes (16+% of US adults are 50+) struggle. The trendy 'minimal aesthetic' loses to readability. Run the Xcode Accessibility Inspector → Color Audit on every text/background pair; failing pairs are flagged. Fix: darken text until AA passes — usually `secondaryLabel` or darker; for body, `label` (full primary). Test in dark mode too. Counterintuitively: increasing contrast often makes designs look more confident, not less elegant — high-contrast is the Apple aesthetic (see Notes, Mail, Messages — all high-contrast). 'Elegant' light gray is often a sign the designer didn't measure; ask for contrast values. Failures are common in Figma where backgrounds are pure white and gray text reads fine on a screen at 100% brightness in a dim room — but production users in varied environments suffer. Make contrast a checklist item before shipping any screen." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Looks fine." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Likely fails WCAG AA (4.5:1). Light gray on white often 2.5-3.5:1. Audit + darken until AA passes.",
+      "points": 1
+    }
+  ]
+}

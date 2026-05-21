@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Gameplay framework",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Where should you store player progress that survives level changes?",
+      "choices": [
+        { "id": "a", "text": "On the Pawn." },
+        { "id": "b", "text": "GameInstance — the only framework class that persists across level transitions. Pawn is destroyed when level changes; PlayerController may or may not persist depending on setup; GameMode + GameState are per-level (destroyed on level change); only GameInstance lives the entire game session from boot to quit. Setup: 1) Create custom GameInstance subclass (BP_MyGameInstance). 2) Project Settings → Maps & Modes → Game Instance Class → set to your custom GameInstance. 3) Add variables (PlayerProgress, UnlockedLevels, SaveSlot, GlobalSettings, etc.). 4) Access via Get Game Instance → Cast To BP_MyGameInstance → access variables. Use cases for GameInstance: 1) Player progression (XP, level, achievements). 2) Save game state (which save slot is active; references to SaveGame objects). 3) Settings (audio, graphics, controls). 4) Active match state in lobby → battle transition (carry player choice / loadout from lobby into battle level). 5) Player profile data (username, avatar). 6) Multiplayer connection info. Don't use GameInstance for: 1) Per-level data (use GameState). 2) Per-player data (use PlayerState). 3) Per-character data (use Pawn variables — but understand they reset on respawn / level change). The 'where does this data live?' question is foundational to UE5 gameplay architecture: GameInstance for cross-level, GameMode for level rules, GameState for level state, PlayerState for player data, Pawn for character-specific. Getting this right scales; mixing up scopes produces fragile codebases that break on level transitions or multiplayer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "GameMode." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GameInstance — only class that persists across level transitions. For player progression, save data, settings, cross-level state. Pawn/GameMode/GameState all reset per level.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Player dies; want them to respawn with new body but maintain camera/input continuity. Approach?",
+      "choices": [
+        { "id": "a", "text": "Restart the level." },
+        { "id": "b", "text": "Use the PlayerController + Pawn separation built into UE5's framework. PlayerController persists when the Pawn dies; Pawn (body) gets destroyed; spawn new Pawn; PlayerController possesses the new Pawn; input continues; camera continues; player experience is smooth respawn. Workflow: 1) Player Pawn takes damage → Health reaches 0. 2) On death event: PlayerController.UnPossess() to release current Pawn. 3) Destroy old Pawn (or play death animation; destroy after). 4) Spawn new Pawn at respawn location (PlayerStart actor or designated respawn point). 5) PlayerController.Possess(newPawn). 6) Input continues; camera attaches to new Pawn; player resumes gameplay. This is one of the key reasons UE5 splits input (PlayerController) from body (Pawn). With both in one actor: dying = losing input handling; need to recreate everything; clunky. With separation: PlayerController is the persistent player identity; Pawns come and go. Same pattern enables: 1) Vehicle gameplay (player enters car → PlayerController possesses car Pawn → can possess back to character). 2) Character switching (squad games where you swap between multiple characters; PlayerController possesses different characters). 3) Spectator mode (PlayerController possesses spectator Pawn after death; observe other players). 4) Cinematic camera takeover (briefly possess a camera Pawn for cutscenes; return to player Pawn after). For polished respawn: add death sequence (camera rotates around dead body 3 sec) + transition (fade to black 0.5 sec) + spawn (new body appears) + fade in (smooth return). The PlayerController + Pawn separation is foundational; pro UE5 games leverage it for all respawn / character-swap / vehicle gameplay." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reload the game." }
+      ],
+      "correct_answer": "b",
+      "explanation": "PlayerController persists; Pawn (body) destroyed + replaced. UnPossess old, Possess new. Input + camera continuity. Same pattern for vehicles, character switching, spectator.",
+      "points": 1
+    }
+  ]
+}

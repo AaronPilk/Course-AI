@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Lumen",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Lumen vs. baked lightmaps?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Lumen = real-time dynamic global illumination; baked lightmaps = precomputed offline + stored per-texel. Lumen advantages: 1) Dynamic — lights can move; time of day changes; environment can shift; lighting updates instantly. 2) No build time — baked lighting takes hours (sometimes days) to compute for complex levels; Lumen needs zero build. 3) Iteration speed — designers tweak lights and see results in real-time; baked requires rebuild per change. 4) Dynamic objects lit correctly — characters, vehicles, moving props receive proper indirect lighting (baked lighting can't account for them). Lumen disadvantages: 1) GPU cost — more expensive per frame than baked (which is essentially free at runtime). 2) Some quality limits in complex scenes — baked can produce perfect ambient occlusion / shadow detail in static scenes; Lumen approximates. 3) Hardware requirement — modern GPU + DX12/Vulkan/Metal. For 2026 projects: Lumen is default; baked lighting is legacy. Justifications for baked: 1) Mobile / VR / lower-end hardware where Lumen is too expensive. 2) Static scenes where Lumen GPU cost isn't justified. 3) Specific quality requirements baked excels at. Hybrid: some scenes use Lumen; some use baked; per-level choice. The trajectory is clear — Lumen wins as GPUs catch up; baked phases out. Older games (UE4 era) used baked exclusively; UE5 games shipping in 2025-2026 are Lumen-first. Performance tuning: Lumen quality (Low/Medium/High/Epic) lets you scale per platform; Low for consoles, High for desktop. Hardware ray tracing (HWRT) vs. software (SWRT) gives another knob: HWRT requires RTX 4070+/equivalent AMD; produces highest quality reflections + GI." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lumen = real-time dynamic GI; baked = precomputed offline. Lumen for dynamic lights + zero build time; baked for static + minimal GPU cost. UE5 default = Lumen.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Indoor scene has light leaking through walls — pockets of light visible inside dark rooms. Cause?",
+      "choices": [
+        { "id": "a", "text": "Bug in Lumen." },
+        { "id": "b", "text": "Thin walls. Lumen uses distance fields (signed distance functions) to approximate geometry for ray tracing; walls thinner than the distance field resolution have 'gaps' through which light leaks. Fix: 1) Thicken walls — make walls > 5cm thick (real walls aren't paper-thin anyway). 2) Add an interior shell — a separate mesh inside the wall that captures rays. 3) Reduce Lumen Range / sample distance — limits how far rays travel; less far-distance leak. 4) Adjust Distance Field Resolution Scale on the affected meshes (Static Mesh editor → Build Settings → Distance Field Resolution Scale). Higher resolution = better wall representation; more memory. 5) Disable Lumen on specific meshes (use Skip in Lumen Scene checkbox) — fine-grained control. For polished interior scenes: build with thick walls from the start; cleanest. For existing thin walls: thicken via modeling OR add interior collision shells. The 'light leak' issue is Lumen-specific (baked lighting doesn't have this — but baked has its own issues). Pro UE5 interior workflow: 1) Build walls thick by default (5-10cm minimum). 2) Test with Lumen on; check for leaks via test renders. 3) Fix leaks via thickening or interior shells before polishing further. 4) Use Lumen Scene visualization (View → Lumen Scene) to see what Lumen 'sees' — bright spots inside dark rooms reveal leak sources. Combined with proper Sky Atmosphere setup + appropriate Lumen quality + reasonable light counts = clean interior scenes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove lights." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Thin walls — Lumen's distance fields have gaps. Thicken walls (>5cm) OR add interior shell OR adjust Distance Field Resolution. Verify via Lumen Scene visualization.",
+      "points": 1
+    }
+  ]
+}

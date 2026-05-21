@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Adaptive layouts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use `NavigationSplitView` instead of separate iPhone/iPad code?",
+      "choices": [
+        { "id": "a", "text": "Less code only." },
+        { "id": "b", "text": "Adaptive by framework. NavigationSplitView automatically presents as single-column NavigationStack on iPhone (compact width) and multi-column sidebar+detail on iPad (regular width); rotation, Split View, Slide Over, Stage Manager all handled. Write once; works across the device matrix. Compared to hand-coding 'if iPad show sidebar else navigation' — you'd recreate adaptive logic, miss edge cases (orientation changes, multitasking transitions), and have parallel code paths to maintain. SwiftUI / UIKit's adaptive components encode platform conventions: split views look right on iPad, popovers become sheets on iPhone automatically, sidebars collapse appropriately. Apple's framework has done the adaptive thinking; using it means your app inherits sensible defaults across device classes. Custom adaptive logic when defaults don't fit; framework defaults for everything else. The 'write once, adapt across devices' promise is the SwiftUI thesis; NavigationSplitView is one of its strongest demonstrations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster compile." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Framework adapts: NavigationStack on phone; sidebar+detail on iPad; handles rotation + multitasking. Write once.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "iPad app needs to handle Split View. Minimum width to design for?",
+      "choices": [
+        { "id": "a", "text": "1024pt." },
+        { "id": "b", "text": "~320pt. iPad Split View can present your app at multiple widths depending on user's split: 50/50 (about half iPad width), 33/66 (about third), or as Slide Over (a floating column, ~320pt wide on most iPads). Your app must work at the narrowest possible width — typically 320pt for Slide Over, which is essentially iPhone-portrait width. Layouts that assumed 'iPad = wide' break: sidebars overflow; multi-column views become unusable; text gets cramped. The solution: respect size classes (compact width = single column UI like phone; regular width = sidebar + detail); adapt component layouts based on `horizontalSizeClass`. NavigationSplitView handles this automatically for many cases; custom layouts need explicit size-class checks. Test in Xcode simulator with Split View enabled, and on real iPad with multitasking. The 'iPad is always 1024pt' assumption was true in iOS 8; in iPadOS, your app must work as wide as 1366pt OR as narrow as 320pt depending on context." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "768pt." }
+      ],
+      "correct_answer": "b",
+      "explanation": "~320pt (Slide Over). iPad multitasking can render your app at any width from 320 to 1366. Respect size classes.",
+      "points": 1
+    }
+  ]
+}

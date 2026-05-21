@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Plugins",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the single accessibility plugin worth installing in Figma?",
+      "choices": [
+        { "id": "a", "text": "Random plugins." },
+        { "id": "b", "text": "Stark — comprehensive accessibility checker with contrast ratios (WCAG AA/AAA), color-blindness simulators (deuteranopia, protanopia, tritanopia, achromatopsia), focus order checks, missing alt-text detection, font-size analysis. Run on every screen before handoff; catches contrast failures, color-only state communication, missing labels — issues that would otherwise reach production and affect real users. Free tier covers contrast + simulation; paid adds more features. Mandatory if your team cares about shipping accessible work; common in design teams that have an accessibility review process. Competitors (Able, A11y - Color Contrast Checker) are simpler but Stark is the comprehensive choice; if you install one accessibility plugin, install Stark. Pair with manually running designs through accessibility settings on real devices (VoiceOver, Dynamic Type A5) before considering work complete. The plugin catches issues during design; device testing catches issues that emerge in real use." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stark." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stark — contrast checking + color-blind simulation + accessibility audit. Mandatory before shipping designs.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer installs 30+ plugins to 'have everything available.' Issue?",
+      "choices": [
+        { "id": "a", "text": "No issue." },
+        { "id": "b", "text": "Plugin bloat slows Figma + clutters the menu without adding value. Each plugin loads in the background; menu becomes long and unscannable; you can't find what you actually use among the noise; Figma startup and file performance degrade. Better: curate ruthlessly. Pin 5-10 plugins you actually use weekly (right-click in Plugins menu → Pin); uninstall everything else. Quarterly review: which pinned plugins did you use this quarter? Unpin / uninstall the rest. Adding a plugin should require a real problem it solves; 'might be useful someday' is the wrong reason. Workflow check: when reaching for a plugin, ask 'is this faster than doing it natively?' If no, native is fine. Some plugins (Stark, Iconify, Content Reel) earn permanent residence; most are situational; many are one-time tools that should be uninstalled after use. The plugin ecosystem is rich precisely because Figma encourages experimentation — but curation is on you." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "More tools always good." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Plugin bloat slows Figma + clutters menu. Pin 5-10 weekly-used; uninstall the rest. Curate ruthlessly.",
+      "points": 1
+    }
+  ]
+}

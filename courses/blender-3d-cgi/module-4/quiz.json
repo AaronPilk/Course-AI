@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Animation, rigging, simulation",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Default keyframe interpolation in Blender?",
+      "choices": [
+        { "id": "a", "text": "Linear." },
+        { "id": "b", "text": "Bezier — creates ease (slow start + fast middle + slow end) between keyframes. This matches how real-world motion behaves: objects accelerate and decelerate; pure linear motion (constant speed) feels robotic. Bezier curves have handles in the Graph Editor that you can drag to shape the ease aggressively (sharper for snappier; gentler for slower acceleration). Use Bezier for: organic motion (characters, animals), camera movements (most natural), object animations needing realism. Use Linear (constant rate) for: mechanical motion (rotating gears, conveyor belts, spinning fans), abstract / graphic motion where ease feels wrong. Use Constant (hold value until next keyframe) for: step animation (claymation, stop-motion), pose-to-pose animation with frame-by-frame control. Switch in Graph Editor: select keyframe → T → pick interpolation type. Different per keyframe (a slow ease-in might have Bezier; a fast snap might switch to Linear; a hold might be Constant). Disney's 'slow in, slow out' animation principle = Bezier interpolation; 3D animation inherits from 2D tradition. Master handles via the Graph Editor; ease shaping is animation craft. Default Bezier handles are 'Aligned Auto' — good starting point; tune for polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Constant." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bezier — creates ease (slow start, fast middle, slow end). Default. Matches real-world motion. Master handles in Graph Editor.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Character walks; foot 'slips' along the ground instead of staying planted. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Wrong character." },
+        { "id": "b", "text": "Feet need IK (Inverse Kinematics) with the IK target staying planted on the ground while hips move. Without IK, animator manually keyframes every leg bone's rotation per frame — error-prone; small mistakes cause the foot to slide. With IK on legs: place IK target on foot; target's position drives the entire leg chain. Plant the IK target on the ground (keyframe its Location stationary); animate the hips moving forward; the IK chain (thigh + lower leg + foot) automatically computes the rotations to keep the foot stationary as the body moves over it. Setup: In Pose Mode, on the foot bone, add Bone Constraint → IK → Chain Length 2 or 3 (foot + lower leg + thigh) → set Target (a separate IK controller bone, typically placed at foot position). Animate the IK target's position to plant the foot during stance phase; lift during swing phase; replant at next step. The IK controller is what the animator keyframes; the rest of the chain computes automatically. Result: feet stay planted; no slipping; natural walk. Common pro setup: separate IK controllers per leg + IK/FK switching property (so animator can use IK for walks but FK for kicks where arc matters). Rigify auto-generates this complete setup. Without IK, foot-slip on walks is endemic; with IK, foot planting is trivial. Same principle applies to hands (gripping objects), feet (climbing, jumping landings), tail/tentacles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster animation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add IK on legs with IK target planted on ground. IK chain auto-computes rotations as hips move. Foot stays stationary; no slipping. Standard for walks.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Cloth simulation: shirt falls through body. Cause?",
+      "choices": [
+        { "id": "a", "text": "Bad cloth preset." },
+        { "id": "b", "text": "No collision object on the body. Cloth simulation needs collision targets to interact with — without them, cloth ignores everything and falls through as if in empty space. Fix: select the body mesh → Properties → Physics → Collision → enable. Now the cloth sees the body and interacts (drapes over, doesn't penetrate). Other potential issues even with collision: 1) No pinning — even with collision, an unanchored shirt slides off body during gravity simulation; pin shoulders + collar via Vertex Group + Cloth Physics → Pinning. 2) Body mesh too thin (no thickness) — cloth can intersect thin geometry; add Solidify modifier to body underneath. 3) Initial position penetrates body — start cloth slightly outside body mesh; if cloth starts inside, simulation can't resolve. 4) Collision distance too small (default 0.015) — increase if cloth penetrates frequently. 5) Quality too low — Cloth Physics → Quality higher iteration count for more accurate collision detection (default 5; increase to 10-20 for problem areas). The collision + pinning combo is the foundation of cloth simulation; without either, the sim doesn't work. Standard cloth setup checklist: 1) Cloth Physics on garment. 2) Collision Physics on body. 3) Pin Vertex Group on garment shoulders / waistband. 4) Cloth preset matching fabric (Cotton, Silk, Leather). 5) Bake simulation before final render. Skipping any produces broken sim." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "No Collision Physics on body. Cloth ignores everything without collision targets. Add Collision on body; verify pinning + thickness; bake.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Camera animation: simple push-in feels lifeless. Add cinematic feel?",
+      "choices": [
+        { "id": "a", "text": "Skip the push." },
+        { "id": "b", "text": "Anticipation + ease + motion blur + subtle handheld shake. Anticipation: before the push, pause camera 8-12 frames; optionally a tiny backward 'wind-up' move (1-2 units back over 4 frames) — sets up the push. Ease: in Graph Editor, shape Bezier handles on Location keyframes for slow-start / fast-middle / smooth-end (or fast snap-stop for dramatic punctuation). Motion blur: enable in Render Properties; Shutter Speed 0.5-1.0; renders directional blur during fast camera motion — reinforces speed sensation. Subtle shake: small random keyframes on camera position (0.02 unit jitter) + rotation (0.5° jitter) during the push — adds 'handheld' character; pure mathematically-clean camera moves look CGI. Combined: anticipation hold → wind-up → eased push with motion blur + slight handheld shake → snap stop with brief overshoot. This is film grammar; the same techniques cinematographers use for dramatic camera moves. Reference Studio Marvel / Russo Brothers / Nolan films — note how their dramatic pushes use these elements. Pro Blender animation workflow includes ALL of these for important camera moves; novice work skips them and produces 'CGI camera' that lacks emotional impact. The static frames + lifeless camera moves are the amateur signature; cinematic camera work is the pro polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Static frames." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Anticipation + ease + motion blur + subtle handheld shake. Film grammar for dramatic camera moves. Adds emotional impact; pure mathematical motion = CGI feel.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Rigify is...",
+      "choices": [
+        { "id": "a", "text": "A modifier." },
+        { "id": "b", "text": "Blender's built-in auto-rig generator addon. Enable in Preferences → Add-ons → search 'Rigify' → check. Then Shift+A → Armature → Human (or Quadruped, etc.). A meta-rig template appears — position the bones to match your character's body. Click 'Generate Rig' in the Rigify panel → outputs a fully-functional production-grade rig with: 1) IK/FK switching on arms + legs (animator picks per shot). 2) Twist bones (forearm + thigh twist properly). 3) Stretch bones (squash + stretch for cartoony characters). 4) Facial controls (jaw + eyes + lip controls if facial meta-rig included). 5) Spine + neck controls (IK or FK). 6) Custom shape controls for animator interaction. 7) Hand finger rigs. Faster than hand-rigging by 4-10x; more capable than most hand-built rigs. For most character work in 2026: use Rigify rather than building custom rigs. Workflow: model character → position Rigify meta-rig in character → tweak bone positions to fit → Generate Rig → weight paint mesh to the generated rig → animate. The generated rig is permanent; can be modified after generation if needed. Saved as part of .blend file. Limitations: Rigify is opinionated about rig structure — works best for standard humanoid / quadruped characters; custom creatures need hand-rigging. For game export: Rigify can be 'simplified' to game-rig output. The 'use Rigify' default for character rigging is standard advice in the Blender community for good reason." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "A plugin marketplace." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Built-in auto-rig generator addon. Position meta-rig template; Generate Rig → production-grade rig with IK/FK, twist bones, facial controls. 4-10x faster than hand-rigging.",
+      "points": 1
+    }
+  ]
+}

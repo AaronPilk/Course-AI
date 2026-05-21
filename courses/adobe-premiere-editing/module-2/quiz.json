@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Cutting and editing techniques",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best way to make a tight cut at a specific moment in dialogue?",
+      "choices": [
+        { "id": "a", "text": "Drag the clip end." },
+        { "id": "b", "text": "Audio scrub + frame-precise navigation + Ripple tool. 1) Enable audio waveforms in timeline (right-click track header → Display Audio Waveform). 2) Hold Shift + drag playhead to scrub WITH audio playback — find the exact frame where the syllable starts or ends. 3) Alternative: K + L (slow forward) lets you hear frame-by-frame. 4) At the exact frame, press Q (ripple trim from clip start to playhead) or W (ripple trim from playhead to clip end) — instant frame-precise ripple. Or: position playhead → Cmd+K to add an edit at playhead → use Ripple tool (B) to fine-tune. The combination of audio scrub + waveform visibility + ripple-to-playhead shortcuts makes dialogue editing surgical. Without these techniques, editors approximate cuts and drag with the Selection tool — slow, imprecise, often mid-syllable. Pro dialogue editing is frame-level work; 1/30th second matters. The art is finding the natural cut point (start of breath, end of syllable, gap between words) and being precise enough to land there. Audio waveform visibility is non-negotiable; without it you're guessing. Combined with Slip (Y) to adjust clip content, Rolling (N) to shift edit points, and unlink (Cmd+L) for J/L cuts, dialogue editors have the full toolkit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random cut." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Audio scrub + waveforms + Q/W ripple-to-playhead. Frame-precise dialogue editing. Without these = guessing.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Sequence is 60 minutes; you remove a 30-second segment that turned out unusable. Music underneath was sync'd to specific moments. What goes wrong?",
+      "choices": [
+        { "id": "a", "text": "Music gets louder." },
+        { "id": "b", "text": "Ripple delete shifts everything downstream by 30 seconds — including the music track if it's targeted. Music sync that was carefully aligned with picture is now 30 seconds off; every beat hits at the wrong moment; the entire downstream timing is broken. Fix workflow: 1) Before the ripple delete, untarget the music track (its track header should NOT be yellow-highlighted) and disable its sync lock (the rectangle icon on the track header). 2) Then ripple delete the segment — only video + dialogue ripple; music stays in place; everything from the deletion point onward in V + dialogue shifts left to close the gap; music doesn't move. 3) Now there's a gap in the music ON THE OTHER SIDE — but since music shouldn't have synced to that removed segment anyway, this is correct: downstream music beats hit exactly where they used to relative to the new (shorter) video timeline. The lesson: in any multi-track sequence, think before rippling. Which tracks should ripple together (sync locks engaged); which should stay locked (sync locks disengaged). Untargeting + sync-lock-off on the music track is the surgical solution. The 'why did everything shift wrong' problem is endemic to editors who don't internalize sync locks; once mastered, complex ripples become precise. Same principle applies to inserts (don't push music when inserting dialogue) and other rippling operations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Loses color." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ripple shifts everything; music sync breaks if music track was rippled. Untarget music + disable its sync lock before rippling. Surgical control.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When should you use a J-cut?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When introducing a speaker or sound source — audio FROM the next clip begins BEFORE the picture cuts to it. Visual cue in timeline: the audio edit point is to the LEFT of the video edit point (forms a 'J' shape with the upcoming clip). Use cases: 1) Documentary: wide shot of a factory; we hear an interviewee's voice begin (J-cut); cut to interviewee on camera. The voice 'arrives' before the face, creating layered exposition. 2) Cross-cutting between scenes: scene A's audio bridges into scene B before scene B's video appears. 3) Lower thirds revealing speakers: audio plays; text appears; finally the speaker's face. The J-cut adds layering and naturalism — you hear something before you see it, mirroring how attention works in reality (we hear a voice before we look at the speaker; we hear an event before we see it). Setup: unlink video + audio (Cmd+L); trim the audio edge of the next clip to start earlier than its video edge with Ripple. Or: cut V and A at separate points with Cmd+K + track targeting. The J-cut pairs with L-cut (audio of CURRENT clip continues AFTER video cuts) — together they handle most dialogue transitions in pro editing. Pure straight cuts (video + audio together) for every transition is the amateur signature; J/L cuts are the pro polish." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only morning shots." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Introducing a speaker/sound. Audio of next clip leads; video catches up. Layered naturalism. Pairs with L-cuts.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Multicam edit: switched cameras every 1.5 seconds throughout. Viewer feedback: 'feels chaotic, gave me a headache.' What's the principle violated?",
+      "choices": [
+        { "id": "a", "text": "Use more cameras." },
+        { "id": "b", "text": "Visual rhythm too fast for content type — cuts should serve the content, not impose pacing. The 1.5-second rhythm is appropriate for action sequences, music videos, or high-energy commercial editing where momentum is the point. For most multicam content (interviews, panels, podcasts, documentaries), the rhythm is much slower: 5-15 seconds per angle, varying based on content. Switching every 1.5 seconds in dialogue content: viewer can't settle into a face; the brain spends attention parsing the cut rather than the words; cognitive load high; perceived as chaotic. Pro multicam rhythm principles: 1) Stay on the speaker; cut to other angles for emotional weight, reaction, or topic shifts. 2) Cut on motion (head turn, gesture) — invisible cuts. 3) Cut on natural beats (pause, point made, question landed). 4) Vary shot length: don't always 5 seconds, don't always 15 — variety is rhythm. 5) The 'most interesting angle' rule: pick what serves THIS moment, not 'I haven't used B-cam in a while.' Fast cuts have a place: opener montages, recaps, transitions, action segments. But sustained fast cutting in dialogue exhausts viewers. Match pace to content: a 90-second TikTok hooks faster than a 30-min documentary should." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong camera." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Visual rhythm too fast for content type. Dialogue/interview content needs 5-15 sec per angle, varying. Fast cuts for action/music videos only.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best practice for setting up J/L cuts efficiently?",
+      "choices": [
+        { "id": "a", "text": "Drag everything by hand." },
+        { "id": "b", "text": "Unlink the clip's video + audio (Cmd+L), then use Ripple to trim the video edge and audio edge independently. After unlinking, video and audio behave as separate clips on the timeline — you can extend one before the other or shrink one beyond the other. With Ripple tool: drag the video edge of the next clip to the right (so video starts later); audio of next clip can already be playing earlier = J-cut. Or drag the audio edge of the current clip to extend past where the video cuts = L-cut. After the J/L cut is set, optionally re-link (Cmd+L) so they move together going forward — but many editors leave them unlinked for the duration of editing (relinking only on final lock). Alternative method: keep clips linked, use track targeting + Cmd+K to add edits at different points on V vs A tracks. Method 1 (unlink + trim) is faster for multiple J/L cuts in a sequence; method 2 (selective Cmd+K) is faster for one-off cuts. The unlink approach is the pro standard for documentary / interview / dialogue editing where most cuts are J or L cuts. Bonus: some editors set a custom shortcut for 'Trim video only with Ripple' (Option + drag in Ripple mode) — selective trim without unlinking; even more surgical. The drag-everything-manually approach loses sync constantly and is the slowest path." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unlink (Cmd+L) the linked clip; trim video and audio edges independently with Ripple. Pro standard for J/L cut workflows.",
+      "points": 1
+    }
+  ]
+}

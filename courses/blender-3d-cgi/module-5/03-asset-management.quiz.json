@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Asset management",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why build a personal asset library?",
+      "choices": [
+        { "id": "a", "text": "Required by Blender." },
+        { "id": "b", "text": "Compound productivity — build common assets once; reuse across all future projects forever. Each asset built (a material, model, node group, HDRI, pose, lighting setup) saves time on every subsequent project that uses it. Examples: 1) Common materials (skin, metals, woods, plastics) built once = available for every character / scene. 2) Brand color materials (your studio's colors as material assets) = consistent branding across projects. 3) Lighting setups (three-point + variations as collection assets) = drag-drop lighting per project. 4) Brushes (custom alpha-driven brushes for skin pores, wood grain) = consistent detail work. 5) Geometry Nodes setups (brick wall generator, forest scatter, particle effects) = reusable procedural tools. 6) HDRIs collection (studio, outdoor, indoor) = lighting context-ready. 7) Pose library (walks, gestures, idles) = reusable character poses. 8) Camera setups (DoF presets, focal length+composition combos) = consistent cinematography. Build over 6-12 months of consistent saving: a solo artist accumulates a productive library. For team / studio work: shared library across artists multiplies returns. Asset Browser + Asset metadata (tags, descriptions, authors) makes assets findable in the library. Polyhaven (free) + BlenderKit (subscription) provide starting collections. The 'rebuild everything from scratch each project' approach is the amateur signature; pro work builds on accumulating reusable resources. Asset libraries are how Blender artists scale productivity over their careers." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Save disk space." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compound productivity — build once, reuse forever. Materials, models, brushes, node groups, HDRIs, poses, lighting setups. Build over 6-12 months for compound returns.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Find free high-quality HDRIs / textures / models for Blender. Best source?",
+      "choices": [
+        { "id": "a", "text": "Random web search." },
+        { "id": "b", "text": "Polyhaven (polyhaven.com) + the Polyhaven Asset Browser addon for Blender. Polyhaven is a free open-source library of HDRIs, PBR textures, and 3D models — all CC0 (public domain; commercial-use unlimited; no attribution required). Quality is studio-grade; many assets used in professional films + games. The Polyhaven addon for Blender integrates directly with the Asset Browser — pulls live assets into your workflow without manually downloading + organizing. Setup: 1) Install the official Polyhaven Asset Browser addon (free, available on Polyhaven's site). 2) Enable in Preferences. 3) Asset Browser now shows Polyhaven library — drag any HDRI / texture / model into your scene. 4) The addon downloads + caches on-demand; once downloaded, it's available offline. Use cases: 1) HDRIs for instant photoreal lighting (studio, outdoor, sky, interior) — Module 2's lighting design. 2) PBR textures (concrete, wood, brick, fabric, leather) with full Albedo / Roughness / Normal / Metallic / AO maps. 3) Scanned models (rocks, plants, props, furniture, organic objects) for environment + scene work. Other free sources: AmbientCG (similar to Polyhaven; textures + models), Quixel Megascans (now free for Unreal users; can convert to Blender). Paid options: BlenderKit (subscription with thousands of assets in-Blender), Substance Source (Adobe subscription). For 90% of needs starting out: Polyhaven covers HDRIs + textures + basic models; supplement with your own custom work + occasional paid asset purchases for specific needs. The 'random web search' approach yields lower quality + uncertain licensing; Polyhaven + similar curated sources are pro-recommended." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Polyhaven (polyhaven.com) + Polyhaven Asset Browser addon. Free CC0 HDRIs, textures, models. Integrates with Blender's Asset Browser. Pro-grade quality.",
+      "points": 1
+    }
+  ]
+}

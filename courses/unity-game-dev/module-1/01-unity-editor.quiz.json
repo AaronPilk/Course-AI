@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Unity Editor",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Which Unity render pipeline for cross-platform projects in 2026?",
+      "choices": [
+        { "id": "a", "text": "Built-in." },
+        { "id": "b", "text": "URP (Universal Render Pipeline). Modern + cross-platform; works on mobile, PC, console, VR/AR. Replaces the older Built-in pipeline (legacy; still works but lacks modern features). URP features: 1) Modern rendering features (post-processing, lighting, custom shaders) baked in. 2) Performance-optimized for mobile + lower-end hardware. 3) Compatible with newer Unity workflows (Shader Graph, VFX Graph, Render Graph). 4) Scriptable Render Pipeline architecture — extensible for custom needs. 5) Future-direction for Unity (Built-in is maintained but not getting new features). HDRP (High Definition Render Pipeline) is the alternative for AAA PC/console-only projects requiring maximum visual fidelity (path tracing, advanced volumetric, ray tracing) — too heavy for mobile / cross-platform. Pick by target: 1) Mobile + cross-platform indie + most games → URP. 2) AAA PC/console exclusive with extreme visuals → HDRP. 3) Legacy project migration → Built-in (but plan URP transition). 4) New project in 2026 → URP unless specific HDRP need. Project setup: select URP template when creating project; or migrate existing Built-in project via the Render Pipeline Wizard. Materials, shaders, post-processing differ per pipeline; switching pipelines mid-project requires recreating shaders + materials. Pick correctly at project start. For learning Unity in 2026: URP. For shipped commercial work: pipeline matches target platform + audience expectations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "No pipeline." }
+      ],
+      "correct_answer": "b",
+      "explanation": "URP (Universal Render Pipeline). Modern + cross-platform (mobile, PC, console, VR). Replaces Built-in. HDRP for AAA PC/console only. Pick at project creation.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Made big changes during Play mode; pressed Stop; changes are gone. What happened?",
+      "choices": [
+        { "id": "a", "text": "Bug in Unity." },
+        { "id": "b", "text": "Unity intentionally reverts scene changes made during Play mode — safety feature so you can experiment freely during testing without breaking your real scene. Scene state (GameObject positions, component values, etc.) reverts when Play stops. This is by design and well-known to Unity users. What DOES persist during Play mode (and survives Stop): 1) Asset changes (modifications to .asset files like Materials, ScriptableObjects, Animation Clips). 2) File system changes (creating / deleting files in Assets/). 3) Code edits (saved C# scripts). Be careful: editing assets during Play (changing Material color, ScriptableObject values) persists; players may save unwanted changes thinking they'll revert. Visual indicator: Editor tints UI red/orange when in Play mode — strong reminder you're testing, not editing. Pro habits: 1) Stop Play before making intentional scene changes you want to keep. 2) Be cautious editing assets while Playing. 3) Use 'Play mode tint' preference (Edit → Preferences → Colors → Playmode tint) to make the indicator more obvious. 4) For desired-to-persist scene experiments during Play: write changes to ScriptableObjects (which persist) or save scene programmatically. The 'lost work in Play mode' moment is universal Unity dev experience early on; quickly becomes muscle memory. Same safety in Unreal's PIE (changes revert) and Godot's play mode. The alternative (changes always persist) would risk destroying scene state during testing — Unity's approach is safer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Auto-save off." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Play mode reverts scene changes by design — safety for testing. Asset changes persist; scene changes revert. Stop Play before making changes to keep.",
+      "points": 1
+    }
+  ]
+}

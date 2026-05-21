@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Clarity, deference, depth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does 'deference' mean in Apple's design principles?",
+      "choices": [
+        { "id": "a", "text": "Polite tone in copy." },
+        { "id": "b", "text": "The interface yields to the content — UI chrome recedes so users' photos, messages, documents, work take visual priority. Translucent navigation bars let underlying content show through; toolbars use subdued color compared to vivid content; the app frames rather than upstages. Apple-native apps (Photos, Notes, Safari) feel restrained vs many third-party apps with heavy branding precisely because of deference: the app isn't a stage for its own brand, it's a frame for the user's stuff. Tensions with clarity (which says 'make it obvious') — resolved by making the important thing prominent enough but not louder than needed. The discipline of 'remove what doesn't earn its presence' is the deference move. Outside Apple-platform work, the principle still applies: heavy branding fights deference; restrained chrome lets work breathe. Apply it whenever you catch yourself decorating for the brand instead of serving the user." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller text." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Interface yields to content. Chrome recedes; user's stuff takes priority. The opposite of 'look at our app!'",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You're designing an app and tempted to add a colorful animated splash screen + heavy branding throughout. HIG-aligned move?",
+      "choices": [
+        { "id": "a", "text": "Yes — brand visibility." },
+        { "id": "b", "text": "Restrain it — deference says the user came for their content, not your brand. Apple-style apps minimize chrome: a brief launch screen (Apple actually recommends NO splash; load straight into UI), restrained header colors, white/dark backgrounds that let content stand out, brand expression mostly in the icon and occasional accent color. Heavy branding throughout fights what users actually want — to get to their work or content. Trade-off: brand teams sometimes push back ('the brand isn't visible enough'); design discipline says the brand is communicated through the quality of the experience, not through visual shouting. Compare Apple's own apps to early-2010s app shovels with logos plastered everywhere — the Apple approach aged better because it deferred. Specific guidance: brand colors in the icon and one or two accent uses (button tints, links); body chrome neutral; brand voice in copy but not visual treatment. Customers who care about your brand will recognize it in the quality; customers who don't, your splash screen wasn't going to convert anyway." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Make it more colorful." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Deference — brand expression in icon + accent color; chrome restrained; content leads. Heavy branding fights HIG.",
+      "points": 1
+    }
+  ]
+}

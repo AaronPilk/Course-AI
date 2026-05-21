@@ -1,0 +1,81 @@
+{
+  "title": "Module 1 quiz: How diffusion models work",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does the diffusion model learn?",
+      "choices": [
+        { "id": "a", "text": "Draw images directly." },
+        { "id": "b", "text": "Predict + remove noise from images. Training: progressively add noise to training images; model learns to predict noise at each level. Inference: start with pure random noise; iteratively predict + subtract noise across 20-50 steps; image emerges. Text prompts condition the noise prediction — model predicts noise such that removing it produces image matching prompt. Latent diffusion: operations happen in compressed latent space (8x smaller than pixels) via VAE encode/decode for efficiency.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Predict + remove noise. Iteratively denoise from pure random noise; image emerges. Text conditions the prediction. Latent space for efficiency.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Best open-source diffusion model in 2026?",
+      "choices": [
+        { "id": "a", "text": "SD 1.5." },
+        { "id": "b", "text": "Flux.1 (Black Forest Labs). SOTA quality; rivals Midjourney. Three variants: Pro (closed API; commercial), Dev (open weights; non-commercial without license), Schnell (Apache 2.0; commercial-free). 12 GB+ VRAM for full Dev. Excellent text-in-images; better hands. SDXL strong alternative with deeper LoRA ecosystem. SD 1.5 legacy.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Flux.1. SOTA open-source 2026. Three variants: Pro, Dev, Schnell. Excellent quality + text + hands. SDXL strong alternative with bigger ecosystem.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "scenario",
+      "prompt": "SDXL output too saturated / burned. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Resolution too high." },
+        { "id": "b", "text": "CFG (Classifier-Free Guidance) too high. CFG amplifies prompt influence; too high (12+) over-saturates + burns highlights + unrealistic contrast. SDXL sweet spot 5-8; SD 1.5 7-9; Flux 1-3.5. Lower CFG = more naturalistic + creative output. Also check: sampler choice (some vivid; DPM++ 2M Karras balanced), steps (too high can over-saturate), VAE selection.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "CFG too high. Lower to 5-8 for SDXL. Amplification of prompt influence; high CFG = over-saturated burned output.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "Default sampler for SDXL?",
+      "choices": [
+        { "id": "a", "text": "DDIM." },
+        { "id": "b", "text": "DPM++ 2M Karras. Modern, sharp, detailed; standard for SDXL. 20-30 steps. Karras scheduler pair. Alternatives: DPM++ 2M SDE Karras (variant), DPM++ 3M SDE Karras (hero quality, 30+ steps), Euler (faster, softer), LCM (only with LCM-LoRA models, 4-8 steps).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DPM++ 2M Karras. Standard for SDXL. 20-30 steps. Karras scheduler. Modern sharp balanced choice.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Generated images have mysterious green tint. Fix?",
+      "choices": [
+        { "id": "a", "text": "Adjust colors in post." },
+        { "id": "b", "text": "Use correct VAE for your checkpoint. VAE decodes latents to pixels; mismatched VAE produces color tints (green, magenta, yellow common). Identify model's correct VAE (often documented in model card); load via UI (A1111 Settings → SD VAE; ComfyUI VAE Loader node). Color shifts disappear. Also fixes: fine detail loss, bleeding edges, banding gradients. Foundational color fix; check VAE first.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Wrong VAE for checkpoint. Match VAE; tint disappears. Foundational color fix; 90% of color issues = VAE mismatch.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Hug / fill / fixed",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Button: width = ? in Auto Layout?",
+      "choices": [
+        { "id": "a", "text": "Fixed." },
+        { "id": "b", "text": "Hug. Button width should follow the text content — short label = narrow button; long label = wider button — with padding (typically 16px horizontal) consistent. 'Hug' sets the frame width = sum of children widths + horizontal padding; change the text, button auto-resizes to fit. Counterpart: button height also typically 'hug' (height = text height + vertical padding). 'Fixed' would mean specifying a width (e.g., 120px) that doesn't adapt to text — short labels get whitespace; long labels overflow or truncate; both look broken. 'Fill' would make button stretch to parent width — appropriate for FULL-WIDTH buttons (CTA at bottom of mobile screen) but wrong for inline / hug buttons. Standard button: hug × hug. Full-width CTA: fill × hug. Icon-only button: fixed × fixed (e.g., 44×44 for touch target). Common variants: hug width with min-width (button stays at least 88px even if 'OK' is short) using Auto Layout's min/max constraints." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Fill." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hug — button width tracks text length + padding. Fill is for full-width CTAs; fixed loses adaptability.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Layer set to 'fill' inside Auto Layout but doesn't visibly expand. Likely cause?",
+      "choices": [
+        { "id": "a", "text": "Figma bug." },
+        { "id": "b", "text": "Parent frame is set to 'hug.' Fill only works when the parent has DEFINED size — when parent is fixed or fill itself (so there's a known container size to fill). When parent is 'hug,' parent's size DEPENDS on children's content size; a child set to 'fill' inside a hugging parent has nothing to fill (parent is sized by content, and child's content drives that size). The mutual dependency resolves by ignoring fill; layer takes content size as if 'hug.' Fix: change parent to fill (if parent's parent has space) or fixed (specify explicit size); now child can fill it. Common debugging step: walk up the parent chain checking sizing modes; first 'hug' ancestor breaks fill below it. The mental model: 'fill needs a container with known size to fill.' For full-width content areas: ensure the chain from screen frame down has fill or fixed at each level so fill propagates. The 'fill in hug' is the most common Auto Layout confusion; recognizing it solves most layout debugging." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Layer is locked." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Parent is set to 'hug.' Fill only works inside fixed/fill parents. Walk up; first hug ancestor breaks fill below.",
+      "points": 1
+    }
+  ]
+}

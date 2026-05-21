@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Rigidbody and physics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "ForceMode for an instant jump impulse?",
+      "choices": [
+        { "id": "a", "text": "Force." },
+        { "id": "b", "text": "Impulse. Applies an instant push as if pushed once hard; perfect for jumps, explosions, knockback. ForceMode.Force is continuous over time (good for thrusters, wind, sustained pushing); ForceMode.VelocityChange directly changes velocity (ignores mass; instant); ForceMode.Acceleration is continuous + ignores mass. For jump: `rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);` — one-shot upward push; mass-aware (heavier characters jump less for same force; tune accordingly). Alternative for arcade-feel jump: `rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);` — direct velocity change; consistent height regardless of mass. Both work; Impulse for physics-accurate; velocity-set for arcade-precise. For explosions: AddExplosionForce method takes position + radius + force; pushes nearby Rigidbodies away from explosion center. For knockback: AddForce(direction * force, Impulse). For walking force: continuous AddForce(direction * speed, Force) per FixedUpdate (or use CharacterController for arcade walking). Knowing the right ForceMode for each case = clean physics behavior. Pro Unity habit: Impulse for one-shot events; Force for sustained; velocity-set for arcade.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Impulse — one-shot instant push; mass-aware; perfect for jumps/explosions/knockback. Force = continuous; VelocityChange = direct velocity (mass-independent); Acceleration = continuous mass-independent.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Player Rigidbody falls through floor sometimes at high speed. Cause?",
+      "choices": [
+        { "id": "a", "text": "Unity bug." },
+        { "id": "b", "text": "Tunneling — at high speed, the Rigidbody moves more per physics step than the collider's thickness; physics integration misses the collision; object passes through. Fix options: 1) Increase Rigidbody Collision Detection: Default → Continuous (or Continuous Dynamic for very fast objects). Continuous Collision Detection (CCD) uses swept volume tests to catch tunneling. 2) Slow movement (cap velocity). 3) Thicker colliders. 4) Smaller physics timestep (Project Settings → Time → Fixed Timestep, e.g., 0.01 = 100Hz from default 0.02 = 50Hz; more accurate but more CPU). 5) Use multiple smaller forces vs. one huge force (less tunneling per step). Setup: select Rigidbody → Inspector → Collision Detection → Continuous (for normal-speed objects); Continuous Dynamic (for bullets, projectiles, fast objects). Continuous CCD costs more CPU but eliminates tunneling. Pro Unity habit: 1) Default Discrete for stationary / slow objects (cheapest). 2) Continuous for player characters + medium-speed projectiles (catches tunneling against static colliders). 3) Continuous Dynamic for bullets / fast moving (catches tunneling against any colliders including other dynamic). 4) Continuous Speculative for very high speed (predictive). Choose based on speed + importance. Common tunneling-prone scenarios: bullets (use Continuous Dynamic), player jumping at high speed (Continuous), falling objects through thin platforms (Continuous + thicker collider). The 'object passes through floor' bug is universal across physics engines; CCD is universal solution.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Heavier player." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tunneling at high speed. Fix: Collision Detection = Continuous (or Continuous Dynamic for very fast). CCD uses swept volume tests. Or smaller fixed timestep / thicker colliders.",
+      "points": 1
+    }
+  ]
+}

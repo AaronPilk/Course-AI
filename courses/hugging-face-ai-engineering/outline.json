@@ -1,0 +1,71 @@
+{
+  "slug": "hugging-face-ai-engineering",
+  "name": "Hugging Face",
+  "title": "Hugging Face AI Engineering",
+  "subtitle": "The open-source AI platform — models, datasets, deployment.",
+  "category": "AI",
+  "level": "Intermediate",
+  "estimated_hours": 6,
+  "summary": "Hugging Face is the GitHub of AI — hosts 1M+ open-source models + datasets + community Spaces. This course covers HF's full stack: Transformers library for using + fine-tuning models, Datasets library, Hub for sharing, Spaces for deployment, and production patterns. Practical workflows from running a model in 5 lines to fine-tuning + deploying a custom model.",
+  "brand": {
+    "logo": "/brands/hugging-face-ai-engineering.svg",
+    "gradient": ["#FFD21E", "#FF9D00"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "Hugging Face Hub and the ecosystem",
+      "objective": "Navigate the platform; find + use models + datasets.",
+      "lessons": [
+        { "position": 1, "title": "The Hub — models, datasets, Spaces" },
+        { "position": 2, "title": "Finding the right model for your task" },
+        { "position": 3, "title": "Datasets library — load + explore data" },
+        { "position": 4, "title": "Model cards and licensing" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Transformers library essentials",
+      "objective": "Use any open-source model in code.",
+      "lessons": [
+        { "position": 1, "title": "Pipelines — one-line inference" },
+        { "position": 2, "title": "Tokenizers, Models, and the lower-level API" },
+        { "position": 3, "title": "Running locally vs. via Inference API" },
+        { "position": 4, "title": "GPU acceleration and quantization" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Fine-tuning models",
+      "objective": "Adapt models to your specific data + task.",
+      "lessons": [
+        { "position": 1, "title": "Trainer API — supervised fine-tuning" },
+        { "position": 2, "title": "PEFT and LoRA for efficient training" },
+        { "position": 3, "title": "TRL — preference and instruction tuning" },
+        { "position": 4, "title": "Saving + sharing your fine-tunes" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Spaces and deployment",
+      "objective": "Ship your AI as a web app.",
+      "lessons": [
+        { "position": 1, "title": "Spaces — Gradio and Streamlit apps" },
+        { "position": 2, "title": "Inference Endpoints — production hosting" },
+        { "position": 3, "title": "Integration with cloud providers" },
+        { "position": 4, "title": "Cost optimization and scaling" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Production AI patterns",
+      "objective": "Build real-world AI systems with HF.",
+      "lessons": [
+        { "position": 1, "title": "RAG systems with sentence-transformers" },
+        { "position": 2, "title": "Multi-model pipelines (chained inference)" },
+        { "position": 3, "title": "Monitoring, versioning, A/B testing" },
+        { "position": 4, "title": "Open-source vs. commercial AI trade-offs" }
+      ]
+    }
+  ]
+}

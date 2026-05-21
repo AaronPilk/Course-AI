@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Negative prompts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Effective SDXL negative prompt baseline?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Concise quality-focused negative: 'ugly, deformed, bad anatomy, watermark, text, signature, blurry, low quality, jpeg artifacts, oversaturated.' ~10-20 tokens; covers most common SDXL artifacts (anatomy issues, hallucinated text + watermarks, blurry / low-quality outputs, over-amplification artifacts). Negative prompts push the model away from these concepts. SDXL responds strongly to negative prompts — significantly improves output quality. For specific use cases, add targeted negatives: 1) Photography: 'cartoon, anime, illustration, painting, 3d render' (exclude unwanted styles). 2) Illustration: 'photo, photorealistic, 3d render'. 3) Anime: 'realistic, photo, 3d, multiple views'. 4) Anti-bad-hands: 'bad hands, fused fingers, extra fingers, missing fingers, malformed hands' (helps but doesn't fix; ControlNet better). 5) Anti-text: 'text, watermark, signature, logo, copyright, username'. Don't over-negative (200+ tokens dilutes); 30-60 sweet spot. Community provides 'negative embeddings' as shortcuts (EasyNegative, BadDream, UnrealisticDream) — pre-trained negative tokens. For Flux: minimal/empty negative often works fine (different architecture; CFG behaves differently); don't carry SDXL-style heavy negatives to Flux. Same negative not universal — adapt per model + style.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Concise negative (~10-20 tokens): ugly, deformed, bad anatomy, watermark, text, blurry, low quality, jpeg artifacts. Push away common SDXL artifacts. Add style-specific negatives.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Switching from SDXL to Flux; copied negative prompt over. Output looks worse than SDXL despite Flux's better quality. Why?",
+      "choices": [
+        { "id": "a", "text": "Flux is worse." },
+        { "id": "b", "text": "Flux handles negative prompts very differently from SDXL — heavy SDXL-style negatives often hurt Flux output. SDXL uses Classifier-Free Guidance (CFG) prominently; negative prompt provides the 'unconditional' baseline that CFG amplifies away from. Heavy negatives in SDXL = strong amplification toward positive. Flux uses a different guidance mechanism (Distilled Guidance); negative prompts are less impactful + can sometimes interfere with the model's expected behavior. Fix: 1) Empty negative prompt entirely for Flux, OR 2) Very brief negative (5-10 tokens max: 'low quality, blurry'). Don't carry 50-token SDXL negatives. Also adjust CFG / guidance scale: SDXL 5-8; Flux 1-3.5 typical. The model architecture differences require different prompting strategies. Same applies across other models — prompts that work on Midjourney don't translate directly to SDXL; SDXL prompts don't translate to Flux. Test + iterate per model. Pro habit: maintain separate prompt templates per model family; don't assume cross-portability. Generally: 1) SDXL = layered keyword prompts + heavy negative + CFG 7. 2) Flux = natural language sentences + minimal negative + CFG 2-3.5. 3) SD 1.5 = keyword-heavy + medium negative + CFG 7-9. Adapt energy investment per model's actual behavior; don't fight the architecture.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Flux handles negatives differently — heavy SDXL-style negatives interfere. Use empty or minimal negative (5-10 tokens). Adjust CFG to 1-3.5. Different architectures need different prompt strategies.",
+      "points": 1
+    }
+  ]
+}

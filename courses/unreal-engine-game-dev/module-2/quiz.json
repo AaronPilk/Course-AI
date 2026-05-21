@@ -1,0 +1,76 @@
+{
+  "title": "Module 2 quiz: Blueprints",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "White wires vs. colored wires in Blueprints?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "White wires = execution flow (the sequence of WHEN things happen, one at a time, left to right). Colored wires = data values (the WHAT — variable values, function returns, computed results). Two completely separate flows: execution determines when a function runs; data determines what values it uses. Example: 'Event BeginPlay (execution out) → Print String (execution in)' — the white wire from BeginPlay to Print String triggers Print String when BeginPlay fires. Separately: 'String variable Get (data out) → Print String In String input (data in)' — the colored wire (blue for string) carries the actual text. Right-click context menu in Blueprint Editor shows only compatible nodes based on which pin type you dragged from. Master this distinction; it's foundational mental model for visual scripting. Same principle in Unity Visual Scripting, Godot, Blender's Geometry Nodes — all separate execution from data. Novices confuse the two and try to connect data pins to execution pins; doesn't work. Pro Blueprint reading: scan white wires for sequence understanding; scan colored wires for data flow understanding; two separate mental passes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "White = execution sequence (when). Colored = data values (what). Two separate flows; never connect across them.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Health logic appears in 5 enemy types. Bug fixes require updating all 5. Refactor approach?",
+      "choices": [
+        { "id": "a", "text": "Live with the bugs." },
+        { "id": "b", "text": "Extract to HealthComponent (Actor Component) — single source of truth. Build health logic once: CurrentHealth + MaxHealth variables; TakeDamage + Heal + IsAlive functions; OnDeath Event Dispatcher; death state handling. Attach the component to each enemy (Details panel → +Component → HealthComponent). Each enemy now has a HealthComponent instance with full health logic; configure per-instance (different MaxHealth per enemy type); zero duplication. Bug fixes happen in one place; apply to all enemies automatically. Pattern: composition via Actor Components. Same approach for Inventory (InventoryComponent), AI (AIComponent), Stats (StatsComponent), Save data (SaveComponent). Each is reusable across any actor that needs that functionality. Player also gets HealthComponent — same logic; consistent across game. Without components: 5 enemies × duplicated logic = 5 places to fix bugs + 5 places with subtle inconsistencies; maintenance nightmare. With component: one place; consistent everywhere; easy to extend. UE5's component model (composition over inheritance) is the architecture pattern; same in Unity (Components on GameObjects). For comprehensive refactor: identify duplicated logic across Blueprints; extract to Actor Components OR Blueprint Interfaces; reuse. Resulting code: clean, maintainable, scales to dozens of similar actors." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Inheritance only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HealthComponent (Actor Component). Build once; attach to all 5 enemies. Composition over inheritance. Same pattern for Inventory/AI/Stats components.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When to use Blueprint Interface vs. Cast To?",
+      "choices": [
+        { "id": "a", "text": "Always Cast." },
+        { "id": "b", "text": "Interface when multiple unrelated Blueprints need to share behavior (loose coupling). Cast when accessing specific class features (tight access). Interface example: IInteractable with `Interact()` function — implemented by BP_Door, BP_Chest, BP_NPC, BP_LightSwitch; caller (BP_Player) calls Interact() on whatever actor it targets via the interface; no Cast needed; doesn't depend on specific classes. New Interactable types: implement the interface; no caller changes. Cast example: 'Get OtherActor from collision event; Cast To BP_Enemy; access Enemy-specific functions (PlayDeathAnimation, DropLoot).' Tight access to specific class. Cast creates hard dependencies — Blueprint that Casts to BP_Enemy must load BP_Enemy class when it loads; recompilation cascades when BP_Enemy changes. Interfaces decouple; Casts couple. Rule of thumb: Interface for cross-cutting behaviors (Interactable, Damageable, Healable, Saveable, Selectable); Cast for occasional specific-class access. Pro Blueprint architecture: interfaces define contracts; many implementers; flexible. Heavy Casting throughout the codebase = brittle; refactor toward interfaces. Game engine equivalent of dependency inversion principle from software engineering." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Interface = loose coupling for shared behavior across many class types. Cast = tight access to specific class features. Interfaces decouple; Casts couple. Use Interface for cross-cutting concerns.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Game UI needs to update HUD score + check achievements + play sound when score changes. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Score code calls each directly." },
+        { "id": "b", "text": "Event Dispatcher (pub-sub). Define Event Dispatcher `OnScoreChanged(NewScore: Integer)` on GameManager. When score updates: Broadcast OnScoreChanged with new value. Subscribers (BP_HUD, BP_AchievementSystem, BP_SoundManager) Bind Event to Dispatcher on BeginPlay. When broadcast fires, each subscriber's handler runs independently — HUD updates text; achievements check thresholds; sound plays. GameManager doesn't know about subscribers; they self-register. Loose coupling: 1) Add new subscriber (Analytics tracking) without modifying GameManager. 2) Remove subscriber without breaking GameManager. 3) Modify subscriber independently. 4) Test each in isolation. Direct-call alternative: GameManager holds references to HUD + Achievements + Sound + every subscriber; calls each function explicitly. Tight coupling: signature changes break GameManager; new subscribers require GameManager modification. Event Dispatchers scale to N subscribers; direct calls don't. Pattern: 1) Identify game events (score change, level up, item picked up, enemy killed, player damaged). 2) Define Event Dispatchers on central Blueprint (GameManager or GameState). 3) Broadcast on event. 4) Subscribers bind on BeginPlay. Result: scalable + maintainable. Same pattern as observer pattern in software engineering; foundational for UI + game state changes. Pro Blueprint design: Event Dispatchers for game-state changes; direct calls only for 1:1 tight relationships." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tick polling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Event Dispatcher (pub-sub). Broadcast OnScoreChanged; subscribers bind + react independently. Loose coupling; scales to N subscribers. Pro pattern.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Most overused performance anti-pattern in Blueprints?",
+      "choices": [
+        { "id": "a", "text": "Too few nodes." },
+        { "id": "b", "text": "Tick — running heavy logic every frame when event-driven would suffice. Tick fires 60-120+ times/sec; expensive math, loops, ray traces, or function calls in Tick murder performance. Anti-patterns: 1) Health regen every Tick (should be Timer-based, every 0.5-1s). 2) Find Actor of Class in Tick (massive cost; cache once). 3) Distance check to player in Tick (use overlap event instead). 4) Update UI in Tick (update only when value actually changes; subscribe to event). 5) AI decisions in Tick (Behavior Trees + timer-based ticks every 0.2-0.5s). Fix patterns: 1) Event-driven — use overlap events, input events, collision events, Event Dispatchers. 2) Timer-based — Set Timer by Function Name for periodic logic (every X seconds). 3) Cache references — Get Player Controller once in BeginPlay, store reference; use cache instead of Get every Tick. 4) Disable Tick on actors that don't need it — Class Settings → Actor Tick → Start with Tick Enabled = false. 5) Reduce Tick interval — Set Actor Tick Interval to 0.1s (10 Hz) for AI/non-critical updates. For Tick that IS necessary (smooth interpolation, per-frame movement): always multiply changes by Delta Seconds (frame-rate independence). Without Delta Seconds: 60 FPS = 1x speed; 120 FPS = 2x speed. Profiling: stat unit shows frame time breakdown; stat scripttime shows Blueprint cost; identify expensive Ticks. Pro Blueprint design: event-driven first; Tick last; Delta Seconds always when Tick is necessary." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tick anti-pattern — running heavy logic every frame when event-driven would suffice. Prefer events / timers / cached refs. Tick only with Delta Seconds for true per-frame needs.",
+      "points": 1
+    }
+  ]
+}

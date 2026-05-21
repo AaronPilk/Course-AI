@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: ComfyUI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use ComfyUI over A1111 for pro work?",
+      "choices": [
+        { "id": "a", "text": "Easier UI." },
+        { "id": "b", "text": "Node-based workflows are reproducible + shareable + more powerful for complex pipelines. A1111 hides workflow in UI state; ComfyUI shows entire generation graph visually. Benefits: 1) Reproducibility — workflow JSON exports the exact pipeline; recipient loads and gets identical setup. 2) Shareability — Civitai, Reddit, Discord workflows traded as JSON files; library of community workflows for common needs. 3) Complex pipelines — multi-stage generation (upscale, face restoration, ControlNet + LoRA + IP-Adapter) cleanly chained visually. 4) Visual debugging — see data flow; preview intermediate outputs; identify which step fails. 5) Performance — lazy execution (re-run only changed parts); VRAM-aware; queue handling. 6) Metadata — generated images embed full workflow; drop image back into ComfyUI to reproduce. 7) Custom Nodes — community extensions install via ComfyUI Manager; expanding capabilities monthly. 8) API for automation — build apps + services on top. Trade-off: steeper learning curve than A1111's sliders. For pros + production work in 2026: worth the investment. For beginners / casual users: A1111 or Forge easier start; transition to ComfyUI when pipeline complexity grows. Many pros run both: A1111 for quick exploration; ComfyUI for production pipelines. ComfyUI dominant in 2026 commercial AI art workflows; the node-graph paradigm matches modern thinking (similar to Blender Geometry Nodes, Unreal Blueprints, Houdini); transfers across creative tools.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Node-based: reproducible + shareable + visual debugging + complex pipelines. Workflow JSON exports exact setup. Standard for pro work in 2026. A1111 easier for beginners.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to apply ControlNet + 2 LoRAs + IP-Adapter + upscaling to every generation. Architecture in ComfyUI?",
+      "choices": [
+        { "id": "a", "text": "Type each step manually each time." },
+        { "id": "b", "text": "Build the workflow once as a node graph; save as JSON; reuse for every generation. Node chain: Load Checkpoint → Load LoRA (1) → Load LoRA (2) → CLIP Text Encode (positive + negative) → Load ControlNet Model + Load Image + Preprocessor → Apply ControlNet to conditioning → Load IP-Adapter Model + Load Reference Image → Apply IP-Adapter → KSampler (with all conditioning chained) → VAE Decode → Optional Upscale (Ultimate SD Upscale or ESRGAN node) → Save Image. Save Workflow as JSON file. Future generations: load this JSON → swap only the prompt + maybe reference image → click Queue Prompt → entire pipeline runs. Reproducibility: every output identical configuration; consistent quality across generations; client work has predictable outputs. Variations: 1) Multiple subworkflow branches (different stages for different image types). 2) Conditional logic via switches (toggle ControlNet on/off via boolean). 3) Multi-image batches via Latent Batch nodes. 4) Saved at various intermediate steps for debugging. Pro ComfyUI workflows: complex JSON files (sometimes 50+ nodes) saved as templates per project / client / use case. Library of templates grows over time. Civitai + community share template workflows for common needs (HD upscale workflow, character consistency workflow, product photography workflow). Pro habit: build template once; reuse for series; modify only variable inputs. The 'workflow as template' pattern is ComfyUI's killer feature — reproducibility + shareability + complex pipelines unified.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Build node graph once; save as JSON; reuse. Future generations: load template + swap prompt + click Queue. Reproducible + shareable + scales to complex pipelines.",
+      "points": 1
+    }
+  ]
+}

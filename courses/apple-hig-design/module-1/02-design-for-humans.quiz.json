@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Design for humans",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Apple's minimum touch target 44×44 points?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Human-fingertip ergonomics. Fingertips are ~10-14mm wide; the contact patch on a screen is similar; targets smaller than that get mistapped. 44pt at default scale is roughly 44 points × the device's points-per-mm ratio — comfortably within fingertip range. Smaller targets force users to aim precisely (slow + frustrating) and cause tap errors (cascade of frustration). The 44pt minimum holds even when visual designs look 'cleaner' with smaller buttons; the visual elegance loses to functional failure. Tablets and Macs (with mice) can use smaller targets, but mobile sticks to 44pt minimum. Beyond visual size, hit-box can extend beyond visible — a 20pt visible button with 44pt invisible tap area honors the minimum while looking clean. Apple's HIG documents this; iOS frameworks follow it. Same logic applies in any touch-input design: respect the human body that's using the device. Designers in Figma forget fingers aren't pixel-precise; users remind them via 1-star reviews." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by FCC." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fingertip ergonomics — ~10-14mm contact patch. Smaller targets cause mistaps. 44pt is the human floor.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You want a custom tab bar at the top of the screen instead of bottom for visual differentiation. iOS users will...?",
+      "choices": [
+        { "id": "a", "text": "Appreciate the novelty." },
+        { "id": "b", "text": "Be confused — iOS users have learned over 15+ years that the tab bar is at the BOTTOM. Reversing it for visual differentiation = re-teaching a learned convention for every user; cost is paid by them, not you. Users tap the bottom expecting nav; nothing happens; frustration. Convention wins for the 90% case; novelty should be reserved for the genuinely new (your unique value). The 'we want our app to feel distinctive' impulse is real but usually wrong — the brand expression should be in the icon, accent color, content, voice. Chrome conventions should be invariant so users navigate fluidly. The visual differentiation you're trading away (custom-position tab bar) costs more in learning friction than it gains in distinctiveness. Apple's HIG explicitly: 'Make sure your app conforms to platform-specific conventions.' Even tools that aggressively differentiate (Linear, Notion) keep their nav patterns consistent with platform expectations. Differentiate with content quality, not chrome position." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tap harder." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Convention learned over 15+ years. Reversing = re-teaching cost; users frustrated. Differentiate via content, not chrome.",
+      "points": 1
+    }
+  ]
+}

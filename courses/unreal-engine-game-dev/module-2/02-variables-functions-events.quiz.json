@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Variables, functions, events",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When NOT to use Tick?",
+      "choices": [
+        { "id": "a", "text": "Always use Tick." },
+        { "id": "b", "text": "For event-driven logic — things that respond to specific triggers (collision, input, timer expiration, custom events) rather than running every frame. Tick fires 60-120+ times per second; heavy logic in Tick murders performance. Examples of WRONG Tick usage: 1) Health regen by Tick (checking + adding HP each frame) — use a Timer firing every 0.5s instead. 2) Checking if player is near object every Tick — use overlap event instead. 3) Updating UI text by Tick — update only when value actually changes (Event-driven). 4) AI decision-making every Tick — use Behavior Trees or timer-based ticks every 0.2s. Examples of CORRECT Tick usage: 1) Smooth interpolation between values (lerp camera position toward target each frame for smoothness). 2) Per-frame physics updates (already handled by engine; don't re-add). 3) Continuous animations that need per-frame updates (rotating object, flowing water effects). For continuous-update Tick: ALWAYS multiply changes by Delta Seconds (input to Tick) — makes the behavior frame-rate independent. Without Delta Seconds: 60 FPS = behavior at 1x speed; 120 FPS = 2x speed. With Delta Seconds: consistent regardless of frame rate. Performance habit: profile Blueprint Tick usage; refactor heavy Tick logic to event-driven or timer-based. Many Blueprints don't need Tick enabled at all — disable in Class Settings → Actor Tick → Start with Tick Enabled = false. Removing unused Ticks across a project = significant performance gain. Pro Blueprint design: event-driven first; Tick only when necessary; Delta Seconds always." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Tick fires 60-120+ times/sec; expensive. Use event-driven (overlap, input, timer) for most logic. Tick only for per-frame interpolation; always multiply by Delta Seconds.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Heal logic appears in 5 different Blueprints (player, ally, healing items). Bug: each implementation slightly different. Fix?",
+      "choices": [
+        { "id": "a", "text": "Live with the bugs." },
+        { "id": "b", "text": "Extract to a function; call from all 5 Blueprints. Single source of truth for healing logic; fix once, applies everywhere. Implementation: 1) Decide where the function lives — typically on a base class (e.g., HealableActor base) that all healable Blueprints inherit from. Alternative: function lives on a HealthComponent that you add to each healable actor. 2) Create Function 'ApplyHeal(Amount: Float)'. 3) Implement once: check max health cap; add to current health; trigger any heal VFX/SFX; broadcast OnHealed event. 4) In each of the 5 calling Blueprints: replace the per-Blueprint heal logic with a call to ApplyHeal(amount). Now: 5 callers; 1 implementation; bugs fix in one place. This is the DRY principle (Don't Repeat Yourself) — copy-pasted logic in 5 places becomes inconsistent over time; centralized logic stays correct. Variations: 1) Component-based — create HealthComponent (Blueprint Class: Actor Component) with ApplyHeal function; attach component to every healable actor; call component's ApplyHeal. 2) Interface-based — define IHealable interface with ApplyHeal function; each healable Blueprint implements; callers use interface. Component approach is most flexible (HealthComponent encapsulates all health logic — current, max, regen, damage, healing; reusable across any actor that needs health). Functions extracted to components or interfaces is the architecture pattern for medium-to-large Blueprint projects; avoiding it produces fragile codebases. Pro Blueprint design: identify duplicated logic; extract to functions / components / interfaces; reuse via reference." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different code for each." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Extract to shared function (in base class, component, or interface). DRY principle: 5 callers, 1 implementation. Fix once, applies everywhere.",
+      "points": 1
+    }
+  ]
+}

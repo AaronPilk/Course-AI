@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "title": "Hugging Face documentation",
+      "url": "https://huggingface.co/docs",
+      "type": "documentation"
+    },
+    {
+      "title": "Transformers library",
+      "url": "https://huggingface.co/docs/transformers",
+      "type": "documentation"
+    },
+    {
+      "title": "Datasets library",
+      "url": "https://huggingface.co/docs/datasets",
+      "type": "documentation"
+    },
+    {
+      "title": "Hugging Face Hub",
+      "url": "https://huggingface.co/models",
+      "type": "platform"
+    },
+    {
+      "title": "Spaces",
+      "url": "https://huggingface.co/spaces",
+      "type": "platform"
+    },
+    {
+      "title": "PEFT (Parameter-Efficient Fine-Tuning)",
+      "url": "https://huggingface.co/docs/peft",
+      "type": "documentation"
+    }
+  ]
+}

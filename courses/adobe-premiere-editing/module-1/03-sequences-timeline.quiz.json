@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Sequences and the timeline",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between Ripple Edit (B) and Rolling Edit (N)?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "Ripple trims the edge of one clip and shifts everything downstream of it; Rolling adjusts the edit point between two adjacent clips without changing total duration. Ripple (B): drag the end of Clip A right → Clip A gets longer; all clips after Clip A shift right to make room (rippling forward). The sequence gets longer / shorter by your trim amount; nothing overwrites. Rolling (N): grab the edit point between Clip A and Clip B → drag right → Clip A gets longer AND Clip B gets shorter by the same amount. Sequence duration stays the same; the edit point moves but downstream timing is preserved. When to use: Ripple when you want to extend a clip and accept the timing shift (most editing); Rolling when you want to adjust where a cut falls without breaking sync with later clips (especially for music-locked edits where downstream timing must stay). Both are infinitely better than the alternative — manually moving clips one at a time. Add Slip (Y, change clip's in/out without moving its timeline position) and Slide (U, move clip on timeline; adjacent clips adjust) to your toolkit; these four (Ripple/Rolling/Slip/Slide) are the heart of pro editing. Without them, every edit means dragging clips manually and breaking sync. With them, edits are surgical." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Both are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ripple = trim clip edge + shift downstream. Rolling = move edit point between two clips; total duration unchanged. Both essential.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Editor inserts a clip from source; it lands on the wrong tracks (V2/A3 instead of V1/A1). What went wrong?",
+      "choices": [
+        { "id": "a", "text": "Software bug." },
+        { "id": "b", "text": "Track targeting was misconfigured. The yellow-highlighted track headers (V1, V2, A1, A2, etc.) indicate which tracks are active for insert/overwrite operations. When you insert from the source monitor, the clip goes to whichever tracks are currently targeted — if V2 + A3 were highlighted instead of V1 + A1, the clip lands there. Fix workflow: 1) Before inserting, glance at track headers; only target the tracks you want affected. 2) Use the source patch indicators (the V and A labels at the left edge of source monitor) — these let you map source's video to a specific timeline video track (drag source V → target V1). 3) Use keyboard shortcuts: V1/V2/V3 toggle target; can also untarget all tracks then target only what you want. Pro habit: before any major insert, verify track targets visually. The error is invisible until the clip lands wrong — then ripple-delete (Shift+Delete) and re-insert with correct targeting. For complex multi-track edits, dedicated workflows: insert dialogue to A1, music to A3, SFX to A5 — set targeting per insertion. Many editors color-code track headers via right-click for visual reinforcement: green = dialogue, blue = music, etc. The track targeting system is one of Premiere's quirks that frustrates new users; once mastered, it's surgical." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong sequence." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Track targeting (yellow highlighted headers) was wrong. Insert goes to targeted tracks. Set targets explicitly before inserting.",
+      "points": 1
+    }
+  ]
+}

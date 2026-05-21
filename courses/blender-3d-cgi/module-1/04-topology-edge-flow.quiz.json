@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Topology and edge flow",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the problem with N-gons in a mesh?",
+      "choices": [
+        { "id": "a", "text": "They look cool." },
+        { "id": "b", "text": "N-gons (faces with 5+ vertices) cause artifacts with Subdivision Surface (the smoothing produces weird bulges or distortions at the N-gon center because the algorithm can't predict how to subdivide cleanly), animate poorly (deformation can't compute a single normal for the face), shade incorrectly (lighting calculations assume planar quad faces; N-gons may produce shading artifacts), and break edge loops (no continuous loop can pass through an N-gon since the topology branches arbitrarily). Modern Blender displays N-gons fine in static views, but the moment you Subdivide, animate, or use them in production pipelines, problems emerge. Fix: convert N-gons to quads via Knife (K) cuts, or triangulate temporarily, or restructure topology to flow around the area without N-gons. Tools to find them: Select → Select by Trait → N-gons highlights all faces with 5+ vertices for review. Acceptable cases: completely flat surfaces (a hexagonal wall panel) with no Subsurf, no animation, no complex shading — even then, quads are better practice. The 'all quads' goal is aspirational; some accidental tris are okay; N-gons should be eliminated systematically. Pro modelers check topology with cleanup tools at the end of each modeling session: Merge by Distance (removes duplicates), Select N-gons (identifies problems), Select Triangles (review tri count). Topology cleanup is the unsexy half of modeling; ignoring it produces models that look fine static but fail in production." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required for animation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "N-gons cause Subsurf artifacts, animation issues, shading errors, broken edge loops. Convert to quads via Knife or restructure. Find via Select by N-gons.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Modeling a character; sculpted high-detail head in sculpt mode; need to animate it. What's the next step?",
+      "choices": [
+        { "id": "a", "text": "Animate the sculpt." },
+        { "id": "b", "text": "Retopology — create new clean low-poly mesh over the sculpt for animation. Sculpted meshes have millions of polygons in non-uniform topology (sculpting tools add density wherever you brush; no consistent edge loops). This is great for detail but terrible for animation (too dense for real-time deformation; topology doesn't flow around joints / features; UV unwrapping is impossible). Retopology workflow: 1) Create a new low-poly mesh (often by adding a quad sphere or starting from a primitive). 2) Enable Shrinkwrap modifier targeting the sculpt — wraps new mesh to sculpt's surface. 3) Manually model edge loops over the sculpt, following form (around eyes, mouth, jawline). 4) Use snap-to-face for vertex placement on the sculpt surface. 5) Result: low-poly mesh (~5k-20k polys for character) with clean topology + edge loops at joints. 6) Bake the sculpt's high-detail into Normal Maps / Displacement Maps on the low-poly version (preserves the detail visually without the polygon cost). 7) The low-poly mesh is the rig + animation target; the high-detail is the visual surface via maps. Tools that accelerate retopo: Quad Remesher addon (automated, works well for organic forms); RetopoFlow addon (interactive retopo tools); Blender's built-in QuadriFlow (automatic remeshing). For most production work, retopology is a 4-8 hour task per character; automated tools cut it but rarely eliminate manual cleanup. The sculpt-to-retopo-to-rig pipeline is standard for film / game character work; ZBrush + Maya use the same pattern; Blender's all-in-one is the open-source equivalent." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Reduce sculpt detail." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Retopology: build new clean low-poly mesh over the sculpt. Shrinkwrap modifier + manual loop modeling. Low-poly for animation; bake sculpt detail to maps.",
+      "points": 1
+    }
+  ]
+}

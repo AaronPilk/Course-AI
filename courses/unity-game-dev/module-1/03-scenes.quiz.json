@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Scenes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How to keep a GameObject (e.g., GameManager) alive across scene loads?",
+      "choices": [
+        { "id": "a", "text": "Recreate in every scene." },
+        { "id": "b", "text": "DontDestroyOnLoad(gameObject) in script. By default, all GameObjects in a scene are destroyed when that scene unloads (Single load mode). DontDestroyOnLoad marks the GameObject to survive scene transitions — it persists in memory across scene loads + unloads. Setup: in a MonoBehaviour script, in Awake() or Start(), call `DontDestroyOnLoad(gameObject)`. The GameObject (and its components / children) persists until you explicitly Destroy() it. Common use cases: 1) GameManager — handles game state, score, progression across all levels. 2) AudioManager — music continues smoothly between scenes; SFX system available globally. 3) UI Managers — persistent UI elements (HUD, dialogue system, settings overlay). 4) SaveSystem — save / load game data across sessions. 5) AnalyticsManager — track player behavior throughout the session. 6) NetworkManager — multiplayer connection persists. Pattern: 1) Create empty GameObject in initial scene (e.g., main menu). 2) Attach manager scripts. 3) Each script's Awake() calls DontDestroyOnLoad(gameObject). 4) Subsequent scenes can access these managers via singleton pattern (static reference). Singleton: `public static GameManager Instance; void Awake() { Instance = this; DontDestroyOnLoad(gameObject); }`. Now any script in any scene: `GameManager.Instance.Score`. Caution: 1) Don't apply DontDestroyOnLoad to many objects — memory bloat over time as scenes accumulate persistent objects. 2) Use one manager GameObject containing all manager components vs. many separate persistent objects. 3) If LoadScene Single is called twice, you'd have two GameManager instances (one from previous scene; one new) — implement singleton check (destroy second instance). The pattern is universal in Unity games; foundational for cross-scene architecture." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Disable scene loading." }
+      ],
+      "correct_answer": "b",
+      "explanation": "DontDestroyOnLoad(gameObject) in script. Persistent across scenes. Pattern: GameManager / AudioManager / SaveSystem with singleton check. One persistent object containing manager components.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Loading a large level scene freezes the game for 3-4 seconds. Better approach?",
+      "choices": [
+        { "id": "a", "text": "Make scene smaller." },
+        { "id": "b", "text": "SceneManager.LoadSceneAsync in a coroutine. SceneManager.LoadScene (synchronous) blocks the main thread while loading — game freezes until done; bad UX for large scenes. SceneManager.LoadSceneAsync returns an AsyncOperation; loading happens on background thread; main thread continues running. Pattern: 1) Show loading screen UI (currently loaded scene). 2) Start coroutine: `IEnumerator LoadLevel() { AsyncOperation op = SceneManager.LoadSceneAsync('Level2'); while (!op.isDone) { float progress = Mathf.Clamp01(op.progress / 0.9f); progressBar.value = progress; yield return null; } }`. 3) Update progress bar from op.progress (0-0.9 during load; 0.9-1.0 during activation). 4) Optional: op.allowSceneActivation = false to delay activation until ready (wait for player input, finish animations, hold on loading screen). 5) Set op.allowSceneActivation = true when ready. 6) Once op.isDone, new scene is active. Result: smooth loading with progress UI; game stays responsive; no freeze. For very large scenes (open world hubs, AAA levels), additionally: 1) Use Addressables to load assets on-demand vs. embedding everything. 2) Async-load shared assets ahead of scene transition. 3) Pre-warm shaders during loading. 4) Use loading screen as opportunity for hints/tips/cinematics. 5) Streaming for open worlds (load adjacent scenes additive; unload distant). Modern Unity async patterns: AsyncOperation, Tasks (C# async / await), UniTask library (popular addon for cleaner async). Pro Unity games use LoadSceneAsync for all non-trivial transitions; LoadScene synchronous only for tiny scenes (loading screens, menus). The 'game freezes during load' UX is amateur-tier; modern players expect smooth transitions with progress indication." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip loading." }
+      ],
+      "correct_answer": "b",
+      "explanation": "LoadSceneAsync in coroutine with progress UI. Non-blocking; main thread continues; show loading screen + progress bar. Modern Unity standard for non-trivial scene transitions.",
+      "points": 1
+    }
+  ]
+}

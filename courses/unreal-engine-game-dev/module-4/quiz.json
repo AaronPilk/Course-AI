@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Materials, post-processing, lighting",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use Material Instances instead of editing Materials directly?",
+      "choices": [
+        { "id": "a", "text": "Required by UE5." },
+        { "id": "b", "text": "Material Instances are lightweight variants that tweak parameters without recompiling the shader. Editing a full Material recompiles the shader (slow, seconds-to-minutes for complex materials; affects every object using it). Material Instances inherit from a master Material and expose parameters — change those parameters in the instance editor without recompiling. Workflow: 1) Build master M_StandardSurface once with parameters (BaseColor, Roughness, Metallic, NormalTexture). 2) Create Material Instances for variants — MI_WoodOak, MI_ConcreteWall, MI_RustyMetal — each with different parameter values. 3) Apply Material Instances to meshes. 4) Tweak per-instance parameters via Material Instance editor; instant preview; no shader recompile. Benefits: 1) Speed — instance edits instant; master edits slow. 2) Reusability — one master Material; hundreds of instances. 3) Memory + performance — instances share compiled shader. 4) Runtime customization — Dynamic Material Instances allow Blueprint to change parameters per-instance at runtime (team colors, damage states, etc.). 5) Designer-friendly — non-shader-experts tweak instances. Pro UE5 workflow: build master Materials with rich parameter sets; create instances for variants; apply instances to meshes; rarely edit masters in production. Editing 20 separate full Materials for 20 variants is the amateur signature; one master + 20 instances is the pro pattern." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Lightweight variants of a master Material; tweak parameters without recompiling. Faster, reusable, runtime-customizable, designer-friendly. Pro pattern.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cave area should feel darker + cooler + more vignette than outdoor area. How to architect?",
+      "choices": [
+        { "id": "a", "text": "Separate level." },
+        { "id": "b", "text": "Post Process Volume covering the cave with override settings. Setup: 1) Place Actors → Volumes → Post Process Volume; position + scale to enclose the cave. 2) Settings (each parameter has an Override toggle + Value): Color Grading → Temperature lower (-200 to -500 for cooler blue tint), Exposure → -1 to -2 stops; Vignette → Intensity 0.6; Color Grading Shadows → push toward blue. 3) Priority = 5 (higher than global outdoor volume's priority). 4) Blend Weight = 1.0 (full effect inside); Blend Radius = 200 (smooth transition at boundary). 5) Global Outdoor Post Process Volume (Unbound, Priority 0) handles the outdoor look. When player enters the cave: cave volume overrides global settings; smooth transition over Blend Radius distance. When player exits: returns to global outdoor settings. Multiple volumes can stack — outdoor (Priority 0) + cave (Priority 5) + deep cave secret (Priority 10) = layered overrides per area. Each volume's Override toggles let you change only the parameters that should differ per area; don't touch unrelated parameters; they inherit. Blueprint can dynamically modify Post Process Volume settings at runtime (e.g., damage flash applies red tint + chromatic aberration via Post Process Volume parameter changes). Pro environment design: per-area Post Process Volumes for atmospheric variation (cave dark, lab clinical, forest warm, boss room dramatic); player moves through; mood shifts seamlessly. One of UE5's foundational atmospheric storytelling tools." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different lighting only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Post Process Volume enclosing cave + override settings (cooler temp, lower exposure, more vignette). Higher Priority overrides global. Smooth Blend at boundary.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why blueprint a Dynamic Material Instance?",
+      "choices": [
+        { "id": "a", "text": "Saves memory." },
+        { "id": "b", "text": "Runtime per-instance parameter changes via Blueprint. Standard Material Instances are static (parameters set at edit time); Dynamic Material Instances allow Blueprint to change parameters AT RUNTIME, per-instance. Setup: 1) Get reference to static Material Instance on a mesh. 2) Create Dynamic Material Instance node → returns Dynamic Material Instance. 3) Call Set Scalar Parameter Value / Set Vector Parameter Value / Set Texture Parameter Value with name + value. 4) Each mesh instance now has its own parameter values; doesn't affect others. Use cases: 1) Team colors — same character mesh + different team color per player via team-color parameter. 2) Damage states — progressive damage texture / color as character takes damage. 3) Highlight selected — emission color set on hover / selection. 4) Animated material properties — flicker, pulse, fade via Tick or timer-driven parameter updates. 5) Status effects — burn glow, poison tint, frost overlay on top of base material. 6) Player customization — character creator sliders feed Dynamic Material Instance parameters. The Dynamic Material Instance is per-mesh instance (one mesh = one Dynamic Material Instance); doesn't affect other meshes using the same source Material. Standard Material Instances handle design-time variation; Dynamic Material Instances handle runtime variation. Both extend a Master Material. Performance: Dynamic Material Instances cost slightly more (per-instance parameter storage); use judiciously. Pro Blueprint pattern: cache Dynamic Material Instance reference in BeginPlay (don't recreate every Tick); update parameters as state changes. For all interactive material changes in 2026 UE5 games: Dynamic Material Instances." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Runtime per-instance parameter changes via Blueprint. For team colors, damage states, animations, selection highlights, player customization. Cache reference; update as state changes.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Outdoor scene; want realistic atmosphere with golden hour lighting + drifting clouds + slight fog. Setup?",
+      "choices": [
+        { "id": "a", "text": "Single point light." },
+        { "id": "b", "text": "Directional Light (sun, rotated for golden hour angle 30° from horizon, warm color ~3500K) + Sky Light (ambient capture from Sky Atmosphere) + Sky Atmosphere (physically-based sky producing golden-hour scattering) + Exponential Height Fog (atmospheric depth + sun shafts) + Volumetric Cloud (drifting 3D clouds). All set Movable for full Lumen GI. Setup: 1) Directional Light — rotation 30° elevation, 45° azimuth from camera; intensity 50,000-80,000 lux (lower than midday); color 3500K (warm yellow / orange). 2) Sky Light — Source Type = Captured Scene OR HDRI; captures from Sky Atmosphere. 3) Sky Atmosphere — single actor; reacts to Directional Light position; automatically produces golden orange / pink scattering at sunset. 4) Exponential Height Fog — Density 0.02; enable Volumetric Fog for sun shafts; atmospheric perspective makes distant objects subtly hazier. 5) Volumetric Cloud — Density 0.5; Coverage 0.4; clouds drift with wind. 6) Post Process Volume (Unbound) — Color Grading slightly amplifies golden tones; Bloom intensity 0.7. Result: cinematic golden hour with realistic atmospheric scattering, soft long shadows, glowing clouds backlit by sun, atmospheric depth via fog. UE5's atmosphere stack is the most powerful real-time atmospheric lighting available in any game engine in 2026. Animate the Directional Light rotation for day-night cycle; everything reacts in real-time. The same stack with parameters adjusted creates: midday (high sun, cool/neutral color, fewer clouds); blue hour (sun below horizon, deep blue + orange residual); midnight (no sun, ambient via Sky Light + moonlight Directional Light); overcast (denser clouds, neutral light, less contrast). Pro outdoor lighting: this combo + Lumen handles 95% of cases beautifully." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Directional Light (sun) + Sky Light + Sky Atmosphere + Exponential Height Fog + Volumetric Cloud + Post Process. All Movable for Lumen. UE5's full atmospheric stack.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Material Domain for screen-wide effects?",
+      "choices": [
+        { "id": "a", "text": "Surface." },
+        { "id": "b", "text": "Post Process. Material Domain → Post Process is for full-screen effects applied during post-processing — color tinting, distortion, scanlines, custom film effects, screen-space effects you build yourself. Workflow: 1) Create Material with Material Domain = Post Process. 2) Build the effect using SceneTexture node (samples the scene's rendered color, depth, normal); apply math / texture / shader operations. 3) Add to Post Process Volume → Settings → Post Process Materials → add the material to the array. 4) Plays during post-processing chain. Use cases: 1) Color tinting (full-screen tone shift; e.g., damage flash applies red overlay). 2) Distortion (screen-wave effects, drunkenness, magic spells). 3) Custom retro effects (scanlines, CRT distortion, pixelation, color quantization). 4) Outline effects (cel-shading lines around objects via depth + normal sampling). 5) Bloom alternatives (custom bloom not provided by default). 6) Heat haze (refraction over hot surfaces). 7) Game-state visual effects (low health = red vignette intensifying; sneak mode = desaturated overlay). The Post Process Material runs per-frame on the rendered scene; full-screen effect. Different from Surface materials (applied per-mesh) or Decal materials (projected onto surfaces). Post Process Volume's built-in effects (Bloom, Vignette, Color Grading, etc.) handle most common needs; Post Process Materials for custom effects beyond built-in. Pro pattern: use built-in effects first; Post Process Materials for game-specific custom effects. Same approach in Unity (Image Effects) and other engines. Combined with Post Process Volume layering (priority, blending), enables complex per-area + per-state visual effects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Light Function." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Material Domain = Post Process. Full-screen effect applied via Post Process Volume. For custom screen tints, distortion, retro effects, game-state visuals beyond built-in post-processing.",
+      "points": 1
+    }
+  ]
+}

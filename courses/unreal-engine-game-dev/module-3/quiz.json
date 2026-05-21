@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: World Partition, Nanite, Lumen, performance",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "World Partition does what?",
+      "choices": [
+        { "id": "a", "text": "Builds walls." },
+        { "id": "b", "text": "Automatically streams large open worlds via spatial cell grid. Divides the world into a grid (default 25m or 50m cells); loads only cells near the player's loading range (default ~256m); unloads distant cells. Solves four problems of large-world game development: 1) Memory — only loaded cells consume RAM; a 10km world doesn't need 10GB+ of simultaneous load. 2) Performance — rendering scales with loaded actors, not total world content. 3) Editor — load only the cell you're editing; editor remains fast on massive worlds. 4) Source control — each cell is a separate file on disk; multiple developers can edit different cells simultaneously without conflicts. Create via File → New Level → Empty Open World. HLOD (Hierarchical Levels of Detail) generates simplified proxies for distant content — always visible even before full streaming; smooth transition to full detail; no pop-in. Data Layers enable runtime variations (day/night, tutorial/main, quest state) without separate levels. World Partition is UE5's open-world technology; powers Hellblade II, Black Myth: Wukong, Star Wars Outlaws. For 10km+ open world games in 2026: World Partition is the default; the legacy single-level or World Composition approaches are deprecated. Combined with Nanite (per-pixel LOD) + Lumen (real-time GI) + virtual textures, UE5 delivers AAA open-world tech stack." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automatic spatial streaming for open worlds via cell grid. Solves memory, performance, editor, source control problems. UE5 default for open-world games.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "5,000 individual tree actors in a forest scene; performance terrible due to draw calls. Fix?",
+      "choices": [
+        { "id": "a", "text": "Fewer trees." },
+        { "id": "b", "text": "Hierarchical Instanced Static Mesh (HISM) or Foliage tool. With 5,000 individual actors, each submits ~10 draw calls = 50,000+ draw calls; render thread chokes. HISM batches identical meshes into one draw call per material per LOD — 5,000 trees collapse to ~10 draw calls. Massive performance gain. Setup: 1) Foliage tool (artist-friendly) — activate Foliage mode in toolbar; pick mesh; configure brush (density, scale variation, rotation, random Z rotation); paint on terrain. Auto-creates instanced foliage actors. 2) Hierarchical Instanced Static Mesh Component — programmatic instances via Blueprint; AddInstance() per location. 3) Manual conversion via Mesh Merge Actor for combining batches. Combined with Nanite-compatible tree materials: per-pixel LOD; no manual LOD setup needed. Combined with World Partition: instances stream in/out per cell. Pro environment workflow: paint forests / grass via Foliage tool; use HISM for programmatic placement; Nanite-enable all foliage; combined with Lumen for indirect lighting. The 'individual actors per element' anti-pattern is the #1 cause of poor performance in environment scenes; instancing is the #1 fix. Same approach: grass (Foliage tool with grass mesh), rocks (Foliage or PCG), pebbles, leaves, dust particles. Identify via stat scenerendering — draw call counts > 10,000 are warning; > 50,000 critical." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger trees." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HISM or Foliage tool. Batches identical meshes into single draw calls. 50,000 → ~10 draw calls. Foliage tool for painting; HISM for programmatic instancing.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use Lumen over baked lightmaps?",
+      "choices": [
+        { "id": "a", "text": "Cheaper." },
+        { "id": "b", "text": "Real-time dynamic global illumination — lights can move, time of day changes, environment shifts, all with lighting updating instantly. Baked lightmaps are precomputed offline (hours of build time for complex levels); static lights only; dynamic objects don't receive proper indirect lighting. Lumen: 1) Dynamic — move lights freely; lighting updates. 2) Zero build time — designers iterate in real-time. 3) Dynamic objects properly lit by indirect bounce. 4) Designer iteration speed compounds across project. Lumen disadvantages: 1) Higher GPU cost — Lumen costs more per frame than baked. 2) Quality approximation — baked can be slightly more accurate in static scenes. 3) Modern GPU required (UE5 fundamentals; DX12/Vulkan/Metal). For 2026 UE5 projects: Lumen is default; baked lighting is legacy. Exceptions: mobile/VR where Lumen too expensive; specific static archviz scenes where baked perfection matters. Hardware ray tracing (HWRT) on capable GPUs (RTX 4070+) elevates Lumen quality; software ray tracing (SWRT) works on any modern GPU. Lumen quality settings: Low/Medium/High/Epic; tune per platform. Combined with Nanite (per-pixel detail) + Sky Atmosphere (physically-based sky) + Volumetric Cloud + Height Fog = real-world atmospheric look in real-time. Used in Hellblade II, Black Myth: Wukong, The Matrix Awakens demo. The trajectory: Lumen wins as GPUs improve; baked lighting phases out. Some indie / lower-budget 2026 projects still bake for performance; mainstream is Lumen." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Real-time dynamic GI: lights move + time of day changes + zero build time + dynamic objects lit. Baked = precomputed offline; static only. UE5 default = Lumen.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Nanite is enabled on glass mesh; renders with sparkles + missing surfaces. Cause?",
+      "choices": [
+        { "id": "a", "text": "Bug in Nanite." },
+        { "id": "b", "text": "Nanite doesn't support translucent materials. Glass uses translucent material (light passes through with refraction); Nanite is opaque-geometry-only. Mixing translucent + Nanite causes visual artifacts: rendering order issues, missing surfaces, sparkles where depth can't be determined, broken reflections. Fix: disable Nanite on the glass mesh. Static Mesh editor → Nanite Settings → Enabled = off. Glass uses traditional rendering; works correctly with translucent material. Performance: glass meshes are usually low-poly anyway; no Nanite benefit lost. Same principle for: water surfaces, particles, decals, holograms, ghost effects, anything with significant transparency. Subtle difference: masked alpha (cutout transparency, like foliage leaves) IS Nanite-compatible; translucent blended IS NOT. Foliage with masked alpha leaves works with Nanite. The opaque vs. translucent vs. masked distinction matters. Other Nanite limitations to know: 1) Heavy World Position Offset (vertex animation like flag waving) — limited. 2) Skeletal meshes — preview/experimental in UE5.4+; full support coming. 3) Tessellation — replaced by Nanite's per-pixel detail; not applicable. 4) Tiny meshes — engine overhead > benefit. Pro UE5 workflow: 'Nanite ON for all imported high-poly meshes by default; disable for translucent / particle / specific exclusions; verify via PIE; artifacts = check Nanite compatibility.' This handles most cases cleanly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller glass." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Nanite doesn't support translucent materials. Disable Nanite on glass; uses traditional rendering. Same applies to water, particles, decals. Opaque-only Nanite.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Performance profiling tools in UE5?",
+      "choices": [
+        { "id": "a", "text": "Just look at the game." },
+        { "id": "b", "text": "stat unit (frame time breakdown per thread — Game/Render/GPU); stat fps (current frame rate); stat scenerendering (render thread cost breakdown); stat scripttime (Blueprint cost); GPU Visualizer (what GPU spends per frame); Unreal Insights (comprehensive multi-track profiling). Run in PIE; identify bottlenecks. For 60 FPS at 16.67ms total budget: Game thread ~8ms, Render thread ~5ms, GPU ~12ms (parallel). Whichever thread exceeds its slice sets the actual frame rate. Common bottlenecks: Game thread = heavy Blueprint Tick, many ticking actors, complex AI; Render thread = too many draw calls, shader complexity, instance count; GPU = high-res, complex post-processing, many lights, Lumen quality. Workflow: 1) Set FPS target + platform. 2) Profile baseline early in development (even at prototype). 3) Identify bottleneck thread via stat unit. 4) Use specific profiling tools to drill into that thread's cost. 5) Optimize hot path. 6) Re-profile; verify improvement. 7) Repeat for next bottleneck. Performance work is iterative; not a single optimization but accumulated gains. Tools beyond UE5: external profilers (RenderDoc for GPU; PIX for Windows; Xcode Instruments for Mac). For shipping: profile in packaged build (PIE may not reflect ship perf accurately). Pro UE5 performance engineers profile constantly; setup performance dashboards for ongoing visibility. Without profiling, performance work is guesswork." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "stat unit + stat fps + stat scenerendering + GPU Visualizer + Unreal Insights. Profile baseline early; identify bottleneck thread; optimize; re-profile; repeat.",
+      "points": 1
+    }
+  ]
+}

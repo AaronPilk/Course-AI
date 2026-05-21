@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Team Projects",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between Team Projects and Productions?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Team Projects = cloud-based collaborative editing where Premiere hosts the project file in Adobe's cloud; editors anywhere access it via login; changes sync in near-real-time; sequences lock when claimed by an editor. Built for distributed / remote teams; requires Adobe Creative Cloud Pro or Teams subscription; modern + integrated. Productions = file-based alternative where a Production folder contains multiple Premiere project files + shared media on local / NAS storage; multiple editors work on different projects within the same Production simultaneously; shared bin for cross-project assets. Built for traditional broadcast / film teams on local network infrastructure (NAS, SAN); no cloud dependency. Choose based on team setup: 1) Remote distributed team → Team Projects (cloud necessary). 2) On-site team with high-bandwidth NAS → Productions (faster local access; no cloud sync overhead). 3) Hybrid → either works; depends on team preference. Team Projects strengths: real-time collaboration awareness, automatic version history, conflict resolution UI, integration with Frame.io. Productions strengths: faster media access on LAN, traditional file-based mental model, no internet required, lower subscription cost. Both replace the 'pass the .prproj around' single-editor pattern with team-aware workflows. For 2026: Team Projects is growing as remote-first becomes standard; Productions retains traditional studios where in-office editing on shared NAS dominates." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Productions is deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Team Projects = cloud-based collaborative; Productions = file-based shared storage. Both enable multi-editor work. Pick by team setup: remote/distributed → TP; on-site NAS → Productions.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Team Project shows 'media offline' for everyone except Editor A. What's wrong?",
+      "choices": [
+        { "id": "a", "text": "Bug in Premiere." },
+        { "id": "b", "text": "Editor A imported media from a local-only path (their Desktop / Downloads / external drive that other editors can't reach). Team Projects manages project metadata + sequences in the cloud but requires media files to live on shared storage accessible at consistent paths across all editors' machines — typically a NAS, SAN, or cloud storage with sync clients. When Editor A drops a clip from `/Users/EditorA/Desktop/footage.mp4` into the project, the project records that path; Editor B's machine doesn't have that path; Premiere shows 'media offline.' Fix workflow: 1) Move the offending media to shared storage (NAS / cloud-synced folder accessible by all). 2) In Premiere, right-click the offline clip → Link Media → point to the new shared location. 3) The link persists for everyone. 4) Establish team convention: ingest media ONLY from shared storage; never from local-only paths. The most common Team Projects breakage is local-only media. Prevention: 1) All editors mount the shared storage to the same path (configure NAS via /Volumes/shared on Mac; \\\\server\\shared on Windows; document for team). 2) Sync client for cloud storage configured the same way on every machine. 3) Ingest workflow goes through Media Browser → shared storage path; never File → Import from local. 4) Lock down: some teams enforce 'no local media' via process; editors can't import to project from anywhere except shared. The 'media offline for everyone except one editor' symptom is the diagnostic; the fix is shared-storage discipline." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different OS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Editor A imported media from a local-only path others can't reach. Move media to shared storage; relink. Enforce: all media on shared storage; consistent paths across machines.",
+      "points": 1
+    }
+  ]
+}

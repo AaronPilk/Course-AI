@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Weighting and attention",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Token weighting syntax in A1111/ComfyUI?",
+      "choices": [
+        { "id": "a", "text": "There's no weighting." },
+        { "id": "b", "text": "(token) = 1.1x; (token:1.4) = 1.4x precise; [token] = 0.91x de-emphasis; nested parens compound — ((token)) = 1.21x; (((token))) = 1.33x. Used to emphasize / de-emphasize specific prompt elements. Examples: '(red dress:1.3)' to ensure clearly red dress when default is dull; '[background:0.7]' to de-emphasize background; '((perfect anatomy))' to push toward correct anatomy in SD/SDXL. Sweet spot: 1.1-1.4 per token; higher (1.6+) often produces distortion / burning / mangled features. Lower (0.5-) effectively removes the token. Standard across A1111, Forge, ComfyUI, SD.Next, most SD UIs. Different from natural-language Flux prompting where weighting is less effective. For complex prompts: 1) Lead with most important concept (early tokens have more CLIP weight). 2) Use weighting for selective emphasis. 3) Don't over-weight (subtle nudges > heavy hammers). 4) Use BREAK keyword (A1111) to separate conflicting concept groups (red car BREAK blue sky avoids concept bleeding). For Flux: weighting less impactful due to T5 encoder; write descriptive natural sentences instead. Pro habit: minimal weighting in initial draft; add precision weights only when default needs nudging; don't over-engineer prompts.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "(token) = 1.1x; (token:1.4) = 1.4x; [token] = 0.91x. Sweet spot 1.1-1.4. Higher distorts. Standard across SD UIs. Flux uses natural language instead.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Prompt: 'red apple on green table'. Output: green apple on red table. Cause?",
+      "choices": [
+        { "id": "a", "text": "Wrong colors." },
+        { "id": "b", "text": "Concept bleeding — SD/SDXL's CLIP encoder doesn't reliably bind colors to specific objects; concepts mix. Fix options: 1) Use BREAK keyword (A1111/Forge): 'red apple BREAK green table' — separates concepts into attention groups; less bleeding. 2) Token weighting: '(red apple:1.3) on (green table:1.3)' — emphasizes correct bindings. 3) Reorder: 'red apple sitting on top of a green wooden table' — natural prose can sometimes bind better. 4) Use regional prompting (Regional Prompter extension / ComfyUI nodes): assign 'red apple' to upper region of image, 'green table' to lower region; surgical control. 5) ControlNet (Module 3): generate apple + table separately via Inpaint or layout-based ControlNet. 6) Switch to Flux: T5 encoder binds concepts more reliably; 'red apple on green table' often works first try on Flux. The 'color binding' problem is a known SDXL weakness; community workarounds + Flux/SD3 better at it. For complex multi-color compositions: combine BREAK + weighting + iteration; sometimes ControlNet is the only reliable way. The 'why is the apple green?' bug is universal SDXL experience; familiarity with workarounds = pro skill. As models improve (Flux, SD3.5), binding gets more reliable; SD 1.5 has the worst binding; Flux has the best. Choose model accordingly for binding-sensitive prompts.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Concept bleeding — CLIP doesn't reliably bind colors to objects. Fix: BREAK keyword (A1111), token weighting, regional prompting, ControlNet, or switch to Flux (better T5 binding).",
+      "points": 1
+    }
+  ]
+}

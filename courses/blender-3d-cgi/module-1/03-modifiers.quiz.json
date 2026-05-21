@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Modifiers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why does modifier stack order matter?",
+      "choices": [
+        { "id": "a", "text": "It doesn't." },
+        { "id": "b", "text": "Modifiers apply top-to-bottom in the stack; the output of each modifier is the input of the next. Order determines what each modifier sees. Example: Mirror → Subdivision Surface. Mirror first creates the mirrored geometry (left half from right); Subsurf then smooths both halves. Reversed: Subdivision Surface → Mirror. Subsurf smooths the right half; Mirror then duplicates the smoothed geometry to the left — works, but if you want to edit the original (low-poly) geometry on right side, Edit Mode shows the SUBDIVIDED version, much harder to manipulate. Mirror first; Subsurf second is the standard. Another example: Array → Bevel vs. Bevel → Array. Array first makes 10 copies; Bevel rounds all 10. Bevel first rounds one shape; Array duplicates the rounded — efficient if Bevel is slow on complex geometry. The choice depends on whether you want subsequent modifiers to see the multiplied geometry or just one instance. Each modifier has subtleties: Boolean wants clean topology input (so order Boolean BEFORE Bevel which produces extra edges); Solidify wants to see the un-mirrored mesh sometimes (depends on intent). Pro habit: think about what each modifier needs to see and order accordingly. The visual indicator in Blender's modifier panel — Properties → wrench — shows top-to-bottom; drag to reorder. Common pre-made stacks (character: Mirror + Subsurf; mechanical: Bevel + Subsurf) reflect proven orderings." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random order is fine." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Modifiers apply top-to-bottom; each operates on previous output. Order determines what each sees. Mirror → Subsurf is standard (mirror first, then smooth both).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You added Subdivision Surface to a character; the face looks soft and pillowy where you wanted sharp brow ridges. Fix?",
+      "choices": [
+        { "id": "a", "text": "Remove Subsurf." },
+        { "id": "b", "text": "Add edge creases / crease weights on the brow edges. Subdivision Surface smooths everything by default — every edge gets pulled toward an averaged position; sharp ridges become rounded. To preserve sharpness in specific areas: select the edges where you want sharpness preserved → Ctrl+E → Edge Crease → set value 1.0 (fully sharp) or partial values for partial sharpness. Subsurf respects edge creases: creased edges don't smooth; the rest does. Use cases: brow ridges (sharp), cheekbones (semi-sharp 0.5), jawline (semi-sharp), hard-edged mechanical parts (full crease). For broader sharpness control: 1) Add support loops (Ctrl+R) near the edge you want sharp — Subsurf smooths over loops less aggressively when they're close to each other; tight loops = preserved sharpness. 2) Use Bevel + Subsurf instead (Bevel adds edges defining sharp transitions; Subsurf then doesn't over-smooth). 3) Use Mark Sharp + Edge Split Modifier — alternative approach. The crease method is the simplest first option for character faces; support loops are common in hard-surface modeling. The general principle: smooth surfaces from Subsurf are the default; sharpness is opt-in via creases, support loops, or alternate workflows. Most pro character heads use creases on key facial landmarks (brow, nose ridge, lip edges) to preserve definition while keeping cheek areas smooth." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Live with soft brows." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Add edge creases (Ctrl+E → Edge Crease) on brow edges. Subsurf respects creases; sharp edges preserved; smooth rest. Or support loops near sharp edges.",
+      "points": 1
+    }
+  ]
+}

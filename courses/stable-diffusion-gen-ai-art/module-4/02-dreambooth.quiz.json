@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Dreambooth",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Dreambooth vs. LoRA — when use Dreambooth?",
+      "choices": [
+        { "id": "a", "text": "Always Dreambooth." },
+        { "id": "b", "text": "When LoRA isn't strong enough or you need a foundation model for a series of related works. Dreambooth fine-tunes the entire model; produces 7 GB+ standalone checkpoint; longer training (8-24 hours); 24 GB+ VRAM or cloud. LoRA is preferred for most use cases: smaller (10-200 MB), faster (30 min-4 hours), stackable (multiple LoRAs in one prompt), reusable. Reserve Dreambooth for: 1) Base model for ongoing series (brand fine-tune used across hundreds of generations; bake style/concepts into base). 2) Maximum character likeness where LoRA quality insufficient. 3) Stylistic foundation for a body of work in same style. 4) Model merging projects (combine multiple Dreambooth checkpoints). For practical training: cloud GPUs (RunPod, fal.ai) since 24 GB+ local VRAM is rare. Cost: $5-30 per training run. 95% of users train only LoRAs; Dreambooth is occasional. In 2026, alternatives often suffice: high-quality LoRA + multi-LoRA stacking, latest Flux + targeted IP-Adapter, community fine-tunes (download instead of train). Train Dreambooth only when these alternatives fail. Catastrophic forgetting risk: over-training Dreambooth = model forgets prior knowledge; class images (regularization) help; careful step count helps. Iterate test generations; pick best checkpoint via test rather than max steps.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reserve for: base model for series, max likeness LoRA can't achieve, stylistic foundation, model merging. 95% of fine-tuning is LoRA; Dreambooth for special cases.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Training Dreambooth; after 6 hours, model can't render generic 'cat' anymore — only your trained character. Cause?",
+      "choices": [
+        { "id": "a", "text": "Working as intended." },
+        { "id": "b", "text": "Catastrophic forgetting — over-training caused the model to forget broader knowledge it had pre-training. The trained concept dominates so much that prior knowledge degraded. Symptoms: generic prompts produce trained-concept outputs; model can't render unrelated subjects; quality regression compared to base model on unrelated topics. Fixes: 1) Class images / regularization — include generic 'class' images in training (e.g., 100 generic 'cat' images alongside 30 of your specific character if training a character cat); model learns 'this specific cat is one example of cats in general'; preserves cat-rendering capability. 2) Earlier checkpoint — Dreambooth saves checkpoints during training; load checkpoint from earlier point (e.g., 50% through); test generations; usually pre-forgetting state available. 3) Lower learning rate + fewer steps — less aggressive over-fit. 4) Smaller training run — instead of 24 hours, try 12; test; iterate. 5) Re-add base model's general capabilities — some workflows re-merge with base model post-training to recover. The 'catastrophic forgetting' problem is classic in transfer learning + fine-tuning generally; not unique to diffusion models. Mitigation patterns: regularization, early stopping, smaller learning rates, class images. Dreambooth specifically is fragile here — training entire model on small dataset is high-risk. LoRA has lower risk because base model parameters frozen; only adapter trained. The forgetting problem is one reason Dreambooth is less popular than LoRA in 2026; LoRA's modular approach avoids this entirely.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Catastrophic forgetting from over-training. Fix: class images (regularization), earlier checkpoint, lower learning rate, fewer steps. LoRA avoids this entirely.",
+      "points": 1
+    }
+  ]
+}

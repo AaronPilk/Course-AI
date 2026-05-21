@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: SF Pro",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use named text styles (`.body`, `.title`) instead of hardcoded sizes?",
+      "choices": [
+        { "id": "a", "text": "Easier to type." },
+        { "id": "b", "text": "Dynamic Type support. Named text styles automatically scale with user preference — if a user increases system text size (Settings → Display & Brightness → Text Size, or via the accessibility XXL settings), all text using named styles scales together, preserving hierarchy. Hardcoded sizes (font(.system(size: 17))) DON'T scale; vision-impaired users get tiny text regardless of their setting; effectively excludes a portion of your audience. Apple's HIG strongly recommends named styles for all UI text; SwiftUI defaults to scaling. Beyond accessibility: named styles encode Apple's optical sizing (SF Pro Text vs Display variants based on size), proper leading per size, and tracking adjustments — getting all this right manually is hard. The single discipline 'always use named styles' produces accessible-by-default text. For specific cases where you must use custom sizes (a hero with very specific design): `.font(.system(size: 60, weight: .bold)).dynamicTypeSize(...DynamicTypeSize.xxxLarge)` opt back into scaling." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller bundle." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dynamic Type — named styles scale with user preference; hardcoded sizes don't; excludes vision-impaired users.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your designer wants Helvetica Neue body text 'because it's elegant.' Trade-offs vs SF Pro?",
+      "choices": [
+        { "id": "a", "text": "Just do it." },
+        { "id": "b", "text": "Push back unless there's a strong reason. SF Pro vs Helvetica trade-offs: SF Pro is engineered specifically for screens at every size (optical sizing); has Dynamic Type ramps built in; renders perfectly on retina + non-retina; pre-installed (no download); free; supports many languages with consistent feel; gets ongoing improvements from Apple. Helvetica Neue: nice on print, fine on screen but not optimized; older license; no built-in Dynamic Type integration; uses additional storage if bundled; users with system Helvetica replaced see fallback. The 'elegant' subjective preference rarely justifies the costs in 2026. Helvetica was Apple's UI font pre-iOS 9; SF Pro replaced it because Apple's engineers measured legibility and Helvetica lost. Apple-platform body text is a solved problem; the solution is SF Pro. If brand truly requires Helvetica feel (very rare), restrict to display contexts (hero headlines only) and keep body SF. The default choice is so much cheaper and better that deviation should require justification beyond 'designer prefers it.'" },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Designer's call." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SF Pro is engineered for screens + Dynamic Type + free + native feel. Custom fonts for display only, not body.",
+      "points": 1
+    }
+  ]
+}

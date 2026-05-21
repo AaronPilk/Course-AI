@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: GameObjects and Components",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Unity's core architecture pattern?",
+      "choices": [
+        { "id": "a", "text": "Deep class inheritance." },
+        { "id": "b", "text": "Composition over inheritance — build GameObjects by combining Components. Instead of class hierarchies like Player extends Character extends Actor extends MonoBehaviour with 10 levels of inheritance, Unity uses: GameObject is a container; attach Components for each behavior (Transform, Rigidbody, Collider, MeshRenderer, custom scripts). A Player GameObject = Transform + Rigidbody + CapsuleCollider + MeshRenderer + Animator + AudioSource + PlayerController script + Health component + Inventory component. Each component is independent + reusable. Same pattern: an Enemy GameObject reuses Rigidbody + Collider + MeshRenderer + AudioSource + Animator (same as player) + custom EnemyAI script + Health component (same as player) + LootDropper component. Health component reusable across player + enemy + destructible objects. Inventory component reusable across player + chest + vendor. Composition lets you assemble behavior from parts vs. inheriting massive base classes. Add components via Inspector → Add Component or AddComponent<T>() in code. Remove via Destroy(component). RequireComponent attribute on scripts ensures dependencies exist. Same architecture in Unreal Engine (Actor + Components), Godot (Node + composition), modern game engines universally. The 'mega base class with everything' alternative is older + fragile + hard to maintain; composition scales cleanly. Pro Unity design: small focused components doing one thing well; assemble for complex behavior; reuse across GameObject types." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Singletons." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Composition over inheritance. GameObject = container; Components = behavior; combine for complex actors. Reusable components across object types. Modern engine standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Player GameObject has script that needs Rigidbody to exist. How to ensure it's always attached?",
+      "choices": [
+        { "id": "a", "text": "Add manually each time." },
+        { "id": "b", "text": "[RequireComponent(typeof(Rigidbody))] attribute on the script class. When you attach the script to a GameObject (or create a new GameObject with the script), Unity automatically adds Rigidbody if missing. Trying to remove Rigidbody from a GameObject that has this script → Unity prevents removal (with explanation) — protects the dependency. Setup: `[RequireComponent(typeof(Rigidbody))] public class PlayerController : MonoBehaviour { ... }`. Multiple required components: `[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]`. The attribute is compile-time enforcement; runtime guarantees the dependency exists; eliminates 'null reference exception because Rigidbody missing' bugs. Use cases: 1) PlayerController requires Rigidbody (movement physics). 2) EnemyAI requires NavMeshAgent (pathfinding). 3) Health component requires Collider (to receive damage from hits). 4) AudioPlayer requires AudioSource. Combined with GetComponent<>() in code to access the required component: `private Rigidbody rb; void Start() { rb = GetComponent<Rigidbody>(); }`. Cache references in Start (rather than GetComponent every frame in Update — performance + clarity). Pro Unity scripts: 1) [RequireComponent] for dependencies. 2) Cache component references in Start/Awake. 3) Use SerializeField for Inspector-visible private fields. 4) Use [Tooltip] for documentation. Result: robust + maintainable scripts. The 'add manually each time' alternative is error-prone; one missed addition = null reference at runtime; hard to debug." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Inheritance." }
+      ],
+      "correct_answer": "b",
+      "explanation": "[RequireComponent(typeof(Rigidbody))] attribute. Unity auto-adds + prevents removal of dependency. Combine with cached GetComponent reference in Start. Robust + maintainable.",
+      "points": 1
+    }
+  ]
+}

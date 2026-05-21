@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Sculpting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's Dyntopo and when do you need it?",
+      "choices": [
+        { "id": "a", "text": "A particle system." },
+        { "id": "b", "text": "Dynamic Topology — sculpting feature that adds polygons as you brush, more where you sculpt and less elsewhere. Enable: Sculpt menu → Dyntopo (or Ctrl+D). Now the mesh subdivides under brush strokes — sculpting a wrinkle adds polygons specifically along that wrinkle; not detail elsewhere. Without Dyntopo, sculpting operates on existing topology — you can only push existing polygons around; can't add new detail beyond what's there. Use Dyntopo when: 1) Sculpting high-detail organic forms (wrinkles, pores, scales) — need topology where the detail goes. 2) Starting from a low-poly base — adds detail as you sculpt. 3) Roughing in shapes that need to become detailed. Alternative: Remesh — creates uniform high-resolution mesh in one step (Sculpt → Remesh → Voxel Size 0.02 → Apply). Use Remesh when you want a clean even topology to sculpt on (vs. Dyntopo's chaotic per-stroke topology). Modern Blender workflow often combines: Remesh to start with high-poly clean mesh; sculpt detail; periodically Remesh again to reset topology if it gets too chaotic. Multires modifier is yet another option: stores multiple subdivision levels; sculpt at high level; display at low for performance. For 90% of sculpting work: Dyntopo OR Remesh handles topology needs. ZBrush has DynaMesh (similar to Remesh); same concept industry-wide." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "A render setting." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dynamic Topology adds polygons as you brush. Enables high-detail organic sculpting on low-poly base. Alternative: Remesh for clean uniform high-poly.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Sculpted character has amazing detail (5M polygons); now need to animate it. What's the workflow?",
+      "choices": [
+        { "id": "a", "text": "Animate the sculpt directly." },
+        { "id": "b", "text": "Retopology to low-poly + bake sculpt detail to Normal Map / Displacement Map applied to the low-poly. The 5M poly sculpt is animation-impossible — too dense for real-time deformation; topology doesn't flow around joints; UV unwrapping unfeasible. Bridge: 1) Retopology — build a clean low-poly mesh (~10k-30k polys) over the sculpt. Tools: Shrinkwrap modifier (auto-wraps new mesh to sculpt surface); manual modeling with snap-to-face; QuadRemesher addon (automated retopology); RetopoFlow addon (interactive retopo tools). 2) Smart UV unwrap or manual unwrap on the low-poly mesh. 3) Bake the sculpt's high-detail into texture maps: Normal Map (RGB image encoding surface normals — fakes the detail visually), Displacement Map (grayscale height; can be true geometric displacement or fake). Setup: Cycles → Bake → with low-poly selected, then high-poly selected (Selected to Active) → bake type Normal → renders the difference between low + high into a texture. 4) Apply Normal Map to the low-poly's material → low-poly mesh now SHOWS the sculpt's detail visually without the polygon cost. 5) Rig + animate the low-poly. The low-poly mesh appears as detailed as the sculpt (5M polys' worth of normal information encoded in the map) while being animation-friendly (30k polys deform smoothly). This high-to-low + bake workflow is universal in film + AAA games; standard for character pipelines. Pro tools: Substance Painter for painting on top of the bakes; Marmoset Toolbag for baking. Blender's built-in baking is competent for most workflows." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Simplify sculpt." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Retopology to low-poly + bake sculpt detail to Normal Map / Displacement Map on low-poly. Low-poly for animation; maps preserve visual detail. Standard high-to-low pipeline.",
+      "points": 1
+    }
+  ]
+}

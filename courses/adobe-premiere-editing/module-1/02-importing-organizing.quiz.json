@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Importing and organizing media",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When you import a clip into Premiere, what happens to the file?",
+      "choices": [
+        { "id": "a", "text": "Copied into the project." },
+        { "id": "b", "text": "Nothing — Premiere creates a reference (pointer) to the original file on disk. The clip in your Project panel is a link, not a copy. This means: 1) Project files (.prproj) are tiny (under 100 MB even for huge projects); 2) Moving / renaming the source files breaks the references — Premiere shows 'Media Offline' until you re-link via right-click → Link Media → point to new location; 3) Multiple projects can reference the same source files without duplication; 4) For long-term archive, use File → Project Manager to consolidate (collect + copy referenced files into one folder). The reference-based model is why pro editors structure project folders carefully: one root folder containing `01_footage/`, `02_audio/`, `03_project/`, `04_exports/` subfolders, then move the whole root if needed (Premiere resolves relative paths within the structure). The alternative — letting source files scatter across Desktop, Downloads, external drives — produces fragile projects that go offline whenever something gets moved. The Media Browser panel (vs File → Import) is the pro choice for importing because it previews clips, handles camera-specific multi-file formats correctly (XAVC, R3D, BRAW), and respects clip relationships." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Transcoded." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reference created, not copy. Move sources = offline media. Project files stay tiny. Organize source folders structurally.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Editing 4K 60p footage on a laptop. Playback stutters; timeline scrubbing is sluggish. Best solution?",
+      "choices": [
+        { "id": "a", "text": "Buy a new laptop." },
+        { "id": "b", "text": "Generate proxies. Premiere's proxy workflow creates low-resolution copies (typically 1/4 or 1/2 resolution ProRes Proxy) of your high-res footage. During editing, Premiere plays the proxies — laptop handles smoothly; scrubbing is responsive; effects preview at reasonable speed. On export, Premiere automatically uses the high-resolution originals — final delivery is uncompromised. Setup: select clips in Project panel → right-click → Proxy → Create Proxies → pick preset → Premiere sends to Adobe Media Encoder (AME) which generates them in the background. After: toggle proxy mode via Program monitor → wrench icon → Toggle Proxies. Now timeline plays proxies; export uses originals. Pro editors use proxies routinely for 4K+ work, even on capable workstations — saves GPU heat, extends laptop battery, smooths the entire editing experience. Alternative: transcode to ProRes / DNxHR intermediates (similar idea but the intermediates become the working files). Or upgrade hardware — viable but expensive; proxies solve the immediate problem for $0. The shift from native 4K editing to proxy workflows is mainstream in 2026 because 4K-and-up footage is normal but real-time playback of high-res on average laptops remains expensive." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Downsize all footage." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generate proxies. Low-res copies for editing; export uses originals. Smooth playback on modest hardware; standard 2026 workflow for 4K+.",
+      "points": 1
+    }
+  ]
+}

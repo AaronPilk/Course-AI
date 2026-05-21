@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dynamic Type",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why test your app specifically at the accessibility text size A5?",
+      "choices": [
+        { "id": "a", "text": "Required by App Store." },
+        { "id": "b", "text": "Layouts break at largest accessibility sizes. At A5 (largest accessibility text size), body text is ~3× the default — that 17pt body becomes ~50pt. Horizontal layouts (icon + label + arrow in one row) overflow off-screen; lists of 3-column data become unreadable; modal sheets become too tall to fit content. Apps that work fine at default routinely break at A5; users with vision impairments encounter the broken state daily. Apple's Accessibility Inspector lets you simulate; test the critical screens (home, list views, forms, settings) at A5; fix what breaks. Common fixes: stack horizontally arrangements vertically at accessibility sizes (check `@Environment(\\\\.dynamicTypeSize).isAccessibilitySize`), use ScrollView where you assumed fixed-height content, cap font scaling on hero headlines with `.dynamicTypeSize(...DynamicTypeSize.accessibility3)` to prevent absurd display sizes. 1 in 4 adults over 50 has reduced vision; this isn't an edge case. Testing at A5 is good design practice and required by Apple's accessibility audit before App Store approval for some apps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Stress test." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layouts break at A5 (~3× default text). Test critical screens; stack vertically; cap hero text. 1 in 4 over 50 affected.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer wants custom font for body text. Will it scale with Dynamic Type by default?",
+      "choices": [
+        { "id": "a", "text": "Yes." },
+        { "id": "b", "text": "No — custom fonts don't automatically respect Dynamic Type. To make them scale, wrap with UIFontMetrics: `UIFont(name: 'CustomFont', size: 17).flatMap { UIFontMetrics(forTextStyle: .body).scaledFont(for: $0) }`. UIFontMetrics scales the custom font to match the named style's size category — body style scales the way `.body` would; title scales like `.title`. Without this wrapper, your custom-font body stays at its hardcoded size while system fonts scale around it, looking smaller relative to UI as user increases text size. Plus you lose Dynamic Type support — users with vision needs get tiny text. Trade-off when adopting custom fonts: license + performance + the UIFontMetrics wrapping to maintain accessibility. Alternative: use SF Pro for body (free + scales automatically) and reserve custom font for display/marketing surfaces where Dynamic Type matters less. Most apps end up doing this hybrid because making custom fonts work fully with Dynamic Type is meaningful engineering work that's easy to skip and leaves accessibility gaps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Only if licensed." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Custom fonts don't auto-scale. Wrap with UIFontMetrics; or restrict custom to display only, body stays SF.",
+      "points": 1
+    }
+  ]
+}

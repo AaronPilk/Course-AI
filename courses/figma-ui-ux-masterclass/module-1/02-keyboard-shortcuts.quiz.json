@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Keyboard shortcuts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why is Cmd/Ctrl+click your most-used Figma selection shortcut?",
+      "choices": [
+        { "id": "a", "text": "Tradition." },
+        { "id": "b", "text": "Selects layers regardless of nesting depth. Figma's default click selects the OUTERMOST clickable layer; clicking inside a nested component selects the whole component, not the inner element. To reach the inner element, you'd normally double-click multiple times or expand the layer panel and click there — slow. Cmd/Ctrl+click bypasses the hierarchy: click on any visible element and it selects directly regardless of how many layers of nesting wrap it. Essential when working with complex components (a button inside a card inside a section inside a frame); skipping the drill-down saves clicks constantly. Pair with Cmd/Ctrl+drag to select multiple deeply-nested items. The 'I need this exact layer, ten levels deep' problem becomes 'click and done.' Combined with Shift+1 (zoom to fit), Shift+0 (100%), Spacebar+drag (pan), Cmd+D (duplicate with offset), Shift+A (wrap in Auto Layout) — these 5 shortcuts cover most of your interaction with the canvas." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Selects layers regardless of nesting depth. Bypasses the drill-down clicks for deeply nested elements.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "You need to ensure consistent spacing between elements. Fastest verification method?",
+      "choices": [
+        { "id": "a", "text": "Eyeball it." },
+        { "id": "b", "text": "Select one element; hover another while holding Alt/Option. Figma displays the distance between them in real-time: 16px between top edges, 24px between rights, etc. Move the cursor around to inspect different relationships. Compared to: computing positions manually from x/y values in the right panel (slow + error-prone), using rulers and guides (overkill for ad-hoc checks), exporting to a measurement tool (absurd). The Alt-hover measurement is among Figma's most useful affordances; designers fluent with it produce visually-consistent work much faster than those who don't know about it. Combine with Auto Layout (which guarantees consistent spacing via the layout settings, not requiring per-element checks); for hand-positioned elements, Alt-hover is the verification tool. Show this to junior designers; they often haven't discovered it and their work becomes notably tighter after learning." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use rulers." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Alt/Option + hover shows distances in real-time. Select one; hover others; instant verification.",
+      "points": 1
+    }
+  ]
+}

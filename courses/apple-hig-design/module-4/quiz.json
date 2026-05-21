@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Controls, gestures, motion",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why set `textContentType` on iOS TextField?",
+      "choices": [
+        { "id": "a", "text": "Style." },
+        { "id": "b", "text": "Unlocks iOS AutoFill — `.emailAddress` shows saved email above the keyboard for one-tap fill; `.password` triggers iCloud Keychain Password AutoFill; `.oneTimeCode` auto-extracts SMS-delivered codes from Messages and fills the field. Plus `keyboardType` shows the right keyboard (@ visible for email, numeric for codes). Together they make signup/login 2-tap experiences. Skipping them = users type full email manually + standard keyboard + no AutoFill = friction; conversion drops measurably on signup flows where each field costs more than it should. One line per field; pays back enormously. Forms without proper content types feel old-fashioned; AutoFill is the modern expectation in iOS. Major leverage win for very small effort." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Security." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enables AutoFill (emails, passwords, SMS codes) + right keyboard. Huge UX win, one-line cost.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "App has critical action hidden ONLY behind a swipe gesture. Issue?",
+      "choices": [
+        { "id": "a", "text": "Power user feature." },
+        { "id": "b", "text": "Discoverability disaster. Gestures are powerful but INVISIBLE; users can't see what they don't know exists. Critical actions hidden behind gesture-only access mean users who don't discover the gesture can never reach the feature; they don't even know it exists to look up. Pattern: critical actions should have a tap-accessible path (visible button, menu item, context menu) AS WELL AS the gesture shortcut for power users. Example: deleting list items — visible 'Edit' button reveals delete buttons + swipe gesture deletes faster for those who know. Both paths; gesture is shortcut, not gate. Also accessibility — Voice Control / Switch Control users can't perform gestures; need button equivalents. Rule: gestures ENHANCE; they shouldn't be the ONLY way to access anything important. Test by mentally removing gesture awareness — can users still complete core tasks? If not, design is broken." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster UX." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gestures are invisible. Critical actions need tap-accessible path too; gesture as shortcut, not gate.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why is `accessibilityReduceMotion` an accessibility requirement, not preference?",
+      "choices": [
+        { "id": "a", "text": "Trend." },
+        { "id": "b", "text": "Vestibular disorders (inner ear / balance system conditions) cause real nausea, dizziness, headaches from screen motion — especially parallax + dramatic zoom transitions. About 35% of adults have some vestibular sensitivity; not edge case. For affected users, an app with heavy motion = literally physically uncomfortable to use. Honoring Reduce Motion: replace dramatic transitions with cross-fades; eliminate parallax; skip zoom-from-thumbnail animations. Functional animations (loading spinner, progress bar) can remain in minimal form. SwiftUI: `@Environment(\\\\.accessibilityReduceMotion) var reduceMotion` then conditionally `withAnimation(reduceMotion ? .none : .spring) { ... }`. Apple bakes this into standard components; custom animations need explicit code. Beyond medical necessity: respecting Reduce Motion shows attention; users who enable it see graceful degradation; trust. App Store review checks. Cheap to implement; meaningful for affected users; standard accessibility-conscious practice." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apple law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Vestibular disorders cause real nausea; ~35% sensitive. Replace dramatic transitions with cross-fades for these users.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designer wants 2-second hero photo zoom 'for luxury feel.' Issue?",
+      "choices": [
+        { "id": "a", "text": "Luxurious." },
+        { "id": "b", "text": "Sluggish, not luxurious. Apple's animations: 100-500ms typical; 2 seconds is 4-20× longer than standard. Users wait; attention drifts; perception shifts from 'polished' to 'unresponsive.' Test on device: 2s feels like the app froze. Apple's hero animations (Photos zooming from thumbnail) typically 350-450ms with tuned spring physics — short enough to feel responsive, with spring overshoot signaling 'physics-real' and registering as satisfying. Slower animations don't feel more luxurious; they feel SLOWER. Real luxury comes from: smooth 60-120fps rendering, well-tuned spring physics, matched-geometry continuity, appropriate easing per action. Test the same hero at 200/350/600/1000/2000ms — users near-universally prefer 350. The 'longer feels more important' instinct is wrong; correct duration feels right; longer feels broken. Save 2s+ animations for genuinely cinematic moments (first-launch hero, occasional rewards) — never routine transitions." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Add easing." }
+      ],
+      "correct_answer": "b",
+      "explanation": "2s feels sluggish, not luxurious. Apple norms 100-500ms; luxury comes from spring physics + smoothness.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why use haptics sparingly, not on every interaction?",
+      "choices": [
+        { "id": "a", "text": "Apple ban." },
+        { "id": "b", "text": "Annoyance + battery + erosion of meaning. Haptics firing constantly become background buzz users tune out — signal is lost. The Taptic Engine consumes real power; constant firing drains battery and possibly accelerates wear. Users start associating buzz with the app's chatter rather than meaningful confirmation; future important haptics get lost in the noise. Apple's HIG: haptics for 'the system / app meaningfully responded to me' — toggle switch flip, message sent, error occurred, critical action confirmed. NOT for routine button taps (visual press is sufficient). Discipline is restraint: 2-5 haptic interactions per typical session, not 50. Apple's own apps (Mail, Messages, Notes) use haptics sparingly — barely noticeable individually but each meaningful. Apps that haptic everything feel cheap. Same logic for sound: silent by default; sound where it earns its place." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Battery only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Annoyance + battery + loss of signal. Haptics confirm meaningful actions; restraint is the discipline.",
+      "points": 1
+    }
+  ]
+}

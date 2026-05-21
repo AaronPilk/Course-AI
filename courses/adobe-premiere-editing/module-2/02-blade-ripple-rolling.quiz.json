@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Blade, ripple, rolling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "scenario",
+      "prompt": "Music-locked sequence: edit at 0:30 needs to shift 2 seconds later but everything from 0:32 onward must stay in place. Which tool?",
+      "choices": [
+        { "id": "a", "text": "Ripple Edit." },
+        { "id": "b", "text": "Rolling Edit (N). Music-locked sequences require preserving downstream timing — beats, hits, sync points after the affected edit must NOT shift. Ripple would extend Clip A by 2s and shift everything downstream by 2s — destroys the music sync. Rolling adjusts the edit point between Clip A and Clip B without changing the total duration of the section: Clip A becomes 2s longer, Clip B becomes 2s shorter, the cut between them moves 2s later, the total duration is unchanged so downstream beats stay perfectly aligned. Tool: N for Rolling; click on the edit point between the two clips; drag right (or use plus/minus in Trim mode for frame-precise nudge). Verify by playback: music beats should still hit on their original frames. Rolling is the music editor's best friend; whenever you're cutting to music and need to refine cut timing without breaking sync, Rolling is the move. Other tools: Slip (Y) wouldn't help here — it changes content within a clip, not where the cut falls. Add Edit (Cmd+K) + manual reposition could work but takes 5 steps for what Rolling does in 1. Ripple, the most-used trim tool, is exactly wrong here — it's the tool that DOES shift downstream, the opposite of what you need." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Razor." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Rolling Edit (N). Moves edit point between two clips; total duration unchanged; downstream timing preserved. Music sync stays intact.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between Slip and Slide?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "Slip (Y) changes WHICH content of the source clip plays without moving the clip on the timeline — clip stays in same timeline position, but the in/out points shift inside the source, showing a different portion of the original footage. Use when: 'this clip is in the right spot on the timeline, but the wrong moment of the source is showing.' Visual cue when dragging with Slip: source's two thumbnails (new in + new out) preview. Slide (U) MOVES the clip on the timeline; adjacent clips' edges adjust to fit — Clip B (between A and C) is dragged later by 2s; A extends by 2s; C shrinks by 2s. Use when: 'this clip needs to be at a different timeline position, but I want to keep surrounding clips' content showing (just more or less of them).' Visual cue when dragging with Slide: preview shows new edges of adjacent clips. The mnemonic: Slip = content slips inside the clip, position unchanged. Slide = clip slides on timeline, content unchanged. Both leave total sequence duration unchanged (unlike Ripple) and don't affect remote downstream clips (unlike Ripple). Combined with Ripple (trim + shift downstream) and Rolling (adjust edit point, no duration change), Slip + Slide complete the 4-tool trim toolkit: Ripple, Rolling, Slip, Slide. Master these four; covers 90% of timeline refinement. The remaining 10% is Razor (C) for surgical cuts." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Slip is deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Slip = change clip content without moving on timeline. Slide = move clip on timeline; adjacent clips adjust. Different dimensions affected.",
+      "points": 1
+    }
+  ]
+}

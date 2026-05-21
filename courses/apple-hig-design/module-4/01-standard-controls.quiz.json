@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Standard controls",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why set `textContentType` and `keyboardType` on TextField?",
+      "choices": [
+        { "id": "a", "text": "Style." },
+        { "id": "b", "text": "Both unlock huge UX wins. `textContentType(.emailAddress)` enables iOS AutoFill for emails — the keyboard shows the user's saved email above the keys; one tap fills the field. `textContentType(.password)` triggers Password AutoFill with the user's iCloud Keychain. `textContentType(.oneTimeCode)` auto-extracts SMS-delivered codes from the Messages app and fills the field. These flows are invisible when set; signup/login become 2-tap experiences. `keyboardType(.emailAddress)` shows the keyboard with @ visible; `.numberPad` shows just numbers; `.phonePad` shows a phone-style numeric layout. Together they signal what kind of data the field accepts AND provide the right keyboard. Skipping them = users type full email manually + get standard keyboard + miss AutoFill = friction; conversion drops on signup flows where each field costs more than it should. Adding them is one line per field; pays back enormously. Forms without proper content types feel old-fashioned and inefficient compared to apps that use them; AutoFill is the modern expectation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Security." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enables AutoFill (emails, passwords, SMS codes) + right keyboard layout. Massive UX win for forms.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "App has 7 sections, designer wants all as tab bar items. Issue?",
+      "choices": [
+        { "id": "a", "text": "Fine." },
+        { "id": "b", "text": "Too many — Apple HIG recommends 5 tab items max for iPhone, and that's already pushing it visually. With 7 tabs: tabs become cramped at typical screen widths; labels truncate; touch targets shrink; visual hierarchy dies (every tab looks equally important when 7 share the bar). Solutions: (1) Identify the truly top-level destinations — usually only 3-5; the rest are sub-sections accessible from those. Settings often deserves its own tab; obscure features don't, (2) Use a 'More' tab containing extras (iOS does this when more than 5 tabs are defined — auto-promotes the last to More). Allows N tabs but hides the bottom in More menu, (3) Restructure information architecture so 3-5 tabs cover the experience; if you genuinely need 7 sections at the top level, the IA is probably broken. Tab bar should reflect TOP-LEVEL destinations, not the complete feature catalog. Cramming features in the tab bar hurts discoverability more than it helps." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller icons." }
+      ],
+      "correct_answer": "b",
+      "explanation": "5 tabs max per HIG. Restructure IA OR use 'More' tab. Tab bar = top-level destinations, not full feature catalog.",
+      "points": 1
+    }
+  ]
+}

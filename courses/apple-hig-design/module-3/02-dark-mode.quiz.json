@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Dark mode",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use near-black (not pure black) for dark mode backgrounds?",
+      "choices": [
+        { "id": "a", "text": "Looks cooler." },
+        { "id": "b", "text": "Three reasons: (1) OLED smearing — pure black pixels can produce trails / artifacts on OLED displays as content moves; near-black drives those pixels slightly, eliminating the issue; (2) Eye comfort — pure black + pure white is the harshest possible contrast (1:21+); fatigues eyes especially in low-light viewing. Near-black + near-white (Apple's choice) preserves great contrast (still ~15:1) while feeling kinder over long sessions; (3) Layered hierarchy — true black leaves no room to differentiate 'this card is on top of the background'; with near-black bg + slightly-lighter near-black cards, you can convey depth via subtle tonal differences. Apple's semantic colors handle all this automatically (systemBackground = near-black in dark mode). Hardcoded `Color.black` violates all three. The 'pure black saves battery on OLED' argument is partly true but Apple chose comfort over the small additional battery saving. Use the system colors; they encode the right answer." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Battery only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OLED smearing + eye comfort (avoid harsh contrast) + room for layered hierarchy. System colors handle this.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your brand color is a strong orange. Works fine in light mode; looks harsh in dark mode. Fix?",
+      "choices": [
+        { "id": "a", "text": "Force light mode." },
+        { "id": "b", "text": "Define a dark-mode variant of the brand color via Asset Catalog. Open Assets.xcassets → New Color Set → Appearance: 'Any, Dark.' Set 'Any' to your standard brand orange (e.g., #FF6B1A). Set 'Dark' to a slightly desaturated, slightly lighter version (e.g., #FF9555) — this looks better on dark backgrounds: maintained brand recognition + less harsh + adequate contrast for WCAG AA (4.5:1 against systemBackground in dark mode). Reference via `Color('BrandAccent')` — system picks the right variant automatically. Many brands need dark variants because aggressive saturated colors fight dark mode contrast and feel jarring. The dark variant typically: +10-20% lightness, -10-20% saturation; test against your dark backgrounds for contrast and visual feel. Apple's own system colors do this internally (systemRed, systemBlue all have dark variants). Forcing light mode is hostile to dark-mode users (large user base); design the brand to work in both. Compromise option: accent color stays brand-true; marketing surfaces (paywall, onboarding) can use a different shade strategically." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use system orange." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Asset Catalog with light + dark variants. Dark variant: lighter + less saturated; tested for WCAG AA contrast.",
+      "points": 1
+    }
+  ]
+}

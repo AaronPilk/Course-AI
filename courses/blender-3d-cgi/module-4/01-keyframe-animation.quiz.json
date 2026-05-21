@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Keyframe animation",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Bezier interpolation between keyframes produce?",
+      "choices": [
+        { "id": "a", "text": "Linear motion." },
+        { "id": "b", "text": "Ease — smooth curve through keyframes producing slow start + fast middle + slow end. This is the default interpolation in Blender and matches how real-world motion behaves: objects accelerate (slow → fast) and decelerate (fast → slow); pure linear motion (constant speed) feels mechanical / robotic. Bezier curves in the Graph Editor have handles you can drag to shape the ease aggressively (sharper ease for snappier motion; gentler ease for slower acceleration). Use Bezier for: organic motion (characters, animals, natural objects), camera movements (most natural), object animations where realism matters. Use Linear (constant rate of change) for: mechanical motion (rotating gears, conveyor belts, spinning fans), purely abstract / graphic motion where ease feels wrong. Use Constant (hold value until next keyframe) for: step animation (claymation style, stop-motion feel), pose-to-pose animation where you want frame-by-frame control. Other tangent types: Bezier Auto (handles auto-calculated for smooth ease), Bezier Vector (handles flatten to point at neighbors, sharper transitions). Change interpolation in Graph Editor: select keyframe → T → pick mode. Different per keyframe: a slow ease-in might have Bezier; a fast snap might switch to Linear; a hold might be Constant. The Disney 'slow in, slow out' principle of animation is essentially Bezier interpolation; 3D animation inherits this from 2D. Master Bezier handles and animation gains polish; ignore them and animation feels stiff." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Random motion." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bezier = ease: slow start + fast middle + slow end. Default. Matches real-world motion. Linear for mechanical; Constant for step. Master handles for polish.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bouncing ball animation looks robotic — perfectly even bounce heights, uniform timing. How to make it look real?",
+      "choices": [
+        { "id": "a", "text": "More keyframes." },
+        { "id": "b", "text": "Apply animation principles: squash & stretch (ball deforms on impact + stretches as it falls), variable bounce heights (each bounce ~70% of previous due to energy loss), variable timing (slower at peaks, faster mid-bounce), follow-through (ball comes to rest, not stops dead). Workflow: 1) Squash: at impact frame, scale ball flatter on Y (vertical) + wider on X (horizontal). Add keyframes for the squash and immediately after (unsquash as ball leaves ground). 2) Stretch: at mid-air falling fast, scale ball taller on Y + thinner on X. Keyframes for the stretch. 3) Heights: first bounce reaches 80% of original drop height; second 60% of first; third 45%; etc. — exponential decay reflecting real physics. 4) Timing: more frames at the peak (slow motion at the top); fewer frames mid-bounce (faster downward / upward). At 24 fps: peak might be 8 frames (~1/3 sec hanging); mid-bounce only 2-3 frames. 5) Follow-through: after final bounce, ball settles — a few small final bounces; not abrupt stop. 6) Constraints / drivers can add automatic squash based on velocity (advanced; not required). The classic bouncing ball exercise is the foundational animation test — incorporates squash/stretch, timing, ease, anticipation, follow-through. Master it in 3D; apply principles to all future animation. Reference: Richard Williams' 'The Animator's Survival Kit' has the definitive bouncing ball breakdown; the principles transfer 1:1 to Blender. Pro animator's first day-1 exercise — never stops being relevant." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Faster ball." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Squash & stretch + variable heights (exponential decay) + variable timing (slow at peaks, fast mid-bounce) + follow-through. Classic bouncing ball exercise; foundational animation principles.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Compositing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you composite vs. re-render?",
+      "choices": [
+        { "id": "a", "text": "Always re-render." },
+        { "id": "b", "text": "Composite for color/exposure/effects adjustments; re-render for geometry / material / lighting changes. Compositing in Blender's Compositor (or external tools like DaVinci Resolve, Nuke, After Effects) is much faster than re-rendering — seconds to minutes vs. hours per frame. For: color grading (Color Balance, Curves, Hue/Saturation), adding bloom / glow (Glare node), lens distortion + chromatic aberration, vignettes, film grain, exposure tweaks, sharpening, mild blur — all in compositing. Save the re-render cost. For: geometry changes (move a wall, resize a character), material changes (change a color, swap a texture), lighting changes (add a light, move existing lights), camera changes (different position, focal length) — these require re-rendering since they affect the underlying scene. Render to multipass (View Layer Properties → Passes: enable Diffuse, Specular, Volume, Z Depth, Normal, Object Index) provides MORE compositing flexibility — you can adjust diffuse light separately from specular; add post-render DoF via Z Depth + Defocus node; relight using Normal pass + custom lighting setups. The pro workflow: render once at quality (Cycles or Eevee), output multipass, then iterate in compositing for color / effects / grading. Iteration cost: minutes in compositing vs. hours in re-rendering. Many film studios render the same scene once and color-grade for different markets / outputs (theatrical, streaming, broadcast) — all via compositing on the rendered footage. The 'render once; composite many times' pattern saves enormous render time over project lifecycle." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always composite." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Composite for color/effects/exposure (fast). Re-render for geometry/material/lighting changes (necessary). Render once + composite many times = pro workflow.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Render looks technically clean but visually 'flat' — no presence; doesn't pop. Quick post fix?",
+      "choices": [
+        { "id": "a", "text": "Re-render." },
+        { "id": "b", "text": "Add Glare (for bloom on highlights), Color Balance (warm shadows + cool highlights for 'magic hour' feel), subtle Lens Distortion + Chromatic Aberration (mimics real lenses), and slight film grain. In Compositor: Render Layers → Glare (Fog Glow type, strength 0.3, threshold 1.0 — adds soft glow around bright pixels; subtle bloom that lifts the image) → Color Balance (lift = warm orange, gamma = neutral, gain = slight cool — creates 'teal & orange' grade) → Lens Distortion (Distortion 0.05, Dispersion 0.01 — subtle barrel distortion + edge color fringing) → Add Noise/Grain (Compositor → Add → Noise → mix at low strength for film grain) → Composite. Each step adds 10-30 seconds; total compositing setup: 2-5 minutes; transforms 'flat render' to 'cinematic image.' Without these, even a technically perfect render lacks the 'photographed' or 'cinematic' feel — looks like CGI. With them, the same render looks like film. Reference: study how DaVinci Resolve / Premiere color graders treat raw footage — same principles apply to renders. The 'flat to cinematic' transformation is the post-production magic in any media; renders aren't special. Other effects to consider: 1) Vignette (subtle dark edges, focus eye to center). 2) Sharpening (slight detail enhancement). 3) Saturation boost (modest, +10%). 4) Crush blacks slightly (darker shadows, contrast). Pro Blender renders almost always benefit from this 2-5 minute compositing pass; ship without it and the work looks unfinished. Save the compositor setup as a node group for reuse across projects." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Brighter materials." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Compositor: Glare (bloom) + Color Balance (warm/cool) + Lens Distortion + grain. 2-5 minute setup transforms flat → cinematic. Save as node group for reuse.",
+      "points": 1
+    }
+  ]
+}

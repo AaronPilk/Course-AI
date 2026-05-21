@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Workspace and project setup",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why match sequence settings to source footage?",
+      "choices": [
+        { "id": "a", "text": "Looks cooler." },
+        { "id": "b", "text": "Mismatched settings cause performance and visual issues — Premiere has to conform (re-interpret) footage that doesn't match the sequence's frame rate / resolution / color space, which means real-time scaling/stretching during playback, increased GPU load, longer render times, and potential visual artifacts (judder if 24fps footage in a 30fps timeline; pillarboxing if 16:9 in 9:16 sequence; quality degradation if 8K downscaled to 1080p on the fly). Best practice: create the sequence by dragging the first clip from your source onto the New Item icon at the bottom of the Project panel — Premiere auto-builds a sequence matching that clip's specs. Or use a preset that matches (e.g., 'Digital SLR > 1080p > DSLR 1080p24' for 24fps DSLR footage). For mixed footage (multiple cameras, multiple frame rates), pick one canonical sequence setting matching your delivery format; conform the rest. Match: 4K 24p footage → 4K 24p sequence; 1080p 60p footage → 1080p 60p sequence; vertical phone footage → 1080×1920 sequence. The conform Premiere does on mismatch isn't 'wrong' but it costs performance and sometimes quality." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by law." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mismatch = real-time conforming = performance hit + potential artifacts (judder, pillarbox, quality loss). Match settings to footage.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your project has 800 clips in one flat Project panel. Edit time is mostly hunting for clips. What's the systemic fix?",
+      "choices": [
+        { "id": "a", "text": "Memorize all 800." },
+        { "id": "b", "text": "Bins + labels + markers — organize systematically. 1) Create bins by logical category: '01 Footage / Day 1 / Camera A', '01 Footage / Day 1 / Camera B', '02 Audio / Music', '02 Audio / SFX', '03 Graphics', '04 Sequences'. Numbered prefixes control sort order. 2) Apply label colors (right-click clip → Label color): green for 'usable', red for 'don't use', yellow for 'maybe', blue for 'reference'. Scan-time identification of clip status. 3) Add markers within long clips at key moments: 'CEO mentions Q4 numbers @ 2:34', 'Wide shot of factory floor', 'Best take'. Markers carry into the timeline; helps location later. 4) Use metadata columns (Frame rate, Audio channels, Duration, Scene, Take) visible in list view; sort/filter by them. 5) Search via the Project panel filter — type 'wide' to find clips labeled 'wide shot'. The investment: 30-60 minutes upfront organizing; the payoff: hours saved over the project's life. Pro editors organize religiously because they edit faster, find clips faster, and feel less overwhelmed. Tools like PostLab or Frame.io adds organization layers on top, but Premiere's built-in bins+labels+markers are enough for 90% of cases." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete most clips." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bins (categorical) + labels (color codes) + markers (in-clip notes) + metadata columns. 30-60 min upfront = hours saved. Pro editors organize religiously.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Nanite",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's Nanite's main advantage?",
+      "choices": [
+        { "id": "a", "text": "Smaller file sizes." },
+        { "id": "b", "text": "Effectively unlimited polygon count at runtime — render meshes with 10+ million polygons each, scenes with billions of polygons total, at high frame rates. Without Nanite: 60 FPS budget caps at ~5-10 million polygons total; meshes need manually-created LODs (Level of Detail variants) at different distances; high-detail assets impossible without significant performance cost. With Nanite: engine virtualizes geometry into hierarchical clusters; per-frame culls + LOD-selects clusters per-pixel; renders only what's visible at the right detail level for the screen distance. Result: film-quality assets at game runtime. Enable per-mesh in Static Mesh editor → Nanite Settings → Enable. Best for: high-poly environment assets (Quixel Megascans, ZBrush sculpts, photogrammetry scans), architectural detail, scanned rocks / props / statues, distant geometry. Limitations: 1) Translucent materials not supported (glass, water — use traditional). 2) Limited World Position Offset (vertex animation like wind). 3) Skeletal meshes only in preview (UE5.4+). 4) Inefficient for tiny / simple meshes (engine overhead). 5) Modern GPU + DX12/Vulkan/Metal required. Combined with Lumen (dynamic global illumination) + HLOD (distant simplification) + World Partition (streaming), Nanite delivers the AAA open-world tech stack that powered The Matrix Awakens demo, Hellblade II, Black Myth: Wukong. For environment work in 2026 UE5: Nanite-enable everything by default; disable only when limitations matter." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Better lighting." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Effectively unlimited polygon count at runtime via virtualized clusters + per-pixel LOD. Film-quality assets at game runtime. Default for environment work in UE5.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Glass window mesh has Nanite enabled; renders with visual artifacts (sparkles, missing surfaces). Why?",
+      "choices": [
+        { "id": "a", "text": "GPU is too slow." },
+        { "id": "b", "text": "Nanite doesn't support translucent materials. Glass uses a translucent material (light passes through with refraction); Nanite is designed for opaque geometry only. Mixing translucent + Nanite produces visual artifacts: rendering order issues, missing surfaces, sparkles where the renderer can't determine correct depth, broken reflections. Fix: disable Nanite on the glass mesh. Static Mesh editor → Nanite Settings → Enabled = off. The glass mesh now uses traditional rendering; works correctly with translucent material. Performance: glass meshes are usually low-poly anyway; no Nanite benefit lost. Same principle applies to: water surfaces, particles, decals, holograms, ghost / spectral effects, anything with significant transparency. Solid opaque objects with subtle transparency edges (foliage with alpha-tested leaves): Nanite-compatible IF using masked alpha (cutout) rather than translucent (blended). Foliage often uses opaque base with alpha-mask for leaves — Nanite-friendly. The opaque vs. translucent vs. masked distinction matters for Nanite compatibility. Other Nanite limitations to know: 1) Heavy World Position Offset (vertex animation like flag waving) — limited / experimental. 2) Skeletal meshes — preview in UE5.4+, fully supported coming. 3) Tessellation — replaced by Nanite's per-pixel detail; not applicable. 4) Very small meshes (single triangle) — engine overhead > benefit; use traditional. For modern UE5 project: 1) Default Nanite ON for all imported high-poly meshes. 2) Disable for translucent / particle / specific exclusions. 3) Verify visually in PIE; artifacts = check if Nanite-incompatible feature is in use. The 'enable Nanite by default; disable for exceptions' workflow handles most cases cleanly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong glass." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Nanite doesn't support translucent materials. Disable Nanite on glass mesh. Same applies to water, particles, decals. Translucent = traditional rendering.",
+      "points": 1
+    }
+  ]
+}

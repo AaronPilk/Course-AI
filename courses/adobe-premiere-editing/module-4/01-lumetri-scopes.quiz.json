@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Lumetri scopes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why trust scopes over your eyes when color grading?",
+      "choices": [
+        { "id": "a", "text": "Scopes are deprecated." },
+        { "id": "b", "text": "Eyes deceive due to monitor calibration drift, ambient lighting changes, visual fatigue, and chromatic adaptation (eyes adjust to color casts over time, so a blue-tinted image starts looking 'normal' after a few minutes of viewing). Scopes are objective — they measure the actual signal values regardless of viewing conditions. Vectorscope shows color distribution + saturation; Waveform shows brightness; Parade (RGB) shows per-channel levels; Histogram shows brightness distribution. A scope reading is the same whether you're tired, the room is too bright, or the monitor needs calibration. Pro colorist workflow: scopes first, eyes second. Verify with scopes that skin tones sit on the I-line (vectorscope), that brightness spans 0-100 without clipping (waveform), that channels balance for neutral images (parade). Once scopes confirm the technical correctness, eyes evaluate creative choices. The novice approach (eyes-only) produces inconsistent grades because the editor's perception shifts session-to-session. Calibrated monitor in a properly-lit room helps but isn't sufficient — scopes give objective ground truth. Premiere's Lumetri Scopes panel (Window → Lumetri Scopes) docks alongside the program monitor; you can see them constantly while grading. The scope+eye combination — scopes for what's there, eyes for what feels right — is the pro standard." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Eyes are better." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Eyes deceive: monitor calibration, lighting, fatigue, chromatic adaptation. Scopes are objective measurements. Scopes first, eyes second.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Footage looks washed-out, low contrast, slightly green tint. Camera shot S-Log3. Workflow?",
+      "choices": [
+        { "id": "a", "text": "Apply random presets." },
+        { "id": "b", "text": "Apply a Rec. 709 conversion LUT first, then correct. S-Log3 is a log profile designed to capture maximum dynamic range from the sensor — by design, the image looks low-contrast and washed out, sometimes with characteristic green tint. The footage isn't meant to be viewed in this state; it requires conversion to a standard color space (Rec. 709 for HD, Rec. 2020 for HDR) via a LUT. Workflow: 1) Lumetri Color → Basic Correction → Input LUT → select Sony S-Log3 to Rec. 709 (Premiere ships with common camera LUTs, or download official ones from Sony). 2) After LUT applied: footage looks normal contrast and color, ready for further correction. 3) NOW apply standard correction — white balance (eye-dropper on neutral area), exposure if needed, contrast adjustment, saturation. 4) Move to creative grading if desired. Skipping the LUT and trying to manually correct S-Log3 with sliders rarely produces good results — the curve from log to display is non-linear; sliders are linear; trying to compensate stacks problems. LUTs are the correct first step. Same approach for other log profiles: V-Log, ARRI LOG-C, RED Log3G10, BRAW, ProRes RAW — each has its own LUT or built-in conversion. For RAW formats: Premiere's source settings often have built-in color space transforms before any Lumetri work. The 'apply LUT first' rule is universal for log/RAW footage." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Crank saturation." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Apply Sony S-Log3 to Rec. 709 LUT first (in Lumetri's Input LUT), then standard correction. Log/RAW always needs LUT conversion before sliders.",
+      "points": 1
+    }
+  ]
+}

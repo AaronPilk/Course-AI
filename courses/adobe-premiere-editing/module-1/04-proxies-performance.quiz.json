@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Proxies and performance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the Mercury Playback Engine and why does GPU mode matter?",
+      "choices": [
+        { "id": "a", "text": "An audio engine." },
+        { "id": "b", "text": "Premiere's renderer — handles real-time playback, effects, color, and rendering. Two modes: GPU Acceleration (Metal on Mac, CUDA on Nvidia, OpenCL on AMD) which offloads heavy lifting to the GPU for fast performance; Software Only which runs everything on CPU and is essentially unusable for daily work on modern footage. Set in File → Project Settings → General → Renderer. GPU mode is mandatory in 2026 — 4K editing, Lumetri color, Ultra Key, and most modern effects are GPU-accelerated and run smoothly with the right renderer. Software mode exists for troubleshooting (driver issues, GPU artifacts) but never for production work. Pick the GPU mode matching your hardware: Metal for Apple Silicon and modern Intel Macs; CUDA for Nvidia (RTX series, GTX 1080+); OpenCL for AMD or older cards. Mismatch (CUDA on AMD GPU) falls back to software mode silently. Premiere also auto-detects but verify in settings. Combined with proper hardware (modern GPU with 8+ GB VRAM for 4K, 12+ for 8K) and proxies, GPU mode enables real-time playback of complex timelines on consumer hardware. The Mercury Playback Engine is what makes Premiere viable for high-end workflows; without GPU mode, only the simplest projects play smoothly." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "A title generator." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Premiere's renderer. GPU Acceleration (Metal/CUDA/OpenCL) is mandatory; Software Only is troubleshooting-only. Match renderer to GPU.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Multicam edit with 6 camera angles, 4K each. Premiere stutters; playback is unwatchable. Solution?",
+      "choices": [
+        { "id": "a", "text": "Cut down to one camera." },
+        { "id": "b", "text": "Generate proxies for all 6 angles. Multicam playback requires Premiere to decode all camera streams simultaneously — 6 × 4K H.264 decoding is too much for most hardware, even high-end. Proxies (typically 1/4 resolution ProRes Proxy) reduce each stream's decode cost dramatically: 1/4 resolution = 1/16 the pixels = 16x lower decode load. Six 1/4-res proxy streams play smoothly where six 4K originals didn't. Setup: select all 6 source clips in Project panel → right-click → Proxy → Create Proxies → 1/4 res ProRes Proxy → AME generates in background → toggle Proxies in Program monitor → multicam edit plays smoothly. On export, Premiere uses the original 4K. Combine with: 1/2 playback resolution in Program monitor during editing (additional decode savings); render previews after locking the edit; SSD-based scratch + media. For 8-cam or 12-cam mults: even more proxies essential. Multicam is the most demanding common workflow in Premiere; proxies aren't optional. Many docs / event editors generate proxies as part of ingest, before even creating sequences — pre-emptive performance management. The alternative (editing native multicam on modest hardware) is essentially impossible past 3-4 angles." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Buy expensive GPU." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Generate proxies for all angles. 6 × 4K decoding is too much; 1/4 res proxies = 16x lower decode load. Standard multicam practice.",
+      "points": 1
+    }
+  ]
+}

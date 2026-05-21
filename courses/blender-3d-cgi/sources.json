@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "title": "Blender Manual",
+      "url": "https://docs.blender.org/manual/en/latest/",
+      "type": "documentation"
+    },
+    {
+      "title": "Blender Studio learning",
+      "url": "https://studio.blender.org",
+      "type": "tutorials"
+    },
+    {
+      "title": "Blender developer documentation",
+      "url": "https://developer.blender.org",
+      "type": "documentation"
+    },
+    {
+      "title": "Blender features",
+      "url": "https://www.blender.org/features/",
+      "type": "documentation"
+    },
+    {
+      "title": "Blender Cycles documentation",
+      "url": "https://docs.blender.org/manual/en/latest/render/cycles/",
+      "type": "documentation"
+    },
+    {
+      "title": "Blender Geometry Nodes",
+      "url": "https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/",
+      "type": "documentation"
+    }
+  ]
+}

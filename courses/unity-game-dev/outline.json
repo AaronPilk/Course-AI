@@ -1,0 +1,71 @@
+{
+  "slug": "unity-game-dev",
+  "name": "Unity",
+  "title": "Unity Game Development Systems",
+  "subtitle": "The world's most-used game engine — from mobile to AAA.",
+  "category": "Game Development",
+  "level": "Beginner to Intermediate",
+  "estimated_hours": 6,
+  "summary": "Unity powers 50%+ of mobile games and a huge share of indie + AAA work in 2026. This course covers Unity's core: GameObjects + Components architecture, C# scripting, prefabs + scenes, physics + collisions, UI (UGUI + UI Toolkit), animation (Animator + Timeline), and shipping to platforms. Practical patterns from mobile to console.",
+  "brand": {
+    "logo": "/brands/unity-game-dev.svg",
+    "gradient": ["#0E0E0E", "#222C37"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "Unity foundations",
+      "objective": "GameObjects, Components, Scenes — the Unity mental model.",
+      "lessons": [
+        { "position": 1, "title": "The Unity Editor and Inspector" },
+        { "position": 2, "title": "GameObjects and Components" },
+        { "position": 3, "title": "Scenes and the scene hierarchy" },
+        { "position": 4, "title": "Prefabs — Unity's reusable asset system" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "C# scripting in Unity",
+      "objective": "Write code that drives your game.",
+      "lessons": [
+        { "position": 1, "title": "MonoBehaviour and the Unity lifecycle" },
+        { "position": 2, "title": "Variables, references, and the Inspector" },
+        { "position": 3, "title": "Update, FixedUpdate, coroutines" },
+        { "position": 4, "title": "Events, delegates, ScriptableObjects" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Physics, input, and interactions",
+      "objective": "Make objects move + collide + respond to player.",
+      "lessons": [
+        { "position": 1, "title": "Rigidbody and physics" },
+        { "position": 2, "title": "Colliders and triggers" },
+        { "position": 3, "title": "Input System (new) and player control" },
+        { "position": 4, "title": "Raycasting and detection" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "UI, animation, and polish",
+      "objective": "Build interfaces and bring scenes to life.",
+      "lessons": [
+        { "position": 1, "title": "UI — UGUI and UI Toolkit" },
+        { "position": 2, "title": "Animator — state machines for animation" },
+        { "position": 3, "title": "Timeline — cinematics and sequences" },
+        { "position": 4, "title": "Audio + visual effects" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Building and shipping",
+      "objective": "From editor to player's device.",
+      "lessons": [
+        { "position": 1, "title": "Scene management and persistence" },
+        { "position": 2, "title": "Build pipeline and platform settings" },
+        { "position": 3, "title": "Performance optimization" },
+        { "position": 4, "title": "Publishing to platforms (mobile, PC, console)" }
+      ]
+    }
+  ]
+}

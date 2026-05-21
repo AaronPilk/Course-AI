@@ -1,0 +1,81 @@
+{
+  "title": "Module 5 quiz: ComfyUI and production",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use ComfyUI over A1111 for production?",
+      "choices": [
+        { "id": "a", "text": "Easier learning." },
+        { "id": "b", "text": "Node-based workflows: reproducible (JSON export), shareable (community workflows), powerful for complex pipelines (multi-stage with ControlNet + LoRA + IP-Adapter + upscaling), visual debugging, lazy execution performance. Pro standard in 2026.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reproducible + shareable JSON workflows; complex pipelines; visual debugging; performance. Pro 2026 standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Beginner wants easiest SDXL setup. Tool?",
+      "choices": [
+        { "id": "a", "text": "ComfyUI." },
+        { "id": "b", "text": "Fooocus. Simplified UI; auto-tuned defaults; quality-focused. Lowest learning curve. Progress to A1111 / Forge for more control; then ComfyUI for pro pipelines. Alternatives: web services (Replicate, Civitai online), DiffusionBee (Mac), Draw Things (mobile).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Fooocus. Simplified SDXL; lowest learning curve. Or web services for no install.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Best fix for bad faces across batch of generations?",
+      "choices": [
+        { "id": "a", "text": "Manual inpaint each." },
+        { "id": "b", "text": "ADetailer (A1111/Forge) or FaceDetailer (ComfyUI). Auto-detects + inpaints faces. One-click polish; scales to batch. Optional face LoRA + ControlNet for stronger control. Production essential.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "ADetailer or FaceDetailer. Auto face detection + inpaint. Scales to batch. Production polish standard.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Upscaling SDXL 1024 to 4K for print. Approach?",
+      "choices": [
+        { "id": "a", "text": "Resize in Photoshop." },
+        { "id": "b", "text": "Diffusion-aided: hires.fix (A1111) or Ultimate SD Upscale (post-gen tiled). Adds detail via diffusion at higher resolution vs. simple sharpening. Premium: SUPIR, Magnific. For commercial print: Ultimate SD Upscale or Magnific.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Diffusion-aided upscaling. hires.fix or Ultimate SD Upscale. Adds plausible detail; not just sharper resize.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Most critical step for commercial AI art work?",
+      "choices": [
+        { "id": "a", "text": "Speed." },
+        { "id": "b", "text": "License verification — every component (base model, LoRAs, IP-Adapter, extensions, reference images) must be commercially licensed. Document per project. Use known-commercial models (Flux Schnell, SDXL + open LoRAs) or commercial-safe services (Adobe Firefly with indemnification). Avoid restricted-license content.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "License verification per tool. Commercial requires ALL components commercial-licensed. Document per project; avoid legal risk.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Prompt structure",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Good prompt structure?",
+      "choices": [
+        { "id": "a", "text": "Just keywords." },
+        { "id": "b", "text": "Subject + context + style + modifiers + technical. Layered specificity guides the model to your intended output. Example: 'young woman, late 20s, sitting in a cozy coffee shop [subject], looking out window thoughtfully, soft window light streaming in [context], photorealistic, professional photography [style], shallow depth of field, 50mm portrait lens [technical], moody warm tones [modifier].' Each layer narrows the generation space. Vague prompts ('beautiful girl') produce generic outputs because there's nothing distinguishing what 'beautiful' means here; specific prompts produce intentional outputs. For SD/SDXL: subject first (early tokens have more CLIP weight); style + modifiers later. For Flux: more natural language; less position-sensitive due to T5 encoder. Common layers: 1) Subject (who/what — age, gender, appearance, action). 2) Context (where, when, atmosphere). 3) Style (photographic, illustration, anime, specific aesthetic). 4) Lighting (golden hour, dramatic, cinematic). 5) Composition (wide shot, close-up, low angle). 6) Camera/lens (50mm portrait, 24mm wide, macro). 7) Quality / mood (cinematic, moody, detailed). Skip layers and you lose control. Stuff too many keywords (200+ tokens) and prompts become noise — also worse. Sweet spot for SDXL: 30-75 tokens; Flux: 1-3 sentences. Save successful prompts; iterate; build library.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Subject + context + style + modifiers + technical. Layered specificity. Subject early for SD/SDXL (CLIP token weight). Flux: natural language. Build prompt library.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "SDXL prompt with 250 tokens; output is messy, doesn't match intent. Why?",
+      "choices": [
+        { "id": "a", "text": "Need more tokens." },
+        { "id": "b", "text": "Prompt too long; CLIP token limit + dilution. SDXL's CLIP encoders have ~75 token limit per chunk; longer prompts get chunked + weighted; 250 tokens spans multiple chunks that don't interact ideally. Beyond technical limit: 'more keywords' diminishes returns past ~50 tokens — model focuses on early tokens; late tokens have less influence; conflicting concepts dilute each other. Fix: condense to 30-60 focused tokens. Cut: 1) Redundant quality boosters ('masterpiece, best quality, highly detailed, 4K, 8K, ultra HD' = noise; pick 2-3). 2) Long list of style descriptors (pick the most relevant; not all). 3) Conflicting concepts (cinematic + cartoon + photoreal = mess). 4) Generic adjectives (beautiful, stunning, amazing = noise). Keep: specific subject details (age, clothing, expression), context (location, lighting, time), one clear style choice, key composition / technical specs. Quality > quantity. For Flux: opposite advice — T5 encoder handles longer descriptive prompts (sentences) well; describe scene naturally in 1-3 sentences. The 'more is more' approach fails on SDXL; the 'natural prose' approach works on Flux. Adapt per model. Pro habit: write prompt; trim 50%; trim 25%; test; often final shorter version produces better results than original sprawl. Same writing principle as code: clarity > verbosity.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Too long. SDXL CLIP ~75 token limit; 250 tokens dilutes + chunks awkwardly. Condense to 30-60 focused tokens. Quality > quantity. Flux differs — handles longer prose due to T5.",
+      "points": 1
+    }
+  ]
+}

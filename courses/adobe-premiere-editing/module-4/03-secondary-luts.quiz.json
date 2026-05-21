@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Secondary grading and LUTs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does HSL Secondary do?",
+      "choices": [
+        { "id": "a", "text": "Saves audio." },
+        { "id": "b", "text": "Targets a specific color range in the image and applies adjustments only to those pixels — surgical, color-isolated grading. Workflow: 1) Lumetri Color → HSL Secondary section. 2) Click the eye-dropper next to Key; click the target color in the program monitor (subject's blue shirt, sky, brand color). 3) Premiere creates a mask of pixels matching that hue/saturation/luminance range. 4) Refine the mask with H/S/L sliders + Refine controls (Smoothing, Contrast on the mask). 5) Toggle B/W mask preview to verify exactly what's selected. 6) Adjustments below (Temperature, Tint, Contrast, Saturation, Sharpness) apply ONLY to the masked region. Common uses: boost saturation/warmth of skin tones without affecting background; pop sky color without changing skin; selectively desaturate everything except brand color (the 'orange-only' isolated look). The HSL Secondary is more surgical than primary correction's global sliders — it lets you adjust 'just this color' rather than 'everything.' For multi-person interviews where one person reads too orange: target that person's skin tone; pull back. For drab skies: target blue range; boost saturation + brightness. The mask-preview toggle is essential — without it, you don't see precisely what's being affected, often producing artifacts at color boundaries." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Generates LUTs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Targets specific color range; applies adjustments only to those pixels. Eye-dropper + H/S/L mask + output adjustments. Surgical color work.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Applied a 'cinematic teal & orange' LUT at 100%; looks over-the-top and unnatural. Fix?",
+      "choices": [
+        { "id": "a", "text": "Different LUT." },
+        { "id": "b", "text": "Reduce LUT Intensity to 30-60%; LUTs at 100% are almost always too strong. The Intensity slider in Lumetri's Creative section blends the LUT with the original — 100% is full LUT effect; 0% is no LUT; 30-60% gives the LUT's character without overwhelming the source. The over-the-top tell-tales: skin too orange, shadows too teal, mid-tones muddy, image looks 'graded' rather than 'real.' At 50% intensity, the LUT's contribution is subtle — viewers notice the look without it screaming 'I applied a LUT.' Additionally: 1) Verify primary correction is solid BEFORE applying LUT — LUTs assume corrected input; on uncorrected footage they amplify problems. 2) After tuning intensity, use HSL Secondary to refine skin tones if they still read too orange (pull skin back toward neutral while keeping the LUT's character on shadows / mid-tones / highlights). 3) Some LUTs work better with companion adjustments: increase saturation, drop highlights, add slight vignette — many LUT packs include 'how to use' notes from the creator. The lesson: LUTs are starting points, not finishing moves. Pro colorists use LUTs at 60-80% as a base, then refine with manual grading on top. Novices apply at 100% and ship; the work looks generic and the LUT character dominates. The Intensity slider exists exactly to prevent the over-cooked LUT look." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Apply more LUTs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reduce Intensity to 30-60%. LUTs at 100% are over-cooked. LUTs are starting points; refine with manual grading on top. Tune to taste.",
+      "points": 1
+    }
+  ]
+}

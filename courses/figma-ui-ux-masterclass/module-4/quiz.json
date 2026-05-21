@@ -1,0 +1,76 @@
+{
+  "title": "Module 4 quiz: Variables and design tokens",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does a variable in Figma give you that a hardcoded value doesn't?",
+      "choices": [
+        { "id": "a", "text": "Nothing." },
+        { "id": "b", "text": "Single source of truth — change the variable once and every reference updates everywhere it's used (components, properties, effects). Hardcoded values mean N manual edits with drift risk. Variables also unlock modes (light/dark, brand A/B), where a single variable holds different values per mode; frame-level mode switching previews all configurations without separate components. Variables support color, number, string, and boolean types — covering the full surface of token-able design values. Combined with the two-tier pattern (primitives + semantic aliases), variables give designers an enormous lever: rebranding becomes a 5-minute change to semantic mappings instead of weeks of manual updates. The asset panel grouping via /-separated names organizes hundreds of variables into navigable folders. Library publishing carries variables across files — a design system library exposes its tokens to every consumer file. The pattern aligns with engineering reality (CSS variables, Tailwind config, Style Dictionary outputs); design + code share the same mental model for tokens." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Single source of truth + modes + library propagation. Hardcoded values mean drift; variables make the system.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your product needs Light + Dark + 3 brands (15 combinations). Best variable structure?",
+      "choices": [
+        { "id": "a", "text": "Hardcode each combination." },
+        { "id": "b", "text": "Two collections stacked at frame level. **Theme collection** (Light, Dark modes) holds theme-sensitive variables: backgrounds, text, borders, surfaces, shadows. **Brand collection** (Brand-A, Brand-B, Brand-C modes) holds brand-sensitive variables: brand primary, secondary, accent. Frame-level mode selection picks one mode per collection: Theme=Dark, Brand=A → both modes' values resolve simultaneously. This composes the 15 combinations from 5 mode total (2 themes + 3 brands), keeping each collection manageable (~10 modes per collection is the practical limit before pickers get crowded). The alternative — one mega-collection with 15 modes (Light-A, Light-B, Light-C, Dark-A, Dark-B, Dark-C) — duplicates values 3x for themes and 2x for brands, error-prone to maintain, picker overwhelming. Mode stacking matches engineering reality: CSS uses `[data-theme=dark][data-brand=a]` selector composition for the same effect. Document the stacking convention: 'set theme mode on outer frame, brand mode on inner' so designers know the pattern. For products with even more axes (theme × brand × density × accessibility), add more collections — composition scales linearly, mega-collection scales multiplicatively." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip modes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Two collections stacked: Theme (Light/Dark) + Brand (A/B/C). 5 modes total compose 15 combos; manageable + matches CSS pattern.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What's the role of semantic vs. primitive tokens?",
+      "choices": [
+        { "id": "a", "text": "No difference." },
+        { "id": "b", "text": "Primitives are raw values (`blue-500 = #3B82F6`, `gray-900 = #0A0A0A`); semantics are aliases referencing primitives for meaning (`color/brand/primary = blue-500`, `color/text/primary = gray-900`). Components reference semantics. Why both: rebranding becomes a swap of semantic mappings (`color/brand/primary` now points to `purple-500` instead of `blue-500`) without touching primitives — blue stays available for chart accents, illustrations, anywhere blue specifically is needed regardless of brand. The two-tier indirection is the standard for mature design systems (Material's `md.sys.color.primary` → `md.ref.palette.primary40`; Tailwind's primitive palette + semantic CSS variables). Costs: naming overhead, more variables to manage. Benefits: rebranding flexibility, clear semantic vocabulary in components, primitive scales available for one-offs. For small teams: one tier is fine starting; refactor to two tiers when the system matures. For large teams or multi-brand products: two tiers from the start. The semantic layer is what makes the system feel like a system rather than a color palette — components speak intent ('primary action color') not implementation ('the specific blue hex')." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Primitives = raw values; semantics = aliases for meaning. Two-tier gives rebranding flexibility; semantic layer = intent vocabulary.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designers update Figma variables; engineers manually copy values to code. Time to update brand color: 1-2 weeks. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Hire more engineers." },
+        { "id": "b", "text": "Build an automated token pipeline. Setup: 1) Tokens Studio plugin installed in Figma → designers maintain variables here; plugin syncs to a `design-tokens` GitHub repo. 2) Repo CI runs Style Dictionary → transforms design-tokens.json into CSS variables file + Tailwind config + iOS / Android resource files. 3) Consumer apps depend on the generated files (versioned package). 4) Designer updates Figma → plugin commits to repo → CI builds outputs → engineers see PR with diff → merge → next deploy includes the change. Lag drops from 1-2 weeks to 5-30 minutes (plus deploy time). The pipeline handles cross-platform automatically (one source → web + iOS + Android). Semantic versioning of the token package gives engineers stability — pin to v2.3.0 while v3.0.0 (breaking changes) goes through migration. Setup investment: 1-2 weeks. Ongoing value: faster iterations, fewer drift bugs, designer-engineer parity. The Design Tokens Spec + Tokens Studio + Style Dictionary triumvirate is the de facto standard now; this is approachable for any team, not just enterprises. The alternative (manual hand-off, hand-coded tokens) only scales while team is small; past 5-10 engineers + 2-3 designers, the pipeline pays for itself." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip tokens." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Automated pipeline: Tokens Studio → GitHub → Style Dictionary → CSS / Tailwind / Swift / Kotlin. 1-2 weeks → 5-30 min.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Token naming should be...",
+      "choices": [
+        { "id": "a", "text": "Random." },
+        { "id": "b", "text": "Slash-separated, lowercase, semantic over literal, hierarchical. Examples: `color/text/primary` not `Color/Text/Primary` (case), `color/text/primary` not `darkTextColor` (semantic over literal — describe intent not implementation), `color/brand/primary` rather than `brand-primary-color` (slash for grouping in Figma asset panel). The structure should mirror your taxonomy: category (color/space/radius/font-size) → subcategory (text/bg/border/brand) → variant (primary/secondary/tertiary). Slash separation makes Figma's picker group hierarchically (folders), so 'Color' opens to show Text/Bg/Border/Brand subfolders, each containing variants. Lowercase + kebab-case for compound words is the web convention (`font-size/xs`) and aligns with CSS variable naming (`--font-size-xs`). Semantic naming (`color/text/primary`) survives rebrands and visual changes; literal naming (`color/dark-gray`) becomes wrong the moment 'dark gray' is replaced with 'navy' or similar. Slashes also enable the alignment between Figma and code: Figma `color/brand/primary` → CSS `--color-brand-primary` → Tailwind `colors.brand.primary`. Same structure, syntax-translated per platform. The patterns are well-established in the design-token community; following them avoids reinventing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Single-letter." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Slash-separated, lowercase, semantic, hierarchical. Mirrors taxonomy; groups in Figma picker; aligns with code naming.",
+      "points": 1
+    }
+  ]
+}

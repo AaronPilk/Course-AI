@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Reading the HIG",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How should you treat the HIG?",
+      "choices": [
+        { "id": "a", "text": "Strict rule book." },
+        { "id": "b", "text": "A reasoning aid, not a rule book. Apple writes guidance with softening language ('generally,' 'usually,' 'avoid' not 'never'); the prose acknowledges exceptions exist. The HIG encodes thinking that other designers have validated; treat it as shortcuts to good decisions rather than laws to obey. Default to it (saves you re-deriving every choice); deviate consciously when your context genuinely differs (document why for the team). Treating HIG as strict law removes the judgment that good design requires; ignoring it forfeits the value of standing on shoulders. The middle ground: internalize the principles (clarity, deference, depth), follow the specifics for the 90% of decisions where they apply, deviate only when you have a substantive reason and can articulate the tradeoff. Mature designers cite HIG to support decisions but don't hide behind it; they own their choices. The document itself encourages this attitude — it's prose, not regulations." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Optional fiction." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reasoning aid, not law. Default to it; deviate consciously when justified. Internalize principles.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Building macOS + iOS versions of the same app. Same HIG?",
+      "choices": [
+        { "id": "a", "text": "Yes — one playbook." },
+        { "id": "b", "text": "Different. iOS HIG covers touch-first conventions (tab bars bottom, navigation push/pop, modal sheets, large tap targets); macOS HIG covers desktop conventions (menu bars top, sidebars, windows, document architecture, smaller targets for mouse). Same principles (clarity/deference/depth, accessibility) but different specific patterns. Mac Catalyst tries to bridge with adaptive controls, but a great Mac app feels different from a great iPhone app — different input model (mouse + keyboard vs touch), different screen affordances (windows + menus vs single-screen). For cross-platform: design native per platform OR use Catalyst with awareness of where it adapts well/poorly. Some apps (Final Cut Pro, Logic) have separate iOS and macOS apps that share data but feel native each. Some (Things, Bear) successfully adapt the same paradigm. Match the platform's actual conventions; don't fake macOS app-ness with iOS UI scaled up, nor iOS-ness with macOS chrome. Read the macOS HIG specifically before designing the Mac version." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "iPad HIG." }
+      ],
+      "correct_answer": "b",
+      "explanation": "iOS HIG (touch) vs macOS HIG (mouse + windows). Same principles, different conventions. Read each platform's HIG.",
+      "points": 1
+    }
+  ]
+}

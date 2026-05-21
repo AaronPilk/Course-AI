@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Importing assets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Blender model imports into Unreal at wrong scale (tiny or huge). Why?",
+      "choices": [
+        { "id": "a", "text": "Bug in Unreal." },
+        { "id": "b", "text": "Unit mismatch. Unreal uses centimeters (1 unit = 1 cm); Blender uses meters by default (1 unit = 1 m). A 1.8-meter character in Blender exports as 1.8 units; Unreal interprets as 1.8 cm — tiny character. Or vice versa with custom unit settings. Fix options: 1) In Blender, set Scene Properties → Units → Unit System → Metric, Unit Scale → 0.01 (so 1 BU = 1 cm matches Unreal); OR scale the model by 100 before exporting (1.8m * 100 = 180 cm). 2) In Blender's FBX exporter, Scale 100 in the Transform section — Blender bakes the scale on export. 3) Apply Scale in Blender (Ctrl+A → Scale) before exporting; clean transform values. 4) On Unreal side: at import dialog, set Import Uniform Scale = 100 to compensate. Cleanest workflow: set Blender to centimeters once (per-project setting) — Blender displays meters but exports as cm-matching values; no scaling needed at export. Alternative: keep meters in Blender but enable Scale 100 in FBX exporter — fast for occasional exports. The 'asset is wrong scale' problem is the most common Blender → Unreal issue; once you've set up units correctly, it goes away. Other scale tips: 1) Apply transforms before export (Ctrl+A in Blender → Location/Rotation/Scale = clean values; no surprise multipliers). 2) Set pivot/origin intentionally in Blender — becomes Unreal's actor origin. Doors should pivot at hinge; buildings at base. 3) Verify scale in Unreal by placing next to default Mannequin (~180 cm tall) — visual sanity check." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong file." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Unit mismatch: Unreal = centimeters; Blender = meters by default. Fix: set Blender to cm OR scale 100 in FBX exporter OR Import Scale 100 in Unreal.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need environmental assets (rocks, trees, foliage) for a forest scene. Best workflow?",
+      "choices": [
+        { "id": "a", "text": "Model everything from scratch." },
+        { "id": "b", "text": "Quixel Megascans via Quixel Bridge (built into UE5). Free for Unreal projects. 15,000+ scanned assets: rocks, trees, foliage, terrain materials, props — all PBR with full Albedo/Roughness/Normal/AO maps; many at 8K texture quality; some with custom shaders for vegetation wind. Workflow: 1) Open Quixel Bridge (Window menu → Quixel Bridge OR external app). 2) Sign in with Epic account. 3) Browse / search for needed assets (forest trees, granite rocks, moss textures, etc.). 4) Click 'Add' on each asset → downloads + imports into your project's Content Browser. 5) Drag from Content Browser into your level. 6) Auto-assigned PBR materials applied. Quixel Megascans saves enormous time vs. modeling each asset — what would take days or weeks of work is minutes of selection + download. Combined with: 1) Foliage tool in Unreal (paint trees / grass on terrain at scale). 2) Landscape system (sculpt terrain). 3) Lumen lighting (real-time global illumination). You get AAA-quality forest scenes in hours instead of months. This is why solo developers + small studios can ship games that look studio-grade in 2026 — the asset tools democratized photoreal content. For unique / custom assets (specific creature, brand-specific prop), build in Blender or commission. For environments / commonly-needed assets: Megascans first. Alternative sources: Epic Marketplace (free + paid asset packs), Sketchfab (with Unreal-compatible licensing), Polyhaven. For commercial work: verify licenses; Megascans is free for Unreal use." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Photographs." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quixel Megascans via Quixel Bridge. Free for Unreal; 15,000+ scanned PBR assets. Saves weeks of modeling. AAA-quality at indie scale.",
+      "points": 1
+    }
+  ]
+}

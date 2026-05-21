@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: The Apple design ethos",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Apple's three design principles?",
+      "choices": [
+        { "id": "a", "text": "Form, color, motion." },
+        { "id": "b", "text": "Clarity, deference, depth. Clarity = information prioritized; legible type; obvious affordances; nothing fights for attention that doesn't earn it. Deference = UI yields to content; chrome recedes; user's stuff (photos, messages, work) takes priority over the app's branding. Depth = layered hierarchy via motion and material (modals slide up, navigation pushes, translucent layers convey z-axis). The three tension each other productively — clarity vs deference resolved by making important things prominent without shouting; deference vs depth resolved by using layering sparingly. Apple introduced these in iOS 7 (2013); they've held through every Apple OS generation since. The framework helps you read Apple's design decisions and apply the same thinking to your work, even on non-Apple platforms. They encode bets that are good design bets generally: prioritize function, let content lead, use space to communicate hierarchy." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Simple, fast, fun." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Clarity, deference, depth. iOS 7 (2013) onward; framework for every Apple OS since.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to differentiate your iOS app with a top tab bar instead of bottom. Risk?",
+      "choices": [
+        { "id": "a", "text": "Cool differentiation." },
+        { "id": "b", "text": "Users confused. iOS users learned over 15+ years that tab bars are at the bottom; reversing it = re-teaching a learned convention for every new user; cost paid by them, not you. Users tap the bottom expecting nav; nothing happens; frustration. Convention wins for the 90% case; novelty should be reserved for genuinely new value (your unique features). Brand expression belongs in the icon, accent color, content, voice — NOT in chrome conventions. Apps that successfully differentiate (Linear, Notion, Things) keep navigation patterns consistent with platform expectations; they distinguish via content quality, accent color, content voice. The 'we need to stand out' impulse usually traded for usability that mattered more. HIG explicitly recommends platform conformance for navigation chrome. Differentiate elsewhere; this trade is rarely worth it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tap harder." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Reversed convention = re-teaching cost; users frustrated. Differentiate via content + accent color, not chrome.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Highest-leverage iOS brand expression while respecting conventions?",
+      "choices": [
+        { "id": "a", "text": "Custom font." },
+        { "id": "b", "text": "Accent color via tintColor. iOS automatically applies your accent to button text/icons, links, switch on-states, selected tab bar items, slider tracks, refresh control, segmented control, back button — every interactive element gets your brand color in one consistent application. Single line of code (.tint(.brand) in SwiftUI); free; instant; risk-free. Custom fonts cost licensing + performance + Dynamic Type complexity + accessibility risk; custom controls cost VoiceOver/dark mode/haptics/RTL reimplementation; both have ongoing maintenance cost. Accent color + SF Pro + SF Symbols + your app icon = native iOS app with clear brand identity for nearly zero engineering cost. Pick accent wisely: sufficient contrast in both modes; distinctive (avoid generic system blue); tested for color-blindness. Highest leverage single decision in iOS app branding." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "App icon." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Accent color via tintColor — system-wide automatic; free; distinctive; respects conventions. Highest leverage.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designer wants to replace UISwitch with custom toggle for visual consistency. Trade-offs?",
+      "choices": [
+        { "id": "a", "text": "Worth it." },
+        { "id": "b", "text": "Significant losses for marginal gain. Replacing UISwitch loses: VoiceOver support (custom needs accessibility identifiers + traits + state announcements manually), haptic feedback (UISwitch auto-haptics on toggle), dark mode adaptation (system colors adjust automatically), Dynamic Type scaling (system controls scale with text), RTL layout (automatic for system), Reduce Motion respect, smooth iOS-native animations, future iOS visual updates (UISwitch evolves; custom is stuck on whatever you shipped). Cost: weeks of careful re-implementation + ongoing maintenance. Gain: marginally different toggle look. Better: tint UISwitch with brand accent (`.tint(.brand)` or `onTintColor`); now branded + keeps all platform features for free. HIG explicitly recommends using system controls; custom controls should solve genuine product needs, not aesthetic preferences. The 90% rule for iOS: system control + accent color is the answer. Custom controls only when the system genuinely can't deliver." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip toggles." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Loses VoiceOver / haptics / dark mode / Dynamic Type / RTL / future updates. Tint UISwitch instead.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Apple's minimum touch target size?",
+      "choices": [
+        { "id": "a", "text": "20×20pt." },
+        { "id": "b", "text": "44×44 points — based on human fingertip ergonomics (fingertips are ~10-14mm; contact patch similar; targets smaller cause mistaps). Holds even when designs look 'cleaner' with smaller buttons; the visual elegance loses to functional failure. Smaller targets force precise aiming (slow + frustrating) and produce tap errors. Tablets and Mac (with mice) can use smaller targets; mobile sticks to 44pt minimum. Beyond visual size, the hit-box can extend beyond visible — a 20pt visible button with 44pt invisible tap area honors the minimum while looking clean. Apple's HIG documents this; UIKit and SwiftUI components honor it by default. Same logic applies to any touch-input design: respect the human body using the device. Designers in Figma forget fingers aren't pixel-precise; users remind them via 1-star reviews. Combined with spacing between targets (so adjacent buttons aren't accidentally hit) = comfortable, accessible interaction." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Whatever." }
+      ],
+      "correct_answer": "b",
+      "explanation": "44×44pt minimum based on fingertip ergonomics. Smaller = mistaps. HIG mandatory floor for touch.",
+      "points": 1
+    }
+  ]
+}

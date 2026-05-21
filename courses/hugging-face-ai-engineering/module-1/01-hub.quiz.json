@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: HF Hub",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Hugging Face host?",
+      "choices": [
+        { "id": "a", "text": "Just code." },
+        { "id": "b", "text": "Models (1M+), Datasets (500K+), Spaces (300K+), Libraries (Transformers, Datasets, PEFT, Accelerate, TRL, Diffusers). The dominant open-source AI platform in 2026. Each model has a model card (description, training info, capabilities), files + versions (git-based), inference widget (test in browser), code snippets (copy-paste to use), Spaces using it (community usage signal), discussions. Datasets similarly hosted with viewer, statistics, splits. Spaces are live AI demos built as Gradio / Streamlit apps; free tier deploys them publicly. Major open models on HF: Llama 3.5 (Meta), Mistral/Mixtral, Qwen, Phi (Microsoft), Flux (Black Forest Labs), Whisper, CLIP, Stable Diffusion. Filter searches by task, library, license, language, size. Read model cards before using — capability + licensing + training data documented there. API tokens enable programmatic access (huggingface_hub login). Free tier covers unlimited public repos + limited Spaces compute + Inference API rate limits; Pro for private repos + more compute. HF democratized open-source AI — what required research papers + custom code is now 5 lines of Python on any free Colab.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Models + Datasets + Spaces + Libraries. 1M+ models, 500K+ datasets, 300K+ Spaces. Dominant open-source AI platform.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need a small open LLM for chatbot; want commercial use; doesn't need huge context. Approach to find?",
+      "choices": [
+        { "id": "a", "text": "Pick random." },
+        { "id": "b", "text": "Filter Hub by Task = Text Generation; License = Apache 2.0 or MIT (commercial-safe); sort by Trending / Most downloads. Top candidates 2026: Phi (Microsoft, 2-14B params, MIT-licensed, excellent small LLM), Llama 3 (Meta, custom commercial-friendly license up to certain scale, 8B available), Mistral 7B (Apache 2.0, commercial OK), Qwen (Alibaba, varied licenses, 0.5B-72B available). Read each model card carefully: 1) License terms — confirm commercial OK at your scale (Llama has revenue caps; Phi/Mistral/Qwen Apache 2.0). 2) Context window — chatbot needs at least 4K-8K tokens typical; longer = better but more compute. 3) Capability — check benchmarks + sample outputs. 4) Size — 7B fits in 12-16 GB VRAM (consumer GPU); 13B+ needs more or quantization. 5) Recent updates — model still maintained? 6) Community usage — many Spaces using it = battle-tested. 7) Instruction-tuned variant — base model is for completion; instruct/chat variant for chatbot. Pick instruct variant. Try in browser via Inference widget on model card. Test 2-3 finalists on representative chat queries. Pick best fit for use case + hardware. For chatbot specifically: Llama 3 8B Instruct, Mistral 7B Instruct, Phi 3.5 Mini Instruct, Qwen 2.5 7B Instruct are all strong 2026 candidates. Avoid: huge models (70B+, too expensive); base (non-instruct) variants (don't follow chat format); restrictive-license models (no commercial use).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Filter by Task + License; sort by Trending. Read model cards (license, context, capability, size, instruct vs. base). Test in Inference widget. Pick instruct variant for chatbot.",
+      "points": 1
+    }
+  ]
+}

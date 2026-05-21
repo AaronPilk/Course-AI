@@ -1,0 +1,71 @@
+{
+  "slug": "stable-diffusion-gen-ai-art",
+  "name": "Stable Diffusion",
+  "title": "Stable Diffusion & Generative AI Art",
+  "subtitle": "Generate images professionally — from prompts to fine-tuned commercial workflows.",
+  "category": "AI",
+  "level": "Intermediate",
+  "estimated_hours": 6,
+  "summary": "Stable Diffusion + the open-source image generation ecosystem (Flux, SDXL, SD3, ControlNet, LoRAs) underpins most professional AI art workflows in 2026. This course covers the technology end-to-end: how diffusion models work, prompting techniques, ControlNet for guided generation, fine-tuning via LoRA + Dreambooth, ComfyUI for production pipelines, and commercial workflows. Practical patterns from concept art to e-commerce to film pre-vis.",
+  "brand": {
+    "logo": "/brands/stable-diffusion-gen-ai-art.svg",
+    "gradient": ["#FF6B35", "#7A0BC0"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "How diffusion models work",
+      "objective": "Understand the technology behind AI image generation.",
+      "lessons": [
+        { "position": 1, "title": "Diffusion models — denoising your way to images" },
+        { "position": 2, "title": "Model families — SD 1.5, SDXL, SD3, Flux" },
+        { "position": 3, "title": "Samplers, schedulers, and steps" },
+        { "position": 4, "title": "VAEs, encoders, and the latent space" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Prompting for professional results",
+      "objective": "Get the images you actually want.",
+      "lessons": [
+        { "position": 1, "title": "Prompt structure — subject, style, modifiers" },
+        { "position": 2, "title": "Negative prompts and avoiding artifacts" },
+        { "position": 3, "title": "Weighting, regional prompting, attention" },
+        { "position": 4, "title": "Style libraries and reference workflows" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "ControlNet and guided generation",
+      "objective": "Take precise control of what gets generated.",
+      "lessons": [
+        { "position": 1, "title": "ControlNet — pose, depth, edge guidance" },
+        { "position": 2, "title": "Inpainting and outpainting" },
+        { "position": 3, "title": "Img2img and reference image workflows" },
+        { "position": 4, "title": "IP-Adapter and identity preservation" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Fine-tuning and customization",
+      "objective": "Teach the model your style, character, or product.",
+      "lessons": [
+        { "position": 1, "title": "LoRA training — fast fine-tuning" },
+        { "position": 2, "title": "Dreambooth and full fine-tunes" },
+        { "position": 3, "title": "Dataset preparation and tagging" },
+        { "position": 4, "title": "Combining LoRAs and style stacking" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "ComfyUI and production workflows",
+      "objective": "Build repeatable professional generation pipelines.",
+      "lessons": [
+        { "position": 1, "title": "ComfyUI — node-based generation" },
+        { "position": 2, "title": "Automatic1111 and Forge alternatives" },
+        { "position": 3, "title": "Upscaling, face restoration, post-processing" },
+        { "position": 4, "title": "Commercial workflows — concept art, product, film" }
+      ]
+    }
+  ]
+}

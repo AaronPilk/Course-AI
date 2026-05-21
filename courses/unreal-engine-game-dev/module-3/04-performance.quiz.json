@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Performance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Frame time budget for 60 FPS?",
+      "choices": [
+        { "id": "a", "text": "Unlimited." },
+        { "id": "b", "text": "~16.67 milliseconds per frame total (1000ms ÷ 60 frames = 16.67ms). The budget splits across three threads that run in parallel: Game thread (game logic, Blueprint, AI, physics ticking) ~8ms budget; Render thread (preparing draw calls for GPU, culling, sorting) ~5ms budget; GPU (actual rendering: shading, lighting, post-processing) ~12ms budget. If ANY thread exceeds its slice, frame rate drops below 60. Profile with `stat unit` in PIE — shows ms per thread + total; identify which thread is bottleneck. For 30 FPS target: 33ms total. For 120 FPS: 8.3ms total — very tight; only achievable on high-end PCs. For VR (90 FPS minimum): 11ms total — strict; VR drops cause motion sickness. Common bottlenecks per thread: Game thread = heavy Blueprint Tick logic, many ticking actors, complex AI; Render thread = too many draw calls (1000s of materials × visible meshes), shader complexity; GPU = high-res rendering, complex post-processing, many dynamic lights, Lumen quality too high. Mitigations: optimize hot path on bottlenecked thread; reduce work on that thread; offload (e.g., expensive math from Game thread to compute shader on GPU). The 'thread that drops first sets the frame rate' — optimize the slowest thread first; verify with re-profile. Pro performance workflow: profile early (even at prototype) → set per-platform targets → measure each thread → optimize bottleneck → re-profile → repeat. Performance is iterative engineering work; not a single optimization but accumulated wins." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "16.67ms total. Split: Game thread ~8ms, Render thread ~5ms, GPU ~12ms (parallel). Profile with stat unit; optimize bottlenecked thread first.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Scene has 5,000 individual tree actors; draw call count is 50,000+; performance unacceptable.",
+      "choices": [
+        { "id": "a", "text": "Remove trees." },
+        { "id": "b", "text": "Convert to Hierarchical Instanced Static Mesh (HISM) or use Foliage tool. With 5,000 individual actors, each tree submits ~10 draw calls (mesh + materials + LOD variants) = 50,000+ draw calls; render thread + GPU choke on the volume. HISM batches identical static meshes into one draw call per material per LOD — 5,000 trees might collapse to ~10 draw calls. Massive performance gain. Setup options: 1) Foliage tool — UE5's painting tool for vegetation. Activate Foliage mode in toolbar; pick mesh; brush settings (density, scale variation, rotation); paint on landscape / terrain. Auto-creates instanced foliage actors. 2) Hierarchical Instanced Static Mesh Component — programmatic instances in Blueprint; each instance via AddInstance() call. 3) Static Mesh Actors with manual conversion via Mesh Merge Actor → combines into batches. For procedural placement: PCG (Procedural Content Generation) framework + HISM. The Foliage tool is artist-friendly; for 5,000 trees painted in minutes. Combined with Nanite (if trees have Nanite-compatible materials): per-pixel LOD eliminates need for manual tree LODs; instancing + Nanite = optimal for forests. Performance gains: 50,000 draw calls → ~10 draw calls; render thread freed up; 60 FPS achievable. Same pattern for grass (paint with Foliage tool), rocks (HISM), props (instanced). Identifying the issue: stat scenerendering shows draw call count; values > 10,000 are warning; > 50,000 is bottleneck. Pro environment artists use instancing aggressively; raw actor counts in forest scenes can be 100,000+ trees + grass; only feasible via instancing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller trees." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Hierarchical Instanced Static Mesh (HISM) or Foliage tool. Batches identical meshes into single draw call. 50,000 → ~10 draw calls. Use Foliage tool for artist-friendly painting.",
+      "points": 1
+    }
+  ]
+}

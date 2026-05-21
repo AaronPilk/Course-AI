@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Token taxonomy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why have both primitive AND semantic tokens?",
+      "choices": [
+        { "id": "a", "text": "More work for designers." },
+        { "id": "b", "text": "Two-tier system gives rebranding flexibility. Primitives are raw values (`blue-500 = #3B82F6`); semantics are aliases referencing primitives (`color/brand/primary = blue-500`); components reference semantics. When the brand changes from blue to purple: update the semantic alias to `purple-500`; primitives untouched (blue still available for accents, illustrations, charts); every component using `color/brand/primary` updates instantly. With only one tier (`color/brand/primary = #3B82F6` directly), you can still rebrand by editing the value, but you lose the primitive scale — there's no `blue-500` to use elsewhere if blue is still needed somewhere. Two-tier costs naming overhead but pays in flexibility. The pattern matches major design systems: Material has `md.sys.color.primary` (semantic) → `md.ref.palette.primary40` (primitive); Tailwind ships primitives in config + semantic in CSS variables. For small teams or simple systems, one tier is fine; for products that might rebrand or theme multiply, two tiers from the start saves a refactor later." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Primitives = raw values; semantics = aliases for meaning. Rebrand changes semantic mappings; primitives untouched.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team has 800 color variables and the picker is unmanageable. Audit reveals 300 are unused and many are near-duplicates. Action?",
+      "choices": [
+        { "id": "a", "text": "Add more variables." },
+        { "id": "b", "text": "Consolidate: delete unused (after confirming zero references across files), merge near-duplicates into the canonical semantic, enforce taxonomy. Audit pass: 1) Use Figma's variable analytics (or scripted scan) to find unreferenced variables — delete them. 2) Identify near-duplicates: `color/bg/primary`, `color/background/primary`, `color/surface/primary` all hitting similar values — pick one canonical (`color/bg/surface`); migrate references; deprecate the others. 3) Establish taxonomy: `color/{text,bg,border,brand,feedback}/{variant}` — anything outside this scheme is suspect. 4) Add primitives tier if missing: refactor direct hex values into `blue-500` style primitives + semantic aliases. 5) Document with descriptions so future designers don't recreate duplicates. After consolidation, expect 150-200 variables (foundations + key components) — manageable picker, clear taxonomy, no duplicates. The 800 → 200 reduction is typical when imposing structure on an organically-grown system; teams that started without taxonomy invariably reach this point. Going forward: variable PR process — new variables require justification + naming review." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Delete all variables." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Consolidate: delete unused, merge near-duplicates, enforce taxonomy, add primitives tier, document. 800 → 200 is typical.",
+      "points": 1
+    }
+  ]
+}

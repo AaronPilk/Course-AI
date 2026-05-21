@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Blueprint communication",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When prefer Blueprint Interface over Cast To?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "When multiple unrelated Blueprints need to share behavior — interfaces enable polymorphism without creating hard class dependencies. Cast To creates a dependency: 'Blueprint A casts to Blueprint B' means A's compiled output references B's class; when B is loaded, A must load B; recompilation cascades when B changes. Interfaces decouple: define IInteractable interface with `Interact()` function; BP_Door, BP_Chest, BP_NPC, BP_LightSwitch all implement IInteractable; caller (BP_Player) calls Interact() on whatever actor the player is targeting — no Cast required; no hard dependency on Door/Chest/NPC/LightSwitch classes. The caller doesn't know or care about specific implementing classes. This is dependency inversion + polymorphism — clean architecture. When new objects need to be Interactable, implement the interface; no caller changes required. Cast To use cases: when you NEED specific class features (Cast generic Actor to BP_Enemy to access Enemy-specific functions); when interface would be overkill for simple cases. The rule of thumb: Cast for occasional access to specific classes; Interface for shared behavior across many class types. Pro Blueprint architecture: interfaces for cross-cutting concerns (IInteractable, IDamageable, IHealable, ISaveable); direct references / casts for tight relationships. Interfaces also work for actors at runtime — call interface function on any actor; if it implements, runs; if not, no-op. Safe broadcast." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cast for everything." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Interfaces decouple: multiple Blueprints implement; caller uses interface without knowing specific classes. Cast creates hard dependencies + recompilation cascades.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Score changes; need HUD to update, achievements to check, sound to play. How to architect?",
+      "choices": [
+        { "id": "a", "text": "Score code calls HUD, achievements, sound directly." },
+        { "id": "b", "text": "Event Dispatcher (pub-sub pattern). BP_GameManager has Event Dispatcher `OnScoreChanged(NewScore: Integer)`. When score updates: Broadcast OnScoreChanged with new value. Subscribers (BP_HUD, BP_AchievementSystem, BP_SoundManager) Bind Event to Dispatcher on BeginPlay — when broadcast fires, each subscriber's handler runs. BP_HUD updates score text; BP_AchievementSystem checks thresholds; BP_SoundManager plays score sound. GameManager doesn't know about HUD / Achievements / Sound — they subscribe themselves. Loose coupling: 1) Add new subscriber (e.g., BP_Analytics tracking score) without modifying GameManager. 2) Remove subscriber (delete BP_SoundManager) without breaking GameManager. 3) Modify subscriber logic without touching GameManager. 4) Test each subscriber in isolation by triggering the event. The 'direct calls' alternative: GameManager has references to HUD + Achievements + Sound + every other subscriber; calls each one's update function explicitly. Tight coupling: changing HUD's function signature breaks GameManager; adding a subscriber requires GameManager modification; testing requires real instances of all dependencies. Event Dispatchers scale to N subscribers; direct references don't. Pattern: 1) Identify 'things that happen' in your game (score change, level up, player damaged, item picked up, enemy spawned). 2) Define Event Dispatchers for each on appropriate central Blueprint. 3) Broadcast when the event happens. 4) Subscribers bind on BeginPlay. Result: scalable + maintainable architecture. Pro Blueprint design: Event Dispatchers everywhere for game-state changes; direct calls only for tight 1:1 relationships." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tick polling." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Event Dispatcher (pub-sub). Broadcast OnScoreChanged; subscribers (HUD, achievements, sound) bind and react. Loose coupling; scales to N subscribers.",
+      "points": 1
+    }
+  ]
+}

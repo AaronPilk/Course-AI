@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Performance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Most underrated Unity optimization?",
+      "choices": [
+        { "id": "a", "text": "Faster CPU." },
+        { "id": "b", "text": "Avoiding GC (Garbage Collection) allocations in hot paths. Unity's C# garbage collector triggers when allocations exceed thresholds; collection pauses the main thread; visible frame drops (especially on mobile / older hardware). Common hot-path offenders: 1) `string concatenation in Update` — 'Score: ' + score allocates new string per frame; 60 FPS × 1 hour = 216,000 string allocations; massive GC pressure. Fix: cache + use TextMeshPro's SetText with non-alloc overloads. 2) `foreach on Lists / arrays sometimes allocates enumerator (depends on type)`. Fix: use 'for' loops with index. 3) `LINQ in Update — .Where(), .Select(), etc.` allocate iterators + intermediate collections. Fix: avoid LINQ in hot paths; manual loops. 4) `new Vector3(x, y, z)` per frame in Update (Vectors are structs; technically no allocation, but combined with class wrappers cause issues). Fix: pre-allocate + mutate. 5) `Instantiate / Destroy of GameObjects` — frequent spawning + destroying = GC pressure. Fix: object pooling. 6) `Boxing of value types into objects` — passing struct to method expecting object boxes it; allocation. Fix: generics. 7) `Substring / Split / etc.` — String operations allocate. Fix: cache results; use StringBuilder. Profile via Unity Profiler → Memory → Allocations + GC.Alloc per frame; values >0 in tight loops = optimization target. Pro Unity habit: in Update / FixedUpdate / hot paths, eliminate allocations; verify via Profiler that GC.Alloc = 0 in steady-state gameplay. Result: no GC pauses; smooth frame rate; especially critical for mobile + VR. The 'GC pause' is one of the most common 'why does my game stutter every few seconds?' bugs; almost always traced to allocations in hot paths.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Avoiding GC allocations in hot paths. String concatenation, LINQ, foreach (sometimes), Instantiate / Destroy, boxing all allocate. GC pauses cause frame drops. Profile via GC.Alloc per frame.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Scene has 500 visible trees + grass blades; draw call count is 5000+; frame rate poor. Fix?",
+      "choices": [
+        { "id": "a", "text": "Fewer trees." },
+        { "id": "b", "text": "GPU Instancing + Static Batching + LOD Groups. GPU Instancing: enable on materials (Material Inspector → Enable GPU Instancing). For meshes sharing the same material + having Instanced rendering: GPU renders many copies in one draw call. 500 trees with one shared material + GPU Instancing = ~1 draw call vs. 500. Static Batching: mark trees as Static (Inspector → Static dropdown → Batching Static). Unity combines static meshes into batched meshes at build time. Fewer draw calls. LOD Groups: trees have LODGroup component with LOD0 (high-poly close), LOD1 (medium), LOD2 (low far away). Distant trees render as low-poly proxies — fewer total polygons; smaller draw call cost. Foliage system: paint trees + grass via Terrain's Tree / Detail painting tools — auto-applies GPU Instancing + culling distance. For grass specifically: GPU-instanced grass system; renders 100,000s of blades on screen. Combined with: occlusion culling (don't render trees behind walls), frustum culling (auto: don't render off-screen), distance culling (don't render super-distant). Pro Unity environment performance: Static for stationary objects + GPU Instancing on materials + LOD Groups + occlusion baking = 60 FPS open-world possible on mobile with thousands of visible objects. Profile via Frame Debugger to confirm draw call reduction.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "GPU Instancing (Material setting) + Static Batching (Static flag) + LOD Groups. 5000 → ~10-50 draw calls. Combined with occlusion / frustum / distance culling. Foliage tool for grass.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Animator",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's a Blend Tree?",
+      "choices": [
+        { "id": "a", "text": "A 3D tree." },
+        { "id": "b", "text": "Animation blending node in the Animator that smoothly transitions between multiple clips based on parameter values. 1D Blend Tree: blends along one parameter axis (e.g., Speed parameter — Idle clip at 0, Walk clip at 3, Run clip at 6; engine interpolates between adjacent clips based on current Speed value, producing smooth idle-to-walk-to-run transition). 2D Blend Tree: blends along two parameter axes (e.g., MovementX + MovementY → 8-directional locomotion clips at compass positions; current movement direction interpolates between adjacent clips). Setup: Animator window → Create State → Blend Tree → double-click to enter Blend Tree editor → Add Motion Field for each clip → assign clips + threshold values → set blend parameter(s). Result: single 'Locomotion' state handles all walking / running variations smoothly; transitions to Jump / Attack states still discrete. Without Blend Trees: dozens of separate states for each speed/direction combination + transitions between them = messy state machine. With Blend Trees: one state with internal blending = clean state machine + smooth animation. Universal animation pattern; Unreal has Blend Spaces (same concept).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Animation blending node — smoothly transitions between clips based on parameter values. 1D for Speed → Idle/Walk/Run; 2D for direction → 8-way locomotion. Clean state machine + smooth animation.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want footstep sound to play synced to character's foot landing in walk animation. How?",
+      "choices": [
+        { "id": "a", "text": "Time it manually." },
+        { "id": "b", "text": "Animation Events. In the Animation Clip's timeline, add events at the exact frames where feet hit ground. Each event references a method on a script attached to the GameObject. When the animation reaches that frame during playback, Unity calls the method. Setup: 1) Select the GameObject with Animator. 2) Open Animation window (Window → Animation → Animation). 3) Select the walk clip. 4) Find the frame where foot lands (scrub timeline). 5) Right-click in event track → Add Animation Event. 6) Configure: Function = PlayFootstepSound (method name on script). 7) Add event at other foot's landing frame too. Script: `public void PlayFootstepSound() { audioSource.PlayOneShot(footstepClip); }`. Synced perfectly to animation — when walk animation runs, footsteps fire at correct frames automatically. Use cases: 1) Footstep sounds during walk/run. 2) Combat hit detection on swing frame (enable hitbox briefly). 3) Spawn projectile at bow-release frame. 4) Trigger VFX on power animation peak. 5) End-of-attack reset state. 6) Camera shake at impact moments. Animation Events keep audio + VFX + logic locked to animation timing; no separate timer needed. Combined with Animator parameters + state transitions, gives full animation-driven gameplay control. Pro Unity animation: heavy use of Animation Events for syncing gameplay to animation. Same concept in Unreal (Animation Notifies).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Animation Events. Add events at specific frames in Animation Clip; each calls a method on script. Synced to animation timing. For footsteps, combat hits, VFX, audio cues.",
+      "points": 1
+    }
+  ]
+}

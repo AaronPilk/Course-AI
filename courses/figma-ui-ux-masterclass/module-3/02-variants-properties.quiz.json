@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Variants and properties",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the difference between variants and properties?",
+      "choices": [
+        { "id": "a", "text": "They're the same." },
+        { "id": "b", "text": "Variants group structurally-related component versions into one configurable component (Button/Primary/Small, Button/Secondary/Large all share a Button component with Style + Size variant properties). Properties are configuration knobs on instances — text (label content), boolean (show/hide nested elements), instance swap (replace nested component). Both coexist: a Button has Style/Size as variants (structural) AND Label/HasIcon/Icon as properties (configurable). Variants change what the button IS (which design); properties change what the button SHOWS (what content). The right panel on an instance shows a dropdown per variant property + a control per regular property — designers configure without drilling into the component. Setup: Add variants via 'Combine as variants'; add properties via 'Apply text/boolean/instance swap property.' This separation matters: variants explode multiplicatively (3 styles × 3 sizes × 4 states = 36 combos to build) while properties are linear (one Label text field handles infinite label content). Use variants for structural variation, properties for everything else." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Variants are deprecated." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Variants = structural versions; properties = config knobs (text, boolean, instance swap). Both coexist on the same component.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team's Button has 4 styles × 4 sizes × 5 states × 2 icon-positions = 160 variants. The dropdown is slow and designers find it confusing. What to do?",
+      "choices": [
+        { "id": "a", "text": "Add more variants." },
+        { "id": "b", "text": "Refactor: shrink the matrix using properties + reduced variants. Most of those 160 combinations are never actually used (Disabled-Hover doesn't make sense; Tertiary-Large might be unused). Audit usage: which combinations appear in real designs? Cut unused. Then: convert non-structural axes to properties — icon-position becomes a 'IconPosition' property (Left/Right/None enum) not variants; states might collapse to one default + a property (or stay as variants if states genuinely look different). After: 4 styles × 4 sizes × 3 states = 48 variants + IconPosition property = 48 variants total, ~70% reduction. Performance recovers; dropdown shorter; designers less confused. Variant explosion is a smell: hundreds of variants means structure was forced where properties belong. Limit ~50 variants per component. For complex components, split: 'Button' for primary/secondary/tertiary, 'IconButton' for icon-only — two components is clearer than one with 160 variants. Past 50 the asset panel slows; past 100 designers can't find what they want." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Detach everywhere." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Variant explosion — shrink matrix. Convert non-structural axes to properties; cut unused combinations; consider splitting into separate components.",
+      "points": 1
+    }
+  ]
+}

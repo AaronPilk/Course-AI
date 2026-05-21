@@ -1,0 +1,76 @@
+{
+  "title": "Module 1 quiz: Premiere foundations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's the pro way to create a new sequence?",
+      "choices": [
+        { "id": "a", "text": "Type random settings." },
+        { "id": "b", "text": "Drag a source clip onto the New Item icon at the bottom of the Project panel — Premiere creates a sequence matching the clip's specs (resolution, frame rate, audio, color space). The drag-a-clip method auto-matches 95% of the time, eliminating the most common mistake (wrong sequence settings causing conform issues, performance hits, and visual artifacts like judder or pillarboxing). Alternative paths: File → New → Sequence → pick a preset matching your camera (DSLR 4K, ARRI ProRes, Sony XAVC); or fully custom (Settings tab; configure manually). For mixed-footage projects, pick one canonical sequence matching your delivery target (e.g., 4K 24p for cinematic delivery, 1080p 60p for sports content); conform the rest. The 'match clip to sequence' principle prevents Premiere having to real-time scale/stretch/conform footage during playback — major performance saver. Verify sequence settings after creation: Sequence menu → Sequence Settings. Frame rate, resolution, audio sample rate (48000 Hz is broadcast standard), display format (Timecode for video). Lock these down once; don't fiddle later (changing frame rate mid-edit invites breakage)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Drag a clip onto the New Item icon. Auto-matches sequence to source. Eliminates wrong-setting mistakes; 95% of cases.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Editor's 4K project plays smoothly in Premiere but final export has stutters and dropped frames. Why?",
+      "choices": [
+        { "id": "a", "text": "Premiere bug." },
+        { "id": "b", "text": "Export settings or hardware bottleneck during render — distinct from playback. Playback in Premiere uses optimizations (proxies, render previews, playback resolution, GPU acceleration) that hide real performance limits. Export disables all these, processes every frame at full quality, often with complex effects that didn't trigger during scrub-edit playback. Causes of export stutters: 1) Source codec mismatch with export codec — re-encoding H.264 to H.264 with effects = heavy CPU. 2) Hardware encoding not used — set 'Hardware Encoding' in Export Settings for H.264/H.265 if your GPU supports it (modern Macs, Nvidia RTX, AMD Radeon). 3) Output to slow drive — exporting to a USB drive over slow connection bottlenecks. 4) Background processes consuming CPU/GPU. 5) Effects that don't render correctly at full quality (third-party plugins). Fix workflow: a) Verify hardware encoding enabled in Export Settings. b) Export to fast local SSD, then copy to slower drive. c) Close other apps. d) Try Adobe Media Encoder queue export (background; allows Premiere to keep editing). e) If still stuttering, try ProRes intermediate export → re-encode in HandBrake. The 'plays in Premiere but exports badly' pattern usually means a setting mismatch or a hardware bottleneck specific to render. Test by exporting a 30-second segment first — if that's bad, the full export will be." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong frame rate." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Export disables playback optimizations. Check hardware encoding, slow output drive, codec mismatch, background apps. Test with short export first.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "What does the Media Browser panel offer over File → Import?",
+      "choices": [
+        { "id": "a", "text": "Same thing." },
+        { "id": "b", "text": "Premiere-aware browsing with previews, format intelligence, and clip-relationship awareness. Media Browser previews clips before import — hover or click → source-monitor-style preview without committing to the import yet. Handles camera-specific multi-file formats correctly: Sony XAVC (multi-file structure where MP4 is just one piece), RED R3D (sidecar files), BRAW (Blackmagic-specific), ARRI ALEXA (.ari files) — importing via File → Import on these formats sometimes misses pieces; Media Browser sees the whole clip. Respects spanned clips (footage split across multiple files due to FAT32 file size limits). Easier to navigate camera card structures (BPAV, AVCHD, XDROOT directories). Pro editors use Media Browser exclusively because: 1) Preview before import saves time + project clutter. 2) Format intelligence prevents broken imports. 3) Better for multicam ingest. 4) Avoids the 'why is my footage truncated?' problem on Sony XAVC. The File → Import path works fine for simple files (single MP4, MOV) but Media Browser is strictly better for any camera-card-based footage. Habituate to Media Browser; faster + less error-prone." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Smaller file sizes." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Previews + format intelligence + clip-relationship awareness. Handles XAVC, RED, BRAW, ARRI correctly. Pro choice for camera-card footage.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Project file (.prproj) is 50 MB but the project takes 800 GB of disk space. What accounts for the difference?",
+      "choices": [
+        { "id": "a", "text": "Bug in Premiere." },
+        { "id": "b", "text": "Source media files + cache. The .prproj file is just references to media (pointers, not copies of the actual video/audio); typically 10-100 MB. The bulk of disk usage comes from: 1) Source footage — 4K H.264 averages ~50-100 GB per hour; 8K or RAW is 200-500 GB per hour. A documentary with 50 hours of source footage = several TB. 2) Media Cache — Premiere caches indexed audio + decoded frames + conformed audio (.cfa). Grows to 50-200 GB on long projects. 3) Render previews — pre-rendered effects (yellow → green render bars). Can be 10-100 GB. 4) Proxies — if generated, low-res copies are typically 20% the size of originals; for 800 GB of footage, ~160 GB of proxies. 5) Exports — finished videos, often retained alongside the project. The .prproj file's tiny size + everything else's massive size is by design: Premiere's reference model means the project itself is portable; media must travel with it (Project Manager > Collect Files consolidates everything). For archive: copy only essential source footage + project file; regenerate cache + proxies on demand. For active projects: ensure 2-3x the source footage size in free space (room for cache + proxies + exports)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Cloud sync." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Source media + cache + render previews + proxies + exports. .prproj is just references; the bulk is everything it points to.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Best practice for organizing the Project panel in a big project?",
+      "choices": [
+        { "id": "a", "text": "Flat, no folders." },
+        { "id": "b", "text": "Bins (folders) by category + labels (color codes) + markers (in-clip notes) + metadata. Bin structure: '01_Footage / Day_1 / Cam_A', '01_Footage / Day_1 / Cam_B', '02_Audio / Music', '02_Audio / SFX', '02_Audio / Dialogue', '03_Graphics / Titles', '04_Sequences / v01_RoughCut', '05_Exports'. Numbered prefixes control sort order. Label colors per clip (right-click → Label color): green = approved usable, red = don't use, yellow = maybe, blue = reference. Visual at-a-glance scan replaces searching by name. Markers within clips: M during source playback adds marker at playhead with optional note ('best take starts here'; 'CEO mentions Q4 numbers @ 2:34'). Metadata fields visible in list view: Scene, Take, Description, Frame Rate, Audio Channels — sort and filter by these. For 500+ clip projects, organization is the difference between editing and excavating: pro editors spend 30-60 minutes upfront organizing the project panel and save hours over the project's life. The Project panel search filter (top of panel) finds clips fast — type 'wide' to find clips with 'wide' in name or label. Subclips (Cmd+U) split long clips into named usable sections. Bins + labels + markers + metadata + search is the complete kit." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Bins (categorical) + labels (color codes) + markers (in-clip notes) + metadata + search. Pro editors organize religiously; saves hours.",
+      "points": 1
+    }
+  ]
+}

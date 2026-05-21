@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Export presets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why use 2-pass VBR for final delivery?",
+      "choices": [
+        { "id": "a", "text": "Slower for no reason." },
+        { "id": "b", "text": "Best quality-per-bitrate. Variable Bitrate (VBR) adjusts data rate based on content complexity — fast motion / detail gets more bitrate (preserves detail); static scenes get less (saves file size). Constant Bitrate (CBR) uses same rate regardless, wasting on simple scenes and starving complex ones. Two-pass: first pass analyzes the entire timeline noting where complexity peaks; second pass encodes with that knowledge, allocating bitrate optimally across the content. One-pass VBR makes decisions on-the-fly, less optimal allocation. For a given target file size or quality, 2-pass VBR produces visibly better results than CBR or 1-pass VBR — fewer compression artifacts in motion, cleaner gradients, better detail in dark scenes. The cost: 2-pass takes ~2x the encode time of 1-pass (the analysis pass + encoding pass). For final delivery, this is worth it. For dailies / previews / drafts: 1-pass VBR or even CBR is fine — faster turnaround. The 'best for final' choice in pro workflows is 2-pass VBR with hardware encoding enabled (GPU acceleration cuts encode time dramatically on modern hardware). Combined with target bitrate matching the delivery platform's recommendations (YouTube ~8 Mbps for 1080p, ~35 Mbps for 4K), 2-pass VBR delivers the best quality your bitrate can afford." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required by YouTube." }
+      ],
+      "correct_answer": "b",
+      "explanation": "2-pass VBR: best quality-per-bitrate. First pass analyzes complexity; second pass encodes optimally. ~2x time of 1-pass; worth it for final.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Need to export same edit for YouTube (16:9), Instagram (1:1), and TikTok (9:16). Best workflow?",
+      "choices": [
+        { "id": "a", "text": "Three separate sequences." },
+        { "id": "b", "text": "Use Auto Reframe + Media Encoder queue for multiple outputs from one source. Workflow: 1) Original sequence is 16:9 YouTube version. Duplicate sequence (Cmd+C in Project panel, Cmd+V to paste a copy). 2) On duplicate, change sequence settings to 1:1 (1080×1080). 3) Select all clips → right-click → Auto Reframe → analyze and keyframe each clip to intelligently follow the action in the new aspect ratio (face detection, subject tracking). 4) Review + manually adjust where Auto Reframe got it wrong (the auto is 70-90% accurate; refine the 10-30%). 5) Repeat for 9:16 TikTok version (1080×1920). 6) Export all three via Media Encoder: File → Export → Send to Media Encoder; add each sequence as queue item; pick platform preset per item; click Start Queue; AME exports all three; walk away. The Auto Reframe approach handles the reframing intelligently — keeps subjects in frame as composition shifts from wide to vertical. Without it, you'd manually keyframe Position on every clip across the duration. Alternative: build the edit once at 1:1 or 9:16 (smallest aspect ratio); export pillarboxed / letterboxed for other formats. Less ideal — composition wastes space. The 'build at native; reframe for others' pattern is the modern multi-platform workflow. For social campaigns spanning 5+ platforms, this is essential — every platform has a preferred aspect ratio, and one-size-fits-all doesn't perform." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Pick one platform only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Duplicate sequence per aspect ratio + Auto Reframe for intelligent reframing + Media Encoder queue for all exports at once. Modern multi-platform workflow.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 3 quiz: Color & materials",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why prefer `Color.primary` / `UIColor.label` over `Color.black`?",
+      "choices": [
+        { "id": "a", "text": "Aesthetic." },
+        { "id": "b", "text": "Semantic colors adapt across modes and accessibility settings. `Color.primary` = black in light mode + near-white in dark mode + adjusts for Increase Contrast / Differentiate Without Color settings — same code, four different actual colors depending on user context. Hardcoded `Color.black` = black always; invisible on dark backgrounds; ignores accessibility preferences. Semantic naming forces you to think in terms of MEANING (primary text, background, accent) rather than absolute color values. Asset Catalog colors with light/dark variants achieve the same for custom brand colors. Rule: if a color has meaning beyond a specific RGB value, use a semantic color or mode-adapting custom color. Hardcoded RGB is reserved for very specific decoration (brand stripe that's always the same regardless of mode), and even those benefit from being named once. Apple's HIG strongly recommends semantic colors throughout." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Required." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Semantic colors adapt to mode + accessibility. Hardcoded RGB doesn't. Think meaning, not RGB.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designer applies your brand accent color to text + backgrounds + borders + icons everywhere. Result?",
+      "choices": [
+        { "id": "a", "text": "Strong brand." },
+        { "id": "b", "text": "Loses meaning + cluttered. iOS convention: accent color signals INTERACTIVITY — appears on interactive elements (buttons, links, switches, selected items). Users learn 'colored = tappable.' Spreading accent to backgrounds, decoration, body text dilutes the signal; users can no longer distinguish 'tappable button' from 'colored decoration.' Plus heavy color fatigues the eye; chrome should be calm so content stands out (deference). Better: one accent applied only to interactive elements; 90%+ of UI in grayscale + system colors. Apple's own apps (Notes, Reminders, Mail) demonstrate — mostly grayscale; accent appears in checkmarks, tab bar selected, action buttons. Brand expression isn't in color volume — it's in consistent intentional application of accent for a single meaning. Apps that try to brand harder (color everywhere) feel LESS polished. Restraint is the discipline; Apple-style designs prove the point repeatedly across mature products." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Customers love color." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Loses 'accent = interactive' signal; cluttered. Accent only on interactive elements; rest in grayscale.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why use near-black (not pure black) for dark mode?",
+      "choices": [
+        { "id": "a", "text": "Battery only." },
+        { "id": "b", "text": "Three reasons: (1) OLED smearing — pure black pixels produce trails on OLED displays as content moves; near-black drives those pixels slightly, eliminating artifacts; (2) Eye comfort — pure black + pure white = harshest contrast (1:21+); fatigues eyes especially over long sessions; near-black + near-white preserves great contrast (~15:1) while feeling gentler; (3) Layered hierarchy — true black leaves no room to differentiate 'card on top of background' via tonal shift; with near-black bg + slightly-lighter near-black cards, depth conveys via subtle tones. Apple's semantic colors handle all this automatically (systemBackground = near-black in dark mode). Hardcoded `Color.black` violates all three. The battery argument is partly true but Apple chose comfort + hierarchy over the small additional savings. Use system colors; they encode the right answer. The 'minimalism' impulse toward pure black is wrong; Apple's research and millions of hours of user testing point at near-black." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tradition." }
+      ],
+      "correct_answer": "b",
+      "explanation": "OLED smearing + eye comfort + layered hierarchy. System colors handle this automatically.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Reduce Transparency setting enabled. App uses materials. Right behavior?",
+      "choices": [
+        { "id": "a", "text": "Ignore setting." },
+        { "id": "b", "text": "Standard SwiftUI/UIKit materials respect the setting automatically — render with reduced/no transparency, falling back to solid backgrounds appropriate for the mode. Users with Reduce Transparency enabled (vision impaired, motion-sensitive, attention-focused) see solid surfaces instead of blurred; readability improves; visual hierarchy still works because system uses appropriate solid tones per material level. If you use RAW blur effects (UIVisualEffectView with custom config), you must check `UIAccessibility.isReduceTransparencyEnabled` and provide a solid fallback manually. SwiftUI: `@Environment(\\\\.accessibilityReduceTransparency)` lets you adapt. The setting exists because translucent surfaces can be hard to read (low vision) and visually distracting (motion sensitivity). Honoring is mandatory for accessibility-conscious apps; increasingly checked in App Store review. Free if you use system materials; one check if customizing. The 'I want my materials always' attitude excludes affected users; the cost is trivial; honoring is the right call." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Re-enable transparency." }
+      ],
+      "correct_answer": "b",
+      "explanation": "System materials auto-adapt to Reduce Transparency. Custom blur needs `isReduceTransparencyEnabled` check + solid fallback.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Status indicators use red for error / green for success only. Issue?",
+      "choices": [
+        { "id": "a", "text": "Conventional." },
+        { "id": "b", "text": "About 8% of men have red-green color blindness — they can't reliably distinguish red from green. If color is the ONLY signal for state, those users can't tell error from success. Apple's HIG: 'Differentiate Without Color' principle — combine color with another signal: error gets red + ⚠ warning icon + clear text 'Error: ...'; success gets green + ✓ checkmark + 'Saved' text. Color reinforces; icon/text carry primary meaning. iOS has a system setting that forces apps to test without color reliance; honoring shows graceful degradation. Beyond color blindness: contrast issues in bright sun, screen reader users hearing text, monochrome eInk — all benefit from non-color-only signals. Color-blindness simulators (Sim Daltonism, Color Oracle, Chrome DevTools CB filters) let you test designs through CB vision; major UI screens should remain readable through them. Universally good UX and inclusive design; cost is trivial; impact significant." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong shade." }
+      ],
+      "correct_answer": "b",
+      "explanation": "8% of men have red-green color blindness. Pair color with icon + text + position. Test with CB simulators.",
+      "points": 1
+    }
+  ]
+}

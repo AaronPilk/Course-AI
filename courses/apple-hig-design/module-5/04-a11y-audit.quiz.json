@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Accessibility audit",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "When should you run an accessibility audit?",
+      "choices": [
+        { "id": "a", "text": "Once before first launch." },
+        { "id": "b", "text": "Before every major release, plus continuously during development. Accessibility regressions creep in with every code change — new features add components that need labels; design tweaks reduce contrast; refactors break VoiceOver navigation order. One pre-launch audit catches initial gaps but new gaps emerge with every shipped feature. Mature teams: automate what's possible (linters for missing labels, contrast checks in CI, snapshot tests with VoiceOver focus order), manual audit before each release (run through the checklist, test with real assistive tech for 20-30 min), accessibility-conscious code review (every PR considers a11y impact). Apple's App Store review increasingly checks accessibility; failed audits delay launches. Beyond compliance: accessibility is genuinely a product-quality signal. Apps that fail accessibility tend to fail other quality dimensions; treating it as a gate raises overall quality. Quarterly comprehensive audit + per-release checklist + per-PR review = sustainable practice. Skipping after launch = accessibility decays; users with disabilities encounter degraded experience over time." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Never." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Continuously — before each release, per-PR review, automation in CI. Not one-and-done; regressions accumulate.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Your team has limited time. Highest-leverage single accessibility fix to start with?",
+      "choices": [
+        { "id": "a", "text": "Brand colors." },
+        { "id": "b", "text": "Accessibility labels on every interactive element + decorative-hiding for non-interactive images. Foundation of VoiceOver usability; without labels, screen-reader users cannot use the app at all (VoiceOver announces 'button' / 'image' meaninglessly). Adding labels is mechanical but high-impact: walk every screen; for each Image, Icon, custom Button without text — add `.accessibilityLabel('Action description')`; for decorative elements add `.accessibilityHidden(true)`. SwiftUI standard Buttons with text labels are auto-handled; the gap is icon-only / custom views. Couple hours to thousands of users newly able to use your app. Other audit areas (Dynamic Type, contrast, motion) matter but labels are the biggest single delta — they turn 'app is invisible to VoiceOver users' into 'app is usable.' Tools: Accessibility Inspector → Audit highlights missing labels. After labels: contrast audit (also short to fix); then Dynamic Type adaptation (more effort, less acute impact). The order: labels → contrast → Dynamic Type → motion → tests with assistive tech. Each compounds the previous." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Custom controls." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Accessibility labels on interactive + hiding decorative. Foundation of VoiceOver usability; biggest single delta.",
+      "points": 1
+    }
+  ]
+}

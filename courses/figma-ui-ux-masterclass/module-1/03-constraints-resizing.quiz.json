@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Constraints",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Constraint `Left + Right` does what when parent resizes?",
+      "choices": [
+        { "id": "a", "text": "Keeps child fixed." },
+        { "id": "b", "text": "Stretches the child horizontally — the distance from the left edge of the parent to the left edge of the child stays constant, AND the distance from the right edge of the child to the right edge of the parent stays constant; the only way to satisfy both is for the child's width to grow / shrink as the parent does. Useful for: search bars, full-width buttons, background fills, content areas that should fill available width while maintaining margins. The four single-axis constraints: Left (pin distance from left, keep width), Right (pin distance from right, keep width), Center (stay horizontally centered, keep width), Scale (resize width proportionally with parent). Left+Right is the 5th option specifically for stretching. Vertical axis works the same with Top, Bottom, Center, Top+Bottom (stretching), Scale. Combined: 5×5 = 25 possible constraint combinations; most common are Left+Top (default) and Left+Right+Top+Bottom (full stretch fill)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Centers it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Stretches child horizontally — maintains margin from both edges; width grows/shrinks with parent.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Designing a button whose width adapts to text length (short label = narrow; long label = wide). Constraints or Auto Layout?",
+      "choices": [
+        { "id": "a", "text": "Constraints." },
+        { "id": "b", "text": "Auto Layout. Constraints define how a CHILD behaves when PARENT resizes; they don't change the parent's size based on children. For a button that hugs its text content, you need the OPPOSITE — parent (the button background) sizes based on child (the text). That's Auto Layout: configure the button frame as Auto Layout with padding (16px horizontal, 8px vertical); the frame's width = text width + 32px automatically. Change text from 'Save' to 'Save and Continue,' button grows. Constraints can't express 'parent depends on child' relationships. The next module covers Auto Layout in depth. Common pattern: button is Auto Layout (hugs text); button container (parent of button) might use constraints if it has fixed-position decoration; Auto Layout handles the dynamic content sizing; constraints handle fixed-position overlays. Modern Figma designs use Auto Layout for most dynamic sizing; constraints for static positioning within Auto Layout frames." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Scale constraint." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto Layout — parent sizes based on children. Constraints handle child behavior in resizing parent, not the reverse.",
+      "points": 1
+    }
+  ]
+}

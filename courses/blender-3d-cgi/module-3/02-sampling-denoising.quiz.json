@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Sampling and denoising",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How does denoising save render time?",
+      "choices": [
+        { "id": "a", "text": "Magic." },
+        { "id": "b", "text": "Denoising (OIDN or OptiX) removes noise from the rendered image, faking the look of higher sample counts; this means you can render at lower samples + apply denoising to get a clean image faster than just raising samples. Without denoising: 4096 samples might be needed for a clean Cycles render — 60+ minutes per frame. With denoising: 256-512 samples + denoise produces similar visual quality — 5-10 minutes per frame. Often 6-10x speedup. Setup: Render Properties → Sampling → Denoising → enable. Pick OIDN (Open Image Denoise, Intel, CPU-based, high quality) or OptiX (Nvidia, GPU-accelerated, fast). The denoiser analyzes the noisy image + surface data (albedo, normals) and intelligently removes grain while preserving detail. The downside: aggressive denoising can smooth fine details (fabric weave, hair, surface micro-texture); test side-by-side denoised vs. raw if your scene has heavy fine detail. The Adaptive Sampling feature works alongside denoising: stops sampling pixels that have converged enough; saves additional time on smooth areas while denoiser handles the remaining noise. Combined defaults that work for most: 256-512 samples + Adaptive Sampling (noise threshold 0.01) + Denoising (OIDN) → clean Cycles renders at fraction of the time of raw 4096 samples. For animation: lower samples (128-256) + denoise; the 6-10x speedup compounds across thousands of frames into the difference between days of render time and months. Denoising is essentially mandatory for practical Cycles workflows in 2026." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Doesn't." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Denoising fakes higher sample counts. 256 + denoise ≈ 4096 raw. 6-10x speedup. Mandatory for practical Cycles. OIDN (CPU) or OptiX (Nvidia GPU).",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Cycles render has bright single-pixel artifacts (fireflies) randomly scattered. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Ignore them." },
+        { "id": "b", "text": "Enable light clamping. Render Properties → Light Paths → Clamping → set Direct Light and Indirect Light to a value like 10. These caps prevent Cycles from registering super-bright light rays (a direct sample of the sun visible through a tiny window; a specular reflection of a small bright light source on a glossy surface) as single-pixel super-bright values. Without clamping, occasional rays hit these extreme bright spots and produce the firefly artifacts — pixels much brighter than their neighbors, making the image speckled. With clamping at ~10: bright pixels are capped at that value; the overall look is preserved (small loss of dynamic range at extreme highlights, but most extreme highlights weren't perceptually meaningful anyway); fireflies eliminated. Setting too low (e.g., 1-2): visible loss of highlight detail; image looks 'flat.' Setting too high (e.g., 100): fireflies return. Sweet spot 5-15. Direct Light clamp: caps direct rays from lights. Indirect Light clamp: caps indirect bounce rays. Indirect typically has more fireflies (random small bright bounces); set Indirect lower than Direct (e.g., Direct=10, Indirect=5). Combined with: 1) More samples (helps but only marginally). 2) Denoising (cleans up remaining fireflies). 3) Larger light sources (small lights are firefly magnets; size them up). Fireflies are a classic Cycles artifact; clamping is the standard solution. Without it, scenes with caustics, small bright lights, or glossy materials produce frequent artifacts; with it, those same scenes render clean." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Lower samples." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable Light Path Clamping. Direct ~10, Indirect ~5. Caps super-bright sample values that create fireflies. Standard Cycles cleanup step.",
+      "points": 1
+    }
+  ]
+}

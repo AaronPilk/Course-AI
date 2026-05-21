@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Gameplay patterns",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best modern way to handle player input in UE5?",
+      "choices": [
+        { "id": "a", "text": "Tick + check key state." },
+        { "id": "b", "text": "Enhanced Input System — UE5's modern input framework that decouples input mapping from gameplay logic. Setup: 1) Define Input Actions (data assets representing 'what you can do' — Move, Jump, Look, Interact, Crouch, etc.). 2) Define Input Mapping Context (data asset listing which keys / buttons / gamepad axes trigger which Input Actions — e.g., 'W = Move forward, Space = Jump, E = Interact'). 3) In Player Controller: Add Input Mapping Context on BeginPlay. 4) In Character Blueprint: bind Input Action events (right-click → 'Enhanced Input Action IA_Move' event) → connect to movement logic. Benefits: 1) Decoupled mapping — change which key triggers Jump without touching gameplay code. 2) Cross-platform — same gameplay logic works for keyboard, mouse, gamepad, touch; just swap Input Mapping Context. 3) Rebinding — let players customize keys via UI; just change the mapping context. 4) Multiple contexts — different controls per situation (driving = vehicle controls; walking = character controls; menu = UI controls); swap context at runtime. 5) Input modifiers — built-in support for Hold, Tap, Double-Tap, Swizzle, etc. The legacy approach (axis mappings + action mappings in Project Settings) is deprecated for UE5 work; Enhanced Input is the path forward. The 'Tick + check key state' anti-pattern: polls input every frame; misses brief presses; doesn't handle gamepad / touch; verbose; performance cost. Pro UE5 projects use Enhanced Input throughout; don't fight it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Legacy axis mappings." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enhanced Input System — decoupled, cross-platform, rebindable. Input Actions + Input Mapping Context + bind in Character/Controller. Modern UE5 standard.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Have 20 different enemy types; each has health, takes damage, can die. Where should the health logic live?",
+      "choices": [
+        { "id": "a", "text": "Duplicate in each enemy." },
+        { "id": "b", "text": "HealthComponent (Blueprint Class: Actor Component). Build the health logic once: variables (CurrentHealth, MaxHealth), functions (TakeDamage, Heal, GetHealthPercent), Event Dispatcher (OnDeath), death handling logic. Attach the component to each of the 20 enemy actors (Details panel → +Component → HealthComponent). Each enemy now has a HealthComponent instance with full health logic; no duplication. Configure per-instance: enemy A has 100 HP; enemy B has 500 HP — just set MaxHealth on each instance differently. The component encapsulates: 1) Health state (CurrentHealth, MaxHealth as variables on the component). 2) Damage logic (TakeDamage function — applies damage, clamps, checks death). 3) Healing logic (Heal function). 4) Death event (OnDeath Event Dispatcher — fires when health reaches 0; subscribers handle death visuals / score / loot drops). 5) Helper functions (GetHealthPercent, IsAlive, IsCritical). The pattern: composition via components. Same approach for Inventory (InventoryComponent), AI (AIComponent), Stats (StatsComponent), Save data (SaveComponent). Each is reusable across any actor that needs that functionality; tunable per-instance; testable in isolation. Player also gets HealthComponent — same logic; consistent across game. Without components: 20 enemies × duplicated health logic = 20 places to fix bugs; 20 places with subtle inconsistencies; nightmare to maintain. With component: one place; consistent everywhere; easy to extend. UE5's component model is the architecture pattern; same in Unity (Components on GameObjects), Godot (Nodes). The 'inherit from massive base class' alternative is older + less flexible; modern game engines favor composition over inheritance." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Global function." }
+      ],
+      "correct_answer": "b",
+      "explanation": "HealthComponent (Actor Component). Build health logic once; attach to all 20 enemies + player. Composition over inheritance. Same pattern for Inventory, AI, Stats.",
+      "points": 1
+    }
+  ]
+}

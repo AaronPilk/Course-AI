@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Titles and Essential Graphics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's a MOGRT and why use one?",
+      "choices": [
+        { "id": "a", "text": "A typo." },
+        { "id": "b", "text": "Motion Graphics Template — a pre-built animated graphic (lower third, intro, transition, end card) packaged as a .mogrt file with adjustable properties (text, colors, fonts, scale, timing). Drag the .mogrt into Premiere's Essential Graphics panel, then drag into your timeline; select the clip and use Essential Graphics → Edit tab to customize the properties; the underlying animation runs automatically. Why: building motion graphics from scratch (keyframing every property) takes hours per piece; MOGRTs reduce this to minutes. Sources: 1) Adobe Stock (subscription includes thousands of MOGRTs). 2) Built-in (Premiere ships with some). 3) Third-party marketplaces (Envato, MotionElements) — paid packs $30-100 for 10-50 cohesive templates. 4) Custom — build in After Effects, export as MOGRT, use in Premiere (creator workflow for in-house templates). For YouTube channels, podcast shows, corporate content with consistent lower-thirds and intros, MOGRT packs are essential — every episode gets the same polished look without rebuilding. The customizable properties mean the same template works across episodes (different speaker name + title in lower third; different episode number in intro). Responsive design properties on MOGRTs handle scaling across resolutions (16:9 / 9:16 / 1:1 versions of the same template). The cost of buying a MOGRT pack vs. building motion graphics manually pays back in the first few uses." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "A new file format for video." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Motion Graphics Template. Pre-built animated graphic with adjustable properties. Saves hours vs. building from scratch. Source: Adobe Stock, Envato, custom AE.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Lower-third works on desktop preview but text is cropped off the right edge on a TV display. What went wrong?",
+      "choices": [
+        { "id": "a", "text": "Bad TV." },
+        { "id": "b", "text": "Text extended outside the title-safe zone. TVs (especially older ones, but even modern ones doing scaling/overscan) sometimes crop the outer 5-10% of the frame for various reasons (calibration overscan, broadcast standards, display margins). Pro practice: keep important text within the title-safe area (inner 80% of frame) and important visuals within action-safe (inner 90%). Premiere's title-safe overlay: right-click in program monitor → Safe Margins. Two visible rectangles appear; keep text inside the inner one. Fix: pull the text in from the right edge until it sits inside title-safe; verify visually by toggling Safe Margins on/off. For broadcast deliveries this is mandatory; FCC / Sky / BBC / Netflix all reject content with text outside safe zones. For web-only delivery (YouTube, Vimeo), the rules are looser but still respected by pro editors — viewers on smart TVs or older devices may still see cropping. The 80/90 rule is universal: 80% title-safe, 90% action-safe, 100% the actual canvas. Beyond cropping, edge text feels visually unbalanced; pulling it inward improves composition too. Modern displays mostly don't overscan, but the safety margin is cheap insurance. Adobe's templates respect safe zones by default; custom-built graphics need explicit verification." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Wrong codec." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Text outside title-safe zone (inner 80%). TVs crop edges. Keep text inside title-safe (right-click → Safe Margins). 80/90 rule: title-safe 80%, action-safe 90%.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Cross-platform & accessibility",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Why doesn't an iPhone app ported directly to iPad feel right?",
+      "choices": [
+        { "id": "a", "text": "Bigger screen." },
+        { "id": "b", "text": "Wastes the screen + ignores iPad conventions. iPad users expect: sidebars, multi-column layouts, multitasking support (Split View / Slide Over / Stage Manager at 320pt-1366pt widths), pointer / trackpad with hover effects, keyboard shortcuts, Apple Pencil where relevant, denser layouts using the space. A direct iPhone port shows a single column of content scaled to fit; gestures designed for one-thumb phones; no sidebar; no keyboard support — feels like a phone app accidentally on iPad. Users expect MORE on iPad, not the same. Solution: NavigationSplitView for adaptive sidebar+detail; conditional layouts via `horizontalSizeClass`; iPad-specific affordances. Apple's first-party iPad apps (Mail, Notes, Files) showcase the patterns. The 'iPad is a big iPhone' assumption was true in iOS 7; iPadOS is meaningfully its own platform now." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different OS." }
+      ],
+      "correct_answer": "b",
+      "explanation": "iPad expects sidebars + multi-column + multitasking + pointer + keyboard + Pencil. Not just scaled-up iPhone.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Mac app with no keyboard shortcuts. Mac power user reaction?",
+      "choices": [
+        { "id": "a", "text": "Fine." },
+        { "id": "b", "text": "Bad — Mac power users live by keyboard shortcuts; absence signals 'not a real Mac app' / 'iPad port masquerading.' Standard expectations: Cmd-W close window, Cmd-Q quit, Cmd-N new document, Cmd-S save, Cmd-Z undo, Cmd-, preferences, plus app-specific shortcuts for common actions. SwiftUI: `.keyboardShortcut(.return, modifiers: .command)`; menu bar items automatically expose shortcuts. Standard text-editing shortcuts (Cmd-A/C/V/X/Z) come free if using standard controls. Mac users will switch to competing apps that have shortcuts; complain in reviews; not recommend. Investment is modest — 10-20 shortcuts for common actions — impact on Mac credibility is significant. Apple's HIG: 'Provide keyboard shortcuts for common tasks.' Skipping = forfeiting power-user satisfaction; on Mac that's most of your engaged users." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Welcome it." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Mac power users live by shortcuts. Add standard (Cmd-W/Q/N/S/Z) + app-specific.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Why does iPad multitasking break hardcoded widths?",
+      "choices": [
+        { "id": "a", "text": "Performance." },
+        { "id": "b", "text": "iPad renders your app at variable widths depending on multitasking mode: Slide Over ~320pt, Split View 50/50 ~512pt, Split View 33/66 ~341pt or ~683pt, full-screen iPad Pro 1366pt. A hardcoded 600pt content area overflows at smaller widths; content clips; UI feels broken at all but the widest sizes. Fix: relative sizing (`frame(maxWidth: .infinity)` with padding), size-class checks for layout switches, GeometryReader to react to width, ViewThatFits for layout fallbacks. The 'iPad = 1024pt always' assumption broke in iOS 9 with Slide Over; in 2026 multitasking is heavy usage with Stage Manager adding even more variability. Test in simulator with Split View / Slide Over enabled + real iPad with Stage Manager. Hardcoded widths anywhere in iPad code is a smell; replace with relative or constrained sizing. Modern iPad apps are responsive across the full width range; users in multitasking expect it." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Battery." }
+      ],
+      "correct_answer": "b",
+      "explanation": "iPad renders 320-1366pt depending on multitasking. Use relative sizing + size classes + GeometryReader.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "App has swipe-to-delete gesture but no visible delete button. VoiceOver user impact?",
+      "choices": [
+        { "id": "a", "text": "Use a different gesture." },
+        { "id": "b", "text": "Can't delete. VoiceOver users navigate by swipe — but VoiceOver CAPTURES swipes for focus movement, not passed to the app. Any app gesture (swipe-to-delete, pinch-to-zoom, swipe-to-archive) is unreachable to VoiceOver users without a non-gesture alternative. Fix: expose actions via `.accessibilityActions { ... }` — VoiceOver users access via Rotor (rotate two fingers; pick action); they can perform without using the gesture. Apple's first-party apps do this routinely. Without accessibility actions, the gesture-based feature is missing for VoiceOver users. Same logic for Switch Control (can't perform gestures) and Voice Control (can perform via 'tap Delete' if labeled). Universal pattern: every gesture-based action should ALSO be accessible via a non-gesture path. Test with VoiceOver on; if you can't accomplish what sighted users can via gestures, accessibility gap." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Tap twice." }
+      ],
+      "correct_answer": "b",
+      "explanation": "VoiceOver captures swipes for focus. Expose actions via `.accessibilityActions`; VoiceOver users access via Rotor.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Highest-leverage single accessibility fix when time is limited?",
+      "choices": [
+        { "id": "a", "text": "Brand colors." },
+        { "id": "b", "text": "Accessibility labels on every interactive element + decorative-hiding for non-interactive images. Foundation of VoiceOver usability; without labels, screen-reader users can't use the app at all (VoiceOver announces 'button' / 'image' meaninglessly). Adding labels is mechanical but high-impact: walk every screen; for each Image / Icon / custom Button without text — add `.accessibilityLabel('Action description')`; for decorative elements add `.accessibilityHidden(true)`. SwiftUI standard Buttons with text labels are auto-handled; the gap is icon-only / custom views. A couple of hours turns 'app is invisible to VoiceOver users' into 'app is usable.' Other audit areas matter (Dynamic Type, contrast, motion) but labels are the biggest single delta. Order of fixes by ROI: labels → contrast → Dynamic Type adaptation → motion respect → assistive-tech testing. Each compounds the previous; labels are foundation." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Custom fonts." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Accessibility labels — foundation of VoiceOver usability; biggest single delta; mechanical to add.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "title": "Module 3 quiz: Physics, input, interactions",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "ForceMode for instant jump?",
+      "choices": [
+        { "id": "a", "text": "Force." },
+        { "id": "b", "text": "Impulse. Applies one-shot push; mass-aware (heavier characters jump less per same force). Force is continuous over time (good for sustained thrusters, wind); VelocityChange directly modifies velocity (mass-independent; instant); Acceleration is continuous + mass-independent. For jump: `rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);` — one-shot upward push. Alternative for consistent-height jump regardless of mass: directly set `rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);`. Pick by gameplay feel: physics-accurate (Impulse) or arcade-precise (velocity set). For explosions: AddExplosionForce method (radius + force). For knockback: AddForce(direction * force, Impulse).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Impulse — one-shot push, mass-aware. Force = continuous; VelocityChange = direct velocity (mass-independent); Acceleration = continuous mass-independent.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Bullets should hit enemies + walls but NOT pickups or other bullets. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Tag checks." },
+        { "id": "b", "text": "Layer-based Collision Matrix. Project Settings → Physics → Layer Collision Matrix → toggle which pairs collide. Bullets vs Enemies = checked; Bullets vs Walls = checked; Bullets vs Pickups = unchecked; Bullets vs Bullets = unchecked. Physics engine filters at system level; no callbacks for filtered pairs; faster than tag-checking in collision events. Assign layers to GameObjects (Inspector top → Layer dropdown). For raycasting / spherecasting: pass LayerMask parameter to filter checks. Universal Unity optimization; same in Unreal (Collision Channels).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Layer-based Collision Matrix. Set Bullets/Enemies/Walls/Pickups layers; toggle interactions in Project Settings. Physics engine filters; faster than tag checks.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Modern Unity input handling?",
+      "choices": [
+        { "id": "a", "text": "Legacy Input class." },
+        { "id": "b", "text": "New Input System (package). Cross-platform + rebindable + action-based. Define Input Actions asset with action maps (Player / UI / Vehicle), actions (Move / Jump / Look), and bindings (WASD + LeftStick → Move; Space + ButtonSouth → Jump). Gameplay code reads actions; doesn't know physical inputs. Benefits: cross-platform (auto device detection), rebinding (settings UI), composite bindings (WASD = 2D Vector), multiple simultaneous devices, touch + VR support, event-driven. Install: Package Manager → Input System. Legacy Input class is deprecated for new projects; lacks rebinding + cross-platform features. Pro Unity 2026 input: New Input System exclusively.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "New Input System (package). Cross-platform, rebindable, action-based, event-driven. Replaces legacy Input class. Modern Unity 2026 standard.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "First-person 'press E to interact' on object player looks at. Implementation?",
+      "choices": [
+        { "id": "a", "text": "Click anywhere." },
+        { "id": "b", "text": "Raycast from camera forward + IInteractable interface. Each frame in Update: Raycast from playerCamera.position in playerCamera.forward direction with LayerMask 'Interactable' + max interactDistance. If hit: show 'Press E' prompt; on Interact action press: call hit.collider.GetComponent<IInteractable>()?.Interact(). Each interactable object (Door, Chest, NPC, LightSwitch) implements IInteractable.Interact() with its own behavior. Player code doesn't know specific class; calls interface; polymorphic dispatch handles correctly. Combined with LayerMask filtering: Raycast only hits Interactable-layer objects; ignores walls, floor, etc. Pattern is universal first-person interaction; same in Unreal (Line Trace + IInteractable), Godot.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Raycast from camera forward + IInteractable interface. LayerMask filters interactables; interface enables polymorphism. Universal first-person interaction pattern.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why use FixedUpdate for physics?",
+      "choices": [
+        { "id": "a", "text": "Faster." },
+        { "id": "b", "text": "Consistent timing for stable physics simulation. FixedUpdate runs at fixed intervals (default 50/sec); physics calculations need predictable time steps. Update fires irregularly based on visual frame rate (60-120+ FPS variable); using Update for physics produces frame-rate-dependent behavior (60 FPS = 1x force; 120 FPS = 2x force; physics objects act differently per device). FixedUpdate guarantees same physics behavior regardless of visual FPS. Configure interval: Project Settings → Time → Fixed Timestep (default 0.02 = 50Hz). Higher Hz = more accurate but more CPU. Pattern: `void FixedUpdate() { rigidbody.AddForce(force); }`. Universal across game engines: Unreal (Physics Tick vs. Tick), Godot (physics_process vs. process). Pro Unity habit: physics → FixedUpdate; visual / input → Update; post-physics camera → LateUpdate.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Consistent timing for stable physics. FixedUpdate runs at fixed 50Hz intervals; Update is frame-rate dependent. Physics in Update = framerate-dependent behavior. Universal pattern.",
+      "points": 1
+    }
+  ]
+}

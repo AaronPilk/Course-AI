@@ -1,0 +1,76 @@
+{
+  "title": "Module 5 quiz: Prototyping, handoff, system maintenance",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Smart animate interpolates layers across frames based on what?",
+      "choices": [
+        { "id": "a", "text": "Color." },
+        { "id": "b", "text": "Matching layer names. A layer named 'Card/Featured' in Frame 1 with one position/size, paired with a layer of the same name 'Card/Featured' in Frame 2 with a different position/size, will be interpolated by Figma — smooth animation of the property differences (position, size, fill, opacity, corner radius). Different names = Smart animate treats them as separate; source fades out, destination fades in (basically dissolve). The key discipline: rename consistently. Common pattern: design source state → duplicate frame → modify positions, sizes, contents — but KEEP the layer names identical for elements that should animate. Result: a single click connection with Smart animate produces app-quality transitions without writing animation code. Master Smart animate and prototypes feel polished; ignore matching names and animations look broken. Used for: card expansion, modal entrances, hamburger menu opens, hero transitions, state changes (default → hover → pressed on buttons via component variants). Pair with timing controls (200-400ms typical, ease-out curve) for production feel." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Position." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Matching layer names. Same name → Figma interpolates property changes. Different names → dissolve. Consistent naming = smooth animations.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Engineer says 'I can't tell which hex you used for the button background.' The design uses a variable `color/brand/primary`. What's the fix?",
+      "choices": [
+        { "id": "a", "text": "Tell engineer the hex." },
+        { "id": "b", "text": "Show engineer Dev Mode. Toggle Dev Mode (Shift+D); select the button; the code snippet shows the variable name (`background: var(--color-brand-primary)`), not just the resolved hex. The engineer can now align to their CSS variable / Tailwind config of the same name. If the engineer doesn't have Dev Mode access (older permission tier), share file with 'Can view dev resources' permission. Long-term fix: ensure engineering's CSS variables / Tailwind config use the same naming as Figma variables (`--color-brand-primary` in CSS, `color/brand/primary` in Figma) — set up the token pipeline (Tokens Studio + Style Dictionary) so Figma variables auto-export to CSS. Then 'which hex' is the wrong question — the answer is always 'the variable name; resolve at runtime.' The engineer's confusion is a symptom of token alignment gaps: design speaks variables; engineering speaks hex; pipeline is missing or weak. Quick fix: Dev Mode + pointer to variable. Systemic fix: token pipeline + alignment + Dev Mode access for engineers. The hex value is the LAST thing the engineer should care about — they should care about the token name, which gives them flexibility to flip themes, brands, modes." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Remove the variable." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Dev Mode shows variable name in snippets. Long-term: align Figma + code variables; set up token pipeline. Engineer should think tokens, not hex.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "When should you use Figma branches?",
+      "choices": [
+        { "id": "a", "text": "Never." },
+        { "id": "b", "text": "For experimental or risky changes to a file that consumers depend on, multi-designer collaboration on a single feature without stepping on each other, or speculative work that may not ship. Branches are parallel copies of main; edits don't affect main; review + merge when ready. Common use cases: refactoring the Button component (don't want product designers seeing half-done refactor); multiple designers on a feature redesign (each in own branch, merge); speculative explorations (try a new direction, discard if not pursued). Without branching, big changes on main disrupt active product work and library consumers; with branching, main stays stable; branches contain experiments. Process mirrors Git: feature branches, review before merge, archive when done. Don't branch for trivial work (10-minute tweak) — overhead exceeds benefit. Threshold: a change that takes > a day OR affects > 10 instances/components OR could break consumers is branch-worthy. For team design systems with active product consumers, branching is essential — without it, every component refactor risks breaking 30+ consumer files simultaneously." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Always." }
+      ],
+      "correct_answer": "b",
+      "explanation": "For experimental / risky / multi-designer / speculative changes. Isolate; review; merge. Threshold: > day's work or > 10 instances affected.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Designer marks a component 'Ready for dev' but the spec is just visual frames — no annotations, no behavior notes, no edge cases. Engineer ships wrong implementation. Whose fault?",
+      "choices": [
+        { "id": "a", "text": "Engineer's." },
+        { "id": "b", "text": "Designer's — 'Ready for dev' should mean handoff is complete, not just visually finalized. A complete handoff includes: 1) Visual designs for every state (default, hover, focus, active, disabled, loading, error, empty, overflow). 2) Interaction spec (annotations for animations, transitions, timing). 3) Component spec (variants + properties documented with descriptions). 4) Token references (which variables to use, visible in Dev Mode). 5) Assets (icons exported, correct format/scale). 6) Edge cases (long text, no data, slow network, permission denied). 7) Behavior outside the component (when does this appear? what triggers it? what happens on error?). 'Visual only' is the most common handoff gap. The engineer reasonably interprets the visuals, but without behavior spec they MUST guess — sometimes right, sometimes wrong. Fix process: 'Ready for dev' has a checklist; designer can't mark it ready without checking off all items. Engineering reviews the handoff (in Dev Mode) and signs off before designer flips the status. Or: dev partner pairs with designer during the design phase so handoff is shared understanding. The 'designer ships visuals, engineer interprets behavior' pattern produces consistent gaps; bake the spec into the handoff process to close them." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Both blameless." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Designer's. 'Ready for dev' needs visuals + states + annotations + tokens + assets + edge cases — not just visuals. Process should checklist this.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "What does a healthy design system have that an unhealthy one lacks?",
+      "choices": [
+        { "id": "a", "text": "More colors." },
+        { "id": "b", "text": "Ownership, governance, adoption, documentation, and rituals. **Ownership** — a clear team/person responsible for the system, not 'we all own it' which means nobody. **Governance** — process for adding components (proposed → reviewed → built → released); naming conventions enforced; deprecation policy in place; semver versioning. **Adoption** — consumers actually use it; coverage metrics tracked; gaps closed via roadmap; new designers onboarded systematically. **Documentation** — Figma descriptions + Storybook + internal docs site; designers and engineers find what they need. **Rituals** — office hours, weekly reviews, quarterly health checks, release notes; the system stays alive through deliberate practice. Unhealthy systems lack one or more of these: ownership = ambiguous, governance = ad-hoc additions creating sprawl, adoption = 20% coverage, documentation = nonexistent, rituals = abandoned. The signs of decay: 1000+ variables nobody uses; 5 buttons named differently doing the same thing; designers detaching instances because the system doesn't fit; engineers asking 'what's the hex for primary?' because tokens don't reach them. Healthy systems compound value for years; unhealthy systems get rebuilt every 2-3 years (round 2, 3, 4)." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Ownership + governance + adoption + documentation + rituals. Each closes a gap; unhealthy systems lack ≥1. Healthy systems compound value; unhealthy get rebuilt.",
+      "points": 1
+    }
+  ]
+}

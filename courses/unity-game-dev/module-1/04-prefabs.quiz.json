@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Prefabs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's a Prefab Variant?",
+      "choices": [
+        { "id": "a", "text": "A copy." },
+        { "id": "b", "text": "A specialized version of a Prefab that inherits from a parent Prefab and can override specific properties. Creates a hierarchical Prefab system — base Prefab + variants that share core behavior but differ in specifics. Example: base Enemy Prefab (mesh + collider + Health component + EnemyAI script with default values). Variants: Goblin (mesh=goblin model, Health=50, color=green), Skeleton (mesh=skeleton model, Health=30, animation=undead, no audio breathing), Bandit (mesh=bandit model, Health=100, weapon=sword, drops gold). All inherit from base Enemy; only override their specific differences. Edit base Prefab → all variants update (e.g., add new component → all enemies get it). Edit variant only → only that variant changes. Create variant: right-click Prefab → Create → Prefab Variant. Use cases: 1) Enemy families (base enemy + N variants per type / region). 2) UI button variants (base button + Primary/Secondary/Danger variants overriding colors). 3) Building variants (base house + Stone/Wood/Concrete variants overriding material + LOD). 4) Weapon variants (base weapon + Sword/Axe/Bow overriding mesh + stats + animations). 5) Particle effect variants (base impact + Fire/Water/Sparkle variants overriding emitter settings). Benefits: 1) Inheritance — share common changes across variants. 2) Override granularity — change only what should differ. 3) Maintainability — base updates propagate; variant-specific tweaks isolated. 4) Designer-friendly — non-coders create variants via Inspector. The hierarchical Prefab system in Unity is analogous to Class inheritance in code but at the asset level; same pattern provides structure + flexibility. Pro Unity workflow: identify shared structure → make base Prefab → make variants for specific cases → maintain base; iterate variants. Avoid duplicating Prefabs (which produces inconsistent copies); use variants for clean inheritance." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Different asset type." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Specialized version of a Prefab that inherits + overrides specific properties. Base + variants for enemy families, UI buttons, weapons, buildings. Hierarchical Prefab system.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Game spawns 100s of bullets per second; performance drops due to Instantiate / Destroy churn. Fix?",
+      "choices": [
+        { "id": "a", "text": "Fewer bullets." },
+        { "id": "b", "text": "Object pooling. Pre-instantiate a pool of N bullets at game start (e.g., 100 bullet GameObjects); deactivate them; reactivate when needed for shooting; deactivate again when 'destroyed' (instead of Destroy). Avoids Instantiate / Destroy cycle — Unity's garbage collector triggers from frequent allocations + deallocations; spikes cause frame drops. Pool pattern: 1) On Awake: instantiate N bullets; SetActive(false) on each; store in List<GameObject>. 2) On fire: find first inactive bullet in pool; SetActive(true); set position/rotation; apply force. 3) Bullet's lifetime ends (hit target, timeout, off-screen): SetActive(false) instead of Destroy; return to pool. 4) Subsequent shots reuse the same GameObjects; no new instantiations. Result: zero allocation per shot after initial pool setup; GC pressure eliminated; smooth performance even at 1000s of shots/sec. Unity provides built-in ObjectPool<T> class (UnityEngine.Pool) for automated pooling: `private ObjectPool<Bullet> pool = new ObjectPool<Bullet>(CreateBullet, OnGet, OnRelease, OnDestroy, ...);`. Or custom implementation with List. Pool size considerations: 1) Pool small enough to limit memory. 2) Pool large enough that you don't exhaust + need runtime instantiation. 3) Optionally grow pool dynamically if exhausted (compromise). Common pooling targets in games: bullets / projectiles, particle effects, enemies (in waves), UI popups (damage numbers), audio sources. Any frequently-spawned + destroyed object benefits. The 'Instantiate + Destroy' anti-pattern is the #1 performance issue in shooting / action games; object pooling solves it cleanly. Pro Unity performance: identify pooling candidates; implement pools; profile improvement (Unity Profiler shows GC.Alloc reduction). Same pattern applies in Unreal (UE has built-in object pools); universal game engine optimization." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Skip bullets." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Object pooling. Pre-instantiate N bullets; deactivate / reactivate vs. Instantiate / Destroy. Avoids GC pressure. Unity ObjectPool<T> or custom List. Standard optimization for frequent spawning.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Editor interface",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Default UE5 viewport navigation mode for level design?",
+      "choices": [
+        { "id": "a", "text": "Only mouse." },
+        { "id": "b", "text": "Right-click + WASD (Fly mode). Hold right-click to engage; W = forward, A = left, S = back, D = right, Q = down, E = up; right-mouse-drag = look around. Shift modifier = move faster. Scroll wheel = change movement speed. This is the game-style FPS navigation that makes Unreal's viewport feel like walking through a game world; natural for level design where you want to experience the scene at human scale. Alternative: Orbit mode (Alt + left-click drag = orbit around focus; Alt + right-click = zoom; Alt + middle-click = pan) — familiar from Maya / Blender; good for inspecting individual models from all angles. Most level designers use Fly mode for general work; Orbit for inspecting specific assets. Master Fly: lets you 'walk' the player path through your level, evaluate scale, find sightline issues, test framing. Master Orbit: for inspecting characters / props from multiple angles for visual consistency. Switch effortlessly between them — same scene; different navigation purpose. Other useful viewport shortcuts: F = focus (frame selected actor); G = game view (hide editor UI in viewport, just see the game); End = drop to floor; Ctrl+P = pilot actor (camera follows that actor). The WASD + right-click navigation is shared across game engines (Unreal, Unity, Godot); learn it once; transfers across tools." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Arrow keys only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Right-click + WASD = Fly mode (FPS-style navigation). Right-click + drag to look. Shift to move faster. Scroll wheel changes movement speed. Master for level design.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Level has 200 actors; finding a specific one in viewport is impossible. Best approach?",
+      "choices": [
+        { "id": "a", "text": "Click randomly." },
+        { "id": "b", "text": "Outliner panel — hierarchical list of all actors in the level with search + folder organization. Type the actor's name in the search box at top of Outliner → list filters to matches. Click in Outliner = select in viewport; F to frame. Far faster than hunting in the 3D view, especially in large/dense scenes. Outliner features: 1) Folders — right-click → Create Folder, drag actors into folders for organization (Lights, Props, Characters, Triggers, etc.). 2) Search — top of panel. 3) Visibility / lock toggles per actor — eye icon to hide; lock icon to prevent selection. 4) Hierarchical view — actors attached to other actors appear as children. 5) Filter by class (right-click → Show Only). Pro level design relies on Outliner organization religiously: a 200-actor scene without Outliner folders is unmanageable; with folders, navigable. Establish folder convention early in level: SM_ for static meshes, BP_ for blueprints, FX_ for effects, etc. Naming conventions + folder organization compound over the project. Other navigation aids: World Outliner search supports class filters ('Light', 'Mesh'), property filters. For very large worlds (1000+ actors): World Partition (Module 3) divides into spatial cells; Outliner shows what's currently streamed. Without Outliner, scenes become impenetrable; with it, even huge worlds are navigable." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Restart level." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Outliner panel: hierarchical list + search + folders + filters. Search by name; click selects in viewport. Essential for navigating dense scenes.",
+      "points": 1
+    }
+  ]
+}

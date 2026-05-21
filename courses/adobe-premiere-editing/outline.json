@@ -1,0 +1,71 @@
+{
+  "slug": "adobe-premiere-editing",
+  "name": "Adobe Premiere",
+  "title": "Adobe Premiere & Content Editing Systems",
+  "subtitle": "Production-grade video editing — from raw footage to polished cut.",
+  "category": "Creative",
+  "level": "Intermediate",
+  "estimated_hours": 6,
+  "summary": "Adobe Premiere Pro is the dominant pro video editor in 2026. This course covers the editor end-to-end: project setup, ingest and organization, cutting techniques, audio and color, motion graphics integration, export pipelines, and the editor's day-to-day workflow. Practical patterns from documentary, YouTube, social, narrative, and commercial editors.",
+  "brand": {
+    "logo": "/brands/adobe-premiere-editing.svg",
+    "gradient": ["#9999FF", "#5C57FF"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "Premiere foundations",
+      "objective": "Set up projects right; ingest and organize footage; navigate the interface.",
+      "lessons": [
+        { "position": 1, "title": "Workspace and project setup" },
+        { "position": 2, "title": "Importing and organizing media" },
+        { "position": 3, "title": "Sequences, settings, and the timeline" },
+        { "position": 4, "title": "Proxies and performance" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Cutting and editing techniques",
+      "objective": "Master the timeline tools that pro editors live by.",
+      "lessons": [
+        { "position": 1, "title": "Source/program monitor and three-point editing" },
+        { "position": 2, "title": "The blade, ripple, and rolling edits" },
+        { "position": 3, "title": "J-cuts, L-cuts, and the rhythm of dialogue" },
+        { "position": 4, "title": "Multicam editing" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Audio for video",
+      "objective": "Make your videos sound as good as they look.",
+      "lessons": [
+        { "position": 1, "title": "Audio tracks, levels, and the mixer" },
+        { "position": 2, "title": "Essential Sound panel — dialogue, music, ambience, SFX" },
+        { "position": 3, "title": "Cleaning audio: noise, hum, plosives" },
+        { "position": 4, "title": "Music and sync; the rhythm question" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Color and visual polish",
+      "objective": "Move beyond raw footage to a graded, intentional look.",
+      "lessons": [
+        { "position": 1, "title": "Lumetri scopes and the color workflow" },
+        { "position": 2, "title": "Primary correction: white balance, contrast, saturation" },
+        { "position": 3, "title": "Secondary grading and LUTs" },
+        { "position": 4, "title": "Titles, lower thirds, and Essential Graphics" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Workflow, integration, and export",
+      "objective": "Ship the finished video; integrate with the Adobe pipeline; sustain the editor's craft.",
+      "lessons": [
+        { "position": 1, "title": "After Effects roundtripping via Dynamic Link" },
+        { "position": 2, "title": "Export presets and platform delivery" },
+        { "position": 3, "title": "Team Projects and collaborative editing" },
+        { "position": 4, "title": "The editor's mindset and craft" }
+      ]
+    }
+  ]
+}

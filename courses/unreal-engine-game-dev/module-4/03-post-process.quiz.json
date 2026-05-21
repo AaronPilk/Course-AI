@@ -1,0 +1,34 @@
+{
+  "title": "Quick check: Post-process volumes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How do you make a cave area feel darker + cooler than the rest of the level?",
+      "choices": [
+        { "id": "a", "text": "Different level." },
+        { "id": "b", "text": "Place a Post Process Volume covering the cave area; configure its parameters (lower exposure, blue temperature tint, more vignette, darker shadows). When the player camera enters the volume, those post-process effects apply; outside the cave, the global / outdoor Post Process Volume applies. Setup: 1) Place Actors → Volumes → Post Process Volume. 2) Position + scale to enclose the cave. 3) Settings: Color Grading → Temperature lower (cooler, ~5000K for slight blue); Exposure → lower (-1 to -2 stops); Vignette → higher intensity; Color Grading Shadows → push slightly toward blue. 4) Optional: Blend Weight = 1.0 (full effect inside); Blend Radius = 200 (smooth transition at boundary). 5) Test in PIE: walk into cave; effects transition smoothly. Multiple post-process volumes layer via Priority — outdoor volume Priority 0 (global, unbound); cave volume Priority 5 (overrides inside cave); deep cave secret area Priority 10 (overrides cave inside that sub-area). Each volume's Override toggles determine which parameters it changes — cave overrides Temperature + Exposure + Vignette; doesn't touch Bloom or DoF (those stay at parent's values). The Blend Weight enables partial effects (50% of cave look applied with smooth transition). For dynamic content: change post-process via Blueprint (Set Post Process Settings on the volume) — e.g., damage flash, slow-motion effect, hallucination scenes. Pro environment artists use Post Process Volumes per region (per gameplay area, per emotional beat, per lighting scenario) to control mood without separate levels. The global → per-area volume pattern is one of UE5's foundational atmospheric design tools." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Change lighting only." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Post Process Volume enclosing the cave with cooler temperature, lower exposure, more vignette. Higher Priority overrides global volume. Blend smoothly at boundary.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Render looks washed-out, lacks cinematic punch. Bloom is off; colors flat. Fix?",
+      "choices": [
+        { "id": "a", "text": "Different mesh textures." },
+        { "id": "b", "text": "Enable + tune key post-processing effects via global Post Process Volume. Setup: 1) Place Unbound Post Process Volume (covers entire level). 2) Bloom → Intensity 0.5-1.0; gives bright pixels a soft halo (lights look bright, sunlit edges glow). 3) Color Grading → Saturation 1.1 (boost colors), Contrast 1.1 (deepen contrast). 4) Color Grading wheels → Shadows toward warm orange + Highlights toward cool blue (teal-and-orange cinematic look). 5) Vignette → Intensity 0.4 (subtle dark edges focusing attention to center). 6) Auto Exposure → Method Manual + Bias 0 (consistent exposure across scene; auto-exposure can be unpredictable for cinematic stills). 7) Film Grain → optional Intensity 0.1-0.2 for film aesthetic. 8) Tone Mapper → Filmic / ACES (default; preserves highlights). Result: render feels cinematic instead of washed-out. The same effects film colorists apply in DaVinci Resolve / Premiere — bloom, color grade, vignette, grain. Without post-processing, even technically-perfect renders look like CGI demos rather than film / game cinematic shots. Add gradually + iterate: enable one effect; tune to taste; enable next. Avoid over-applying — heavy bloom + heavy vignette + heavy grain = stylized but tiring. The cinematic look is subtle accumulation: bloom 0.5, contrast 1.1, vignette 0.4, slight color shift = feels graded. For specific looks (matching a film reference): use LUTs (Look-Up Tables); load a LUT into Color Grading; instant style. Pro UE5 visual workflow: 1) Light the scene technically correctly. 2) Add post-processing layer. 3) Reference real film / game cinematic shots; iterate to match. 4) Tune per platform (lower quality on mobile/console; full on PC). The 'render looks flat' problem is universally solved in post-processing." },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Bigger render." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Enable Post Process Volume effects: Bloom + Color Grading (saturation, contrast, warm shadows / cool highlights) + Vignette + Tone Mapper. Cinematic post-processing transforms flat → graded.",
+      "points": 1
+    }
+  ]
+}
