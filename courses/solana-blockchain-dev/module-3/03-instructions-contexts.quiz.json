@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Instructions and contexts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Emit event for client?",
+      "choices": [
+        {"id": "a", "text": "Log only."},
+        {"id": "b", "text": "#[event] struct PurchaseEvent {...} + emit!(PurchaseEvent { ... }) in instruction. Clients subscribe via program.addEventListener. Logged to tx logs; structured event data."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "#[event] + emit! macro for typed client events.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Time-based logic?",
+      "choices": [
+        {"id": "a", "text": "Pass timestamp."},
+        {"id": "b", "text": "let now = Clock::get()?.unix_timestamp. Solana Clock sysvar provides on-chain time. Validate require!(now < expiry, MyError::Expired). Don't trust client-passed timestamps."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Clock::get() sysvar for trusted on-chain time.",
+      "points": 1
+    }
+  ]
+}

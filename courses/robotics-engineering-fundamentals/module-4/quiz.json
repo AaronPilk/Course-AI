@@ -1,0 +1,61 @@
+{
+  "title": "Module 4 quiz: Motion + control",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "6-DOF arm planning?",
+      "choices": [
+        {"id": "a", "text": "Grid A*."},
+        {"id": "b", "text": "RRT/RRT* sampling-based via MoveIt 2 + OMPL. Grid infeasible in high-dim C-space. RRT* asymptotically optimal. CHOMP/TrajOpt for smoothness."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RRT* / OMPL for high-dim planning.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Mobile nav stack?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "Nav2: global planner (SmacPlanner A*) + local planner (DWB/MPPI) + costmaps + recovery behaviors. ROS 2 standard."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Nav2 standard ROS 2 mobile stack.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "PID purpose?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Closed-loop control. u = Kp×e + Ki×∫e + Kd×de/dt. P (current error) + I (eliminate offset) + D (damp). Tune via Ziegler-Nichols. Anti-windup on saturation."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PID = P + I + D feedback control.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Smooth trajectory?",
+      "choices": [
+        {"id": "a", "text": "Linear."},
+        {"id": "b", "text": "Trapezoidal velocity profile (accel + cruise + decel) for industrial. S-curve for jerk-limited (smoother motor wear). Quintic polynomial for smooth jerk. MoveIt time-parameterization handles automatically."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Trapezoidal / S-curve / quintic profiles.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Hard manipulation task?",
+      "choices": [
+        {"id": "a", "text": "Classical."},
+        {"id": "b", "text": "RL (PPO/SAC) trained in Isaac Gym with 1000+ parallel envs + domain randomization for sim2real. Imitation learning (behavior cloning + DAgger) bootstraps from demos. VLA foundation models emerging."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RL + imitation + sim2real for hard manipulation.",
+      "points": 1
+    }
+  ]
+}

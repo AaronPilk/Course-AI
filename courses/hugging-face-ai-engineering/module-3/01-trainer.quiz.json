@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Trainer API",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Typical learning rate for fine-tuning?",
+      "choices": [
+        { "id": "a", "text": "1.0" },
+        { "id": "b", "text": "1e-5 to 5e-5 (0.00001 to 0.00005). Fine-tuning needs much lower learning rate than training from scratch — too high catastrophically forgets pre-training. Common values: 2e-5 (BERT classification fine-tuning), 5e-5 (T5 / smaller models), 1e-4 (LoRA fine-tuning since only adapter trained). For full fine-tuning: 1e-5 to 5e-5. For LoRA / PEFT: 1e-4 to 5e-4. For from-scratch: 1e-3 to 1e-4. Start with proven values for your model + task; tune from there. Symptoms of too-high LR: training loss spikes, model output gibberish, validation accuracy drops below pre-training baseline. Symptoms of too-low LR: training loss barely moves, takes forever to converge. Use warmup_steps (typically 500-1000) for gradual LR increase at start; prevents early instability. Use weight_decay (typically 0.01) for regularization. Combined: warmup → main LR → optional decay. Pro habit: 1) Pick proven LR for your task. 2) Train short run + observe loss curves. 3) Adjust if too high (NaN losses) or too low (slow progress). 4) Use learning rate finder if uncertain.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "1e-5 to 5e-5 for full fine-tuning. Too high = catastrophic forgetting. LoRA can use higher (1e-4 to 5e-4). Use warmup + weight decay.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Fine-tuning 7B model; OOM on 24 GB GPU even with batch size 1. Options?",
+      "choices": [
+        { "id": "a", "text": "Smaller model." },
+        { "id": "b", "text": "Use gradient accumulation + mixed precision + gradient checkpointing + LoRA. Full fine-tuning 7B model = need ~50+ GB VRAM for full precision (model + gradients + optimizer states + activations). 24 GB insufficient. Options: 1) Mixed precision (fp16/bf16) — halves memory; might still be too much. 2) Gradient accumulation — effective larger batch without VRAM cost (batch_size=1, gradient_accumulation_steps=16 = effective batch 16). 3) Gradient checkpointing — recomputes activations; trades compute for memory; 50% memory reduction; ~30% slower. 4) Optimizer offloading (DeepSpeed Zero) — optimizer states to CPU. 5) LoRA / PEFT (Module 3 Lesson 2) — only train small adapter; full model frozen; 5-10 GB total. LoRA is the practical winner for consumer GPU + 7B model: keeps most parameters frozen; trains tiny adapter; fits 24 GB easily. Code: load model + add LoRA adapters via peft library; train normally; save tiny adapter. 95% of fine-tuning workflows in 2026 use LoRA / QLoRA for this reason. Full fine-tuning reserved for large compute budgets (cloud A100/H100 multi-GPU). Combined: QLoRA (4-bit quantized base + LoRA adapter) fits even 70B models on single 24 GB GPU — current SOTA for consumer fine-tuning.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradient accumulation + mixed precision + gradient checkpointing + LoRA (or QLoRA). LoRA is practical winner — only train adapter; full model frozen.",
+      "points": 1
+    }
+  ]
+}

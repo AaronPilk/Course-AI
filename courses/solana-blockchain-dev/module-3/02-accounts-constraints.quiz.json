@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Constraints",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Verify cross-account ownership?",
+      "choices": [
+        {"id": "a", "text": "Custom code."},
+        {"id": "b", "text": "#[account(has_one = authority)] on the account; pub authority: Signer<'info> as separate field. Anchor verifies account.authority == authority.key() automatically. Cleaner than explicit constraint."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "has_one = field for cross-account ownership.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Standard token account per user?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Associated Token Account (ATA): PDA derived from (owner, mint). associated_token::mint = mint + associated_token::authority = user constraints. Deterministic per (owner, mint) — recoverable + wallet-standard."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATA = PDA per (owner, mint) pair = wallet standard.",
+      "points": 1
+    }
+  ]
+}

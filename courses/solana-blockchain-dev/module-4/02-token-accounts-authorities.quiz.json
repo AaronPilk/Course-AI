@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Authorities",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Program-controlled vault?",
+      "choices": [
+        {"id": "a", "text": "Keypair stored."},
+        {"id": "b", "text": "PDA token account: token::mint = mint, token::authority = vault_authority where vault_authority is a PDA derived by your program. PDA signs withdrawals via new_with_signer + seeds. No private key needed."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PDA as vault authority; program signs via seeds.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Non-custodial DEX integration?",
+      "choices": [
+        {"id": "a", "text": "Custody funds."},
+        {"id": "b", "text": "Delegate pattern: user calls token::approve granting DEX PDA spending authority up to max amount. DEX swaps without taking custody. User revokes anytime. Standard for Jupiter, Orca, Phoenix."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Approve pattern = non-custodial spending.",
+      "points": 1
+    }
+  ]
+}

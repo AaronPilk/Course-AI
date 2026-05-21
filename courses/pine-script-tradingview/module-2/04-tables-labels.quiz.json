@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Tables and labels",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Avoid creating new table every bar?",
+      "choices": [
+        {"id": "a", "text": "Hope."},
+        {"id": "b", "text": "var table info = table.new(...) + update cells inside `if barstate.islast`. `var` declares once; islast updates only on last bar. Prevents performance + drawing-count issues."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "var + barstate.islast for table persistence.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Format float for table cell?",
+      "choices": [
+        {"id": "a", "text": "Cast."},
+        {"id": "b", "text": "str.tostring(close, \"#.##\") for fixed decimals. Or str.format(\"Price: {0}, RSI: {1}\", price, rsi) for templates."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "str.tostring with format string; str.format for templates.",
+      "points": 1
+    }
+  ]
+}

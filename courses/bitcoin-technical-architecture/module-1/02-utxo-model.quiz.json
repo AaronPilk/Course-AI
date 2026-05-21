@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: UTXO model",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bitcoin wallet balance?",
+      "choices": [
+        {"id": "a", "text": "Account balance."},
+        {"id": "b", "text": "Sum of UTXOs you can spend. Bitcoin has no account balances — only Unspent Transaction Outputs. Spending = consume input UTXOs, create output UTXOs. Stateless; parallelizable."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "UTXO model: balance = sum of spendable outputs.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Backup HD wallet?",
+      "choices": [
+        {"id": "a", "text": "Each address."},
+        {"id": "b", "text": "Mnemonic phrase (BIP39): 12-24 words encode random entropy. Master seed → unlimited child addresses via BIP32 HD derivation. Backup mnemonic on metal plate; protect offline. Lose mnemonic = lose all funds forever."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Mnemonic = root of all wallet addresses.",
+      "points": 1
+    }
+  ]
+}

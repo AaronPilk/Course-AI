@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: PEFT and LoRA",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "What's LoRA?",
+      "choices": [
+        {"id": "a", "text": "A model."},
+        {"id": "b", "text": "Low-Rank Adaptation — adds small adapter matrices to each layer; trains only 0.1-1% of parameters while keeping base frozen. Configure via LoraConfig: rank (r), alpha, target_modules. QLoRA combines 4-bit quantized base + LoRA = fine-tune 70B on single GPU. Standard for efficient fine-tuning 2026."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Low-Rank Adaptation. Trains 0.1-1% of params via small adapter matrices. QLoRA = 4-bit + LoRA = 70B on single GPU.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Fine-tune 70B model on 24GB GPU?",
+      "choices": [
+        {"id": "a", "text": "Impossible."},
+        {"id": "b", "text": "QLoRA. Load base in 4-bit (NF4 quantization) = ~35 GB → too much for 24 GB alone but with CPU offloading via Accelerate fits. Add LoRA adapter via PEFT (only train ~0.1% of params). Train. Save tiny adapter (~100-500 MB). Inference: load 4-bit base + adapter. The standard way to fine-tune 70B on consumer hardware. Practical sweet spot: 13-30B for solid 24 GB workflow without offloading."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "QLoRA = 4-bit quantized base + LoRA adapter. Fits 70B on 24 GB with offloading. SOTA for consumer fine-tuning.",
+      "points": 1
+    }
+  ]
+}

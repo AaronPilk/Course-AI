@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Transaction structure",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bitcoin fee calculation?",
+      "choices": [
+        {"id": "a", "text": "Fixed."},
+        {"id": "b", "text": "fee = sum(input values) - sum(output values). No explicit fee field. Difference between inputs and outputs goes to miner. Change must be explicit output back to sender."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Fee = inputs - outputs; implicit miner payment.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Speed up stuck transaction?",
+      "choices": [
+        {"id": "a", "text": "Wait."},
+        {"id": "b", "text": "RBF (Replace By Fee): replace original with higher-fee version if RBF-signaled. Or CPFP (Child Pays For Parent): spend output in new high-fee tx, miner must include parent. Both standard fee bumping."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RBF or CPFP for fee acceleration.",
+      "points": 1
+    }
+  ]
+}

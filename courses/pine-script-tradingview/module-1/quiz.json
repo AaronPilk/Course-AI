@@ -1,0 +1,61 @@
+{
+  "title": "Module 1 quiz: Pine Script foundations",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Pine version declaration?",
+      "choices": [
+        {"id": "a", "text": "Optional."},
+        {"id": "b", "text": "//@version=5 at top of script. Required first line. v5 is current; v6 in preview. Older versions deprecated; new features require v5+."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "//@version=5 required at top.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Float vs. int?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "float = decimal (close, prices, percentages); int = whole number (bar_index, lengths). Pine infers from value. na = missing/invalid."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "float decimal; int whole; na missing.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Previous bar close?",
+      "choices": [
+        {"id": "a", "text": "close.prev"},
+        {"id": "b", "text": "close[1] — [N] historical reference. close[0] current, close[1] previous, close[N] N bars ago."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "close[N] for N bars ago.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Standard indicator without re-implementing?",
+      "choices": [
+        {"id": "a", "text": "Write your own."},
+        {"id": "b", "text": "ta. namespace: ta.sma, ta.ema, ta.rsi, ta.macd, ta.bb, ta.atr. Built-in optimized; battle-tested. Use unless you need custom variation."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ta. namespace for standard indicators.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Avoid intra-bar signal flips?",
+      "choices": [
+        {"id": "a", "text": "Hope."},
+        {"id": "b", "text": "Guard logic with barstate.isconfirmed — only fires on closed bars. Stops repainting; essential for backtest fidelity + live alerts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "barstate.isconfirmed for closed-bar logic.",
+      "points": 1
+    }
+  ]
+}

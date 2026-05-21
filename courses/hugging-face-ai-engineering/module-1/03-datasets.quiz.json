@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Datasets",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "How to load IMDB dataset for sentiment analysis?",
+      "choices": [
+        { "id": "a", "text": "Download CSV manually." },
+        { "id": "b", "text": "`from datasets import load_dataset; ds = load_dataset('imdb')`. One-liner gets the entire IMDB dataset (25k train + 25k test reviews, labeled positive / negative) loaded as Dataset objects. Access splits: `ds['train']`, `ds['test']`. Access example: `ds['train'][0]` returns `{'text': '...', 'label': 0}`. Schema visible: `ds['train'].features`. Standard for 5000+ HF-hosted datasets. Same pattern: `load_dataset('squad')` for QA, `load_dataset('cnn_dailymail', '3.0.0')` for summarization, `load_dataset('common_voice', 'en')` for speech. Subsets: `load_dataset('imdb', split='train[:1000]')` for first 1000 only. Custom data: `load_dataset('csv', data_files='mydata.csv')` for your CSV. Streaming for huge datasets: `load_dataset('c4', 'en', streaming=True)` doesn't load all into memory; iterate row by row. Combined with tokenizer.map() for preprocessing; .filter() for subsetting; .train_test_split() for held-out evaluation. The Datasets library is the standard for loading ML data in 2026 Python AI workflows; replaces ad-hoc CSV / JSON loading + manual preprocessing. Includes caching (downloads once + reuses); versioning (`revision='v1.0'` for reproducibility); push_to_hub() for sharing your processed data.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "load_dataset('imdb'). One-liner; loads entire dataset as Dataset objects with splits. Standard for 5000+ HF datasets. Streaming for huge data.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to fine-tune model on 100 GB text dataset; doesn't fit in RAM. Approach?",
+      "choices": [
+        { "id": "a", "text": "Get more RAM." },
+        { "id": "b", "text": "Streaming with load_dataset(..., streaming=True). Returns IterableDataset — iterate row by row without loading all into memory. Process pattern: `ds = load_dataset('c4', 'en', streaming=True); for example in ds['train'].take(1_000_000): train_step(example)`. .take(N) limits how many to use; .skip(N) skips first N; .filter() / .map() work as in non-streaming mode. Memory usage: tiny (a few examples in flight at any time); not 100 GB. Trade-off: 1) No random access (can't index ds[5000]; only iterate). 2) Can't shuffle the entire dataset (only buffered shuffling via .shuffle(buffer_size=10000) which shuffles within a sliding window). 3) Loading happens during iteration (slower per-step than pre-loaded). Use cases: 1) Massive web datasets (C4, RedPajama, FineWeb). 2) Training on data too large for disk too. 3) Continuous training on growing datasets. For fine-tuning typical patterns: 1) Pre-process + tokenize offline; save as smaller intermediate dataset. 2) Stream the intermediate during training. 3) Iterate over multiple epochs by re-streaming. Hugging Face Trainer + Accelerate support streaming datasets natively. Combined with batched processing + DataLoader workers, streaming scales to arbitrary-size datasets. Same approach across PyTorch / TensorFlow / JAX in modern training pipelines. The 'load 100 GB to RAM' anti-pattern is unnecessary; streaming is the standard solution.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Streaming with load_dataset(..., streaming=True). IterableDataset iterates without loading all. Memory usage tiny; trade-off no random access + windowed shuffle. Standard for huge datasets.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Audits and monitoring",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Mainnet readiness?",
+      "choices": [
+        {"id": "a", "text": "Tests pass."},
+        {"id": "b", "text": "100% tests + Slither/Mythril + external audit (Trail of Bits / OpenZeppelin / Halborn / Code4rena) + multi-sig + Timelock + Pausable + monitoring (Tenderly/Defender) + bug bounty (Immunefi) + incident runbook + Etherscan verified."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Tests + audit + multi-sig + monitoring + bug bounty.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Vulnerability discovered post-launch?",
+      "choices": [
+        {"id": "a", "text": "Silent fix."},
+        {"id": "b", "text": "Pause if possible → white-hat self-exploit to extract funds to safe address → fix → return funds + deploy patched contract → public postmortem within 48-72 hours. Transparency preserves trust; silence destroys it."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pause → save funds → fix → postmortem publicly.",
+      "points": 1
+    }
+  ]
+}

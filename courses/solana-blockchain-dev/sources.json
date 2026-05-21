@@ -1,0 +1,10 @@
+{
+  "sources": [
+    { "url": "https://solana.com/docs", "title": "Solana Documentation" },
+    { "url": "https://solana.com/docs/programs/anchor", "title": "Anchor Framework" },
+    { "url": "https://spl.solana.com/", "title": "Solana Program Library" },
+    { "url": "https://docs.metaplex.com/", "title": "Metaplex Documentation" },
+    { "url": "https://solana.com/docs/clients/javascript", "title": "Web3.js JavaScript Client" },
+    { "url": "https://solanacookbook.com/", "title": "Solana Cookbook" }
+  ]
+}

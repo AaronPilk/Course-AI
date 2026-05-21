@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Whitepaper",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bitcoin's core innovation?",
+      "choices": [
+        {"id": "a", "text": "Digital money."},
+        {"id": "b", "text": "Solved double-spending without trusted third party. Combines Proof of Work (costly block creation), chained timestamps, longest-chain rule. Probabilistic finality after enough blocks. Trustless digital cash."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PoW + chained timestamps + longest chain = trustless ledger.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "21M cap mechanism?",
+      "choices": [
+        {"id": "a", "text": "Soft."},
+        {"id": "b", "text": "Block reward halves every 210,000 blocks (~4 years). Started at 50 BTC; geometric series converges to ~21M total. Hard cap enforced by every full node; changing requires near-impossible consensus."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Halvings every 210k blocks; ~21M cap.",
+      "points": 1
+    }
+  ]
+}

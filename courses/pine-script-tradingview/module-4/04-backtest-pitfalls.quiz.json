@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Backtest pitfalls",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Repainting indicator?",
+      "choices": [
+        {"id": "a", "text": "Normal."},
+        {"id": "b", "text": "Bar's value changes after the bar formed. Causes: lookahead_on in request.security, executing on unconfirmed bars, future-bar access. Fix: barstate.isconfirmed + close[1] from HTF. Backtest will then match live."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Repainting = future leak; fix with isconfirmed + close[1].",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Cardinal sin in OOS testing?",
+      "choices": [
+        {"id": "a", "text": "Test once."},
+        {"id": "b", "text": "Touching OOS data after a fail. Tweaking params after seeing 2023 perform poorly → OOS becomes IS. Workflow: split once, optimize train only, OOS is one shot. Failure = back to drawing board on new IS data."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Never re-optimize on OOS — destroys validation.",
+      "points": 1
+    }
+  ]
+}

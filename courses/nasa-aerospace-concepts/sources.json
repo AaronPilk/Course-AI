@@ -1,0 +1,7 @@
+{
+  "sources": [
+    { "url": "https://www.nasa.gov/learning-resources/", "title": "NASA Learning Resources" },
+    { "url": "https://ntrs.nasa.gov", "title": "NASA Technical Reports Server" },
+    { "url": "https://www.nasa.gov/topics/aerospace/index.html", "title": "NASA Aerospace Topics" }
+  ]
+}

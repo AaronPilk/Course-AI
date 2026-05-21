@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Gazebo",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Simulate robot before hardware?",
+      "choices": [
+        {"id": "a", "text": "Skip."},
+        {"id": "b", "text": "Gazebo (formerly Ignition) — open-source ROS-integrated simulator. Realistic physics + sensor plugins (camera, LiDAR, IMU). URDF/SDF robot description. ros2_control runs same code in sim + real. Train RL with millions of trials safely."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Gazebo = standard ROS simulator.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Sim2Real gap?",
+      "choices": [
+        {"id": "a", "text": "None."},
+        {"id": "b", "text": "Simulator ≠ reality (sensor noise, friction, dynamics approximations). Mitigations: domain randomization (vary sim params), realistic sensor models, fine-tune on hardware. Final test always on real robot."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Bridge gap via domain randomization + hw fine-tune.",
+      "points": 1
+    }
+  ]
+}

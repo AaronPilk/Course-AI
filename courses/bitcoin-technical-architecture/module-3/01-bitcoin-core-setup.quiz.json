@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Bitcoin Core setup",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Disk needs?",
+      "choices": [
+        {"id": "a", "text": "10 GB."},
+        {"id": "b", "text": "600+ GB for full chain (no prune). Or prune=5500 for last 5.5 GB only (saves disk but can't serve historical blocks, limits Lightning). SSD recommended for faster IBD."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "600+ GB full or prune=5500 minimal.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Verify download integrity?",
+      "choices": [
+        {"id": "a", "text": "Trust."},
+        {"id": "b", "text": "Verify GPG signatures + SHA256 checksums: gpg --verify SHA256SUMS.asc + sha256sum -c SHA256SUMS. Catches tampered downloads. Compromised binary = wallet drained."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "GPG + SHA256 verification mandatory for security.",
+      "points": 1
+    }
+  ]
+}

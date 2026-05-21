@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Orders and exits",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bracket order (SL + TP)?",
+      "choices": [
+        {"id": "a", "text": "Two orders."},
+        {"id": "b", "text": "strategy.exit(\"Bracket\", from_entry=\"Long\", stop=slPrice, limit=tpPrice). Single call sets both; one fills cancels the other (OCO behavior)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "strategy.exit with stop + limit = OCO bracket.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Volatility-adaptive stop?",
+      "choices": [
+        {"id": "a", "text": "Fixed %"},
+        {"id": "b", "text": "stopPrice = entry - ta.atr(14) * 2. ATR scales with volatility; tight in calm markets, wide in fast markets. Prevents getting stopped by normal noise."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATR-based stops adapt to market volatility.",
+      "points": 1
+    }
+  ]
+}

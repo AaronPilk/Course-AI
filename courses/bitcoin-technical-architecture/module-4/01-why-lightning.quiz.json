@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Lightning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Lightning solves what?",
+      "choices": [
+        {"id": "a", "text": "Mining."},
+        {"id": "b", "text": "L1 throughput limit (~7 TPS) + fees ($0.50-50+). Settles tx off-chain via payment channels; only on-chain when opening/closing. Result: near-instant, sub-cent fees, millions of TPS theoretically."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Off-chain settlement scales throughput + cuts fees.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Self-custody vs. easy setup?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Custodial wallets (Wallet of Satoshi, Cash App) = 1-click but trust provider. Non-custodial (Phoenix, Breez, Zeus, LND/CLN node) = run node, true Bitcoin ethos. Tradeoff: convenience vs. sovereignty."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Custodial = easy; non-custodial = sovereignty.",
+      "points": 1
+    }
+  ]
+}

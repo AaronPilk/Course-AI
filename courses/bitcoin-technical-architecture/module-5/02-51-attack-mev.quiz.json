@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: 51% + MEV",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "51% attack scope?",
+      "choices": [
+        {"id": "a", "text": "Steal anything."},
+        {"id": "b", "text": "Can: censor txs, reorganize recent blocks (double-spend), empty mempool. Cannot: steal others' coins, change 21M cap, reverse confirmed deep history. Economically prohibitive on Bitcoin (~$10B+); smaller chains (BCH/ETC) attacked regularly."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Censor + reorg + double-spend; not theft.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Real risk priorities?",
+      "choices": [
+        {"id": "a", "text": "Quantum."},
+        {"id": "b", "text": "Phishing > lost keys > exchange hacks > software bugs >>> 51% > quantum. Daily threats are scams + key loss. Focus security on real-world common attacks; protocol attacks economically prohibitive."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Phishing + key loss vastly more likely than protocol attacks.",
+      "points": 1
+    }
+  ]
+}

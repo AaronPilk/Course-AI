@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Kinematics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Forward vs inverse kinematics?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Forward: joints → end-effector pose. Easy; chain transformations T1×T2×...×Tn. Inverse: pose → joints; hard, multi-solution, no closed-form for 6+ DoF. Solvers: KDL, TRAC-IK, MoveIt."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "FK easy chain; IK hard inverse problem.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Robot arm freezes mid-motion?",
+      "choices": [
+        {"id": "a", "text": "Battery."},
+        {"id": "b", "text": "Likely singularity: Jacobian loses rank → can't move in some direction. E.g., arm fully extended can't move along its axis. Plan paths to avoid singular configurations; or use damped pseudoinverse."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Singularity = Jacobian rank loss.",
+      "points": 1
+    }
+  ]
+}

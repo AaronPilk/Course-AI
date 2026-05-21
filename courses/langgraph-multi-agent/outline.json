@@ -1,0 +1,71 @@
+{
+  "slug": "langgraph-multi-agent",
+  "name": "LangGraph",
+  "title": "LangGraph Multi-Agent Workflows",
+  "subtitle": "Build stateful, multi-agent AI systems.",
+  "category": "AI Engineering",
+  "level": "Advanced",
+  "estimated_hours": 6,
+  "summary": "LangGraph is LangChain's framework for building stateful, multi-actor AI applications. This course covers LangGraph end-to-end: state machines, agents, tool use, multi-agent orchestration, human-in-the-loop, persistence, and production deployment. Practical patterns for sophisticated AI workflows beyond simple prompts.",
+  "brand": {
+    "logo": "/brands/langgraph-multi-agent.svg",
+    "gradient": ["#1C3D5A", "#0E1F2F"]
+  },
+  "modules": [
+    {
+      "position": 1,
+      "title": "LangGraph foundations",
+      "objective": "Understand graph-based AI workflows.",
+      "lessons": [
+        { "position": 1, "title": "Why LangGraph — beyond simple chains" },
+        { "position": 2, "title": "State, nodes, edges" },
+        { "position": 3, "title": "Conditional edges and routing" },
+        { "position": 4, "title": "Cycles, loops, and recursion limits" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Building agents",
+      "objective": "Create reasoning AI agents with tools.",
+      "lessons": [
+        { "position": 1, "title": "Single-agent ReAct pattern" },
+        { "position": 2, "title": "Tools and tool calling" },
+        { "position": 3, "title": "Memory and context management" },
+        { "position": 4, "title": "Streaming and observability" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Multi-agent orchestration",
+      "objective": "Coordinate multiple AI agents.",
+      "lessons": [
+        { "position": 1, "title": "Supervisor architecture" },
+        { "position": 2, "title": "Hierarchical agent teams" },
+        { "position": 3, "title": "Agent-to-agent handoffs" },
+        { "position": 4, "title": "Parallel + sequential workflows" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Production patterns",
+      "objective": "Ship reliable agent systems.",
+      "lessons": [
+        { "position": 1, "title": "Persistence and checkpointing" },
+        { "position": 2, "title": "Human-in-the-loop approval" },
+        { "position": 3, "title": "Error handling and retries" },
+        { "position": 4, "title": "Cost and latency optimization" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Real-world agent systems",
+      "objective": "Apply LangGraph to production use cases.",
+      "lessons": [
+        { "position": 1, "title": "Research agent — web search + synthesis" },
+        { "position": 2, "title": "Code agent — generate, test, iterate" },
+        { "position": 3, "title": "Customer support agent" },
+        { "position": 4, "title": "Deployment with LangGraph Platform" }
+      ]
+    }
+  ]
+}

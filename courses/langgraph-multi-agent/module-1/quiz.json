@@ -1,0 +1,17 @@
+{"title": "Module 1 quiz: LangGraph foundations", "scoring": {"passing_score": 4, "total_questions": 5}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Why LangGraph over simple chains?",
+    "choices": [{"id": "a", "text": "Always faster."}, {"id": "b", "text": "Cycles, branching, state, multi-agent. Beyond linear chains. Standard for production agents 2026."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Cycles + branching + state + multi-agent.", "points": 1},
+  {"position": 2, "type": "multiple_choice", "prompt": "Three LangGraph primitives?",
+    "choices": [{"id": "a", "text": "LLMs/tools/users."}, {"id": "b", "text": "State (TypedDict), Nodes (functions), Edges (transitions). Plus reducers for state merging."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "State + Nodes + Edges.", "points": 1},
+  {"position": 3, "type": "multiple_choice", "prompt": "ReAct agent loop?",
+    "choices": [{"id": "a", "text": "Linear."}, {"id": "b", "text": "Agent ↔ Tool loop via conditional edge. Agent decides; tool runs; back to agent."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Agent ↔ Tool loop via conditional.", "points": 1},
+  {"position": 4, "type": "multiple_choice", "prompt": "Default recursion limit?",
+    "choices": [{"id": "a", "text": "Infinite."}, {"id": "b", "text": "25 steps. Safety vs. infinite loops. Configurable per invocation."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "25 default; configurable.", "points": 1},
+  {"position": 5, "type": "multiple_choice", "prompt": "Messages keep getting replaced instead of appended?",
+    "choices": [{"id": "a", "text": "Bug."}, {"id": "b", "text": "Missing add_messages reducer. Use Annotated[list, add_messages] for accumulation. Default replaces."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Need add_messages reducer.", "points": 1}
+]}

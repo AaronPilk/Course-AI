@@ -1,0 +1,79 @@
+{
+  "slug": "robotics-engineering-fundamentals",
+  "title": "Robotics Engineering Fundamentals",
+  "subtitle": "Mechatronics, ROS, perception, motion planning — build robots that work.",
+  "category": "Robotics",
+  "level": "Intermediate",
+  "estimated_hours": 7,
+  "tagline": "The hardware-software discipline reshaping every industry.",
+  "brand": {
+    "gradient_from": "#00A6FB",
+    "gradient_to": "#005377",
+    "accent": "#FFFFFF"
+  },
+  "outcomes": [
+    "Understand robot anatomy: sensors, actuators, controllers, kinematics.",
+    "Use ROS 2 to build modular robot software.",
+    "Implement perception with cameras, LiDAR, IMUs.",
+    "Master motion planning: configuration space, path planning, trajectory.",
+    "Apply control theory: PID, model predictive control.",
+    "Deploy to real robots: simulation → hardware bring-up → operation."
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Robot fundamentals",
+      "objective": "Understand robot anatomy + math.",
+      "lessons": [
+        { "position": 1, "title": "What a robot is" },
+        { "position": 2, "title": "Sensors and actuators" },
+        { "position": 3, "title": "Kinematics + dynamics" },
+        { "position": 4, "title": "Coordinate frames + TF" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "ROS 2 ecosystem",
+      "objective": "Build software with ROS 2.",
+      "lessons": [
+        { "position": 1, "title": "ROS 2 overview" },
+        { "position": 2, "title": "Nodes, topics, services" },
+        { "position": 3, "title": "Launch files + parameters" },
+        { "position": 4, "title": "Gazebo simulation" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Perception",
+      "objective": "Make sense of sensor data.",
+      "lessons": [
+        { "position": 1, "title": "Cameras + computer vision" },
+        { "position": 2, "title": "LiDAR + point clouds" },
+        { "position": 3, "title": "Sensor fusion + IMU" },
+        { "position": 4, "title": "SLAM (Simultaneous Localization + Mapping)" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Motion + control",
+      "objective": "Move the robot intelligently.",
+      "lessons": [
+        { "position": 1, "title": "Path planning algorithms" },
+        { "position": 2, "title": "PID controllers" },
+        { "position": 3, "title": "Trajectory generation" },
+        { "position": 4, "title": "Reinforcement learning for control" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Deployment",
+      "objective": "From simulation to real robots.",
+      "lessons": [
+        { "position": 1, "title": "Simulation to real (sim2real)" },
+        { "position": 2, "title": "Robot platforms: TurtleBot, Spot, drones" },
+        { "position": 3, "title": "Safety + ROS 2 best practices" },
+        { "position": 4, "title": "Career + industry trends" }
+      ]
+    }
+  ]
+}

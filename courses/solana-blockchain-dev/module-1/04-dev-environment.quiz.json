@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Dev environment",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Solana program toolchain?",
+      "choices": [
+        {"id": "a", "text": "JavaScript."},
+        {"id": "b", "text": "Rust + Anchor framework. Rust compiles to BPF bytecode. Anchor (cargo install + avm) provides scaffolding, account constraints, IDL generation, testing. avm install latest; anchor init project."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Rust + Anchor = standard program development.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Fast iteration during dev?",
+      "choices": [
+        {"id": "a", "text": "Devnet only."},
+        {"id": "b", "text": "solana-test-validator runs local network on localhost:8899; instant blocks; pre-loaded SOL. anchor test --skip-local-validator if running separately. Faster than devnet + no airdrops needed."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Local validator for fast dev cycle.",
+      "points": 1
+    }
+  ]
+}

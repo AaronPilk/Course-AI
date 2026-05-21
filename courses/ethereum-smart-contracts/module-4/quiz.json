@@ -1,0 +1,61 @@
+{
+  "title": "Module 4 quiz: Security",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Prevent reentrancy?",
+      "choices": [
+        {"id": "a", "text": "Skip checks."},
+        {"id": "b", "text": "CEI pattern (Checks→Effects→Interactions) + OpenZeppelin ReentrancyGuard nonReentrant modifier. State updated before external call so reentrant attacker sees zeroed balance. Defense in depth."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CEI + nonReentrant = standard defense.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Modern ETH send?",
+      "choices": [
+        {"id": "a", "text": ".transfer"},
+        {"id": "b", "text": "(bool ok,) = payable(to).call{value: amount}(\"\"); require(ok). .transfer's 2300 gas stipend broken by EIP-1884. .call forwards all available gas; check success."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": ".call modern; .transfer deprecated for ETH.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Production admin?",
+      "choices": [
+        {"id": "a", "text": "Hot wallet."},
+        {"id": "b", "text": "Gnosis Safe multi-sig + TimelockController. Multi-sig prevents single-key rug; timelock 48-72 hours gives users exit window. Standard for Uniswap, Aave, Compound."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-sig + Timelock for production.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Pack 256 boolean flags?",
+      "choices": [
+        {"id": "a", "text": "mapping<uint,bool>"},
+        {"id": "b", "text": "Bitmap: mapping(uint256 => uint256). 256 flags per slot. bitmap[id/256] |= (1 << (id%256)) to set. 256× less storage. Standard for airdrop claim tracking."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Bitmap = 256 bools per slot.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Upgradeable storage rules?",
+      "choices": [
+        {"id": "a", "text": "Reorder freely."},
+        {"id": "b", "text": "Append-only: never reorder/remove existing variables. Add at end. Use uint256[N] __gap arrays in parent contracts. OZ Upgrades plugin validates compatibility. Reordering = catastrophic data corruption."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Append-only storage + __gap for future.",
+      "points": 1
+    }
+  ]
+}

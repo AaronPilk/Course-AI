@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Nodes + topics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ROS 2 communication primitives?",
+      "choices": [
+        {"id": "a", "text": "Just topics."},
+        {"id": "b", "text": "Topics (pub/sub, async, one-to-many), services (RPC request/response sync), actions (long-running with feedback). Pick based on use case: streaming data → topic, query → service, navigation goal → action."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Topics + services + actions = comm primitives.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Sensor topic at 100Hz losing data?",
+      "choices": [
+        {"id": "a", "text": "Network."},
+        {"id": "b", "text": "Check QoS. Sensor data → BEST_EFFORT (UDP-like, high rate, lossy OK). Commands → RELIABLE (TCP-like, every message matters). Subscriber QoS must match publisher's; mismatch = no messages received."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "QoS mismatch silently drops messages.",
+      "points": 1
+    }
+  ]
+}

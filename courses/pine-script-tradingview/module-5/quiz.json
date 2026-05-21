@@ -1,0 +1,61 @@
+{
+  "title": "Module 5 quiz: Alerts and automation",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Trustworthy live alerts?",
+      "choices": [
+        {"id": "a", "text": "freq_all"},
+        {"id": "b", "text": "alert(msg, alert.freq_once_per_bar_close) — fires only after bar closes. Prevents intra-bar flicker. Matches backtest signals. freq_all spams; freq_once_per_bar may still flicker on tick updates."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "alert.freq_once_per_bar_close = clean confirmed signals.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Pine to broker automation?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Pine alert → TradingView webhook URL → your endpoint (Cloudflare Workers/Vercel) → broker API → order. JSON in alert message; endpoint parses + auths + places."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhook URL bridges Pine alerts to broker APIs.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Secure webhook endpoint?",
+      "choices": [
+        {"id": "a", "text": "Public URL OK."},
+        {"id": "b", "text": "Random secret in URL + Bearer token + IP whitelist + HMAC signature. Public webhook URLs are attackable; anyone can POST. Layer defenses prevent unauthorized order placement."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Auth tokens + IP whitelist + HMAC for webhook security.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Production operational maturity?",
+      "choices": [
+        {"id": "a", "text": "Set it up."},
+        {"id": "b", "text": "Heartbeat (hourly alert + external monitor) + order logging + position reconciliation + daily loss limit + kill switch + broker health check. Catches dead pipelines, missed orders, regime changes early."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Heartbeat + reconciliation + kill switch = production maturity.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Portfolio diversification?",
+      "choices": [
+        {"id": "a", "text": "Multiple symbols."},
+        {"id": "b", "text": "Multiple uncorrelated strategies (correlation <0.3): trend + mean-reversion + breakout work in different regimes. Sum = smoother equity curve. Risk-budget capital across them; cap aggregate daily exposure."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Uncorrelated strategies + risk budget = real portfolio.",
+      "points": 1
+    }
+  ]
+}

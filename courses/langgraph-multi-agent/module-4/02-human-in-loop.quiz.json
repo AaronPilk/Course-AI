@@ -1,0 +1,8 @@
+{"title": "Quick check: Human-in-loop", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Pause agent for human approval?",
+    "choices": [{"id": "a", "text": "Print and wait."}, {"id": "b", "text": "interrupt() in node. Graph pauses; surfaces decision request to UI; user approves/rejects/edits; resume with decision. State persists via checkpointer during pause. Use for: risky actions (emails, payments, DB writes, customer comms). Selective: interrupt only when confidence low or risk high — balance automation + safety."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "interrupt() pauses graph; user decides via UI; resume.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Agent sends customer emails autonomously; one mistake hurts brand. Add safety?",
+    "choices": [{"id": "a", "text": "Trust agent."}, {"id": "b", "text": "Human approval interrupt before send. Pattern: agent drafts email → interrupt with draft → human reviews via UI → approve/edit/reject → if approved, send. Selective: low-stakes confirmations (order confirmed) auto-send; high-stakes (refund denial, complaint response) require approval. As confidence builds: gradually expand auto-send. Initial deployment: 100% approved; over time, approve patterns automatically as trust grows. Customer-facing AI without human-in-loop = recipe for PR disasters."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Interrupt for approval before send. Selective by risk; expand auto-send as trust grows.", "points": 1}
+]}

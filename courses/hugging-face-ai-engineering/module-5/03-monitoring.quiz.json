@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Monitoring + versioning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Best way to measure quality at scale for generative AI?",
+      "choices": [
+        {"id": "a", "text": "Human review everything."},
+        {"id": "b", "text": "LLM-as-judge — use stronger LLM (GPT-4, Claude 3.5) to rate your model's outputs against a rubric. Build evaluation rubric: helpfulness, accuracy, safety, relevance, tone (whatever matters for your use case). Sample outputs daily/weekly; judge LLM scores 1-5; track average + distribution over time. Combined with: 1) User signals (thumbs up/down, regenerate clicks, conversation length). 2) Task-specific metrics where applicable (ROUGE for summaries, BLEU for translations, accuracy for classification). 3) Human spot-checks of disagreements between judge + users. 4) Test set with known good answers (run nightly; alert on regression). Pure human review doesn't scale; rule-based metrics miss nuance. LLM-as-judge balances scale + nuance; some bias but trackable + valid for comparison. Pro AI ops 2026: LLM-as-judge + user signals + automated test set = comprehensive quality monitoring. Tools: Langfuse, Helicone, Arize, custom pipelines."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "LLM-as-judge. Stronger LLM rates outputs against rubric. Combined with user signals + test sets. Scalable + nuanced.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Want to switch from Llama 3 8B to Llama 3.1 70B without risking user disruption. Strategy?",
+      "choices": [
+        {"id": "a", "text": "Deploy immediately."},
+        {"id": "b", "text": "Shadow mode → canary deployment → gradual rollout. Stage 1: Shadow mode — production traffic stays on Llama 3 8B (users see this); same traffic copied to Llama 3.1 70B (logged; users don't see); compare quality + cost + latency offline; identify any regressions. Days/weeks of shadow data. Stage 2: Canary deployment — 1% of users randomly assigned to 70B; monitor user signals (thumbs up/down, complaints, completion rates) + LLM-as-judge quality + latency + cost. If healthy after days: 10%, then 50%, then 100%. Stage 3: Rollback ready — if issues emerge at any percentage, instant rollback to 8B for affected users. Decision criteria for promotion: quality non-regression on standard metrics; latency within budget; cost increase justified by quality. The 'deploy immediately' approach risks: unexpected regression hurts users; rollback needed but no monitoring caught issue; expensive surprise. Shadow + canary + monitoring + rollback = safe production model swaps. Required infrastructure: feature flags / traffic routing; monitoring + alerting; quick rollback mechanism. Pro AI teams 2026 use this pattern for every model change. Same approach for prompt changes, infrastructure changes, any production AI modification."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Shadow mode → canary → gradual rollout + monitoring + rollback ready. Pro production model swap pattern. Required: feature flags, monitoring, fast rollback.",
+      "points": 1
+    }
+  ]
+}

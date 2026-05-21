@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: SPL Token",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Standard token account per user?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Associated Token Account (ATA): deterministic PDA per (owner, mint). associated_token::mint + associated_token::authority constraints. Wallet-standard; predictable address."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATA = PDA(owner, mint) — wallet standard.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Fixed-supply token launch?",
+      "choices": [
+        {"id": "a", "text": "Mint forever."},
+        {"id": "b", "text": "Create mint with decimals → mint full supply once → token::set_authority(MintTokens, None) renounces mint authority forever. Investors see no rug pull risk. Standard token launch pattern."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Mint once + renounce mint authority = fixed supply.",
+      "points": 1
+    }
+  ]
+}

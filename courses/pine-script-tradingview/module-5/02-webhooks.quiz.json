@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Webhooks",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Secure webhook endpoint?",
+      "choices": [
+        {"id": "a", "text": "Public URL is fine."},
+        {"id": "b", "text": "Random secret in URL + Bearer token + IP whitelist + HMAC signature. Anyone with URL can POST to public endpoint. Layer defenses to prevent unauthorized order placement."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Auth + secret + IP whitelist for webhook safety.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Prevent duplicate orders?",
+      "choices": [
+        {"id": "a", "text": "Trust TradingView."},
+        {"id": "b", "text": "Idempotency keys: orderId = ticker + bar_time; check store before placing; mark placed after success. TradingView retries on transient failure; idempotency prevents double-fill."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Idempotency keys prevent double orders on retries.",
+      "points": 1
+    }
+  ]
+}

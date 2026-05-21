@@ -1,0 +1,61 @@
+{
+  "title": "Module 3 quiz: Fine-tuning",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Trainer LR for fine-tuning?",
+      "choices": [
+        {"id": "a", "text": "1.0"},
+        {"id": "b", "text": "1e-5 to 5e-5 for full fine-tune; 1e-4 to 5e-4 for LoRA. Too high catastrophically forgets pre-training. Use warmup_steps (500-1000) + weight_decay (0.01)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "1e-5 to 5e-5 full fine-tune; 1e-4 to 5e-4 LoRA.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Fine-tune 70B on 24GB GPU?",
+      "choices": [
+        {"id": "a", "text": "Buy bigger GPU."},
+        {"id": "b", "text": "QLoRA. 4-bit quantized base + LoRA adapter. Fits with offloading. Standard 2026 consumer fine-tuning."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "QLoRA. 4-bit base + LoRA adapter. Fits 70B on 24GB.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "DPO vs RLHF?",
+      "choices": [
+        {"id": "a", "text": "RLHF better."},
+        {"id": "b", "text": "DPO simpler + stable; matches RLHF quality often; no separate reward model. Standard 2026."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "DPO simpler + stable. Standard 2026.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Specialize Llama for legal domain. Pipeline?",
+      "choices": [
+        {"id": "a", "text": "Just prompts."},
+        {"id": "b", "text": "Base → SFT (instruction examples) → DPO (preference pairs) → optionally RAG for current knowledge. QLoRA for efficiency. Standard vertical AI pattern."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Base → SFT → DPO. RAG complementary. QLoRA efficient.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Best license for max adoption of shared model?",
+      "choices": [
+        {"id": "a", "text": "Custom non-commercial."},
+        {"id": "b", "text": "Apache 2.0 or MIT. Permissive; no restrictions; commercial OK; max adoption. CC-BY-SA okay but share-alike limits. OpenRAIL-M for AI-specific responsibility."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Apache 2.0 / MIT for permissive + max adoption.",
+      "points": 1
+    }
+  ]
+}

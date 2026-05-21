@@ -1,0 +1,8 @@
+{"title": "Quick check: Persistence", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Save agent state across sessions?",
+    "choices": [{"id": "a", "text": "Each session fresh."}, {"id": "b", "text": "Checkpointer + thread_id. SqliteSaver/PostgresSaver saves state at each node execution. thread_id identifies conversation. Resume via same thread_id; new starts new. Plus time travel (view past states), state editing (update externally for human intervention)."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Checkpointer + thread_id for persistence.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Production agent, 10K conversations/day. Persistence backend?",
+    "choices": [{"id": "a", "text": "SqliteSaver."}, {"id": "b", "text": "PostgresSaver. SqliteSaver fine for dev / single-machine; doesn't scale to high concurrency or multi-server. PostgresSaver: handles concurrent reads/writes, multi-server deployments, durability, backups. MemorySaver = lost on restart (dev only). Redis = fast but ephemeral. For production with persistence requirements: PostgresSaver standard. Configure connection string; same API as other savers."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "PostgresSaver for production scale + durability.", "points": 1}
+]}

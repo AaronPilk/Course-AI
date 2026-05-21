@@ -1,0 +1,61 @@
+{
+  "title": "Module 1 quiz: Bitcoin fundamentals",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Whitepaper innovation?",
+      "choices": [
+        {"id": "a", "text": "Money."},
+        {"id": "b", "text": "Solved double-spending without trusted third party. PoW + chained timestamps + longest-chain rule. Probabilistic finality after confirmations. Trustless digital cash."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PoW + timestamps + longest chain = trustless ledger.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Bitcoin balance model?",
+      "choices": [
+        {"id": "a", "text": "Accounts."},
+        {"id": "b", "text": "UTXO (Unspent Transaction Output). No account balances. Wallet shows sum of spendable UTXOs. Spending consumes inputs, creates outputs. Stateless; parallelizable; better privacy than account-based."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "UTXO model: balance = sum of outputs.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "HD wallet backup?",
+      "choices": [
+        {"id": "a", "text": "Each address."},
+        {"id": "b", "text": "BIP39 mnemonic (12-24 words) encodes random entropy → BIP32 HD derivation → unlimited addresses. Backup mnemonic offline (metal plate). Lose mnemonic = lose funds forever; no recovery."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Mnemonic = root of all wallet addresses.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Block time stable how?",
+      "choices": [
+        {"id": "a", "text": "Magic."},
+        {"id": "b", "text": "Difficulty auto-adjusts every 2,016 blocks (~2 weeks). Targets 10-min average. Faster blocks → difficulty up; slower → down. Max swing 4× per cycle. Adapts to any hash rate."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Difficulty retarget every 2016 blocks.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Long-term miner incentive?",
+      "choices": [
+        {"id": "a", "text": "Endless reward."},
+        {"id": "b", "text": "Block reward halves every 4 years; → 0 by 2140. Tx fees must dominate eventually. Current ~1-10% fees; must grow with usage + BTC value. Open question for sustainability — but by then BTC value likely much higher."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Fees replace reward as it decays to zero.",
+      "points": 1
+    }
+  ]
+}

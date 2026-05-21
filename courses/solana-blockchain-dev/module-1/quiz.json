@@ -1,0 +1,61 @@
+{
+  "title": "Module 1 quiz: Solana fundamentals",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Solana TPS and block time?",
+      "choices": [
+        {"id": "a", "text": "10 TPS, 10 min."},
+        {"id": "b", "text": "3,000-5,000 TPS typical, 400ms blocks, <$0.001 fees. Theoretical 65k TPS. Trade-offs: high validator hardware reqs, occasional chain halts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "3-5k TPS, 400ms blocks, sub-cent fees.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Proof of History?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Cryptographic clock via continuous hash chain. Validators don't coordinate on time; chain self-orders. Enables parallel block production = throughput advantage."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PoH = verifiable clock + parallelism.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Account fields?",
+      "choices": [
+        {"id": "a", "text": "Balance."},
+        {"id": "b", "text": "Address (32-byte pubkey), owner (controlling program), lamports (SOL), data (serialized bytes), executable. All state in accounts; programs read/write."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "address + owner + lamports + data + executable.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Many-account transaction?",
+      "choices": [
+        {"id": "a", "text": "Split."},
+        {"id": "b", "text": "Address Lookup Tables (ALT) + V0 Versioned Transactions. ALT stores accounts on-chain; tx references by 1-byte index. Fits within 1,232 byte limit. Standard for DEX routing + DeFi."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ALT + V0 for multi-account efficiency.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Development toolchain?",
+      "choices": [
+        {"id": "a", "text": "JavaScript."},
+        {"id": "b", "text": "Solana CLI + Rust + Anchor + Helius/QuickNode RPC. anchor init scaffolds; anchor build compiles to BPF; anchor deploy ships. Local validator (solana-test-validator) for fast iteration."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CLI + Rust + Anchor + paid RPC = standard stack.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Hardhat + Foundry",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Hardhat vs. Foundry?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Hardhat (Node.js/TS) — mature ecosystem, TS tests, plugin-rich. Foundry (Rust + Solidity) — fastest compile/test, built-in fuzzing, Solidity-native tests. Modern projects often use both: Foundry for tests, Hardhat for deploy."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Hardhat for ecosystem, Foundry for speed + fuzzing.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Fuzz test smart contract?",
+      "choices": [
+        {"id": "a", "text": "Manual cases."},
+        {"id": "b", "text": "Foundry: function testFuzz_X(uint256 input) public — automatically generates random inputs, tries invariant assertions, shrinks failures. Built into forge test. Catches edge cases manual testing misses."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Foundry built-in fuzzing via testFuzz_ prefix.",
+      "points": 1
+    }
+  ]
+}

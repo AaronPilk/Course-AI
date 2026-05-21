@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Strategy Tester",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Profit factor target?",
+      "choices": [
+        {"id": "a", "text": "Any positive."},
+        {"id": "b", "text": "Profit Factor = Gross Profit / Gross Loss. 1.0 breakeven, 1.5+ decent, 2.0+ strong, 3.0+ suspect overfit. Combine with Sharpe + DD + trade count for full picture."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Profit factor 1.5-2.0 strong; >3 suspect.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Backtest red flags?",
+      "choices": [
+        {"id": "a", "text": "Big returns are great."},
+        {"id": "b", "text": "95%+ win rate, Sharpe >3.0, profit factor >4, <30 trades, gains from single winner, one-symbol/one-year. Likely curve-fit; won't generalize. Test out-of-sample + multiple symbols."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Too-good metrics + small sample = overfit warning.",
+      "points": 1
+    }
+  ]
+}

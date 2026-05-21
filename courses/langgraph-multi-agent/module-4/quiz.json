@@ -1,0 +1,17 @@
+{"title": "Module 4 quiz: Production patterns", "scoring": {"passing_score": 4, "total_questions": 5}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Persistence across sessions?",
+    "choices": [{"id": "a", "text": "Fresh each."}, {"id": "b", "text": "Checkpointer + thread_id. PostgresSaver for production scale; SqliteSaver for dev."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Checkpointer + thread_id.", "points": 1},
+  {"position": 2, "type": "multiple_choice", "prompt": "Human approval before send?",
+    "choices": [{"id": "a", "text": "Trust agent."}, {"id": "b", "text": "interrupt() node. Pauses; user decides; resume. Selective by risk."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "interrupt() for human approval.", "points": 1},
+  {"position": 3, "type": "multiple_choice", "prompt": "Rate limit error handling?",
+    "choices": [{"id": "a", "text": "Crash."}, {"id": "b", "text": "Retry with exponential backoff via tenacity. Plus fallback after exhausted retries."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Tenacity retry with backoff.", "points": 1},
+  {"position": 4, "type": "multiple_choice", "prompt": "Reduce agent cost?",
+    "choices": [{"id": "a", "text": "Same model everywhere."}, {"id": "b", "text": "Mix model sizes per node. Small for routing/simple; large only for complex reasoning. Plus cache + token budgets + recursion limits. 5-20x savings vs naive."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Mix models; cache; budgets; limits.", "points": 1},
+  {"position": 5, "type": "multiple_choice", "prompt": "Tool fails gracefully?",
+    "choices": [{"id": "a", "text": "Re-raise."}, {"id": "b", "text": "Return error as text from tool; LLM reads + adapts. Don't crash agent."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Return error text; LLM adapts.", "points": 1}
+]}

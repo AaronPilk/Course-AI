@@ -1,0 +1,61 @@
+{
+  "title": "Module 4 quiz: Spaces + deployment",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Easiest demo deployment?",
+      "choices": [
+        {"id": "a", "text": "React app on AWS."},
+        {"id": "b", "text": "Gradio + HF Space. Few lines Python; push to Space repo; live URL. Free CPU tier; paid GPU upgrades."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradio + HF Space. Easiest path from code to live URL.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Production API vs. demo?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Inference Endpoints (production REST API) vs. Spaces (web UI demos). Endpoints: dedicated GPU, auto-scale, TGI optimized, pay-per-hour. Spaces: Gradio/Streamlit UI, free CPU tier."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Endpoints = production REST APIs; Spaces = demo UIs.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "AWS HF deployment?",
+      "choices": [
+        {"id": "a", "text": "Manual EC2."},
+        {"id": "b", "text": "SageMaker + HuggingFaceModel SDK. Pre-built containers; 5-line deployment. Managed alternative: GCP Vertex AI, Azure ML."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SageMaker + HuggingFaceModel SDK. Native AWS+HF integration.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Biggest AI cost lever?",
+      "choices": [
+        {"id": "a", "text": "Network speed."},
+        {"id": "b", "text": "Right-sizing model. Default-to-biggest = #1 cost mistake. Smaller model + quantization + caching = 10-100x savings with minimal quality impact for most workloads."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Model right-sizing. Smaller-first; upgrade if needed. 10-100x cost reduction.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "API costs $30K/month at 100K queries/day. Cheaper?",
+      "choices": [
+        {"id": "a", "text": "Accept it."},
+        {"id": "b", "text": "Self-host. ~$720/month per dedicated GPU vs. $30K API. Open-source model + TGI/vLLM continuous batching. Break-even 100K-1M queries/day; above = self-host saves; below = API simpler."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Self-host. ~$720/mo vs. $30K API. Break-even ~100K-1M queries/day.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Conditionals and loops",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Reassign value to existing variable?",
+      "choices": [
+        {"id": "a", "text": "x = x + 1"},
+        {"id": "b", "text": "x := x + 1 — `:=` is reassignment operator in Pine. `=` declares; `:=` reassigns; `==` compares. Common bug source for new Pine devs."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": ":= reassigns; = declares; == compares.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Compact conditional value?",
+      "choices": [
+        {"id": "a", "text": "Long if/else."},
+        {"id": "b", "text": "Ternary: color = close > open ? color.green : color.red. One-liner for simple conditional value. Use switch for many cases; if/else for complex branches."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Ternary `? :` for compact conditional value.",
+      "points": 1
+    }
+  ]
+}

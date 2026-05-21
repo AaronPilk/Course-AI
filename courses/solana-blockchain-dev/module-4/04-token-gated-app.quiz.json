@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Token gating",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Secure token-gating?",
+      "choices": [
+        {"id": "a", "text": "Client check."},
+        {"id": "b", "text": "Server-side: SIWS (Sign-In With Solana) verifies signature → backend checks on-chain balance → grants session. Client-only gating bypassable by editing UI. Continuously re-verify; locked staking prevents flash-borrow attacks."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SIWS + backend balance check = secure gating.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "On-chain feature gating?",
+      "choices": [
+        {"id": "a", "text": "Off-chain."},
+        {"id": "b", "text": "Program constraint: #[account(constraint = user_token.amount > 0)] on instruction. Program rejects call if user doesn't hold tokens. Trustless gating; users can't bypass."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Anchor constraint = trustless on-chain gate.",
+      "points": 1
+    }
+  ]
+}

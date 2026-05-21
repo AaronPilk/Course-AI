@@ -1,0 +1,61 @@
+{
+  "title": "Module 2 quiz: Building indicators",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Plot signal on bar when condition true?",
+      "choices": [
+        {"id": "a", "text": "if signal: plot()"},
+        {"id": "b", "text": "plotshape(signal, shape.triangleup, location.belowbar, color.green). plot() can't be in conditional block; plotshape only renders when true."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "plotshape() handles conditional rendering.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "RSI overbought / oversold levels?",
+      "choices": [
+        {"id": "a", "text": "50 / 50"},
+        {"id": "b", "text": "Overbought >70, oversold <30. RSI on 0-100 scale measures momentum. hline(70) / hline(30) reference lines."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "70 overbought, 30 oversold.",
+      "points": 1
+    },
+    {"position": 3, "type": "scenario", "prompt": "HTF trend filter for entries?",
+      "choices": [
+        {"id": "a", "text": "Trade blind."},
+        {"id": "b", "text": "htfEma = request.security(syminfo.tickerid, \"D\", ta.ema(close, 50)); trade only when close > htfEma. Top-down filter; aligns LTF entries with HTF trend."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "HTF trend filter via request.security().",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "ATR for stop loss?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "stopPrice = entry - (ta.atr(14) * 2). Volatility-aware distance; adapts to market conditions. Tight in low-vol; wide in high-vol."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATR * multiplier for adaptive stops.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Persistent table on chart?",
+      "choices": [
+        {"id": "a", "text": "Every bar."},
+        {"id": "b", "text": "var table tbl = table.new(...) + update cells inside `if barstate.islast`. `var` for declare-once; islast for last-bar updates."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "var + barstate.islast pattern.",
+      "points": 1
+    }
+  ]
+}

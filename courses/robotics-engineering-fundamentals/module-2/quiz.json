@@ -1,0 +1,61 @@
+{
+  "title": "Module 2 quiz: ROS 2",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ROS 2 over ROS 1?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "DDS-based, decentralized, real-time capable, multi-robot native, embedded support, SROS2 security. ROS 1 EOL May 2025. Use Humble (2022 LTS) or Jazzy (2024 LTS) for production."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "DDS + real-time + decentralized.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "ROS 2 primitives?",
+      "choices": [
+        {"id": "a", "text": "Just topics."},
+        {"id": "b", "text": "Topics (pub/sub async), services (RPC sync), actions (long-running with feedback), parameters (config). Pick by use: stream → topic, query → service, navigate → action."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Topics + services + actions + parameters.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "QoS impact?",
+      "choices": [
+        {"id": "a", "text": "None."},
+        {"id": "b", "text": "Sensor data: BEST_EFFORT (UDP-like, high rate, lossy OK). Commands: RELIABLE (every msg matters). Subscriber QoS must match publisher; mismatch = silent message drops."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "QoS mismatch silently drops messages.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Multi-node startup?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Launch files (Python): generate_launch_description() returns LaunchDescription with Node + remappings + parameters. Compose smaller files (bringup pattern). Composable nodes for zero-copy IPC."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Python launch files orchestrate startup.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Test robot software safely?",
+      "choices": [
+        {"id": "a", "text": "Hardware first."},
+        {"id": "b", "text": "Gazebo simulation: physics + sensor plugins; same ros2_control code runs sim + real. Iterate fast. Bridge sim2real gap via domain randomization + hardware fine-tune. Final test always on real robot."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Gazebo + sim2real for safe iteration.",
+      "points": 1
+    }
+  ]
+}

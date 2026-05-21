@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Access control",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Production admin control?",
+      "choices": [
+        {"id": "a", "text": "Hot wallet."},
+        {"id": "b", "text": "Gnosis Safe multi-sig as owner + TimelockController for critical changes. Multi-sig prevents single-key rug; timelock gives users exit window before malicious change. Standard for production protocols (Uniswap, Aave, Compound)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-sig + Timelock for production trust.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "tx.origin auth pitfall?",
+      "choices": [
+        {"id": "a", "text": "Safe."},
+        {"id": "b", "text": "Phishing: user signs tx to attacker contract → attacker calls victim's tx.origin-gated function → tx.origin = user (still owner). msg.sender would be attacker, blocking. Always use msg.sender for auth."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "tx.origin phishable; always msg.sender.",
+      "points": 1
+    }
+  ]
+}

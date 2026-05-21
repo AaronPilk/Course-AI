@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Strategy basics",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "indicator() vs. strategy()?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "indicator() only plots; strategy() enables strategy.entry/close + Strategy Tester pane for backtesting P&L, drawdown, win rate."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "strategy() unlocks backtesting framework.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Realistic backtest configuration?",
+      "choices": [
+        {"id": "a", "text": "Defaults."},
+        {"id": "b", "text": "Set initial_capital (realistic size); commission_type=strategy.commission.percent with commission_value=0.05-0.25; slippage=2 ticks. Without these, backtest overstates edge by 20-50%."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Realistic capital + commission + slippage.",
+      "points": 1
+    }
+  ]
+}

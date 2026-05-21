@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Transactions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Priority fee in tx?",
+      "choices": [
+        {"id": "a", "text": "Hope."},
+        {"id": "b", "text": "ComputeBudgetProgram.setComputeUnitLimit({ units: 600000 }) + setComputeUnitPrice({ microLamports: 5000 }). Sets CU budget + per-CU priority fee. During congestion 1k-100k+; fetch via getRecentPrioritizationFees for dynamic pricing."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ComputeBudgetProgram for CU limit + priority fee.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Improve tx reliability?",
+      "choices": [
+        {"id": "a", "text": "Send once."},
+        {"id": "b", "text": "Simulate before submit (catches errors); retry with fresh blockhash on failure; priority fee from getRecentPrioritizationFees; confirmation at \"confirmed\" commitment (balance latency vs. safety). Production-grade pattern."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Simulate + retry + priority fees + commitment = reliability.",
+      "points": 1
+    }
+  ]
+}

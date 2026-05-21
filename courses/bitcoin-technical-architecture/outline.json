@@ -1,0 +1,79 @@
+{
+  "slug": "bitcoin-technical-architecture",
+  "title": "Bitcoin Technical Architecture",
+  "subtitle": "Understand the protocol that started it all — UTXOs, mining, scripts, Lightning.",
+  "category": "Blockchain",
+  "level": "Intermediate",
+  "estimated_hours": 7,
+  "tagline": "Digital gold. The original blockchain. Understand it deeply.",
+  "brand": {
+    "gradient_from": "#F7931A",
+    "gradient_to": "#5A341A",
+    "accent": "#FFFFFF"
+  },
+  "outcomes": [
+    "Understand Bitcoin's UTXO model and how it differs from account-based chains.",
+    "Read the Bitcoin whitepaper's design — Proof of Work, blocks, difficulty.",
+    "Master Bitcoin Script and transaction types: P2PKH, P2SH, SegWit, Taproot.",
+    "Use Bitcoin Core CLI: query blocks, build transactions, run a node.",
+    "Understand Lightning Network: payment channels, HTLCs, scaling.",
+    "Know the security model + threats: 51% attacks, miner extractable value, custody."
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Bitcoin fundamentals",
+      "objective": "Master the core architecture.",
+      "lessons": [
+        { "position": 1, "title": "The Bitcoin whitepaper" },
+        { "position": 2, "title": "UTXO model and addresses" },
+        { "position": 3, "title": "Proof of Work + mining" },
+        { "position": 4, "title": "Difficulty + halvings" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Transactions + scripts",
+      "objective": "Build and understand Bitcoin transactions.",
+      "lessons": [
+        { "position": 1, "title": "Transaction structure" },
+        { "position": 2, "title": "Bitcoin Script basics" },
+        { "position": 3, "title": "P2PKH, P2SH, SegWit, Taproot" },
+        { "position": 4, "title": "Fees and mempool" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Running a node",
+      "objective": "Operate Bitcoin Core hands-on.",
+      "lessons": [
+        { "position": 1, "title": "Bitcoin Core install + setup" },
+        { "position": 2, "title": "bitcoin-cli essentials" },
+        { "position": 3, "title": "RPC and indexing" },
+        { "position": 4, "title": "Wallet management" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Lightning Network",
+      "objective": "Understand Bitcoin's L2 scaling.",
+      "lessons": [
+        { "position": 1, "title": "Why Lightning exists" },
+        { "position": 2, "title": "Payment channels" },
+        { "position": 3, "title": "HTLCs and routing" },
+        { "position": 4, "title": "Running a Lightning node" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Security + ecosystem",
+      "objective": "Understand threats and the wider Bitcoin world.",
+      "lessons": [
+        { "position": 1, "title": "Custody: hot vs. cold storage" },
+        { "position": 2, "title": "51% attacks + MEV" },
+        { "position": 3, "title": "Ordinals, Runes, Inscriptions" },
+        { "position": 4, "title": "Privacy: CoinJoin, mixers, regulation" }
+      ]
+    }
+  ]
+}

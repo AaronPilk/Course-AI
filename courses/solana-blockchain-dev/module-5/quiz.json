@@ -1,0 +1,61 @@
+{
+  "title": "Module 5 quiz: Frontend + production",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Standard wallet integration?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "@solana/wallet-adapter-react: ConnectionProvider + WalletProvider + WalletMultiButton. useWallet() / useConnection() hooks. Phantom, Solflare, Backpack, Ledger via standard interface."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "wallet-adapter standard for multi-wallet support.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Priority fees during congestion?",
+      "choices": [
+        {"id": "a", "text": "Wait."},
+        {"id": "b", "text": "ComputeBudgetProgram.setComputeUnitLimit + setComputeUnitPrice. Fetch dynamic price via getRecentPrioritizationFees. During congestion 1k-100k+ micro-lamports per CU."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ComputeBudgetProgram with dynamic priority pricing.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Production RPC?",
+      "choices": [
+        {"id": "a", "text": "Public."},
+        {"id": "b", "text": "Paid provider (Helius, QuickNode, Triton) with SLA + failover backup. Public RPC ~40 req/10s rate-limited. Use enhanced APIs (DAS) for NFTs. Cache hot data; WebSocket for subscriptions."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Paid RPC + failover + caching for production.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Upgrade authority?",
+      "choices": [
+        {"id": "a", "text": "Hot wallet."},
+        {"id": "b", "text": "Squads multi-sig (2-of-3 or 3-of-5). Hot wallet compromise = rug. Multi-sig requires coordinated approval. Optionally set --final to lock forever (trustless but unfixable)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Squads multi-sig for production upgrade auth.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Mainnet readiness?",
+      "choices": [
+        {"id": "a", "text": "Deploy."},
+        {"id": "b", "text": "External audit (Halborn, OtterSec, Neodyme), multi-sig upgrade auth, emergency pause, devnet beta with real users, monitoring webhooks, incident response plan, bug bounty program (Immunefi). Don't ship unprepared."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Audit + multi-sig + pause + monitoring + bug bounty.",
+      "points": 1
+    }
+  ]
+}

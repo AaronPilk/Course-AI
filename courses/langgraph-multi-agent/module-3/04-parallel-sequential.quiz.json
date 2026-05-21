@@ -1,0 +1,8 @@
+{"title": "Quick check: Parallel/sequential", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "How to run 3 agents concurrently?",
+    "choices": [{"id": "a", "text": "Sequential edges."}, {"id": "b", "text": "Multiple edges from one node + merge node. graph.add_edge('start', 'a'); graph.add_edge('start', 'b'); graph.add_edge('start', 'c'); each runs in parallel; merge waits for all. For dynamic count: Send objects via conditional edge. State reducers handle concurrent updates to same field."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Multiple edges + merge node. Send for dynamic count.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Need to process 100 documents through same analysis pipeline. Architecture?",
+    "choices": [{"id": "a", "text": "Sequential."}, {"id": "b", "text": "Map-reduce with Send. Planner node creates Send list (one per document); dispatched to worker node (runs in parallel for all 100); aggregator collects results. 100x faster than sequential. State reducer (append list) collects worker outputs into single results list. For: bulk processing, parallel analysis, scalable document handling."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Map-reduce with Send. Parallel workers; aggregator merges.", "points": 1}
+]}

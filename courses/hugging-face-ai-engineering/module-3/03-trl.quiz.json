@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: TRL",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "DPO vs. RLHF for preference alignment?",
+      "choices": [
+        {"id": "a", "text": "RLHF always better."},
+        {"id": "b", "text": "DPO simpler + more stable; often matches RLHF quality. RLHF: train reward model from preferences → RL fine-tune (PPO) against reward model. Complex pipeline; unstable; tricky hyperparameters. DPO: direct optimization on preference pairs (chosen vs. rejected); no separate reward model; single training run; more stable; easier to implement. Dataset: {prompt, chosen, rejected}. Use DPOTrainer in TRL. Standard for open-source preference tuning 2026. Llama 3 / Mistral instruct / many community models use DPO. Newer methods (KTO, ORPO, IPO) offer further improvements but DPO is mainstream baseline."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "DPO simpler + more stable. No separate reward model. Matches RLHF quality often. Standard 2026.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Want to turn Llama base model into chatbot for legal domain. Pipeline?",
+      "choices": [
+        {"id": "a", "text": "Just prompt it."},
+        {"id": "b", "text": "Base → SFT on legal instructions → DPO on legal preference pairs. SFT (supervised fine-tuning): collect/generate 1000s of {legal question, expert answer} pairs; SFTTrainer fine-tunes base to follow legal-domain instructions. DPO: collect/generate {legal question, good answer, bad answer} pairs; DPOTrainer refines model to prefer good answers. Combined LoRA training (QLoRA) keeps it fast + cheap. Pipeline steps: 1) Curate legal SFT dataset (e.g., 5000 examples). 2) SFT for 1-3 epochs with QLoRA. 3) Generate preference pairs (human raters or LLM-as-judge). 4) DPO refinement. 5) Evaluate on held-out legal questions. 6) Deploy. Alternative: 1) Use prompt engineering with retrieval-augmented generation (RAG) over legal corpus — no fine-tuning needed. 2) Fine-tune via API (OpenAI's fine-tuning, Together AI's services). For domain-specialized chatbot: fine-tuning beats prompt engineering for consistency + cost-per-query at scale; RAG complements for keeping current knowledge. Standard pattern for vertical AI products: SFT for behavior + DPO for quality + RAG for knowledge."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Base → SFT on instructions → DPO on preferences. QLoRA for efficiency. RAG complementary for current knowledge. Standard pipeline for vertical AI.",
+      "points": 1
+    }
+  ]
+}

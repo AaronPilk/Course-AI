@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Career",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Stand out in robotics job market?",
+      "choices": [
+        {"id": "a", "text": "Just resume."},
+        {"id": "b", "text": "Portfolio: ROS 2 package on GitHub + demo videos + open-source contributions to MoveIt/Nav2/ROS 2 + ICRA/IROS papers. Stronger than just resume. Companies hire on demonstrated capability."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Portfolio + open source + papers > resume alone.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Growth areas 2026?",
+      "choices": [
+        {"id": "a", "text": "All same."},
+        {"id": "b", "text": "Humanoids (Tesla Optimus, Figure, Apptronik), foundation models for robotics (VLA: RT-2, OpenVLA, Octo), warehouse automation, surgical robotics, defense. Stagnant: pure industrial arm. Position for ML + manipulation + control."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Humanoids + VLA + warehouse + surgical + defense booming.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: PID",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "PID terms?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "P (proportional, react to current error) + I (integral, eliminate steady-state offset) + D (derivative, damp oscillations). u = Kp×e + Ki×∫e + Kd×de/dt. Workhorse closed-loop controller."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "P (now) + I (history) + D (rate).",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Integral term grows during saturation?",
+      "choices": [
+        {"id": "a", "text": "Ignore."},
+        {"id": "b", "text": "Anti-windup: when output saturated (clamped at max/min), stop integrating error (or even decay integral). Without it, recovery from saturation is slow + oscillatory. Common implementation: only integrate when not saturated."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Anti-windup prevents integral runaway.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "title": "Module 2 quiz: Transactions + scripts",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bitcoin fee?",
+      "choices": [
+        {"id": "a", "text": "Fixed."},
+        {"id": "b", "text": "fee = sum(inputs) - sum(outputs). Implicit; no fee field. Measured in sat/vB. Miners pick highest sat/vB first."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Fee = inputs - outputs; sat/vB unit.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Script properties?",
+      "choices": [
+        {"id": "a", "text": "Turing-complete."},
+        {"id": "b", "text": "Stack-based, no loops, deterministic, bounded (max 10k ops). Intentionally limited for security + predictable execution. Contrast Ethereum Solidity."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Bitcoin Script intentionally limited.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Address prefixes?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "1 (P2PKH legacy), 3 (P2SH wrapper), bc1q (SegWit P2WPKH/P2WSH), bc1p (Taproot P2TR). Modern wallets default bc1q/bc1p for smaller tx + privacy."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "1 / 3 / bc1q / bc1p = type identifiers.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Taproot benefits?",
+      "choices": [
+        {"id": "a", "text": "Just newer."},
+        {"id": "b", "text": "Schnorr signatures (64 bytes, aggregatable), all P2TR outputs look identical on-chain (privacy), MAST hides unused script branches. ~50% tx size reduction vs. P2PKH."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Schnorr + privacy + MAST = Taproot wins.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Stuck transaction?",
+      "choices": [
+        {"id": "a", "text": "Wait forever."},
+        {"id": "b", "text": "RBF if original signaled it — replace with higher-fee version. Or CPFP: receiver spends output in high-fee child tx; miner must include parent. Both bump effective fee rate."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RBF or CPFP for unsticking tx.",
+      "points": 1
+    }
+  ]
+}

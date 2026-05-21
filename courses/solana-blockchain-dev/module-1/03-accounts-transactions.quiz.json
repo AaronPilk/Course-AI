@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Accounts and transactions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Solana account fields?",
+      "choices": [
+        {"id": "a", "text": "Just balance."},
+        {"id": "b", "text": "Address (32-byte pubkey), owner (program controlling writes), lamports (SOL balance), data (serialized bytes), executable (is program?). All on-chain state lives in accounts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "address + owner + lamports + data + executable.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Transaction with 30+ accounts?",
+      "choices": [
+        {"id": "a", "text": "Multiple tx."},
+        {"id": "b", "text": "Address Lookup Tables (ALT) + Versioned Transactions (V0). ALT stores accounts on-chain; tx references by 1-byte index instead of 32 bytes. Fits within 1,232-byte tx size limit."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ALT + V0 transactions for many-account ops.",
+      "points": 1
+    }
+  ]
+}

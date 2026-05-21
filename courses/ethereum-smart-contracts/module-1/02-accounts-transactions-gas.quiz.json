@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Accounts and gas",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "EIP-1559 fee structure?",
+      "choices": [
+        {"id": "a", "text": "Fixed price."},
+        {"id": "b", "text": "totalFee = (baseFee + priorityFee) × gasUsed. baseFee adjusts to block fullness, burnt; priorityFee tip goes to validator; maxFeePerGas caps total. Reduces user overpayment vs. old auction model."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "baseFee (burnt) + priorityFee (tip) capped by maxFeePerGas.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Stuck tx with nonce 5?",
+      "choices": [
+        {"id": "a", "text": "Wait."},
+        {"id": "b", "text": "Replace with same nonce 5 + higher gas + value 0 to self. Validators take higher-gas tx; replaces stuck one. All later-nonce txs unstuck. Standard 'speed up' / 'cancel' in wallets."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Replace stuck nonce with higher-gas self-tx.",
+      "points": 1
+    }
+  ]
+}

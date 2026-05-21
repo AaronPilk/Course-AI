@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Testing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Discover edge cases automatically?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Foundry fuzz: function testFuzz_X(uint256 input) auto-generates random inputs, finds failure cases, shrinks. forge test --fuzz-runs 10000. Catches edge cases manual testing misses. Invariant tests find protocol-level bugs."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Foundry fuzz + invariant testing for edge cases.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Test against real DAI contract?",
+      "choices": [
+        {"id": "a", "text": "Mock."},
+        {"id": "b", "text": "forge test --fork-url $MAINNET_RPC --fork-block-number N. Tests run against forked mainnet state; interact with real DAI, Uniswap, etc. Reveals integration bugs mocks miss. vm.prank(whale) to transfer real tokens."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Fork test for realistic external interactions.",
+      "points": 1
+    }
+  ]
+}

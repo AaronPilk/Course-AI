@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Bitcoin Script",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bitcoin Script properties?",
+      "choices": [
+        {"id": "a", "text": "Turing-complete."},
+        {"id": "b", "text": "Stack-based, no loops, deterministic, intentionally limited (max 10k ops, 1000 stack). Designed for security + predictable execution time. Contrast with Solidity which is Turing-complete with footguns."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Stack-based + bounded + no loops = security-first.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Multisig 2-of-3 setup?",
+      "choices": [
+        {"id": "a", "text": "Custom code."},
+        {"id": "b", "text": "OP_2 <pubkey1> <pubkey2> <pubkey3> OP_3 OP_CHECKMULTISIG. Locks output so any 2 of 3 keys can spend. Wrap in P2SH for standard address. Used for cold storage, treasury, escrow."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Native OP_CHECKMULTISIG opcode for multisig.",
+      "points": 1
+    }
+  ]
+}

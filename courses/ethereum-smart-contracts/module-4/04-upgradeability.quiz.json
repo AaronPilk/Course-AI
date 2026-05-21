@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Upgradeability",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Upgradeable contract initialization?",
+      "choices": [
+        {"id": "a", "text": "Constructor."},
+        {"id": "b", "text": "function initialize() public initializer { ... } — replaces constructor. Constructors don't run on proxy storage. initializer modifier ensures one-time execution; reinitializer(N) for version-specific upgrade init."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "initialize() with initializer modifier replaces constructor.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Storage layout for V2?",
+      "choices": [
+        {"id": "a", "text": "Reorder freely."},
+        {"id": "b", "text": "Append-only: never reorder/remove existing storage variables. Add new fields at end. Use uint256[N] __gap arrays in parent contracts to reserve future slots. OZ Upgrades plugin validates compatibility."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Append-only storage; __gap for future slots.",
+      "points": 1
+    }
+  ]
+}

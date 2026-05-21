@@ -1,0 +1,61 @@
+{
+  "title": "Module 4 quiz: Backtesting",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Minimum trade count for validity?",
+      "choices": [
+        {"id": "a", "text": "10"},
+        {"id": "b", "text": "100+ trades for confidence; 500+ for robust. <30 trades = not statistically significant; could be lucky run. Combine with 3-5 year period across bull / bear / chop conditions."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "100+ trades for stats; <30 is noise.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Detect overfitting?",
+      "choices": [
+        {"id": "a", "text": "Trust metrics."},
+        {"id": "b", "text": "Compare IS vs OOS. IS Sharpe 2.0 + OOS Sharpe 0.3 = overfit. Test parameter neighborhood — smooth = robust, spiky = curve-fit. Multi-symbol + multi-regime test."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "IS/OOS divergence + parameter neighborhood reveal overfit.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Walk-forward efficiency?",
+      "choices": [
+        {"id": "a", "text": "Backtest."},
+        {"id": "b", "text": "Rolling train/test windows: train 2018-2020/test 2021, train 2019-2021/test 2022, etc. WFE = OOS/IS returns. >0.5 generalizes; <0.3 overfit."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Rolling re-train/test mimics live deployment.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Repainting prevention?",
+      "choices": [
+        {"id": "a", "text": "Ignore it."},
+        {"id": "b", "text": "Use barstate.isconfirmed on entries; close[1] (not close) from request.security; default lookahead_off. Backtest then matches live; no flickering signals; no future leak."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "isconfirmed + close[1] from HTF prevents repaint.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Live transition order?",
+      "choices": [
+        {"id": "a", "text": "Backtest → live."},
+        {"id": "b", "text": "Backtest IS → OOS → paper-trade 3 months → micro-live 1% capital 3-6 months → scaled 25% target → full deployment. Live edge always less than backtest; learn at small size."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Backtest → OOS → paper → micro → scaled → full.",
+      "points": 1
+    }
+  ]
+}

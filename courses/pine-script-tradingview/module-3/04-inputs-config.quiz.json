@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Inputs and configuration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "User-editable integer param?",
+      "choices": [
+        {"id": "a", "text": "length = 20"},
+        {"id": "b", "text": "length = input.int(20, \"MA Length\", minval=2, maxval=200). Settings panel UI; minval/maxval clamp; tooltip optional. User tunes without code change."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "input.int with bounds for safe user-tuneable params.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Organize 20 inputs in UI?",
+      "choices": [
+        {"id": "a", "text": "Don't."},
+        {"id": "b", "text": "Use group=\"MA Settings\" / \"Risk Management\" / \"Display\" parameters; inline=\"MA\" puts pairs on same row. Tooltips document each. Clean collapsible sections."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "group + inline + tooltips for usable UI.",
+      "points": 1
+    }
+  ]
+}

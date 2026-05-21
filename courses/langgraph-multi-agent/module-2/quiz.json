@@ -1,0 +1,17 @@
+{"title": "Module 2 quiz: Building agents", "scoring": {"passing_score": 4, "total_questions": 5}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "ReAct pattern?",
+    "choices": [{"id": "a", "text": "Linear."}, {"id": "b", "text": "Reasoning + Acting. LLM alternates think + tool calls. Loops until done. create_react_agent for quick start."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Reasoning + Acting iteration.", "points": 1},
+  {"position": 2, "type": "multiple_choice", "prompt": "Define tool?",
+    "choices": [{"id": "a", "text": "Inline."}, {"id": "b", "text": "@tool decorator + descriptive docstring. ToolNode auto-executes. Pydantic args for complex schemas."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "@tool decorator + docstring.", "points": 1},
+  {"position": 3, "type": "multiple_choice", "prompt": "Memory across sessions?",
+    "choices": [{"id": "a", "text": "Each session new."}, {"id": "b", "text": "Checkpointer + thread_id. SqliteSaver / PostgresSaver persists state per thread. Plus vector DB for long-term facts."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Checkpointer + thread_id for persistence.", "points": 1},
+  {"position": 4, "type": "multiple_choice", "prompt": "Observability tool?",
+    "choices": [{"id": "a", "text": "Print logs."}, {"id": "b", "text": "LangSmith. Auto-tracing all runs; visualize execution; debug + monitor. Production-essential."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "LangSmith for tracing + observability.", "points": 1},
+  {"position": 5, "type": "scenario", "prompt": "Agent has 25 tools; confused. Fix?",
+    "choices": [{"id": "a", "text": "More tools."}, {"id": "b", "text": "Reduce to 5-10 max. Combine related. Hierarchical agents for more capability."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "5-10 tools max; hierarchical for more.", "points": 1}
+]}

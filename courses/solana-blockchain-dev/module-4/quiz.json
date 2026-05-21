@@ -1,0 +1,61 @@
+{
+  "title": "Module 4 quiz: Tokens and NFTs",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ATA?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Associated Token Account: deterministic PDA per (owner, mint). associated_token::mint + associated_token::authority. Wallet-standard; predictable. Recoverable by recomputing."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATA = PDA per (owner, mint).",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "PDA vault pattern?",
+      "choices": [
+        {"id": "a", "text": "Keypair."},
+        {"id": "b", "text": "token::authority = vault_authority where vault_authority is a PDA from your program. PDA signs withdrawals via new_with_signer + seeds. Program controls funds; no private key risk."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PDA as token authority = program-owned vault.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "NFT structure?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "SPL mint (0 decimals, supply 1) + Metaplex Metadata (name, symbol, uri, royalties) + Master Edition (uniqueness) + token account. Metaplex Token Metadata standard."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SPL mint + Metadata + Master Edition.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Million-scale NFT collection?",
+      "choices": [
+        {"id": "a", "text": "Regular NFTs."},
+        {"id": "b", "text": "Compressed NFTs (cNFTs) via Bubblegum. Merkle trees store data; ~$0.0001 per mint vs. $0.01 regular. 1M+ feasible. DAS API for reading; standard wallets need cNFT support."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "cNFTs (Bubblegum) for massive scale.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Secure token gating?",
+      "choices": [
+        {"id": "a", "text": "Client check."},
+        {"id": "b", "text": "SIWS (Sign-In With Solana) for auth + server checks on-chain balance + continuously verify (don't grant permanent access). On-chain feature gating via Anchor constraints rejects calls without holdings."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SIWS + backend verify + continuous check + on-chain constraints.",
+      "points": 1
+    }
+  ]
+}

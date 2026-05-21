@@ -1,0 +1,8 @@
+{"title": "Quick check: Support agent", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Customer support agent architecture?",
+    "choices": [{"id": "a", "text": "One LLM."}, {"id": "b", "text": "Triage classifier → domain specialist (billing/tech/sales) → tools (CRM lookup, KB search, order API) → resolution OR escalation. Persistence per customer (thread_id). RAG over support docs. Production: Intercom Fin, Zendesk AI patterns."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Triage → specialist → tools → resolution/escalation.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Support agent confidently gives wrong answer to billing question. Fix?",
+    "choices": [{"id": "a", "text": "Better LLM."}, {"id": "b", "text": "Confidence-based escalation + grounding in actual data. 1) Ground every answer in CRM lookup / KB search (not LLM general knowledge). 2) Confidence threshold — if LLM uncertain, escalate to human. 3) Citations required (every claim → source from CRM/KB). 4) Human approval for high-stakes responses (refunds, billing changes). 5) Feedback loop — track which answers customer accepted vs. complained about; iterate prompts/grounding. The 'over-confident wrong answer' is the #1 support AI failure mode; ground answers + escalate uncertainty + cite sources prevents it."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Ground in data + confidence threshold + citations + human approval for high-stakes.", "points": 1}
+]}

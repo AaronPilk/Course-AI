@@ -1,0 +1,43 @@
+{
+  "slug": "pine-script-tradingview",
+  "name": "Pine Script",
+  "title": "Pine Script TradingView Automation",
+  "subtitle": "Build indicators + strategies + alerts in TradingView's scripting language.",
+  "category": "Trading",
+  "level": "Beginner to Intermediate",
+  "estimated_hours": 5,
+  "summary": "Pine Script is TradingView's scripting language for custom indicators, backtested strategies, and automated alerts. Used by 60M+ TradingView users. This course covers Pine Script v5 end-to-end: syntax, plotting, indicators, strategies, backtesting, alerts, and integration with brokers. Practical patterns from simple moving averages to fully automated trading strategies.",
+  "brand": {"logo": "/brands/pine-script-tradingview.svg", "gradient": ["#2962FF", "#0D47A1"]},
+  "modules": [
+    {"position": 1, "title": "Pine Script fundamentals", "objective": "Get oriented with Pine v5.", "lessons": [
+      {"position": 1, "title": "TradingView + Pine editor"},
+      {"position": 2, "title": "Variables, types, operators"},
+      {"position": 3, "title": "Series and time"},
+      {"position": 4, "title": "Conditionals and loops"}
+    ]},
+    {"position": 2, "title": "Building indicators", "objective": "Visualize market data.", "lessons": [
+      {"position": 1, "title": "Plot functions"},
+      {"position": 2, "title": "Common indicators (SMA, EMA, RSI, MACD)"},
+      {"position": 3, "title": "Multi-timeframe analysis"},
+      {"position": 4, "title": "Custom visualizations + tables"}
+    ]},
+    {"position": 3, "title": "Strategy development", "objective": "Code backtestable trading strategies.", "lessons": [
+      {"position": 1, "title": "strategy() vs. indicator()"},
+      {"position": 2, "title": "Entry, exit, and order management"},
+      {"position": 3, "title": "Risk management — stop loss, take profit"},
+      {"position": 4, "title": "Position sizing"}
+    ]},
+    {"position": 4, "title": "Backtesting and optimization", "objective": "Validate strategy performance.", "lessons": [
+      {"position": 1, "title": "Reading the strategy tester"},
+      {"position": 2, "title": "Avoiding overfitting"},
+      {"position": 3, "title": "Walk-forward testing"},
+      {"position": 4, "title": "Common backtest pitfalls"}
+    ]},
+    {"position": 5, "title": "Alerts and automation", "objective": "Trade automatically via alerts.", "lessons": [
+      {"position": 1, "title": "Pine Script alerts"},
+      {"position": 2, "title": "Webhook integration"},
+      {"position": 3, "title": "Broker connections (TradingView native + 3rd party)"},
+      {"position": 4, "title": "Production deployment + monitoring"}
+    ]}
+  ]
+}

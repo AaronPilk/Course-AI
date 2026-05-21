@@ -1,0 +1,61 @@
+{
+  "title": "Module 5 quiz: Deployment",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Bridge sim2real gap?",
+      "choices": [
+        {"id": "a", "text": "Train more."},
+        {"id": "b", "text": "Domain randomization (vary friction, mass, sensors, lighting) + system identification (measure real, tune sim) + real-world fine-tuning. Three pillars; each addresses different gap source."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Randomization + sysid + fine-tune.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Best learning platform?",
+      "choices": [
+        {"id": "a", "text": "Industrial KUKA."},
+        {"id": "b", "text": "TurtleBot 4 (~$2k, ROS 2 native) for mobile or Crazyflie 2.1 (~$200) for drones. Full ROS 2 ecosystem; designed for education. Industrial (UR/Franka $30k+) overkill."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "TurtleBot / Crazyflie = affordable + complete.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Safety design?",
+      "choices": [
+        {"id": "a", "text": "Software."},
+        {"id": "b", "text": "Defense in depth: mechanical (padding) + hardware (E-stops, redundant sensors) + firmware (joint limits, watchdog) + software (velocity caps, collision detect) + operational (workspace fencing). Each layer catches failures."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Mechanical + hardware + firmware + software + ops.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Real-time control?",
+      "choices": [
+        {"id": "a", "text": "Stock Linux."},
+        {"id": "b", "text": "Linux PREEMPT_RT + CPU isolation (isolcpus) + pre-allocated memory (no malloc in loop) + lock-free comms. Deterministic deadlines; industrial control loops at 1kHz+."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PREEMPT_RT + isolation + pre-alloc.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Robotics career path 2026?",
+      "choices": [
+        {"id": "a", "text": "Generalist."},
+        {"id": "b", "text": "Portfolio (GitHub + demos + papers) + specialize in growth area (RL, manipulation, perception, humanoids). Active in open source ROS 2 / MoveIt / Nav2. ICRA/IROS papers. Salary $130-300k+ for senior roles."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Portfolio + specialization + open source + papers.",
+      "points": 1
+    }
+  ]
+}

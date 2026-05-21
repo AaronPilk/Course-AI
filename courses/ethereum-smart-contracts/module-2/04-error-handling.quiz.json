@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Error handling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Cheapest revert with structured data?",
+      "choices": [
+        {"id": "a", "text": "require with string."},
+        {"id": "b", "text": "Custom errors (0.8.4+): error InsufficientBalance(uint256 avail, uint256 req); revert InsufficientBalance(x, y). ~24 bytes vs. 200+ for strings. Typed args returned to client; cheaper bytecode."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Custom errors = cheap + typed.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Withdraw pattern preventing reentrancy?",
+      "choices": [
+        {"id": "a", "text": "Trust caller."},
+        {"id": "b", "text": "CEI (Checks-Effects-Interactions): 1) require checks first, 2) update state (balances[msg.sender] -= amount), 3) external call last. State updated before external call prevents reentrant calls from seeing stale state."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CEI pattern: state before external call.",
+      "points": 1
+    }
+  ]
+}

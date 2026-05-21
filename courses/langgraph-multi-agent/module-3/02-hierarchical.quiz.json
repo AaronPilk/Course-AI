@@ -1,0 +1,8 @@
+{"title": "Quick check: Hierarchical", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "When use hierarchical agent teams?",
+    "choices": [{"id": "a", "text": "Always."}, {"id": "b", "text": "Very complex tasks needing many specialists (>10 agents). Top supervisor → sub-supervisors → specialists. Each level decides among 3-5 options vs. one supervisor decides among 20 options (error-prone). Sub-teams as compiled graphs treated as nodes in parent."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "For >10 agents. Avoids supervisor overload.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Single supervisor with 25 specialist agents performs poorly. Fix?",
+    "choices": [{"id": "a", "text": "Bigger supervisor LLM."}, {"id": "b", "text": "Hierarchical structure. Top supervisor routes to 5 team supervisors; each team supervisor has 5 specialists. Decision space at each level: 5 options instead of 25. Cleaner reasoning; less context bloat; better specialist selection. Compose sub-teams as sub-graphs; LangGraph supports natively."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Restructure as hierarchy: top → team supervisors → specialists. 5-way decisions vs. 25-way.", "points": 1}
+]}

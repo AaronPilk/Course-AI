@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Deployment",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Detect dead pipeline?",
+      "choices": [
+        {"id": "a", "text": "Check sometimes."},
+        {"id": "b", "text": "Heartbeat: Pine fires alert every hour; endpoint updates last_alive_at; external monitor (UptimeRobot) alerts if no heartbeat >2 hours. Without it, pipelines die silently."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Heartbeat alerts + external monitor = pipeline health.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Emergency halt all trading?",
+      "choices": [
+        {"id": "a", "text": "Delete alerts."},
+        {"id": "b", "text": "Kill switch: endpoint checks KV/database flag before placing orders; toggle via admin endpoint or Discord bot command. Instant halt regardless of incoming alerts. Critical when strategy misbehaves."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Kill switch in endpoint = instant halt mechanism.",
+      "points": 1
+    }
+  ]
+}

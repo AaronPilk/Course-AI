@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Sensor fusion",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Standard ROS sensor fusion?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "robot_localization package: EKF / UKF nodes combine wheel odom + IMU + GPS + visual via YAML config. Each sensor's enabled axes specified. Standard for ROS 2 navigation stacks."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "robot_localization package for ROS fusion.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Best for known map localization?",
+      "choices": [
+        {"id": "a", "text": "EKF."},
+        {"id": "b", "text": "AMCL (Adaptive Monte Carlo Localization) uses particle filter — represents belief as 1000+ samples, handles multi-modal initial uncertainty. Standard for ROS Navigation in pre-built maps."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Particle filter (AMCL) handles multi-modal localization.",
+      "points": 1
+    }
+  ]
+}

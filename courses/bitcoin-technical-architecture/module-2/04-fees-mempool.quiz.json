@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Fees and mempool",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Fee unit?",
+      "choices": [
+        {"id": "a", "text": "Flat."},
+        {"id": "b", "text": "Sat/vB (satoshis per virtual byte). Total fee = tx size × sat/vB. P2PKH ~226 vB, P2WPKH ~141 vB, Taproot ~111 vB. Smaller tx types save fees proportionally."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Fees in sat/vB; tx size matters.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Tx stuck due to low fee?",
+      "choices": [
+        {"id": "a", "text": "Wait."},
+        {"id": "b", "text": "RBF (Replace-By-Fee) if tx signaled it — replace with higher-fee version. Or CPFP (Child-Pays-For-Parent): receiver spends output in high-fee tx, miner must include parent. Both bumb effective fee rate."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RBF or CPFP for fee acceleration.",
+      "points": 1
+    }
+  ]
+}

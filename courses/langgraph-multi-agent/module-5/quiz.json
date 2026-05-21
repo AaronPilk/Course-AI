@@ -1,0 +1,17 @@
+{"title": "Module 5 quiz: Real-world agents", "scoring": {"passing_score": 4, "total_questions": 5}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Research agent architecture?",
+    "choices": [{"id": "a", "text": "Single LLM."}, {"id": "b", "text": "Plan → parallel search → evaluate → loop or synthesize. Perplexity-style."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Plan → search → evaluate → loop/synthesize.", "points": 1},
+  {"position": 2, "type": "multiple_choice", "prompt": "Code agent safety?",
+    "choices": [{"id": "a", "text": "Trust LLM."}, {"id": "b", "text": "Sandboxing essential. E2B / Modal / Docker / cloud VM. Never run untrusted code on host."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Sandboxing for untrusted code execution.", "points": 1},
+  {"position": 3, "type": "multiple_choice", "prompt": "Support agent architecture?",
+    "choices": [{"id": "a", "text": "One model."}, {"id": "b", "text": "Triage → specialist → tools (CRM, KB) → resolution or escalation. Per-customer persistence. Citations + grounding."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Triage → specialist → tools → resolution/escalation.", "points": 1},
+  {"position": 4, "type": "multiple_choice", "prompt": "Deployment options?",
+    "choices": [{"id": "a", "text": "Run locally."}, {"id": "b", "text": "LangGraph Platform (managed) OR FastAPI + Docker self-hosted. Plus streaming, auth, rate limiting, monitoring."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Platform managed OR FastAPI self-hosted.", "points": 1},
+  {"position": 5, "type": "scenario", "prompt": "Production cost protection?",
+    "choices": [{"id": "a", "text": "Trust users."}, {"id": "b", "text": "Per-user rate limits + cost budgets + token quotas + recursion limits + alerts + hard caps. Required for production."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Rate limits + budgets + caps required.", "points": 1}
+]}

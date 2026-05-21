@@ -1,0 +1,61 @@
+{
+  "title": "Module 1 quiz: Ethereum fundamentals",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "EVM properties?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Deterministic + isolated + stateful + pay-per-op (gas). Stack-based VM; same input → same output everywhere. Bytecode compiled from Solidity."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Deterministic + isolated + stateful + gas-priced.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "EIP-1559 fees?",
+      "choices": [
+        {"id": "a", "text": "Fixed."},
+        {"id": "b", "text": "(baseFee + priorityFee) × gasUsed. baseFee adjusts to demand, burnt; priorityFee tip; maxFeePerGas caps total. Reduced overpayment vs. old auction."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "EIP-1559: baseFee + priorityFee.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Ethereum finality time?",
+      "choices": [
+        {"id": "a", "text": "Instant."},
+        {"id": "b", "text": "~13 minutes via 2 consecutive justified epochs (32 slots × 12s × 2). After finalization, reversing requires slashing 1/3+ validators (~$30B+ economic security)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "~13 min finality via PoS consensus.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Reduce user fees 10-100×?",
+      "choices": [
+        {"id": "a", "text": "L1 only."},
+        {"id": "b", "text": "L2 rollups (Arbitrum, Optimism, Base, zkSync). Inherit Ethereum security via batched proofs. EIP-4844 blobs dropped L2 fees another 90%+ in 2024."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "L2 rollups for 10-100× cheaper transactions.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Dev tool stack?",
+      "choices": [
+        {"id": "a", "text": "Remix."},
+        {"id": "b", "text": "Foundry (forge/cast/anvil) for fast Solidity tests + fuzzing; Hardhat for TS scripts + deploy. Both compile/test/deploy/verify on Etherscan. Modern projects use both."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Foundry for tests + Hardhat for deploy.",
+      "points": 1
+    }
+  ]
+}

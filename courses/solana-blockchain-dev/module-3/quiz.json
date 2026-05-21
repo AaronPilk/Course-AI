@@ -1,0 +1,61 @@
+{
+  "title": "Module 3 quiz: Anchor framework",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Anchor advantage?",
+      "choices": [
+        {"id": "a", "text": "Slower."},
+        {"id": "b", "text": "~10× less boilerplate; declarative account validation; discriminator system; IDL auto-gen + typed TS client. Production standard."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Boilerplate reduction + safety + typed client.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Verify field matches signer?",
+      "choices": [
+        {"id": "a", "text": "Skip."},
+        {"id": "b", "text": "#[account(has_one = authority)] on account + pub authority: Signer<'info>. Anchor verifies account.authority == authority.key() automatically."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "has_one = field for ownership validation.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Cache PDA bump?",
+      "choices": [
+        {"id": "a", "text": "Recompute."},
+        {"id": "b", "text": "Store at init: offer.bump = ctx.bumps.offer; use bump = offer.bump in subsequent constraints. Skips find_program_address iteration (up to 256 hashes); saves thousands CU."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache bump on account; reuse in constraints.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Notify client of program event?",
+      "choices": [
+        {"id": "a", "text": "Polling."},
+        {"id": "b", "text": "#[event] struct + emit!() in instruction. Client subscribes via program.addEventListener. Logged to tx logs; structured event data; lower latency than polling account changes."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "#[event] + emit! + addEventListener for client events.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Test failure paths?",
+      "choices": [
+        {"id": "a", "text": "Only happy."},
+        {"id": "b", "text": "try/catch on tx call; expect(err.error.errorCode.code).to.equal('Unauthorized'). Test success + failure for each instruction to catch missing constraints and validate auth bypass attempts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Negative tests = security validation.",
+      "points": 1
+    }
+  ]
+}

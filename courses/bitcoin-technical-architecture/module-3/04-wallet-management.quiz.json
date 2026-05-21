@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Wallet management",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Air-gapped signing?",
+      "choices": [
+        {"id": "a", "text": "Impossible."},
+        {"id": "b", "text": "PSBT (Partially Signed Bitcoin Transaction): create unsigned tx on online watch-only wallet → transfer PSBT via QR/SD card to air-gapped hardware wallet → sign offline → bring back signed PSBT → broadcast. Funds never touch online machine."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PSBT enables air-gapped multi-step signing.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Track cold storage without exposure?",
+      "choices": [
+        {"id": "a", "text": "Import private key."},
+        {"id": "b", "text": "Watch-only wallet: createwallet \"monitor\" true + import xpub descriptor. Node tracks all derived addresses; shows balances + receives; cannot spend (no private keys). Sign separately on hardware wallet via PSBT."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Watch-only + xpub for safe monitoring.",
+      "points": 1
+    }
+  ]
+}

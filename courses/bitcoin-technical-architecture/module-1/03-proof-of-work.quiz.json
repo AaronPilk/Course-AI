@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: PoW + mining",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Difficulty adjustment?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Every 2,016 blocks (~2 weeks), difficulty auto-adjusts to target 10 min/block. Faster blocks = difficulty up; slower = down. Max change 4× per cycle. Keeps issuance steady regardless of hash rate."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-adjusts every 2016 blocks; targets 10 min.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Halving impact?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Block reward halves every 210,000 blocks (~4 years). 50 → 25 → 12.5 → 6.25 → 3.125 BTC currently. Reduces new issuance; converges to ~21M total. Historically preceded BTC price rallies due to supply shock."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Halvings every 4 years; ~21M cap.",
+      "points": 1
+    }
+  ]
+}

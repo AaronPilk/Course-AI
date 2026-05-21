@@ -1,0 +1,61 @@
+{
+  "title": "Module 2 quiz: Solidity",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Data locations?",
+      "choices": [
+        {"id": "a", "text": "Storage only."},
+        {"id": "b", "text": "storage (permanent, ~20k gas SSTORE) / memory (temp, cheap) / calldata (read-only function input, cheapest). Use calldata for external inputs you won't modify."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "storage / memory / calldata = cost-different locations.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Event filtering?",
+      "choices": [
+        {"id": "a", "text": "All indexed."},
+        {"id": "b", "text": "Up to 3 indexed params = topics filterable off-chain. Non-indexed in data. Index fields you'll filter on (from, to, tokenId). Strings stored as keccak256 if indexed."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Max 3 indexed params for off-chain filtering.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Standard token implementation?",
+      "choices": [
+        {"id": "a", "text": "From scratch."},
+        {"id": "b", "text": "Inherit OpenZeppelin: contract MyToken is ERC20, Ownable { constructor() ERC20(\"X\",\"X\") Ownable(msg.sender) {} }. Audited, conventional, safe. Never reimplement ERC standards."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "OpenZeppelin = audited standard library.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Cheapest typed revert?",
+      "choices": [
+        {"id": "a", "text": "require string."},
+        {"id": "b", "text": "Custom errors (0.8.4+): error InsufficientBalance(uint256, uint256); revert InsufficientBalance(have, need). ~24 bytes encoded vs. 200+ for strings; client decodes typed args."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Custom errors = cheap + typed.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Reentrancy-safe withdraw?",
+      "choices": [
+        {"id": "a", "text": "External call first."},
+        {"id": "b", "text": "Checks-Effects-Interactions (CEI): 1) require checks, 2) update state, 3) external call last. balances[msg.sender] -= amount BEFORE payable transfer. Reentrant attacker sees already-deducted state."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CEI: checks → effects → interactions.",
+      "points": 1
+    }
+  ]
+}

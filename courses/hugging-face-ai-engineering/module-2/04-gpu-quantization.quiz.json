@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: GPU + Quantization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Approximate VRAM needed for 70B parameter model in FP16?",
+      "choices": [
+        { "id": "a", "text": "8 GB" },
+        { "id": "b", "text": "~140 GB. Formula: ~2 GB per billion params in FP16. 70B × 2 = 140 GB. Plus ~20% overhead for activations / KV cache = ~170 GB total during inference. Far beyond single GPU (max ~80 GB on H100); needs multi-GPU (2x H100 80GB = 160 GB, tight; 4x A100 80GB = 320 GB comfortable) or aggressive quantization. INT8: ~70 GB; still multi-GPU. INT4: ~35 GB; fits 48 GB workstation card; 24 GB consumer GPU needs CPU offloading (slow). Practical 70B local: 1) 2-4 GPU rig with INT8/INT4. 2) Single 80GB H100 with INT4 + some offloading. 3) GGUF Q4 on Mac M-series with unified memory (24 GB+ Mac handles 70B INT4). For consumer GPU (24 GB RTX 4090): use 8B model (16 GB FP16) or quantized 13B (~10 GB INT4); 70B requires either cloud or multi-GPU. Memory math foundational: FP16 = 2 GB/B params; INT8 = 1 GB/B; INT4 = 0.5 GB/B. Plus overhead. Pick model size + precision matching your hardware. Pro habit: calculate before downloading; saves bandwidth + frustration.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "~140 GB FP16. 2 GB/B params. Multi-GPU or aggressive quantization (INT4 ~35 GB). Consumer GPU = use smaller model.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Production LLM API serving 1000s of requests/min. Optimization?",
+      "choices": [
+        { "id": "a", "text": "Standard Transformers." },
+        { "id": "b", "text": "vLLM or TensorRT-LLM. Standard Transformers library is fine for development / low volume but doesn't optimize throughput. Production serving engines: 1) vLLM — PagedAttention for efficient KV cache; continuous batching; 5-20x throughput vs. naive Transformers. Easy: `from vllm import LLM; llm = LLM(model='...'); llm.generate(prompts)`. 2) TensorRT-LLM (Nvidia) — best raw speed on Nvidia GPUs; compile model for specific hardware; harder setup but maximum performance. 3) Text Generation Inference (TGI) — HF's production server; similar to vLLM. 4) Triton Inference Server — Nvidia's general inference server. Continuous batching key insight: traditional batching waits for slowest request in batch; continuous batching swaps completed requests for new ones immediately; much higher throughput when request lengths vary. PagedAttention key insight: KV cache memory managed like virtual memory (paged); avoids fragmentation; fits more concurrent requests. Combined with: 1) Quantization (INT8 / INT4 / AWQ) for memory. 2) Flash Attention for memory + speed. 3) Speculative decoding for latency. 4) Tensor parallelism across multiple GPUs. Production stack 2026: model + AWQ quantization + vLLM serving + load balancer + auto-scaling. Combined throughput: 5-20x naive Transformers; cost per token significantly lower. For business with serious LLM volumes: this stack is the standard.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "vLLM or TensorRT-LLM. PagedAttention + continuous batching = 5-20x throughput. Combine with AWQ quantization + Flash Attention. Production standard.",
+      "points": 1
+    }
+  ]
+}

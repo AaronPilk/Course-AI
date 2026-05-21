@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: LiDAR",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Process 3D LiDAR data?",
+      "choices": [
+        {"id": "a", "text": "Raw points."},
+        {"id": "b", "text": "Open3D / PCL: voxel downsampling for speed, RANSAC plane segment for ground removal, DBSCAN clustering for objects, ICP/NDT for registration. PointCloud2 = ROS format; read_points iterates."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Open3D pipeline: downsample → segment → cluster.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Align two 3D scans?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "ICP (Iterative Closest Point): registration_icp(source, target, threshold, init_transform) iteratively finds best transform. Or NDT (Normal Distributions Transform) for faster on large clouds. Standard SLAM building block."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ICP/NDT for point cloud alignment.",
+      "points": 1
+    }
+  ]
+}

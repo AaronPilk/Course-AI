@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Blocks and finality",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Ethereum finality?",
+      "choices": [
+        {"id": "a", "text": "Instant."},
+        {"id": "b", "text": "~13 minutes (2 consecutive justified epochs). After finalization, reversing requires slashing 1/3+ of validators (~$30B+ economic security). 12s slots, 32-slot epochs."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "~13 min finality via 2 epochs justified.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "L2 fees dropped 90%?",
+      "choices": [
+        {"id": "a", "text": "Magic."},
+        {"id": "b", "text": "EIP-4844 (proto-danksharding) added blob transactions. L2s post compressed data as cheap blobs ($0.0001/byte) instead of expensive calldata. Pruned after ~2 weeks. Result: L2 fees dropped 90%+ in 2024."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "EIP-4844 blobs = cheap L2 data posting.",
+      "points": 1
+    }
+  ]
+}

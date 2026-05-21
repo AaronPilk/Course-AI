@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Proof of History",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "What PoH provides?",
+      "choices": [
+        {"id": "a", "text": "Random number."},
+        {"id": "b", "text": "Cryptographic clock via continuous hash chain. Each hash proves what happened before it. Validators don't need to agree on time — the chain self-orders. Result: parallelism in block production; no consensus round-robin."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PoH = verifiable global clock enabling parallel block production.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Transaction during congestion?",
+      "choices": [
+        {"id": "a", "text": "Wait forever."},
+        {"id": "b", "text": "Set priority fee via ComputeBudgetProgram.setComputeUnitPrice + reasonable CU limit. Local fee markets per write-locked account; hot accounts cost more. Priority fees move tx ahead in leader's queue."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Priority fees + CU budget control congestion behavior.",
+      "points": 1
+    }
+  ]
+}

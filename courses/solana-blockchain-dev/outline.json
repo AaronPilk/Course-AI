@@ -1,0 +1,79 @@
+{
+  "slug": "solana-blockchain-dev",
+  "title": "Solana Blockchain Development",
+  "subtitle": "Build on the fastest L1: programs, tokens, NFTs, and high-throughput apps.",
+  "category": "Blockchain",
+  "level": "Intermediate",
+  "estimated_hours": 8,
+  "tagline": "The high-performance blockchain for real applications.",
+  "brand": {
+    "gradient_from": "#14F195",
+    "gradient_to": "#9945FF",
+    "accent": "#03E1FF"
+  },
+  "outcomes": [
+    "Understand Solana's architecture: Proof of History, Tower BFT, parallel execution.",
+    "Build, deploy, and call Solana programs (smart contracts) in Rust.",
+    "Mint SPL tokens and NFTs; integrate Metaplex.",
+    "Use Anchor framework to ship programs faster and safer.",
+    "Connect a frontend with wallet adapters; sign transactions client-side.",
+    "Reason about fees, compute units, and scaling beyond a hackathon demo."
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Solana fundamentals",
+      "objective": "Understand the architecture that makes Solana fast.",
+      "lessons": [
+        { "position": 1, "title": "Why Solana exists" },
+        { "position": 2, "title": "Proof of History + consensus" },
+        { "position": 3, "title": "Accounts, transactions, and fees" },
+        { "position": 4, "title": "Setting up your dev environment" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Programs (smart contracts)",
+      "objective": "Write and deploy native Solana programs in Rust.",
+      "lessons": [
+        { "position": 1, "title": "Rust for Solana developers" },
+        { "position": 2, "title": "Your first program" },
+        { "position": 3, "title": "Program-derived addresses (PDAs)" },
+        { "position": 4, "title": "Cross-program invocation (CPI)" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Anchor framework",
+      "objective": "Ship safer programs faster with Anchor.",
+      "lessons": [
+        { "position": 1, "title": "Why Anchor exists" },
+        { "position": 2, "title": "Accounts and constraints" },
+        { "position": 3, "title": "Instructions and contexts" },
+        { "position": 4, "title": "Testing Anchor programs" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Tokens and NFTs",
+      "objective": "Mint, transfer, and manage SPL tokens + Metaplex NFTs.",
+      "lessons": [
+        { "position": 1, "title": "SPL token program" },
+        { "position": 2, "title": "Token accounts and authorities" },
+        { "position": 3, "title": "Metaplex and NFT standards" },
+        { "position": 4, "title": "Building a token-gated app" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Frontend + production",
+      "objective": "Connect users; ship to mainnet responsibly.",
+      "lessons": [
+        { "position": 1, "title": "Web3.js + wallet adapters" },
+        { "position": 2, "title": "Signing and submitting transactions" },
+        { "position": 3, "title": "RPC providers and rate limits" },
+        { "position": 4, "title": "Mainnet deployment + security" }
+      ]
+    }
+  ]
+}

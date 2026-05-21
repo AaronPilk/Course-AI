@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: PDAs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Program-derived address (PDA)?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Address derived from seeds + program ID, off-curve (no private key). Only the deriving program can sign for it. Deterministic — recover by computing again. Used for per-user state, vaults, global config."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Seed-derived deterministic address; program signs.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Save compute on PDA validation?",
+      "choices": [
+        {"id": "a", "text": "Recompute."},
+        {"id": "b", "text": "Store bump on account at init; use `bump = profile.bump` constraint to skip find_program_address (which iterates up to 256 bumps). Saves thousands of CU per call."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache bump on account; reuse in constraint.",
+      "points": 1
+    }
+  ]
+}

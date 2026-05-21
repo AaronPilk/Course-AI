@@ -1,0 +1,8 @@
+{"title": "Quick check: State/nodes/edges", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Three core primitives of LangGraph?",
+    "choices": [{"id": "a", "text": "Just LLMs."}, {"id": "b", "text": "State (TypedDict shared across graph), Nodes (functions transforming state), Edges (transitions: normal/conditional/entry/END). Reducers control how state updates merge (default replace; add_messages appends). Compile + invoke runs workflow. Foundation for any LangGraph application."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "State + Nodes + Edges. Plus reducers for state merging.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Messages list keeps getting replaced instead of appended. Why?",
+    "choices": [{"id": "a", "text": "Bug."}, {"id": "b", "text": "Missing add_messages reducer. Default state behavior replaces values; for accumulating lists, need a reducer. Fix: `messages: Annotated[list, add_messages]`. The Annotated type tells LangGraph to use add_messages function to merge updates (append) vs. default (replace). Same pattern for other accumulating lists; define custom reducer for specific merge behavior."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Missing add_messages reducer. Use Annotated[list, add_messages] for accumulation.", "points": 1}
+]}

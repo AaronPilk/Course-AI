@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Scaling",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Portfolio diversification threshold?",
+      "choices": [
+        {"id": "a", "text": "Any spread."},
+        {"id": "b", "text": "Correlation < 0.3 between strategies' monthly returns. >0.7 = essentially same strategy. Trend + mean-reversion + breakout often have low correlation; combine for smoother equity curve."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Correlation <0.3 between strategies = real diversification.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "When to graduate from Pine?",
+      "choices": [
+        {"id": "a", "text": "Never."},
+        {"id": "b", "text": "Move to Python (backtrader, vectorbt, NautilusTrader) or C++ for: sub-second execution, order book / Level 2 data, multi-symbol sub-second correlation, heavy historical backtest >100k bars. Pine perfect for solo retail with webhook automation up to that point."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pine fluent → Python/C++ when latency / depth / scale outgrow TradingView.",
+      "points": 1
+    }
+  ]
+}

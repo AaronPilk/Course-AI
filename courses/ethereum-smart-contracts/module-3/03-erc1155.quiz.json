@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: ERC-1155",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "When to use ERC-1155 over ERC-721?",
+      "choices": [
+        {"id": "a", "text": "Always."},
+        {"id": "b", "text": "When you need many token types in one contract (games, multi-edition, tickets). Multiple copies per ID supported. Batch transfers 16× cheaper. One contract deploy vs. N for 721 collections."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-token + batch ops + cheaper deploy.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "URI pattern for multi-token?",
+      "choices": [
+        {"id": "a", "text": "Per-token URI."},
+        {"id": "b", "text": "Templated URI: \"https://api.io/items/{id}.json\". Clients replace {id} with hex-encoded tokenId. Server returns metadata per id. Saves storage; consistent pattern."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Templated URI with {id} substitution.",
+      "points": 1
+    }
+  ]
+}

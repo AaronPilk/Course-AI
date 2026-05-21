@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Inference Endpoints",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Spaces vs. Inference Endpoints?",
+      "choices": [
+        {"id": "a", "text": "Same thing."},
+        {"id": "b", "text": "Spaces = web app demos with Gradio/Streamlit UI. Inference Endpoints = production REST API hosting. Use Spaces for: model demos, interactive tools, public-facing UIs, internal demos. Use Endpoints for: production APIs serving high traffic, integration with backend services, scalable model inference. Endpoints offer: dedicated GPU, auto-scaling (min/max replicas, scale-to-zero), optimized containers (TGI, custom), monitoring dashboard, pay-per-GPU-hour. Spaces offer: free CPU tier, simple Python app deployment, public sharing via URL. Migration path: demo on Space → validate idea → if production needed, create Inference Endpoint."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Spaces = web UI demos; Endpoints = production REST APIs. Different purposes; same model can power both.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Production API serves 50 requests/sec average; spikes to 500. Architecture?",
+      "choices": [
+        {"id": "a", "text": "Single fixed endpoint."},
+        {"id": "b", "text": "Auto-scaling Inference Endpoint. Configure: min_replicas=2 (handles average load + redundancy), max_replicas=10-20 (handles 500 RPS spike), scale-up threshold tuned. Or self-hosted on Kubernetes with HPA (horizontal pod autoscaler). For HF Endpoints: easier setup; markup on raw GPU. For self-hosted: lower per-hour cost but ops burden. Combined with: vLLM / TGI for continuous batching (5-10x throughput per replica); load balancer for traffic distribution; CDN for any cached responses; monitoring + alerting on latency spikes. The 'single fixed endpoint' under-provisions during spikes (queue/timeout) or over-provisions otherwise (cost). Auto-scaling matches capacity to load. For absolute cost optimization with predictable patterns: scheduled scaling (more replicas during business hours; fewer at night). Pro production: combine all above + run load tests to validate before launch."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Auto-scaling Inference Endpoint with min/max replicas. Or self-hosted K8s with HPA. Continuous batching (vLLM/TGI) per replica. Load test before launch.",
+      "points": 1
+    }
+  ]
+}

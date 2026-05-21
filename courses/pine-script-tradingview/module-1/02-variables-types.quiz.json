@@ -1,0 +1,8 @@
+{"title": "Quick check: Variables", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Persistent counter across bars?",
+    "choices": [{"id": "a", "text": "counter = 0"}, {"id": "b", "text": "var counter = 0. Without var: reinitialized each bar; counter never grows. With var: initialized once; persists. Use := for reassignment: `counter := counter + 1`. Standard for accumulators, state, persistent tracking across bars."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "var for persistent; := for reassign.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Want user to set indicator period (default 14)?",
+    "choices": [{"id": "a", "text": "Hardcode 14."}, {"id": "b", "text": "input.int(). `length = input.int(14, 'Length', minval=1)`. Appears in settings UI; users adjust. input.float(), input.bool(), input.string(), input.color() for other types. Pro pattern: all tunable values via input(); never hardcode. Users customize per asset/timeframe."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "input.int/float/bool/string for user-tweakable settings.", "points": 1}
+]}

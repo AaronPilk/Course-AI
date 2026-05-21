@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Wallet adapters",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Standard wallet connection?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "ConnectionProvider + WalletProvider + WalletModalProvider + WalletMultiButton from @solana/wallet-adapter-react. Supports Phantom, Solflare, Backpack, Ledger, etc. useWallet() hook for state."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "wallet-adapter handles multi-wallet UX.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Enumerate user's NFTs?",
+      "choices": [
+        {"id": "a", "text": "Iterate all."},
+        {"id": "b", "text": "Helius DAS API getAssetsByOwner — supports compressed + regular NFTs in single call. Returns enriched metadata. Standard RPC getTokenAccountsByOwner only finds regular NFTs and is slow."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Helius DAS API for unified NFT enumeration.",
+      "points": 1
+    }
+  ]
+}

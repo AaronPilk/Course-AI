@@ -1,0 +1,8 @@
+{"title": "Quick check: Supervisor", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Supervisor pattern?",
+    "choices": [{"id": "a", "text": "Single agent."}, {"id": "b", "text": "Supervisor agent routes work to specialist agents (researcher, writer, reviewer). After each specialist completes, control returns to supervisor; supervisor decides next or FINISH. Clean separation of concerns; each specialist focused on domain with own prompt + tools."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Supervisor routes; specialists execute; loop until FINISH.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Need to: research topic, write article, review for accuracy. Architecture?",
+    "choices": [{"id": "a", "text": "One big agent."}, {"id": "b", "text": "Supervisor + 3 specialists (researcher, writer, reviewer). Supervisor decides order: research → write → review → (if issues found) → back to researcher or writer → review → FINISH. Each specialist has focused prompt + relevant tools (researcher: web search; writer: content tools; reviewer: fact-checking). State accumulates: research notes, draft, review feedback. Pro multi-agent pattern; cleaner than monolithic agent for multi-skill tasks."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Supervisor + 3 specialists. Each focused; supervisor orchestrates.", "points": 1}
+]}

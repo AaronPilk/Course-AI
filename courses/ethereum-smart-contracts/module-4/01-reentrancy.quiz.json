@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Reentrancy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Prevent reentrancy?",
+      "choices": [
+        {"id": "a", "text": "Hope."},
+        {"id": "b", "text": "CEI pattern: Checks → Effects (state update) → Interactions (external call) LAST. State zeroed before transfer so reentrant call sees updated balance. Add OpenZeppelin ReentrancyGuard nonReentrant modifier for defense-in-depth."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CEI + nonReentrant = canonical defense.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Modern ETH sending?",
+      "choices": [
+        {"id": "a", "text": ".transfer"},
+        {"id": "b", "text": "(bool success,) = payable(to).call{value: amount}(\"\"); require(success). .transfer's 2300 gas stipend broken since EIP-1884. .call forwards all available gas; check success return. Always use .call for ETH."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": ".call modern; .transfer broken by EIP-1884.",
+      "points": 1
+    }
+  ]
+}

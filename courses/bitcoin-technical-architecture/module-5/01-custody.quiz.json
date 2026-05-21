@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Custody",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Self-custody backup?",
+      "choices": [
+        {"id": "a", "text": "Cloud."},
+        {"id": "b", "text": "Metal plate (Steelmaster/Cryptosteel) stored offline + redundant geographic locations. Never digital photo, email, or cloud — phishing/breach risk. Test recovery on wiped device before scaling deposits."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Metal + geographic redundancy + tested recovery.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Large savings custody?",
+      "choices": [
+        {"id": "a", "text": "One wallet."},
+        {"id": "b", "text": "Multisig 2-of-3 across hardware wallets in different locations. Lose any one, recover. Eliminates single-point failure. Sparrow / Specter / Casa / Unchained for implementation. Inheritance plan via attorney with key location info."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multisig 2-of-3 + inheritance plan.",
+      "points": 1
+    }
+  ]
+}

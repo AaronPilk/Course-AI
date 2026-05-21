@@ -1,0 +1,21 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="nasaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B3D91"/>
+      <stop offset="100%" stop-color="#FC3D21"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#nasaGrad)"/>
+  <g fill="#FFFFFF">
+    <circle cx="200" cy="200" r="140" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.5"/>
+    <circle cx="200" cy="200" r="80" fill="#FFFFFF"/>
+    <text x="200" y="220" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="48" fill="#0B3D91">NASA</text>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="80" cy="80" r="2"/>
+    <circle cx="120" cy="60" r="1.5"/>
+    <circle cx="320" cy="90" r="2"/>
+    <circle cx="350" cy="320" r="1.5"/>
+    <circle cx="60" cy="340" r="2"/>
+  </g>
+</svg>

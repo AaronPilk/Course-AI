@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Walk-forward and live transition",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Walk-forward efficiency target?",
+      "choices": [
+        {"id": "a", "text": "Any positive."},
+        {"id": "b", "text": "Walk-forward efficiency = OOS returns / IS returns. >0.5 edge generalizes. 0.3-0.5 marginal. <0.3 overfit. Sum across rolling train/test windows."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": ">0.5 WFE = edge persists out-of-sample.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Backtest → live progression?",
+      "choices": [
+        {"id": "a", "text": "Full size day 1."},
+        {"id": "b", "text": "Paper 3 months → micro-live 1% capital 3-6 months → scaled 25% target → full deployment. Live edge usually < backtest by 20-50% due to slippage / regime / decay. Start tiny."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Graduated risk: paper → micro → scaled → full.",
+      "points": 1
+    }
+  ]
+}

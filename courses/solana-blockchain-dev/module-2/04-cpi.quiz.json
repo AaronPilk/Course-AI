@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: CPI",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Cross-program invocation?",
+      "choices": [
+        {"id": "a", "text": "Off-chain call."},
+        {"id": "b", "text": "Programs call other programs synchronously. Common: token::transfer, system_program::create_account. CpiContext::new(program, accounts); CPI hops cost ~3k CU; max depth 4."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CPI = on-chain program-to-program call.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "PDA signs CPI?",
+      "choices": [
+        {"id": "a", "text": "Pass keypair."},
+        {"id": "b", "text": "CpiContext::new_with_signer(program, accounts, &[&seeds[..]]) where seeds include bump. Runtime verifies PDA derivation; only the program that derived the PDA can sign with it. No private key needed."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "new_with_signer + seeds = PDA signing in CPI.",
+      "points": 1
+    }
+  ]
+}

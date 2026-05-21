@@ -1,0 +1,8 @@
+{"title": "Quick check: Research agent", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Architecture for research agent?",
+    "choices": [{"id": "a", "text": "Single LLM call."}, {"id": "b", "text": "Planner → parallel search → evaluator → (loop or synthesize). Planner breaks query into sub-questions; parallel search each; evaluator checks coverage; if gaps, more search; synthesizer compiles cited answer. Like Perplexity / Search GPT. Standard research agent pattern."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Plan → parallel search → evaluate → loop or synthesize. Perplexity-style.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Research agent answers without sources; can't verify. Fix?",
+    "choices": [{"id": "a", "text": "Trust it."}, {"id": "b", "text": "Always include citations in synthesize prompt. 'Cite sources [1], [2] for every claim. Include URLs.' LLM associates each fact with source. Display sources in UI; users verify. Trust + transparency. Standard research / RAG pattern. Without citations: hallucinations untraceable; users don't trust."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Citations in synthesize prompt. Display sources for verification.", "points": 1}
+]}

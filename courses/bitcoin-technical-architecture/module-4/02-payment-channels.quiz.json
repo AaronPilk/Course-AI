@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Payment channels",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Channel cheat protection?",
+      "choices": [
+        {"id": "a", "text": "Trust."},
+        {"id": "b", "text": "Penalty mechanism: if Bob broadcasts old state (where he had more sats), Alice has CSV time window to broadcast breach tx with penalty key — takes 100% of channel. Bob loses everything. Watchtowers monitor when Alice is offline."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Penalty tx punishes cheating with 100% loss.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Channel funded with 1M sats, all on your side. Can you receive?",
+      "choices": [
+        {"id": "a", "text": "Yes."},
+        {"id": "b", "text": "No outbound liquidity matters — to receive, counterparty needs sats they can send to you (your inbound). Strategies: pay someone to push sats your way, use Lightning service provider, dual-funded channels, splice-in."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Inbound liquidity required to receive payments.",
+      "points": 1
+    }
+  ]
+}

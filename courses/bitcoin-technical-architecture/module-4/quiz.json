@@ -1,0 +1,61 @@
+{
+  "title": "Module 4 quiz: Lightning Network",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Lightning purpose?",
+      "choices": [
+        {"id": "a", "text": "Mining."},
+        {"id": "b", "text": "Solve L1 throughput (~7 TPS) + fees ($0.50-50+). Off-chain payment channels via 2-of-2 multisig; on-chain only for open/close. Near-instant + sub-cent + millions of TPS theoretical."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Off-chain scaling via payment channels.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Cheat protection?",
+      "choices": [
+        {"id": "a", "text": "Trust."},
+        {"id": "b", "text": "Penalty mechanism: if counterparty broadcasts old state, you have CSV time window to broadcast breach tx with penalty key — take 100% of channel. Watchtowers monitor when offline."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Penalty tx punishes cheating.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Multi-hop trustless?",
+      "choices": [
+        {"id": "a", "text": "Magic."},
+        {"id": "b", "text": "HTLC chains: pay X if preimage of H revealed before time T. Each hop locks funds; preimage revelation cascades back through chain. Atomic — all succeed or all rollback."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "HTLC chains = atomic multi-hop.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Channel can't receive?",
+      "choices": [
+        {"id": "a", "text": "Bug."},
+        {"id": "b", "text": "No inbound liquidity. Solutions: Lightning Pool, pay LNBig/Bitrefill for inbound channel, Loop-out to convert outbound to inbound, submarine swaps. Always one-sided initially."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Need inbound liquidity to receive.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Lightning node essentials?",
+      "choices": [
+        {"id": "a", "text": "Just install."},
+        {"id": "b", "text": "LND/CLN + Bitcoin Core full node + Static Channel Backup offsite + watchtower for offline protection. Without these, drive failure or old-state attack can lose funds."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Implementation + Core + backup + watchtower.",
+      "points": 1
+    }
+  ]
+}

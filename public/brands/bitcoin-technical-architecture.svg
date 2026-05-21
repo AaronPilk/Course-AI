@@ -1,0 +1,19 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="btcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7931A"/>
+      <stop offset="100%" stop-color="#5A341A"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#btcGrad)"/>
+  <g fill="#FFFFFF">
+    <circle cx="200" cy="200" r="100" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="200" y="240" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="120" fill="#FFFFFF">₿</text>
+  </g>
+  <g fill="#FFFFFF" opacity="0.18">
+    <circle cx="60" cy="60" r="5"/>
+    <circle cx="340" cy="80" r="4"/>
+    <circle cx="100" cy="340" r="6"/>
+    <circle cx="320" cy="320" r="5"/>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+{"title": "Module 3 quiz: Multi-agent", "scoring": {"passing_score": 4, "total_questions": 5}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Supervisor pattern?",
+    "choices": [{"id": "a", "text": "Single agent."}, {"id": "b", "text": "One supervisor routes to specialists; specialists work; return; supervisor decides next. Loop until FINISH. Clean separation of concerns."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Supervisor routes; specialists execute.", "points": 1},
+  {"position": 2, "type": "multiple_choice", "prompt": "Hierarchical when?",
+    "choices": [{"id": "a", "text": "Always."}, {"id": "b", "text": "Many specialists (>10). Top supervisor → sub-supervisors → specialists. Manageable decision space per level."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "For >10 agents; hierarchy avoids supervisor overload.", "points": 1},
+  {"position": 3, "type": "multiple_choice", "prompt": "Peer-to-peer handoffs?",
+    "choices": [{"id": "a", "text": "Need supervisor."}, {"id": "b", "text": "Transfer tools per agent route to peers. LangGraph Swarm for flat structure. Specialists know own domain."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Transfer tools + Swarm pattern.", "points": 1},
+  {"position": 4, "type": "multiple_choice", "prompt": "Parallel execution?",
+    "choices": [{"id": "a", "text": "Sequential only."}, {"id": "b", "text": "Multiple edges from one node + merge. Send for dynamic count. Reducers for concurrent state."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Fan-out edges + merge. Send for dynamic.", "points": 1},
+  {"position": 5, "type": "scenario", "prompt": "Process 100 docs simultaneously?",
+    "choices": [{"id": "a", "text": "Sequential loop."}, {"id": "b", "text": "Map-reduce with Send. Planner dispatches per-doc workers; aggregator merges. Parallel 100x faster."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Map-reduce with Send dispatch.", "points": 1}
+]}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: NFTs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Solana NFT structure?",
+      "choices": [
+        {"id": "a", "text": "Custom contract."},
+        {"id": "b", "text": "SPL token (decimals 0, supply 1, mint auth renounced) + Metaplex Metadata account (name, symbol, uri, royalties, creators) + Master Edition (uniqueness) + token account (owner). Metaplex Token Metadata standard."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SPL token + Metadata + Master Edition.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Massive cheap NFT collection?",
+      "choices": [
+        {"id": "a", "text": "Regular NFTs."},
+        {"id": "b", "text": "Compressed NFTs (cNFTs) via Bubblegum program. Uses Merkle trees → ~$0.0001 per mint vs. $0.01 regular. 1M+ feasible. Tradeoff: traditional wallets need cNFT support; reading requires DAS API."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "cNFTs (Bubblegum) for ultra-cheap mass mints.",
+      "points": 1
+    }
+  ]
+}

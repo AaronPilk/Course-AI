@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Series and time",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Access previous bar's close?",
+      "choices": [
+        {"id": "a", "text": "close.prev"},
+        {"id": "b", "text": "close[1] — [N] accesses N bars ago. close[0] = current, close[1] = previous bar, close[2] = 2 bars ago. Series indexed by bar position."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "[N] for historical reference; close[1] = prior bar.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Avoid repainting signals?",
+      "choices": [
+        {"id": "a", "text": "Ignore it."},
+        {"id": "b", "text": "Use barstate.isconfirmed — only fires on closed bars. Avoids signal flips intra-bar as price moves. Critical for backtest fidelity + live alerts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "barstate.isconfirmed prevents intra-bar repainting.",
+      "points": 1
+    }
+  ]
+}

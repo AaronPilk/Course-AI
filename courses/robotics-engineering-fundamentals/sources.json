@@ -1,0 +1,8 @@
+{
+  "sources": [
+    { "url": "https://docs.ros.org", "title": "ROS 2 Documentation" },
+    { "url": "https://gazebosim.org/docs", "title": "Gazebo Simulator" },
+    { "url": "https://moveit.ros.org/", "title": "MoveIt Motion Planning" },
+    { "url": "https://wiki.ros.org/", "title": "ROS Wiki (Legacy)" }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Launch + parameters",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Multi-node startup?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Launch files (Python): generate_launch_description() returns LaunchDescription with Node entries + remappings + parameters. ros2 launch <pkg> file.launch.py. Compose smaller files for modularity (bringup pattern)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Python launch files coordinate startup.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "High-performance multi-node pipeline?",
+      "choices": [
+        {"id": "a", "text": "Separate processes."},
+        {"id": "b", "text": "Composable nodes via ComposableNodeContainer. Multiple nodes in single process; zero-copy intra-process pub/sub via shared memory. Saves serialization overhead for high-rate sensor pipelines (cameras, LiDAR)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Composable nodes = zero-copy IPC.",
+      "points": 1
+    }
+  ]
+}

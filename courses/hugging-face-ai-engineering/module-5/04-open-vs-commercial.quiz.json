@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Open vs. commercial",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "When does open-source AI win over commercial APIs?",
+      "choices": [
+        {"id": "a", "text": "Always."},
+        {"id": "b", "text": "When volume + privacy + customization + cost demand it. High volume (>100K queries/day): per-query API costs add up; self-host saves dramatically. Privacy critical (healthcare, legal, finance, enterprise): data must stay on premises; only open-source allows this. Customization needed: fine-tune for your domain (impossible with closed APIs except OpenAI's limited fine-tuning). Cost-sensitive at scale: GPU rental cheaper than per-token. Long-term IP control: own your stack vs. depend on provider. Commercial wins at low volume (engineering effort > savings); when frontier quality essential (GPT-4 / Claude 3.5 still lead reasoning); when no ML engineering team; rapid prototyping. Hybrid often best: frontier closed for hard tasks; open-source for high-volume routine. Quality gap closing: open-source ~6-12 months behind frontier; sufficient for most production. Decision framework: 1) Volume → high = open. 2) Privacy → sensitive = open. 3) Quality bar → frontier = closed; specialized = either. 4) Team → engineering capacity = open viable. 5) Budget → long-term TCO favors open at scale."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "High volume + privacy + customization + cost. Decision based on volume, privacy, quality bar, team capacity, budget. Hybrid often best.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Healthcare startup; sensitive patient data; needs LLM for note summarization; team has 1 ML engineer. Approach?",
+      "choices": [
+        {"id": "a", "text": "Use OpenAI API."},
+        {"id": "b", "text": "Self-host open-source on private infrastructure. Healthcare = strict privacy (HIPAA / GDPR); patient data CANNOT leave organization's controlled environment. OpenAI/Anthropic/Google APIs all process data on their servers — even with 'no training on your data' assurances, data still leaves your env; insufficient for healthcare. Solution: 1) Pick open-source LLM (Llama 3 8B-13B for summarization sufficient; verify commercial license — Llama Community License covers most healthcare startups under MAU caps). 2) Deploy on private infrastructure (on-prem GPU server, private AWS GovCloud, Azure for Healthcare). 3) HIPAA-compliant infrastructure provider if cloud (BAA in place). 4) Use TGI / vLLM for production-grade serving. 5) Monitor + log within compliant environment. 6) Optional: fine-tune on de-identified historical notes for better domain quality. With 1 ML engineer: tight but doable (Llama deployment + TGI hosting + monitoring = 4-8 weeks initial; ongoing maintenance modest). Alternative compliant commercial: Microsoft Azure OpenAI (HIPAA compliant; BAA available; same models as OpenAI but in Azure tenant); Google Vertex AI with HIPAA. These solve compliance but still pay per-token. For high-volume healthcare: self-hosted open-source wins on cost + control. For moderate volume + lean team: Azure OpenAI compromise — compliant + managed. Pure OpenAI API: blocker; not HIPAA-compliant by default. Decision: 1) Confirm compliance requirements with legal. 2) Pick infrastructure path (private OR HIPAA-compliant managed). 3) Deploy + monitor. The 'just use API' shortcut violates regulations in healthcare; legal + financial risk far outweighs convenience."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Self-host open-source on HIPAA-compliant infra. Patient data can't leave controlled environment. Llama 3 + TGI on private cloud. Alternative: Azure OpenAI (HIPAA compliant managed).",
+      "points": 1
+    }
+  ]
+}

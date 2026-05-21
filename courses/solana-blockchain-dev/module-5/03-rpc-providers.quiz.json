@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: RPC providers",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Production RPC choice?",
+      "choices": [
+        {"id": "a", "text": "Public."},
+        {"id": "b", "text": "Paid provider (Helius, QuickNode, Triton, Syndica) with SLA. Public RPC api.mainnet-beta.solana.com rate-limited to ~40 req/10s; fails first scale. Failover to second provider for reliability."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Paid RPC + failover for production.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Reduce RPC costs at scale?",
+      "choices": [
+        {"id": "a", "text": "Pay more."},
+        {"id": "b", "text": "Cache hot data with TTL; batch with getMultipleAccountsInfo; WebSocket subscriptions instead of polling; use enhanced APIs (DAS for NFTs) instead of getProgramAccounts. Indexer/GraphQL for complex queries."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Cache + batch + WebSocket + enhanced APIs.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: L2 deployment",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Optimistic vs ZK rollup tradeoff?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Optimistic (Arbitrum, Optimism, Base): EVM-equivalent, drop-in deploy, but 7-day withdraw window. ZK rollups (zkSync, Polygon zkEVM, Scroll): faster finality + withdraws (minutes-hours), some compat quirks. Use OP-stack L2s for max ecosystem reuse."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimistic = compat + slow withdraw; ZK = fast withdraw.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Same contract address across chains?",
+      "choices": [
+        {"id": "a", "text": "Impossible."},
+        {"id": "b", "text": "CREATE2 with same salt + bytecode produces same address on every chain. Deploy factory at same address (using same deployer nonce 0); then deploy contracts via factory. Users recognize consistent addresses."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CREATE2 + same salt + bytecode = same address.",
+      "points": 1
+    }
+  ]
+}

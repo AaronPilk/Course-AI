@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Testing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "anchor test workflow?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "anchor build + spin up solana-test-validator + deploy + run Mocha tests + cleanup. Local validator instant; no devnet airdrops needed. TS tests via anchor.workspace.Program."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Build → validator → deploy → tests in one command.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Test failure paths?",
+      "choices": [
+        {"id": "a", "text": "Only happy."},
+        {"id": "b", "text": "try/catch around tx; expect(err.error.errorCode.code).to.equal(\"Unauthorized\"). Test both success + failure for each instruction; catches missing constraints and helps prevent auth bypass."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Negative tests catch auth bypass + missing constraints.",
+      "points": 1
+    }
+  ]
+}

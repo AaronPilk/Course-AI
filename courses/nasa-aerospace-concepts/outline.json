@@ -1,0 +1,54 @@
+{
+  "slug": "nasa-aerospace-concepts",
+  "title": "NASA Aerospace Engineering Concepts",
+  "subtitle": "Orbital mechanics, propulsion, spacecraft systems, mission design — fundamentals from NASA practice.",
+  "category": "Aerospace",
+  "level": "Intermediate",
+  "estimated_hours": 7,
+  "tagline": "How NASA engineers think about going to space.",
+  "brand": {
+    "gradient_from": "#0B3D91",
+    "gradient_to": "#FC3D21",
+    "accent": "#FFFFFF"
+  },
+  "outcomes": [
+    "Understand orbital mechanics: orbits, transfers, delta-v.",
+    "Know rocket propulsion: Tsiolkovsky equation, types of engines.",
+    "Survey spacecraft systems: power, thermal, ADCS, communication.",
+    "Understand atmospheric flight + reentry physics.",
+    "Reason about mission design: trajectory, launch windows, ops.",
+    "Appreciate NASA's role + historical missions."
+  ],
+  "modules": [
+    { "position": 1, "title": "Orbital mechanics", "objective": "Master space motion.", "lessons": [
+      { "position": 1, "title": "Orbits and Keplerian elements" },
+      { "position": 2, "title": "Delta-v and orbital transfers" },
+      { "position": 3, "title": "Lagrange points + n-body" },
+      { "position": 4, "title": "Earth orbits: LEO, MEO, GEO, SSO" }
+    ]},
+    { "position": 2, "title": "Rocket propulsion", "objective": "How rockets work.", "lessons": [
+      { "position": 1, "title": "Tsiolkovsky rocket equation" },
+      { "position": 2, "title": "Chemical engines + propellants" },
+      { "position": 3, "title": "Electric + nuclear propulsion" },
+      { "position": 4, "title": "Reusability + cost economics" }
+    ]},
+    { "position": 3, "title": "Spacecraft systems", "objective": "Subsystems for survival.", "lessons": [
+      { "position": 1, "title": "Power: solar + batteries + RTGs" },
+      { "position": 2, "title": "Thermal: extreme temperature swings" },
+      { "position": 3, "title": "ADCS: attitude determination + control" },
+      { "position": 4, "title": "Communication + deep space network" }
+    ]},
+    { "position": 4, "title": "Atmosphere + reentry", "objective": "Going + coming back.", "lessons": [
+      { "position": 1, "title": "Atmospheric flight + drag" },
+      { "position": 2, "title": "Reentry physics" },
+      { "position": 3, "title": "Heat shields + materials" },
+      { "position": 4, "title": "Landing systems: parachutes, retro" }
+    ]},
+    { "position": 5, "title": "Mission design", "objective": "From idea to flight.", "lessons": [
+      { "position": 1, "title": "Trajectory planning" },
+      { "position": 2, "title": "Launch windows + ops planning" },
+      { "position": 3, "title": "Famous missions: Apollo, Mars, Voyager, JWST" },
+      { "position": 4, "title": "NASA today + careers" }
+    ]}
+  ]
+}

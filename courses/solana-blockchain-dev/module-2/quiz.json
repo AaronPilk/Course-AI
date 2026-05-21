@@ -1,0 +1,61 @@
+{
+  "title": "Module 2 quiz: Programs",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Anchor account validation?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Constraints declared on #[derive(Accounts)] struct: init, mut, signer, seeds + bump, has_one, constraint = expr. Anchor enforces before instruction body runs. Declarative access control + auto IDL generation."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Anchor #[derive(Accounts)] constraints = declarative checks.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Prevent overflow drain?",
+      "choices": [
+        {"id": "a", "text": "Skip checks."},
+        {"id": "b", "text": "Use checked_add/sub/mul/div + ? operator. Unchecked arithmetic with attacker-supplied amounts can wrap → drain. Always wrap u64 math with checked variants returning Option."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "checked_* arithmetic prevents overflow exploits.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Program-derived address?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Derived from seeds + program ID, off Ed25519 curve, no private key. Only deriving program signs. Used for per-user state, vaults, global config. Cache bump on account; reuse to save CU."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Seed-derived deterministic address; program-owned.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Program calls SPL Token?",
+      "choices": [
+        {"id": "a", "text": "Direct."},
+        {"id": "b", "text": "CPI via anchor_spl::token::transfer with CpiContext::new(token_program, Transfer { from, to, authority }). For PDA-owned vaults, use new_with_signer with seeds + bump. Reentrancy auto-detected at depth 4."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CPI to token program via CpiContext.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "PDA signs CPI?",
+      "choices": [
+        {"id": "a", "text": "Sign manually."},
+        {"id": "b", "text": "CpiContext::new_with_signer(program, accounts, &[&[seed1, seed2, &[bump]]]). Runtime verifies derivation; PDA signs without private key. Only the program that derived can use this."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "new_with_signer + seed slice = PDA signing.",
+      "points": 1
+    }
+  ]
+}

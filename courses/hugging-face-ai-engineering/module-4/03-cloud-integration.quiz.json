@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Cloud integration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Best HF deployment on AWS?",
+      "choices": [
+        {"id": "a", "text": "Manual EC2 setup."},
+        {"id": "b", "text": "SageMaker with HuggingFaceModel SDK. AWS + HF partnership; pre-built containers; native integration. Deploy in 5 lines of Python. Handles model loading, serving, scaling, monitoring. Alternative: EC2 GPU instances for full control (more ops); EKS for Kubernetes; Lambda for serverless small models. For most teams: SageMaker. For massive scale + custom requirements: EKS with custom containers. Similar managed offerings: GCP Vertex AI, Azure ML. Pick based on cloud provider + team familiarity. HF Inference Endpoints abstract cloud entirely (HF picks underlying provider); cloud direct gives more control + lower cost at scale."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SageMaker + HuggingFaceModel SDK. Pre-built containers; 5-line deployment. Managed; production-ready.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Need lowest possible latency for chatbot serving global users. Architecture?",
+      "choices": [
+        {"id": "a", "text": "Single endpoint."},
+        {"id": "b", "text": "Multi-region deployment + smart routing + optimized inference server. Architecture: 1) Deploy model on Inference Endpoints (or self-hosted) in 3-5 regions (us-east, us-west, eu-west, ap-southeast, etc.). 2) Global load balancer (CloudFlare, AWS Global Accelerator) routes user to nearest region. 3) Each region runs optimized inference server (TGI / vLLM with continuous batching). 4) Stream responses (don't wait for completion; show tokens as generated). 5) Consider Groq (specialized fast inference hardware) for select regions. 6) CDN for caching common responses (FAQ-style queries). 7) Smaller / quantized model for ultra-low latency tier (Phi 3.5 Mini, Llama 3.2 1B); larger model for complex queries. Combined approach: typical < 500ms response globally; complex queries 1-2 sec. Without multi-region: 200-500ms network latency alone for distant users. With multi-region: ~30-50ms network + inference time. Cost: 3-5x running multiple regions; usually worth it for latency-critical apps. For cost optimization: scale down off-peak per region; share data via lower-cost replication."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-region deployment + smart routing + optimized inference server (TGI/vLLM) + streaming. CDN for caching. Cost: 3-5x but latency win for global users.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: TF",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Manage robot coordinate frames?",
+      "choices": [
+        {"id": "a", "text": "Manual math."},
+        {"id": "b", "text": "tf2 library in ROS 2. Tree of frames (map → odom → base_link → sensors); transforms via buffer.lookup_transform(). Static (URDF rigid links) + dynamic (joint state, odometry) transforms published continuously."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "tf2 library handles frame tree + transforms.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "3D orientation math?",
+      "choices": [
+        {"id": "a", "text": "Euler angles."},
+        {"id": "b", "text": "Quaternions (x,y,z,w): no gimbal lock, composable via multiplication, 4 numbers. tf_transformations.quaternion_from_euler converts. Euler easier to read but problematic near singularities."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Quaternions avoid gimbal lock.",
+      "points": 1
+    }
+  ]
+}

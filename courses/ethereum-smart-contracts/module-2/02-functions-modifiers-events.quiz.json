@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Functions and events",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Event with indexed fields?",
+      "choices": [
+        {"id": "a", "text": "All indexed."},
+        {"id": "b", "text": "Up to 3 indexed params; logged as topics; filterable. Non-indexed go in data; not filterable. Indexed strings store keccak256 hash. Use indexed for fields you'll filter on (from, to, tokenId)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Max 3 indexed params for filtering.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Authentication check?",
+      "choices": [
+        {"id": "a", "text": "tx.origin"},
+        {"id": "b", "text": "require(msg.sender == owner) — msg.sender is direct caller. tx.origin is original EOA; phishable via malicious contract chain. Always msg.sender for auth in modern contracts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "msg.sender for auth; tx.origin is phishable.",
+      "points": 1
+    }
+  ]
+}

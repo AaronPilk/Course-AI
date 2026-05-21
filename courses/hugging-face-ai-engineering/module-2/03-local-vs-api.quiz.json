@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Local vs. API",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best execution mode for prototyping LLM features?",
+      "choices": [
+        { "id": "a", "text": "Always local." },
+        { "id": "b", "text": "API / cloud — fastest start, no setup, try latest models. Local requires GPU + CUDA + Python env + model downloads (often 5-50 GB); 1-2 hours to first inference for novice. API: sign up; get token; call client.text_generation(); 5 minutes to first inference. For prototyping where you're testing if model fits use case before committing: cloud lets you iterate fast. After validating approach + estimating volume: switch to local if cost/privacy benefits matter; stay on cloud if convenience wins. Options: HF Inference API (free tier; rate limited; great for testing), Replicate (pay-per-second; many models), Together AI (open-source LLMs; fast), Fireworks AI (fast inference), Groq (ultra-fast specialized hardware), OpenAI/Anthropic APIs (closed but easy). Once committed to a model + use case: local for high volume (TCO favors hardware over per-call); cloud for variable load. The 'cloud for prototype; local or cloud for production' decision happens after validation. Pro habit: start cloud; benchmark; decide. Don't sink hours into local setup before knowing if model fits.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "API / cloud for prototyping. Fastest start; latest models; no setup. Switch to local later if cost / privacy / volume justify.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Real-time chatbot needing < 500ms response latency. Architecture?",
+      "choices": [
+        { "id": "a", "text": "Standard cloud API." },
+        { "id": "b", "text": "Groq (specialized) or local inference on dedicated GPU. Standard cloud LLM APIs (OpenAI, HF Inference) typically have 1-5 second response times for complete answers; not real-time. Groq specifically designed for ultra-fast LLM inference: 200-500+ tokens/sec; sub-second responses for typical chat. Architecture options: 1) Groq API — easiest; their hardware specialized for fast inference; supports Llama / Mistral / others. 2) Local inference with optimized engines — vLLM, TensorRT-LLM, ExLlamaV2 for batch optimization; ~50-200 tokens/sec on consumer GPU; can hit < 500ms for short responses. 3) Streaming — start showing first tokens immediately while rest generates; perceived latency much lower even if total time longer. 4) Smaller model — 1-3B params (Phi 3.5, Llama 3.2 1B) inferences in tens of milliseconds; trade quality for speed. 5) Dedicated cloud inference (Together, Fireworks) — optimized for speed; faster than HF Inference API but slower than Groq. Combined approach: smaller model + streaming + Groq or fast cloud = best perceived latency. For absolute speed: Groq (when available for your model) or local with optimization. Avoid: large model + non-streaming + slow cloud API (3-10 second responses; feels broken). Pro habit: measure latency in actual conditions; optimize biggest bottleneck.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Groq (ultra-fast) or local with optimization (vLLM, TensorRT). Standard cloud APIs too slow. Combine with streaming + smaller models for perceived speed.",
+      "points": 1
+    }
+  ]
+}

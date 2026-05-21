@@ -1,0 +1,81 @@
+{
+  "title": "Module 1 quiz: HF Hub and ecosystem",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What does Hugging Face host?",
+      "choices": [
+        { "id": "a", "text": "Just LLMs." },
+        { "id": "b", "text": "Models (1M+), Datasets (500K+), Spaces (300K+ live demos), Libraries (Transformers, Datasets, PEFT, Accelerate, TRL, Diffusers). The dominant open-source AI platform in 2026. Each asset has version-controlled git repo + card / docs + community discussions. API tokens for programmatic access. Free tier: unlimited public repos + limited Spaces compute. Pro: private repos + scale.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Models + Datasets + Spaces + Libraries. Dominant open-source AI platform.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "Best model family for RAG embeddings?",
+      "choices": [
+        { "id": "a", "text": "Llama." },
+        { "id": "b", "text": "sentence-transformers (BGE, MPNet, MiniLM, E5). Purpose-built for embedding text to vector space. LLMs (Llama, Mistral) for generation; sentence-transformers for retrieval embeddings. Two-stage RAG: embed via sentence-transformers; generate via LLM.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "sentence-transformers (BGE, MPNet, MiniLM, E5). Purpose-built for embeddings; not LLMs.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "How to load IMDB dataset?",
+      "choices": [
+        { "id": "a", "text": "Custom CSV." },
+        { "id": "b", "text": "`from datasets import load_dataset; ds = load_dataset('imdb')`. One-liner; entire 50k labeled reviews dataset loaded with train/test splits. Standard for 5000+ HF datasets. Streaming for huge data (streaming=True).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "load_dataset('imdb'). One-liner; HF Datasets library standard.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "scenario",
+      "prompt": "Want to use Llama 3 commercially for small startup. Critical step?",
+      "choices": [
+        { "id": "a", "text": "Just download." },
+        { "id": "b", "text": "Verify license terms apply. Llama Community License allows commercial use below ~700M MAU + AUP compliance + Meta attribution. Small startup easily within scope. Click 'Access' on model card, agree to terms, get approval (instant), document license + scope. For pure permissive license: prefer Apache 2.0 models (Mistral, Phi).",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Verify Llama Community License terms. Commercial OK below 700M MAU; AUP compliance; attribution. Document.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "multiple_choice",
+      "prompt": "Why read model cards?",
+      "choices": [
+        { "id": "a", "text": "Required by HF." },
+        { "id": "b", "text": "Contains: description + intended uses + out-of-scope warnings + bias/risks/limitations + training data + evaluation benchmarks + license + citation. Read before production / commercial use. 5-10 min investment; saves surprises. Document license + scope in project records. The contract between creator + user.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Description + uses + warnings + license + benchmarks + training. Read before production use; document license.",
+      "points": 1
+    }
+  ]
+}

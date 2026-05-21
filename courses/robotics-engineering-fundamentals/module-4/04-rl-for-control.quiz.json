@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: RL",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "When RL beats classical?",
+      "choices": [
+        {"id": "a", "text": "Always."},
+        {"id": "b", "text": "Contact-rich manipulation, many-DoF humanoids, complex unmodeled dynamics (cloth, fluids), learning from demos. PPO/SAC modern algorithms. Train in sim (Isaac Gym GPU-accelerated 1000+ parallel envs); deploy via sim2real."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Contact-rich, high-DoF, unmodeled = RL wins.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Bridge sim2real gap?",
+      "choices": [
+        {"id": "a", "text": "Hope."},
+        {"id": "b", "text": "Domain randomization: vary sim params (friction, mass, sensor noise, lighting) so policy generalizes to real-world variation. Plus realistic sensor models. Final fine-tune on hardware for robust transfer."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Domain randomization + sensor realism + hw fine-tune.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "url": "https://bitcoin.org/bitcoin.pdf", "title": "Bitcoin Whitepaper (Satoshi)" },
+    { "url": "https://developer.bitcoin.org", "title": "Bitcoin Developer Reference" },
+    { "url": "https://github.com/bitcoin/bitcoin", "title": "Bitcoin Core Source" },
+    { "url": "https://docs.lightning.engineering/", "title": "Lightning Labs Documentation" },
+    { "url": "https://en.bitcoin.it/wiki/Main_Page", "title": "Bitcoin Wiki" }
+  ]
+}

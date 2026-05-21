@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Gas optimization",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Pack struct for slot savings?",
+      "choices": [
+        {"id": "a", "text": "All uint256."},
+        {"id": "b", "text": "Order fields large→small; same-slot tiny types pack. uint128 + uint64 + bool fit one slot (16+8+1=25 bytes). vs. 3 uint256 = 3 slots. 50%+ storage savings."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pack same-slot tiny types; large→small order.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Track 1M claim flags?",
+      "choices": [
+        {"id": "a", "text": "Mapping<uint256,bool>"},
+        {"id": "b", "text": "Bitmap: mapping(uint256 => uint256) claimedBitmap. 256 flags per slot. claimedBitmap[id/256] |= (1 << (id%256)). 256× less storage vs. mapping<uint256,bool>. Standard for airdrop claim tracking."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Bitmap = 256 bools per storage slot.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Spaces",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Easiest way to demo your ML model on web?",
+      "choices": [
+        {"id": "a", "text": "Build full React app."},
+        {"id": "b", "text": "Gradio app on HF Space. `import gradio as gr; gr.Interface(fn=my_model, inputs='text', outputs='text').launch()`. Push code + requirements.txt to Space repo; HF deploys; share URL. Free CPU tier; paid GPUs for heavier models. ChatInterface for chat UIs. Streaming for real-time. File uploads for image/audio. 10-line Python + Space deployment = live AI demo URL in minutes. Standard for showcasing models, prototyping, internal tools, public demos."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Gradio on HF Space. Few lines Python; push to Space; live URL. Free CPU tier.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Demo Space with 8B LLM on free CPU; loading takes forever then crashes. Fix?",
+      "choices": [
+        {"id": "a", "text": "Wait longer."},
+        {"id": "b", "text": "Upgrade to GPU Space (T4 minimum for 8B FP16, or A10G for comfort) OR use HF Inference API in your Gradio app instead of loading model locally. Option 1: paid GPU Space — Settings → Hardware → T4 / A10G / A100 → cost per hour while running. Pauseable to save money. Option 2 (free): use InferenceClient in Space code; Space stays free CPU; LLM runs on HF's infra via API. `from huggingface_hub import InferenceClient; client = InferenceClient(); response = client.text_generation('prompt', model='meta-llama/Llama-3.1-8B')`. Space just routes UI to inference API; no model in Space; works on free tier. Trade-off: rate limited (free Inference API has limits); good for low-volume demos; not for high traffic. Option 3: use smaller model that fits CPU (Phi 3.5 Mini 3.8B INT8 ~4GB fits CPU memory; slow but works). Option 4: use ONNX / quantized version optimized for CPU. For most demos: use Inference API from free Space — combination is sustainable + sufficient quality. Reserve GPU Spaces for serious workloads where API rate limits hurt."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Upgrade to GPU Space OR use Inference API in your Gradio app. API approach keeps Space free; routes inference to HF infra. Rate limited but sufficient for demos.",
+      "points": 1
+    }
+  ]
+}

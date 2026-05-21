@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: First program",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Validate caller in Anchor instruction?",
+      "choices": [
+        {"id": "a", "text": "Skip checks."},
+        {"id": "b", "text": "require!(counter.authority == ctx.accounts.user.key(), CounterError::Unauthorized) + Signer<'info> on user. Anchor checks signer; require! enforces ownership. Without auth checks, anyone can mutate."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Signer<'info> + require!(authority == user.key()).",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Prevent integer overflow?",
+      "choices": [
+        {"id": "a", "text": "Don't worry."},
+        {"id": "b", "text": "counter.count.checked_add(1).ok_or(CounterError::Overflow)?. Returns Option which converts to Result. Unchecked arithmetic can drain accounts via overflow exploits — always use checked_add/sub/mul/div for user-supplied amounts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "checked_add/sub/mul with ? for safe arithmetic.",
+      "points": 1
+    }
+  ]
+}

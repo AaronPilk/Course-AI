@@ -1,0 +1,61 @@
+{
+  "title": "Module 1 quiz: Robot fundamentals",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Robot definition?",
+      "choices": [
+        {"id": "a", "text": "Software."},
+        {"id": "b", "text": "Sense (sensors) + think (controllers) + act (actuators) machine. Differs from pure AI (LLMs, chess) by having physical body that interacts with world."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Sense + think + act = robot.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "IMU?",
+      "choices": [
+        {"id": "a", "text": "Camera."},
+        {"id": "b", "text": "Accelerometer + gyroscope + magnetometer. Linear accel + angular vel + compass. Integration over time gives velocity/position (drift). Fuse with vision (VIO) for robust pose."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Accel + gyro + magnetometer.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "FK vs IK?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Forward kinematics: joints → end-effector pose (easy chain mult). Inverse kinematics: pose → joints (hard, multi-solution, no closed-form 6+ DoF). MoveIt + TRAC-IK for IK solving."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "FK easy; IK hard.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Singularity?",
+      "choices": [
+        {"id": "a", "text": "Battery dead."},
+        {"id": "b", "text": "Jacobian rank loss → can't move in some direction. E.g., arm fully extended can't move along axis. Plan paths to avoid; or damped pseudoinverse for graceful degradation."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Singularity = Jacobian rank loss.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Manage robot coordinate frames?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "tf2 library in ROS 2: tree of frames (map → odom → base_link → sensors); buffer.lookup_transform(); URDF describes rigid links; robot_state_publisher publishes joint frames. Quaternions for orientations."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "tf2 + URDF + quaternions = ROS frame management.",
+      "points": 1
+    }
+  ]
+}

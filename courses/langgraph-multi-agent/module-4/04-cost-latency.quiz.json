@@ -1,0 +1,8 @@
+{"title": "Quick check: Cost+latency", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Biggest agent cost driver?",
+    "choices": [{"id": "a", "text": "Compute hosting."}, {"id": "b", "text": "LLM calls. Each reasoning loop costs per-token. Optimize: 1) Right-size models per node (small for routing/simple; large for complex). 2) Cache idempotent calls. 3) Token budgets (max_tokens cap). 4) Recursion limit (cap iterations). 5) Tool minimalism (fewer tools = fewer LLM round-trips). 6) Smart routing (cheap model decides; expensive only when needed). 80%+ cost reduction possible vs. naive 'always use GPT-4' agent."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "LLM calls. Right-size + cache + budget + limits.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Agent uses GPT-4 for every node; cost $50/conversation. Reduce?",
+    "choices": [{"id": "a", "text": "Cheaper API."}, {"id": "b", "text": "Mix model sizes per node. Routing/classification nodes → GPT-4o-mini ($0.15/M vs $5/M tokens). Simple text → GPT-4o-mini. Complex reasoning → GPT-4o or Claude 3.5 Sonnet. Most agent nodes don't need frontier reasoning; smaller models suffice. Plus: cache repeated calls; cap max_tokens; reduce recursion limit; eliminate unused tools. Expected savings: 5-20x for typical agent. The 'one model for everything' is the #1 over-spend pattern in production agents."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Mix model sizes per node. Cheap for routing/simple; expensive only for complex reasoning. 5-20x savings.", "points": 1}
+]}

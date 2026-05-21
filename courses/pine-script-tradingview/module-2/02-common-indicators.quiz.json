@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Common indicators",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "MACD destructure?",
+      "choices": [
+        {"id": "a", "text": "macd = ta.macd(close, 12, 26, 9)"},
+        {"id": "b", "text": "[macdLine, signalLine, histogram] = ta.macd(close, 12, 26, 9). Pine destructures tuples. Same for ta.bb (middle/upper/lower) and ta.stoch (k/d)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "[a, b, c] = ta.macd() destructures tuple return.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "ATR practical use?",
+      "choices": [
+        {"id": "a", "text": "Color charts."},
+        {"id": "b", "text": "Stop loss + position sizing. stopDistance = atr * 2 places stop beyond normal noise. Volatility-aware sizing prevents over-leverage in fast markets."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATR for volatility-aware stops + sizing.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Cameras",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ROS image processing?",
+      "choices": [
+        {"id": "a", "text": "Raw bytes."},
+        {"id": "b", "text": "cv_bridge: imgmsg_to_cv2(msg, encoding) converts sensor_msgs/Image → OpenCV ndarray. Then YOLO/SAM/CLIP for detection/segmentation. cv2_to_imgmsg for the reverse."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "cv_bridge for ROS ↔ OpenCV.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Vision in robot frame?",
+      "choices": [
+        {"id": "a", "text": "Assume."},
+        {"id": "b", "text": "Calibration: intrinsic (focal/distortion via checkerboard), extrinsic (camera→base via AprilTag at known robot pose + solvePnP). Without it, vision detections in wrong frame; grasping fails."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Intrinsic + extrinsic calibration required.",
+      "points": 1
+    }
+  ]
+}

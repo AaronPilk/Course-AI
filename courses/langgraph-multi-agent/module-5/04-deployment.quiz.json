@@ -1,0 +1,8 @@
+{"title": "Quick check: Deployment", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Deploy LangGraph agent to production?",
+    "choices": [{"id": "a", "text": "Run locally."}, {"id": "b", "text": "LangGraph Platform (managed) OR FastAPI + Docker on AWS/Cloud Run (self-hosted). Platform: one-click deploy + auto-scaling + integrated tracing. Self-hosted: more control + lower cost at scale. Streaming endpoints for real-time UX. Authentication + rate limiting + monitoring required for production."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "LangGraph Platform managed OR FastAPI + Docker self-hosted.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Production agent; rate limiting + cost protection needed?",
+    "choices": [{"id": "a", "text": "Skip it."}, {"id": "b", "text": "Implement per-user rate limits + cost budgets + LLM call quotas. Without limits: malicious users / bugs can rack up massive bills (saw this with early OpenAI integrations spamming GPT-4 calls). Implementation: 1) Per-user QPS via Redis. 2) Daily token budgets per user. 3) Conversation cost caps. 4) Recursion limits on graphs. 5) Alert on anomaly (10x typical usage). 6) Hard caps that stop serving on budget exceeded. Standard production AI ops; not optional. Many startups have learned this lesson via $50K surprise bills."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Rate limits + budgets + quotas + alerts + hard caps. Required for production.", "points": 1}
+]}

@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Finding models",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Best general-purpose embedding model for RAG (sentence similarity / retrieval)?",
+      "choices": [
+        { "id": "a", "text": "Llama 3." },
+        { "id": "b", "text": "sentence-transformers family — purpose-built for embedding text into vector space for similarity search. Top choices in 2026: 1) BGE (BAAI General Embeddings) — 'BAAI/bge-large-en-v1.5' for English; SOTA on MTEB benchmark; ~1B parameters; produces 1024-dim embeddings. 2) MPNet — 'sentence-transformers/all-mpnet-base-v2' — popular general purpose, 768-dim, smaller + faster. 3) MiniLM — 'sentence-transformers/all-MiniLM-L6-v2' — tiny + fast, 384-dim, great for prototyping or limited compute. 4) E5 family — 'intfloat/e5-large-v2' — strong general purpose. 5) Cohere Embed v3 — closed API; high quality. Multilingual: 'BAAI/bge-m3' supports 100+ languages. Code embeddings: 'jinaai/jina-embeddings-v2-base-code' for code search. Pick by: 1) Domain (general / multilingual / code). 2) Performance (MTEB leaderboard for accuracy). 3) Size (smaller = faster + cheaper). 4) Dimension (more dims = potentially better quality + more storage). Llama 3 / Mistral / Qwen are text-generation LLMs — wrong for embedding (technically possible to extract embeddings from them but expensive + lower quality than purpose-built embedding models). Use sentence-transformers for RAG retrieval; LLMs for generation. The two-stage pattern (embed via sentence-transformers; generate via LLM) is the foundation of RAG systems.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "sentence-transformers family. BGE, MPNet, MiniLM, E5 are top 2026 choices for RAG retrieval. Purpose-built for embedding; not LLMs. MTEB benchmark for comparison.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to use Llama 3 commercially; what to check?",
+      "choices": [
+        { "id": "a", "text": "Just download." },
+        { "id": "b", "text": "Llama 3 license terms. Meta's Llama models use a custom 'Llama Community License' (or similar named per version) that allows commercial use BUT with restrictions: 1) Revenue cap — large companies (originally 700M MAU; check current license version) need separate commercial agreement with Meta; small businesses + indie devs fine. 2) Acceptable use policy — must comply with Meta's AUP (no harmful, illegal, deceptive use cases listed). 3) Attribution — must include Meta attribution. 4) Display 'Llama' branding requirement if integrating prominently. 5) Output restrictions for some use cases. Verify: 1) Read current license version on the model card (license terms evolve per Llama release). 2) Confirm your use case + scale falls within terms. 3) For large-scale commercial: contact Meta licensing. 4) Document compliance in your project. Also gated model: click 'Access' button on Llama model card; agree to terms; approved usually within minutes; download enabled. Same checks for: Mistral (Apache 2.0 — no restrictions), Qwen (Apache 2.0 or Tongyi Qianwen License depending on version), Phi (MIT — most permissive). Always read current model card; licenses change. For absolute commercial safety + no restrictions: pure Apache 2.0 / MIT models (Mistral, Phi). For Llama: usually OK for indie / small business; verify scale.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Llama Community License: commercial OK with restrictions (revenue cap; AUP; attribution). Verify scale + use case. Gated model = click Access; agree to terms. Read current license.",
+      "points": 1
+    }
+  ]
+}

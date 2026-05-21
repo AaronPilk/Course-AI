@@ -1,0 +1,61 @@
+{
+  "title": "Module 3 quiz: Running a node",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Full node disk?",
+      "choices": [
+        {"id": "a", "text": "10 GB."},
+        {"id": "b", "text": "600+ GB for full chain; prune=5500 for last 5.5 GB only (limits Lightning). SSD recommended for IBD speed."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "600+ GB full or prune for minimal disk.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Look up any tx by id?",
+      "choices": [
+        {"id": "a", "text": "Default."},
+        {"id": "b", "text": "Requires txindex=1 in bitcoin.conf. Adds ~10 GB index. Without it, only wallet txs queryable."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "txindex=1 needed for non-wallet tx lookups.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Address balance lookups?",
+      "choices": [
+        {"id": "a", "text": "Bitcoin Core."},
+        {"id": "b", "text": "Bitcoin Core doesn't index addresses. Add electrs / esplora / Fulcrum indexer. Powers Electrum wallet, mempool.space backend, custom apps."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Indexer (electrs/esplora) for address lookups.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Cold storage workflow?",
+      "choices": [
+        {"id": "a", "text": "Online only."},
+        {"id": "b", "text": "Offline hardware wallet generates xpub → import to online watch-only wallet → tx via PSBT (create online, sign offline, broadcast online). Funds never touch online machine."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Watch-only + PSBT + hardware = cold storage.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Real-time events from node?",
+      "choices": [
+        {"id": "a", "text": "Poll."},
+        {"id": "b", "text": "ZeroMQ pub/sub: zmqpubrawtx, zmqpubrawblock, zmqpubhashtx, zmqpubhashblock in bitcoin.conf. Subscribe via ZMQ socket. Used by Lightning, mempool.space, payment processors."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ZeroMQ pub/sub for real-time events.",
+      "points": 1
+    }
+  ]
+}

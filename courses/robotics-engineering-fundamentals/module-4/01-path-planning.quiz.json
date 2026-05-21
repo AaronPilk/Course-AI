@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Path planning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Plan 6-DOF arm motion?",
+      "choices": [
+        {"id": "a", "text": "Grid A*."},
+        {"id": "b", "text": "Sampling-based (RRT/RRT*) via MoveIt 2 + OMPL. Grid A* infeasible in high-dim C-space. RRT* probabilistically complete + asymptotically optimal. Trajectory optimization (CHOMP/TrajOpt) for smoothness."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RRT* / OMPL for high-dim arm planning.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Mobile robot navigation?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "Nav2 (ROS 2): global planner (NavFn/SmacPlanner A*) + local planner (DWB/MPPI) + costmaps (static map + dynamic obstacles) + recovery behaviors. Industry standard for mobile robots."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Nav2 = standard ROS 2 nav stack.",
+      "points": 1
+    }
+  ]
+}

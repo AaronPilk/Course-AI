@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Privacy",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Break tx graph linkage?",
+      "choices": [
+        {"id": "a", "text": "Address reuse."},
+        {"id": "b", "text": "CoinJoin: multiple users combine UTXOs in single tx. Multiple inputs → multiple equal outputs. Breaks common-input heuristic (chain analysis assumes all inputs same owner). Wasabi Wallet, JoinMarket implementations."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CoinJoin breaks tx graph linkage.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Custodial mixers in 2026?",
+      "choices": [
+        {"id": "a", "text": "Safe."},
+        {"id": "b", "text": "Risky: Tornado Cash sanctioned 2022, Blender.io / ChipMixer seized, Samourai Whirlpool devs arrested 2024. Use of sanctioned mixers can freeze funds + legal liability. Prefer non-custodial CoinJoin alternatives."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Custodial mixers sanctioned; avoid.",
+      "points": 1
+    }
+  ]
+}

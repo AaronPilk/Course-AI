@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Multi-timeframe analysis",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Pull daily close from current symbol?",
+      "choices": [
+        {"id": "a", "text": "close.daily"},
+        {"id": "b", "text": "request.security(syminfo.tickerid, \"D\", close). Symbol + timeframe + expression. Use close[1] to avoid repaint."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "request.security() with timeframe \"D\".",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Many security calls hitting limit?",
+      "choices": [
+        {"id": "a", "text": "Live with it."},
+        {"id": "b", "text": "Bundle in tuple: [o, h, l, c] = request.security(s, \"D\", [open, high, low, close]). One call, multiple values. Stay under TradingView limits."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Bundle multiple values into single security call.",
+      "points": 1
+    }
+  ]
+}

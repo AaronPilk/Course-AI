@@ -1,0 +1,79 @@
+{
+  "slug": "ethereum-smart-contracts",
+  "title": "Ethereum Smart Contract Engineering",
+  "subtitle": "Solidity, EVM, security, gas, DeFi patterns — write production smart contracts.",
+  "category": "Blockchain",
+  "level": "Intermediate",
+  "estimated_hours": 8,
+  "tagline": "The world computer. Build dApps the right way.",
+  "brand": {
+    "gradient_from": "#627EEA",
+    "gradient_to": "#3C3C3D",
+    "accent": "#C99D66"
+  },
+  "outcomes": [
+    "Understand Ethereum's architecture: EVM, accounts, gas, blocks.",
+    "Write, test, and deploy Solidity smart contracts.",
+    "Design contracts with security-first patterns; avoid common vulnerabilities.",
+    "Implement ERC-20 tokens, ERC-721 NFTs, and proxy upgradeability.",
+    "Optimize gas; understand storage vs. memory; pack variables.",
+    "Connect frontends with ethers.js / viem and wallet libraries."
+  ],
+  "modules": [
+    {
+      "position": 1,
+      "title": "Ethereum fundamentals",
+      "objective": "Master Ethereum's architecture and developer environment.",
+      "lessons": [
+        { "position": 1, "title": "EVM and how Ethereum works" },
+        { "position": 2, "title": "Accounts, transactions, and gas" },
+        { "position": 3, "title": "Blocks, finality, and consensus" },
+        { "position": 4, "title": "Hardhat + Foundry dev setup" }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Solidity language",
+      "objective": "Master Solidity syntax and patterns.",
+      "lessons": [
+        { "position": 1, "title": "Types, storage, memory" },
+        { "position": 2, "title": "Functions, modifiers, events" },
+        { "position": 3, "title": "Inheritance and interfaces" },
+        { "position": 4, "title": "Error handling and assertions" }
+      ]
+    },
+    {
+      "position": 3,
+      "title": "Token standards",
+      "objective": "Build ERC-20, ERC-721, and ERC-1155 tokens.",
+      "lessons": [
+        { "position": 1, "title": "ERC-20 fungible tokens" },
+        { "position": 2, "title": "ERC-721 NFTs" },
+        { "position": 3, "title": "ERC-1155 multi-token" },
+        { "position": 4, "title": "OpenZeppelin contracts library" }
+      ]
+    },
+    {
+      "position": 4,
+      "title": "Security and patterns",
+      "objective": "Prevent the vulnerabilities that have lost billions.",
+      "lessons": [
+        { "position": 1, "title": "Reentrancy and CEI pattern" },
+        { "position": 2, "title": "Access control and ownership" },
+        { "position": 3, "title": "Gas optimization" },
+        { "position": 4, "title": "Upgradeability patterns" }
+      ]
+    },
+    {
+      "position": 5,
+      "title": "Production deployment",
+      "objective": "Ship safely to mainnet and L2s.",
+      "lessons": [
+        { "position": 1, "title": "Testing strategies" },
+        { "position": 2, "title": "Frontend integration: ethers.js + viem" },
+        { "position": 3, "title": "L2 deployment: Arbitrum, Optimism, Base" },
+        { "position": 4, "title": "Audits, monitoring, incident response" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{"title": "Quick check: Why LangGraph", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "When does LangGraph beat simple LangChain chains?",
+    "choices": [
+      {"id": "a", "text": "Always."},
+      {"id": "b", "text": "When workflow has cycles, branching, state, or multi-agent. Chains run linearly — input → process → output. LangGraph supports: 1) Cycles for agent loops (think → act → observe → think). 2) Branching based on conditions (route by query type). 3) Shared state across many steps. 4) Multi-agent coordination. 5) Human-in-the-loop pauses. 6) Persistence + resume. Use chains for simple prompt → response; LangGraph for sophisticated workflows. Alternatives: CrewAI (higher-level, built on LangGraph), AutoGen (Microsoft, conversation-oriented), custom code. Standard for production agent systems 2026."},
+      {"id": "c", "text": "Use Opus."},
+      {"id": "d", "text": "Use Sonnet."}
+    ],
+    "correct_answer": "b",
+    "explanation": "Cycles, branching, state, multi-agent. Beyond simple chains. Standard for production agents.",
+    "points": 1
+  },
+  {"position": 2, "type": "scenario", "prompt": "Building research assistant that searches web, evaluates results, decides if more search needed. Architecture?",
+    "choices": [
+      {"id": "a", "text": "Simple chain."},
+      {"id": "b", "text": "LangGraph with cycle. Nodes: search_node (web search), evaluate_node (LLM decides if results sufficient), respond_node (synthesize answer). Conditional edge: from evaluate_node either back to search_node (need more) or forward to respond_node (sufficient). Allows iterative refinement until satisfied. Add max_iterations to prevent infinite loops. State holds: query, search_results_so_far, evaluation_history. This pattern (ReAct-style with iterative refinement) impossible with linear chains; natural in LangGraph. Modern research agents (Perplexity-style, ChatGPT browse) use exactly this pattern."},
+      {"id": "c", "text": "Use Opus."},
+      {"id": "d", "text": "Use Sonnet."}
+    ],
+    "correct_answer": "b",
+    "explanation": "LangGraph with search/evaluate/respond nodes + conditional edge + cycle. ReAct pattern with iterative refinement.",
+    "points": 1
+  }
+]}

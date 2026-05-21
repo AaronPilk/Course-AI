@@ -1,0 +1,50 @@
+{
+  "slug": "construction-project-management",
+  "title": "Construction Project Management Systems",
+  "subtitle": "Estimating, scheduling, safety, software, and field ops for modern construction.",
+  "category": "Construction",
+  "level": "Beginner",
+  "estimated_hours": 6,
+  "tagline": "Run construction projects on time, on budget, safely.",
+  "brand": { "gradient_from": "#F59E0B", "gradient_to": "#92400E", "accent": "#FFFFFF" },
+  "outcomes": [
+    "Understand project lifecycle from bid to closeout.",
+    "Master scheduling: CPM, Gantt, lean construction.",
+    "Manage estimating, change orders, contracts.",
+    "Implement OSHA safety + compliance.",
+    "Use modern construction software (Procore, BIM).",
+    "Lead trades + subcontractors effectively."
+  ],
+  "modules": [
+    { "position": 1, "title": "Project lifecycle", "objective": "Master the construction process.", "lessons": [
+      { "position": 1, "title": "Bid to closeout phases" },
+      { "position": 2, "title": "Contract types: lump sum, GMP, T&M" },
+      { "position": 3, "title": "Project delivery methods: DBB, DB, CMAR" },
+      { "position": 4, "title": "Stakeholders + RACI" }
+    ]},
+    { "position": 2, "title": "Estimating + budgeting", "objective": "Cost the work accurately.", "lessons": [
+      { "position": 1, "title": "Quantity takeoffs + unit pricing" },
+      { "position": 2, "title": "Direct + indirect costs" },
+      { "position": 3, "title": "Contingency + risk management" },
+      { "position": 4, "title": "Change orders + cost control" }
+    ]},
+    { "position": 3, "title": "Scheduling", "objective": "Plan time effectively.", "lessons": [
+      { "position": 1, "title": "Work Breakdown Structure (WBS)" },
+      { "position": 2, "title": "Critical Path Method (CPM)" },
+      { "position": 3, "title": "Gantt charts + Microsoft Project" },
+      { "position": 4, "title": "Lean construction + Pull Planning" }
+    ]},
+    { "position": 4, "title": "Safety + compliance", "objective": "Zero-incident culture.", "lessons": [
+      { "position": 1, "title": "OSHA 30 + Focus Four hazards" },
+      { "position": 2, "title": "Job Hazard Analysis (JHA)" },
+      { "position": 3, "title": "PPE + site safety planning" },
+      { "position": 4, "title": "Incident reporting + investigation" }
+    ]},
+    { "position": 5, "title": "Modern construction", "objective": "Software + trends + careers.", "lessons": [
+      { "position": 1, "title": "Procore + construction software" },
+      { "position": 2, "title": "BIM + digital twins" },
+      { "position": 3, "title": "Trades + subcontractor management" },
+      { "position": 4, "title": "Careers + certifications" }
+    ]}
+  ]
+}

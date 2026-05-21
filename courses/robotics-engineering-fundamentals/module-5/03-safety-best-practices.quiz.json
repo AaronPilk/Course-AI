@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Safety",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Robot safety layers?",
+      "choices": [
+        {"id": "a", "text": "Software only."},
+        {"id": "b", "text": "Defense in depth: mechanical (padding, breakaway) + hardware (E-stops, redundant sensors) + firmware (joint limits, watchdog) + software (velocity limits, collision detection) + operational (workspace fencing). Each layer catches failures."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Mechanical + hardware + firmware + software + ops layers.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Deterministic real-time control?",
+      "choices": [
+        {"id": "a", "text": "Ubuntu default."},
+        {"id": "b", "text": "Linux PREEMPT_RT kernel + CPU isolation (isolcpus) + pre-allocated memory (no malloc in loop) + lock-free comms. Hard real-time guarantees deadline; control loops at 1kHz+ for industrial robots."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "PREEMPT_RT + isolation + pre-alloc memory.",
+      "points": 1
+    }
+  ]
+}

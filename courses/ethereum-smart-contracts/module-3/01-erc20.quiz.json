@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: ERC-20",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "1-tx DEX swap UX?",
+      "choices": [
+        {"id": "a", "text": "Two txs."},
+        {"id": "b", "text": "ERC-2612 permit: user signs approval off-chain → DEX submits permit + transferFrom in single tx. No prior on-chain approve. Inherit ERC20Permit from OpenZeppelin."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ERC-2612 permit = off-chain signed approval.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Integrate non-standard tokens like USDT?",
+      "choices": [
+        {"id": "a", "text": "Standard interface."},
+        {"id": "b", "text": "OpenZeppelin SafeERC20: using SafeERC20 for IERC20; safeTransfer, safeApprove. Wraps standard calls + reverts on failure. Handles USDT (no bool return), fee-on-transfer, and weird tokens."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "SafeERC20 wraps quirks; reverts on failure.",
+      "points": 1
+    }
+  ]
+}

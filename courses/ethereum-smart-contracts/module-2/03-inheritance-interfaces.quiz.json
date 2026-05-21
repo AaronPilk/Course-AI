@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Inheritance",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Build standard ERC-20?",
+      "choices": [
+        {"id": "a", "text": "From scratch."},
+        {"id": "b", "text": "Inherit OpenZeppelin: contract MyToken is ERC20, Ownable { constructor() ERC20(\"Name\", \"SYM\") Ownable(msg.sender) {} ... } — audited, conventional, gets all standard functions free. Don't reinvent token contracts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "OpenZeppelin = audited standard library.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Predict contract address before deploy?",
+      "choices": [
+        {"id": "a", "text": "Impossible."},
+        {"id": "b", "text": "CREATE2: address = keccak256(0xff, deployer, salt, bytecode). Deterministic; same inputs always produce same address. Used for counterfactual contracts, meta-tx, deployable predictions."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "CREATE2 = deterministic deploy address.",
+      "points": 1
+    }
+  ]
+}

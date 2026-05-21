@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Address types",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Address prefix guide?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "P2PKH starts with 1 (legacy), P2SH with 3 (multisig wrapper), SegWit P2WPKH/P2WSH with bc1q, Taproot P2TR with bc1p. Modern wallets default to bc1q or bc1p for smaller tx + privacy."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "1 / 3 / bc1q / bc1p = type identifiers.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Best modern address type?",
+      "choices": [
+        {"id": "a", "text": "Legacy."},
+        {"id": "b", "text": "Taproot (bc1p) — smallest tx, best privacy (all P2TR outputs look identical on-chain), Schnorr signatures aggregatable for cheap multisig. ~50% tx size reduction vs. P2PKH. Some exchanges still catching up on support."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Taproot = smallest + best privacy + Schnorr.",
+      "points": 1
+    }
+  ]
+}

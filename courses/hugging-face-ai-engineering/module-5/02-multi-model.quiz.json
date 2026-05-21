@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Multi-model pipelines",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Voice assistant pipeline architecture?",
+      "choices": [
+        {"id": "a", "text": "One model for everything."},
+        {"id": "b", "text": "Three specialized stages: 1) ASR (Whisper) converts audio → text. 2) LLM (Llama/GPT/Claude) generates text response. 3) TTS (Bark/XTTS/ElevenLabs) converts response → audio. Each stage uses best-in-class model for that task. Total latency: sum of stages (~500ms ASR + ~1s LLM + ~500ms TTS = 2s typical). Optimize: streaming (start TTS on first LLM tokens; parallel processing); cache common responses; smaller LLM for simple queries via classifier-branch. One-model-for-everything alternative (multimodal model) emerging but specialized chain still better quality + lower cost for most production. LangChain / LlamaIndex orchestrate; or custom Python with async."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Three specialized stages: ASR → LLM → TTS. Each uses best-in-class for task. Stream + cache + classify-branch for optimization.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Chatbot routes queries through 4-stage pipeline (classifier → retriever → LLM → safety filter). 90% of latency in LLM stage. Optimize?",
+      "choices": [
+        {"id": "a", "text": "Faster classifier."},
+        {"id": "b", "text": "Focus on LLM stage — it's the bottleneck (90% of latency). Optimizations: 1) Streaming — start showing response as tokens generate; perceived latency much lower even if total time same. 2) Smaller LLM via classifier-branch — route simple queries to small fast model (Phi 3.5 / Llama 3.2 1B); complex to larger. 3) Specialized fast inference — Groq, vLLM with continuous batching, TensorRT-LLM for max throughput. 4) Quantization (AWQ INT4) — faster inference per token. 5) Speculative decoding — small draft model proposes; large verifies; 2-3x speedup. 6) Reduce max_tokens — many responses don't need 500 tokens; 100-200 suffices. 7) Cache common queries — exact + semantic cache; instant response for repeats. 8) KV cache reuse — for similar prompts. Optimize the bottleneck (Amdahl's law); making 10% faster only marginal improvement. Don't waste effort optimizing classifier when LLM is 90%. Parallelize where possible (run safety filter in parallel with response display, not before). Pro habit: profile pipeline; identify bottleneck stage; optimize it; re-profile."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimize LLM stage (the bottleneck). Streaming, smaller model via routing, vLLM/Groq, quantization, speculative decoding, max_tokens cap, caching. Amdahl's law: bottleneck dominates.",
+      "points": 1
+    }
+  ]
+}

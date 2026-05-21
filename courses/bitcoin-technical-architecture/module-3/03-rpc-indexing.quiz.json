@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: RPC and indexing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Look up any tx by id?",
+      "choices": [
+        {"id": "a", "text": "Default."},
+        {"id": "b", "text": "Requires txindex=1 in bitcoin.conf. Adds ~10 GB index. Without it, only wallet txs queryable. Required for block explorers, payment processors, custom apps."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "txindex=1 for tx lookups outside wallet.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Address balance lookups?",
+      "choices": [
+        {"id": "a", "text": "Bitcoin Core."},
+        {"id": "b", "text": "Bitcoin Core doesn't index addresses. Run electrs / esplora / Fulcrum indexer alongside bitcoind. Uses Electrum protocol on port 50001. Powers wallets (Electrum, Sparrow) + explorers."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Indexer (electrs/esplora) for address lookups.",
+      "points": 1
+    }
+  ]
+}

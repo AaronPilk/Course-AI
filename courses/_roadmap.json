@@ -446,42 +446,54 @@
       "slug": "hugging-face-ai-engineering",
       "title": "Hugging Face AI Engineering",
       "category": "AI Engineering",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://huggingface.co/docs"]
     },
     {
       "slug": "langgraph-multi-agent",
       "title": "LangGraph Multi-Agent Workflows",
       "category": "AI Engineering",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://langchain-ai.github.io/langgraph/"]
     },
     {
       "slug": "pine-script-tradingview",
       "title": "Pine Script TradingView Automation",
       "category": "Trading",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://www.tradingview.com/pine-script-docs/"]
     },
     {
       "slug": "solana-blockchain-dev",
       "title": "Solana Blockchain Development",
       "category": "Blockchain",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://solana.com/docs"]
     },
     {
       "slug": "ethereum-smart-contracts",
       "title": "Ethereum Smart Contract Engineering",
       "category": "Blockchain",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://ethereum.org/en/developers/docs/"]
     },
     {
       "slug": "bitcoin-technical-architecture",
       "title": "Bitcoin Technical Architecture",
       "category": "Blockchain",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://bitcoin.org/bitcoin.pdf",
         "https://developer.bitcoin.org"
@@ -510,14 +522,18 @@
       "slug": "robotics-engineering-fundamentals",
       "title": "Robotics Engineering Fundamentals",
       "category": "Robotics",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": ["https://docs.ros.org"]
     },
     {
       "slug": "nasa-aerospace-concepts",
       "title": "NASA Aerospace Engineering Concepts",
       "category": "Aerospace",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://www.nasa.gov/learning-resources/",
         "https://ntrs.nasa.gov"
@@ -527,7 +543,9 @@
       "slug": "faa-aviation-systems",
       "title": "FAA Aviation Systems & Airspace",
       "category": "Aviation",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation"
       ]
@@ -536,7 +554,9 @@
       "slug": "construction-project-management",
       "title": "Construction Project Management Systems",
       "category": "Construction",
-      "status": "planned",
+      "status": "shipped",
+      "shippedAt": "2026-05-20",
+      "stats": { "modules": 5, "lessons": 20, "lessonQuizzes": 20, "moduleQuizzes": 5 },
       "sources": [
         "https://www.osha.gov/construction",
         "https://www.procore.com/library"

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Plot functions",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Render shape on bar when condition true?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "plotshape(condition, shape.triangleup, location.belowbar, color.green). Renders only on true bars. Use shape.arrowup, circle, diamond, cross for variety."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "plotshape for discrete signals.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Fill area between two plots?",
+      "choices": [
+        {"id": "a", "text": "Not possible."},
+        {"id": "b", "text": "p1 = plot(upper); p2 = plot(lower); fill(p1, p2, color.new(color.blue, 80)). Assign plot() to variables; pass to fill(). Used for bands, channels, ranges."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "fill() takes two plot() returns; ideal for bands.",
+      "points": 1
+    }
+  ]
+}

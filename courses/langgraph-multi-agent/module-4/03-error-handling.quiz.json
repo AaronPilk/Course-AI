@@ -1,0 +1,8 @@
+{"title": "Quick check: Errors", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Tool fails; how to make agent resilient?",
+    "choices": [{"id": "a", "text": "Re-raise."}, {"id": "b", "text": "Return error as text from tool; LLM reads + adapts. Don't crash agent. `@tool def search(q): try: return result; except Exception as e: return f'Error: {e}. Try different query.'`. LLM sees error message, decides next step (try different approach, give up, escalate). Combined with: retry with exponential backoff (tenacity) for transient failures; conditional routing for persistent errors; fallback nodes; timeouts. Production agents handle all failure modes gracefully."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Return error as text; LLM adapts. Plus retry/fallback/timeout.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Agent hits rate limit; crashes. Fix?",
+    "choices": [{"id": "a", "text": "Don't use API."}, {"id": "b", "text": "Retry with exponential backoff. `from tenacity import retry, wait_exponential, retry_if_exception_type; @retry(wait=wait_exponential(min=4, max=60), retry=retry_if_exception_type(RateLimitError)) def call_llm(): ...`. Waits 4s, 8s, 16s, etc. up to 60s between retries. After several retries: handle as permanent failure (escalate, fallback model, defer). Standard pattern for handling rate-limited APIs."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Retry with exponential backoff via tenacity. Fallback after retries exhausted.", "points": 1}
+]}

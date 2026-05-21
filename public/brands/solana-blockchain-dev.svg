@@ -1,0 +1,21 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="solanaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14F195"/>
+      <stop offset="50%" stop-color="#03E1FF"/>
+      <stop offset="100%" stop-color="#9945FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#solanaGrad)"/>
+  <g fill="#0B0B0F" opacity="0.92">
+    <rect x="80" y="140" width="240" height="22" rx="11"/>
+    <rect x="80" y="189" width="240" height="22" rx="11"/>
+    <rect x="80" y="238" width="240" height="22" rx="11"/>
+  </g>
+  <g fill="#0B0B0F" opacity="0.18">
+    <circle cx="60" cy="60" r="6"/>
+    <circle cx="340" cy="80" r="4"/>
+    <circle cx="100" cy="340" r="5"/>
+    <circle cx="300" cy="320" r="6"/>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: bitcoin-cli",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Check sync status?",
+      "choices": [
+        {"id": "a", "text": "Check explorer."},
+        {"id": "b", "text": "bitcoin-cli getblockchaininfo — returns chain height, verificationprogress (0.0-1.0), pruned/initialblockdownload flags. Local node's view. Compare blocks to mempool.space for sync status."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "getblockchaininfo for sync + chain state.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Multi-wallet operations?",
+      "choices": [
+        {"id": "a", "text": "One wallet only."},
+        {"id": "b", "text": "bitcoin-cli -rpcwallet=NAME getbalance — flag specifies which wallet for commands. createwallet/loadwallet for management. Separate wallets for different uses (savings, spending, services)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "-rpcwallet=NAME flag selects active wallet.",
+      "points": 1
+    }
+  ]
+}

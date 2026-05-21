@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Tokenizers and Models",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Right AutoModel class for chat / text generation?",
+      "choices": [
+        { "id": "a", "text": "AutoModel" },
+        { "id": "b", "text": "AutoModelForCausalLM. Causal Language Modeling = next-token prediction = GPT-style autoregressive generation. The right class for chat models, completion models, instruct models. Other AutoModel variants for specific tasks: AutoModelForSequenceClassification (sentiment, classification), AutoModelForTokenClassification (NER, POS tagging), AutoModelForQuestionAnswering (extractive QA), AutoModelForMaskedLM (BERT-style fill-in-blank), AutoModelForSeq2SeqLM (translation, summarization where input + output are different sequences), AutoModelForImageClassification (vision). Plain AutoModel returns base model without task head — for extracting hidden states / embeddings only; not for generation. Using wrong class crashes or returns incorrect output type. Pattern: model_id determines task; pick matching AutoModel class. For Llama/Mistral/Qwen/Phi instruct models: AutoModelForCausalLM. For BERT classification fine-tunes: AutoModelForSequenceClassification. For Whisper: AutoModelForSpeechSeq2Seq. Documented in model card under 'Use in Transformers' button.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AutoModelForCausalLM for text generation / chat. Variants for other tasks: SequenceClassification, TokenClassification, QA, Seq2SeqLM, etc.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Want to get text embeddings for similarity search. Approach?",
+      "choices": [
+        { "id": "a", "text": "Use Llama 3." },
+        { "id": "b", "text": "SentenceTransformers wrapper or sentence-transformers model via Transformers. Easiest: `from sentence_transformers import SentenceTransformer; model = SentenceTransformer('BAAI/bge-large-en-v1.5'); embeddings = model.encode(['text1', 'text2'])`. Returns numpy array; ready for similarity comparison (cosine similarity). Direct via Transformers: `model = AutoModel.from_pretrained('BAAI/bge-large-en-v1.5'); outputs = model(**tokenizer('text', return_tensors='pt')); embedding = outputs.last_hidden_state[:, 0]` (CLS pooling) or `.mean(dim=1)` (mean pooling). SentenceTransformers handles pooling + normalization automatically; simpler. For RAG retrieval: 1) Embed corpus once. 2) Store in vector DB (Chroma, Pinecone, Weaviate, FAISS). 3) Query: embed query; nearest neighbor search; return top-k. 4) Pass results to LLM for generation. The two-stage pattern: embeddings retrieve; LLM generates. Don't use LLMs for embeddings directly: 1) Much slower (full forward pass for one embedding vs. fast specialized model). 2) Lower quality (LLMs not trained for similarity). 3) Higher cost. Purpose-built embedding models (sentence-transformers family): BGE, MPNet, MiniLM, E5 — all optimized for the task; small + fast + good quality.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "SentenceTransformers wrapper with sentence-transformers model (BGE, MPNet, MiniLM). Purpose-built embeddings. Don't use LLMs for this.",
+      "points": 1
+    }
+  ]
+}

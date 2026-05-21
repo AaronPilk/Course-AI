@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Ordinals + Runes",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Ordinals enable what?",
+      "choices": [
+        {"id": "a", "text": "Smart contracts."},
+        {"id": "b", "text": "NFT-like assets on Bitcoin L1 via inscriptions: data embedded in Taproot witness; tied to specific sat via Ordinal theory. Released Jan 2023; no protocol change required. Stored permanently on-chain. Controversial in BTC community."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Ordinals = NFTs on Bitcoin via inscriptions.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Token standard on Bitcoin?",
+      "choices": [
+        {"id": "a", "text": "ERC-20."},
+        {"id": "b", "text": "BRC-20 (March 2023) via JSON inscriptions — speculative, off-chain indexer-based. Runes (April 2024) — UTXO-based, uses OP_RETURN, more efficient, designed to replace BRC-20. Stacks adds smart contracts as separate L2."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "BRC-20 + Runes for tokens; Stacks for smart contracts.",
+      "points": 1
+    }
+  ]
+}

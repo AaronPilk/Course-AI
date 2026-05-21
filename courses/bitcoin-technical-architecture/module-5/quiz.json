@@ -1,0 +1,61 @@
+{
+  "title": "Module 5 quiz: Security + ecosystem",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Self-custody backup?",
+      "choices": [
+        {"id": "a", "text": "Cloud."},
+        {"id": "b", "text": "Metal plate (Steelmaster/Cryptosteel) offline + geographic redundancy + test recovery on wiped device before scaling deposits. Never digital photo, email, cloud — phishing/breach risk."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Metal + redundant + tested recovery.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Realistic risk priorities?",
+      "choices": [
+        {"id": "a", "text": "Quantum."},
+        {"id": "b", "text": "Phishing > lost keys > exchange hacks > software bugs >>> 51% > quantum. Day-to-day threats are scams + key loss. Focus security on real-world common attacks, not theoretical protocol attacks."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Phishing + key loss dominant; protocol attacks rare.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Ordinals?",
+      "choices": [
+        {"id": "a", "text": "Smart contracts."},
+        {"id": "b", "text": "NFT-like assets via inscription in Taproot witness; sat identified via Ordinal theory. Jan 2023; no protocol change. Stored on-chain permanently. Pushed fees up; controversial."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Inscriptions on individual sats = NFTs.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Bitcoin token standard 2024?",
+      "choices": [
+        {"id": "a", "text": "ERC-20."},
+        {"id": "b", "text": "Runes (April 2024): UTXO-based, uses OP_RETURN, more efficient than BRC-20. Designed to replace BRC-20 (JSON inscription tokens). Both speculative; non-native; off-chain indexer-dependent."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Runes (UTXO-based) replaces BRC-20.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Privacy practical baseline?",
+      "choices": [
+        {"id": "a", "text": "Reuse addresses."},
+        {"id": "b", "text": "Don't reuse addresses + run own node (over Tor) + separate wallets per purpose + consider CoinJoin (Wasabi/JoinMarket) before large movements + hold long-term off exchange. Custodial mixers risky post-sanction."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Own node + non-reuse + CoinJoin + off-exchange.",
+      "points": 1
+    }
+  ]
+}

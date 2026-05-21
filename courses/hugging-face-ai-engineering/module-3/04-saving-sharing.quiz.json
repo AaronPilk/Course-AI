@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Saving + sharing",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Save trained model + tokenizer + push to Hub?",
+      "choices": [
+        {"id": "a", "text": "Manual copy."},
+        {"id": "b", "text": "model.push_to_hub('user/model'); tokenizer.push_to_hub('user/model'); or trainer.push_to_hub('user/model'). Pushes weights + tokenizer files + auto-generates basic model card. Add comprehensive README.md as model card with: description, training data, usage example, limitations, license. Public by default; private=True for Pro tier. Versioning via Git (HF repos are Git). For LoRA: push only adapter (tiny ~10-200 MB)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "push_to_hub() on model + tokenizer. Or via Trainer. Add comprehensive README model card.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Released model on Hub; nobody using it. Why?",
+      "choices": [
+        {"id": "a", "text": "Bad model."},
+        {"id": "b", "text": "Discoverability + documentation gap. Solutions: 1) Comprehensive model card — description, intended uses, training data, usage examples, sample outputs, limitations, license. Weak cards = low adoption. 2) Tags — task, library, language, base_model. Helps filter searches. 3) Clear license — Apache 2.0 / MIT for max adoption; ambiguous licenses scare commercial users. 4) Sample outputs in card. Show what your model produces. 5) Companion Space — interactive demo using your model; let people try without setup. 6) Announce — Twitter, Reddit r/LocalLLaMA, Discord communities, HF discussions. 7) Quality matters — if model genuinely better than alternatives for niche, word spreads. 8) Quickstart code in card — copy-paste working example. Pro habit: treat model release like product launch; documentation + demo + announcement matter as much as model quality."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Documentation + discoverability. Comprehensive model card + tags + license + sample outputs + Space demo + announcement. Treat release like product launch.",
+      "points": 1
+    }
+  ]
+}

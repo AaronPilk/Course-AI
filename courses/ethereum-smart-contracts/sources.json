@@ -1,0 +1,11 @@
+{
+  "sources": [
+    { "url": "https://ethereum.org/en/developers/docs/", "title": "Ethereum.org Developer Docs" },
+    { "url": "https://docs.soliditylang.org/", "title": "Solidity Documentation" },
+    { "url": "https://docs.openzeppelin.com/", "title": "OpenZeppelin Contracts" },
+    { "url": "https://hardhat.org/docs", "title": "Hardhat Documentation" },
+    { "url": "https://book.getfoundry.sh/", "title": "Foundry Book" },
+    { "url": "https://docs.ethers.org/", "title": "ethers.js Documentation" },
+    { "url": "https://viem.sh/", "title": "viem Documentation" }
+  ]
+}

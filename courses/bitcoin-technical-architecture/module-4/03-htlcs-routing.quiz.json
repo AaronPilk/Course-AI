@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: HTLCs",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "HTLC?",
+      "choices": [
+        {"id": "a", "text": "Routing tool."},
+        {"id": "b", "text": "Hash Time-Locked Contract: \"pay X if recipient reveals preimage of hash H before time T; refund otherwise.\" Chains across hops; atomic guarantee — either all hops complete or all refund. Cryptographic, trustless."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Conditional payment unlocked by preimage.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Privacy in routing?",
+      "choices": [
+        {"id": "a", "text": "Plain."},
+        {"id": "b", "text": "Onion routing (like Tor). Sender encrypts route in nested layers; each hop decrypts only its layer; knows previous + next hop only. Recipient sees nothing about sender. Channels publicly known via gossip but payment direction hidden."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Onion routing hides hops from each other.",
+      "points": 1
+    }
+  ]
+}

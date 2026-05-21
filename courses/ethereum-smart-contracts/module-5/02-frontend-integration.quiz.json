@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Frontend integration",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Modern React + Web3 stack?",
+      "choices": [
+        {"id": "a", "text": "ethers v6."},
+        {"id": "b", "text": "Wagmi + viem + RainbowKit/ConnectKit + TanStack Query. viem typed contracts; Wagmi hooks (useAccount, useReadContract, useWriteContract); RainbowKit wallet UX. Standard 2024+ stack."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Wagmi + viem + RainbowKit = modern stack.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Efficient multi-read?",
+      "choices": [
+        {"id": "a", "text": "Loop reads."},
+        {"id": "b", "text": "client.multicall({ contracts: [...] }) — batches into one RPC call. Read balanceOf + decimals + symbol in one round trip. Significant latency + RPC cost improvement for token displays."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multicall batches reads in one RPC call.",
+      "points": 1
+    }
+  ]
+}

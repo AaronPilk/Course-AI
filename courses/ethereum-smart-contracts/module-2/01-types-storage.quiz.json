@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Types and storage",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Data locations?",
+      "choices": [
+        {"id": "a", "text": "Just storage."},
+        {"id": "b", "text": "storage (permanent, expensive), memory (temp, cheap), calldata (read-only function input, cheapest). State vars default to storage. Use calldata for external function inputs you won't modify."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "storage / memory / calldata = cost-different locations.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Save gas on small fields?",
+      "choices": [
+        {"id": "a", "text": "Always uint256."},
+        {"id": "b", "text": "Pack same-slot tiny types: uint128 + uint128 in 1 slot vs. 2 separate uint256 slots. Saves ~17k gas on initial write. Order struct fields by size for max packing."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pack tiny types in struct for slot savings.",
+      "points": 1
+    }
+  ]
+}

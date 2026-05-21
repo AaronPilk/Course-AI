@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Sim2Real",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Reality gap solution?",
+      "choices": [
+        {"id": "a", "text": "Train more."},
+        {"id": "b", "text": "Domain randomization (vary friction, mass, sensor noise, lighting, textures) + system identification (measure real params, tune sim) + real-world fine-tuning (few hours after sim pretrain). Three pillars."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Randomization + sysid + fine-tune.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Bootstrap policy on real robot?",
+      "choices": [
+        {"id": "a", "text": "Pure RL."},
+        {"id": "b", "text": "Imitation learning from demos: VR teleoperation (Aloha, NVIDIA Groot), hand-guided, or kinesthetic. 5-100 demos with modern methods (behavior cloning + DAgger). Then RL fine-tunes. Pure real-RL slow + dangerous."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Imitation + RL hybrid for real-robot learning.",
+      "points": 1
+    }
+  ]
+}

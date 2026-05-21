@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: What a robot is",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Robot definition?",
+      "choices": [
+        {"id": "a", "text": "Computer."},
+        {"id": "b", "text": "Autonomous or semi-autonomous machine that senses environment, processes info, and acts. Three pillars: sense (sensors), think (controllers), act (actuators). Differs from pure AI (LLMs, chess engines) by having physical body."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Sense + think + act = robot.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Hardest problems in robotics 2026?",
+      "choices": [
+        {"id": "a", "text": "Solved."},
+        {"id": "b", "text": "Manipulation (picking arbitrary objects), locomotion (robust walking on varied terrain), generalization (unseen environments), safety (around humans). Active research; humanoid push from Tesla/Figure/Boston Dynamics tackling these now."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Manipulation + locomotion + generalization + safety.",
+      "points": 1
+    }
+  ]
+}

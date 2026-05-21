@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Rust for Solana",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Why Rust for Solana?",
+      "choices": [
+        {"id": "a", "text": "Trendy."},
+        {"id": "b", "text": "Memory safety without GC, predictable performance (BPF compile target), zero-cost abstractions, strong type system. Tradeoff: steeper learning curve than Solidity. Borrow checker catches bugs at compile time."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Memory safety + performance + types.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Avoid program crash on missing data?",
+      "choices": [
+        {"id": "a", "text": "unwrap()"},
+        {"id": "b", "text": "Pattern match Option or use Result + ? operator. .unwrap() panics → halts transaction with error. Always handle None / Err explicitly; return MyError::NotFound.into() for cleaner client UX."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Match Option / Result + ? — never unwrap() in programs.",
+      "points": 1
+    }
+  ]
+}

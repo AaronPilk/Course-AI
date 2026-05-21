@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: OpenZeppelin",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Multi-role access control?",
+      "choices": [
+        {"id": "a", "text": "Ownable."},
+        {"id": "b", "text": "AccessControl: bytes32 constant MINTER_ROLE = keccak256(\"MINTER_ROLE\"); onlyRole(MINTER_ROLE) modifier. Multiple distinct roles; grant/revoke per address. More flexible than single-owner Ownable."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "AccessControl for role-based permissions.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Safe contract upgradeability?",
+      "choices": [
+        {"id": "a", "text": "Selfdestruct + redeploy."},
+        {"id": "b", "text": "@openzeppelin/contracts-upgradeable + hardhat-upgrades plugin. TransparentUpgradeableProxy delegates calls to implementation; upgrade via upgrades.upgradeProxy. Validates storage layout to prevent slot conflicts."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "OZ Upgrades plugin + Transparent Proxy = safe upgrades.",
+      "points": 1
+    }
+  ]
+}

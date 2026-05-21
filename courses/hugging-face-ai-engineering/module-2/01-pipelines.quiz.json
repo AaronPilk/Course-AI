@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Pipelines",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Simplest way to use any HF model?",
+      "choices": [
+        { "id": "a", "text": "Write custom code." },
+        { "id": "b", "text": "pipeline() function. `from transformers import pipeline; pipe = pipeline('text-generation', model='meta-llama/Llama-3.2-1B-Instruct'); pipe('prompt')`. One-line creation; ready callable; handles tokenization + model loading + decoding. Tasks: text-generation, sentiment-analysis, summarization, translation, QA, NER, zero-shot-classification, image-classification, image-to-text, automatic-speech-recognition. Add `device=0` for GPU; `torch_dtype=torch.float16` for half precision; `load_in_8bit=True` for quantization. Batching: pass list. For instruct models: pass messages list with role+content for chat template handling. Streaming: TextStreamer for real-time output. For prototyping + production simple cases: pipeline() is the standard. Lower-level API (Module 2 Lesson 2) for custom control. Most demos + examples use pipeline.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "pipeline() function. One-line; handles everything. Use device + quantization for performance.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Llama 3.1 70B model; consumer GPU (24 GB VRAM); want to run locally. Approach?",
+      "choices": [
+        { "id": "a", "text": "Impossible." },
+        { "id": "b", "text": "Quantization. 70B at FP16 = ~140 GB; doesn't fit. INT8 = ~70 GB; doesn't fit. INT4 = ~35 GB; doesn't fit 24 GB GPU alone but with offloading and lower variants becomes feasible. Practical options: 1) NF4 quantization (~35 GB) + CPU offloading via accelerate (some layers on RAM); slow but works. 2) Use smaller model: Llama 3.1 8B (~16 GB FP16; fits easily) — often 80-90% of 70B quality for many tasks. 3) Use API for 70B; reserve local for 8B. 4) Multi-GPU rig (2x consumer GPU = 48 GB; fits INT4 70B). 5) Cloud GPU (RunPod, Lambda Labs) renting A100/H100. Code with quantization: `pipeline('text-generation', model='meta-llama/Llama-3.1-70B-Instruct', model_kwargs={'load_in_4bit': True, 'bnb_4bit_quant_type': 'nf4', 'bnb_4bit_compute_dtype': torch.float16}, device_map='auto')`. bitsandbytes library required for INT4/INT8; install via pip. Trade-offs: INT4 reduces quality slightly (5-15% benchmark drop typical) but enables consumer hardware. For chat/most use cases: imperceptible. For precision tasks (code, math): may notice. The 'big model on consumer GPU' problem solved via quantization + offloading + sometimes choosing smaller model. Pro habit: benchmark quality vs. size; smaller-good often beats bigger-quantized for specific tasks.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Quantization (NF4/INT4) + accelerate offloading. Or use smaller model (8B). 70B at INT4 ~35GB; needs 24GB+ + offloading or multi-GPU.",
+      "points": 1
+    }
+  ]
+}

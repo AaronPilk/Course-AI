@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Mainnet security",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Upgrade authority for production?",
+      "choices": [
+        {"id": "a", "text": "Deployer hot wallet."},
+        {"id": "b", "text": "Multi-sig via Squads Protocol (2-of-3 or 3-of-5). Deployer hot wallet compromise = rug. Multi-sig requires coordinated approval. Or set --final to lock forever (trustless but unfixable)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Squads multi-sig prevents hot wallet rug.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Critical Solana vulnerabilities?",
+      "choices": [
+        {"id": "a", "text": "None."},
+        {"id": "b", "text": "Account substitution, missing signer checks, type confusion, missing PDA bump validation, reinitialization (init_if_needed twice), unchecked math overflow, sysvar substitution. Sealevel-attacks repo + Anchor's typed accounts mitigate most."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Sealevel attacks: substitution, missing signer, type confusion.",
+      "points": 1
+    }
+  ]
+}

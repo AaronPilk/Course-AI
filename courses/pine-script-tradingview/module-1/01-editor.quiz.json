@@ -1,0 +1,8 @@
+{"title": "Quick check: Pine editor", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Pine Script current version 2026?",
+    "choices": [{"id": "a", "text": "v4"}, {"id": "b", "text": "v5. Declare via //@version=5 first line. Major improvements over v4: better types (matrices, maps), error handling, more built-ins, cleaner syntax. Always use v5 for new scripts."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "v5 with //@version=5 declaration.", "points": 1},
+  {"position": 2, "type": "multiple_choice", "prompt": "indicator() vs. strategy() in Pine?",
+    "choices": [{"id": "a", "text": "Same."}, {"id": "b", "text": "indicator() = visual indicators only (lines, markers, oscillators). strategy() = enables backtesting + entry/exit orders + trading simulation. Use indicator() for visualization; strategy() when you want to backtest entries/exits + see performance metrics."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "indicator() = visualize only; strategy() = backtest trades.", "points": 1}
+]}

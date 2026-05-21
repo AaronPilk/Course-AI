@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Why Solana exists",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Solana's throughput thesis?",
+      "choices": [
+        {"id": "a", "text": "Same as Ethereum."},
+        {"id": "b", "text": "Single-shard high-performance L1: 3-5k TPS typical, 400ms blocks, <$0.001 fees. Trade-off: high validator hardware requirements (fewer validators) + occasional chain halts. Different from L2 scaling approach."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Monolithic L1 scaling via high-performance single shard.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Solana programming model vs. Ethereum?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Programs are stateless executables; state lives in accounts (serialized blobs at addresses); transactions must pass relevant accounts. Different from Ethereum's contracts-hold-state model. Implication: structure code around explicit account access."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Stateless programs + accounts model; must pass accounts explicitly.",
+      "points": 1
+    }
+  ]
+}

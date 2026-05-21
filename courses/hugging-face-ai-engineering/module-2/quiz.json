@@ -1,0 +1,81 @@
+{
+  "title": "Module 2 quiz: Transformers library",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "Simplest way to use HF model?",
+      "choices": [
+        { "id": "a", "text": "Manual code." },
+        { "id": "b", "text": "pipeline() function. One-line; handles tokenization + model + decoding. Tasks: text-generation, sentiment, summarization, QA, NER, image, audio, etc. Lower-level API (AutoTokenizer + AutoModelFor[Task]) for custom control.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "pipeline() function. One-line model usage.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "multiple_choice",
+      "prompt": "AutoModel class for text generation / chat?",
+      "choices": [
+        { "id": "a", "text": "AutoModel" },
+        { "id": "b", "text": "AutoModelForCausalLM. Causal language modeling = next-token prediction = GPT-style autoregressive generation. For Llama / Mistral / Qwen / Phi instruct models. Other variants: SequenceClassification, TokenClassification, QA, Seq2SeqLM, ImageClassification.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "AutoModelForCausalLM for text generation / chat models.",
+      "points": 1
+    },
+    {
+      "position": 3,
+      "type": "multiple_choice",
+      "prompt": "Best for prototyping AI features?",
+      "choices": [
+        { "id": "a", "text": "Local GPU." },
+        { "id": "b", "text": "Cloud API. Fastest start; no setup; latest models. HF Inference API free tier; Replicate; Together; Fireworks; Groq for speed. Switch to local after validation if cost/privacy/volume justify.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Cloud API. Faster start; latest models. Switch to local for production high-volume.",
+      "points": 1
+    },
+    {
+      "position": 4,
+      "type": "multiple_choice",
+      "prompt": "VRAM for 70B model FP16?",
+      "choices": [
+        { "id": "a", "text": "16 GB" },
+        { "id": "b", "text": "~140 GB. 2 GB/B params FP16. INT8 = 70 GB; INT4 = 35 GB. Consumer GPU = use 8B model or aggressive quantization.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "~140 GB FP16. Multi-GPU or quantization.",
+      "points": 1
+    },
+    {
+      "position": 5,
+      "type": "scenario",
+      "prompt": "Production serving 1000s req/min. Optimization?",
+      "choices": [
+        { "id": "a", "text": "More servers." },
+        { "id": "b", "text": "vLLM or TensorRT-LLM with continuous batching + PagedAttention. 5-20x throughput vs. naive Transformers. Combine with AWQ quantization + Flash Attention. Production standard 2026.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "vLLM / TensorRT-LLM. Continuous batching + PagedAttention. 5-20x throughput.",
+      "points": 1
+    }
+  ]
+}

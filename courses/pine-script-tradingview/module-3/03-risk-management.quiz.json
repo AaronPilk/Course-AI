@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Risk management",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Position size formula?",
+      "choices": [
+        {"id": "a", "text": "All in."},
+        {"id": "b", "text": "positionSize = (equity × riskPercent) / (entryPrice − stopPrice). Fixed dollar risk regardless of stop distance. Smaller positions with wider stops; larger with tight stops."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Risk-adjusted sizing: account risk / stop distance.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Strategy expectancy formula?",
+      "choices": [
+        {"id": "a", "text": "Win rate."},
+        {"id": "b", "text": "Expectancy = (Win% × AvgWin in R) − (Loss% × AvgLoss in R). 40% win × 3R − 60% loss × 1R = 0.6R/trade. Positive = profitable. High win rate with small wins / large losses = negative."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Expectancy in R-multiples reveals true edge.",
+      "points": 1
+    }
+  ]
+}

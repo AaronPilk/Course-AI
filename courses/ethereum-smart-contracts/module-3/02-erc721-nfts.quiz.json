@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: ERC-721",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Batch mint optimization?",
+      "choices": [
+        {"id": "a", "text": "Loop OZ."},
+        {"id": "b", "text": "ERC-721A (Azuki): mint 5 NFTs at ~1.5× gas vs. 5× for OpenZeppelin. Defers per-token storage until transfer. Standard for large mass-mint collections."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ERC-721A for cheap batch minting.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Compact allowlist?",
+      "choices": [
+        {"id": "a", "text": "List on-chain."},
+        {"id": "b", "text": "Merkle root: store single bytes32 on-chain; users submit proof + leaf. MerkleProof.verify(proof, root, hash(msg.sender)) gates mint. 10k addresses = 10k×32 bytes on-chain → 32 bytes total."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Merkle root + proof = O(1) on-chain allowlist.",
+      "points": 1
+    }
+  ]
+}

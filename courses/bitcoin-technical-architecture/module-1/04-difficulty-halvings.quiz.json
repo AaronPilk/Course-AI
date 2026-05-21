@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Difficulty + halvings",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Network self-regulation after disruption?",
+      "choices": [
+        {"id": "a", "text": "Human intervention."},
+        {"id": "b", "text": "Automatic. China mining ban May 2021: hash rate dropped 50%; block time slowed to 15 min; difficulty auto-adjusted -28% within 6 weeks (largest in history). Network recovered without intervention."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Difficulty auto-adjusts every 2016 blocks for self-healing.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Long-term mining incentive?",
+      "choices": [
+        {"id": "a", "text": "Block reward forever."},
+        {"id": "b", "text": "Transaction fees must dominate as block reward → 0 by ~2140. Fees today 1-10% of miner revenue; must grow with usage + BTC price. Open question: are fees sustainable? Layer-2 (Lightning) absorbs small txs; L1 becomes settlement for high-value."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Fees must dominate as reward goes to zero.",
+      "points": 1
+    }
+  ]
+}

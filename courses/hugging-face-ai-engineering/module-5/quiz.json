@@ -1,0 +1,61 @@
+{
+  "title": "Module 5 quiz: Production AI patterns",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "RAG vs. fine-tuning for current company knowledge?",
+      "choices": [
+        {"id": "a", "text": "Fine-tune."},
+        {"id": "b", "text": "RAG. Easy to update; current data; explicit citations; lower compute. sentence-transformers embed + vector DB (Chroma/Pinecone/Weaviate/Qdrant) + LLM generates with retrieved context."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RAG for knowledge; easy updates + citations. Fine-tune for style.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Voice assistant architecture?",
+      "choices": [
+        {"id": "a", "text": "One model."},
+        {"id": "b", "text": "Three stages: ASR (Whisper) → LLM (Llama/GPT) → TTS (Bark/XTTS). Specialized models per task. Stream for low latency."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ASR → LLM → TTS specialized pipeline.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Scaled quality evaluation?",
+      "choices": [
+        {"id": "a", "text": "Human review everything."},
+        {"id": "b", "text": "LLM-as-judge — stronger LLM rates outputs against rubric. Plus user signals (thumbs up/down) + test sets. Scalable + nuanced."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "LLM-as-judge + user signals + test sets.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Switching model in production safely?",
+      "choices": [
+        {"id": "a", "text": "Deploy immediately."},
+        {"id": "b", "text": "Shadow mode → canary deployment → gradual rollout + monitoring + fast rollback. Standard safe model swap."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Shadow → canary → gradual + monitor + rollback.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "When does open-source AI win?",
+      "choices": [
+        {"id": "a", "text": "Never."},
+        {"id": "b", "text": "High volume (>100K queries/day) + privacy critical + customization needed + cost-sensitive at scale. Frontier closed wins for cutting-edge features + low volume + lean teams. Hybrid often best."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Volume + privacy + customization + cost. Hybrid optimal.",
+      "points": 1
+    }
+  ]
+}

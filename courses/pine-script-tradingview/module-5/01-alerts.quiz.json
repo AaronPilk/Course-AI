@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Alerts",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Prevent flickering alerts?",
+      "choices": [
+        {"id": "a", "text": "freq_all"},
+        {"id": "b", "text": "alert(msg, alert.freq_once_per_bar_close) — fires only after bar closes; no intra-bar flicker; matches backtest signals. freq_all spams; freq_once_per_bar may still flicker."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "alert.freq_once_per_bar_close = clean signals.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Route alert to broker?",
+      "choices": [
+        {"id": "a", "text": "Email."},
+        {"id": "b", "text": "Configure TradingView Alert with Webhook URL pointing to broker / proxy endpoint. Pine alert message becomes POST body (JSON ideal). Endpoint parses + places order via broker API. 100ms-2s latency."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Webhook URL → broker endpoint = automated execution.",
+      "points": 1
+    }
+  ]
+}

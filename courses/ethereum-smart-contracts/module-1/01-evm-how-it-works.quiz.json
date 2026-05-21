@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: EVM",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "EVM properties?",
+      "choices": [
+        {"id": "a", "text": "Random."},
+        {"id": "b", "text": "Stack-based VM; deterministic (same input → same output everywhere); isolated (no OS/network/file); stateful (storage on-chain); pay-per-op (gas). Smart contracts compile to bytecode; all nodes execute identically."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Deterministic + isolated + stateful + pay-per-op.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Reduce user gas costs 10-100×?",
+      "choices": [
+        {"id": "a", "text": "L1 only."},
+        {"id": "b", "text": "Deploy to L2 rollup (Arbitrum, Optimism, Base, zkSync). Inherits Ethereum security via batched proofs. Optimistic rollups: 7-day withdraw period. ZK rollups: cryptographic proofs, faster withdraws."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "L2 rollups: 10-100× cheaper, security via Ethereum.",
+      "points": 1
+    }
+  ]
+}

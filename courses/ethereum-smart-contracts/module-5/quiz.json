@@ -1,0 +1,61 @@
+{
+  "title": "Module 5 quiz: Production deployment",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Find edge cases automatically?",
+      "choices": [
+        {"id": "a", "text": "Manual."},
+        {"id": "b", "text": "Foundry fuzz tests + invariant tests + fork testing. fuzz auto-generates inputs; invariant checks always-true properties under random sequences; fork tests run against real mainnet state. Catches edge cases manual misses."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Foundry fuzz + invariant + fork = thorough coverage.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Modern frontend stack?",
+      "choices": [
+        {"id": "a", "text": "ethers v6."},
+        {"id": "b", "text": "Wagmi + viem + RainbowKit + TanStack Query. viem typed contracts; Wagmi React hooks; RainbowKit wallet UX. 2024+ standard."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Wagmi + viem + RainbowKit modern stack.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "L2 type tradeoffs?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Optimistic rollups (Arbitrum/Optimism/Base): EVM-equivalent, drop-in deploy, 7-day withdraw. ZK rollups (zkSync/Polygon zkEVM/Scroll): faster withdraws (minutes-hours), some compat quirks. OP-stack for max ecosystem reuse."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimistic compat + slow vs. ZK fast + quirks.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Production admin?",
+      "choices": [
+        {"id": "a", "text": "Hot wallet."},
+        {"id": "b", "text": "Gnosis Safe multi-sig + TimelockController with 48-72h delay. Multi-sig prevents single-key rug; timelock gives users exit window before malicious changes. Standard for Uniswap, Aave, Compound."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-sig + Timelock + Pausable.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Discovery of vulnerability live?",
+      "choices": [
+        {"id": "a", "text": "Hide it."},
+        {"id": "b", "text": "Pause + white-hat self-exploit to safe address + fix + return funds + public postmortem within 48-72h. Transparency preserves trust; silence destroys it. Bug bounty programs (Immunefi) reduce these scenarios."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pause + self-exploit + fix + postmortem.",
+      "points": 1
+    }
+  ]
+}

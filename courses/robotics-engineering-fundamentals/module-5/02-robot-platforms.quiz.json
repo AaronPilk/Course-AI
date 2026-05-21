@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Platforms",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Best learning platform?",
+      "choices": [
+        {"id": "a", "text": "Industrial KUKA."},
+        {"id": "b", "text": "TurtleBot 4 (~$2k, ROS 2 native) for mobile robotics or Crazyflie 2.1 (~$200) for drones. Designed for education + research; full ROS 2 ecosystem. Industrial systems (UR/Franka) cost $30k+ and overkill for learning."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "TurtleBot / Crazyflie = affordable learning platforms.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Humanoid 2026 landscape?",
+      "choices": [
+        {"id": "a", "text": "Sci-fi."},
+        {"id": "b", "text": "Booming: Tesla Optimus, Figure 01 (BMW warehouse), Boston Dynamics Atlas, Unitree H1 ($90k affordable), Agility Digit (logistics). Major investment + early commercial deployments 2024-2026. Driven by foundation models + RL advances."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Optimus, Figure, Atlas, Unitree H1, Digit.",
+      "points": 1
+    }
+  ]
+}

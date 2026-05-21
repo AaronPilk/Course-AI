@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: RAG",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "RAG vs. fine-tuning for knowledge-intensive Q&A?",
+      "choices": [
+        {"id": "a", "text": "Fine-tune."},
+        {"id": "b", "text": "RAG. Easier to update (re-embed new docs vs. retrain model); current data; lower compute; explicit citations possible. Fine-tuning bakes knowledge into model — harder to update; expensive; risk of forgetting. RAG pipeline: embed docs (sentence-transformers) → store (Chroma / Pinecone / Weaviate / Qdrant / FAISS / pgvector) → retrieve relevant at query time → pass top-k to LLM as context → generate answer. For knowledge-intensive use cases (FAQ bots, document search, company knowledge, current info): RAG. For style / format / persona tuning: fine-tuning. Often combined: RAG for knowledge + fine-tune for style. Modern RAG stack 2026: BGE embeddings + vector DB + Llama/GPT/Claude for generation + LangChain/LlamaIndex orchestration."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "RAG for knowledge. Easier updates, current data, explicit citations. Fine-tuning for style/format/persona. Often combined.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "RAG returns relevant docs but LLM still ignores them. Fix?",
+      "choices": [
+        {"id": "a", "text": "Different LLM."},
+        {"id": "b", "text": "Better prompt template + instruct LLM to use only provided context. Common prompt: 'You are a helpful assistant. Use ONLY the provided context to answer. If the context doesn't contain the answer, say so. Do not use prior knowledge. Context: {context}. Question: {query}. Answer:'. Variations: 1) Cite sources explicitly ('Answer with citations like [Doc 1], [Doc 2]'). 2) Refuse if not in context ('If context doesn't answer, respond: I don't have information about that'). 3) Few-shot examples of good RAG answers. 4) Place context AFTER question (some models attend better; test). 5) Use stronger model (GPT-4 / Claude 3.5 / Llama 3.1 70B follow context better than smaller). Also check: retrieved docs actually contain answer; chunking didn't split critical info; context within model's window. Re-ranking before passing to LLM improves quality of top-k. Iteratively refine prompt + observe outputs. The 'LLM hallucinates despite context' is the most common RAG issue; prompt engineering fixes 80% of cases; model upgrade fixes the rest. Pro RAG systems: detailed system prompt + explicit cite-sources instruction + LLM-as-judge for quality monitoring."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Better prompt: 'Use ONLY provided context'. Cite sources. Refuse if not in context. Few-shot examples. Stronger model. Re-ranking. Iterate.",
+      "points": 1
+    }
+  ]
+}

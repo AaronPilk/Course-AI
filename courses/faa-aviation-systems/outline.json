@@ -1,0 +1,50 @@
+{
+  "slug": "faa-aviation-systems",
+  "title": "FAA Aviation Systems & Airspace",
+  "subtitle": "How U.S. airspace, ATC, and aviation safety actually work.",
+  "category": "Aviation",
+  "level": "Beginner",
+  "estimated_hours": 6,
+  "tagline": "Understand the system you fly in.",
+  "brand": { "gradient_from": "#1E3A8A", "gradient_to": "#0EA5E9", "accent": "#FFFFFF" },
+  "outcomes": [
+    "Understand U.S. airspace classes and their rules.",
+    "Know how Air Traffic Control operates.",
+    "Understand pilot certification + medical requirements.",
+    "Know aviation weather + flight planning basics.",
+    "Understand safety, incident investigation (NTSB).",
+    "Survey modern aviation: NextGen, drones, eVTOL."
+  ],
+  "modules": [
+    { "position": 1, "title": "Airspace fundamentals", "objective": "Master U.S. airspace structure.", "lessons": [
+      { "position": 1, "title": "Class A through G airspace" },
+      { "position": 2, "title": "Special use airspace + TFRs" },
+      { "position": 3, "title": "VFR vs IFR" },
+      { "position": 4, "title": "Charts + navigation" }
+    ]},
+    { "position": 2, "title": "Air Traffic Control", "objective": "Understand ATC operations.", "lessons": [
+      { "position": 1, "title": "ATC structure: towers, centers, TRACON" },
+      { "position": 2, "title": "Clearances + communication" },
+      { "position": 3, "title": "Radar + ADS-B" },
+      { "position": 4, "title": "NextGen modernization" }
+    ]},
+    { "position": 3, "title": "Pilot certification", "objective": "How pilots are qualified.", "lessons": [
+      { "position": 1, "title": "Pilot certificates: Private to ATP" },
+      { "position": 2, "title": "Medical certificates + BasicMed" },
+      { "position": 3, "title": "Ratings + endorsements" },
+      { "position": 4, "title": "Currency + recency requirements" }
+    ]},
+    { "position": 4, "title": "Weather + flight planning", "objective": "Plan safe flights.", "lessons": [
+      { "position": 1, "title": "Aviation weather products" },
+      { "position": 2, "title": "METARs, TAFs, PIREPs" },
+      { "position": 3, "title": "Flight planning fundamentals" },
+      { "position": 4, "title": "Weight + balance + performance" }
+    ]},
+    { "position": 5, "title": "Safety + modern aviation", "objective": "Industry trends + safety culture.", "lessons": [
+      { "position": 1, "title": "NTSB + incident investigation" },
+      { "position": 2, "title": "Drones (Part 107) + airspace integration" },
+      { "position": 3, "title": "eVTOL + urban air mobility" },
+      { "position": 4, "title": "Careers in aviation" }
+    ]}
+  ]
+}

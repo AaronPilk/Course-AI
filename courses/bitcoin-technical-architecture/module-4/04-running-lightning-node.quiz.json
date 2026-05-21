@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Running Lightning",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Lightning node essentials?",
+      "choices": [
+        {"id": "a", "text": "Just install."},
+        {"id": "b", "text": "LND/CLN/Eclair + running Bitcoin Core full node + Static Channel Backup (SCB) cp'd offsite + watchtower for offline protection. Without backup, drive failure can lose channel funds; without watchtower, vulnerable to old-state attack."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Implementation + Bitcoin Core + backup + watchtower.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Get inbound liquidity?",
+      "choices": [
+        {"id": "a", "text": "Wait."},
+        {"id": "b", "text": "Lightning Pool marketplace, paid services (LNBig, Bitrefill open channels for fee), Loop-out (convert outbound to inbound via Lightning Labs Loop), submarine swaps. Necessary to receive payments; new nodes have zero inbound by default."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pool / paid services / Loop / submarine swaps.",
+      "points": 1
+    }
+  ]
+}

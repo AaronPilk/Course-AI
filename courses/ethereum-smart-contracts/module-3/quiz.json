@@ -1,0 +1,61 @@
+{
+  "title": "Module 3 quiz: Token standards",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ERC-20 1-tx UX?",
+      "choices": [
+        {"id": "a", "text": "Two txs."},
+        {"id": "b", "text": "ERC-2612 permit: user signs approval off-chain → DEX submits permit + transferFrom in one tx. Inherit ERC20Permit from OpenZeppelin. Eliminates pre-approve step."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ERC-2612 permit = signed approval.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Batch NFT mint efficiency?",
+      "choices": [
+        {"id": "a", "text": "Loop."},
+        {"id": "b", "text": "ERC-721A (Azuki) defers per-token storage until first transfer. 5 NFTs at ~1.5× single mint gas vs. 5× with OpenZeppelin. Standard for 10k+ collections."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ERC-721A for batch mint optimization.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Multi-token gaming items?",
+      "choices": [
+        {"id": "a", "text": "Many ERC-721s."},
+        {"id": "b", "text": "ERC-1155: one contract holds fungible + semi-fungible + NFTs. Batch ops 16× cheaper. setApprovalForAll covers all token IDs. Standard for games (inventory + currency + equipment)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ERC-1155 = multi-token in one contract.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "Compact allowlist?",
+      "choices": [
+        {"id": "a", "text": "List."},
+        {"id": "b", "text": "Merkle root: 10k addresses stored as single bytes32 on-chain. Users submit proof + leaf. MerkleProof.verify gates mint. Off-chain compute; minimal on-chain storage."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Merkle root + proofs for O(1) on-chain allowlist.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Multi-role permissions?",
+      "choices": [
+        {"id": "a", "text": "Ownable only."},
+        {"id": "b", "text": "OpenZeppelin AccessControl: bytes32 ROLE = keccak256(\"X_ROLE\"); onlyRole(ROLE) modifier; _grantRole + _revokeRole. Multiple distinct roles per address. Or v5 AccessManager for centralized policy."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "AccessControl roles for multi-stakeholder.",
+      "points": 1
+    }
+  ]
+}

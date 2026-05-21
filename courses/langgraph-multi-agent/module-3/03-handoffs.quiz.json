@@ -1,0 +1,8 @@
+{"title": "Quick check: Handoffs", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "Peer-to-peer agent handoffs?",
+    "choices": [{"id": "a", "text": "Need supervisor."}, {"id": "b", "text": "Each agent has transfer tools (transfer_to_billing, transfer_to_tech, etc.); when called, graph routes to target agent. LangGraph Swarm library makes this easy. State shared; one agent 'active' at a time; handoffs change active. Use when specialists know their domain better than centralized supervisor would."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Transfer tools route between agents. LangGraph Swarm for flat structure.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Customer support: triage agent should route to billing/tech/sales specialists. Pattern?",
+    "choices": [{"id": "a", "text": "One agent does all."}, {"id": "b", "text": "Handoff pattern with transfer tools. Triage agent has: transfer_to_billing, transfer_to_tech, transfer_to_sales. After determining query type, calls appropriate transfer; graph routes to specialist; specialist solves; if mixed query, can hand back or forward to another specialist. Each specialist focused on their domain (better quality than monolithic). Shared state preserves conversation history. LangGraph Swarm or custom graph with transfer logic. Production customer support pattern."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Handoff with transfer tools. Triage routes to specialists; specialists can forward/return.", "points": 1}
+]}

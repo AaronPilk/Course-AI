@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: ROS 2",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ROS 2 vs ROS 1?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "ROS 2 uses DDS (decentralized, real-time, multi-robot), supports embedded, has built-in security (SROS2). ROS 1 EOL May 2025; new projects → ROS 2. Use Jazzy (2024 LTS) or Humble (2022 LTS) for production."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "DDS + real-time + decentralized.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Choose ROS 2 distro?",
+      "choices": [
+        {"id": "a", "text": "Latest."},
+        {"id": "b", "text": "LTS (Long-Term Support): Humble (2022-2027) or Jazzy (2024-2029). LTS gets 5 years support; non-LTS only ~1-2 years. Production stability requires LTS."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Humble / Jazzy LTS for production.",
+      "points": 1
+    }
+  ]
+}

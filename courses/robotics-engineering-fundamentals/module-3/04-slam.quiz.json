@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: SLAM",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "SLAM components?",
+      "choices": [
+        {"id": "a", "text": "Just GPS."},
+        {"id": "b", "text": "Front-end (features: visual keypoints / LiDAR edges) + back-end (pose graph optimization via g2o/GTSAM/Ceres) + loop closure (revisit detection corrects drift). Modern: Cartographer, ORB-SLAM3, SLAM Toolbox."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Front-end + back-end + loop closure.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Drift over time?",
+      "choices": [
+        {"id": "a", "text": "Inevitable."},
+        {"id": "b", "text": "Loop closure: detect revisited places via feature matching → add graph constraint → optimization redistributes error globally. Map snaps back to consistent geometry. Critical for long-term SLAM accuracy."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Loop closure corrects accumulated drift.",
+      "points": 1
+    }
+  ]
+}

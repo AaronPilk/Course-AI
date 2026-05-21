@@ -1,0 +1,61 @@
+{
+  "title": "Module 3 quiz: Perception",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "ROS image processing?",
+      "choices": [
+        {"id": "a", "text": "Raw bytes."},
+        {"id": "b", "text": "cv_bridge converts sensor_msgs/Image → OpenCV ndarray. Then YOLO/SAM/CLIP for detection/segmentation. Calibrate intrinsics (focal/distortion) + extrinsics (camera→base via AprilTag + solvePnP)."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "cv_bridge + foundation models + calibration.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Process LiDAR clouds?",
+      "choices": [
+        {"id": "a", "text": "Skip."},
+        {"id": "b", "text": "Open3D / PCL pipeline: voxel downsample → RANSAC plane segment (ground) → DBSCAN cluster (objects) → ICP/NDT register multi-scans. PointCloud2 = ROS format."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Open3D pipeline for point cloud processing.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Standard ROS fusion?",
+      "choices": [
+        {"id": "a", "text": "Custom."},
+        {"id": "b", "text": "robot_localization package: EKF/UKF nodes combine wheel odom + IMU + GPS + visual via YAML config. Each sensor's axes specified. AMCL particle filter for known-map localization."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "robot_localization for fusion; AMCL for known maps.",
+      "points": 1
+    },
+    {"position": 4, "type": "multiple_choice", "prompt": "SLAM components?",
+      "choices": [
+        {"id": "a", "text": "Just sensors."},
+        {"id": "b", "text": "Front-end (features: visual keypoints / LiDAR edges) + back-end (pose graph optimization via g2o/GTSAM) + loop closure (revisit detection corrects drift). Cartographer, ORB-SLAM3, SLAM Toolbox common."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Front-end + back-end + loop closure.",
+      "points": 1
+    },
+    {"position": 5, "type": "scenario", "prompt": "Map quality over long mission?",
+      "choices": [
+        {"id": "a", "text": "Inevitable drift."},
+        {"id": "b", "text": "Loop closure: detect revisited places via feature matching → add graph constraint → optimization redistributes error globally. Map snaps to consistent geometry. Without it, drift accumulates linearly with distance."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Loop closure corrects drift.",
+      "points": 1
+    }
+  ]
+}

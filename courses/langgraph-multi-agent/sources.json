@@ -1,0 +1,7 @@
+{
+  "sources": [
+    {"title": "LangGraph documentation", "url": "https://langchain-ai.github.io/langgraph/", "type": "documentation"},
+    {"title": "LangChain documentation", "url": "https://python.langchain.com/docs/", "type": "documentation"},
+    {"title": "LangGraph tutorials", "url": "https://langchain-ai.github.io/langgraph/tutorials/", "type": "tutorials"}
+  ]
+}

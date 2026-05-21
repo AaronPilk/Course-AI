@@ -1,0 +1,18 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ethGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#627EEA"/>
+      <stop offset="100%" stop-color="#3C3C3D"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#ethGrad)"/>
+  <g fill="#FFFFFF" opacity="0.95">
+    <polygon points="200,80 260,200 200,232 140,200"/>
+    <polygon points="200,244 260,212 200,320 140,212"/>
+  </g>
+  <g fill="#C99D66" opacity="0.4">
+    <circle cx="60" cy="70" r="5"/>
+    <circle cx="340" cy="90" r="4"/>
+    <circle cx="80" cy="330" r="6"/>
+  </g>
+</svg>

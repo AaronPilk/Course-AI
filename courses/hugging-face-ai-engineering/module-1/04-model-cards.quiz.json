@@ -1,0 +1,36 @@
+{
+  "title": "Quick check: Model cards",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {
+      "position": 1,
+      "type": "multiple_choice",
+      "prompt": "What's in a good model card?",
+      "choices": [
+        { "id": "a", "text": "Just the name." },
+        { "id": "b", "text": "Model description, intended uses, out-of-scope warnings, bias / risks / limitations, training data + procedure, evaluation benchmarks, license, citation. The README of an AI model. Required reading before using. Strong cards (Llama 3, BLOOM, Stable Diffusion) provide comprehensive transparency; weak cards (one paragraph, no license, no training data) signal lower-quality / less-responsible models. Pro habit: read full model card for any production / commercial usage; spend 5-10 minutes understanding capabilities + limitations + license. Critical decisions from card: 1) Use case fit (intended uses match yours?). 2) License compatibility (commercial OK?). 3) Known issues (bias, language gaps, knowledge cutoff). 4) Hardware requirements (size, quantization options). 5) Quality expectations (benchmark scores; community usage). The card is the contract between model creator + user; ignoring it = surprises. Compare to using a library without reading its README: it might work; you might miss critical setup, license terms, gotchas. For commercial work: document the model card's license details + intended use scope in your project records; protects against future legal questions.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Description + intended uses + out-of-scope + bias/risks + training data + evaluation + license + citation. The README of an AI model. Read before production use; document license.",
+      "points": 1
+    },
+    {
+      "position": 2,
+      "type": "scenario",
+      "prompt": "Click 'Access' button on Llama 3 model card; need to use it commercially for small startup. Steps?",
+      "choices": [
+        { "id": "a", "text": "Click Access; done." },
+        { "id": "b", "text": "Click Access (read + agree to Llama Community License terms first); wait for approval (often instant); verify license terms apply to your use case (small startup typically OK as long as below revenue caps and following acceptable use policy); document license + scope in project records; download + use. Llama 3 specifics: 1) Commercial use is allowed below ~700M monthly active users (specific cap varies per Llama release — check current model card). 2) Acceptable Use Policy (AUP) must be followed (no harmful, deceptive, illegal use cases listed). 3) Attribution to Meta required (e.g., in app's About page or documentation). 4) For some Llama versions, outputs may have restrictions if used for training other LLMs. For small startup: easily within commercial scope; verify scale doesn't reach restricted cap; comply with AUP; attribute properly. Beyond Llama, other gated models (some Stability AI, some Mistral large variants): similar workflow — click Access, agree, get approval. Some gated models require manual review (research-only models for sensitive applications); approval can take days/weeks. Document compliance: maintain project log noting model used, license version, scope verification date; protects against future license disputes. For absolute commercial safety + no scale concerns: prefer pure Apache 2.0 models (Mistral, Phi) — no scale caps, no AUP beyond illegal use, no attribution requirements. The 'gated → click → instant access' pattern is the modern HF experience for restricted models; legitimate process; not a barrier for legitimate users.",
+"choices": [] },
+        { "id": "c", "text": "Use Opus." },
+        { "id": "d", "text": "Use Sonnet." }
+      ],
+      "correct_answer": "b",
+      "explanation": "Click Access + agree to Llama Community License; verify commercial terms (under 700M MAU OK; AUP compliance; attribution). Document license scope. Llama easy for small / indie; verify scale.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "title": "Module 3 quiz: Strategy development",
+  "scoring": { "passing_score": 4, "total_questions": 5 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Realistic backtest config?",
+      "choices": [
+        {"id": "a", "text": "Defaults."},
+        {"id": "b", "text": "strategy() with initial_capital realistic, commission_type=strategy.commission.percent (0.05-0.25), slippage=2 ticks. Without these, backtests overstate edge by 20-50%."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Realistic commission + slippage required for trustworthy backtest.",
+      "points": 1
+    },
+    {"position": 2, "type": "multiple_choice", "prompt": "Bracket order (SL + TP)?",
+      "choices": [
+        {"id": "a", "text": "Two calls."},
+        {"id": "b", "text": "strategy.exit(\"Bracket\", from_entry=\"Long\", stop=slPrice, limit=tpPrice). Single call sets both; OCO behavior; one fills cancels other."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "strategy.exit handles bracket OCO.",
+      "points": 1
+    },
+    {"position": 3, "type": "multiple_choice", "prompt": "Position size by risk?",
+      "choices": [
+        {"id": "a", "text": "Fixed shares."},
+        {"id": "b", "text": "size = (equity × risk%) / (entry − stop). Risk fixed dollar amount; wider stop = smaller size; tighter stop = larger size. Standard 1-2% per trade."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Account risk / stop distance = position size.",
+      "points": 1
+    },
+    {"position": 4, "type": "scenario", "prompt": "Volatility-aware stop?",
+      "choices": [
+        {"id": "a", "text": "Fixed %"},
+        {"id": "b", "text": "stopPrice = entry − ta.atr(14) * 2. ATR scales with market volatility; adapts tight in calm markets, wide in fast ones. Avoids whipsaws from normal noise."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "ATR-based stops for adaptive risk.",
+      "points": 1
+    },
+    {"position": 5, "type": "multiple_choice", "prompt": "Daily loss limit?",
+      "choices": [
+        {"id": "a", "text": "Hope."},
+        {"id": "b", "text": "Track day-start equity; if (currentEquity − dayStart)/dayStart < −0.03 (3% daily loss), strategy.close_all() + stop trading. Prevents revenge trading and protects capital."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Daily DD circuit breaker prevents account blowup.",
+      "points": 1
+    }
+  ]
+}

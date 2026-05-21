@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Overfitting",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Robust vs. overfit params?",
+      "choices": [
+        {"id": "a", "text": "Pick best."},
+        {"id": "b", "text": "Test parameter neighborhood. Robust: length 14=1.8, 13=1.7, 15=1.7 (smooth). Overfit: length 14=1.8 but 13=-0.5, 15=0.2 (spiky). Pick mid-range robust values, not isolated peaks."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Smooth parameter neighborhood = robust; spiky = curve-fit.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Validate strategy before live?",
+      "choices": [
+        {"id": "a", "text": "Trust backtest."},
+        {"id": "b", "text": "IS/OOS split (optimize 2018-2022, test 2023-2024 untouched) + walk-forward (rolling re-train) + multi-symbol + multi-regime test. Lock parameters; paper-trade 3 months. Then live."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "IS/OOS + walk-forward + multi-symbol + paper-trade gate.",
+      "points": 1
+    }
+  ]
+}

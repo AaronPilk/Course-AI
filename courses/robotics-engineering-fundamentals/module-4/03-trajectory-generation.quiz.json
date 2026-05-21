@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Trajectory",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Path vs. trajectory?",
+      "choices": [
+        {"id": "a", "text": "Same."},
+        {"id": "b", "text": "Path = geometric sequence of positions. Trajectory = path + time: position(t), velocity(t), acceleration(t). Trajectory respects velocity/acceleration limits + smooth continuity for hardware compatibility."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Trajectory = path + temporal profile.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Industrial arm motion?",
+      "choices": [
+        {"id": "a", "text": "Linear."},
+        {"id": "b", "text": "Trapezoidal velocity profile (accel + cruise + decel) respecting max velocity + acceleration. S-curve for jerk-limited (smoother on motors). Quintic polynomial for smooth high-derivative continuity. MoveIt handles automatically."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Trapezoidal / S-curve / quintic for smooth motion.",
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Why Anchor",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "Anchor over raw Solana?",
+      "choices": [
+        {"id": "a", "text": "Slower."},
+        {"id": "b", "text": "~10× less boilerplate, declarative account validation, discriminator system, IDL auto-generation, typed TS client. Tradeoff: small CU overhead. Used by 95% of production Solana programs."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Anchor saves boilerplate + adds safety.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Pin Anchor version across team?",
+      "choices": [
+        {"id": "a", "text": "Latest."},
+        {"id": "b", "text": "avm install X.Y.Z + avm use X.Y.Z + match anchor-lang = \"X.Y.Z\" in Cargo.toml. Anchor releases occasionally include breaking changes; pinning prevents surprise breakage."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Pin avm + Cargo dep to same version.",
+      "points": 1
+    }
+  ]
+}

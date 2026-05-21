@@ -1,0 +1,28 @@
+{
+  "title": "Quick check: Sensors + actuators",
+  "scoring": { "passing_score": 2, "total_questions": 2 },
+  "questions": [
+    {"position": 1, "type": "multiple_choice", "prompt": "IMU components?",
+      "choices": [
+        {"id": "a", "text": "Camera."},
+        {"id": "b", "text": "Accelerometer (linear accel) + gyroscope (angular velocity) + magnetometer (compass). Integration over time gives velocity + position (drift accumulates). Sensor fusion with vision (VIO) reduces drift."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Accel + gyro + magnetometer = IMU.",
+      "points": 1
+    },
+    {"position": 2, "type": "scenario", "prompt": "Robust localization indoors?",
+      "choices": [
+        {"id": "a", "text": "GPS."},
+        {"id": "b", "text": "Sensor fusion: camera + IMU + LiDAR + wheel encoders combined via Kalman/Extended Kalman/Particle filter. Single sensor fails (GPS no signal indoors); combined gives robust estimate of pose. Standard SLAM stack."},
+        {"id": "c", "text": "Use Opus."},
+        {"id": "d", "text": "Use Sonnet."}
+      ],
+      "correct_answer": "b",
+      "explanation": "Multi-sensor fusion via Kalman filter.",
+      "points": 1
+    }
+  ]
+}

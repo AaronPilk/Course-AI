@@ -1,0 +1,8 @@
+{"title": "Quick check: ReAct", "scoring": {"passing_score": 2, "total_questions": 2}, "questions": [
+  {"position": 1, "type": "multiple_choice", "prompt": "What's ReAct?",
+    "choices": [{"id": "a", "text": "React.js."}, {"id": "b", "text": "Reasoning + Acting — LLM agent pattern alternating thought + tool calls. Loops until done. Use create_react_agent(model, tools) for instant LangGraph agent."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Reasoning + Acting iteration with tools.", "points": 1},
+  {"position": 2, "type": "scenario", "prompt": "Agent gives 5 different answers same question; inconsistent. Fix?",
+    "choices": [{"id": "a", "text": "Different model."}, {"id": "b", "text": "Better system prompt + temperature reduction. System prompt: define role, behavior, constraints, response format clearly. Temperature 0 for deterministic; 0.3-0.7 for slight variation. Add few-shot examples in system. Constrain tool use. Test repeatedly; iterate prompt. The 'wrong model' assumption is often a 'weak prompt' problem. Pro prompt engineering for agent reliability."}, {"id": "c", "text": "Use Opus."}, {"id": "d", "text": "Use Sonnet."}],
+    "correct_answer": "b", "explanation": "Stronger system prompt + lower temperature + few-shot examples.", "points": 1}
+]}
